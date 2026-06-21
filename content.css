@@ -1,0 +1,111 @@
+/* content.css — overlay + native caption suppression */
+
+/* When the extension is active, visually hide YouTube's own caption layer.
+   We keep it in the DOM (display stays) so we can still read its text. */
+html.ytds-active .ytp-caption-window-container,
+html.ytds-active .caption-window {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#ytds-overlay {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;                 /* above video, below YT settings menus */
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 4px;
+  width: 92%;
+  max-width: 1100px;
+  pointer-events: none;        /* clicks pass through to the player */
+  text-align: center;
+  --ytds-bg: rgba(8, 8, 8, 0.55);
+}
+
+/* preset anchors (used when posMode === "preset") */
+#ytds-overlay.ytds-pos-bottom { bottom: 8%; top: auto; }
+#ytds-overlay.ytds-pos-center { top: 50%; bottom: auto; transform: translate(-50%, -50%); }
+#ytds-overlay.ytds-pos-top    { top: 8%; bottom: auto; }
+
+/* When there is no visible subtitle, do NOT hide the overlay container itself
+   (display:none would also remove the child drag handle from layout, making
+   it ungrabbable during every inter-sentence gap / silent passage). Instead
+   keep the container in flow and hide only its text lines, so the handle stays
+   discoverable and draggable any time you hover the player. */
+#ytds-overlay.ytds-empty .ytds-line { display: none; }
+
+.ytds-line {
+  display: inline-block;
+  max-width: 100%;
+  padding: 2px 10px;
+  border-radius: 4px;
+  background: var(--ytds-bg);
+  font-weight: 600;
+  line-height: 1.25;
+  /* default soft shadow; replaced by an outline ring when strokeOpacity > 0 */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  white-space: normal;
+  word-break: break-word;
+}
+
+.ytds-line:empty { display: none; }
+
+/* ---- draggable handle -------------------------------------------------- */
+/* The overlay itself stays pointer-events:none so the player keeps receiving
+   clicks; only this small grip is interactive. It sits at the overlay's
+   top-left corner, faint until the pointer is near the player/overlay. */
+.ytds-handle {
+  position: absolute;
+  top: -11px;
+  left: -11px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(8, 8, 8, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: move;
+  pointer-events: auto;        /* the ONE interactive child */
+  opacity: 0;
+  transition: opacity .15s ease;
+  touch-action: none;          /* let pointer drag work without scroll/zoom */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+.ytds-handle svg { width: 13px; height: 13px; display: block; pointer-events: none; }
+
+/* Discoverable when the player's control bar is visible. We gate on
+   :not(.ytp-autohide): YouTube adds .ytp-autohide to the player whenever it
+   auto-hides the controls (cursor idle). A plain :hover rule failed in
+   fullscreen — there the cursor is always over the player, so :hover stayed true
+   and the handle lingered after the progress bar hid. Gating on the control-bar
+   state makes the handle appear and disappear together with the progress bar in
+   BOTH fullscreen and windowed. An active drag always wins so a gesture is never
+   cut off mid-drag if the controls happen to hide. */
+#movie_player:not(.ytp-autohide):hover #ytds-overlay .ytds-handle,
+.html5-video-player:not(.ytp-autohide):hover #ytds-overlay .ytds-handle,
+.ytds-handle.ytds-dragging {
+  opacity: .9;
+}
+.ytds-handle:hover { background: rgba(20, 20, 20, 0.9); }
+
+/* ---- in-player quick toggle (control-bar button) ----------------------- */
+/* A caption-box glyph that reads as "subtitles". The icon is a fixed 24x24
+   (matching YouTube's native control icons) and absolutely centered so it can't
+   sit low. State is colour-coded for clarity: bright blue = ON, dim grey = OFF.
+   One click turns the whole extension (and YouTube's CC) on/off. */
+.ytds-toggle { position: relative; color: rgba(255, 255, 255, 0.55); }
+.ytds-toggle.ytds-on { color: #3ea6ff; }
+.ytds-toggle svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  transition: color .12s ease;
+}
