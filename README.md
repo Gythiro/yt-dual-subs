@@ -36,6 +36,8 @@ YouTube serves caption tracks from an `/api/timedtext` endpoint that now require
 4. Click **Load unpacked** and select the unzipped folder.
 5. Open a YouTube video with captions — the subtitles appear automatically (the extension turns captions on for you).
 
+> ⚠️ **Getting "Manifest file is missing or unreadable"?** This almost always means the archive was extracted into a **nested folder** (`yt-dual-subs\yt-dual-subs\`). Keep opening the folder until you see `manifest.json` directly inside, and select *that* level. Prefer the ZIP from the **Releases page** (it unzips to a single folder) over the green **Code** button's source download, and make sure you actually **extracted** the ZIP rather than loading from inside the archive.
+
 Works on Chrome, Edge, and other Chromium browsers. Requires Chrome 111+ (for the MAIN‑world content script).
 
 ## Usage
