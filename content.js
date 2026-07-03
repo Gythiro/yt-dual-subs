@@ -518,7 +518,7 @@
     toggleBtn.setAttribute("aria-pressed", on ? "true" : "false");
     const label =
       (on ? t("toggleTurnOff", "关闭双语字幕") : t("toggleTurnOn", "开启双语字幕")) +
-      " (YT Dual Subs)";
+      " (Dual Subtitles for YouTube)";
     toggleBtn.setAttribute("aria-label", label);
     toggleBtn.title = label;
   }

@@ -1,7 +1,8 @@
 {
-  "extName": { "message": "YT Dual Subs" },
+  "extName": { "message": "Dual Subtitles for YouTube™" },
   "extDesc": { "message": "Bilingual subtitles for YouTube — original and translation in one non-overlapping layer." },
-  "headerSub": { "message": "Bilingual subtitles · single layer" },
+  "headerSub": { "message": "for YouTube™ · Bilingual, single layer" },
+  "disclaimer": { "message": "Not affiliated with YouTube or Google." },
   "enableTitle": { "message": "Enable / disable" },
   "enableAria": { "message": "Enable extension" },
   "previewTag": { "message": "Preview" },

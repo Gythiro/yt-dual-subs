@@ -275,7 +275,12 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 .ft {
   padding: 11px 15px 15px; border-top: 1px solid var(--line);
   margin-top: 7px;
-  display: flex; align-items: center; gap: 11px;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.ft-row { display: flex; align-items: center; gap: 11px; }
+.disclaimer {
+  margin: 0; font-size: 10px; color: var(--muted);
+  text-align: center; opacity: .85;
 }
 .reset {
   flex: 1; padding: 9px; font-size: 12px;

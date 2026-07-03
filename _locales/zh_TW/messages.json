@@ -1,7 +1,8 @@
 {
-  "extName": { "message": "YT Dual Subs" },
+  "extName": { "message": "Dual Subtitles for YouTube™" },
   "extDesc": { "message": "YouTube 雙語字幕——原文與譯文單層顯示,互不重疊。" },
-  "headerSub": { "message": "雙語字幕 · 單層算繪" },
+  "headerSub": { "message": "for YouTube™ · 雙語單層字幕" },
+  "disclaimer": { "message": "非 YouTube / Google 官方出品,與其無關聯。" },
   "enableTitle": { "message": "啟用 / 停用" },
   "enableAria": { "message": "啟用擴充功能" },
   "previewTag": { "message": "預覽" },

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "default_locale": "en",
   "name": "__MSG_extName__",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "__MSG_extDesc__",
   "permissions": ["storage"],
   "host_permissions": [
@@ -29,7 +29,7 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "YT Dual Subs",
+    "default_title": "Dual Subtitles for YouTube",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",

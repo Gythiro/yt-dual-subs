@@ -1,4 +1,4 @@
-# YT Dual Subs
+# Dual Subtitles for YouTube™
 
 > Bilingual subtitles for YouTube — the original language and your translation shown together as a single, non‑overlapping layer that switches cleanly sentence by sentence.
 
@@ -85,3 +85,7 @@ A clean‑room reimplementation inspired by the (closed‑source, discontinued) 
 ## License
 
 [MIT](LICENSE).
+
+---
+
+*Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.*
