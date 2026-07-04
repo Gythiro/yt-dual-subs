@@ -549,7 +549,16 @@
       if (retries > 0) setTimeout(() => ensureCaptionsOn(retries - 1), 600);
       return;                                   // button / state not ready yet
     }
-    if (cc.getAttribute("aria-disabled") === "true") return;  // no captions on this video
+    if (cc.getAttribute("aria-disabled") === "true") {
+      // Disabled is often TRANSIENT: on a cold page load YouTube keeps the CC
+      // button disabled until the video's track list arrives, several seconds
+      // after the button exists. Treating that as "no captions on this video"
+      // made auto-enable give up on cold loads (SPA navs were fast enough to
+      // never hit it). Keep retrying within the window; a video with genuinely
+      // no track just lets the retries lapse — clicking never happens either way.
+      if (retries > 0) setTimeout(() => ensureCaptionsOn(retries - 1), 600);
+      return;
+    }
     if (cc.getAttribute("aria-pressed") !== "true") {
       cc.click();
       weEnabledCC = true;
@@ -564,7 +573,9 @@
   }
 
   function syncCaptions() {
-    if (settings.enabled) ensureCaptionsOn(15);
+    // 20 × 600ms ≈ 12s window: covers slow cold loads where the CC button
+    // stays aria-disabled for several seconds while the track list loads.
+    if (settings.enabled) ensureCaptionsOn(20);
     else restoreCaptionsIfWeEnabled();
   }
 
