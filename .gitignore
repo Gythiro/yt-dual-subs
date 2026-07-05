@@ -3,9 +3,3 @@
 Thumbs.db
 desktop.ini
 *.log
-
-# internal dev notes (not part of the published extension)
-HANDOFF.md
-
-# store publishing kit (listing assets, submission texts, mockup sources)
-store-assets/

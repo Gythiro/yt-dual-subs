@@ -2,7 +2,13 @@
 
 > Bilingual subtitles for YouTube — the original language and your translation shown together as a single, non‑overlapping layer that switches cleanly sentence by sentence.
 
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Install-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)
+[![Version](https://img.shields.io/chrome-web-store/v/ndifcigakimmibkgeabchfaolhjpcmge?logo=googlechrome&logoColor=white&label=version)](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 **中文说明 → [README.zh-CN.md](README.zh-CN.md)**
+
+![Dual‑language subtitles shown over a YouTube video](docs/screenshot-overlay.png)
 
 A clean‑room, open‑source **Manifest V3** extension. It reads the video's real caption track, translates it, and renders both languages in one tidy overlay you can fully style and drag — no overlap, no word‑by‑word flicker.
 
@@ -28,19 +34,27 @@ YouTube serves caption tracks from an `/api/timedtext` endpoint that now require
 3. `content.js` drives an overlay off `video.currentTime`, showing the right sentence and its translation at the right moment, and hides YouTube's native caption layer so there's a single, non‑overlapping line set.
 4. If the cue fetch ever fails, it falls back to reading the on‑screen caption text directly.
 
-## Install (load unpacked)
+## Install
+
+### From the Chrome Web Store (recommended)
+
+**[➜ Install from the Chrome Web Store](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)** — one click, and it auto‑updates. Then open a YouTube video with captions; the subtitles appear automatically (the extension turns captions on for you).
+
+### Load unpacked (for developers)
 
 1. **Download the latest release ZIP** from the [Releases page](https://github.com/Gythiro/yt-dual-subs/releases/latest) and unzip it. *(Prefer the command line? `git clone` works too.)*
 2. Open `chrome://extensions`.
 3. Turn on **Developer mode** (top‑right).
 4. Click **Load unpacked** and select the unzipped folder.
-5. Open a YouTube video with captions — the subtitles appear automatically (the extension turns captions on for you).
+5. Open a YouTube video with captions — the subtitles appear automatically.
 
 > ⚠️ **Getting "Manifest file is missing or unreadable"?** This almost always means the archive was extracted into a **nested folder** (`yt-dual-subs\yt-dual-subs\`). Keep opening the folder until you see `manifest.json` directly inside, and select *that* level. Prefer the ZIP from the **Releases page** (it unzips to a single folder) over the green **Code** button's source download, and make sure you actually **extracted** the ZIP rather than loading from inside the archive.
 
 Works on Chrome, Edge, and other Chromium browsers. Requires Chrome 111+ (for the MAIN‑world content script).
 
 ## Usage
+
+![The settings popup with live preview](docs/screenshot-settings.png)
 
 - **Toolbar icon** → settings popup: target language, translation engine, line order, position, spacing, and per‑line styling, all with a live preview.
 - **Control‑bar button** (the caption icon next to the gear): one‑click on/off. Blue = on, grey = off.

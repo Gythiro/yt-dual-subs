@@ -1,0 +1,4 @@
+# Keep README screenshots out of the packaged extension zip (git archive)
+docs/ export-ignore
+docs/** export-ignore
+.gitattributes export-ignore
