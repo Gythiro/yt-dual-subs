@@ -1,67 +1,119 @@
+<div align="center">
+
+<a href="https://gythiro.github.io/yt-dual-subs/"><img src="icons/icon128.png" width="110" alt="Dual Subtitles for YouTube icon"></a>
+
 # Dual Subtitles for YouTube™
 
-> Bilingual subtitles for YouTube — the original language and your translation shown together as a single, non‑overlapping layer that switches cleanly sentence by sentence.
+**Watch in two languages at once — the original and your translation in one clean, non‑overlapping layer that switches sentence by sentence.**
 
-[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Install-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)
-[![Version](https://img.shields.io/chrome-web-store/v/ndifcigakimmibkgeabchfaolhjpcmge?logo=googlechrome&logoColor=white&label=version)](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Chrome Web Store version](https://img.shields.io/chrome-web-store/v/ndifcigakimmibkgeabchfaolhjpcmge?style=flat-square&logo=googlechrome&logoColor=white&label=chrome%20web%20store)](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-**中文说明 → [README.zh-CN.md](README.zh-CN.md)**
+<a href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge"><img src="https://img.shields.io/badge/Install-Chrome%20Web%20Store-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Install from the Chrome Web Store"></a>&nbsp;&nbsp;<a href="https://gythiro.github.io/yt-dual-subs/"><img src="https://img.shields.io/badge/Official%20Website-gythiro.github.io-2ea44f?style=for-the-badge" alt="Official Website"></a>&nbsp;&nbsp;<a href="README.zh-CN.md"><img src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-README.zh--CN-orange?style=for-the-badge" alt="中文文档"></a>
 
-![Dual‑language subtitles shown over a YouTube video](docs/screenshot-overlay.png)
+English | [简体中文](README.zh-CN.md)
 
-A clean‑room, open‑source **Manifest V3** extension. It reads the video's real caption track, translates it, and renders both languages in one tidy overlay you can fully style and drag — no overlap, no word‑by‑word flicker.
+<br>
+
+<img src="docs/screenshot-overlay.png" width="800" alt="Dual-language subtitles shown over a YouTube video — original English line above, translated line below, in a single overlay">
+
+<sub>A clean‑room, open‑source <b>Manifest V3</b> extension. It reads the video's real caption track, translates it, and renders both languages in one tidy overlay you can fully style and drag.</sub>
+
+</div>
 
 ---
 
-## Features
+> [!IMPORTANT]
+> **No analytics, no tracking, no accounts.** Caption text is sent *only* to the translation service you choose (YouTube's own, or Google Translate) to be translated. Settings live in `chrome.storage.sync` — nothing else leaves your browser.
 
-- **Dual subtitles, one layer.** Original on one line, your language on the other. YouTube's own caption layer is hidden, so the two never overlap.
-- **Per‑sentence, no jitter.** Renders from the timed caption *cues* (not the rolling on‑screen text), so lines switch by whole sentence instead of flickering word by word.
-- **Two translation engines.** YouTube's own whole‑track translation (perfectly aligned, instant), with automatic fallback to Google Translate's free endpoint — prefetched ahead of playback so there's no lag.
-- **Fully customizable.** Per‑line font, size, text colour, background colour + opacity, outline, line spacing, and which line sits on top. Live preview in the popup.
-- **Draggable.** Grab the handle and drop the subtitle box anywhere on the video; it persists, double‑click to reset. Works in fullscreen.
-- **One‑click toggle.** A button in the player's control bar turns the whole thing on/off (and YouTube's CC with it) — handy for videos with burned‑in subtitles.
-- **Export to SRT.** Download the current video's subtitles as a standard `.srt` file — original, translation, or bilingual — straight from the popup.
-- **Robust.** Survives SPA navigation, falls back to reading the on‑screen caption text if the cue fetch ever fails, and turns YouTube captions on for you automatically.
+## ✨ What you get
 
-## How it works
+<table>
+<tr>
+<td width="50%" valign="top" align="center">
 
-YouTube serves caption tracks from an `/api/timedtext` endpoint that now requires a per‑request **proof‑of‑origin token** (`pot`). An extension can't just fetch a track URL on its own — it gets an empty response. So instead:
+<h3>One layer. Zero overlap. Zero flicker.</h3>
 
-1. A MAIN‑world script (`inject.js`) passively watches the page (XHR, `fetch`, and Resource Timing) and captures the **player's own** timedtext request, which already carries a valid `pot`.
-2. It re‑fetches that exact URL as `json3` for the original cues, and again with `&tlang=` for YouTube's translation — aligned cue‑for‑cue.
-3. `content.js` drives an overlay off `video.currentTime`, showing the right sentence and its translation at the right moment, and hides YouTube's native caption layer so there's a single, non‑overlapping line set.
-4. If the cue fetch ever fails, it falls back to reading the on‑screen caption text directly.
+<img src="docs/compare-en.png" width="340" alt="Before and after: other tools let the two caption lines collide; Dual Subtitles for YouTube keeps them cleanly separated">
 
-## Install
+</td>
+<td width="50%" valign="top" align="center">
 
-### From the Chrome Web Store (recommended)
+<h3>Every line, styled your way.</h3>
 
-**[➜ Install from the Chrome Web Store](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)** — one click, and it auto‑updates. Then open a YouTube video with captions; the subtitles appear automatically (the extension turns captions on for you).
+<img src="docs/screenshot-settings.png" width="420" alt="The settings popup with live preview">
 
-### Load unpacked (for developers)
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+- **Dual subtitles, one layer** — original on one line, your language on the other. YouTube's own caption layer is hidden, so the two never overlap.
+- **Per‑sentence, no jitter** — renders from the timed caption *cues* (not the rolling on‑screen text), so lines switch by whole sentence instead of flickering word by word.
+- **Two translation engines** — YouTube's whole‑track translation (perfectly aligned, instant), with automatic fallback to Google Translate — prefetched ahead of playback so there's no lag.
+- **16 target languages** to choose from.
+
+</td>
+<td valign="top">
+
+- **Fully customizable** — per‑line font, size, text colour, background colour + opacity, outline, line spacing, and which line sits on top. Live preview in the popup.
+- **Draggable** — drop the subtitle box anywhere on the video; it persists, double‑click to reset. Works in fullscreen.
+- **One‑click toggle** — a button right in the player's control bar turns everything on/off (and YouTube's CC with it).
+- **Export to SRT** — download the current video's subtitles as `.srt`: original, translation, or bilingual.
+- **Robust by design** — survives SPA navigation, falls back to reading the on‑screen caption text if the cue fetch ever fails, and turns YouTube captions on for you automatically.
+
+</td>
+</tr>
+</table>
+
+## 🚀 Install
+
+**[➜ Install from the Chrome Web Store](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)** — one click, and it auto‑updates.
+
+Then open any YouTube video with captions: the dual subtitles appear automatically (the extension turns captions on for you).
+
+Works on **Chrome, Edge, and other Chromium browsers**, version 111+ (required for the MAIN‑world content script).
+
+<details>
+<summary><b>🧑‍💻 Load unpacked (for developers)</b></summary>
 
 1. **Download the latest release ZIP** from the [Releases page](https://github.com/Gythiro/yt-dual-subs/releases/latest) and unzip it. *(Prefer the command line? `git clone` works too.)*
-2. Open `chrome://extensions`.
-3. Turn on **Developer mode** (top‑right).
-4. Click **Load unpacked** and select the unzipped folder.
-5. Open a YouTube video with captions — the subtitles appear automatically.
+1. Open `chrome://extensions`.
+1. Turn on **Developer mode** (top‑right).
+1. Click **Load unpacked** and select the unzipped folder.
+1. Open a YouTube video with captions — the subtitles appear automatically.
 
 > ⚠️ **Getting "Manifest file is missing or unreadable"?** This almost always means the archive was extracted into a **nested folder** (`yt-dual-subs\yt-dual-subs\`). Keep opening the folder until you see `manifest.json` directly inside, and select *that* level. Prefer the ZIP from the **Releases page** (it unzips to a single folder) over the green **Code** button's source download, and make sure you actually **extracted** the ZIP rather than loading from inside the archive.
 
-Works on Chrome, Edge, and other Chromium browsers. Requires Chrome 111+ (for the MAIN‑world content script).
+</details>
 
-## Usage
+## 🌐 Official Website
 
-![The settings popup with live preview](docs/screenshot-settings.png)
+**[gythiro.github.io/yt-dual-subs](https://gythiro.github.io/yt-dual-subs/)** — the extension's home page, in **English and 中文**: a visual tour of the features, install links, and the latest updates, all on one page. If you're sending this extension to a friend, send them there.
 
-- **Toolbar icon** → settings popup: target language, translation engine, line order, position, spacing, and per‑line styling, all with a live preview.
+## ⚙️ Usage
+
+- **Toolbar icon** → settings popup: target language, translation engine, line order, position, spacing, and per‑line styling — all with a live preview.
 - **Control‑bar button** (the caption icon next to the gear): one‑click on/off. Blue = on, grey = off.
 - **Drag** the subtitle box by its handle (appears top‑left when you hover the player); **double‑click** the handle to reset its position.
 - **Export** (popup → *Export*): download the subtitles as an `.srt` file — choose original, translation, or bilingual.
 
-## Translation engines
+## 📖 The fine print
+
+<details>
+<summary><b>🔬 How it works</b></summary>
+
+YouTube serves caption tracks from an `/api/timedtext` endpoint that now requires a per‑request **proof‑of‑origin token** (`pot`). An extension can't just fetch a track URL on its own — it gets an empty response. So instead:
+
+1. A MAIN‑world script (`inject.js`) passively watches the page (XHR, `fetch`, and Resource Timing) and captures the **player's own** timedtext request, which already carries a valid `pot`.
+1. It re‑fetches that exact URL as `json3` for the original cues, and again with `&tlang=` for YouTube's translation — aligned cue‑for‑cue.
+1. `content.js` drives an overlay off `video.currentTime`, showing the right sentence and its translation at the right moment, and hides YouTube's native caption layer so there's a single, non‑overlapping line set.
+1. If the cue fetch ever fails, it falls back to reading the on‑screen caption text directly.
+
+</details>
+
+<details>
+<summary><b>🔁 Translation engines compared</b></summary>
 
 | | Whole‑sentence (`tlang`) — default | Per‑sentence (`gtx`) |
 |---|---|---|
@@ -70,17 +122,19 @@ Works on Chrome, Edge, and other Chromium browsers. Requires Chrome 111+ (for th
 | Best for | Highest quality + instant | When YouTube can't translate a track, or you prefer Google's wording |
 | Note | Auto‑falls back to `gtx` when a track isn't translatable | Unofficial endpoint — heavy use may be rate‑limited |
 
-## Limitations
+</details>
+
+<details>
+<summary><b>⚠️ Limitations</b></summary>
 
 - Needs a real caption track. **Burned‑in** subtitles (baked into the video pixels) can't be hidden — use the control‑bar toggle to switch the overlay off for those videos.
 - The Google fallback uses an unofficial endpoint with no SLA; heavy use may be rate‑limited.
 - Depends on YouTube's current behaviour; a major YouTube change may require a selector update.
 
-## Privacy
+</details>
 
-No analytics, no tracking, no accounts. Caption text is sent **only** to the translation service you choose (YouTube's own, or Google Translate) to be translated. Settings are stored in `chrome.storage.sync`.
-
-## Development
+<details>
+<summary><b>🛠 Development</b></summary>
 
 Plain vanilla JS/CSS — no build step, no dependencies.
 
@@ -92,14 +146,24 @@ Plain vanilla JS/CSS — no build step, no dependencies.
 | `popup.html/.css/.js` | Settings UI with live preview |
 | `content.css` | Overlay styling + native‑caption suppression |
 
-## Credits
+Issues and pull requests are welcome — [open one here](https://github.com/Gythiro/yt-dual-subs/issues).
+
+</details>
+
+## 🔒 Privacy
+
+No analytics, no tracking, no accounts. Caption text is sent **only** to the translation service you choose; settings are stored in `chrome.storage.sync`. Full policy: [PRIVACY.md](PRIVACY.md).
+
+## 🙏 Credits
 
 A clean‑room reimplementation inspired by the (closed‑source, discontinued) *YouTube™ Dual Subtitles* — built from scratch without using its code, with the overlap and word‑by‑word jitter problems solved at the source.
 
-## License
+## 📜 License
 
 [MIT](LICENSE).
 
 ---
 
-*Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.*
+<sub>*Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.*</sub>
+
+<p align="right"><a href="#readme">↑ Back to top</a></p>
