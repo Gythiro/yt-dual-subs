@@ -34,14 +34,14 @@
 
 <h3>一层字幕，零重叠，零抖动。</h3>
 
-<img src="docs/compare-zh.png" width="340" alt="前后对比：其他工具的原文与译文撞在一起；本扩展上下分明不重叠">
+<img src="docs/compare-zh.png" width="400" alt="前后对比：其他工具的原文与译文撞在一起；本扩展上下分明不重叠">
 
 </td>
 <td width="50%" valign="top" align="center">
 
 <h3>每一行，随你调。</h3>
 
-<img src="docs/screenshot-settings.zh.png" width="420" alt="带实时预览的设置弹窗">
+<img src="docs/screenshot-popup.zh.png" width="320" alt="带实时预览的设置弹窗：目标语言、翻译引擎与布局控制">
 
 </td>
 </tr>

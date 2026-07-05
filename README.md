@@ -34,14 +34,14 @@ English | [简体中文](README.zh-CN.md)
 
 <h3>One layer. Zero overlap. Zero flicker.</h3>
 
-<img src="docs/compare-en.png" width="340" alt="Before and after: other tools let the two caption lines collide; Dual Subtitles for YouTube keeps them cleanly separated">
+<img src="docs/compare-en.png" width="400" alt="Before and after: other tools let the two caption lines collide; Dual Subtitles for YouTube keeps them cleanly separated">
 
 </td>
 <td width="50%" valign="top" align="center">
 
 <h3>Every line, styled your way.</h3>
 
-<img src="docs/screenshot-settings.png" width="420" alt="The settings popup with live preview">
+<img src="docs/screenshot-popup.png" width="320" alt="The settings popup with live preview: target language, engine toggle, and layout controls">
 
 </td>
 </tr>
