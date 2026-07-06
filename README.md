@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://gythiro.github.io/yt-dual-subs/"><img src="icons/icon128.png" width="110" alt="Dual Subtitles for YouTube icon"></a>
+<a href="https://gythiro.github.io/yt-dual-subs/"><img src="https://gythiro.github.io/yt-dual-subs/img/icon128.png" width="110" alt="Dual Subtitles for YouTube icon"></a>
 
 # Dual Subtitles for YouTube™
 
@@ -15,7 +15,7 @@ English | [简体中文](README.zh-CN.md)
 
 <br>
 
-<img src="docs/screenshot-overlay.png" width="800" alt="Dual-language subtitles shown over a YouTube video — original English line above, translated line below, in a single overlay">
+<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-overlay.png" width="800" alt="Dual-language subtitles shown over a YouTube video — original English line above, translated line below, in a single overlay">
 
 <sub>A clean‑room, open‑source <b>Manifest V3</b> extension. It reads the video's real caption track, translates it, and renders both languages in one tidy overlay you can fully style and drag.</sub>
 
@@ -34,14 +34,14 @@ English | [简体中文](README.zh-CN.md)
 
 <h3>One layer. Zero overlap. Zero flicker.</h3>
 
-<img src="docs/compare-en.png" width="400" alt="Before and after: other tools let the two caption lines collide; Dual Subtitles for YouTube keeps them cleanly separated">
+<img src="https://gythiro.github.io/yt-dual-subs/img/compare-en.png" width="400" alt="Before and after: other tools let the two caption lines collide; Dual Subtitles for YouTube keeps them cleanly separated">
 
 </td>
 <td width="50%" valign="top" align="center">
 
 <h3>Every line, styled your way.</h3>
 
-<img src="docs/screenshot-popup.png" width="320" alt="The settings popup with live preview: target language, engine toggle, and layout controls">
+<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-popup.png" width="320" alt="The settings popup with live preview: target language, engine toggle, and layout controls">
 
 </td>
 </tr>
