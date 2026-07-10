@@ -421,8 +421,8 @@
           <span class="eyebrow"><span data-en>Two translation engines</span><span data-zh>两套翻译引擎</span></span>
           <h3 data-en>Translation that's aligned and lag-free</h3>
           <h3 data-zh>对齐精准、毫无延迟的翻译</h3>
-          <p data-en>Use YouTube's™ own whole-track translation for perfectly aligned, instant captions — with an automatic fallback to Google Translate's free endpoint, prefetched so there's no lag.</p>
-          <p data-zh>使用 YouTube™ 自带的整轨翻译，字幕对齐精准、即时呈现——并会自动回退到 Google 翻译的免费接口，提前预取，毫无延迟。</p>
+          <p data-en>Use YouTube's™ own whole-track translation for perfectly aligned, instant captions — and when a track can't be translated, fragmented captions are rebuilt into full sentences before Google translates them.</p>
+          <p data-zh>使用 YouTube™ 自带的整轨翻译，字幕对齐精准、即时呈现——视频不支持翻译时，会先把碎片字幕拼回完整句子，再交给 Google 翻译。</p>
           <div class="engines">
             <div class="engine">
               <div class="h"><span class="badge"><span data-en>Primary</span><span data-zh>首选</span></span> <span data-en>YouTube™ whole-track</span><span data-zh>YouTube™ 整轨翻译</span></div>
@@ -430,16 +430,16 @@
               <p data-zh>与视频时间轴完美对齐，即时呈现。</p>
             </div>
             <div class="engine">
-              <div class="h"><span class="badge"><span data-en>Fallback</span><span data-zh>回退</span></span> <span data-en>Google Translate</span><span data-zh>Google 翻译</span></div>
-              <p data-en>Free endpoint, prefetched ahead of playback — no lag.</p>
-              <p data-zh>免费接口，播放前提前预取——毫无延迟。</p>
+              <div class="h"><span class="badge"><span data-en>Smart</span><span data-zh>智能</span></span> <span data-en>Smart sentences (Google)</span><span data-zh>智能整句（Google）</span></div>
+              <p data-en>Rebuilds fragmented captions into full sentences before translating — also selectable manually.</p>
+              <p data-zh>先把碎片字幕拼回完整句子再翻译——也可以手动选用。</p>
             </div>
           </div>
         </div>
         <div class="media-frame">
           <div class="glow" aria-hidden="true"></div>
           <div class="card-img">
-            <img class="ar-settings" src="assets/settings-en.png" data-src-en="assets/settings-en.png" data-src-zh="assets/settings-zh.png" width="1280" height="800" alt="The extension's settings popup showing the target language selector, engine toggle, layout order, and subtitle position, next to a short feature list.">
+            <img class="ar-settings" src="assets/settings-en.png" data-src-en="assets/settings-en.png" data-src-zh="assets/settings-zh.png" width="1280" height="800" alt="The extension's settings popup showing the target language selector, the engine dropdown set to Auto, layout order, and subtitle position, next to a short feature list.">
           </div>
         </div>
       </div>
@@ -616,6 +616,11 @@
         <p data-en>No. YouTube's™ whole-track translation is instant and perfectly aligned, and the Google Translate fallback is prefetched ahead of playback so there's no lag. Lines are rendered from the timed cues, so they switch by whole sentence without flicker.</p>
         <p data-zh>不会。YouTube™ 的整轨翻译即时呈现、对齐精准，Google 翻译回退方案也会在播放前提前预取，因此毫无延迟。字幕基于带时间轴的轴点渲染，整句切换、不会闪烁。</p>
       </details>
+      <details>
+        <summary><span data-en>Why do translations sometimes pause?</span><span data-zh>为什么翻译有时会停一下？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
+        <p data-en>The Smart-sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate-limit. The extension notices, slows down and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already-translated sentences stay cached, and YouTube's own whole-track engine is never rate-limited.</p>
+        <p data-zh>智能整句引擎走的是 Google 免费公共接口，重度使用（超长视频、频繁拖进度条）时可能被短暂限流。扩展会自己发现并放慢重试：等待期间译文行显示「…」，翻译通常在几秒到一两分钟内自动恢复。已翻译过的句子有缓存不受影响；YouTube 自带的整轨翻译则完全没有限流。</p>
+      </details>
     </div>
   </div>
 </section>
@@ -667,7 +672,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.3.0 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.4.0 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
