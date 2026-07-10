@@ -189,6 +189,11 @@ select:focus { border-color: var(--accent); }
 }
 .tip b { color: var(--txt); }
 
+/* engine hint + status line (translation card; hidden by default) */
+.engine-hint { margin: 0; font-size: 10.5px; color: var(--muted); }
+.engine-msg { margin: 0; font-size: 11px; line-height: 1.45; color: var(--muted); }
+.engine-msg.warn { color: #ffd88a; }
+
 /* position footer */
 .pos-foot {
   display: flex; align-items: center; justify-content: space-between;

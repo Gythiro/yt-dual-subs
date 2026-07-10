@@ -80,14 +80,18 @@
             </svg>
           </button>
         </label>
-        <div class="seg" id="backend" role="group" aria-label="翻译引擎" data-i18n-aria="backendLabel">
-          <button data-val="tlang" type="button"><span data-i18n="backendTlang">整句翻译</span><small data-i18n="backendRecommended">推荐</small></button>
-          <button data-val="gtx" type="button" data-i18n="backendGtx">逐句翻译</button>
-        </div>
+        <select id="backend" aria-label="翻译引擎" data-i18n-aria="backendLabel">
+          <option value="auto" data-i18n="backendAuto">自动（推荐）</option>
+          <option value="tlang" data-i18n="backendTlang">整轨翻译（YouTube）</option>
+          <option value="gtx" data-i18n="backendGtx">智能整句（Google）</option>
+        </select>
         <p class="tip" id="backendTip" hidden data-i18n-html="backendTipHtml">
-          <b>整句翻译</b>：使用 YouTube 自带的整轨翻译，逐句对齐，免费。<br />
-          <b>逐句翻译</b>：调用 Google 免费接口逐句翻译；当整句翻译为空时使用，可能触发限流。
+          <b>自动</b>：优先使用 YouTube 整轨翻译，视频不支持时自动切换到智能整句。<br />
+          <b>整轨翻译</b>：YouTube 自带的整轨翻译，逐条对齐、无限流。<br />
+          <b>智能整句</b>：先把零碎的字幕拼回完整句子，再调用 Google 免费接口翻译——觉得整轨翻译读不通时可以手动切过来；重度使用可能被短暂限流，扩展会自动放慢并重试。
         </p>
+        <p class="engine-hint" id="backendGtxHint" hidden data-i18n="backendGtxHint">使用 Google 免费接口，重度使用可能被短暂限流；扩展会自动放慢并重试。</p>
+        <p class="engine-msg" id="backendStatus" role="status" aria-live="polite" hidden></p>
       </div>
     </section>
 
@@ -209,7 +213,7 @@
   <footer class="ft">
     <div class="ft-row">
       <button id="reset" type="button" class="reset" data-i18n="resetAll">重置全部设置</button>
-      <p class="ver">v<span id="version">3.3.0</span></p>
+      <p class="ver">v<span id="version">3.4.0</span></p>
     </div>
     <p class="disclaimer" data-i18n="disclaimer">Not affiliated with YouTube or Google.</p>
   </footer>

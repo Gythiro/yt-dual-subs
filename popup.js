@@ -6,7 +6,9 @@
 const DEFAULTS = {
   enabled: true,
   targetLang: "zh-CN",
-  backend: "tlang",            // "tlang" | "gtx"
+  engine: "auto",              // "auto" | "tlang" | "gtx" (source of truth since 3.4)
+  backend: "tlang",            // legacy pre-3.4 key; mirrored on engine change so
+                               // old devices on the same sync profile stay sane
   order: "orig-top",           // "orig-top" | "trans-top"
   rowGap: 4,
   position: "bottom",          // "top" | "center" | "bottom"
@@ -78,6 +80,15 @@ function outlineShadow(strokeHex, strokeOpacity) {
 
 const $ = (id) => document.getElementById(id);
 let state = { ...DEFAULTS };
+
+// v3.4 engine migration — READ-side only (mirrors content.js normalizeEngine).
+// "engine" wins when stored; otherwise an explicitly stored gtx survives and
+// everything else lands on "auto". Never written back on its own.
+function normalizeEngine(got) {
+  const e = got && got.engine;
+  if (e === "auto" || e === "tlang" || e === "gtx") return e;
+  return got && got.backend === "gtx" ? "gtx" : "auto";
+}
 let activeLine = "trans";        // which line the tab editor is bound to
 let exportVariant = "bi";        // SRT export content: "bi" | "orig" | "trans" (local, not stored)
 
@@ -187,7 +198,6 @@ function paintSegs() {
       b.classList.toggle("on", on);
       b.setAttribute("aria-pressed", String(on)); // expose state to screen readers
     });
-  sync("#backend", state.backend);
   sync("#order", state.order);
   // a custom (dragged) position highlights no preset
   sync("#position", state.posMode === "custom" ? "__none__" : state.position);
@@ -227,6 +237,44 @@ function sendToTab(tabId, msg) {
       });
     } catch (_e) { resolve(null); }
   });
+}
+
+// ---- engine status line ----------------------------------------------------
+// One quiet line under the engine select. Priority: rate-limited (amber, any
+// engine) > auto's per-video decision (muted) > hidden. Reads the limit gate
+// from chrome.storage.session (written by background.js on state transitions)
+// and the resolved engine from the content script of the active tab.
+async function refreshEngineStatus() {
+  const el = $("backendStatus");
+  if (!el) return;
+  el.hidden = true;
+  el.classList.remove("warn");
+
+  let limited = false;
+  try {
+    if (chrome.storage.session) {
+      const got = await chrome.storage.session.get("ytdsGtxGate");
+      const g = got && got.ytdsGtxGate;
+      limited = !!(g && g.backoffMs > 0 && g.gateUntil > Date.now());
+    }
+  } catch (_e) { /* session storage unavailable — skip the limit line */ }
+  if (limited) {
+    el.textContent = t("backendStatusLimited",
+      "翻译接口暂时限流，已自动放慢重试；已翻译的句子不受影响。");
+    el.classList.add("warn");
+    el.hidden = false;
+    return;
+  }
+
+  if (state.engine !== "auto") return;      // manual choice: stay quiet
+  const tab = await getActiveTab();
+  if (!tab || tab.id == null) return;
+  const r = await sendToTab(tab.id, { type: "engineStatus" });
+  if (!r || !r.ok || !r.engine) return;     // not a YouTube video page / no cues yet
+  el.textContent = r.engine === "gtx"
+    ? t("backendStatusGtx", "本视频：智能整句（Google）")
+    : t("backendStatusTlang", "本视频：整轨翻译（YouTube）");
+  el.hidden = false;
 }
 
 function showExportMsg(text, kind) {
@@ -301,6 +349,8 @@ function bindLineControls() {
 function bindUI() {
   $("enabled").checked = state.enabled;
   $("targetLang").value = state.targetLang;
+  $("backend").value = state.engine;
+  $("backendGtxHint").hidden = state.engine !== "gtx";
   $("rowGap").value = state.rowGap;
   $("rowGapV").textContent = state.rowGap + "px";
   paintSegs();
@@ -322,9 +372,18 @@ function wire() {
     $("backendInfo").setAttribute("aria-expanded", String(open));
   });
 
-  // segmented: backend / order
-  document.querySelectorAll("#backend button").forEach((b) =>
-    b.addEventListener("click", () => { setKey("backend", b.dataset.val); paintSegs(); }));
+  // engine select: write the v3.4 key AND mirror the legacy one, in a single
+  // set() so content.js sees one change event (one re-cue, not two).
+  $("backend").addEventListener("change", (e) => {
+    const v = e.target.value;
+    state.engine = v;
+    state.backend = v === "gtx" ? "gtx" : "tlang";
+    chrome.storage.sync.set({ engine: state.engine, backend: state.backend });
+    $("backendGtxHint").hidden = v !== "gtx";
+    refreshEngineStatus();
+  });
+
+  // segmented: order
   document.querySelectorAll("#order button").forEach((b) =>
     b.addEventListener("click", () => { setKey("order", b.dataset.val); paintSegs(); }));
 
@@ -377,8 +436,9 @@ function wire() {
   // reset all
   $("reset").addEventListener("click", () => {
     state = { ...DEFAULTS };
-    chrome.storage.sync.set(DEFAULTS);
+    chrome.storage.sync.set(DEFAULTS);   // engine:"auto" + backend:"tlang" mirror included
     bindUI();
+    refreshEngineStatus();
   });
 }
 
@@ -392,8 +452,12 @@ function showVersion() {
 
 // ---- boot ----------------------------------------------------------------
 applyI18n();                       // localize static markup before first paint
-chrome.storage.sync.get(DEFAULTS, (got) => {
+// get(null): fetch only what is actually stored, so normalizeEngine can tell
+// "engine never set" apart from an explicit value (see content.js).
+chrome.storage.sync.get(null, (got) => {
+  got = got || {};
   state = { ...DEFAULTS, ...got };
+  state.engine = normalizeEngine(got);
   // migrate legacy global bgOpacity onto per-line defaults
   if (typeof got.bgOpacity === "number") {
     if (typeof got.origBgOpacity !== "number") state.origBgOpacity = got.bgOpacity;
@@ -402,4 +466,5 @@ chrome.storage.sync.get(DEFAULTS, (got) => {
   showVersion();
   bindUI();
   wire();
+  refreshEngineStatus();
 });
