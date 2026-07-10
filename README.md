@@ -24,7 +24,7 @@ English | [简体中文](README.zh-CN.md)
 ---
 
 > [!IMPORTANT]
-> **No analytics, no tracking, no accounts.** Caption text is sent *only* to the translation service you choose (YouTube's own, or Google Translate) to be translated. Settings live in `chrome.storage.sync` — nothing else leaves your browser.
+> **No analytics, no tracking, no accounts.** Caption text is sent *only* to the translation service in use (YouTube's own, or Google Translate — picked per video by Auto mode, or pinned by you) to be translated. Settings live in `chrome.storage.sync` — nothing else leaves your browser.
 
 ## ✨ What you get
 
@@ -50,7 +50,7 @@ English | [简体中文](README.zh-CN.md)
 
 - **Dual subtitles, one layer** — original on one line, your language on the other. YouTube's own caption layer is hidden, so the two never overlap.
 - **Per‑sentence, no jitter** — renders from the timed caption *cues* (not the rolling on‑screen text), so lines switch by whole sentence instead of flickering word by word.
-- **Two translation engines** — YouTube's whole‑track translation (perfectly aligned, instant), with automatic fallback to Google Translate — prefetched ahead of playback so there's no lag.
+- **Two engines, smart default** — YouTube's own whole‑track translation whenever the video supports it, with a much smarter fallback: fragmented captions are **rebuilt into full sentences** before Google translates them, so ASR fragments stop reading like word salad. Prefetched ahead of playback.
 - **16 target languages** to choose from.
 
 </td>
@@ -115,12 +115,21 @@ YouTube serves caption tracks from an `/api/timedtext` endpoint that now require
 <details>
 <summary><b>🔁 Translation engines compared</b></summary>
 
-| | Whole‑sentence (`tlang`) — default | Per‑sentence (`gtx`) |
+The default **Auto** mode uses Whole‑track whenever the video's track can be translated, and switches to Smart sentences when it can't. Either engine can also be pinned manually in the popup — Smart sentences is worth a try when the whole‑track wording reads badly.
+
+| | Whole‑track (YouTube) | Smart sentences (Google) |
 |---|---|---|
-| Source | YouTube's own server‑side translation | Google Translate's free endpoint |
-| Alignment | Perfect, cue‑for‑cue | Per sentence (prefetched) |
-| Best for | Highest quality + instant | When YouTube can't translate a track, or you prefer Google's wording |
-| Note | Auto‑falls back to `gtx` when a track isn't translatable | Unofficial endpoint — heavy use may be rate‑limited |
+| Source | YouTube's own server‑side track translation | Google Translate's free endpoint |
+| How | Translates the whole track server‑side — perfectly aligned, cue for cue | **Rebuilds full sentences** from the caption fragments first, then translates whole sentences |
+| Best for | Most videos — the default | Tracks YouTube can't translate, or fragmented auto‑captions whose whole‑track wording reads badly |
+| Note | Quality varies with how YouTube segments the track | Unofficial endpoint — heavy use may be briefly rate‑limited; the extension paces itself and retries on its own |
+
+</details>
+
+<details>
+<summary><b>⏳ Translations occasionally pause?</b></summary>
+
+The Smart‑sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate‑limit your IP. The extension notices, slows down, and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already‑translated sentences stay cached. If the video supports it, pinning **Whole‑track (YouTube)** in the popup avoids the free endpoint entirely. SRT export is unaffected — it uses a different path.
 
 </details>
 
@@ -128,7 +137,7 @@ YouTube serves caption tracks from an `/api/timedtext` endpoint that now require
 <summary><b>⚠️ Limitations</b></summary>
 
 - Needs a real caption track. **Burned‑in** subtitles (baked into the video pixels) can't be hidden — use the control‑bar toggle to switch the overlay off for those videos.
-- The Google fallback uses an unofficial endpoint with no SLA; heavy use may be rate‑limited.
+- The Smart‑sentences engine uses an unofficial Google endpoint with no SLA; heavy use may be briefly rate‑limited (the extension backs off and recovers on its own).
 - Depends on YouTube's current behaviour; a major YouTube change may require a selector update.
 
 </details>

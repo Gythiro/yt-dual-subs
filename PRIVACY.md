@@ -1,6 +1,6 @@
 # Privacy Policy — Dual Subtitles for YouTube™
 
-**Effective date:** 4 July 2026
+**Effective date:** 7 July 2026
 **Extension:** Dual Subtitles for YouTube™ (Chrome / Chromium browser extension)
 **Developer:** Gythiro · Source code: https://github.com/Gythiro/yt-dual-subs
 
@@ -30,10 +30,11 @@ There is **no developer-operated backend**. No data is ever sent to the develope
 Your display preferences — target language, translation engine, subtitle position, fonts, colors, sizes, and on/off state — are saved using the browser's `chrome.storage.sync` API. This data stays in your own browser profile and is synced by **your browser account** across your own devices. It is **not transmitted to the developer** and contains no personal information.
 
 ### 2. Caption text (sent only to the translation service, only to translate)
-To show a translated line, the extension reads the caption/subtitle text of the video you are **currently watching** and sends that text to a translation service **solely to obtain the translation**, which is then displayed back to you as an overlay. Depending on the engine you select in the settings:
+To show a translated line, the extension reads the caption/subtitle text of the video you are **currently watching** and sends that text to a translation service **solely to obtain the translation**, which is then displayed back to you as an overlay. Depending on the engine selected in the settings — chosen by you, or picked per video by the default **Auto** mode:
 
-- **Whole-sentence engine (default):** the translation is requested from **YouTube's own** caption-translation endpoint (`youtube.com/api/timedtext`), reusing the request the YouTube player itself already makes.
-- **Per-sentence engine (fallback):** the caption text is sent to **Google's public Translate endpoint** (`translate.googleapis.com`) to be translated.
+- **Whole-track engine:** the translation is requested from **YouTube's own** caption-translation endpoint (`youtube.com/api/timedtext`), reusing the request the YouTube player itself already makes.
+- **Smart-sentences engine:** the caption text is sent to **Google's public Translate endpoint** (`translate.googleapis.com`) to be translated.
+- **Auto (default):** uses the Whole-track engine whenever the video's track can be translated, and the Smart-sentences engine otherwise. Both endpoints are the ones listed above; no other service is ever contacted.
 
 Only the caption text of the video you are actively watching is transmitted, and only for the purpose of translating it. The extension does **not** log, store, or transmit this text anywhere else, and the developer never receives it. These requests are handled by Google/YouTube under Google's own privacy policy: https://policies.google.com/privacy
 
@@ -43,7 +44,7 @@ Only the caption text of the video you are actively watching is transmitted, and
 
 - **`storage`** — to save your subtitle preferences locally (see above).
 - **Host access to `www.youtube.com`** (content scripts) — to display the bilingual subtitle overlay inside the YouTube player and read the active caption track of the video you are watching.
-- **Host access to `translate.googleapis.com`** — to fetch machine translations of caption text for the per-sentence fallback engine.
+- **Host access to `translate.googleapis.com`** — to fetch machine translations of caption text for the Smart-sentences engine (used automatically when YouTube's own track translation is unavailable, or when selected manually).
 
 The extension requests the narrowest permissions needed for these features and nothing more. It does not request access to your tabs, browsing history, or any other websites.
 
