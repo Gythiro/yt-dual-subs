@@ -30,7 +30,7 @@
   let currentVideoId = videoIdFromLocation();
 
   // pending config from content.js (set once popup config arrives)
-  let cfg = null;            // { targetLang, useTlang }
+  let cfg = null;            // { targetLang, mode: "auto"|"tlang"|"gtx" }
   let nocuesTimer = null;    // fires if no timedtext URL shows up
   let producedForUrl = "";   // dedupe: last sourceUrl we produced cues for
   // Monotonic request token echoed back to content.js so it can drop any
@@ -83,6 +83,17 @@
     }
   }
 
+  // Track kind of a captured timedtext URL: auto-generated (ASR) tracks carry
+  // kind=asr; human tracks have no kind param. Drives the "auto" engine choice.
+  function trackKindOf(url) {
+    try {
+      return new URL(url, location.href).searchParams.get("kind") === "asr"
+        ? "asr" : "manual";
+    } catch (_e) {
+      return "manual";
+    }
+  }
+
   // Parse the "v" param off a captured timedtext URL when present; otherwise
   // fall back to the current location video id.
   function vidOfUrl(url) {
@@ -114,14 +125,24 @@
     for (const ev of json.events) {
       if (!ev || !Array.isArray(ev.segs)) continue;
       let text = "";
+      let off = 0;
       for (const s of ev.segs) {
-        if (s && typeof s.utf8 === "string") text += s.utf8;
+        if (s && typeof s.utf8 === "string") {
+          text += s.utf8;
+          // Track the last NON-BLANK word's offset. ASR tracks carry per-word
+          // tOffsetMs; blank segs ("\n") may carry one too and would inflate it.
+          if (s.utf8.trim() && typeof s.tOffsetMs === "number") off = s.tOffsetMs;
+        }
       }
       text = text.replace(/\s+/g, " ").trim();
       if (!text) continue;          // skip style/window/blank events
       const start = typeof ev.tStartMs === "number" ? ev.tStartMs : 0;
       const dur = typeof ev.dDurationMs === "number" ? ev.dDurationMs : 0;
-      cues.push({ start, dur, text });
+      // lastOff = absolute time of the event's last word. Manual tracks have no
+      // per-word segs, so lastOff === start — sentence grouping in content.js
+      // reads the pause as (next.start - lastOff), which for manual tracks is
+      // roughly the cue duration and therefore almost always a sentence break.
+      cues.push({ start, dur, text, lastOff: start + off });
     }
     return cues;
   }
@@ -167,12 +188,19 @@
     // config) would both be stamped with the latest nonce and both accepted by
     // content.js -> double cue-loop restart -> startup flicker.
     const myNonce = reqNonce;
+    // Which engine wants the tlang track? Everything except explicit "gtx".
+    // Measured across videos (2026-07): YouTube's whole-track translation is
+    // usually solid even on ASR, so "auto" stays on it and the sentence-group
+    // gtx path serves as the (much better than per-cue) fallback when a track
+    // isn't translatable — plus as the user's manual choice.
+    const kind = trackKindOf(sourceUrl);
+    const wantTlang = cfg.mode !== "gtx";
     try {
       const origJson = await fetchJson3(buildUrl(sourceUrl, null));
       const cues = parseJson3(origJson);
 
       let tcues = null;
-      if (cfg.useTlang) {
+      if (wantTlang) {
         try {
           const target = mapTlang(cfg.targetLang);
           const transJson = await fetchJson3(buildUrl(sourceUrl, target));
@@ -201,7 +229,7 @@
         }
       }
 
-      post("cues", { cues, tcues, aligned, nonce: myNonce });
+      post("cues", { cues, tcues, aligned, trackKind: kind, nonce: myNonce });
     } catch (_e) {
       // could not fetch/parse — let content.js fall back to scraping, but only
       // if we are still on the same video the fetch was started for.
@@ -326,7 +354,11 @@
         // captured for the now-current video.
         checkVideoChange();
         currentVideoId = videoIdFromLocation();
-        cfg = { targetLang: d.targetLang, useTlang: !!d.useTlang };
+        cfg = {
+          targetLang: d.targetLang,
+          // "auto" | "tlang" | "gtx" — anything unrecognized lands on auto.
+          mode: (d.mode === "tlang" || d.mode === "gtx") ? d.mode : "auto"
+        };
         // Adopt the content-supplied nonce so our posts correlate to THIS
         // sendConfig(); content.js drops any reply with an older nonce.
         if (typeof d.nonce === "number") reqNonce = d.nonce;

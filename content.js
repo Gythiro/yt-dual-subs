@@ -28,7 +28,10 @@
   const DEFAULTS = {
     enabled: true,
     targetLang: "zh-CN",
-    backend: "tlang",            // "tlang" | "gtx"
+    engine: "auto",              // "auto" | "tlang" | "gtx" (source of truth since 3.4)
+    backend: "tlang",            // legacy pre-3.4 key ("tlang" | "gtx"); kept as a
+                                 // mirror so not-yet-updated devices on the same
+                                 // sync profile still read a value they understand
     order: "orig-top",           // which line on top: "orig-top" | "trans-top"
     rowGap: 4,                   // px between the two lines
     position: "bottom",          // preset anchor: "top" | "center" | "bottom"
@@ -138,10 +141,30 @@
   let cueTimer = null;       // currentTime-driven loop
   let activeCueIdx = -1;     // index of currently shown cue
   let cueEpoch = 0;          // bumped each (re)start/teardown; invalidates in-flight gtx
-  const transCache = new Map(); // key `${videoId} ${idx}` -> translated text
-  const transInflight = new Set(); // cue indices with an in-flight gtx request (dedupe)
+  const transCache = new Map(); // key `${videoId} ${idx}` (per-cue) or `${videoId} g${gIdx}` (group)
+  const transInflight = new Set(); // in-flight gtx dedupe: cue idx (number) or "g"+gIdx (string)
   const PREFETCH_AHEAD = 12;    // warm this many upcoming cues' gtx translations
   const ZERO_DUR_FLOOR_MS = 1000; // min visible window for a trailing zero-dur cue
+
+  // sentence groups — gtx "smart sentences" mode. ASR cues are time slices, not
+  // sentences; translating them one by one is broken BY INPUT (word sense and
+  // word order need the whole sentence). So when there is no tlang data at all
+  // we rebuild sentences from the cues and translate those instead. Built only
+  // in onCues when data.aligned == null; every consumer keys off cueToGroup.
+  let sentGroups = null;        // [{startIdx,endIdx,text,start,end}] | null
+  let cueToGroup = null;        // cue idx -> group idx | null (null = per-cue mode)
+  let activeGroupIdx = -1;      // group of the active cue (-1 when none/per-cue)
+  let cueTrackKind = "";        // "asr" | "manual" | "" — from inject's captured URL
+  let gtxNetFails = 0;          // consecutive network-dead gtx failures (group mode)
+  let gtxFellBack = false;      // this video: auto engine fell back to tlang
+  let pendingTimer = null;      // delayed "…" placeholder for the active group
+  const PAUSE_BREAK_MS = 600;   // word-level silence that ends a sentence
+  const MAX_GROUP_WORDS = 32;   // sentence cap (space-separated word count)
+  const MAX_GROUP_CHARS = 280;  // second cap: CJK sources (no spaces) + URL safety
+  const PREFETCH_GROUPS = 4;    // ~28s lookahead at the measured ~7s/group
+  const GTX_FALLBACK_FAILS = 3; // network failures before auto falls back to tlang
+  const PENDING_ELLIPSIS_MS = 400; // show "…" if the active group is still in flight
+  const SENT_END_RE = /[.!?…。！？]["'""''」』》】)）\]]?\s*$/;
 
   // fallback (rendered-scrape) mode
   let pollTimer = null;
@@ -160,11 +183,26 @@
   let exportSeq = 0;                  // correlation id for export-request round-trips
   const exportWaiters = new Map();   // exportId -> { resolve, timer }
 
+  // v3.4 engine migration — READ-side only, never written back. "engine" is the
+  // source of truth; pre-3.4 versions stored only "backend". A stored gtx was a
+  // deliberate choice (the old default was tlang) so it survives; everything
+  // else lands on "auto". Not writing back keeps not-yet-updated devices on the
+  // same sync profile working — old code would read "auto" as gtx.
+  function normalizeEngine(got) {
+    const e = got && got.engine;
+    if (e === "auto" || e === "tlang" || e === "gtx") return e;
+    return got && got.backend === "gtx" ? "gtx" : "auto";
+  }
+
   // ---- settings ------------------------------------------------------------
   function loadSettings() {
     return new Promise((resolve) => {
-      chrome.storage.sync.get(DEFAULTS, (got) => {
+      // get(null): fetch only what is actually stored, so normalizeEngine can
+      // tell "engine never set" apart from an explicit value.
+      chrome.storage.sync.get(null, (got) => {
+        got = got || {};
         settings = { ...DEFAULTS, ...got };
+        settings.engine = normalizeEngine(got);
         // migrate legacy global bgOpacity -> per-line bg opacities if present
         // and the per-line keys were never set.
         if (typeof got.bgOpacity === "number") {
@@ -179,7 +217,7 @@
   // ONLY these keys require re-requesting cues from inject.js; every other key
   // is a pure style/position change that applies live via styleOverlay(). This
   // positive set is the single source of truth for the re-cue decision.
-  const RECUE_KEYS = new Set(["backend", "targetLang"]);
+  const RECUE_KEYS = new Set(["engine", "backend", "targetLang"]);
 
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== "sync") return;
@@ -188,6 +226,7 @@
       if (k in settings) {
         const oldV = settings[k];
         settings[k] = changes[k].newValue;
+        if (k === "engine") settings.engine = normalizeEngine(settings);
         if (RECUE_KEYS.has(k) && oldV !== settings[k]) {
           needRecue = true;
         }
@@ -196,18 +235,23 @@
     applyStateToDom();
     if (overlay) styleOverlay();   // position/fonts/colors/bg/stroke/sizes apply live
     if ("enabled" in changes) syncCaptions();   // master switch flipped from popup
-    // backend / targetLang changed: re-request cues from inject.js
+    // engine / targetLang changed: re-request cues from inject.js
     if (needRecue && settings.enabled) {
       transCache.clear();
       transInflight.clear();
+      gtxNetFails = 0;
+      gtxFellBack = false;          // fresh engine/lang choice: give gtx a new chance
+      clearPendingTimer();
       // The current cue loop is now running against stale translation data
       // (old tlang alignment / old gtx cache). Drop the translation source and
       // bump the epoch so the loop degrades cleanly (no wrong-but-plausible
       // lines) and stale in-flight gtx callbacks are ignored until fresh cues
-      // arrive from inject.js.
+      // arrive from inject.js. Sentence groups stay: they are a pure function
+      // of the unchanged cueList (onCues rebuilds/clears them with fresh data).
       tcueList = null;
       cueAligned = null;
       cueEpoch++;
+      activeGroupIdx = -1;
       if (cueTimer) {
         activeCueIdx = -1;          // force re-render of translation on next tick
         setTranslation("", "");
@@ -617,6 +661,8 @@
   function startCueLoop() {
     stopCueLoop();
     activeCueIdx = -1;
+    activeGroupIdx = -1;
+    clearPendingTimer();
     cueEpoch++;                       // invalidate any in-flight gtx callbacks
     ensureOverlay();
     // Clear any leftover text (e.g. last scraped fallback line, or a previous
@@ -643,6 +689,7 @@
     if (idx < 0) {
       if (activeCueIdx !== -1) {
         activeCueIdx = -1;
+        activeGroupIdx = -1;              // no cue ⟹ no group (explicit invariant)
         setOriginal("");
         setTranslation("", "");
       }
@@ -651,6 +698,8 @@
 
     if (idx === activeCueIdx) return;     // same sentence — no re-render, no jitter
     activeCueIdx = idx;
+    // set BEFORE rendering: group gtx callbacks paint iff activeGroupIdx matches
+    activeGroupIdx = (cueToGroup && cueToGroup[idx] != null) ? cueToGroup[idx] : -1;
 
     const cue = cueList[idx];
     setOriginal(cue.text);
@@ -681,7 +730,20 @@
       // no good timestamp match -> fall through (do NOT index positionally)
     }
 
-    // (2) gtx backend (or no usable tlang data): cache by (videoId, idx).
+    // (2) gtx backend (or no usable tlang data).
+    if (activeGroupIdx >= 0) {
+      // sentence-group mode: the whole rebuilt sentence translates as one unit.
+      // Same text repaints across the group's cues — textContent is idempotent,
+      // so there is no visible flicker.
+      const gCached = transCache.get(groupKey(activeGroupIdx));
+      if (gCached !== undefined) {
+        setTranslation(gCached, origText);
+        return;
+      }
+      gtxRequestGroup(activeGroupIdx, true);  // the sentence being watched — fast lane
+      return;
+    }
+    // per-cue path: serves the misaligned-tlang fall-through above.
     const key = cueVideoId + " " + idx;
     const cached = transCache.get(key);
     if (cached !== undefined) {
@@ -730,6 +792,17 @@
   function prefetchFrom(startIdx) {
     if (cueAligned != null) return;             // tlang handles the translation
     if (!settings.enabled || !cueList) return;
+    if (cueToGroup && sentGroups) {
+      // group mode: warm the next few SENTENCES (same ~28s lookahead as the
+      // per-cue window, at a third of the requests). The active group itself is
+      // handled by renderTranslationForCue on the urgent lane.
+      const at = Math.max(0, Math.min(startIdx, cueToGroup.length - 1));
+      const g0 = cueToGroup[at];
+      if (g0 == null || g0 < 0) return;
+      const gEnd = Math.min(sentGroups.length - 1, g0 + PREFETCH_GROUPS);
+      for (let g = g0 + 1; g <= gEnd; g++) gtxRequestGroup(g, false);
+      return;
+    }
     const from = Math.max(0, startIdx);
     const to = Math.min(cueList.length - 1, from + PREFETCH_AHEAD);
     for (let i = from; i <= to; i++) gtxRequest(i);
@@ -768,6 +841,143 @@
     }
   }
 
+  // ---- sentence groups (gtx smart-sentence mode) ---------------------------
+  // Rebuild sentences from (start-sorted, ends-computed) cues. Boundary rules:
+  //   1. sentence-final punctuation on the cue (manual tracks; ASR has none)
+  //   2. real speech pause > PAUSE_BREAK_MS — measured word-level, from the
+  //      LAST WORD of a cue to the start of the next. ASR rolling windows
+  //      overlap by seconds, so cue-gap math is useless; lastOff (from
+  //      inject.js) is the only honest pause signal.
+  //   3. word/char caps, cutting back at the largest pause seen in the group.
+  // Manual tracks degrade naturally to one-cue groups via rules 1 and 2
+  // (lastOff === start there, so the "pause" spans the whole cue).
+  function buildSentenceGroups(list) {
+    sentGroups = [];
+    cueToGroup = new Array(list.length);
+    const wc = (t2) => t2.split(/\s+/).filter(Boolean).length;
+    let s = 0, words = 0, chars = 0, maxPause = -1, maxPauseAt = -1;
+
+    const flush = (endIdx) => {                 // cues [s..endIdx] become a group
+      const g = sentGroups.length;
+      const parts = [];
+      for (let k = s; k <= endIdx; k++) { cueToGroup[k] = g; parts.push(list[k].text); }
+      sentGroups.push({
+        startIdx: s, endIdx,
+        text: parts.join(" "),
+        start: list[s].start, end: list[endIdx].end
+      });
+      s = endIdx + 1; words = 0; chars = 0; maxPause = -1; maxPauseAt = -1;
+    };
+
+    for (let i = 0; i < list.length; i++) {
+      const c = list[i];
+      words += wc(c.text);
+      chars += c.text.length + 1;
+      const isLast = i === list.length - 1;
+      // clamp: defends against a corrupt lastOff earlier than the cue start
+      const anchor = Math.max(c.start, typeof c.lastOff === "number" ? c.lastOff : c.start);
+      const pause = isLast ? Infinity : list[i + 1].start - anchor;
+
+      if (isLast || pause > PAUSE_BREAK_MS || SENT_END_RE.test(c.text)) {
+        flush(i);
+        continue;
+      }
+      if (pause > maxPause) { maxPause = pause; maxPauseAt = i; }
+
+      const next = list[i + 1];
+      if (words + wc(next.text) > MAX_GROUP_WORDS ||
+          chars + next.text.length > MAX_GROUP_CHARS) {
+        // over cap: cut at the best pause recorded inside this group, then
+        // REPLAY from the cut (s advances every flush ⟹ the loop terminates)
+        const cut = maxPauseAt >= s ? maxPauseAt : i;
+        flush(cut);
+        i = cut;
+      }
+    }
+  }
+
+  function groupKey(gIdx) { return cueVideoId + " g" + gIdx; }
+
+  function clearPendingTimer() {
+    if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
+  }
+
+  // gtx looks network-dead (blocked endpoint / offline / shields): in auto mode
+  // re-request this video with YouTube's own translation so the user still gets
+  // a second line. Once per video; a genuine 429/503 never lands here (those
+  // are temporary and handled by the background's backoff).
+  function maybeFallBackToTlang() {
+    if (gtxFellBack || settings.engine !== "auto") return;
+    if (gtxNetFails < GTX_FALLBACK_FAILS) return;
+    gtxFellBack = true;
+    transCache.clear();
+    transInflight.clear();
+    clearPendingTimer();
+    tcueList = null;
+    cueAligned = null;
+    cueEpoch++;
+    activeGroupIdx = -1;
+    if (cueTimer) {
+      activeCueIdx = -1;
+      setTranslation("", "");
+    }
+    sendConfig();                    // sendConfig sees gtxFellBack -> mode "tlang"
+  }
+
+  // Translate one sentence group, deduped by cache + in-flight set, painting the
+  // result iff a cue of that group is still active. The active sentence goes on
+  // the background's urgent lane; prefetch rides the normal lane.
+  function gtxRequestGroup(gIdx, urgent) {
+    if (!sentGroups || gIdx == null || gIdx < 0 || gIdx >= sentGroups.length) return;
+    const g = sentGroups[gIdx];
+    if (!g.text) return;
+    const key = groupKey(gIdx);
+    const ik = "g" + gIdx;           // string — never collides with numeric cue idx
+    if (transCache.has(key)) return;
+    // The active sentence may sit in the rate-limit queue for a while. Show an
+    // honest "…" instead of leaving the PREVIOUS sentence next to new original
+    // text (a mismatched pair reads as a wrong translation).
+    if (urgent) {
+      clearPendingTimer();
+      const pVid = cueVideoId, pEpoch = cueEpoch;
+      pendingTimer = setTimeout(() => {
+        pendingTimer = null;
+        if (pEpoch !== cueEpoch || pVid !== cueVideoId) return;
+        if (activeGroupIdx !== gIdx || activeCueIdx < 0 || !cueList) return;
+        if (transCache.has(key)) return;
+        setTranslation("…", cueList[activeCueIdx].text);
+      }, PENDING_ELLIPSIS_MS);
+    }
+    if (transInflight.has(ik)) return;
+    transInflight.add(ik);
+    const reqVid = cueVideoId;
+    const reqEpoch = cueEpoch;
+    chrome.runtime.sendMessage(
+      { type: "translate", text: g.text, targetLang: settings.targetLang, urgent: !!urgent },
+      (resp) => {
+        transInflight.delete(ik);
+        if (chrome.runtime.lastError) return;       // worker asleep; retried on demand
+        if (reqEpoch !== cueEpoch) return;          // loop restarted / re-config
+        if (reqVid !== cueVideoId) return;          // navigated away
+        if (resp && resp.ok && resp.translated) {
+          gtxNetFails = 0;
+          transCache.set(key, resp.translated);
+          if (activeGroupIdx === gIdx && activeCueIdx >= 0 && cueList) {
+            setTranslation(resp.translated, cueList[activeCueIdx].text);
+          }
+          return;
+        }
+        // failure: leave cache empty — re-requested when next active.
+        if (resp && resp.netfail) {
+          gtxNetFails++;
+          maybeFallBackToTlang();
+        } else if (resp && !resp.shed) {
+          gtxNetFails = 0;           // a real HTTP answer — the endpoint is reachable
+        }
+      }
+    );
+  }
+
   function onCues(data) {
     if (data.videoId && data.videoId !== currentVideoId) return; // stale (videoId)
     if (typeof data.nonce === "number" && data.nonce !== configNonce) return; // stale (nonce)
@@ -789,8 +999,15 @@
       ? data.tcues.slice().sort((a, b) => a.start - b.start)
       : null;
     cueVideoId = data.videoId || currentVideoId;
+    cueTrackKind = data.trackKind === "asr" ? "asr"
+                 : data.trackKind ? "manual" : "";
 
     if (!cueList.length) { onNoCues(data); return; }
+    // Sentence groups exist ONLY when there is no tlang data at all (gtx engine,
+    // auto on an ASR track, or a failed tlang fetch). aligned true/false means
+    // the tlang paths render — groups stay dormant (null).
+    if (cueAligned == null) buildSentenceGroups(cueList);
+    else { sentGroups = null; cueToGroup = null; }
     startCueLoop();
   }
 
@@ -854,6 +1071,11 @@
     stopCueLoop();
     cueList = null;
     tcueList = null;
+    sentGroups = null;
+    cueToGroup = null;
+    activeGroupIdx = -1;
+    cueTrackKind = "";
+    clearPendingTimer();
     if (settings.enabled) startFallback();
   }
 
@@ -864,7 +1086,22 @@
   // the cue data and download it via a Blob + <a download> (no extra permission).
 
   chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
-    if (!msg || msg.type !== "exportSrt") return;          // not ours — ignore
+    if (!msg) return;
+    if (msg.type === "engineStatus") {
+      // popup status line: which engine is ACTUALLY rendering this video (the
+      // resolved outcome, not the setting — tlang can fail into gtx and auto
+      // can fall back the other way).
+      let engine = "";
+      if (cueList && cueList.length) engine = cueAligned != null ? "tlang" : "gtx";
+      sendResponse({
+        ok: true,
+        engine,
+        track: cueTrackKind || "none",
+        fellBack: gtxFellBack
+      });
+      return;                                               // sync reply
+    }
+    if (msg.type !== "exportSrt") return;                   // not ours — ignore
     handleExport(msg.variant)
       .then(sendResponse)
       .catch(() => sendResponse({ ok: false, reason: "nocues" }));
@@ -1069,7 +1306,9 @@
         source: "ytds-content",
         type: "config",
         targetLang: settings.targetLang,
-        useTlang: settings.backend === "tlang",
+        // inject resolves "auto" against the captured track's kind (asr/manual).
+        // After a network-dead gtx this video runs plain tlang instead.
+        mode: (settings.engine === "auto" && gtxFellBack) ? "tlang" : settings.engine,
         nonce
       }, "*");
     } catch (_e) { /* ignore */ }
@@ -1087,6 +1326,11 @@
     cueAligned = null;
     cueVideoId = "";
     activeCueIdx = -1;
+    sentGroups = null;
+    cueToGroup = null;
+    activeGroupIdx = -1;
+    cueTrackKind = "";
+    clearPendingTimer();
     nocuesFallback = false;
     transInflight.clear();
     cueEpoch++;                       // invalidate any in-flight gtx callbacks
@@ -1109,6 +1353,8 @@
   function onNav() {
     currentVideoId = videoIdFromLocation();
     transCache.clear();
+    gtxNetFails = 0;
+    gtxFellBack = false;        // the fallback is per-video
     weEnabledCC = false;        // fresh video — re-evaluate caption state
     teardownAll();
     ensureToggleButton(10);     // control-bar toggle persists across videos
