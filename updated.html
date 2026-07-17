@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog — Dual Subtitles for YouTube™</title>
+<meta name="description" content="Release notes and version history for Dual Subtitles for YouTube™ — the free, open-source bilingual subtitle extension.">
+<style>
+  :root{
+    --bg:#0A0A0F;
+    --bg-2:#0E0E15;
+    --card:#15151F;
+    --ink:#FFFFFF;
+    --muted:#A6A6B8;
+    --muted-2:#7C7C90;
+    --line:rgba(255,255,255,0.10);
+    --line-2:rgba(255,255,255,0.16);
+    --accent:#7B61FF;
+    --accent-2:#FF4D8D;
+    --translation:#FFC24B;
+    --ok:#4ade80;
+    --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --radius:10px;
+    --radius-lg:16px;
+    --maxw:860px;
+    font-synthesis-weight:none;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.12}
+  p{margin:0}
+  ::selection{background:rgba(123,97,255,0.35)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+
+  /* i18n visibility (same mechanism as index) */
+  [data-zh]{display:none}
+  html[lang="zh"] [data-en]{display:none}
+  html[lang="zh"] [data-zh]{display:inline}
+  html[lang="zh"] p[data-zh],
+  html[lang="zh"] h1[data-zh],
+  html[lang="zh"] h2[data-zh],
+  html[lang="zh"] h3[data-zh],
+  html[lang="zh"] div[data-zh],
+  html[lang="zh"] li[data-zh]{display:block}
+
+  /* page modes: body.mode-update (opened by the extension after an update)
+     vs body.mode-log (plain changelog reached from the site nav) */
+  body.mode-log .upd-only{display:none !important}
+  body.mode-update .log-only{display:none !important}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:16px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px}
+  .brand img{width:30px;height:30px;border-radius:8px}
+  .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px}
+  .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s}
+  .lang-toggle button:hover{color:var(--ink)}
+  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s}
+  .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
+
+  /* hero */
+  .hero{position:relative;text-align:center;padding:64px 0 44px;overflow:hidden}
+  .bloom{position:absolute;inset:0;pointer-events:none;z-index:0}
+  .bloom::before{content:"";position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:820px;height:560px;max-width:130vw;background:radial-gradient(50% 50% at 50% 50%,rgba(123,97,255,0.28),rgba(123,97,255,0) 70%);filter:blur(10px)}
+  .bloom::after{content:"";position:absolute;top:40px;left:50%;transform:translateX(-24%);width:460px;height:380px;max-width:90vw;background:radial-gradient(50% 50% at 50% 50%,rgba(255,77,141,0.20),rgba(255,77,141,0) 70%)}
+  .hero-in{position:relative;z-index:1}
+  .pill{display:inline-flex;align-items:center;gap:10px;padding:7px 15px;border:1px solid var(--line-2);border-radius:999px;background:rgba(255,255,255,0.03);font-size:13px;font-weight:600;color:var(--muted)}
+  .pill b{color:var(--ink);font-weight:700}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(74,222,128,0.18)}
+  .hero h1{font-size:clamp(34px,6vw,56px);letter-spacing:-0.035em;margin:22px auto 0;max-width:18ch}
+  .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{max-width:56ch;margin:18px auto 0;color:var(--muted);font-size:clamp(16px,2vw,18.5px)}
+  .cta{display:flex;flex-wrap:wrap;gap:13px;justify-content:center;align-items:center;margin-top:30px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 24px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:15px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 22px rgba(123,97,255,0.38);transition:transform .12s ease,box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(123,97,255,0.5)}
+  .microcopy{margin-top:14px;font-size:13.5px;color:var(--muted-2)}
+
+  /* changelog list */
+  .log{padding:26px 0 40px}
+  .entry{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--card);padding:26px 28px;margin-bottom:22px}
+  .entry.current{border-color:transparent;background:
+    linear-gradient(var(--card),var(--card)) padding-box,
+    var(--grad) border-box;border:1.5px solid transparent;box-shadow:0 10px 44px rgba(123,97,255,0.16)}
+  .entry .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px}
+  .entry .v{font-size:22px;font-weight:700;letter-spacing:-0.02em}
+  .entry.current .v{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .entry .date{font-size:13px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
+  .youare{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad);padding:4px 10px;border-radius:999px;margin-left:auto;display:none}
+  .entry.current .youare{display:inline-flex}
+  .entry ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:12px}
+  .entry li{display:flex;gap:12px;align-items:flex-start;color:var(--muted);font-size:15.5px}
+  .entry li b{color:var(--ink);font-weight:600}
+  .tag{flex:none;font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:4px 9px;border-radius:6px;margin-top:3px;min-width:52px;text-align:center}
+  .tag.new{background:rgba(123,97,255,0.16);color:#A78BFF}
+  .tag.imp{background:rgba(255,194,75,0.14);color:var(--translation)}
+  .tag.fix{background:rgba(74,222,128,0.12);color:var(--ok)}
+  .entry .more{margin-top:16px;font-size:14px}
+  .entry .more a{color:var(--muted);font-weight:600;border-bottom:1px solid var(--line-2)}
+  .entry .more a:hover{color:var(--ink)}
+
+  /* why band (update mode only) */
+  .why{border-top:1px solid var(--line);background:var(--bg-2);padding:34px 0 38px}
+  .why h3{font-size:16px;letter-spacing:-0.01em}
+  .why p{color:var(--muted-2);font-size:14px;margin-top:8px;max-width:70ch}
+  .why .fact{display:flex;gap:9px;align-items:flex-start;margin-top:8px;color:var(--muted-2);font-size:14px}
+  .why .fact svg{flex:none;margin-top:4px;color:var(--ok)}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 34px}
+  .foot{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center;justify-content:space-between;font-size:13.5px;color:var(--muted-2)}
+  .foot a{color:var(--muted);font-weight:600}
+  .foot a:hover{color:var(--ink)}
+
+  @media (max-width:560px){
+    .wrap{padding:0 18px}
+    .hero{padding:46px 0 34px}
+    .cta .btn,.cta .ghost{width:100%;max-width:340px;justify-content:center}
+    .entry{padding:20px 18px}
+    .youare{margin-left:0}
+  }
+</style>
+</head>
+<body class="mode-log">
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="./"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+      </div>
+      <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="bloom" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <span class="pill upd-only"><span class="dot" aria-hidden="true"></span>
+      <span data-en>Updated to <b id="pill-ver-en">v0.0.0</b> — you're all set</span>
+      <span data-zh>已自动更新到 <b id="pill-ver-zh">v0.0.0</b>，无需任何操作</span>
+    </span>
+    <h1 class="upd-only" data-en>Here's what's <span class="g">new</span></h1>
+    <h1 class="upd-only" data-zh>看看这次<span class="g">更新了什么</span></h1>
+    <h1 class="log-only" data-en><span class="g">Changelog</span></h1>
+    <h1 class="log-only" data-zh><span class="g">更新日志</span></h1>
+    <p class="sub upd-only" data-en>Your extension updated itself in the background. Everything you had configured stays exactly the same.</p>
+    <p class="sub upd-only" data-zh>扩展已在后台自动完成更新，所有设置保持原样。</p>
+    <p class="sub log-only" data-en>Every release of Dual Subtitles for YouTube™ — what's new, what improved, and what got fixed.</p>
+    <p class="sub log-only" data-zh>Dual Subtitles for YouTube™ 的每一次发布——新功能、改进与修复，全在这里。</p>
+    <div class="cta">
+      <a class="btn" href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge/reviews" target="_blank" rel="noopener">
+        ⭐ <span data-en>Enjoying it? Leave a review</span><span data-zh>喜欢的话，给个五星好评</span>
+      </a>
+      <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span data-en>Star on GitHub</span><span data-zh>GitHub 点个 Star</span>
+      </a>
+    </div>
+    <p class="microcopy" data-en>Reviews are the biggest support for an independent open-source developer.</p>
+    <p class="microcopy" data-zh>好评是对独立开源开发者最大的支持。</p>
+  </div>
+</header>
+
+<main class="log">
+  <div class="wrap">
+
+    <!-- ════════ RELEASE TEMPLATE (copy above v3.4.0 when shipping) ════════
+    <section class="entry" data-ver="3.5.0">
+      <div class="head">
+        <span class="v mono">v3.5.0</span>
+        <span class="date">YYYY-MM-DD</span>
+        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
+      </div>
+      <ul>
+        <li><span class="tag new">NEW</span>
+          <p data-en><b>…</b> …</p>
+          <p data-zh><b>…</b>…</p>
+        </li>
+      </ul>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+    </section>
+    ═════════════════════════════════════════════════════════════════════ -->
+
+    <section class="entry" data-ver="3.4.0">
+      <div class="head">
+        <span class="v mono">v3.4.0</span>
+        <span class="date">2026-07-10</span>
+        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
+      </div>
+      <ul>
+        <li><span class="tag new">NEW</span>
+          <p data-en><b>Smart sentence mode.</b> When a track can't be translated by YouTube, fragmented auto-captions are first rebuilt into full sentences, then translated — much more natural results.</p>
+          <p data-zh><b>智能整句翻译。</b>当整轨翻译不可用时，先把碎片化的自动字幕重组成完整句子再翻译，译文自然得多。</p>
+        </li>
+        <li><span class="tag new">NEW</span>
+          <p data-en><b>Auto engine.</b> Picks the best available engine per video and falls back gracefully; you can still pin one manually.</p>
+          <p data-zh><b>自动引擎。</b>按视频自动选择最佳翻译方式并平滑降级，也可以手动固定某一种。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>Sturdier under rate limits:</b> request queue with backoff, retry for half-translated lines, "…" placeholder instead of mismatched lines.</p>
+          <p data-zh><b>限流下更稳：</b>请求队列+退避重试、半翻句自动补翻、用"…"占位替代错位配对。</p>
+        </li>
+      </ul>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+    </section>
+
+    <section class="entry" data-ver="3.3.0">
+      <div class="head">
+        <span class="v mono">v3.3.0</span>
+        <span class="date">2026-07-05</span>
+        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
+      </div>
+      <ul>
+        <li><span class="tag new">NEW</span>
+          <p data-en><b>New name: Dual Subtitles for YouTube™</b>, plus a full privacy policy and in-popup disclaimer.</p>
+          <p data-zh><b>更名为 Dual Subtitles for YouTube™</b>，并新增完整隐私政策与弹窗免责声明。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Captions now auto-enable</b> when you open a video directly from the address bar (cold load).</p>
+          <p data-zh><b>修复冷加载不自动开字幕：</b>从地址栏直接打开视频时也会自动开启 CC。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="entry" data-ver="3.2.0">
+      <div class="head">
+        <span class="v mono">v3.2.0</span>
+        <span class="date">2026-06-21</span>
+        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
+      </div>
+      <ul>
+        <li><span class="tag new">NEW</span>
+          <p data-en><b>SRT export</b> — save the original, the translation, or both as a subtitle file.</p>
+          <p data-zh><b>SRT 字幕导出</b>——原文、译文或双语，一键存成字幕文件。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Drag handle</b> no longer lingers in fullscreen when player controls hide.</p>
+          <p data-zh><b>修复全屏拖动手柄</b>在播放器控件隐藏后不消失的问题。</p>
+        </li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<div class="why upd-only">
+  <div class="wrap">
+    <h3 data-en>Why am I seeing this page?</h3>
+    <h3 data-zh>为什么会打开这个页面？</h3>
+    <p data-en>Chrome updated the extension automatically, and this release adds new features worth a quick look. We only open this page for feature releases — never for small fixes.</p>
+    <p data-zh>Chrome 自动更新了扩展，而这次版本带来了值得一看的新功能。只有功能版本才会打开本页，小修小补绝不打扰。</p>
+    <div class="fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Don't want this? Turn off "Open release notes after updates" in the extension popup.</span><span data-zh>不想看到？在扩展弹窗里关闭「更新后打开新功能介绍页」即可。</span></div>
+    <div class="fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>The extension itself collects nothing and phones home to no one — this page is just a webpage on our site.</span><span data-zh>扩展本体不收集任何数据、不回传任何信息——本页只是官网上的一个普通网页。</span></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Gythiro · MIT</span>
+    <span>
+      <a href="./"><span data-en>Website</span><span data-zh>官网</span></a> ·
+      <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a> ·
+      <a href="https://github.com/Gythiro/yt-dual-subs/issues" target="_blank" rel="noopener"><span data-en>Report an issue</span><span data-zh>反馈问题</span></a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var STORAGE_KEY = "dsfy-lang";
+  var params = new URLSearchParams(location.search);
+
+  window.setLang = function (lang) {
+    if (lang !== "zh") lang = "en";
+    document.documentElement.setAttribute("lang", lang);
+    var enBtn = document.getElementById("lang-en");
+    var zhBtn = document.getElementById("lang-zh");
+    if (enBtn) enBtn.classList.toggle("active", lang === "en");
+    if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  };
+
+  // lang: URL param > saved > browser
+  var lang = params.get("lang");
+  if (lang !== "zh" && lang !== "en") {
+    try { lang = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  }
+  if (lang !== "zh" && lang !== "en") {
+    lang = (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+  }
+  window.setLang(lang);
+
+  // mode: ?ver= matching a release entry -> "update" form; anything else -> plain changelog
+  var ver = (params.get("ver") || "").replace(/[^0-9.]/g, "");
+  var entry = ver && document.querySelector('.entry[data-ver="' + ver + '"]');
+  if (entry) {
+    document.body.className = "mode-update";
+    entry.classList.add("current");
+    var pe = document.getElementById("pill-ver-en"), pz = document.getElementById("pill-ver-zh");
+    if (pe) pe.textContent = "v" + ver;
+    if (pz) pz.textContent = "v" + ver;
+    var list = entry.parentElement;
+    if (list.firstElementChild !== entry) list.insertBefore(entry, list.firstElementChild);
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics (cookieless, no personal data) --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9a291d0094db4643a7f4795a003e2419"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+</html>
