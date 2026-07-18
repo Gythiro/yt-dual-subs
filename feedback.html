@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedback &amp; Support — Dual Subtitles for YouTube™</title>
+<meta name="description" content="The easiest ways to get help or send feedback for Dual Subtitles for YouTube™ — email, GitHub, or a store review.">
+<style>
+  :root{
+    --bg:#0A0A0F;
+    --bg-2:#0E0E15;
+    --card:#15151F;
+    --ink:#FFFFFF;
+    --muted:#A6A6B8;
+    --muted-2:#7C7C90;
+    --line:rgba(255,255,255,0.10);
+    --line-2:rgba(255,255,255,0.16);
+    --accent:#7B61FF;
+    --accent-2:#FF4D8D;
+    --translation:#FFC24B;
+    --ok:#4ade80;
+    --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --radius:10px;
+    --radius-lg:16px;
+    --maxw:860px;
+    font-synthesis-weight:none;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.12}
+  p{margin:0}
+  ::selection{background:rgba(123,97,255,0.35)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+
+  [data-zh]{display:none}
+  html[lang="zh"] [data-en]{display:none}
+  html[lang="zh"] [data-zh]{display:inline}
+  html[lang="zh"] p[data-zh],
+  html[lang="zh"] h1[data-zh],
+  html[lang="zh"] h2[data-zh],
+  html[lang="zh"] h3[data-zh],
+  html[lang="zh"] div[data-zh],
+  html[lang="zh"] li[data-zh]{display:block}
+
+  .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:16px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px}
+  .brand img{width:30px;height:30px;border-radius:8px}
+  .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px}
+  .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s}
+  .lang-toggle button:hover{color:var(--ink)}
+  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+
+  .hero{position:relative;text-align:center;padding:60px 0 36px;overflow:hidden}
+  .bloom{position:absolute;inset:0;pointer-events:none;z-index:0}
+  .bloom::before{content:"";position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:820px;height:520px;max-width:130vw;background:radial-gradient(50% 50% at 50% 50%,rgba(123,97,255,0.26),rgba(123,97,255,0) 70%);filter:blur(10px)}
+  .hero-in{position:relative;z-index:1}
+  .hero h1{font-size:clamp(32px,5.5vw,52px);letter-spacing:-0.035em;margin:0 auto;max-width:18ch}
+  .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{max-width:56ch;margin:16px auto 0;color:var(--muted);font-size:clamp(16px,2vw,18px)}
+
+  .cards{padding:20px 0 46px}
+  .card{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--card);padding:24px 26px;margin-bottom:18px}
+  .card.primary{border-color:transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box;border:1.5px solid transparent;box-shadow:0 10px 44px rgba(123,97,255,0.14)}
+  .card .head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .card .emoji{font-size:22px}
+  .card h2{font-size:19px;letter-spacing:-0.02em}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad);padding:4px 10px;border-radius:999px}
+  .card p{color:var(--muted);font-size:15.5px;margin-top:10px}
+  .card p b{color:var(--ink)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:42px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;background:transparent;cursor:pointer;font-family:inherit}
+  .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
+  .mail{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;color:var(--translation);background:rgba(255,194,75,0.08);border:1px solid rgba(255,194,75,0.25);border-radius:8px;padding:8px 14px;display:inline-block;margin-top:12px;user-select:all}
+  .copied{color:var(--ok);font-size:13px;margin-left:10px;opacity:0;transition:opacity .25s}
+  .copied.show{opacity:1}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 34px}
+  .foot{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center;justify-content:space-between;font-size:13.5px;color:var(--muted-2)}
+  .foot a{color:var(--muted);font-weight:600}
+  .foot a:hover{color:var(--ink)}
+
+  @media (max-width:560px){
+    .wrap{padding:0 18px}
+    .actions .btn,.actions .ghost{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="./"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="bloom" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <h1 data-en>Feedback &amp; <span class="g">Support</span></h1>
+    <h1 data-zh>反馈与<span class="g">支持</span></h1>
+    <p class="sub" data-en>Found a bug? Want a feature? Pick whichever channel is easiest for you — every message reaches the developer directly.</p>
+    <p class="sub" data-zh>遇到问题或想要新功能？挑一个你最顺手的渠道——每一条都会直接到开发者手里。</p>
+  </div>
+</header>
+
+<main class="cards">
+  <div class="wrap">
+
+    <section class="card primary">
+      <div class="head">
+        <span class="emoji">📧</span>
+        <h2 data-en>Email — the easiest</h2>
+        <h2 data-zh>邮箱——最简单</h2>
+        <span class="badge" data-en>Recommended</span><span class="badge" data-zh>推荐</span>
+      </div>
+      <p data-en>No account, no forms, no GitHub skills needed. Describe the problem in your own words (Chinese or English both fine), attach a screenshot and the video link if you can.</p>
+      <p data-zh>不用注册任何账号、不用懂 GitHub。用自己的话描述问题就行（中英文都可以），能附上截图和出问题的视频链接更好。</p>
+      <div>
+        <span class="mail" id="mail">gythiro.dev@gmail.com</span><span class="copied" id="copied" data-en>Copied!</span><span class="copied" id="copied-zh" data-zh>已复制!</span>
+      </div>
+      <div class="actions">
+        <a class="btn" href="mailto:gythiro.dev@gmail.com?subject=Dual%20Subtitles%20feedback"><span data-en>Write an email</span><span data-zh>写邮件</span></a>
+        <button type="button" class="ghost" onclick="copyMail()"><span data-en>Copy address</span><span data-zh>复制邮箱地址</span></button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="head">
+        <span class="emoji">🐛</span>
+        <h2 data-en>GitHub Issues — trackable</h2>
+        <h2 data-zh>GitHub Issues——可追踪进度</h2>
+      </div>
+      <p data-en>If you have a GitHub account, an issue is the best way to report bugs: there are guided templates, you'll see progress, and get notified when it's fixed.</p>
+      <p data-zh>有 GitHub 账号的话，提 issue 是报 bug 的最佳方式：有引导模板、能看到处理进度、修好了还会收到通知。</p>
+      <div class="actions">
+        <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs/issues/new/choose" target="_blank" rel="noopener"><span data-en>Open an issue</span><span data-zh>去提 issue</span></a>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="head">
+        <span class="emoji">⭐</span>
+        <h2 data-en>Store reviews — for the love</h2>
+        <h2 data-zh>商店评论——留给好评</h2>
+      </div>
+      <p data-en>Reviews keep an independent open-source project alive — but they're a poor place to debug: replies are slow and back-and-forth barely works. <b>Love it? Leave a review. Something broken? Email is much faster.</b></p>
+      <p data-zh>评分是独立开源项目活下去的氧气——但评论区不适合排查问题：回复慢、来回沟通很困难。<b>喜欢就去评个分；出问题了，发邮箱快得多。</b></p>
+      <div class="actions">
+        <a class="ghost" href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge/reviews" target="_blank" rel="noopener"><span data-en>Leave a review</span><span data-zh>去评分</span></a>
+        <a class="ghost" href="./#faq"><span data-en>Read the FAQ first</span><span data-zh>先看看常见问题</span></a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Gythiro · MIT</span>
+    <span>
+      <a href="./"><span data-en>Website</span><span data-zh>官网</span></a> ·
+      <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a> ·
+      <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var STORAGE_KEY = "dsfy-lang";
+  var params = new URLSearchParams(location.search);
+
+  window.setLang = function (lang) {
+    if (lang !== "zh") lang = "en";
+    document.documentElement.setAttribute("lang", lang);
+    var enBtn = document.getElementById("lang-en");
+    var zhBtn = document.getElementById("lang-zh");
+    if (enBtn) enBtn.classList.toggle("active", lang === "en");
+    if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  };
+
+  var lang = params.get("lang");
+  if (lang !== "zh" && lang !== "en") {
+    try { lang = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  }
+  if (lang !== "zh" && lang !== "en") {
+    lang = (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+  }
+  window.setLang(lang);
+
+  window.copyMail = function () {
+    var addr = "gythiro.dev@gmail.com";
+    var done = function () {
+      var en = document.getElementById("copied"), zh = document.getElementById("copied-zh");
+      [en, zh].forEach(function (el) { if (el) el.classList.add("show"); });
+      setTimeout(function () { [en, zh].forEach(function (el) { if (el) el.classList.remove("show"); }); }, 1800);
+    };
+    try { navigator.clipboard.writeText(addr).then(done, function () {}); } catch (e) {}
+  };
+})();
+</script>
+
+<!-- Cloudflare Web Analytics (cookieless, no personal data) --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9a291d0094db4643a7f4795a003e2419"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+</html>
