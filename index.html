@@ -27,7 +27,7 @@
     font-synthesis-weight:none;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-y:scroll} /* scrollbar always on: no nav shift between pages */
   body{
     margin:0;
     background:var(--bg);
@@ -247,12 +247,22 @@
   .foot-bottom .ver{font-size:13px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
   .disclaimer{font-size:13px;color:var(--muted-2);max-width:640px;line-height:1.6}
 
+  /* mobile menu (burger) — appears exactly when the inline links hide */
+  .nav-burger{display:none;width:40px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);background:transparent;color:var(--ink);cursor:pointer;align-items:center;justify-content:center;flex:none;padding:0}
+  .nav-burger:hover{background:rgba(255,255,255,0.04)}
+  .nav-menu{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(10,10,15,0.97);backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--line);padding:6px 24px 12px}
+  .nav-menu a{display:block;padding:13px 2px;color:var(--muted);font-size:15.5px;font-weight:600;border-bottom:1px solid var(--line)}
+  .nav-menu a:last-child{border-bottom:0}
+  .nav-menu a:hover{color:var(--ink)}
+  .nav-menu.open{display:block}
+
   /* nav ladder — measured, not guessed: full EN nav ≈ 1085px content width */
   @media (max-width:1199px){
     .nav-right .ghost{display:none}    /* GitHub stays reachable in the footer */
   }
   @media (max-width:1039px){
     .nav-links{display:none}
+    .nav-burger{display:inline-flex}
   }
   @media (max-width:900px){
     section{padding:72px 0}
@@ -268,7 +278,7 @@
     .wrap{padding:0 18px}
     .hero{padding:52px 0 30px}
     .cta{flex-direction:column}
-    .cta .btn,.cta .ghost{width:100%;max-width:340px}
+    .cta .btn,.cta .ghost{width:100%;max-width:340px;justify-content:center}
     .nav-right .ghost{display:none}
     .nav-in{gap:10px}
     .brand .tm{display:none}
@@ -309,7 +319,19 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="3.4" stroke="#fff" stroke-width="1.6"/><path d="M12 8.6h8.4M8.9 13.7 4.7 20.4M15.1 13.7 10.9 20.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
         <span id="nav-cta-label"><span data-en>Add to Chrome</span><span data-zh>添加到 Chrome</span></span>
       </a>
+      <button type="button" class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
     </div>
+  </div>
+  <div class="nav-menu" id="navMenu">
+    <a href="#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
+    <a href="#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
+    <a href="#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
+    <a href="#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
+    <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+    <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+    <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
 
@@ -751,6 +773,19 @@
       applyEdgeCopy(lang);
       try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
     };
+
+    window.toggleMenu = function () {
+      var m = document.getElementById("navMenu");
+      var b = document.getElementById("navBurger");
+      if (!m) return;
+      var open = !m.classList.contains("open");
+      m.classList.toggle("open", open);
+      if (b) b.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    var navMenuEl = document.getElementById("navMenu");
+    if (navMenuEl) navMenuEl.addEventListener("click", function (e) {
+      if (e.target && e.target.closest && e.target.closest("a")) window.toggleMenu();
+    });
 
     // ?lang= (used by the extension's welcome/update links) wins over the
     // stored choice; then localStorage; then the browser language.
