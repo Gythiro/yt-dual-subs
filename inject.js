@@ -41,10 +41,25 @@
   function videoIdFromLocation() {
     try {
       const u = new URL(location.href);
+      // Shorts URLs carry the id in the path, not in ?v=.
+      const m = u.pathname.match(/^\/shorts\/([A-Za-z0-9_-]{6,})/);
+      if (m) return m[1];
       return u.searchParams.get("v") || "";
     } catch (_e) {
       return "";
     }
+  }
+
+  function isShortsPage() {
+    try { return /^\/shorts\//.test(location.pathname); } catch (_e) { return false; }
+  }
+
+  // The player element that is actually driving THIS page. A shorts page keeps
+  // a hidden #movie_player around (preloaded watch player), so id order matters.
+  function activePlayer() {
+    return isShortsPage()
+      ? document.getElementById("shorts-player")
+      : document.getElementById("movie_player");
   }
 
   // tlang code map: YouTube uses zh-Hans / zh-Hant for translation targets.
@@ -230,6 +245,7 @@
       }
 
       post("cues", { cues, tcues, aligned, trackKind: kind, nonce: myNonce });
+      checkTrackMismatch(vid, sourceUrl);
     } catch (_e) {
       // could not fetch/parse — let content.js fall back to scraping, but only
       // if we are still on the same video the fetch was started for.
@@ -280,6 +296,61 @@
     }
   }
 
+  // ---- auto-dub caption mismatch (checked once per video) ------------------
+  // Some videos ship YouTube's auto-dubbing: N dubbed audio tracks, and the
+  // caption list holds the ASR of each DUB — sometimes with no track in the
+  // original language at all. With no default marked, the player enables the
+  // alphabetically first track (observed: Arabic on an English-original video),
+  // so the overlay would show a dub's ASR against the original audio.
+  // If a track matching the original audio's language exists, switch to it via
+  // the player API (the new timedtext fetch is then sniffed as usual); if none
+  // exists, tell content.js to show a one-shot notice.
+  let mismatchFor = "";
+
+  function playerResponseFor(vid) {
+    try {
+      const pr = window.ytInitialPlayerResponse;
+      if (pr && pr.videoDetails && pr.videoDetails.videoId === vid) return pr;
+    } catch (_e) { /* ignore */ }
+    try {
+      const p = activePlayer();
+      if (p && typeof p.getPlayerResponse === "function") {
+        const pr = p.getPlayerResponse();
+        if (pr && pr.videoDetails && pr.videoDetails.videoId === vid) return pr;
+      }
+    } catch (_e) { /* ignore */ }
+    return null;
+  }
+
+  function checkTrackMismatch(vid, srcUrl) {
+    try {
+      if (mismatchFor === vid) return;
+      mismatchFor = vid;
+      const pr = playerResponseFor(vid);
+      const r = pr && pr.captions && pr.captions.playerCaptionsTracklistRenderer;
+      if (!r || !Array.isArray(r.captionTracks) || !r.captionTracks.length) return;
+      const audio = Array.isArray(r.audioTracks) ? r.audioTracks : [];
+      const defIdx = typeof r.defaultAudioTrackIndex === "number" ? r.defaultAudioTrackIndex : -1;
+      const a = defIdx >= 0 ? audio[defIdx] : null;
+      // audioTrackId looks like "en-US.4" / "ar.10" — language prefix + suffix.
+      const origLang = a && typeof a.audioTrackId === "string" ? a.audioTrackId.split(".")[0] : "";
+      if (!origLang) return;
+      const base = (s) => String(s || "").toLowerCase().split("-")[0];
+      let curLang = "";
+      try { curLang = new URL(srcUrl, location.href).searchParams.get("lang") || ""; } catch (_e) { /* ignore */ }
+      if (!curLang || base(curLang) === base(origLang)) return;  // already the original's language
+      const match = r.captionTracks.find((t2) => base(t2.languageCode) === base(origLang));
+      if (match) {
+        const p = activePlayer();
+        if (p && typeof p.setOption === "function") {
+          p.setOption("captions", "track", { languageCode: match.languageCode });
+          return;                       // silent fix; the new fetch re-produces
+        }
+      }
+      post("trackwarn", { reason: "dubonly", curLang, origLang });
+    } catch (_e) { /* never throw */ }
+  }
+
   // Called whenever we capture a fresh source URL.
   function onSourceCaptured() {
     if (!cfg) return;               // wait for config before fetching
@@ -327,6 +398,12 @@
   setInterval(checkVideoChange, 500);
 
   // ---- nocues watchdog -----------------------------------------------------
+  // The shorts player is chromeless (no CC button anywhere in its subtree), so
+  // content.js cannot click captions on. If a short produced no timedtext
+  // within the window, nudge the captions module ONCE via the player API and
+  // give it one more window before conceding nocues.
+  let nudgedForVid = "";
+
   function armNocuesTimer() {
     clearNocuesTimer();
     const vid = currentVideoId;
@@ -335,7 +412,17 @@
       nocuesTimer = null;
       if (vid !== currentVideoId) return;
       if (nonceAtArm !== reqNonce) return;
-      if (!sourceUrl) post("nocues");      // never saw the player fetch captions
+      if (sourceUrl) return;               // a capture raced the timer — all good
+      if (isShortsPage() && nudgedForVid !== vid) {
+        nudgedForVid = vid;
+        try {
+          const p = activePlayer();
+          if (p && typeof p.loadModule === "function") p.loadModule("captions");
+        } catch (_e) { /* ignore */ }
+        armNocuesTimer();                  // one extra window after the nudge
+        return;
+      }
+      post("nocues");                      // never saw the player fetch captions
     }, 6000);
   }
 
