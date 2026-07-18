@@ -29,6 +29,39 @@ html.ytds-active .caption-window {
 #ytds-overlay.ytds-pos-center { top: 50%; bottom: auto; transform: translate(-50%, -50%); }
 #ytds-overlay.ytds-pos-top    { top: 8%; bottom: auto; }
 
+/* Shorts (portrait player): the bottom of the video is covered by YouTube's
+   own title/channel overlay (rendered OUTSIDE the player element, above us in
+   stacking), so the default "bottom" preset anchors higher there. Dragged
+   custom positions are untouched. */
+#ytds-overlay.ytds-shorts.ytds-pos-bottom { bottom: 18%; }
+
+/* Smooth the control-bar avoidance lift (content.js adjusts top/bottom while
+   the controls are visible). Disabled mid-drag so dragging stays 1:1. */
+#ytds-overlay { transition: top .18s ease, bottom .18s ease; }
+#ytds-overlay.ytds-notrans { transition: none; }
+
+/* one-shot notice (e.g. auto-dub caption mismatch) */
+.ytds-toast {
+  position: absolute;
+  top: 9%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 61;
+  max-width: 86%;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(8, 8, 8, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 13.5px;
+  line-height: 1.45;
+  text-align: center;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+.ytds-toast-show { opacity: .96; }
+
 /* When there is no visible subtitle, do NOT hide the overlay container itself
    (display:none would also remove the child drag handle from layout, making
    it ungrabbable during every inter-sentence gap / silent passage). Instead

@@ -32,6 +32,8 @@
     backend: "tlang",            // legacy pre-3.4 key ("tlang" | "gtx"); kept as a
                                  // mirror so not-yet-updated devices on the same
                                  // sync profile still read a value they understand
+    updateNotes: true,           // used by background.js only; listed so the
+                                 // popup.js DEFAULTS contract stays in sync
     order: "orig-top",           // which line on top: "orig-top" | "trans-top"
     rowGap: 4,                   // px between the two lines
     position: "bottom",          // preset anchor: "top" | "center" | "bottom"
@@ -264,13 +266,27 @@
   function videoIdFromLocation() {
     try {
       const u = new URL(location.href);
+      // Shorts URLs carry the id in the path, not in ?v=.
+      const m = u.pathname.match(/^\/shorts\/([A-Za-z0-9_-]{6,})/);
+      if (m) return m[1];
       return u.searchParams.get("v") || "";
     } catch (_e) {
       return "";
     }
   }
 
+  function isShorts() {
+    try { return /^\/shorts\//.test(location.pathname); } catch (_e) { return false; }
+  }
+
+  // A shorts page keeps a hidden #movie_player around (preloaded watch player,
+  // complete with its own CC button), so query order must follow the page type
+  // or the overlay/CC clicks land on the invisible player.
   function getPlayer() {
+    if (isShorts()) {
+      return document.getElementById("shorts-player") ||
+             document.querySelector(".html5-video-player");
+    }
     return document.querySelector("#movie_player") ||
            document.querySelector(".html5-video-player");
   }
@@ -283,9 +299,12 @@
   }
 
   // Read the currently displayed native caption text (fallback path).
-  // Read ONLY .ytp-caption-segment (the combined node would duplicate text).
+  // Read ONLY .ytp-caption-segment (the combined node would duplicate text),
+  // scoped to the ACTIVE player so a hidden preloaded player can't leak text.
   function readNativeCaption() {
-    const segs = document.querySelectorAll(".ytp-caption-segment");
+    const player = getPlayer();
+    if (!player) return "";
+    const segs = player.querySelectorAll(".ytp-caption-segment");
     if (!segs.length) return "";
     let parts = [];
     segs.forEach((s) => {
@@ -311,7 +330,9 @@
     overlay.appendChild(transEl);
     overlay.appendChild(origEl);
     buildHandle();                  // drag grip (its listeners die with overlay)
+    overlay.classList.toggle("ytds-shorts", isShorts());
     player.appendChild(overlay);
+    observePlayerControls(player);  // lift the overlay off the control bar
     styleOverlay();
     return overlay;
   }
@@ -360,6 +381,10 @@
       dragGrabDy = 0;
     }
     handleEl.classList.add("ytds-dragging");
+    // Drop the lift and kill transitions for the gesture: the box must track
+    // the cursor exactly, not float `controlsLift` px above it.
+    controlsLift = 0;
+    overlay.classList.add("ytds-notrans");
     try { handleEl.setPointerCapture(e.pointerId); } catch (_e) { /* ignore */ }
     e.preventDefault();
     e.stopPropagation();
@@ -396,6 +421,8 @@
     if (!dragging) return;
     dragging = false;
     handleEl.classList.remove("ytds-dragging");
+    if (overlay) overlay.classList.remove("ytds-notrans");
+    computeLift();                 // ease back off the control bar if needed
     try { handleEl.releasePointerCapture(e.pointerId); } catch (_e) { /* ignore */ }
     // Only persist when a REAL drag happened. A bare click (no movement) must
     // not flip posMode to custom or move the box, and must not race the
@@ -427,6 +454,74 @@
     chrome.storage.sync.set({ posMode: "preset" });
   }
 
+  // ---- control-bar avoidance ----------------------------------------------
+  // Native YouTube captions shift up while the control bar is shown so the
+  // progress bar never sits on top of the text; mirror that. controlsLift is
+  // the px the overlay is raised by; it is folded into applyPosition so preset
+  // AND dragged custom positions both step aside. Recomputed when the player's
+  // class flips (ytp-autohide) and when the rendered text changes height.
+  let controlsLift = 0;
+  let liftObserver = null;
+  let liftRaf = 0;
+
+  // Coalesce triggers (class mutations fire in bursts while the cursor rides
+  // the progress bar) into one computation per frame.
+  function scheduleLift() {
+    if (liftRaf) return;
+    liftRaf = requestAnimationFrame(() => { liftRaf = 0; computeLift(); });
+  }
+
+  function observePlayerControls(player) {
+    if (liftObserver) liftObserver.disconnect();
+    liftObserver = new MutationObserver(scheduleLift);
+    liftObserver.observe(player, { attributes: true, attributeFilter: ["class"] });
+    computeLift();
+  }
+
+  function computeLift() {
+    if (!overlay || dragging) return;      // mid-drag: stay 1:1 with the cursor
+    let lift = 0;
+    try {
+      const player = getPlayer();
+      if (player && !player.classList.contains("ytp-autohide")) {
+        const bar = player.querySelector(".ytp-chrome-bottom");
+        if (bar && bar.offsetParent !== null) {
+          const p = player.getBoundingClientRect();
+          const o = overlay.getBoundingClientRect();
+          const b = bar.getBoundingClientRect();
+          // Only the bottom preset and dragged custom positions avoid the bar
+          // (top/center presets never reach it, and applyPosition would have
+          // nowhere to fold a lift into for them anyway).
+          const eligible = settings.posMode === "custom" || settings.position === "bottom";
+          if (eligible && p.height && o.height && b.height) {
+            // Derive the UNLIFTED bottom edge from layout math, never from the
+            // overlay's live rect: top/bottom are transitioned, so a rect read
+            // mid-animation fed the previous lift back into the measurement
+            // and the value oscillated while the cursor rode the progress bar
+            // (class mutations retriggered this at animation midpoints).
+            // Heights are not animated, so o.height is safe to use.
+            const baseBottom = settings.posMode === "custom"
+              ? p.top + (clampPct(settings.posYpct) / 100) * p.height + o.height / 2
+              : p.bottom - (isShorts() ? 0.18 : 0.08) * p.height;
+            const intrude = baseBottom - (b.top - 6);
+            if (intrude > 0) lift = Math.min(Math.round(intrude), 160);
+          }
+        }
+      }
+    } catch (_e) { /* ignore */ }
+    // Hysteresis: the bar's own hover states wiggle its rect by a few px —
+    // absorb that instead of re-animating the overlay for every pixel.
+    if (lift && controlsLift && Math.abs(lift - controlsLift) <= 4) return;
+    if (lift !== controlsLift) {
+      controlsLift = lift;
+      applyPosition();
+    }
+  }
+
+  // Player size changes without a class mutation (window resize, theater
+  // toggle mid-hover) — re-check on resize too.
+  window.addEventListener("resize", scheduleLift);
+
   // Apply ONLY positioning (shared by styleOverlay + live drag feedback).
   function applyPosition() {
     if (!overlay) return;
@@ -435,14 +530,19 @@
       const x = clampPct(settings.posXpct);
       const y = clampPct(settings.posYpct);
       overlay.style.left = x + "%";
-      overlay.style.top = y + "%";
+      overlay.style.top = controlsLift
+        ? "calc(" + y + "% - " + controlsLift + "px)"
+        : y + "%";
       overlay.style.bottom = "auto";
       overlay.style.transform = "translate(-50%, -50%)";
     } else {
-      // preset: hand control back to the CSS classes
+      // preset: hand control back to the CSS classes (+ lift when needed)
       overlay.style.left = "";
       overlay.style.top = "";
-      overlay.style.bottom = "";
+      overlay.style.bottom =
+        (settings.position === "bottom" && controlsLift)
+          ? "calc(" + (isShorts() ? 18 : 8) + "% + " + controlsLift + "px)"
+          : "";
       overlay.style.transform = "";
       overlay.classList.remove("ytds-pos-bottom", "ytds-pos-center", "ytds-pos-top");
       overlay.classList.add("ytds-pos-" + settings.position);
@@ -485,6 +585,9 @@
   function removeOverlay() {
     if (dragSaveTimer) { clearTimeout(dragSaveTimer); dragSaveTimer = null; }
     dragging = false;
+    if (liftObserver) { liftObserver.disconnect(); liftObserver = null; }
+    if (liftRaf) { cancelAnimationFrame(liftRaf); liftRaf = 0; }
+    controlsLift = 0;
     if (overlay) { overlay.remove(); overlay = null; } // removes handle + its listeners
     origEl = null;
     transEl = null;
@@ -499,6 +602,7 @@
     const oEmpty = !settings.showOriginal || !origEl.textContent;
     const tEmpty = !settings.showTranslation || !transEl.textContent;
     overlay.classList.toggle("ytds-empty", oEmpty && tEmpty);
+    scheduleLift();                // text height changed — re-check the bar gap
   }
 
   function setOriginal(text) {
@@ -588,7 +692,12 @@
 
   function ensureCaptionsOn(retries) {
     if (!settings.enabled) return;
-    const cc = document.querySelector(".ytp-subtitles-button");
+    // Scope to the ACTIVE player: a shorts page keeps a hidden #movie_player
+    // whose CC button must not be clicked (it toggles the wrong player). The
+    // chromeless shorts player has no CC button at all — retries simply lapse
+    // and inject.js nudges the captions module instead.
+    const player = getPlayer();
+    const cc = player && player.querySelector(".ytp-subtitles-button");
     if (!cc || cc.getAttribute("aria-pressed") === null) {
       if (retries > 0) setTimeout(() => ensureCaptionsOn(retries - 1), 600);
       return;                                   // button / state not ready yet
@@ -612,7 +721,8 @@
   function restoreCaptionsIfWeEnabled() {
     if (!weEnabledCC) return;
     weEnabledCC = false;
-    const cc = document.querySelector(".ytp-subtitles-button");
+    const player = getPlayer();
+    const cc = player && player.querySelector(".ytp-subtitles-button");
     if (cc && cc.getAttribute("aria-pressed") === "true") cc.click();
   }
 
@@ -1283,6 +1393,31 @@
       : { ok: false, reason: "notrans" };
   }
 
+  // ---- one-shot in-player notice (auto-dub caption mismatch) ---------------
+  // inject.js posts "trackwarn" when a video's caption list holds only the ASR
+  // of AI-dubbed audio tracks with no original-language track to switch to —
+  // the overlay would pair a dub's captions with the original audio. Shown at
+  // most once per video, auto-fades, never intercepts clicks.
+  let warnedForVid = "";
+
+  function showTrackWarn() {
+    if (!settings.enabled || warnedForVid === currentVideoId) return;
+    warnedForVid = currentVideoId;
+    const player = getPlayer();
+    if (!player) return;
+    const el = document.createElement("div");
+    el.className = "ytds-toast";
+    el.setAttribute("role", "status");
+    el.textContent = t("trackWarnDubOnly",
+      "提示:此视频只有 AI 配音的自动字幕,没有原声语言的字幕轨,双语字幕可能和声音对不上。");
+    player.appendChild(el);
+    requestAnimationFrame(() => el.classList.add("ytds-toast-show"));
+    setTimeout(() => {
+      el.classList.remove("ytds-toast-show");
+      setTimeout(() => { try { el.remove(); } catch (_e) { /* ignore */ } }, 400);
+    }, 9000);
+  }
+
   // =========================================================================
   // BRIDGE <- inject.js
   // =========================================================================
@@ -1297,6 +1432,9 @@
 
     if (d.type === "cues") onCues(d);
     else if (d.type === "nocues") onNoCues(d);
+    else if (d.type === "trackwarn") {
+      if (!d.videoId || d.videoId === currentVideoId) showTrackWarn();
+    }
   }
 
   function sendConfig() {
@@ -1368,6 +1506,17 @@
   // single listener instances (added once; never accumulate)
   window.addEventListener("yt-navigate-finish", onNav, true);
   window.addEventListener("message", onInjectMessage, false);
+
+  // Belt-and-braces nav watcher (mirrors inject.js): shorts swipes change the
+  // URL rapidly and the yt-navigate-finish timing there is less battle-tested
+  // than on watch pages, so also poll the location. Only a genuine videoId
+  // change triggers; the event handler stays authoritative otherwise.
+  setInterval(() => {
+    try {
+      const v = videoIdFromLocation();
+      if (v && v !== currentVideoId) onNav();
+    } catch (_e) { /* ignore */ }
+  }, 500);
 
   // ---- boot ----------------------------------------------------------------
   loadSettings().then(() => {
