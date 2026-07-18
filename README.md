@@ -58,6 +58,7 @@ English | [简体中文](README.zh-CN.md)
 
 - **Fully customizable** — per‑line font, size, text colour, background colour + opacity, outline, line spacing, and which line sits on top. Live preview in the popup.
 - **Draggable** — drop the subtitle box anywhere on the video; it persists, double‑click to reset. Works in fullscreen.
+- **Works on Shorts** — bilingual subtitles on the vertical player too, keeping up as you swipe.
 - **One‑click toggle** — a button right in the player's control bar turns everything on/off (and YouTube's CC with it).
 - **Export to SRT** — download the current video's subtitles as `.srt`: original, translation, or bilingual.
 - **Robust by design** — survives SPA navigation, falls back to reading the on‑screen caption text if the cue fetch ever fails, and turns YouTube captions on for you automatically.
