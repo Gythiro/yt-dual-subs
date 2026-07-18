@@ -63,5 +63,8 @@
   "exportNoTrans": { "message": "這部影片無法取得譯文,試試「整軌翻譯」或換個目標語言。" },
   "exportNoCues": { "message": "沒有可下載的字幕,先播放幾秒讓字幕載入,再試一次。" },
   "exportNotYoutube": { "message": "請在 YouTube 影片頁面使用匯出。" },
-  "exportFailed": { "message": "匯出失敗,請重新整理頁面後再試。" }
+  "exportFailed": { "message": "匯出失敗,請重新整理頁面後再試。" },
+  "updateNotesLabel": { "message": "更新後打開新功能介紹頁" },
+  "trackWarnDubOnly": { "message": "提示:此影片只有 AI 配音的自動字幕,沒有原聲語言的字幕軌,雙語字幕可能和聲音對不上。" },
+  "whatsNewRow": { "message": "看看 v$VER$ 更新了什麼 →", "placeholders": { "ver": { "content": "$1" } } }
 }

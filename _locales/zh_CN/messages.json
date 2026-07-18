@@ -63,5 +63,8 @@
   "exportNoTrans": { "message": "这个视频拿不到译文,试试「整轨翻译」或换个目标语言。" },
   "exportNoCues": { "message": "没有可下载的字幕,先播放几秒让字幕加载,再试一次。" },
   "exportNotYoutube": { "message": "请在 YouTube 视频页面使用导出。" },
-  "exportFailed": { "message": "导出失败,刷新页面后重试。" }
+  "exportFailed": { "message": "导出失败,刷新页面后重试。" },
+  "updateNotesLabel": { "message": "更新后打开新功能介绍页" },
+  "trackWarnDubOnly": { "message": "提示:此视频只有 AI 配音的自动字幕,没有原声语言的字幕轨,双语字幕可能和声音对不上。" },
+  "whatsNewRow": { "message": "看看 v$VER$ 更新了什么 →", "placeholders": { "ver": { "content": "$1" } } }
 }

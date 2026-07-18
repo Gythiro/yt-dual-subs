@@ -63,5 +63,8 @@
   "exportNoTrans": { "message": "No translation available for this video — try the Whole-track engine or another target language." },
   "exportNoCues": { "message": "No downloadable subtitles — play a few seconds so captions load, then try again." },
   "exportNotYoutube": { "message": "Open a YouTube video page to export." },
-  "exportFailed": { "message": "Export failed — refresh the page and try again." }
+  "exportFailed": { "message": "Export failed — refresh the page and try again." },
+  "updateNotesLabel": { "message": "Open release notes after updates" },
+  "trackWarnDubOnly": { "message": "Heads up: this video only has AI-dubbed auto captions (no original-language track), so the bilingual subtitles may not match the audio." },
+  "whatsNewRow": { "message": "See what's new in v$VER$ →", "placeholders": { "ver": { "content": "$1" } } }
 }
