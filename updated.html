@@ -54,21 +54,24 @@
 
   /* nav */
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
+  /* nav + footer span the same width as the homepage (1160px); only the
+     reading column stays at --maxw so entries keep a comfortable measure */
+  .nav .wrap,footer .wrap{max-width:1160px}
   .nav-in{display:flex;align-items:center;gap:16px;height:64px}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
   .brand img{width:30px;height:30px;border-radius:8px}
   .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
-  .nav-links{display:flex;gap:22px;margin-left:14px}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500}
+  .nav-links{display:flex;gap:18px;margin-left:8px;flex:none}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
   .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
   .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
   .lang-toggle button:hover{color:var(--ink)}
   .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
-  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s}
+  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
-  .btn.sm{height:40px;padding:0 18px;font-size:14px}
+  .btn.sm{height:40px;padding:0 18px;font-size:14px;white-space:nowrap}
 
   /* hero */
   .hero{position:relative;text-align:center;padding:64px 0 44px;overflow:hidden}
@@ -130,8 +133,14 @@
   .foot-bottom .ver{font-size:13px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
   .disclaimer{font-size:13px;color:var(--muted-2);max-width:640px;line-height:1.6}
 
-  @media (max-width:900px){
+  /* nav ladder — measured, not guessed: full EN nav ≈ 1085px content width */
+  @media (max-width:1199px){
+    .nav-right .ghost{display:none}    /* GitHub stays reachable in the footer */
+  }
+  @media (max-width:1039px){
     .nav-links{display:none}
+  }
+  @media (max-width:900px){
     .foot-links{gap:32px}
   }
   @media (max-width:560px){

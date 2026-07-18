@@ -70,15 +70,15 @@
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
   .brand img{width:30px;height:30px;border-radius:8px;aspect-ratio:1/1;object-fit:cover}
   .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
-  .nav-links{display:flex;gap:22px;margin-left:14px}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500}
+  .nav-links{display:flex;gap:18px;margin-left:8px;flex:none}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
-  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s}
+  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 24px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:15px;font-weight:700;letter-spacing:-0.01em;border:0;cursor:pointer;box-shadow:0 6px 22px rgba(123,97,255,0.38);transition:transform .12s ease,box-shadow .15s ease}
   .btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(123,97,255,0.5)}
-  .btn.sm{height:40px;padding:0 18px;font-size:14px}
+  .btn.sm{height:40px;padding:0 18px;font-size:14px;white-space:nowrap}
   .btn svg,.ghost svg{flex:none}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 
@@ -247,8 +247,14 @@
   .foot-bottom .ver{font-size:13px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
   .disclaimer{font-size:13px;color:var(--muted-2);max-width:640px;line-height:1.6}
 
-  @media (max-width:900px){
+  /* nav ladder — measured, not guessed: full EN nav ≈ 1085px content width */
+  @media (max-width:1199px){
+    .nav-right .ghost{display:none}    /* GitHub stays reachable in the footer */
+  }
+  @media (max-width:1039px){
     .nav-links{display:none}
+  }
+  @media (max-width:900px){
     section{padding:72px 0}
     .steps{grid-template-columns:1fr}
     .compare{grid-template-columns:1fr;gap:32px}

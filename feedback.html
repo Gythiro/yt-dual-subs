@@ -46,12 +46,15 @@
   html[lang="zh"] li[data-zh]{display:block}
 
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
+  /* nav + footer span the same width as the homepage (1160px); only the
+     reading column stays at --maxw so cards keep a comfortable measure */
+  .nav .wrap,footer .wrap{max-width:1160px}
   .nav-in{display:flex;align-items:center;gap:16px;height:64px}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
   .brand img{width:30px;height:30px;border-radius:8px}
   .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
-  .nav-links{display:flex;gap:22px;margin-left:14px}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500}
+  .nav-links{display:flex;gap:18px;margin-left:8px;flex:none}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
   .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
@@ -79,13 +82,13 @@
   .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease}
   .btn:hover{transform:translateY(-1px)}
-  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:42px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;background:transparent;cursor:pointer;font-family:inherit}
+  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:42px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;background:transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
   .mail{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;color:var(--translation);background:rgba(255,194,75,0.08);border:1px solid rgba(255,194,75,0.25);border-radius:8px;padding:8px 14px;display:inline-block;margin-top:12px;user-select:all}
   .copied{color:var(--ok);font-size:13px;margin-left:10px;opacity:0;transition:opacity .25s}
   .copied.show{opacity:1}
 
-  .btn.sm{height:40px;padding:0 18px;font-size:14px}
+  .btn.sm{height:40px;padding:0 18px;font-size:14px;white-space:nowrap}
   footer{border-top:1px solid var(--line);background:var(--bg-2);padding:56px 0 40px}
   .foot-top{display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start}
   .foot-brand{max-width:320px}
@@ -99,8 +102,14 @@
   .foot-bottom .ver{font-size:13px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
   .disclaimer{font-size:13px;color:var(--muted-2);max-width:640px;line-height:1.6}
 
-  @media (max-width:900px){
+  /* nav ladder — measured, not guessed: full EN nav ≈ 1085px content width */
+  @media (max-width:1199px){
+    .nav-right .ghost{display:none}    /* GitHub stays reachable in the footer */
+  }
+  @media (max-width:1039px){
     .nav-links{display:none}
+  }
+  @media (max-width:900px){
     .foot-links{gap:32px}
   }
   @media (max-width:560px){
