@@ -31,6 +31,9 @@
     </label>
   </header>
 
+  <!-- ============== WHAT'S NEW (shown once after an update) ============== -->
+  <a class="whatsnew" id="whatsNew" hidden target="_blank" rel="noopener"></a>
+
   <!-- ========================= LIVE PREVIEW ========================= -->
   <section class="preview" id="preview" aria-label="实时预览" data-i18n-aria="previewAria">
     <div class="preview-frame">
@@ -213,8 +216,12 @@
   <footer class="ft">
     <div class="ft-row">
       <button id="reset" type="button" class="reset" data-i18n="resetAll">重置全部设置</button>
-      <p class="ver">v<span id="version">3.4.0</span></p>
+      <p class="ver">v<span id="version">3.5.0</span></p>
     </div>
+    <label class="chk ft-chk">
+      <input type="checkbox" id="updateNotes" />
+      <span data-i18n="updateNotesLabel">更新后打开新功能介绍页</span>
+    </label>
     <p class="disclaimer" data-i18n="disclaimer">Not affiliated with YouTube or Google.</p>
   </footer>
 

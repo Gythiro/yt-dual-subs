@@ -9,6 +9,7 @@ const DEFAULTS = {
   engine: "auto",              // "auto" | "tlang" | "gtx" (source of truth since 3.4)
   backend: "tlang",            // legacy pre-3.4 key; mirrored on engine change so
                                // old devices on the same sync profile stay sane
+  updateNotes: true,           // open release notes page after feature updates
   order: "orig-top",           // "orig-top" | "trans-top"
   rowGap: 4,
   position: "bottom",          // "top" | "center" | "bottom"
@@ -348,6 +349,7 @@ function bindLineControls() {
 // ---- bind whole UI from state -------------------------------------------
 function bindUI() {
   $("enabled").checked = state.enabled;
+  $("updateNotes").checked = !!state.updateNotes;
   $("targetLang").value = state.targetLang;
   $("backend").value = state.engine;
   $("backendGtxHint").hidden = state.engine !== "gtx";
@@ -362,6 +364,7 @@ function bindUI() {
 // ---- wire events ---------------------------------------------------------
 function wire() {
   $("enabled").addEventListener("change", (e) => setKey("enabled", e.target.checked));
+  $("updateNotes").addEventListener("change", (e) => setKey("updateNotes", e.target.checked));
   $("targetLang").addEventListener("change", (e) => setKey("targetLang", e.target.value));
 
   // backend info tooltip
@@ -450,8 +453,40 @@ function showVersion() {
   } catch (_e) { /* ignore */ }
 }
 
+// ---- update badge + what's new row ---------------------------------------
+// Opening the popup clears the "NEW" badge; the row links to the release
+// notes and stays until opened once (per announced version).
+const SITE_URL = "https://gythiro.github.io/yt-dual-subs/";
+
+function initWhatsNew() {
+  try { chrome.action.setBadgeText({ text: "" }); } catch (_e) { /* ignore */ }
+  try {
+    chrome.storage.local.get({ updWhatsNew: "", updRowSeen: "" }, (got) => {
+      const ver = got && got.updWhatsNew;
+      if (!ver || got.updRowSeen === ver) return;
+      const el = $("whatsNew");
+      if (!el) return;
+      let lang = "en";
+      try {
+        const ui = (chrome.i18n && chrome.i18n.getUILanguage()) || "";
+        if (ui.toLowerCase().indexOf("zh") === 0) lang = "zh";
+      } catch (_e) { /* ignore */ }
+      let label = "";
+      try { label = chrome.i18n.getMessage("whatsNewRow", [ver]); } catch (_e) { /* ignore */ }
+      el.textContent = label || ("See what's new in v" + ver + " →");
+      el.href = SITE_URL + "updated.html?ver=" + ver + "&lang=" + lang + "&src=popup";
+      el.hidden = false;
+      el.addEventListener("click", () => {
+        try { chrome.storage.local.set({ updRowSeen: ver }); } catch (_e) { /* ignore */ }
+        el.hidden = true;
+      });
+    });
+  } catch (_e) { /* ignore */ }
+}
+
 // ---- boot ----------------------------------------------------------------
 applyI18n();                       // localize static markup before first paint
+initWhatsNew();
 // get(null): fetch only what is actually stored, so normalizeEngine can tell
 // "engine never set" apart from an explicit value (see content.js).
 chrome.storage.sync.get(null, (got) => {

@@ -172,6 +172,62 @@ function translate(text, targetLang, urgent) {
     enqueue({ text, targetLang, urgent: !!urgent, resolve, reject }));
 }
 
+// ---- install / update notifications --------------------------------------
+// install  -> open the site once as a welcome/getting-started page.
+// update   -> feature bump (major/minor changed): open the release-notes page
+//             once per version (user-disableable via the popup toggle);
+//             patch bump: just a "NEW" badge on the icon (popup clears it).
+// Dev reloads report previousVersion === current version and stay silent.
+const SITE_URL = "https://gythiro.github.io/yt-dual-subs/";
+
+function uiLang() {
+  try {
+    const ui = (chrome.i18n && chrome.i18n.getUILanguage()) || "";
+    if (ui.toLowerCase().indexOf("zh") === 0) return "zh";
+  } catch (_e) { /* ignore */ }
+  return "en";
+}
+
+function isFeatureBump(prev, cur) {
+  const p = String(prev || "").split(".");
+  const c = String(cur || "").split(".");
+  return (+c[0] || 0) !== (+p[0] || 0) || (+c[1] || 0) !== (+p[1] || 0);
+}
+
+function showUpdateBadge() {
+  try {
+    chrome.action.setBadgeText({ text: "NEW" });
+    chrome.action.setBadgeBackgroundColor({ color: "#FF4D8D" });
+  } catch (_e) { /* ignore */ }
+}
+
+chrome.runtime.onInstalled.addListener((details) => {
+  const cur = chrome.runtime.getManifest().version;
+  if (details.reason === "install") {
+    try { chrome.tabs.create({ url: SITE_URL + "?src=install&lang=" + uiLang() }); } catch (_e) {}
+    return;
+  }
+  if (details.reason !== "update") return;
+  const prev = details.previousVersion || "";
+  if (!prev || prev === cur) return;
+  chrome.storage.local.get({ updShownFor: "" }, (got) => {
+    if (got.updShownFor === cur) return;           // already announced this version
+    chrome.storage.local.set({ updShownFor: cur, updWhatsNew: cur });
+    if (!isFeatureBump(prev, cur)) { showUpdateBadge(); return; }
+    chrome.storage.sync.get({ updateNotes: true }, (s) => {
+      if (s && s.updateNotes) {
+        try {
+          chrome.tabs.create({
+            url: SITE_URL + "updated.html?ver=" + cur + "&lang=" + uiLang() + "&src=ext"
+          });
+          return;
+        } catch (_e) { /* fall through to the badge */ }
+      }
+      showUpdateBadge();
+    });
+  });
+});
+
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg && msg.type === "translate") {
     translate(msg.text, msg.targetLang, msg.urgent)

@@ -82,6 +82,19 @@ input:focus-visible,
   transform: translateX(17px); background: var(--accent);
 }
 
+/* ============ WHAT'S NEW ROW (once after an update) ============ */
+.whatsnew {
+  display: flex; align-items: center; gap: 8px;
+  margin: 9px 15px 0; padding: 8px 11px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(62, 166, 255, 0.35);
+  border-radius: 8px;
+  color: var(--accent); font-size: 12px; font-weight: 600;
+  text-decoration: none;
+}
+.whatsnew:hover { filter: brightness(1.12); }
+.whatsnew[hidden] { display: none; }
+
 /* ========================= LIVE PREVIEW ========================= */
 .preview { padding: 13px 15px 5px; }
 .preview-frame {
@@ -283,6 +296,7 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
   display: flex; flex-direction: column; gap: 9px;
 }
 .ft-row { display: flex; align-items: center; gap: 11px; }
+.ft-chk { font-size: 12px; color: var(--muted); }
 .disclaimer {
   margin: 0; font-size: 10px; color: var(--muted);
   text-align: center; opacity: .85;
