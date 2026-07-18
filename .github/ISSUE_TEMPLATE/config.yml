@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "📧 不会用 GitHub？邮箱等更简单的反馈方式 / Prefer email?"
+    url: https://gythiro.github.io/yt-dual-subs/feedback.html
+    about: "最简单的反馈方式都在这一页,无需 GitHub 账号 / The simplest ways to reach me — no GitHub skills needed."
+  - name: "📖 常见问题 FAQ"
+    url: https://gythiro.github.io/yt-dual-subs/#faq
+    about: "翻译偶尔不出来?字幕位置怎么调?先看这里 / Quick answers to the most common questions."

@@ -1,0 +1,34 @@
+name: "🐛 问题反馈 / Bug report"
+description: "字幕不显示、显示错乱、功能失效等 / Something isn't working"
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: "出了什么问题? / What happened?"
+      description: "一两句话描述即可,最好附截图 / Describe it briefly; screenshots help a lot."
+      placeholder: "例:这个视频开了扩展但只显示原文,没有译文……"
+    validations:
+      required: true
+  - type: input
+    id: video
+    attributes:
+      label: "出问题的视频链接 / Video link"
+      description: "很多问题跟具体视频有关,贴上链接排查快十倍 / Many issues are video-specific — a link speeds things up a lot."
+      placeholder: "https://www.youtube.com/watch?v=..."
+  - type: dropdown
+    id: engine
+    attributes:
+      label: "翻译引擎设置 / Engine setting"
+      description: "在扩展弹窗的「翻译引擎」下拉里 / In the popup's Engine dropdown."
+      options:
+        - "自动 / Auto(默认 default)"
+        - "整轨翻译 / Whole-track (YouTube)"
+        - "智能整句 / Smart sentences (Google)"
+        - "不确定 / Not sure"
+  - type: input
+    id: version
+    attributes:
+      label: "扩展版本 + 浏览器 / Extension version + browser"
+      description: "版本号在扩展弹窗最底部 / The version is at the bottom of the popup."
+      placeholder: "例:v3.5.0,Chrome 138"
