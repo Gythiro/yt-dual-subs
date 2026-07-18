@@ -67,10 +67,10 @@
   /* nav */
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:20px;height:64px}
-  .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
   .brand img{width:30px;height:30px;border-radius:8px;aspect-ratio:1/1;object-fit:cover}
   .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
-  .nav-links{display:flex;gap:26px;margin-left:14px}
+  .nav-links{display:flex;gap:22px;margin-left:14px}
   .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
@@ -83,8 +83,8 @@
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 
   /* language toggle */
-  .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px}
-  .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:0.01em;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s}
+  .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
+  .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:0.01em;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
   .lang-toggle button:hover{color:var(--ink)}
   .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
 
@@ -264,8 +264,16 @@
     .cta{flex-direction:column}
     .cta .btn,.cta .ghost{width:100%;max-width:340px}
     .nav-right .ghost{display:none}
+    .nav-in{gap:10px}
+    .brand .tm{display:none}
+    .brand{font-size:15px}
+    .lang-toggle button{padding:0 10px}
+    .nav .btn.sm{padding:0 12px;font-size:13px;white-space:nowrap}
     .trust-in{gap:12px 22px}
     .foot-links{gap:32px}
+  }
+  @media (max-width:430px){
+    .nav .btn.sm{display:none}   /* hero has a full-width install CTA anyway */
   }
 </style>
 </head>
@@ -280,6 +288,7 @@
       <a href="#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
       <a href="#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
       <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+      <a href="feedback.html"><span data-en>Feedback</span><span data-zh>反馈</span></a>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Language">
@@ -618,7 +627,12 @@
         <p data-zh>不会。YouTube™ 的整轨翻译即时呈现、对齐精准，Google 翻译回退方案也会在播放前提前预取，因此毫无延迟。字幕基于带时间轴的轴点渲染，整句切换、不会闪烁。</p>
       </details>
       <details>
-        <summary><span data-en>Why do translations sometimes pause?</span><span data-zh>为什么翻译有时会停一下？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
+        <summary><span data-en>The subtitles cover the video — how do I move them?</span><span data-zh>字幕挡住画面了，位置怎么调？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
+        <p data-en>Hover the subtitle box and drag the little round handle at its top-left corner to put it anywhere on the video — the position is remembered per device, and double-clicking the handle resets it. The popup also has top / center / bottom presets, plus per-line font size and spacing. Since v3.5.0 the box automatically steps above the progress bar while the player controls are visible.</p>
+        <p data-zh>把鼠标移到字幕框上，按住左上角的小圆形手柄就能把它拖到画面任意位置——位置会记住，双击手柄可复位。弹窗里还有顶部/居中/底部三个预设，以及每行的字号、行距等设置。从 v3.5.0 起，播放器控件出现时字幕框还会自动上移避开进度条。</p>
+      </details>
+      <details>
+        <summary><span data-en>Why do translations sometimes pause or not show up?</span><span data-zh>为什么翻译有时不出来、或者停一下？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
         <p data-en>The Smart-sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate-limit. The extension notices, slows down and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already-translated sentences stay cached, and YouTube's own whole-track engine is never rate-limited.</p>
         <p data-zh>智能整句引擎走的是 Google 免费公共接口，重度使用（超长视频、频繁拖进度条）时可能被短暂限流。扩展会自己发现并放慢重试：等待期间译文行显示「…」，翻译通常在几秒到一两分钟内自动恢复。已翻译过的句子有缓存不受影响；YouTube 自带的整轨翻译则完全没有限流。</p>
       </details>
@@ -732,11 +746,19 @@
       try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
     };
 
-    var saved = "en";
-    try {
-      var v = localStorage.getItem(STORAGE_KEY);
-      if (v === "zh" || v === "en") saved = v;
-    } catch (e) {}
+    // ?lang= (used by the extension's welcome/update links) wins over the
+    // stored choice; then localStorage; then the browser language.
+    var saved = null;
+    try { saved = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+    if (saved !== "zh" && saved !== "en") {
+      try {
+        var v = localStorage.getItem(STORAGE_KEY);
+        if (v === "zh" || v === "en") saved = v;
+      } catch (e) {}
+    }
+    if (saved !== "zh" && saved !== "en") {
+      saved = (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+    }
     window.setLang(saved);
   })();
 </script>
