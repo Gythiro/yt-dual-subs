@@ -131,9 +131,8 @@
     .brand .tm{display:none}
     .brand{font-size:15px}
     .lang-toggle button{padding:0 10px}
-    .nav .btn.sm{padding:0 12px;font-size:13px;white-space:nowrap}
-  }
-  @media (max-width:430px){
+    /* burger + nav CTA don't both fit under ~560 (real iPhones report up to
+       440px viewports, wider than the 430 emulator preset) */
     .nav .btn.sm{display:none}
   }
 </style>
@@ -228,7 +227,7 @@
       <div class="head">
         <span class="emoji">⭐</span>
         <h2 data-en>Store reviews — for the love</h2>
-        <h2 data-zh>商店评论——留给好评</h2>
+        <h2 data-zh>商店评论——留个好评</h2>
       </div>
       <p data-en>Reviews keep an independent open-source project alive — but they're a poor place to debug: replies are slow and back-and-forth barely works. <b>Love it? Leave a review. Something broken? Email is much faster.</b></p>
       <p data-zh>评分是独立开源项目活下去的氧气——但评论区不适合排查问题：回复慢、来回沟通很困难。<b>喜欢就去评个分；出问题了，发邮箱快得多。</b></p>
