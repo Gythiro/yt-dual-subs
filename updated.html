@@ -261,6 +261,29 @@
     </section>
     ═════════════════════════════════════════════════════════════════════ -->
 
+    <section class="entry" data-ver="3.5.1">
+      <div class="head">
+        <span class="v mono">v3.5.1</span>
+        <span class="date">2026-07-25</span>
+        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
+      </div>
+      <ul>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>No more twin lines on same-language videos.</b> When the caption track already speaks your target language (e.g. a Chinese video with a Chinese target), the overlay now shows a single line — the popup notes "already in your target language". Simplified ↔ Traditional conversion still translates as before.</p>
+          <p data-zh><b>同语言视频不再显示两行一样的字幕。</b>字幕轨本来就是目标语言时（比如中文视频+中文目标），只显示一行，弹窗会注明"已是目标语言，无需翻译"。简体↔繁体转换不受影响，照常工作。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Echo-proof everywhere.</b> A "translation" identical to the original is never painted as a second line on any path — including exported SRT files, where identical pairs collapse to one line.</p>
+          <p data-zh><b>全链路防回声。</b>与原文完全相同的"译文"在任何路径下都不再重复显示，导出的 SRT 里相同的两行也会合并为一行。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Cleaner caption-track switches.</b> Changing the CC language mid-video no longer reuses translations cached for the previous track.</p>
+          <p data-zh><b>切换字幕轨更干净。</b>视频中途更换 CC 语言后，不再误用上一条字幕轨的翻译缓存。</p>
+        </li>
+      </ul>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+    </section>
+
     <section class="entry" data-ver="3.5.0">
       <div class="head">
         <span class="v mono">v3.5.0</span>
@@ -388,7 +411,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.5.0 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.5.1 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
