@@ -157,6 +157,10 @@
   let cueToGroup = null;        // cue idx -> group idx | null (null = per-cue mode)
   let activeGroupIdx = -1;      // group of the active cue (-1 when none/per-cue)
   let cueTrackKind = "";        // "asr" | "manual" | "" — from inject's captured URL
+  let cueSameLang = false;      // track already speaks the target language —
+                                // nothing to translate, render single-line
+  let cueTrackId = "";          // normKey of the track the caches were filled
+                                // for — a switch invalidates them
   let gtxNetFails = 0;          // consecutive network-dead gtx failures (group mode)
   let gtxFellBack = false;      // this video: auto engine fell back to tlang
   let pendingTimer = null;      // delayed "…" placeholder for the active group
@@ -237,6 +241,14 @@
     applyStateToDom();
     if (overlay) styleOverlay();   // position/fonts/colors/bg/stroke/sizes apply live
     if ("enabled" in changes) syncCaptions();   // master switch flipped from popup
+    // Same-language/dedupe paints depend on WHICH line is visible (the single
+    // line migrates to whichever is shown) — re-render the active cue, and
+    // re-process the scraped caption, under the new setting instead of leaving
+    // the box empty until the next caption change.
+    if ("showOriginal" in changes) {
+      if (cueTimer) activeCueIdx = -1;
+      if (pollTimer) { lastSource = ""; lastTransSource = ""; }
+    }
     // engine / targetLang changed: re-request cues from inject.js
     if (needRecue && settings.enabled) {
       transCache.clear();
@@ -252,6 +264,7 @@
       // of the unchanged cueList (onCues rebuilds/clears them with fresh data).
       tcueList = null;
       cueAligned = null;
+      cueSameLang = false;          // the new target may need translating again
       cueEpoch++;
       activeGroupIdx = -1;
       if (cueTimer) {
@@ -817,13 +830,38 @@
     prefetchFrom(idx);                    // warm upcoming translations (gtx mode)
   }
 
+  // What the translation line shows when there is nothing to translate:
+  // nothing (the original line already carries the text) — or the text itself
+  // when the user hides the original line, so the video still has subtitles.
+  function sameLangLine(origText) {
+    return settings.showOriginal ? "" : origText;
+  }
+
+  // A "translation" identical to its original adds nothing — this happens when
+  // the source language matched the target in a way the upstream lang check
+  // could not see. Render it as the same-language case.
+  function dedupeTrans(trans, origText) {
+    if (trans && origText && trans.trim() === origText.trim()) {
+      return sameLangLine(origText);
+    }
+    return trans;
+  }
+
   function renderTranslationForCue(idx, cue) {
     const origText = cue.text;
+
+    // (0) same-language track (flagged by inject.js): nothing to translate.
+    // The text already sits on the original line; when that line is hidden,
+    // carry it on the translation line so the video still has subtitles.
+    if (cueSameLang) {
+      setTranslation(sameLangLine(origText), origText);
+      return;
+    }
 
     // (1) aligned tlang translation — paired by event order in inject.js and
     // carried on the cue itself, so re-sorting cueList cannot desync it.
     if (cueAligned && typeof cue.trans === "string" && cue.trans) {
-      setTranslation(cue.trans, origText);
+      setTranslation(dedupeTrans(cue.trans, origText), origText);
       return;
     }
 
@@ -834,7 +872,7 @@
     if (tcueList && cueAligned === false) {
       const m = nearestTcue(cue.start);
       if (m) {
-        setTranslation(m.text, origText);
+        setTranslation(dedupeTrans(m.text, origText), origText);
         return;
       }
       // no good timestamp match -> fall through (do NOT index positionally)
@@ -847,7 +885,10 @@
       // so there is no visible flicker.
       const gCached = transCache.get(groupKey(activeGroupIdx));
       if (gCached !== undefined) {
-        setTranslation(gCached, origText);
+        // "" is the group-echo marker (see gtxRequestGroup): this sentence
+        // already speaks the target language — render as the same-language
+        // case so a hidden original line still leaves visible text.
+        setTranslation(gCached === "" ? sameLangLine(origText) : gCached, origText);
         return;
       }
       gtxRequestGroup(activeGroupIdx, true);  // the sentence being watched — fast lane
@@ -857,7 +898,7 @@
     const key = cueVideoId + " " + idx;
     const cached = transCache.get(key);
     if (cached !== undefined) {
-      setTranslation(cached, origText);
+      setTranslation(dedupeTrans(cached, origText), origText);
       return;
     }
     // Not cached yet — request it now (deduped via transInflight). Prefetch
@@ -887,7 +928,9 @@
         if (reqVid !== cueVideoId) return;          // navigated away
         if (resp && resp.ok && resp.translated) {
           transCache.set(key, resp.translated);
-          if (activeCueIdx === idx) setTranslation(resp.translated, cue.text);
+          if (activeCueIdx === idx) {
+            setTranslation(dedupeTrans(resp.translated, cue.text), cue.text);
+          }
         }
         // on failure: leave cache empty so it can be retried when next active
       }
@@ -900,6 +943,7 @@
   // gtx backend or a tlang failure; aligned/misaligned tlang is handled inline.
   // Window-bounded to stay gentle on the unofficial endpoint.
   function prefetchFrom(startIdx) {
+    if (cueSameLang) return;                    // nothing to translate at all
     if (cueAligned != null) return;             // tlang handles the translation
     if (!settings.enabled || !cueList) return;
     if (cueToGroup && sentGroups) {
@@ -1071,9 +1115,17 @@
         if (reqVid !== cueVideoId) return;          // navigated away
         if (resp && resp.ok && resp.translated) {
           gtxNetFails = 0;
-          transCache.set(key, resp.translated);
+          // gtx echoing the whole sentence back (source language == target)
+          // must not be painted next to the original: the group text differs
+          // from the single cue on the original line, so the per-cue dedupe
+          // can't catch it. Cache "" as an echo marker (a real gtx result is
+          // never empty here) so the group is not re-requested; paints go
+          // through the same-language rendering instead.
+          const out = resp.translated.trim() === g.text.trim() ? "" : resp.translated;
+          transCache.set(key, out);
           if (activeGroupIdx === gIdx && activeCueIdx >= 0 && cueList) {
-            setTranslation(resp.translated, cueList[activeCueIdx].text);
+            const orig = cueList[activeCueIdx].text;
+            setTranslation(out === "" ? sameLangLine(orig) : out, orig);
           }
           return;
         }
@@ -1111,12 +1163,37 @@
     cueVideoId = data.videoId || currentVideoId;
     cueTrackKind = data.trackKind === "asr" ? "asr"
                  : data.trackKind ? "manual" : "";
+    cueSameLang = !!data.sameLang;
 
     if (!cueList.length) { onNoCues(data); return; }
+    // A different TRACK on the same video (user switched the CC language, or
+    // the auto-dub mismatch fix changed tracks) must not read the previous
+    // track's cached translations: the group/cue cache keys collide while the
+    // text they were translated from is gone. Adopt the id only on a NON-EMPTY
+    // cue set (an empty post falls to nocues above and must not swallow the
+    // clear that the retry will need); in-flight callbacks from the old track
+    // are dropped by the cueEpoch bump in startCueLoop below — this whole
+    // function is synchronous, so none can interleave before that.
+    if (data.trackId && data.trackId !== cueTrackId) {
+      if (cueTrackId) { transCache.clear(); transInflight.clear(); }
+      cueTrackId = data.trackId;
+    }
+    // Track-level echo detection: an aligned "translation" that repeats the
+    // original on every cue means the track already speaks the target language
+    // in a way the URL lang check could not prove (e.g. a bare "zh" track whose
+    // script happens to match a zh-Hans target — we must REQUEST the tlang
+    // because it might have been a Hans<->Hant conversion, but when it comes
+    // back as a pure echo, render it as the same-language case).
+    if (!cueSameLang && cueAligned === true &&
+        cueList.some((c) => c.trans) &&
+        cueList.every((c) => !c.trans || c.trans.trim() === (c.text || "").trim())) {
+      cueSameLang = true;
+    }
     // Sentence groups exist ONLY when there is no tlang data at all (gtx engine,
     // auto on an ASR track, or a failed tlang fetch). aligned true/false means
-    // the tlang paths render — groups stay dormant (null).
-    if (cueAligned == null) buildSentenceGroups(cueList);
+    // the tlang paths render — groups stay dormant (null). A same-language
+    // track never translates at all, so it never needs groups either.
+    if (cueAligned == null && !cueSameLang) buildSentenceGroups(cueList);
     else { sentGroups = null; cueToGroup = null; }
     startCueLoop();
   }
@@ -1137,7 +1214,9 @@
           if (token !== lastReqToken) return;
           if (text !== lastSource) return;
           if (resp && resp.ok && resp.translated) {
-            setTranslation(resp.translated, text);
+            // scrape mode never knows the track language, so the identical-
+            // output dedupe is the only same-language guard on this path
+            setTranslation(dedupeTrans(resp.translated, text), text);
           }
         }
       );
@@ -1185,6 +1264,7 @@
     cueToGroup = null;
     activeGroupIdx = -1;
     cueTrackKind = "";
+    cueSameLang = false;
     clearPendingTimer();
     if (settings.enabled) startFallback();
   }
@@ -1206,6 +1286,7 @@
       sendResponse({
         ok: true,
         engine,
+        same: !!(cueList && cueList.length && cueSameLang),
         track: cueTrackKind || "none",
         fellBack: gtxFellBack
       });
@@ -1278,9 +1359,13 @@
       } else {
         const o = (c.text || "").trim();
         const tr = (c.trans || "").trim();
-        const top = settings.order === "trans-top" ? tr : o;
-        const bottom = settings.order === "trans-top" ? o : tr;
-        body = [top, bottom].filter(Boolean).join("\n");
+        if (tr && tr === o) {
+          body = o;               // same-language echo — don't write the line twice
+        } else {
+          const top = settings.order === "trans-top" ? tr : o;
+          const bottom = settings.order === "trans-top" ? o : tr;
+          body = [top, bottom].filter(Boolean).join("\n");
+        }
       }
       if (!body) continue;
       n++;
@@ -1366,8 +1451,14 @@
 
     // TRANSLATION / BILINGUAL.
     let cues = null;
+    // Same-language track: the "translation" IS the original text. Export
+    // offline from the live cue list (bilingual collapses to single lines in
+    // buildSrt) instead of re-fetching a tlang echo that produceCues skipped.
+    if (cueSameLang && cueList && cueList.length) {
+      cues = cueList.map((c) => ({ ...c, trans: c.text }));
+    }
     // Fast path: the live overlay already has a fully-aligned tlang translation.
-    if (cueAligned === true && cueList && cueList.length && cueList.some((c) => c.trans)) {
+    else if (cueAligned === true && cueList && cueList.length && cueList.some((c) => c.trans)) {
       cues = cueList;
     } else {
       // Fetch a complete paired set from inject (works in any backend mode).
@@ -1468,6 +1559,7 @@
     cueToGroup = null;
     activeGroupIdx = -1;
     cueTrackKind = "";
+    cueSameLang = false;
     clearPendingTimer();
     nocuesFallback = false;
     transInflight.clear();
@@ -1491,6 +1583,9 @@
   function onNav() {
     currentVideoId = videoIdFromLocation();
     transCache.clear();
+    cueTrackId = "";            // the id describes transCache — reset together
+                                // (NOT in teardownAll: a disable/enable cycle
+                                // keeps the cache, so it must keep the id too)
     gtxNetFails = 0;
     gtxFellBack = false;        // the fallback is per-video
     weEnabledCC = false;        // fresh video — re-evaluate caption state
