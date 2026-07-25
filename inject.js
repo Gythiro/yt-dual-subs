@@ -109,6 +109,46 @@
     }
   }
 
+  // Language code of a captured timedtext URL — the track's own language.
+  function trackLangOf(url) {
+    try {
+      return new URL(url, location.href).searchParams.get("lang") || "";
+    } catch (_e) {
+      return "";
+    }
+  }
+
+  // True when translating this track into `target` is a KNOWN no-op: the track
+  // already speaks the target language, so tlang would just echo the original
+  // back and both lines would show the same text (and gtx likewise). Chinese
+  // needs script-level care — zh-CN/zh-SG pair with zh-Hans, zh-TW/zh-HK/zh-MO
+  // with zh-Hant. Any OTHER zh pairing (Hans<->Hant, and a bare "zh" track vs
+  // either script) stays a real translation: Hans<->Hant is a genuine
+  // conversion, and a bare "zh" track hides which script it uses, so skipping
+  // here would rob e.g. a zh-Hant target of the Simplified->Traditional
+  // conversion. When the track's script happens to MATCH the target, the tlang
+  // response is a per-cue echo of the original — content.js detects that
+  // track-level and renders single-line (see the echo check in onCues).
+  // For everything else a base-language match (en-US vs en, pt-BR vs pt) is a
+  // no-op; YouTube offers no regional conversion there.
+  function isSameLang(track, target) {
+    const norm = (c) => {
+      c = String(c || "").toLowerCase();
+      if (c === "zh-cn" || c === "zh-sg" || c === "zh-my" || c === "zh-hans") return "zh-hans";
+      if (c === "zh-tw" || c === "zh-hk" || c === "zh-mo" || c === "zh-hant") return "zh-hant";
+      if (c === "in") return "id";   // YouTube still serves legacy ISO codes
+      if (c === "iw") return "he";   // on some tracks
+      return c;
+    };
+    const a = norm(track), b = norm(target);
+    if (!a || !b) return false;
+    if (a === b) return true;
+    const ab = a.split("-")[0], bb = b.split("-")[0];
+    if (ab !== bb) return false;
+    if (ab === "zh") return false;   // differing zh forms: let tlang convert
+    return true;
+  }
+
   // Parse the "v" param off a captured timedtext URL when present; otherwise
   // fall back to the current location video id.
   function vidOfUrl(url) {
@@ -209,7 +249,12 @@
     // gtx path serves as the (much better than per-cue) fallback when a track
     // isn't translatable — plus as the user's manual choice.
     const kind = trackKindOf(sourceUrl);
-    const wantTlang = cfg.mode !== "gtx";
+    // Track already in the target language: skip translation entirely (tlang
+    // AND gtx would only echo the original — the "double identical lines" bug
+    // on e.g. a Chinese video with a Chinese target). content.js renders a
+    // single line when this flag rides along with the cues.
+    const sameLang = isSameLang(trackLangOf(sourceUrl), cfg.targetLang);
+    const wantTlang = !sameLang && cfg.mode !== "gtx";
     try {
       const origJson = await fetchJson3(buildUrl(sourceUrl, null));
       const cues = parseJson3(origJson);
@@ -244,7 +289,15 @@
         }
       }
 
-      post("cues", { cues, tcues, aligned, trackKind: kind, nonce: myNonce });
+      post("cues", {
+        cues, tcues, aligned, trackKind: kind, sameLang,
+        // stable track identity (normKey strips pot/fmt/tlang): lets content.js
+        // drop cached translations when the TRACK changes on the same video
+        // (CC language switch / auto-dub mismatch fix) — same cache keys,
+        // different text.
+        trackId: normKey(sourceUrl),
+        nonce: myNonce
+      });
       checkTrackMismatch(vid, sourceUrl);
     } catch (_e) {
       // could not fetch/parse — let content.js fall back to scraping, but only
