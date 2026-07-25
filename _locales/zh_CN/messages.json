@@ -19,6 +19,7 @@
   "backendStatusTlang": { "message": "本视频:整轨翻译（YouTube）" },
   "backendStatusGtx": { "message": "本视频:智能整句（Google）" },
   "backendStatusLimited": { "message": "翻译接口暂时限流,已自动放慢重试;已翻译的句子不受影响。" },
+  "backendStatusSame": { "message": "本视频字幕已是目标语言,无需翻译。" },
   "secLayout": { "message": "布局" },
   "orderLabel": { "message": "上下顺序" },
   "orderTransTop": { "message": "译文在上" },
