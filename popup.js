@@ -267,11 +267,20 @@ async function refreshEngineStatus() {
     return;
   }
 
-  if (state.engine !== "auto") return;      // manual choice: stay quiet
   const tab = await getActiveTab();
   if (!tab || tab.id == null) return;
   const r = await sendToTab(tab.id, { type: "engineStatus" });
-  if (!r || !r.ok || !r.engine) return;     // not a YouTube video page / no cues yet
+  if (!r || !r.ok) return;                  // not a YouTube video page
+  if (r.same) {
+    // The track already speaks the target language, so the overlay renders a
+    // single line. Shown in EVERY engine mode (it answers "why is there only
+    // one line?"), unlike the engine line below which is auto-mode-only.
+    el.textContent = t("backendStatusSame", "本视频字幕已是目标语言，无需翻译。");
+    el.hidden = false;
+    return;
+  }
+  if (state.engine !== "auto") return;      // manual choice: stay quiet
+  if (!r.engine) return;                    // no cues yet
   el.textContent = r.engine === "gtx"
     ? t("backendStatusGtx", "本视频：智能整句（Google）")
     : t("backendStatusTlang", "本视频：整轨翻译（YouTube）");
