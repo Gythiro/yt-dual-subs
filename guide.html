@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use your own key — Dual Subtitles for YouTube™</title>
+<meta name="description" content="How to plug your own LLM or DeepL API key into Dual Subtitles for YouTube™ — what it costs, where the key hides, and what to do when it fails.">
+<style>
+  :root{
+    --bg:#0A0A0F;
+    --bg-2:#0E0E15;
+    --card:#15151F;
+    --ink:#FFFFFF;
+    --muted:#A6A6B8;
+    --muted-2:#7C7C90;
+    --line:rgba(255,255,255,0.10);
+    --line-2:rgba(255,255,255,0.16);
+    --accent:#7B61FF;
+    --accent-2:#FF4D8D;
+    --translation:#FFC24B;
+    --ok:#4ade80;
+    --warn:#FFB84D;
+    --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --radius:10px;
+    --radius-lg:16px;
+    --maxw:860px;
+    font-synthesis-weight:none;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;overflow-y:scroll} /* scrollbar always on: no nav shift between pages */
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.12}
+  p{margin:0}
+  ::selection{background:rgba(123,97,255,0.35)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+
+  [data-zh]{display:none}
+  html[lang="zh"] [data-en]{display:none}
+  html[lang="zh"] [data-zh]{display:inline}
+  html[lang="zh"] p[data-zh],
+  html[lang="zh"] h1[data-zh],
+  html[lang="zh"] h2[data-zh],
+  html[lang="zh"] h3[data-zh],
+  html[lang="zh"] div[data-zh],
+  html[lang="zh"] td[data-zh],
+  html[lang="zh"] li[data-zh]{display:block}
+  html[lang="zh"] td[data-zh]{display:table-cell}
+
+  .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
+  /* nav + footer span the same width as the homepage (1160px); only the
+     reading column stays at --maxw so cards keep a comfortable measure */
+  .nav .wrap,footer .wrap{max-width:1160px}
+  .nav-in{display:flex;align-items:center;gap:20px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
+  .brand img{width:30px;height:30px;border-radius:8px}
+  .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
+  .nav-links{display:flex;gap:18px;margin-left:8px;flex:none}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
+  .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
+  .lang-toggle button:hover{color:var(--ink)}
+  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+
+  .hero{position:relative;text-align:center;padding:60px 0 30px;overflow:hidden}
+  .bloom{position:absolute;inset:0;pointer-events:none;z-index:0}
+  .bloom::before{content:"";position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:820px;height:520px;max-width:130vw;background:radial-gradient(50% 50% at 50% 50%,rgba(123,97,255,0.26),rgba(123,97,255,0) 70%);filter:blur(10px)}
+  .hero-in{position:relative;z-index:1}
+  .hero h1{font-size:clamp(30px,5.2vw,48px);letter-spacing:-0.035em;margin:0 auto;max-width:20ch}
+  .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{max-width:58ch;margin:16px auto 0;color:var(--muted);font-size:clamp(16px,2vw,18px)}
+
+  main{padding:14px 0 46px}
+  .card{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--card);padding:24px 26px;margin-bottom:18px}
+  .card.primary{border-color:transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box;border:1.5px solid transparent;box-shadow:0 10px 44px rgba(123,97,255,0.14)}
+  .card .head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .card .emoji{font-size:22px}
+  .card h2{font-size:19px;letter-spacing:-0.02em}
+  .card h3{font-size:15px;margin-top:18px;color:var(--muted)}
+  .card p{color:var(--muted);font-size:15.5px;margin-top:10px}
+  .card p b{color:var(--ink)}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad);padding:4px 10px;border-radius:999px}
+  .badge.q{background:rgba(255,255,255,0.10);color:var(--muted)}
+  .links{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:14.5px}
+  .links a{color:var(--accent);font-weight:600}
+  .links a:hover{text-decoration:underline}
+  .links a::after{content:" ↗";opacity:.6}
+
+  ol.steps{margin:14px 0 0;padding-left:22px;color:var(--muted);font-size:15.5px}
+  ol.steps li{margin-bottom:9px}
+  ol.steps b,ul.notes b{color:var(--ink)}
+  ul.notes{margin:12px 0 0;padding-left:22px;color:var(--muted);font-size:15px}
+  ul.notes li{margin-bottom:8px}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:0.92em;background:rgba(255,255,255,0.07);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  .tip{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:14.5px;color:var(--muted);background:rgba(255,184,77,0.07);border:1px solid rgba(255,184,77,0.24)}
+  .tip b{color:var(--warn)}
+
+  .pico{flex:none;width:26px;height:26px;border-radius:8px;display:inline-grid;place-items:center;overflow:hidden;color:#fff;vertical-align:middle}
+  .pico svg{width:62%;height:62%;display:block}
+  .pico-txt{font-size:11px;font-weight:800;letter-spacing:.3px}
+  .pico-sm{width:20px;height:20px;border-radius:6px;margin-right:8px}
+  .pico-sm .pico-txt{font-size:9px}
+  .tbl-wrap{overflow-x:auto;margin-top:16px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:620px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted-2);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700}
+  td{color:var(--muted)}
+  td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+  td a{color:var(--accent);font-weight:600}
+  td a:hover{text-decoration:underline}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:42px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;background:transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .btn.sm{height:40px;padding:0 18px;font-size:14px;white-space:nowrap}
+
+  footer{border-top:1px solid var(--line);background:var(--bg-2);padding:56px 0 40px}
+  .foot-top{display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start}
+  .foot-brand{max-width:320px}
+  .foot-brand .brand{margin-bottom:12px}
+  .foot-brand p{color:var(--muted-2);font-size:14px}
+  .foot-links{display:flex;gap:56px;flex-wrap:wrap}
+  .foot-col h4{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin:0 0 14px}
+  .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:10px;font-weight:500}
+  .foot-col a:hover{color:var(--ink)}
+  .foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
+  .foot-bottom .ver{font-size:13px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
+  .disclaimer{font-size:13px;color:var(--muted-2);max-width:640px;line-height:1.6}
+
+  /* mobile menu (burger) — appears exactly when the inline links hide */
+  .nav-burger{display:none;width:40px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);background:transparent;color:var(--ink);cursor:pointer;align-items:center;justify-content:center;flex:none;padding:0}
+  .nav-burger:hover{background:rgba(255,255,255,0.04)}
+  .nav-menu{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(10,10,15,0.97);backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--line);padding:6px 24px 12px}
+  .nav-menu a{display:block;padding:13px 2px;color:var(--muted);font-size:15.5px;font-weight:600;border-bottom:1px solid var(--line)}
+  .nav-menu a:last-child{border-bottom:0}
+  .nav-menu a:hover{color:var(--ink)}
+  .nav-menu.open{display:block}
+
+  /* nav ladder — measured, not guessed: full EN nav ≈ 1085px content width.
+     The guide is deliberately NOT in .nav-links: a seventh item would push the
+     measured ladder below and re-break the mobile fitting Lee already fixed
+     twice. It lives in the burger menu and the footer instead. */
+  @media (max-width:1199px){
+    .nav-right .ghost{display:none}    /* GitHub stays reachable in the footer */
+  }
+  @media (max-width:1039px){
+    .nav-links{display:none}
+    .nav-burger{display:inline-flex}
+  }
+  @media (max-width:900px){
+    .foot-links{gap:32px}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 18px}
+    .actions .btn,.actions .ghost{width:100%}
+    .nav-right .ghost{display:none}
+    .nav-in{gap:10px}
+    .brand .tm{display:none}
+    .brand{font-size:15px}
+    .lang-toggle button{padding:0 10px}
+    /* burger + nav CTA don't both fit under ~560 (real iPhones report up to
+       440px viewports, wider than the 430 emulator preset) */
+    .nav .btn.sm{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="./"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
+    <div class="nav-links">
+      <a href="./#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
+      <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
+      <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
+      <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+      <a href="feedback.html"><span data-en>Feedback</span><span data-zh>反馈</span></a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+      </div>
+      <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a class="btn sm" href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="3.4" stroke="#fff" stroke-width="1.6"/><path d="M12 8.6h8.4M8.9 13.7 4.7 20.4M15.1 13.7 10.9 20.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span data-en>Add to Chrome</span><span data-zh>添加到 Chrome</span>
+      </a>
+      <button type="button" class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav-menu" id="navMenu">
+    <a href="./#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
+    <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
+    <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
+    <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
+    <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+    <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+    <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+    <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+    <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="bloom" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <h1 data-en>Use <span class="g">your own key</span></h1>
+    <h1 data-zh>用<span class="g">你自己的 Key</span></h1>
+    <p class="sub" data-en>The extension works with no setup at all. This page is only for people who want a better translation than the free engine gives — you bring an API key, the extension uses it, and nobody sits in between.</p>
+    <p class="sub" data-zh>扩展本身开箱即用，什么都不用配。这一页是给想要比免费引擎更好的译文的人看的——你自备一个 API Key，扩展直接用它，中间没有任何人经手。</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ---------------------------- three worries ---------------------------- -->
+    <section class="card primary">
+      <div class="head">
+        <span class="emoji">🧭</span>
+        <h2 data-en>Three things before you start</h2>
+        <h2 data-zh>开始之前，先说三件事</h2>
+      </div>
+
+      <h3 data-en>1. What it costs</h3>
+      <h3 data-zh>1. 花多少钱</h3>
+      <p data-en>You pay the provider directly for what you use — the extension takes no cut and has no server. Subtitles are short, so a video costs very little, but <b>it is not free by default</b>: check the provider's own pricing page before you rely on it. All three providers below have a free tier, and their limits change often enough that we link to the source instead of copying numbers here.</p>
+      <p data-zh>你按用量直接付给服务商——扩展不抽成、也没有服务器。字幕文本很短，一个视频的花费很小，但<b>默认并不是免费的</b>：依赖它之前先看服务商自己的定价页。下面三家都有免费额度，而额度和限速变动频繁，所以这里只给出处、不抄数字。</p>
+
+      <h3 data-en>2. Network and region</h3>
+      <h3 data-zh>2. 网络与区域</h3>
+      <p data-en>An API only works if your browser can reach it. Chinese endpoints can be slow or flaky from outside mainland China; Google's Gemini API is not available in every region. If a key tests fine one minute and fails the next, this is usually why — the extension retries a dropped connection once and then tells you.</p>
+      <p data-zh>接口能不能用，取决于你的浏览器能不能连上它。国内的接口从境外访问可能慢或不稳；Google Gemini 的接口在部分地区不可用。如果 Key 刚才测通、过一会儿又失败，通常就是这个原因——扩展会对掉线自动重试一次，再失败才提示你。</p>
+
+      <h3 data-en>3. Is my key safe?</h3>
+      <h3 data-zh>3. Key 安全吗</h3>
+      <p data-en>The key is stored in this browser on this computer only (<code>chrome.storage.local</code>). It is <b>never synced to your Google account and never sent anywhere except the provider you picked</b>, as the authorization header of the translation request. You can wipe it any time with <b>Clear</b> next to the key field, and “Reset all settings” wipes it too. Treat a key like a wallet anyway: don't paste it into random websites, and revoke it in the provider's console if you ever suspect it leaked.</p>
+      <p data-zh>Key 只保存在这台电脑的这个浏览器里（<code>chrome.storage.local</code>）。它<b>不会同步到你的 Google 账号，也不会发往除你所选服务商之外的任何地方</b>——只作为翻译请求的认证头。随时可以用 Key 输入框旁边的<b>「清除」</b>删掉，「重置全部设置」也会一并清掉。不过还是把 Key 当钱包看：别往来路不明的网站里粘，一旦怀疑泄露就去服务商后台吊销。</p>
+    </section>
+
+    <!-- ------------------------------- overview ------------------------------ -->
+    <section class="card">
+      <div class="head">
+        <span class="emoji">⚡</span>
+        <h2 data-en>The whole thing in three steps</h2>
+        <h2 data-zh>整个流程就三步</h2>
+      </div>
+      <ol class="steps">
+        <li data-en>Open the extension popup → set <b>Engine</b> to <b>Your own key</b> → click <b>Configure…</b>.</li>
+        <li data-zh>打开扩展弹窗 → 把<b>「翻译引擎」</b>切到<b>「自带 Key」</b> → 点<b>「配置…」</b>。</li>
+        <li data-en>Pick a provider in the list, paste your API key, leave the model on the recommended one.</li>
+        <li data-zh>在列表里选一个服务商，粘贴你的 API Key，模型保持推荐值即可。</li>
+        <li data-en>Click <b>Save and test</b>. Chrome asks once for permission to reach that provider's domain — allow it, and you should see “Connected”.</li>
+        <li data-zh>点<b>「保存并测通」</b>。Chrome 会问一次是否允许访问该服务商的域名——同意后应该看到「连接成功」。</li>
+      </ol>
+      <div class="tip">
+        <b data-en>Why the permission prompt?</b><b data-zh>为什么会弹权限？</b>
+        <span data-en> The extension ships with no access to any AI provider. It asks for one domain, only when you choose that provider — so an unused provider can never be contacted.</span>
+        <span data-zh> 扩展默认对所有 AI 服务商都没有访问权限。只有你选中某一家时，它才申请那一个域名——没用到的服务商永远联系不上。</span>
+      </div>
+    </section>
+
+    <!-- --------------------------------- qwen -------------------------------- -->
+    <section class="card" id="qwen">
+      <div class="head">
+        <span class="pico" data-icon="qwen" style="background:#FF6A00"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M23.919 14.545 20.817 9.17l1.47-2.544a.56.56 0 0 0 0-.566l-1.633-2.83a.57.57 0 0 0-.49-.283h-6.207L12.487.402a.57.57 0 0 0-.49-.284H8.732a.56.56 0 0 0-.49.284L5.139 5.775h-2.94a.56.56 0 0 0-.49.284L.077 8.887a.56.56 0 0 0 0 .567L3.18 14.83l-1.47 2.545a.56.56 0 0 0 0 .566l1.634 2.83a.57.57 0 0 0 .49.283h6.205l1.47 2.545a.57.57 0 0 0 .49.284h3.266a.57.57 0 0 0 .49-.284l3.104-5.375h2.94a.57.57 0 0 0 .49-.283l1.634-2.828a.55.55 0 0 0-.004-.568M8.733.686l1.634 2.828-1.634 2.828H21.8L20.164 9.17H7.425L5.63 6.06Zm1.306 19.801-6.205-.002 1.634-2.83h3.265L2.201 6.344h3.267q3.182 5.517 6.367 11.032zm10.124-5.66L18.53 12l-6.532 11.315-1.634-2.83c2.129-3.673 4.25-7.351 6.373-11.028h3.592l3.102 5.374z"/></svg></span>
+        <h2>Alibaba 百炼 (Qwen / DeepSeek)</h2>
+        <span class="badge" data-en>Tested</span><span class="badge" data-zh>已实测</span>
+      </div>
+      <p data-en>Best pick inside mainland China, and the fastest of the three in our measurements. One key gives you both the Qwen models and DeepSeek models hosted there.</p>
+      <p data-zh>中国大陆首选，也是我们实测里最快的一家。一把 Key 同时能用平台上的通义千问系列和 DeepSeek 系列模型。</p>
+      <div class="links">
+        <a href="https://bailian.console.aliyun.com/?tab=model#/api-key" target="_blank" rel="noopener"><span data-en>Console</span><span data-zh>控制台</span></a>
+        <a href="https://help.aliyun.com/zh/model-studio/model-pricing" target="_blank" rel="noopener"><span data-en>Models &amp; pricing</span><span data-zh>模型与资费</span></a>
+      </div>
+      <ol class="steps">
+        <li data-en>Sign in to the 百炼 console with your Alibaba Cloud account, and activate the model service if it asks you to.</li>
+        <li data-zh>用阿里云账号登录百炼控制台，如果提示需要开通模型服务，先开通。</li>
+        <li data-en>In the console sidebar open <b>System tools → API-KEY</b> and create a key. (The link above goes straight there; console layouts do get reshuffled, so trust the link over the menu names.)</li>
+        <li data-zh>在控制台左侧栏打开<b>「系统工具 → API-KEY」</b>，创建一把 Key。（上面的链接直达该页；控制台偶尔改版，菜单名不对就以链接为准。）</li>
+        <li data-en>Copy the key — it starts with <code>sk-</code>. Paste it into the extension and press Save and test.</li>
+        <li data-zh>复制这把 Key（以 <code>sk-</code> 开头），粘贴进扩展，点「保存并测通」。</li>
+      </ol>
+      <ul class="notes">
+        <li data-en><b>Recommended model:</b> <code>qwen-flash</code> — the default, and by far the quickest we measured. <code>deepseek-v4-flash</code> also works well if you prefer DeepSeek's wording.</li>
+        <li data-zh><b>推荐模型：</b><code>qwen-flash</code>——默认值，也是我们实测最快的。想要 DeepSeek 的语感就填 <code>deepseek-v4-flash</code>，一样能用。</li>
+        <li data-en><b>Keep the default endpoint.</b> A workspace-scoped key (one that starts <code>sk-ws-</code>) works fine on the standard endpoint, so you do not need the workspace-specific host — and the standard one proved more reliable in testing.</li>
+        <li data-zh><b>接口地址保持默认。</b>工作空间级的 Key（以 <code>sk-ws-</code> 开头）在标准接口上照样能用，不需要填工作空间专属域名——而且实测标准接口更稳。</li>
+        <li data-en><b>Avoid “thinking” models</b> for subtitles: they spend most of their time reasoning. The extension already turns that off for this provider where the API allows it.</li>
+        <li data-zh>字幕别用<b>推理（thinking）类模型</b>，它们大部分时间花在思考上。这一家的接口支持关闭思考，扩展已经自动帮你关了。</li>
+      </ul>
+    </section>
+
+    <!-- -------------------------------- gemini ------------------------------- -->
+    <section class="card" id="gemini">
+      <div class="head">
+        <span class="pico" data-icon="gemini" style="background:#4285F4"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg></span>
+        <h2>Google Gemini</h2>
+        <span class="badge" data-en>Tested</span><span class="badge" data-zh>已实测</span>
+      </div>
+      <p data-en>Easiest key to obtain — a couple of clicks in Google AI Studio, no separate billing setup to get started.</p>
+      <p data-zh>最容易拿到 Key 的一家——在 Google AI Studio 点两下就有，开始用不需要另外配置付费。</p>
+      <div class="links">
+        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener"><span data-en>Get a key</span><span data-zh>去申请 Key</span></a>
+        <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener"><span data-en>Pricing &amp; free tier</span><span data-zh>资费与免费额度</span></a>
+      </div>
+      <ol class="steps">
+        <li data-en>Open Google AI Studio and go to the <b>API Keys</b> page.</li>
+        <li data-zh>打开 Google AI Studio，进入 <b>API Keys</b> 页面。</li>
+        <li data-en>Click <b>Create API key</b> and copy the value.</li>
+        <li data-zh>点 <b>Create API key</b>，复制生成的值。</li>
+        <li data-en>Paste it into the extension and press Save and test.</li>
+        <li data-zh>粘贴进扩展，点「保存并测通」。</li>
+      </ol>
+      <ul class="notes">
+        <li data-en><b>Recommended model:</b> <code>gemini-flash-latest</code> — the default. Do not pin an old version: we found <code>gemini-2.0-flash</code> already answering “quota exceeded” on free keys, which looks exactly like a broken extension.</li>
+        <li data-zh><b>推荐模型：</b><code>gemini-flash-latest</code>——默认值。<b>别钉旧版本号</b>：我们实测 <code>gemini-2.0-flash</code> 在免费 Key 上已经直接返回「额度用尽」，看起来就像插件坏了。</li>
+        <li data-en>Not available in every country. If the test fails with a network error while other sites work, this is the likely reason.</li>
+        <li data-zh>并非所有国家/地区都能访问。如果别的网站都正常、只有测通报网络错误，大概就是这个原因。</li>
+      </ul>
+    </section>
+
+    <!-- --------------------------------- deepl ------------------------------- -->
+    <section class="card" id="deepl">
+      <div class="head">
+        <span class="pico" data-icon="deepl" style="background:#0F2B46"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.907 4.93953 12.68543.18573a1.3577 1.3577 0 0 0-1.3709 0L3.09298 4.9565a1.3766 1.3766 0 0 0-.68639 1.18233v9.52646a1.3766 1.3766 0 0 0 .68639 1.19363l8.22157 4.75946.06223.03583 4.04856 2.3458-.01131-2.06106.0075-1.1446.0038.01885v-.38467c0-.23006.1188-.43371.29605-.56005l.264-.15086.12633-.06977h-.0075l4.80283-2.7795a1.3803 1.3803 0 0 0 .68639-1.19551V6.13505a1.3803 1.3803 0 0 0-.68642-1.19552m-9.85269 9.68863a1.4275 1.4275 0 0 1-.39976 1.3841 1.4086 1.4086 0 0 1-1.97054 0 1.4199 1.4199 0 0 1 0-2.06294 1.4086 1.4086 0 0 1 2.0422.07543l3.32822-1.91585.6864.38656zm5.77019-2.41367a1.4086 1.4086 0 0 1-1.97054 0 1.4256 1.4256 0 0 1-.3696-1.47837l-.0132.0075-3.7525-2.1723-.05657.05656a1.4086 1.4086 0 0 1-1.97053 0 1.4199 1.4199 0 0 1 0-2.06293 1.4086 1.4086 0 0 1 1.97242 0c.3941.37713.52422.91832.39033 1.40672l3.7808 2.20059.01886-.01886a1.4086 1.4086 0 0 1 1.97242 0 1.42746 1.42746 0 0 1 0 2.06105z"/></svg></span>
+        <h2>DeepL</h2>
+        <span class="badge" data-en>Tested</span><span class="badge" data-zh>已实测</span>
+      </div>
+      <p data-en>Not a chat model — a dedicated translator. Wording is conservative and consistent, which many people prefer for subtitles. It also gets the per-line alignment right, because its API accepts the surrounding sentence as context.</p>
+      <p data-zh>它不是聊天模型，而是专业翻译引擎。用词稳、前后一致，很多人就喜欢这种字幕。它也能做到逐行对齐，因为它的接口支持把整句作为上下文传进去。</p>
+      <div class="links">
+        <a href="https://www.deepl.com/pro-api" target="_blank" rel="noopener"><span data-en>DeepL API plans</span><span data-zh>DeepL API 方案</span></a>
+        <a href="https://www.deepl.com/pro" target="_blank" rel="noopener"><span data-en>Pricing</span><span data-zh>资费</span></a>
+      </div>
+      <ol class="steps">
+        <li data-en>Sign up for a <b>DeepL API</b> plan — the Free one is enough. Note this is the <b>API</b> product, not the website translator or the desktop app.</li>
+        <li data-zh>注册 <b>DeepL API</b> 方案，Free 版就够。注意要的是 <b>API</b> 产品，不是网页翻译或桌面客户端。</li>
+        <li data-en>In your DeepL account page, open the section for API keys and copy the authentication key.</li>
+        <li data-zh>在 DeepL 账户页面里找到 API 密钥那一节，复制认证密钥。</li>
+        <li data-en>Paste it into the extension and press Save and test. There is no model to choose for DeepL.</li>
+        <li data-zh>粘贴进扩展，点「保存并测通」。DeepL 不需要选模型。</li>
+      </ol>
+      <ul class="notes">
+        <li data-en><b>The single most common mistake:</b> a <b>DeepL Pro</b> subscription (website / apps) is a different product from a <b>DeepL API</b> account, and the key you see in a Pro account does not work here. A 401/403 almost always means this.</li>
+        <li data-zh><b>最常见的错就这一条：</b><b>DeepL Pro</b>（网页版／客户端订阅）和 <b>DeepL API</b> 是两种不同的产品，Pro 账户里看到的密钥在这里用不了。报 401/403 基本都是这个原因。</li>
+        <li data-en>A key ending in <code>:fx</code> is a Free-plan key. The extension reads that suffix and talks to the right endpoint automatically — you never pick one.</li>
+        <li data-zh>以 <code>:fx</code> 结尾的是 Free 版 Key。扩展会读这个后缀自动选对应的接口地址——你不用管。</li>
+        <li data-en><b>Signing up needs a card.</b> The API Free plan (about 500,000 characters a month) still asks for a VISA/Mastercard issued in a region DeepL supports — cards issued in mainland China are generally not accepted, which is why many users here end up on an LLM instead.</li>
+        <li data-zh><b>注册要绑卡。</b>API Free 方案（每月约 50 万字符）仍然需要一张 DeepL 支持地区发行的 VISA／Mastercard——中国大陆发行的卡普遍不被接受，所以国内用户往往最后选大模型那条路。</li>
+        <li data-en>DeepL covers fewer target languages than an LLM. If yours isn't supported you get a clear message asking you to change the language or the engine, and nothing is sent.</li>
+        <li data-zh>DeepL 支持的目标语言比大模型少。遇到不支持的语言，扩展会直接提示你换语言或换引擎，请求不会发出去。</li>
+      </ul>
+    </section>
+
+    <!-- ------------------------------ the others ----------------------------- -->
+    <section class="card">
+      <div class="head">
+        <span class="emoji">🧩</span>
+        <h2 data-en>The other providers</h2>
+        <h2 data-zh>其他服务商</h2>
+        <span class="badge q" data-en>Endpoint checked, no key on hand</span><span class="badge q" data-zh>接口已核，无 Key 实测</span>
+      </div>
+      <p data-en>Every endpoint below was probed and answered — the host and path are right. What we could <b>not</b> check without a key is the model name and whether the provider lets a browser extension call it directly. So don't guess a model: press <b>List models with my key</b> in the settings page and pick from what your own account returns.</p>
+      <p data-zh>下面每一家的接口我们都探过、都有响应——域名和路径是对的。没有 Key 就<b>无法</b>验证的是模型名，以及服务商是否允许浏览器扩展直连。所以别猜模型名：在设置页点<b>「用我的 Key 拉取模型」</b>，从你自己账号返回的列表里选。</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span data-en>Provider</span><span data-zh>服务商</span></th>
+              <th><span data-en>Get a key</span><span data-zh>拿 Key</span></th>
+              <th><span data-en>Notes</span><span data-zh>备注</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="openai">
+              <td><span class="pico pico-sm" data-icon="openai" style="background:#10A37F"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg></span>OpenAI</td>
+              <td><a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">API keys</a> · <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>Model line moves fast — fetch the list rather than typing a name.</span><span data-zh>模型更新很快——用「拉取模型」而不是手打名字。</span></td>
+            </tr>
+            <tr id="deepseek">
+              <td><span class="pico pico-sm" data-icon="deepseek" style="background:#4D6BFE"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M23.748 4.651c-.254-.124-.364.113-.512.233-.051.04-.094.09-.137.137-.372.397-.806.657-1.373.626-.829-.046-1.537.214-2.163.848-.133-.782-.575-1.248-1.247-1.548-.352-.155-.708-.311-.955-.65-.172-.24-.219-.509-.305-.774-.055-.16-.11-.323-.293-.35-.2-.031-.278.136-.356.276-.313.572-.434 1.202-.422 1.84.027 1.436.633 2.58 1.838 3.393.137.094.172.187.129.323-.082.28-.18.553-.266.833-.055.179-.137.218-.328.14a5.5 5.5 0 0 1-1.737-1.179c-.857-.828-1.631-1.743-2.597-2.46a12 12 0 0 0-.689-.47c-.985-.957.13-1.743.387-1.836.27-.098.094-.433-.778-.428-.872.003-1.67.295-2.687.685a3 3 0 0 1-.465.136 9.6 9.6 0 0 0-2.883-.101c-1.885.21-3.39 1.1-4.497 2.622C.082 8.776-.231 10.854.152 13.02c.403 2.284 1.568 4.175 3.36 5.653 1.857 1.533 3.997 2.284 6.438 2.14 1.482-.085 3.132-.284 4.994-1.86.47.234.962.328 1.78.398.629.058 1.235-.031 1.705-.129.735-.155.684-.836.418-.961-2.155-1.004-1.682-.595-2.112-.926 1.095-1.295 2.768-3.598 3.284-6.733.05-.346.115-.834.108-1.114-.004-.171.035-.238.23-.257a4.2 4.2 0 0 0 1.545-.475c1.397-.763 1.96-2.016 2.093-3.517.02-.23-.004-.467-.247-.588M11.58 18.168c-2.088-1.642-3.101-2.183-3.52-2.16-.39.024-.32.472-.234.763.09.288.207.487.371.74.114.167.192.416-.113.603-.673.416-1.842-.14-1.897-.168-1.361-.801-2.5-1.86-3.301-3.306-.775-1.393-1.225-2.888-1.299-4.482-.02-.385.094-.522.477-.592a4.7 4.7 0 0 1 1.53-.038c2.131.311 3.946 1.264 5.467 2.774.868.86 1.525 1.887 2.202 2.89.72 1.066 1.494 2.082 2.48 2.915.348.291.626.513.892.677-.802.09-2.14.109-3.055-.615zm1.001-6.44a.306.306 0 0 1 .415-.287.3.3 0 0 1 .113.074.3.3 0 0 1 .086.214c0 .17-.136.307-.308.307a.303.303 0 0 1-.306-.307m3.11 1.596c-.2.081-.4.151-.591.16a1.25 1.25 0 0 1-.798-.254c-.274-.23-.47-.358-.551-.758a1.7 1.7 0 0 1 .015-.588c.07-.327-.007-.537-.238-.727-.188-.156-.426-.199-.689-.199a.6.6 0 0 1-.254-.078.253.253 0 0 1-.114-.358 1 1 0 0 1 .192-.21c.356-.202.767-.136 1.146.016.352.144.618.408 1.001.782.392.451.462.576.685.915.176.264.336.536.446.848.066.194-.02.353-.25.45"/></svg></span>DeepSeek</td>
+              <td><a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">API keys</a> · <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>DeepSeek's own platform. Also reachable through 百炼 above.</span><span data-zh>DeepSeek 官方平台。上面的百炼也能用到它的模型。</span></td>
+            </tr>
+            <tr id="claude">
+              <td><span class="pico pico-sm" data-icon="claude" style="background:#D97757"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span>Anthropic Claude</td>
+              <td><a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">API keys</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>Its OpenAI-compatible endpoint is live, but Anthropic blocks browser-originated calls by default. The extension sends the documented opt-in header; whether that is enough from an extension is unverified.</span><span data-zh>它的 OpenAI 兼容接口确认存在，但 Anthropic 默认拦截浏览器发起的调用。扩展已带上官方文档里的放行请求头，但从扩展里是否够用未经验证。</span></td>
+            </tr>
+            <tr id="grok">
+              <td><span class="pico pico-sm" data-icon="grok" style="background:#5A5A5A"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg></span>xAI Grok</td>
+              <td><a href="https://console.x.ai/" target="_blank" rel="noopener">Console</a> · <a href="https://docs.x.ai/developers/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>OpenAI-compatible API.</span><span data-zh>OpenAI 兼容接口。</span></td>
+            </tr>
+            <tr id="kimi">
+              <td><span class="pico pico-sm" data-icon="kimi" style="background:#1F2937"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21.765.351C22.998.351 24 1.353 24 2.586S22.998 4.82 21.765 4.82h-1.974c-.15 0-.26-.12-.26-.26V2.586A2.237 2.237 0 0 1 21.765.35M9.41 13.388l8.447-8.377c.16-.16.07-.471-.14-.471h-4.55s-.1.02-.14.06l-9.099 9.029c-.14.14-.35.02-.35-.21V4.81c0-.15-.1-.27-.221-.27H.22c-.12 0-.22.12-.22.27v18.57c0 .15.1.27.22.27h3.137c.12 0 .22-.12.22-.27v-3.79c0-.08.03-.16.08-.21l2.826-2.796c.07-.07.16-.08.241-.03l7.546 5.551a8.9 8.9 0 0 0 4.018 1.493c.12.01.23-.11.23-.27V19.76c0-.14-.08-.25-.19-.26a5.8 5.8 0 0 1-2.355-.942l-6.533-4.73c-.14-.09-.15-.32-.03-.441"/></svg></span>Kimi (Moonshot)</td>
+              <td><a href="https://platform.kimi.com/console/api-keys" target="_blank" rel="noopener">API keys</a> · <a href="https://platform.kimi.com/docs/pricing/chat" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>The console moved to kimi.com; the API host is still the moonshot.cn one filled in here.</span><span data-zh>控制台已迁到 kimi.com，但接口主机仍是这里预填的 moonshot.cn。</span></td>
+            </tr>
+            <tr id="glm">
+              <td><span class="pico pico-sm" data-icon="glm" style="background:#3859FF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11.991 23.503a.24.24 0 00-.244.248.24.24 0 00.244.249.24.24 0 00.245-.249.24.24 0 00-.22-.247l-.025-.001zM9.671 5.365a1.697 1.697 0 011.099 2.132l-.071.172-.016.04-.018.054c-.07.16-.104.32-.104.498-.035.71.47 1.279 1.186 1.314h.366c1.309.053 2.338 1.173 2.286 2.523-.052 1.332-1.152 2.38-2.478 2.327h-.174c-.715.018-1.274.64-1.239 1.368 0 .124.018.23.053.337.209.373.54.658.96.8.75.23 1.517-.125 1.9-.782l.018-.035c.402-.64 1.17-.96 1.92-.711.854.284 1.378 1.226 1.099 2.167a1.661 1.661 0 01-2.077 1.102 1.711 1.711 0 01-.907-.711l-.017-.035c-.2-.323-.463-.58-.851-.711l-.056-.018a1.646 1.646 0 00-1.954.746 1.66 1.66 0 01-1.065.764 1.677 1.677 0 01-1.989-1.279c-.209-.906.332-1.83 1.257-2.043a1.51 1.51 0 01.296-.035h.018c.68-.071 1.151-.622 1.116-1.333a1.307 1.307 0 00-.227-.693 2.515 2.515 0 01-.366-1.403 2.39 2.39 0 01.366-1.208c.14-.195.21-.444.227-.693.018-.71-.506-1.261-1.186-1.332l-.07-.018a1.43 1.43 0 01-.299-.07l-.05-.019a1.7 1.7 0 01-1.047-2.114 1.68 1.68 0 012.094-1.101zm-5.575 10.11c.26-.264.639-.367.994-.27.355.096.633.379.728.74.095.362-.007.748-.267 1.013-.402.41-1.053.41-1.455 0a1.062 1.062 0 010-1.482zm14.845-.294c.359-.09.738.024.992.297.254.274.344.665.237 1.025-.107.36-.396.634-.756.718-.551.128-1.1-.22-1.23-.781a1.05 1.05 0 01.757-1.26zm-.064-4.39c.314.32.49.753.49 1.206 0 .452-.176.886-.49 1.206-.315.32-.74.5-1.185.5-.444 0-.87-.18-1.184-.5a1.727 1.727 0 010-2.412 1.654 1.654 0 012.369 0zm-11.243.163c.364.484.447 1.128.218 1.691a1.665 1.665 0 01-2.188.923c-.855-.36-1.26-1.358-.907-2.228a1.68 1.68 0 011.33-1.038c.593-.08 1.183.169 1.547.652zm11.545-4.221c.368 0 .708.2.892.524.184.324.184.724 0 1.048a1.026 1.026 0 01-.892.524c-.568 0-1.03-.47-1.03-1.048 0-.579.462-1.048 1.03-1.048zm-14.358 0c.368 0 .707.2.891.524.184.324.184.724 0 1.048a1.026 1.026 0 01-.891.524c-.569 0-1.03-.47-1.03-1.048 0-.579.461-1.048 1.03-1.048zm10.031-1.475c.925 0 1.675.764 1.675 1.706s-.75 1.705-1.675 1.705-1.674-.763-1.674-1.705c0-.942.75-1.706 1.674-1.706zm-2.626-.684c.362-.082.653-.356.761-.718a1.062 1.062 0 00-.238-1.028 1.017 1.017 0 00-.996-.294c-.547.14-.881.7-.752 1.257.13.558.675.907 1.225.783zm0 16.876c.359-.087.644-.36.75-.72a1.062 1.062 0 00-.237-1.019 1.018 1.018 0 00-.985-.301 1.037 1.037 0 00-.762.717c-.108.361-.017.754.239 1.028.245.263.606.377.953.305l.043-.01zM17.19 3.5a.631.631 0 00.628-.64c0-.355-.279-.64-.628-.64a.631.631 0 00-.628.64c0 .355.28.64.628.64zm-10.38 0a.631.631 0 00.628-.64c0-.355-.28-.64-.628-.64a.631.631 0 00-.628.64c0 .355.279.64.628.64zm-5.182 7.852a.631.631 0 00-.628.64c0 .354.28.639.628.639a.63.63 0 00.627-.606l.001-.034a.62.62 0 00-.628-.64zm5.182 9.13a.631.631 0 00-.628.64c0 .355.279.64.628.64a.631.631 0 00.628-.64c0-.355-.28-.64-.628-.64zm10.38.018a.631.631 0 00-.628.64c0 .355.28.64.628.64a.631.631 0 00.628-.64c0-.355-.279-.64-.628-.64zm5.182-9.148a.631.631 0 00-.628.64c0 .354.279.639.628.639a.631.631 0 00.628-.64c0-.355-.28-.64-.628-.64zm-.384-4.992a.24.24 0 00.244-.249.24.24 0 00-.244-.249.24.24 0 00-.244.249c0 .142.122.249.244.249zM11.991.497a.24.24 0 00.245-.248A.24.24 0 0011.99 0a.24.24 0 00-.244.249c0 .133.108.236.223.247l.021.001zM2.011 6.36a.24.24 0 00.245-.249.24.24 0 00-.244-.249.24.24 0 00-.244.249.24.24 0 00.244.249zm0 11.263a.24.24 0 00-.243.248.24.24 0 00.244.249.24.24 0 00.244-.249.252.252 0 00-.244-.248zm19.995-.018a.24.24 0 00-.245.248.24.24 0 00.245.25.24.24 0 00.244-.25.252.252 0 00-.244-.248z"></path></svg></span><span data-en>Zhipu GLM</span><span data-zh>智谱 GLM</span></td>
+              <td><a href="https://bigmodel.cn/usercenter/apikeys" target="_blank" rel="noopener">API keys</a> · <a href="https://bigmodel.cn/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>Mainland China endpoint.</span><span data-zh>国内接口。</span></td>
+            </tr>
+            <tr id="doubao">
+              <td><span class="pico pico-sm" data-icon="doubao" style="background:#1664FF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.31 15.756c.172-3.75 1.883-5.999 2.549-6.739-3.26 2.058-5.425 5.658-6.358 8.308v1.12C1.501 21.513 4.226 24 7.59 24a6.59 6.59 0 002.2-.375c.353-.12.7-.248 1.039-.378.913-.899 1.65-1.91 2.243-2.992-4.877 2.431-7.974.072-7.763-4.5l.002.001z" fill-opacity=".5"></path><path d="M22.57 10.283c-1.212-.901-4.109-2.404-7.397-2.8.295 3.792.093 8.766-2.1 12.773a12.782 12.782 0 01-2.244 2.992c3.764-1.448 6.746-3.457 8.596-5.219 2.82-2.683 3.353-5.178 3.361-6.66a2.737 2.737 0 00-.216-1.084v-.002zM14.303 1.867C12.955.7 11.248 0 9.39 0 7.532 0 5.883.677 4.545 1.807 2.791 3.29 1.627 5.557 1.5 8.125v9.201c.932-2.65 3.097-6.25 6.357-8.307.5-.318 1.025-.595 1.569-.829 1.883-.801 3.878-.932 5.746-.706-.222-2.83-.718-5.002-.87-5.617h.001z"></path><path d="M17.305 4.961a199.47 199.47 0 01-1.08-1.094c-.202-.213-.398-.419-.586-.622l-1.333-1.378c.151.615.648 2.786.869 5.617 3.288.395 6.185 1.898 7.396 2.8-1.306-1.275-3.475-3.487-5.266-5.323z" fill-opacity=".5"></path></svg></span><span data-en>Doubao (Volcano Ark)</span><span data-zh>豆包（火山方舟）</span></td>
+              <td><a href="https://console.volcengine.com/ark/region:ark+cn-beijing/apikey" target="_blank" rel="noopener">Ark <span data-en>console</span><span data-zh>控制台</span></a> · <a href="https://www.volcengine.com/docs/82379/1544106" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>Takes an endpoint id (<code>ep-…</code>) in the model field, not a public model name.</span><span data-zh>模型栏要填接入点 ID（<code>ep-…</code>），不是公开模型名。</span></td>
+            </tr>
+            <tr id="siliconflow">
+              <td><span class="pico pico-sm" data-icon="siliconflow" style="background:#6E56CF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.956 6.521H12.522c-.577 0-1.044.468-1.044 1.044v3.13c0 .577-.466 1.044-1.043 1.044H1.044c-.577 0-1.044.467-1.044 1.044v4.174C0 17.533.467 18 1.044 18h10.434c.577 0 1.044-.467 1.044-1.043v-3.13c0-.578.466-1.044 1.043-1.044h9.391c.577 0 1.044-.467 1.044-1.044V7.565c0-.576-.467-1.044-1.044-1.044z"></path></svg></span>SiliconFlow</td>
+              <td><a href="https://cloud.siliconflow.cn/account/ak" target="_blank" rel="noopener">API keys</a> · <a href="https://siliconflow.cn/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>Hosts many open models; names are long — fetch the list.</span><span data-zh>托管很多开源模型，名字都很长——用「拉取模型」。</span></td>
+            </tr>
+            <tr id="openrouter">
+              <td><span class="pico pico-sm" data-icon="openrouter" style="background:#6467F2"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M16.778 1.844v1.919q-.569-.026-1.138-.032-.708-.008-1.415.037c-1.93.126-4.023.728-6.149 2.237-2.911 2.066-2.731 1.95-4.14 2.75-.396.223-1.342.574-2.185.798-.841.225-1.753.333-1.751.333v4.229s.768.108 1.61.333c.842.224 1.789.575 2.185.799 1.41.798 1.228.683 4.14 2.75 2.126 1.509 4.22 2.11 6.148 2.236.88.058 1.716.041 2.555.005v1.918l7.222-4.168-7.222-4.17v2.176c-.86.038-1.611.065-2.278.021-1.364-.09-2.417-.357-3.979-1.465-2.244-1.593-2.866-2.027-3.68-2.508.889-.518 1.449-.906 3.822-2.59 1.56-1.109 2.614-1.377 3.978-1.466.667-.044 1.418-.017 2.278.02v2.176L24 6.014Z"/></svg></span>OpenRouter</td>
+              <td><a href="https://openrouter.ai/keys" target="_blank" rel="noopener">Keys</a> · <a href="https://openrouter.ai/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>One key, many vendors. Model names look like <code>vendor/model</code> — its catalogue is public, so the model list loads reliably.</span><span data-zh>一把 Key 通多家。模型名形如 <code>vendor/model</code>——它的模型目录是公开的，所以「拉取模型」很稳。</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ----------------------------- troubleshooting ------------------------- -->
+    <section class="card" id="troubleshooting">
+      <div class="head">
+        <span class="emoji">🔧</span>
+        <h2 data-en>When it doesn't work</h2>
+        <h2 data-zh>出问题了怎么办</h2>
+      </div>
+      <p data-en>The extension tries to name the actual problem instead of just failing. Here is what each message means.</p>
+      <p data-zh>扩展会尽量说出到底哪里出了问题，而不是只报个失败。下面是每种提示的含义。</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span data-en>Message</span><span data-zh>提示</span></th>
+              <th><span data-en>What to do</span><span data-zh>怎么办</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span data-en>Key was rejected (401/403)</span><span data-zh>Key 被拒绝（401/403）</span></td>
+              <td><span data-en>Re-copy the whole key (a trailing space or a missing character is the usual cause), and check the key is active and the service is enabled on that account.</span><span data-zh>重新完整复制一遍 Key（多一个空格、少一个字符是最常见原因），并确认该 Key 有效、账号已开通对应服务。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Model name or base URL may be wrong</span><span data-zh>模型名或接口地址可能不对</span></td>
+              <td><span data-en>Use “List models with my key” and pick from the list. For a custom endpoint, both a base URL and a full endpoint URL are accepted.</span><span data-zh>点「用我的 Key 拉取模型」从列表里选。自定义接口地址时，填 Base URL 或完整接口地址都可以。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Only chain-of-thought, no translation</span><span data-zh>只输出了思考过程，没给译文</span></td>
+              <td><span data-en>You picked a reasoning model. Switch to a normal “flash”/“turbo” style model.</span><span data-zh>你选到了推理模型。换成普通的 flash／turbo 一类模型。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Rate-limited / out of quota</span><span data-zh>被限流／额度用完</span></td>
+              <td><span data-en>The extension slows down and retries by itself; already-translated lines keep working. If the quota is gone for the period, top up or switch engine.</span><span data-zh>扩展会自动放慢并重试，已翻译的句子不受影响。如果是本期额度用尽，充值或换引擎。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Cannot reach that endpoint</span><span data-zh>连不上这个接口</span></td>
+              <td><span data-en>Network or regional restriction. Try again, try another provider, or use the free engine.</span><span data-zh>网络或区域限制。稍后重试、换一家，或先用免费引擎。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Not authorized to reach that domain</span><span data-zh>没有授权访问这个域名</span></td>
+              <td><span data-en>The permission prompt was dismissed. Press Save and test again and allow it.</span><span data-zh>权限弹窗被关掉了。再点一次「保存并测通」并允许。</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <a class="btn" href="feedback.html"><span data-en>Still stuck? Tell us</span><span data-zh>还是不行？告诉我们</span></a>
+        <a class="ghost" href="./#faq"><span data-en>General FAQ</span><span data-zh>常见问题</span></a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="./" class="brand"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
+        <p data-en>Bilingual subtitles for YouTube — the original language and your translation together in one clean, non-overlapping layer.</p>
+        <p data-zh>为 YouTube 打造的双语字幕——原文与你的译文同处一层，干净整洁、互不重叠。</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4><span data-en>Product</span><span data-zh>产品</span></h4>
+          <a href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge" target="_blank" rel="noopener">Chrome Web Store</a>
+          <a href="./#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
+          <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
+          <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
+          <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+          <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+          <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+        </div>
+        <div class="foot-col">
+          <h4><span data-en>Open source</span><span data-zh>开放源代码</span></h4>
+          <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
+          <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="ver">v3.5.1 · Chromium 111+ · Manifest V3</span>
+      <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. Provider names and logos are trademarks of their respective owners and are used only to identify the API you choose. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
+      <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。各服务商名称与标志均为其各自所有者的商标，此处仅用于标识你所选择的接口。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var STORAGE_KEY = "dsfy-lang";
+  var params = new URLSearchParams(location.search);
+
+  window.setLang = function (lang) {
+    if (lang !== "zh") lang = "en";
+    document.documentElement.setAttribute("lang", lang);
+    var enBtn = document.getElementById("lang-en");
+    var zhBtn = document.getElementById("lang-zh");
+    if (enBtn) enBtn.classList.toggle("active", lang === "en");
+    if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  };
+
+  window.toggleMenu = function () {
+    var m = document.getElementById("navMenu");
+    var b = document.getElementById("navBurger");
+    if (!m) return;
+    var open = !m.classList.contains("open");
+    m.classList.toggle("open", open);
+    if (b) b.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  var navMenuEl = document.getElementById("navMenu");
+  if (navMenuEl) navMenuEl.addEventListener("click", function (e) {
+    if (e.target && e.target.closest && e.target.closest("a")) window.toggleMenu();
+  });
+
+  var lang = params.get("lang");
+  if (lang !== "zh" && lang !== "en") {
+    try { lang = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  }
+  if (lang !== "zh" && lang !== "en") {
+    lang = (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+  }
+  window.setLang(lang);
+
+  // The extension links straight to a provider section (guide.html#qwen). With
+  // a sticky nav an anchor lands under it, so nudge the scroll on arrival.
+  if (location.hash) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) setTimeout(function () {
+      var y = target.getBoundingClientRect().top + window.pageYOffset - 78;
+      window.scrollTo(0, y);
+    }, 0);
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics (cookieless, no personal data) --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9a291d0094db4643a7f4795a003e2419"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+</html>
