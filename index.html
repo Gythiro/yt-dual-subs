@@ -291,6 +291,26 @@
     .trust-in{gap:12px 22px}
     .foot-links{gap:32px}
   }
+
+  /* help dropdown — holds every standalone page so the row stops growing */
+  .nav-drop{position:relative}
+  .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;
+    padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
+    cursor:pointer;white-space:nowrap;transition:color .15s}
+  .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}
+  .nav-drop-btn svg{transition:transform .18s}
+  .nav-drop.open .nav-drop-btn svg{transform:rotate(180deg)}
+  .nav-drop-menu{display:none;position:absolute;top:calc(100% + 14px);left:-14px;min-width:210px;
+    background:rgba(14,14,21,0.98);backdrop-filter:saturate(140%) blur(14px);
+    border:1px solid var(--line-2);border-radius:12px;padding:6px;
+    box-shadow:0 18px 44px rgba(0,0,0,.5)}
+  .nav-drop.open .nav-drop-menu{display:block}
+  .nav-drop-menu a{display:block;padding:9px 12px;border-radius:8px;color:var(--muted);
+    font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-drop-menu a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+  .sec-links{display:flex;flex-wrap:wrap;gap:26px;justify-content:center;margin-top:20px}
+  .sec-links a{color:var(--accent-2);font-size:15.5px;font-weight:600;white-space:nowrap}
+  .sec-links a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -299,12 +319,23 @@
   <div class="wrap nav-in">
     <a href="#top" class="brand"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
     <div class="nav-links">
-      <a href="#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
-      <a href="#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
-      <a href="#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
-      <a href="#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
-      <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
-      <a href="feedback.html"><span data-en>Feedback</span><span data-zh>反馈</span></a>
+      <a href="./#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
+      <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
+      <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
+      <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" id="helpBtn" aria-expanded="false"
+                aria-haspopup="true" aria-controls="helpMenu" onclick="toggleHelp()">
+          <span data-en>Help</span><span data-zh>帮助</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-drop-menu" id="helpMenu" role="menu">
+          <a role="menuitem" href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+          <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+          <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+        </div>
+      </div>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Language">
@@ -452,6 +483,10 @@
       <span class="kicker"><span data-en>Features</span><span data-zh>功能特性</span></span>
       <h2 data-en>Everything you'd want from a subtitle layer</h2>
       <h2 data-zh>一层好字幕该有的，它都有</h2>
+      <p class="sec-links">
+        <a href="guide.html"><span data-en>How to set up your own key</span><span data-zh>怎么配置自带 Key</span> →</a>
+        <a href="roadmap.html"><span data-en>What's coming next</span><span data-zh>接下来会做什么</span> →</a>
+      </p>
     </div>
 
     <div class="rows">
@@ -809,6 +844,33 @@
 </script>
 
 <!-- Cloudflare Web Analytics (cookieless, no personal data) --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9a291d0094db4643a7f4795a003e2419"}'></script><!-- End Cloudflare Web Analytics -->
+
+
+<script>
+// Dropdown kept out of the main IIFE on purpose: it is the only nav behaviour
+// shared by all five pages, so it lives in one block that is easy to diff.
+(function () {
+  var drop = document.querySelector(".nav-drop");
+  window.toggleHelp = function () {
+    if (!drop) return;
+    var open = !drop.classList.contains("open");
+    drop.classList.toggle("open", open);
+    var b = document.getElementById("helpBtn");
+    if (b) b.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  document.addEventListener("click", function (e) {
+    if (!drop || !drop.classList.contains("open")) return;
+    if (!drop.contains(e.target)) window.toggleHelp();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && drop && drop.classList.contains("open")) {
+      window.toggleHelp();
+      var b = document.getElementById("helpBtn");
+      if (b) b.focus();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
