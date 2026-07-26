@@ -2,3 +2,8 @@
 docs/ export-ignore
 docs/** export-ignore
 .gitattributes export-ignore
+
+# Not part of the extension package — keep the store zip to what runs.
+.github/ export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
