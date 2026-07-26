@@ -70,7 +70,11 @@
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
   .brand img{width:30px;height:30px;border-radius:8px;aspect-ratio:1/1;object-fit:cover}
   .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
-  .nav-links{display:flex;gap:18px;margin-left:8px;flex:none}
+  .nav-links{display:flex;align-items:center;gap:18px;margin-left:8px;flex:none}
+  /* anchors and the dropdown button must be laid out the SAME way, or the
+     stretched anchor puts its text at the top of the box while the inline-flex
+     button centres its own — 3px apart, which is visible in the bar. */
+  .nav-links>a,.nav-links>.nav-drop{display:flex;align-items:center}
   .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
@@ -294,7 +298,7 @@
 
   /* help dropdown — holds every standalone page so the row stops growing */
   .nav-drop{position:relative}
-  .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;
+  .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;line-height:inherit;
     padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
     cursor:pointer;white-space:nowrap;transition:color .15s}
   .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}

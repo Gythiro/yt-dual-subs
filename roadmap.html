@@ -59,7 +59,11 @@
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
   .brand img{width:30px;height:30px;border-radius:8px}
   .brand .tm{font-size:0.7em;vertical-align:super;color:var(--muted-2);font-weight:600}
-  .nav-links{display:flex;gap:18px;margin-left:8px;flex:none}
+  .nav-links{display:flex;align-items:center;gap:18px;margin-left:8px;flex:none}
+  /* anchors and the dropdown button must be laid out the SAME way, or the
+     stretched anchor puts its text at the top of the box while the inline-flex
+     button centres its own — 3px apart, which is visible in the bar. */
+  .nav-links>a,.nav-links>.nav-drop{display:flex;align-items:center}
   .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
@@ -82,7 +86,7 @@
      narrow for Chinese text. */
   .board{padding:14px 0 46px}
   .board .wrap{max-width:1160px}
-  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+  .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
   .col h2{font-size:15px;letter-spacing:-0.01em;display:flex;align-items:center;gap:8px;margin-bottom:4px}
   .col .count{font-size:12px;font-weight:600;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
   .col-note{color:var(--muted-2);font-size:13px;margin:0 0 14px}
@@ -90,6 +94,8 @@
   .item.now{border-color:transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
   .item h3{font-size:15.5px;letter-spacing:-0.015em}
   .item p{color:var(--muted);font-size:14px;margin-top:7px}
+  .item.done{border-color:rgba(74,222,128,0.28)}
+  .item.done .src{color:var(--ok);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.07)}
   .item.off{background:rgba(255,255,255,0.02)}
   .item.off h3{color:var(--muted)}
   .src{display:inline-block;margin-top:11px;font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--muted-2);border:1px solid var(--line-2);border-radius:999px;padding:3px 10px}
@@ -136,7 +142,10 @@
     .nav-links{display:none}
     .nav-burger{display:inline-flex}
   }
-  @media (max-width:900px){
+  @media (max-width:1180px){
+    .cols{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:760px){
     .cols{grid-template-columns:1fr;gap:8px}
     .col{margin-bottom:18px}
     .foot-links{gap:32px}
@@ -156,7 +165,7 @@
 
   /* help dropdown — holds every standalone page so the row stops growing */
   .nav-drop{position:relative}
-  .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;
+  .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;line-height:inherit;
     padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
     cursor:pointer;white-space:nowrap;transition:color .15s}
   .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}
@@ -171,16 +180,6 @@
     font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-drop-menu a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
 
-  /* shipped band — chips, not cards: name + version is the whole payload */
-  .done{margin-top:30px;border-top:1px solid var(--line);padding-top:24px}
-  .done-head{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between;margin-bottom:16px}
-  .done-head h2{font-size:15px;display:flex;align-items:center;gap:8px}
-  .done-head a{color:var(--accent-2);font-size:14px;font-weight:600}
-  .done-head a:hover{text-decoration:underline}
-  .chips{display:flex;flex-wrap:wrap;gap:10px}
-  .chip{display:inline-flex;align-items:baseline;gap:9px;border:1px solid var(--line);
-        border-radius:999px;padding:8px 15px;background:var(--card);font-size:14px}
-  .chip .v{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--ok)}
 </style>
 </head>
 <body>
@@ -243,14 +242,40 @@
   <div class="wrap hero-in">
     <h1 data-en>What's <span class="g">next</span></h1>
     <h1 data-zh>接下来<span class="g">做什么</span></h1>
-    <p class="sub" data-en>An honest order of work, not a schedule. There are no dates here and no progress bars — both would be made up. Anything already shipped moves to the changelog.</p>
-    <p class="sub" data-zh>这是一个诚实的先后顺序，不是时间表。这里没有日期、也没有进度百分比——那两样都只能是编的。做完的会移到更新日志里。</p>
+    <p class="sub" data-en>An honest order of work, not a schedule. There are no dates here and no progress bars — both would be made up. Things move left to right, and finished ones stay in the first column.</p>
+    <p class="sub" data-zh>这是一个诚实的先后顺序，不是时间表。这里没有日期、也没有进度百分比——那两样都只能是编的。做完的会留在最左边那一栏。</p>
   </div>
 </header>
 
 <main class="board">
   <div class="wrap">
     <div class="cols">
+
+      <!-- ------------------------------- shipped ------------------------- -->
+      <div class="col">
+        <h2><span>✅</span><span data-en>Done</span><span data-zh>已经做完</span></h2>
+        <p class="col-note" data-en>Asked for here, then built. Newest first.</p>
+        <p class="col-note" data-zh>在这块板子上被提出、然后做掉的。新的在上面。</p>
+
+        <div class="item done">
+          <h3 data-en>Subtitles stop repeating themselves</h3>
+          <h3 data-zh>同语言字幕不再重复翻译</h3>
+          <p data-en>On a video whose subtitles are already in your target language, the second line used to repeat the first. It now shows a single line instead.</p>
+          <p data-zh>字幕本来就是目标语言的视频，第二行会把第一行原样重复一遍。现在直接只显示一行。</p>
+          <span class="src user" data-en>Reported in use · v3.5.1</span>
+          <span class="src user" data-zh>使用中反馈 · v3.5.1</span>
+        </div>
+
+        <div class="item done">
+          <h3 data-en>Subtitles step over the progress bar</h3>
+          <h3 data-zh>字幕自动避开进度条</h3>
+          <p data-en>When the player controls appear, the subtitle box lifts above them instead of being cut in half.</p>
+          <p data-zh>播放控件一出现，字幕框会自动上移，不再被进度条切掉半行。</p>
+          <span class="src user" data-en>Reported in use · v3.5.0</span>
+          <span class="src user" data-zh>使用中反馈 · v3.5.0</span>
+        </div>
+      </div>
+
 
       <!-- ------------------------------ in progress ---------------------- -->
       <div class="col">
@@ -282,6 +307,15 @@
         <h2><span>📋</span><span data-en>Planned</span><span data-zh>计划做</span></h2>
         <p class="col-note" data-en>Roughly in this order. No dates.</p>
         <p class="col-note" data-zh>大致按这个顺序。不给日期。</p>
+
+        <div class="item">
+          <h3 data-en>More interface languages and fonts</h3>
+          <h3 data-zh>更多界面语言与字体</h3>
+          <p data-en>More target languages to translate into, and more font choices for the two subtitle lines.</p>
+          <p data-zh>更多可翻译的目标语言，以及字幕两行可选的字体。</p>
+          <span class="src user" data-en>From a store review, July 2026</span>
+          <span class="src user" data-zh>来自商店评论，2026 年 7 月</span>
+        </div>
 
         <div class="item">
           <h3 data-en>Study mode</h3>
@@ -349,25 +383,10 @@
     </div>
 
 
-    <section class="done">
-      <div class="done-head">
-        <h2><span>✅</span><span data-en>Already shipped</span><span data-zh>已经做完的</span></h2>
-        <a href="updated.html"><span data-en>Full changelog</span><span data-zh>完整更新日志</span> →</a>
-      </div>
-      <div class="chips">
-        <span class="chip"><span data-en>Repeated translation on same-language tracks, fixed</span><span data-zh>同语言字幕重复翻译，已修</span><span class="v">v3.5.1</span></span>
-        <span class="chip"><span data-en>Shorts support</span><span data-zh>支持 Shorts</span><span class="v">v3.5.0</span></span>
-        <span class="chip"><span data-en>Steps above the progress bar</span><span data-zh>自动避开进度条</span><span class="v">v3.5.0</span></span>
-        <span class="chip"><span data-en>Smart sentences + auto engine</span><span data-zh>智能整句 + auto 引擎</span><span class="v">v3.4.0</span></span>
-        <span class="chip"><span data-en>Privacy policy &amp; disclaimer</span><span data-zh>隐私政策与免责声明</span><span class="v">v3.3.0</span></span>
-        <span class="chip"><span data-en>SRT export</span><span data-zh>导出 SRT 字幕</span><span class="v">v3.2.0</span></span>
-        <span class="chip"><span data-en>Drag the subtitles anywhere</span><span data-zh>字幕可自由拖动</span><span class="v">v3.2.0</span></span>
-      </div>
-    </section>
 
     <div class="askbar">
-      <p data-en>Missing something? <b>Just say so.</b> Both of the user-suggested items above came from store reviews — that is genuinely how things get onto this list.</p>
-      <p data-zh>有想要但没在上面的？<b>说一声就行。</b>上面两条标着"来自用户"的，都来自商店评论——功能真的就是这么进这个列表的。</p>
+      <p data-en>Missing something? <b>Just say so.</b> Every item above marked as coming from a user was somebody&#39;s message — that is genuinely how things get onto this list.</p>
+      <p data-zh>有想要但没在上面的？<b>说一声就行。</b>上面标着来源的每一条，都是别人发过来的一句话——功能真的就是这么进这个列表的。</p>
       <a class="btn" href="feedback.html"><span data-en>Send feedback</span><span data-zh>去反馈</span></a>
     </div>
   </div>
