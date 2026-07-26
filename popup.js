@@ -6,9 +6,16 @@
 const DEFAULTS = {
   enabled: true,
   targetLang: "zh-CN",
-  engine: "auto",              // "auto" | "tlang" | "gtx" (source of truth since 3.4)
+  langShown: null,             // popup/options only: which target languages the
+                               // dropdown offers. null = the shipped defaults.
+  engine: "auto",              // "auto" | "tlang" | "gtx" | "byo" (source of
+                               // truth since 3.4; "byo" = own key, since 3.6)
   backend: "tlang",            // legacy pre-3.4 key; mirrored on engine change so
                                // old devices on the same sync profile stay sane
+  // BYO-key engine (3.6). The key itself lives in storage.local, never sync.
+  byoProvider: "",             // providers.js id
+  byoModel: "",                // empty = the provider's default model
+  byoBaseUrl: "",              // custom provider only (https, validated)
   updateNotes: true,           // open release notes page after feature updates
   order: "orig-top",           // "orig-top" | "trans-top"
   rowGap: 4,
@@ -45,7 +52,14 @@ const FONT_STACKS = {
   georgia: 'Georgia, "Times New Roman", serif',
   times:   '"Times New Roman", Times, serif',
   mono:    '"Courier New", ui-monospace, monospace',
-  cjk:     '"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif'
+  cjk:     '"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
+    inter:   'Inter, "Segoe UI Variable", system-ui, sans-serif',
+    verdana: 'Verdana, Geneva, sans-serif',
+    tahoma:  'Tahoma, Geneva, Verdana, sans-serif',
+    trebuchet: '"Trebuchet MS", Tahoma, sans-serif',
+    garamond: 'Garamond, "Palatino Linotype", "Book Antiqua", serif',
+    cjkserif: '"Songti SC", SimSun, "Noto Serif CJK SC", serif',
+    cjkround: '"Yuanti SC", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif'
 };
 function fontStack(key) { return FONT_STACKS[key] || FONT_STACKS.system; }
 
@@ -87,7 +101,7 @@ let state = { ...DEFAULTS };
 // everything else lands on "auto". Never written back on its own.
 function normalizeEngine(got) {
   const e = got && got.engine;
-  if (e === "auto" || e === "tlang" || e === "gtx") return e;
+  if (e === "auto" || e === "tlang" || e === "gtx" || e === "byo") return e;
   return got && got.backend === "gtx" ? "gtx" : "auto";
 }
 let activeLine = "trans";        // which line the tab editor is bound to
@@ -207,6 +221,37 @@ function paintSegs() {
 // ---- export (SRT download) -----------------------------------------------
 // The export variant is a transient choice (not persisted, so it stays out of
 // the shared DEFAULTS contract between popup.js and content.js).
+// ---- target language dropdown ---------------------------------------------
+// Only the languages this user keeps, in the order they arranged them, plus a
+// last entry into the manager. The full table is fifty long, and an <option>
+// cannot carry a remove button — the same wall that moved provider setup onto
+// the options page — so add/remove lives there too.
+const MANAGE = "__manage__";
+
+function paintLangs() {
+  const sel = $("targetLang");
+  if (!sel || !self.YTDS_LANGS) return;
+  const L = self.YTDS_LANGS;
+  const shown = L.shown(state.langShown);
+  // A stored target that is no longer in the kept list still has to be
+  // selectable, or the popup would silently switch what the user is watching in.
+  const codes = shown.includes(state.targetLang) ? shown : shown.concat(state.targetLang);
+  sel.textContent = "";
+  for (const code of codes) {
+    const info = L.get(code);
+    if (!info) continue;
+    const o = document.createElement("option");
+    o.value = code;
+    o.textContent = info.native;
+    sel.appendChild(o);
+  }
+  const manage = document.createElement("option");
+  manage.value = MANAGE;
+  manage.textContent = t("langManage", "管理语言…");
+  sel.appendChild(manage);
+  sel.value = state.targetLang;
+}
+
 function paintExportSeg() {
   document.querySelectorAll("#exportVariant button").forEach((b) => {
     const on = b.dataset.val === exportVariant;
@@ -251,17 +296,32 @@ async function refreshEngineStatus() {
   el.hidden = true;
   el.classList.remove("warn");
 
+  const onByo = state.engine === "byo";
   let limited = false;
+  let byoCode = "";
   try {
     if (chrome.storage.session) {
-      const got = await chrome.storage.session.get("ytdsGtxGate");
-      const g = got && got.ytdsGtxGate;
+      // Each engine has its own gate; read the one that is actually serving.
+      const gateKey = onByo ? "ytdsByoGate" : "ytdsGtxGate";
+      const got = await chrome.storage.session.get([gateKey, "ytdsByoStatus"]);
+      const g = got && got[gateKey];
       limited = !!(g && g.backoffMs > 0 && g.gateUntil > Date.now());
+      const st = onByo && got && got.ytdsByoStatus;
+      if (st && st.code) byoCode = st.code;
     }
   } catch (_e) { /* session storage unavailable — skip the limit line */ }
   if (limited) {
     el.textContent = t("backendStatusLimited",
       "翻译接口暂时限流，已自动放慢重试；已翻译的句子不受影响。");
+    el.classList.add("warn");
+    el.hidden = false;
+    return;
+  }
+
+  // A failing BYO engine has to say so: unlike gtx it has no free fallback, so
+  // staying quiet would just look like "the extension stopped translating".
+  if (byoCode) {
+    el.textContent = byoErrText(byoCode);
     el.classList.add("warn");
     el.hidden = false;
     return;
@@ -279,12 +339,71 @@ async function refreshEngineStatus() {
     el.hidden = false;
     return;
   }
+  // Own-key mode names the provider that is answering — the whole point of
+  // choosing it is knowing it is in use.
+  if (r.engine === "byo") {
+    const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.get(r.provider);
+    const name = (p && p.name) || "";
+    el.textContent = tsub("backendStatusByo", [name], "本视频：自带 Key（" + name + "）");
+    el.hidden = false;
+    return;
+  }
   if (state.engine !== "auto") return;      // manual choice: stay quiet
   if (!r.engine) return;                    // no cues yet
   el.textContent = r.engine === "gtx"
     ? t("backendStatusGtx", "本视频：智能整句（Google）")
     : t("backendStatusTlang", "本视频：整轨翻译（YouTube）");
   el.hidden = false;
+}
+
+// ---- BYO-key engine row ---------------------------------------------------
+// Everything configurable about an own-key engine lives on the options page
+// (options.js explains why — in short, a permission prompt can dismiss a popup
+// and take the callback with it). The popup only reports what is set up and
+// links there; it never reads or writes the key itself.
+const P = self.YTDS_PROVIDERS;
+
+function tsub(key, subs, fb) {
+  try { return (chrome.i18n && chrome.i18n.getMessage(key, subs)) || fb; }
+  catch (_e) { return fb; }
+}
+
+function activeProvider() {
+  return (P && P.get(state.byoProvider)) || null;
+}
+
+function byoErrText(code) {
+  return t(P ? P.errorKey(code) : "byoErrFailed", t("byoErrFailed", "连接失败，稍后再试。"));
+}
+
+function paintByoPanel() {
+  const panel = $("byoPanel");
+  if (!panel) return;
+  panel.hidden = state.engine !== "byo";
+  if (panel.hidden) return;
+
+  const p = activeProvider();
+  // Same tile the options list draws, so the two surfaces agree visually.
+  // Guarded: this is the popup's only dependency on provider-icons.js, and a
+  // missing icon must never cost us the rest of the panel.
+  const slot = $("byoIcon");
+  slot.textContent = "";
+  if (self.YTDS_ICONS) slot.appendChild(self.YTDS_ICONS.iconFor(p));
+
+  const sum = $("byoSummary");
+  const notSet = t("popupByoNotSet", "还没配置");
+  if (!p) { sum.textContent = notSet; return; }
+  const model = state.byoModel || p.defaultModel || "";
+  // Short name here: at 360px the full "Alibaba 百炼 (Qwen / DeepSeek)" would
+  // eat the model name, which is the part that changes.
+  const label = p.short || p.name;
+  // A provider with no key stored is "not set up" no matter what is selected.
+  chrome.storage.local.get({ byoKeys: {} }, (got) => {
+    const has = !!((got && got.byoKeys) || {})[p.id];
+    sum.textContent = has
+      ? label + (model ? " · " + model : "")
+      : label + " — " + notSet;
+  });
 }
 
 function showExportMsg(text, kind) {
@@ -296,33 +415,177 @@ function showExportMsg(text, kind) {
   el.hidden = !text;
 }
 
-async function onExportClick() {
+// ---- export with the own-key engine ---------------------------------------
+// Two things separate this from the free download: it spends the user's quota,
+// and it sends the WHOLE track to their provider (playback only ever sends the
+// sentences actually watched). Both are said out loud before anything is sent,
+// and the run can be stopped while it works.
+let exportByo = false;           // transient, like exportVariant — never stored
+let exportPoll = null;           // progress poll while a download runs
+
+function byoExportOffered() {
+  return state.engine === "byo" && exportVariant !== "orig";
+}
+
+function paintExportEngine() {
+  const row = $("exportByoRow");
+  const note = $("exportEngineNote");
+  if (!row || !note) return;
+  const offered = byoExportOffered();
+  // "Original only" has nothing to translate — the choice would be a no-op.
+  if (!offered) exportByo = false;
+  row.hidden = !offered;
+  $("exportByo").checked = exportByo;
+  note.hidden = !offered;
+  note.textContent = exportByo
+    ? t("exportByoNote", "整片字幕会发给你的服务商翻译，消耗额度；点导出后会先给出预估。")
+    : t("exportUsesYouTube", "导出用的是 YouTube 自带的整轨翻译（免费、不消耗你的 API）。");
+  note.classList.toggle("warn", exportByo);
+}
+
+function showConfirm(text) {
+  $("exportConfirmText").textContent = text;
+  $("exportConfirm").hidden = false;
+}
+function hideConfirm() { $("exportConfirm").hidden = true; }
+
+// Busy state covers both buttons: the export button says what is happening and
+// the stop button appears only while there is something to stop.
+function setExportBusy(on, canStop) {
   const btn = $("exportBtn");
-  const label = btn.textContent;
+  btn.disabled = on;
+  btn.textContent = on
+    ? t("exportWorking", "正在生成…")
+    : t("exportSrt", "下载 SRT 字幕");
+  const stop = $("exportStop");
+  stop.hidden = !(on && canStop);
+  stop.disabled = false;
+  stop.textContent = t("exportStop", "停止");
+}
+
+function stopPoll() {
+  if (exportPoll) { clearInterval(exportPoll); exportPoll = null; }
+}
+
+function startPoll(tabId) {
+  stopPoll();
+  exportPoll = setInterval(async () => {
+    const s = await sendToTab(tabId, { type: "exportStatus" });
+    if (!s || !s.ok) return;
+    if (!s.running) { stopPoll(); return; }
+    showExportMsg(tsub("exportProgress", [String(s.done), String(s.total)],
+      "翻译中… " + s.done + "/" + s.total), null);
+  }, 700);
+}
+
+function exportErrText(resp) {
+  if (resp.reason === "cancelled") return t("exportCancelled", "已取消导出。");
+  if (resp.reason === "byofail") return byoErrText(resp.code || "failed");
+  if (resp.reason === "same") return t("backendStatusSame", "本视频字幕已是目标语言，无需翻译。");
+  if (resp.reason === "notrans") {
+    return t("exportNoTrans", "这个视频拿不到译文，试试「整轨翻译」或换个目标语言。");
+  }
+  return t("exportNoCues", "没有可下载的字幕，先播放几秒让字幕加载，再试一次。");
+}
+
+const NOT_YOUTUBE = () => t("exportNotYoutube", "请在 YouTube 视频页面使用导出。");
+
+// The download itself. useByo has already been confirmed by the caller.
+async function runExport(useByo) {
+  hideConfirm();
   showExportMsg("", null);
-  btn.disabled = true;
-  btn.textContent = t("exportWorking", "正在生成…");
+  setExportBusy(true, useByo);
+  let tabId = null;
   try {
     const tab = await getActiveTab();
-    if (!tab || tab.id == null) {
-      showExportMsg(t("exportNotYoutube", "请在 YouTube 视频页面使用导出。"), "err");
-      return;
-    }
-    const resp = await sendToTab(tab.id, { type: "exportSrt", variant: exportVariant });
+    if (!tab || tab.id == null) { showExportMsg(NOT_YOUTUBE(), "err"); return; }
+    tabId = tab.id;
+    if (useByo) startPoll(tabId);
+    const resp = await sendToTab(tabId, {
+      type: "exportSrt", variant: exportVariant, byo: !!useByo
+    });
     if (resp == null) {
-      showExportMsg(t("exportNotYoutube", "请在 YouTube 视频页面使用导出。"), "err");
+      showExportMsg(NOT_YOUTUBE(), "err");
     } else if (resp.ok) {
-      showExportMsg(t("exportDone", "已下载字幕") + " (" + (resp.count || 0) + ")", "ok");
-    } else if (resp.reason === "notrans") {
-      showExportMsg(t("exportNoTrans", "这个视频拿不到译文，试试「整句翻译」或换个目标语言。"), "err");
+      let msg = t("exportDone", "已下载字幕") + " (" + (resp.count || 0) + ")";
+      // A partial fall back to YouTube's lines changes what is in the file, so
+      // it is reported rather than quietly accepted.
+      if (resp.failedChunks) {
+        msg += " · " + tsub("exportPartial", [String(resp.failedChunks)],
+          resp.failedChunks + " 段回落到 YouTube 译文");
+      }
+      showExportMsg(msg, "ok");
     } else {
-      showExportMsg(t("exportNoCues", "没有可下载的字幕，先播放几秒让字幕加载，再试一次。"), "err");
+      showExportMsg(exportErrText(resp), "err");
     }
   } catch (_e) {
     showExportMsg(t("exportFailed", "导出失败，刷新页面后重试。"), "err");
   } finally {
-    btn.disabled = false;
-    btn.textContent = label;
+    stopPoll();
+    setExportBusy(false, false);
+  }
+}
+
+async function onExportClick() {
+  hideConfirm();
+  if (!byoExportOffered() || !exportByo) return runExport(false);
+
+  // Price it first: the estimate is the whole point of the confirmation.
+  showExportMsg("", null);
+  setExportBusy(true, false);
+  try {
+    const tab = await getActiveTab();
+    if (!tab || tab.id == null) { showExportMsg(NOT_YOUTUBE(), "err"); return; }
+    const plan = await sendToTab(tab.id, { type: "exportPlan" });
+    if (plan == null) { showExportMsg(NOT_YOUTUBE(), "err"); return; }
+    if (!plan.ok) { showExportMsg(exportErrText(plan), "err"); return; }
+    // Everything already translated while watching: nothing leaves the browser
+    // and nothing is spent, so there is nothing to confirm.
+    if (!plan.requests) { setExportBusy(false, false); return runExport(true); }
+    const p = activeProvider();
+    const name = (p && (p.short || p.name)) || "";
+    showConfirm(tsub("exportConfirm",
+      [name, String(plan.lines), String(plan.requests)],
+      "将用「" + name + "」翻译 " + plan.lines + " 条字幕，约 " + plan.requests +
+      " 次请求，消耗你的 API 额度。整片字幕会离开浏览器发给该服务商——播放时只发送你看过的片段。"));
+  } catch (_e) {
+    showExportMsg(t("exportFailed", "导出失败，刷新页面后重试。"), "err");
+  } finally {
+    setExportBusy(false, false);
+  }
+}
+
+async function onExportStop() {
+  const stop = $("exportStop");
+  stop.disabled = true;
+  stop.textContent = t("exportStopping", "正在停止…");
+  const tab = await getActiveTab();
+  if (tab && tab.id != null) await sendToTab(tab.id, { type: "exportCancel" });
+}
+
+// A popup that was closed while a download ran must re-attach to it, not offer
+// to start a second one. Also picks up the result of a run that finished while
+// the popup was shut.
+async function resumeExport() {
+  const tab = await getActiveTab();
+  if (!tab || tab.id == null) return;
+  const s = await sendToTab(tab.id, { type: "exportStatus" });
+  if (!s || !s.ok) return;
+  if (s.running) {
+    setExportBusy(true, true);
+    showExportMsg(tsub("exportProgress", [String(s.done), String(s.total)],
+      "翻译中… " + s.done + "/" + s.total), null);
+    startPoll(tab.id);
+    return;
+  }
+  // Stale results are worse than none: a line from ten minutes ago reads as if
+  // it described the click just made.
+  const r = s.result;
+  if (!r || !r.ts || Date.now() - r.ts > 60000) return;
+  if (r.ok) {
+    showExportMsg(t("exportDone", "已下载字幕") + " (" + (r.count || 0) + ")", "ok");
+  } else {
+    showExportMsg(exportErrText(r), "err");
   }
 }
 
@@ -359,22 +622,33 @@ function bindLineControls() {
 function bindUI() {
   $("enabled").checked = state.enabled;
   $("updateNotes").checked = !!state.updateNotes;
-  $("targetLang").value = state.targetLang;
+  paintLangs();
   $("backend").value = state.engine;
   $("backendGtxHint").hidden = state.engine !== "gtx";
+  paintExportEngine();
   $("rowGap").value = state.rowGap;
   $("rowGapV").textContent = state.rowGap + "px";
   paintSegs();
   paintExportSeg();
   bindLineControls();
   paintPreview();
+  // Last on purpose: it is the only part of the paint that depends on another
+  // script, so if it ever throws the rest of the popup is already drawn.
+  paintByoPanel();
 }
 
 // ---- wire events ---------------------------------------------------------
 function wire() {
   $("enabled").addEventListener("change", (e) => setKey("enabled", e.target.checked));
   $("updateNotes").addEventListener("change", (e) => setKey("updateNotes", e.target.checked));
-  $("targetLang").addEventListener("change", (e) => setKey("targetLang", e.target.value));
+  $("targetLang").addEventListener("change", (e) => {
+    if (e.target.value === MANAGE) {
+      e.target.value = state.targetLang;   // put it back before leaving
+      toOptions("#langs");
+      return;
+    }
+    setKey("targetLang", e.target.value);
+  });
 
   // backend info tooltip
   $("backendInfo").addEventListener("click", () => {
@@ -389,11 +663,35 @@ function wire() {
   $("backend").addEventListener("change", (e) => {
     const v = e.target.value;
     state.engine = v;
-    state.backend = v === "gtx" ? "gtx" : "tlang";
+    // Legacy mirror for pre-3.4 devices: they cannot do "byo", and the closest
+    // thing they understand is client-side translation, i.e. gtx.
+    state.backend = (v === "gtx" || v === "byo") ? "gtx" : "tlang";
     chrome.storage.sync.set({ engine: state.engine, backend: state.backend });
     $("backendGtxHint").hidden = v !== "gtx";
+    paintByoPanel();
     refreshEngineStatus();
   });
+
+  // ---- the settings page -------------------------------------------------
+  // Two ways in, and the header gear is the one that always exists: the BYO row
+  // only appears once the own-key engine is chosen, which used to leave Getting
+  // started and About unreachable for everyone on the default engine.
+  // openOptionsPage() cannot carry a hash, so a request for one section opens
+  // the page by URL instead.
+  const toOptions = (hash) => {
+    try {
+      if (typeof hash === "string" && hash) {
+        chrome.tabs.create({ url: chrome.runtime.getURL("options.html") + hash });
+      } else {
+        chrome.runtime.openOptionsPage();
+      }
+    } catch (_e) { /* ignore */ }
+    window.close();          // hand over to the tab instead of stacking UI
+  };
+  // Bare handlers: a click event as the first argument must not be mistaken
+  // for a hash.
+  $("openOptions").addEventListener("click", () => toOptions());
+  $("byoConfigure").addEventListener("click", () => toOptions());
 
   // segmented: order
   document.querySelectorAll("#order button").forEach((b) =>
@@ -409,6 +707,23 @@ function wire() {
     }));
   $("resetPos").addEventListener("click", () => {
     setKey("posMode", "preset"); paintSegs();
+  });
+
+  // "try dragging": flash the grip on the page. Answering with the label itself
+  // when there is no YouTube tab — a dead-feeling button is what we just spent a
+  // whole round fixing elsewhere.
+  $("tryDrag").addEventListener("click", async () => {
+    const tab = await getActiveTab();
+    const resp = tab && tab.id != null
+      ? await sendToTab(tab.id, { type: "flashHandle" })
+      : null;
+    if (resp && resp.ok) return;
+    // Report in the explanation slot, not on the button: the button is three
+    // characters wide and a sentence there would break the row.
+    const hint = $("posHintText");
+    const was = hint.textContent;
+    hint.textContent = t("posTryNoVideo", "请先打开 YouTube 视频页");
+    setTimeout(() => { hint.textContent = was; }, 2600);
   });
 
   // row gap
@@ -442,13 +757,32 @@ function wire() {
 
   // export (SRT download)
   document.querySelectorAll("#exportVariant button").forEach((b) =>
-    b.addEventListener("click", () => { exportVariant = b.dataset.val; paintExportSeg(); }));
+    b.addEventListener("click", () => {
+      exportVariant = b.dataset.val;
+      paintExportSeg();
+      paintExportEngine();          // "original only" has nothing to translate
+      hideConfirm();                // the estimate was for the other variant
+    }));
+  $("exportByo").addEventListener("change", (e) => {
+    exportByo = e.target.checked;
+    hideConfirm();
+    paintExportEngine();
+  });
   $("exportBtn").addEventListener("click", onExportClick);
+  $("exportGo").addEventListener("click", () => runExport(true));
+  $("exportBack").addEventListener("click", () => hideConfirm());
+  $("exportStop").addEventListener("click", onExportStop);
 
   // reset all
   $("reset").addEventListener("click", () => {
     state = { ...DEFAULTS };
     chrome.storage.sync.set(DEFAULTS);   // engine:"auto" + backend:"tlang" mirror included
+    // Reset means reset: don't leave orphan API keys on the machine. The panel
+    // also has its own "clear" button for doing this alone.
+    try {
+      chrome.storage.local.remove("byoKeys");
+      paintByoPanel();               // the summary must stop claiming a key
+    } catch (_e) { /* ignore */ }
     bindUI();
     refreshEngineStatus();
   });
@@ -466,6 +800,29 @@ function showVersion() {
 // Opening the popup clears the "NEW" badge; the row links to the release
 // notes and stays until opened once (per announced version).
 const SITE_URL = "https://gythiro.github.io/yt-dual-subs/";
+
+function popupLang() {
+  try {
+    const ui = (chrome.i18n && chrome.i18n.getUILanguage()) || "";
+    if (ui.toLowerCase().indexOf("zh") === 0) return "zh";
+  } catch (_e) { /* ignore */ }
+  return "en";
+}
+
+// Footer links. Built here rather than hard-coded in the markup so the site
+// links carry the UI language (a Chinese user landing on the English page was a
+// real bug once) and everything stays in one place.
+const STORE_URL =
+  "https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge";
+
+function initFooterLinks() {
+  const lang = popupLang();
+  const set = (id, href) => { const el = $(id); if (el) el.href = href; };
+  set("lnkSite", SITE_URL + "?src=popup&lang=" + lang);
+  set("lnkGithub", "https://github.com/Gythiro/yt-dual-subs");
+  set("lnkFeedback", SITE_URL + "feedback.html?src=popup&lang=" + lang);
+  set("lnkReview", STORE_URL + "/reviews");
+}
 
 function initWhatsNew() {
   try { chrome.action.setBadgeText({ text: "" }); } catch (_e) { /* ignore */ }
@@ -495,6 +852,7 @@ function initWhatsNew() {
 
 // ---- boot ----------------------------------------------------------------
 applyI18n();                       // localize static markup before first paint
+initFooterLinks();
 initWhatsNew();
 // get(null): fetch only what is actually stored, so normalizeEngine can tell
 // "engine never set" apart from an explicit value (see content.js).
@@ -511,4 +869,5 @@ chrome.storage.sync.get(null, (got) => {
   bindUI();
   wire();
   refreshEngineStatus();
+  resumeExport();
 });

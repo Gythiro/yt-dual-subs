@@ -5,11 +5,11 @@
   --surface-2: #212121;
   --line: #303030;
   --txt: #f1f1f1;
-  --muted: #aaaaaa;
+  --muted: #b8b8b8;
   --accent: #3ea6ff;
   --accent-dim: rgba(62, 166, 255, 0.16);
   --radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 * { box-sizing: border-box; }
@@ -62,9 +62,20 @@ input:focus-visible,
 .hd-mark svg { display: block; width: 32px; height: 32px; }
 .hd-text { flex: 1; min-width: 0; }
 .hd h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .2px; }
-.hd-sub { margin: 2px 0 0; font-size: 11px; color: var(--muted); }
+.hd-sub { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
 
 /* switch */
+/* Sits left of the master switch: always present, whatever the engine is. */
+.hd-gear {
+  flex: none; width: 34px; height: 34px; margin-right: 2px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 9px; cursor: pointer;
+  transition: color .12s, border-color .12s, background .12s;
+}
+.hd-gear:hover { color: var(--txt); border-color: var(--muted); background: var(--surface-2); }
+.hd-gear svg { width: 17px; height: 17px; display: block; }
+
 .switch { cursor: pointer; flex: none; display: inline-flex; }
 .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
 .switch-track {
@@ -89,7 +100,7 @@ input:focus-visible,
   background: var(--accent-dim);
   border: 1px solid rgba(62, 166, 255, 0.35);
   border-radius: 8px;
-  color: var(--accent); font-size: 12px; font-weight: 600;
+  color: var(--accent); font-size: 13px; font-weight: 600;
   text-decoration: none;
 }
 .whatsnew:hover { filter: brightness(1.12); }
@@ -111,7 +122,7 @@ input:focus-visible,
 }
 .preview-tag {
   position: absolute; top: 7px; left: 9px;
-  font-size: 10px; color: var(--muted);
+  font-size: 12px; color: var(--muted);
   letter-spacing: 1px; text-transform: uppercase;
   background: rgba(0, 0, 0, 0.35); padding: 1px 6px; border-radius: 5px;
 }
@@ -128,8 +139,8 @@ input:focus-visible,
   text-shadow: 0 1px 2px rgba(0, 0, 0, .9);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.ytds-prev-orig  { color: #ffffff; font-size: 11px; }
-.ytds-prev-trans { color: #ffe98a; font-size: 12px; }
+.ytds-prev-orig  { color: #ffffff; font-size: 12px; }
+.ytds-prev-trans { color: #ffe98a; font-size: 13px; }
 
 /* ============================ CARDS ============================ */
 .ctrl { padding: 9px 15px 4px; display: flex; flex-direction: column; gap: 11px; }
@@ -142,13 +153,16 @@ input:focus-visible,
 }
 .card-title {
   margin: 0;
-  font-size: 11px; font-weight: 600; color: var(--muted);
+  font-size: 13px; font-weight: 600; color: var(--muted);
   text-transform: uppercase; letter-spacing: 1px;
 }
 
 .row { display: flex; flex-direction: column; gap: 7px; }
+/* display:flex above outranks the UA sheet's [hidden]{display:none}, so rows we
+   toggle with the hidden attribute need it spelled out. */
+.row[hidden] { display: none; }
 .row > label, .stack > label {
-  font-size: 11px; color: var(--muted);
+  font-size: 13px; color: var(--muted);
   letter-spacing: .3px;
   display: flex; align-items: center; justify-content: space-between;
 }
@@ -160,7 +174,7 @@ select {
   width: 100%;
   background: var(--surface-2); color: var(--txt);
   border: 1px solid var(--line); border-radius: 8px;
-  padding: 8px 10px; font-size: 13px; outline: none;
+  padding: 9px 10px; font-size: 14px; outline: none;
   cursor: pointer;
 }
 select:hover { border-color: #454545; }
@@ -172,7 +186,7 @@ select:focus { border-color: var(--accent); }
   border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
 }
 .seg button {
-  flex: 1; padding: 8px 4px; font-size: 12.5px;
+  flex: 1; padding: 9px 4px; font-size: 13.5px;
   background: transparent; color: var(--muted);
   border: 0; cursor: pointer; line-height: 1.25;
   display: inline-flex; align-items: center; justify-content: center; gap: 4px;
@@ -196,26 +210,56 @@ select:focus { border-color: var(--accent); }
 .info:hover { color: var(--accent); }
 .info svg { width: 15px; height: 15px; }
 .tip {
-  margin: 0; font-size: 11px; color: var(--muted);
+  margin: 0; font-size: 13px; color: var(--muted);
   background: var(--surface-2); border: 1px solid var(--line);
   border-radius: 8px; padding: 8px 10px; line-height: 1.5;
 }
 .tip b { color: var(--txt); }
 
 /* engine hint + status line (translation card; hidden by default) */
-.engine-hint { margin: 0; font-size: 10.5px; color: var(--muted); }
-.engine-msg { margin: 0; font-size: 11px; line-height: 1.45; color: var(--muted); }
+.engine-hint { margin: 0; font-size: 13px; color: var(--muted); }
+.engine-msg { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
 .engine-msg.warn { color: #ffd88a; }
+.engine-msg.ok { color: #5fd38a; }
+.engine-msg.err { color: #ff8a8a; }
+
+/* BYO-key row — one line of status; the setup itself is on the options page */
+.byo {
+  padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px;
+  background: var(--surface-2);
+}
+.byo[hidden] { display: none; }
+.byo-sum { display: flex; align-items: center; gap: 9px; }
+.byo-sum-text {
+  flex: 1; min-width: 0; font-size: 13.5px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.byo-sum .link { flex: none; }
+/* provider tile, same shape as the options list */
+.pico {
+  flex: none; width: 20px; height: 20px; border-radius: 6px;
+  display: inline-grid; place-items: center; overflow: hidden;
+}
+.pico-mono {
+  color: #fff; font-size: 9px; font-weight: 700; letter-spacing: .3px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .35);
+}
+.pico-cjk { font-size: 11px; letter-spacing: 0; }
+.pico-mark { color: #fff; }
+.pico svg { width: 62%; height: 62%; display: block; }
 
 /* position footer */
 .pos-foot {
   display: flex; align-items: center; justify-content: space-between;
   gap: 8px; margin-top: 2px;
 }
-.pos-hint { font-size: 10.5px; color: var(--muted); flex: 1; }
+.pos-hint { font-size: 13px; color: var(--muted); flex: 1; }
+/* the only clickable part of the hint — accent-coloured like every other
+   control, so it is visibly the thing you press */
+.pos-try { font-size: 13px; line-height: 1.4; }
 .link {
   background: none; border: 0; color: var(--accent);
-  font-size: 11px; cursor: pointer; padding: 0; flex: none;
+  font-size: 13px; cursor: pointer; padding: 0; flex: none;
 }
 .link:hover { text-decoration: underline; }
 
@@ -249,7 +293,7 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 .check-row { flex-direction: row; }
 .chk {
   display: flex; align-items: center; gap: 8px;
-  font-size: 13px; color: var(--txt); cursor: pointer;
+  font-size: 14px; color: var(--txt); cursor: pointer;
 }
 .chk input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
 
@@ -260,7 +304,7 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
   border-radius: 9px;
 }
 .tab {
-  flex: 1; padding: 7px 4px; font-size: 12.5px;
+  flex: 1; padding: 8px 4px; font-size: 13.5px;
   background: transparent; color: var(--muted);
   border: 0; border-radius: 6px; cursor: pointer;
   transition: background .12s, color .12s;
@@ -274,7 +318,7 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 
 /* ============================ EXPORT ============================ */
 .export-btn {
-  width: 100%; padding: 10px; font-size: 13px; font-weight: 600;
+  width: 100%; padding: 11px; font-size: 14px; font-weight: 600;
   background: var(--accent); color: #06121f;
   border: 0; border-radius: 8px; cursor: pointer;
   transition: filter .12s, opacity .12s;
@@ -283,11 +327,58 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 .export-btn:active { filter: brightness(.95); }
 .export-btn:disabled { opacity: .6; cursor: default; }
 .export-msg {
-  margin: 0; font-size: 11px; line-height: 1.45;
+  margin: 0; font-size: 13px; line-height: 1.45;
   color: var(--muted);
 }
 .export-msg.ok { color: #5fd38a; }
 .export-msg.err { color: #ff8a8a; }
+.export-chk { font-size: 13.5px; }
+.export-chk[hidden] { display: none; }
+.engine-hint.warn { color: #ffd88a; }
+
+/* the "this will spend your quota" step: a panel, not a native confirm() */
+.confirm {
+  display: flex; flex-direction: column; gap: 9px;
+  padding: 10px 11px;
+  background: var(--surface-2); border: 1px solid #4a4335;
+  border-radius: 9px;
+}
+.confirm[hidden] { display: none; }
+.confirm-txt { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--txt); }
+.confirm-row { display: flex; gap: 8px; }
+.confirm-go, .confirm-no {
+  flex: 1; padding: 9px; font-size: 13px; font-weight: 600;
+  border-radius: 7px; cursor: pointer; border: 1px solid transparent;
+  transition: filter .12s, color .12s, border-color .12s;
+}
+.confirm-go { background: var(--accent); color: #06121f; }
+.confirm-go:hover { filter: brightness(1.08); }
+.confirm-no { background: transparent; color: var(--muted); border-color: var(--line); }
+.confirm-no:hover { color: var(--txt); border-color: var(--muted); }
+.export-stop {
+  width: 100%; padding: 9px; font-size: 13px;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
+  transition: color .12s, border-color .12s;
+}
+.export-stop:hover { color: var(--txt); border-color: var(--muted); }
+.export-stop:disabled { opacity: .6; cursor: default; }
+.export-stop[hidden] { display: none; }
+
+/* footer link row — kept clear of the destructive reset button below it.
+   Four equal columns, icon over label; all one colour (see popup.html). */
+.ft-links { display: flex; align-items: stretch; gap: 2px; }
+.ficon {
+  flex: 1; min-width: 0; text-decoration: none;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 7px 2px 6px; border-radius: 8px;
+  color: var(--muted); border: 1px solid transparent;
+  transition: color .12s, background .12s, border-color .12s;
+}
+.ficon:hover { color: var(--txt); background: var(--surface-2); border-color: var(--line); }
+.ficon svg { width: 16px; height: 16px; display: block; }
+.ficon span { font-size: 12px; line-height: 1; white-space: nowrap; }
+.ft-sep { height: 1px; background: var(--line); margin: 4px 0 6px; }
 
 /* ============================ FOOTER ============================ */
 .ft {
@@ -296,16 +387,16 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
   display: flex; flex-direction: column; gap: 9px;
 }
 .ft-row { display: flex; align-items: center; gap: 11px; }
-.ft-chk { font-size: 12px; color: var(--muted); }
+.ft-chk { font-size: 13px; color: var(--muted); }
 .disclaimer {
-  margin: 0; font-size: 10px; color: var(--muted);
+  margin: 0; font-size: 12px; color: var(--muted);
   text-align: center; opacity: .85;
 }
 .reset {
-  flex: 1; padding: 9px; font-size: 12px;
+  flex: 1; padding: 10px; font-size: 13px;
   background: var(--surface); color: var(--muted);
   border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
   transition: color .12s, border-color .12s;
 }
 .reset:hover { color: var(--txt); border-color: var(--muted); }
-.ver { margin: 0; font-size: 11px; color: var(--muted); flex: none; }
+.ver { margin: 0; font-size: 12.5px; color: var(--muted); flex: none; }
