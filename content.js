@@ -28,10 +28,15 @@
   const DEFAULTS = {
     enabled: true,
     targetLang: "zh-CN",
-    engine: "auto",              // "auto" | "tlang" | "gtx" (source of truth since 3.4)
+    engine: "auto",              // "auto" | "tlang" | "gtx" | "byo" (source of
+                                 // truth since 3.4; "byo" = own key, since 3.6)
     backend: "tlang",            // legacy pre-3.4 key ("tlang" | "gtx"); kept as a
                                  // mirror so not-yet-updated devices on the same
                                  // sync profile still read a value they understand
+    // BYO-key engine (3.6). The key itself lives in storage.local, never sync.
+    byoProvider: "",             // providers.js id
+    byoModel: "",                // empty = the provider's default model
+    byoBaseUrl: "",              // custom provider only (https, validated)
     updateNotes: true,           // used by background.js only; listed so the
                                  // popup.js DEFAULTS contract stays in sync
     order: "orig-top",           // which line on top: "orig-top" | "trans-top"
@@ -69,7 +74,14 @@
     georgia: 'Georgia, "Times New Roman", serif',
     times:   '"Times New Roman", Times, serif',
     mono:    '"Courier New", ui-monospace, monospace',
-    cjk:     '"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif'
+    cjk:     '"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
+      inter:   'Inter, "Segoe UI Variable", system-ui, sans-serif',
+      verdana: 'Verdana, Geneva, sans-serif',
+      tahoma:  'Tahoma, Geneva, Verdana, sans-serif',
+      trebuchet: '"Trebuchet MS", Tahoma, sans-serif',
+      garamond: 'Garamond, "Palatino Linotype", "Book Antiqua", serif',
+      cjkserif: '"Songti SC", SimSun, "Noto Serif CJK SC", serif',
+      cjkround: '"Yuanti SC", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif'
   };
   function fontStack(key) {
     return FONT_STACKS[key] || FONT_STACKS.system;
@@ -116,6 +128,18 @@
     if (!isFinite(n)) n = 50;
     return Math.max(2, Math.min(98, n));
   }
+  // Same, but with limits measured from the box being placed, so the whole box
+  // (plus the grip above it) stays inside the player. Falls back to clampPct's
+  // fixed margin when the box has not been measured yet.
+  function clampRange(v, lo, hi) {
+    let n = Number(v);
+    if (!isFinite(n)) n = 50;
+    if (!(hi > lo)) return clampPct(n);
+    return Math.max(lo, Math.min(hi, n));
+  }
+  // Vertical space the grip occupies above the subtitle box (top offset + its
+  // own height); keep in step with .ytds-handle in content.css.
+  const HANDLE_ROOM_PX = 60;
 
   let settings = { ...DEFAULTS };
 
@@ -183,6 +207,9 @@
   // bookkeeping
   let currentVideoId = videoIdFromLocation();
   let nocuesFallback = false;   // true once we've committed to scrape mode
+  let blankRecoveries = 0;      // bounded re-asks when the overlay stays empty
+  let rearmedForVideo = false;  // CC already force-toggled once for this video
+  const MAX_BLANK_RECOVERIES = 3;
   let configNonce = 0;          // monotonic; echoed by inject.js to reject stale replies
 
   // export (SRT download) bookkeeping
@@ -196,7 +223,7 @@
   // same sync profile working — old code would read "auto" as gtx.
   function normalizeEngine(got) {
     const e = got && got.engine;
-    if (e === "auto" || e === "tlang" || e === "gtx") return e;
+    if (e === "auto" || e === "tlang" || e === "gtx" || e === "byo") return e;
     return got && got.backend === "gtx" ? "gtx" : "auto";
   }
 
@@ -223,7 +250,11 @@
   // ONLY these keys require re-requesting cues from inject.js; every other key
   // is a pure style/position change that applies live via styleOverlay(). This
   // positive set is the single source of truth for the re-cue decision.
-  const RECUE_KEYS = new Set(["engine", "backend", "targetLang"]);
+  // The BYO keys belong here too: a different provider/model/endpoint is a
+  // different translator, so cached lines from the previous one must go.
+  const RECUE_KEYS = new Set([
+    "engine", "backend", "targetLang", "byoProvider", "byoModel", "byoBaseUrl"
+  ]);
 
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== "sync") return;
@@ -359,11 +390,15 @@
     handleEl.className = "ytds-handle";
     handleEl.title = t("handleTitle", "拖动移动字幕 · 双击复位");
     handleEl.setAttribute("aria-label", t("handleAria", "拖动移动字幕，双击复位"));
+    // Six-dot grip rather than a move cross: the dots are the universal
+    // "you can drag this" symbol (tables, task boards, list rows all use it),
+    // while arrows read as "this is a move tool". Laid out 3x2 to match the
+    // horizontal bar — a 2x3 column in a wide bar looks like a mistake.
     handleEl.innerHTML =
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-      'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-      '<path d="M12 2v20M2 12h20M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3' +
-      'M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3"/></svg>';
+      '<svg viewBox="0 0 17 12" fill="currentColor">' +
+      '<circle cx="3.5" cy="3.5" r="1.5"/><circle cx="8.5" cy="3.5" r="1.5"/>' +
+      '<circle cx="13.5" cy="3.5" r="1.5"/><circle cx="3.5" cy="8.5" r="1.5"/>' +
+      '<circle cx="8.5" cy="8.5" r="1.5"/><circle cx="13.5" cy="8.5" r="1.5"/></svg>';
 
     handleEl.addEventListener("pointerdown", onHandlePointerDown);
     handleEl.addEventListener("pointermove", onHandlePointerMove);
@@ -372,6 +407,34 @@
     handleEl.addEventListener("dblclick", onHandleDblClick);
 
     overlay.appendChild(handleEl);
+  }
+
+  // ---- first-run discovery -------------------------------------------------
+  // The grip is invisible until the pointer is near the player, which is exactly
+  // why people never find it (a store review said "there are only three
+  // positions"). New installs get it shown, and gently pulsed, on their first
+  // few videos. The counter is written by background.js on install ONLY —
+  // upgrades must not pester people who already know how to drag.
+  let hintedThisVideo = false;
+
+  function flashHandle(ms) {
+    if (!overlay || !handleEl) return false;
+    overlay.classList.add("ytds-hint");
+    setTimeout(() => {
+      if (overlay) overlay.classList.remove("ytds-hint");
+    }, ms || 2400);
+    return true;
+  }
+
+  function maybeHintHandle() {
+    if (hintedThisVideo || !overlay || !handleEl) return;
+    hintedThisVideo = true;                    // one shot per video either way
+    chrome.storage.local.get({ handleHintsLeft: 0 }, (got) => {
+      const left = Number(got && got.handleHintsLeft) || 0;
+      if (left <= 0) return;
+      chrome.storage.local.set({ handleHintsLeft: left - 1 });
+      flashHandle(3600);
+    });
   }
 
   function onHandlePointerDown(e) {
@@ -394,6 +457,10 @@
       dragGrabDy = 0;
     }
     handleEl.classList.add("ytds-dragging");
+    // Lift the whole box while it is being moved: without it the user is
+    // dragging text with no visible edges and cannot tell what they grabbed.
+    overlay.classList.add("ytds-drag");
+    overlay.classList.remove("ytds-hint");     // a real drag ends the hint
     // Drop the lift and kill transitions for the gesture: the box must track
     // the cursor exactly, not float `controlsLift` px above it.
     controlsLift = 0;
@@ -421,8 +488,18 @@
     // actually grabbed rather than snapping the center onto the cursor.
     const cx = e.clientX - dragGrabDx;
     const cy = e.clientY - dragGrabDy;
-    const xpct = clampPct(((cx - rect.left) / rect.width) * 100);
-    const ypct = clampPct(((cy - rect.top) / rect.height) * 100);
+    // The stored position is the box CENTRE, so clamping it to 0..100 still lets
+    // half the box hang outside the player — dragging to the bottom cut the
+    // lower subtitle line in half (reported on both windowed and fullscreen).
+    // Clamp by half the box, and leave room above it for the grip, which lives
+    // outside the box and would otherwise be pushed off-screen at the top.
+    const orect = overlay.getBoundingClientRect();
+    const halfW = orect.width ? (orect.width / 2 / rect.width) * 100 : 0;
+    const halfH = orect.height ? (orect.height / 2 / rect.height) * 100 : 0;
+    const gripPct = (HANDLE_ROOM_PX / rect.height) * 100;
+    const xpct = clampRange(((cx - rect.left) / rect.width) * 100, halfW, 100 - halfW);
+    const ypct = clampRange(((cy - rect.top) / rect.height) * 100,
+                            halfH + gripPct, 100 - halfH);
     settings.posMode = "custom";
     settings.posXpct = xpct;
     settings.posYpct = ypct;
@@ -434,7 +511,10 @@
     if (!dragging) return;
     dragging = false;
     handleEl.classList.remove("ytds-dragging");
-    if (overlay) overlay.classList.remove("ytds-notrans");
+    if (overlay) {
+      overlay.classList.remove("ytds-notrans");
+      overlay.classList.remove("ytds-drag");
+    }
     computeLift();                 // ease back off the control bar if needed
     try { handleEl.releasePointerCapture(e.pointerId); } catch (_e) { /* ignore */ }
     // Only persist when a REAL drag happened. A bare click (no movement) must
@@ -491,8 +571,48 @@
     computeLift();
   }
 
+  // A dragged position is stored as the box CENTRE, so it stays valid only for
+  // the box size it was chosen with. A later, longer subtitle wraps to two lines
+  // and the box grows both ways from that centre — which is how the bottom line
+  // ended up cut off again after the drag-time clamp (intermittent, because it
+  // depends on how long the next sentence happens to be). So re-clamp on every
+  // relayout: text change, resize, fullscreen. In memory only — persisting on
+  // every caption change would be write spam, and the stored value gets clamped
+  // again on the next paint anyway.
+  function clampCustomIntoView() {
+    if (settings.posMode !== "custom" || !overlay || dragging) return;
+    const player = getPlayer();
+    if (!player) return;
+    const rect = player.getBoundingClientRect();
+    const orect = overlay.getBoundingClientRect();
+    if (!rect.width || !rect.height || !orect.height) return;
+    const halfW = (orect.width / 2 / rect.width) * 100;
+    const halfH = (orect.height / 2 / rect.height) * 100;
+    const gripPct = (HANDLE_ROOM_PX / rect.height) * 100;
+    const x = clampRange(settings.posXpct, halfW, 100 - halfW);
+    const y = clampRange(settings.posYpct, halfH + gripPct, 100 - halfH);
+    if (Math.abs(x - settings.posXpct) < 0.3 && Math.abs(y - settings.posYpct) < 0.3) {
+      return;                                   // already inside: no reflow
+    }
+    settings.posXpct = x;
+    settings.posYpct = y;
+    // Instantly, not over the 0.18s `top` transition that content.css uses for
+    // the control-bar lift: this is a hard constraint, and animating it left the
+    // box measurably outside the player for the whole transition (28px for
+    // ~180ms in the geometry rig — long enough to screenshot, which is how it
+    // was reported). The lift keeps its easing; only the correction skips it.
+    overlay.classList.add("ytds-notrans");
+    applyPosition();
+    // Force the style to take effect before the transition comes back.
+    void overlay.offsetHeight;
+    requestAnimationFrame(() => {
+      if (overlay && !dragging) overlay.classList.remove("ytds-notrans");
+    });
+  }
+
   function computeLift() {
     if (!overlay || dragging) return;      // mid-drag: stay 1:1 with the cursor
+    clampCustomIntoView();                 // box may have grown since the drag
     let lift = 0;
     try {
       const player = getPlayer();
@@ -614,7 +734,16 @@
     if (!overlay) return;
     const oEmpty = !settings.showOriginal || !origEl.textContent;
     const tEmpty = !settings.showTranslation || !transEl.textContent;
-    overlay.classList.toggle("ytds-empty", oEmpty && tEmpty);
+    const empty = oEmpty && tEmpty;
+    overlay.classList.toggle("ytds-empty", empty);
+    // The moment there is something on screen is the moment the grip is worth
+    // pointing at — before that there is no box to drag.
+    if (!empty) maybeHintHandle();
+    // Synchronously, in the same task as the text change: leaving this to the
+    // rAF in scheduleLift() let a taller line paint one frame outside the
+    // player before being pulled back (measured 76px of overflow for a frame
+    // at a large font size).
+    clampCustomIntoView();
     scheduleLift();                // text height changed — re-check the bar gap
   }
 
@@ -880,6 +1009,13 @@
 
     // (2) gtx backend (or no usable tlang data).
     if (activeGroupIdx >= 0) {
+      // Aligned mode filled a line for this very cue: prefer it, so the
+      // translation changes in step with the original.
+      const perCue = transCache.get(cueVideoId + " " + idx);
+      if (perCue !== undefined) {
+        setTranslation(dedupeTrans(perCue, origText), origText);
+        return;
+      }
       // sentence-group mode: the whole rebuilt sentence translates as one unit.
       // Same text repaints across the group's cues — textContent is idempotent,
       // so there is no visible flicker.
@@ -1005,17 +1141,26 @@
   //   3. word/char caps, cutting back at the largest pause seen in the group.
   // Manual tracks degrade naturally to one-cue groups via rules 1 and 2
   // (lastOff === start there, so the "pause" spans the whole cue).
+  // The live overlay keeps its groups in module state; export needs the same
+  // grouping over a DIFFERENT cue array (the complete track fetched for the
+  // download), so the algorithm itself is pure and both callers own their result.
   function buildSentenceGroups(list) {
-    sentGroups = [];
-    cueToGroup = new Array(list.length);
+    const built = computeSentenceGroups(list);
+    sentGroups = built.groups;
+    cueToGroup = built.cueToGroup;
+  }
+
+  function computeSentenceGroups(list) {
+    const groups = [];
+    const toGroup = new Array(list.length);
     const wc = (t2) => t2.split(/\s+/).filter(Boolean).length;
     let s = 0, words = 0, chars = 0, maxPause = -1, maxPauseAt = -1;
 
     const flush = (endIdx) => {                 // cues [s..endIdx] become a group
-      const g = sentGroups.length;
+      const g = groups.length;
       const parts = [];
-      for (let k = s; k <= endIdx; k++) { cueToGroup[k] = g; parts.push(list[k].text); }
-      sentGroups.push({
+      for (let k = s; k <= endIdx; k++) { toGroup[k] = g; parts.push(list[k].text); }
+      groups.push({
         startIdx: s, endIdx,
         text: parts.join(" "),
         start: list[s].start, end: list[endIdx].end
@@ -1048,6 +1193,7 @@
         i = cut;
       }
     }
+    return { groups, cueToGroup: toGroup };
   }
 
   function groupKey(gIdx) { return cueVideoId + " g" + gIdx; }
@@ -1088,6 +1234,8 @@
     const key = groupKey(gIdx);
     const ik = "g" + gIdx;           // string — never collides with numeric cue idx
     if (transCache.has(key)) return;
+    // Aligned mode already answered for this group if its first cue has a line.
+    if (transCache.has(cueVideoId + " " + g.startIdx)) return;
     // The active sentence may sit in the rate-limit queue for a while. Show an
     // honest "…" instead of leaving the PREVIOUS sentence next to new original
     // text (a mismatched pair reads as a wrong translation).
@@ -1099,6 +1247,7 @@
         if (pEpoch !== cueEpoch || pVid !== cueVideoId) return;
         if (activeGroupIdx !== gIdx || activeCueIdx < 0 || !cueList) return;
         if (transCache.has(key)) return;
+        if (transCache.has(cueVideoId + " " + activeCueIdx)) return;   // aligned landed
         setTranslation("…", cueList[activeCueIdx].text);
       }, PENDING_ELLIPSIS_MS);
     }
@@ -1106,13 +1255,42 @@
     transInflight.add(ik);
     const reqVid = cueVideoId;
     const reqEpoch = cueEpoch;
+    // Aligned mode (own-key engines only): ask for one line per cue so the
+    // translation line turns over with the original instead of standing still
+    // for the whole sentence. A single-cue group is already aligned by
+    // definition, so it takes the plain path.
+    const nCues = g.endIdx - g.startIdx + 1;
+    const wantAligned = settings.engine === "byo" && nCues > 1;
+    const request = wantAligned
+      ? {
+          type: "translateAligned",
+          texts: cueList.slice(g.startIdx, g.endIdx + 1).map((c) => c.text),
+          targetLang: settings.targetLang,
+          urgent: !!urgent
+        }
+      : { type: "translate", text: g.text, targetLang: settings.targetLang, urgent: !!urgent };
     chrome.runtime.sendMessage(
-      { type: "translate", text: g.text, targetLang: settings.targetLang, urgent: !!urgent },
+      request,
       (resp) => {
         transInflight.delete(ik);
         if (chrome.runtime.lastError) return;       // worker asleep; retried on demand
         if (reqEpoch !== cueEpoch) return;          // loop restarted / re-config
         if (reqVid !== cueVideoId) return;          // navigated away
+        // Aligned answer: one line per cue, cached per cue so the normal
+        // per-cue render path serves it from here on.
+        if (resp && resp.ok && resp.aligned && Array.isArray(resp.values) &&
+            resp.values.length === nCues) {
+          gtxNetFails = 0;
+          for (let k = 0; k < nCues; k++) {
+            transCache.set(cueVideoId + " " + (g.startIdx + k), resp.values[k]);
+          }
+          if (activeGroupIdx === gIdx && activeCueIdx >= g.startIdx &&
+              activeCueIdx <= g.endIdx && cueList) {
+            const orig = cueList[activeCueIdx].text;
+            setTranslation(dedupeTrans(resp.values[activeCueIdx - g.startIdx], orig), orig);
+          }
+          return;
+        }
         if (resp && resp.ok && resp.translated) {
           gtxNetFails = 0;
           // gtx echoing the whole sentence back (source language == target)
@@ -1256,6 +1434,16 @@
   function onNoCues(data) {
     if (data && data.videoId && data.videoId !== currentVideoId) return;
     if (data && typeof data.nonce === "number" && data.nonce !== configNonce) return;
+    // inject.js only posts nocues after 6s with NO timedtext URL captured at
+    // all. On a healthy player that never happens — it always fetches a track —
+    // so this is the precise signature of the restored-tab case, and a much
+    // better trigger than any wall-clock guess: a slow video still gets its
+    // capture and posts cues instead. One shot per video; if CC was not already
+    // pressed there is nothing to re-arm and we fall through as before.
+    if (!rearmedForVideo && rearmCaptions()) {
+      rearmedForVideo = true;
+      return;                       // wait for the capture the toggle forces
+    }
     nocuesFallback = true;
     stopCueLoop();
     cueList = null;
@@ -1277,23 +1465,63 @@
 
   chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     if (!msg) return;
+    // popup's "try dragging" button: point at the grip for people who already
+    // used up their first-run hints.
+    if (msg.type === "flashHandle") {
+      sendResponse({ ok: flashHandle(3600) });
+      return;                                               // sync reply
+    }
     if (msg.type === "engineStatus") {
       // popup status line: which engine is ACTUALLY rendering this video (the
       // resolved outcome, not the setting — tlang can fail into gtx and auto
       // can fall back the other way).
+      // The client-side path is shared by gtx and BYO, so which of the two is
+      // rendering comes from the setting, not from the cue data.
       let engine = "";
-      if (cueList && cueList.length) engine = cueAligned != null ? "tlang" : "gtx";
+      if (cueList && cueList.length) {
+        if (cueAligned != null) engine = "tlang";
+        else engine = settings.engine === "byo" ? "byo" : "gtx";
+      }
       sendResponse({
         ok: true,
         engine,
+        provider: settings.engine === "byo" ? settings.byoProvider : "",
         same: !!(cueList && cueList.length && cueSameLang),
         track: cueTrackKind || "none",
         fellBack: gtxFellBack
       });
       return;                                               // sync reply
     }
+    // What an own-key download would cost, so the popup can say it out loud
+    // before spending anything.
+    if (msg.type === "exportPlan") {
+      planByoExport()
+        .then(sendResponse)
+        .catch(() => sendResponse({ ok: false, reason: "nocues" }));
+      return true;                                          // async reply
+    }
+    // Polled by the popup while a download runs — and once when it opens, so a
+    // popup that was closed mid-download re-attaches to the one in progress
+    // instead of offering to start a second.
+    if (msg.type === "exportStatus") {
+      sendResponse({
+        ok: true,
+        running: !!exportRun,
+        done: exportRun ? exportRun.done : 0,
+        total: exportRun ? exportRun.total : 0,
+        result: exportRun ? null : exportLast
+      });
+      return;                                               // sync reply
+    }
+    if (msg.type === "exportCancel") {
+      // The request already in flight cannot be recalled, but no further chunk
+      // is sent and nothing is downloaded.
+      if (exportRun) exportRun.cancel = true;
+      sendResponse({ ok: true });
+      return;                                               // sync reply
+    }
     if (msg.type !== "exportSrt") return;                   // not ours — ignore
-    handleExport(msg.variant)
+    handleExport(msg.variant, msg.byo)
       .then(sendResponse)
       .catch(() => sendResponse({ ok: false, reason: "nocues" }));
     return true;                                            // async reply
@@ -1434,9 +1662,212 @@
     }
   }
 
+  // =========================================================================
+  // EXPORT WITH THE OWN-KEY ENGINE
+  // =========================================================================
+  // Playback only ever sends the sentences actually watched. A download is the
+  // opposite: the whole track, at once, on the user's own key — so it is opt-in
+  // per download, it says what it will cost before it starts, and it can be
+  // stopped. YouTube's whole-track translation is fetched first regardless and
+  // kept underneath as the fallback layer: a chunk the provider fails on leaves
+  // those cues with YouTube's line instead of a hole.
+  // Measured against real models on a real 20-minute ASR track (see
+  // tests/export-live.js): line fidelity, not context length, is what breaks
+  // first. qwen-flash — one of the recommended presets — returns 32/35 and
+  // 40/50 labels but is clean at 24; deepseek-v4-flash holds 35 and slips at
+  // 50. It is a size wall, not a protocol one: the same models fail the same
+  // way with the live flat numbering. So the cap is set below the weakest
+  // verified preset rather than at the biggest request that fits, because a
+  // dropped line costs a halving cascade (one 50-line chunk cost qwen-flash 17
+  // requests and 35s) and every unverified provider is assumed no better.
+  const EXPORT_MAX_LINES = 25;    // cues per request
+  const EXPORT_MAX_CHARS = 4000;  // second cap: source characters per request
+                                  // (only binds on tracks with very long cues)
+
+  let exportRun = null;           // { total, done, cancel } while one is running
+  let exportLast = null;          // last finished result, for a re-opened popup
+  let exportPlan = null;          // { videoId, targetLang, cues, chunks, lines }
+
+  // Translations already paid for during playback, keyed by start+text so they
+  // survive the re-fetch of the track (the export cue array is a fresh parse).
+  // transCache is cleared whenever the provider or model changes, so anything
+  // still in it came from the engine now selected.
+  function watchedTranslations() {
+    const m = new Map();
+    if (!cueList || !cueList.length) return m;
+    const put = (c, v) => { if (c && v) m.set(c.start + "|" + c.text, v); };
+    for (let i = 0; i < cueList.length; i++) {
+      put(cueList[i], transCache.get(cueVideoId + " " + i));       // aligned mode
+    }
+    if (sentGroups) {
+      for (let g = 0; g < sentGroups.length; g++) {
+        // A one-cue sentence is cached under the group key and is, by
+        // definition, already a per-cue translation.
+        const grp = sentGroups[g];
+        if (grp.startIdx === grp.endIdx) put(cueList[grp.startIdx], transCache.get(groupKey(g)));
+      }
+    }
+    return m;
+  }
+
+  // Split the track into requests. A sentence is never split across two
+  // requests, and a sentence whose cues are ALL already translated is dropped
+  // entirely; a partly-translated one is re-sent whole, because a sentence with
+  // a hole in it translates worse than it saves.
+  function buildExportChunks(cues) {
+    const built = computeSentenceGroups(cues);
+    const known = watchedTranslations();
+    const chunks = [];
+    let cur = [], lines = 0, chars = 0;
+
+    for (const g of built.groups) {
+      const idxs = [];
+      let allKnown = true;
+      for (let i = g.startIdx; i <= g.endIdx; i++) {
+        const hit = known.get(cues[i].start + "|" + cues[i].text);
+        if (hit) cues[i].trans = hit; else allKnown = false;
+        idxs.push(i);
+      }
+      if (allKnown) continue;
+      const over = cur.length &&
+        (lines + idxs.length > EXPORT_MAX_LINES ||
+         chars + g.text.length > EXPORT_MAX_CHARS);
+      if (over) { chunks.push(cur); cur = []; lines = 0; chars = 0; }
+      cur.push(idxs);
+      lines += idxs.length;
+      chars += g.text.length;
+    }
+    if (cur.length) chunks.push(cur);
+    return chunks;
+  }
+
+  // Fetch the complete track (original + YouTube's translation as the fallback
+  // layer) and work out what the download would cost. Cached for the confirm
+  // step that follows, so the track is fetched once per download, not twice.
+  async function planByoExport() {
+    if (settings.engine !== "byo") return { ok: false, reason: "notbyo" };
+    if (cueSameLang) return { ok: false, reason: "same" };
+    const cues = await exportCues();
+    if (!cues || !cues.length) return { ok: false, reason: "nocues" };
+    const chunks = buildExportChunks(cues);
+    const lines = chunks.reduce((n, c) => n + c.reduce((k, g) => k + g.length, 0), 0);
+    exportPlan = {
+      videoId: cueVideoId || currentVideoId,
+      targetLang: settings.targetLang,
+      cues, chunks, lines
+    };
+    return { ok: true, cues: cues.length, lines, requests: chunks.length };
+  }
+
+  function planIsFresh() {
+    return !!exportPlan &&
+      exportPlan.videoId === (cueVideoId || currentVideoId) &&
+      exportPlan.targetLang === settings.targetLang;
+  }
+
+  function sendExportChunk(groups) {
+    return new Promise((resolve) => {
+      try {
+        chrome.runtime.sendMessage(
+          { type: "exportTranslate", groups, targetLang: settings.targetLang },
+          (resp) => {
+            if (chrome.runtime.lastError) { resolve({ ok: false, code: "worker" }); return; }
+            resolve(resp || { ok: false, code: "worker" });
+          }
+        );
+      } catch (_e) { resolve({ ok: false, code: "worker" }); }
+    });
+  }
+
+  // Codes worth stopping the whole download for: every remaining chunk would
+  // fail the same way, so asking the provider 30 more times is pure noise.
+  const EXPORT_FATAL = new Set(["auth", "noKey", "noPerm", "noProvider", "noModel",
+                                "badBaseUrl", "unsupportedTarget"]);
+
+  async function runByoExport(variant) {
+    if (!planIsFresh()) {
+      const p = await planByoExport();
+      if (!p.ok) return { ok: false, reason: p.reason || "nocues" };
+    }
+    const plan = exportPlan;
+    const cues = plan.cues;
+    const run = { total: plan.chunks.length, done: 0, cancel: false };
+    exportRun = run;
+    exportLast = null;
+
+    let failed = 0, code = "";
+    try {
+      for (const chunk of plan.chunks) {
+        if (run.cancel) return finishExport({ ok: false, reason: "cancelled" });
+        const groups = chunk.map((idxs) => idxs.map((i) => cues[i].text));
+        const resp = await sendExportChunk(groups);
+        if (resp && resp.ok && Array.isArray(resp.values) && resp.values.length === chunk.length) {
+          for (let g = 0; g < chunk.length; g++) {
+            const row = resp.values[g] || [];
+            chunk[g].forEach((i, k) => { if (row[k]) cues[i].trans = row[k]; });
+          }
+        } else {
+          failed++;
+          code = (resp && resp.code) || "failed";
+          // Falling back to YouTube's line for one chunk is a degraded file;
+          // carrying on past a key/permission problem is 30 doomed requests.
+          if (EXPORT_FATAL.has(code)) {
+            return finishExport({ ok: false, reason: "byofail", code });
+          }
+        }
+        run.done++;
+      }
+    } finally {
+      if (exportRun === run) exportRun = null;
+    }
+
+    // Stop pressed while the last chunk was in flight: that request cannot be
+    // recalled, but handing over the file anyway would ignore the button. The
+    // loop's own check only covers a stop between chunks.
+    if (run.cancel) return finishExport({ ok: false, reason: "cancelled" });
+
+    // Every chunk failed and nothing was translated earlier: the download would
+    // be YouTube's translation under a label that promises the user's engine.
+    if (failed && failed === plan.chunks.length && !cues.some((c) => c.trans)) {
+      return finishExport({ ok: false, reason: "byofail", code: code || "failed" });
+    }
+    if (!cues.some((c) => c.trans)) return finishExport({ ok: false, reason: "notrans" });
+
+    const v = variant === "trans" ? "trans" : "bi";
+    const built = buildSrt(cues, v);
+    if (!built.count) return finishExport({ ok: false, reason: "notrans" });
+    exportPlan = null;               // consumed: the next download re-plans
+    return finishExport(
+      triggerDownload(built.text, srtFilename(v))
+        ? { ok: true, count: built.count, variant: v, byo: true, failedChunks: failed, code }
+        : { ok: false, reason: "notrans" }
+    );
+  }
+
+  function finishExport(result) {
+    exportRun = null;
+    exportLast = Object.assign({ ts: Date.now() }, result);
+    return result;
+  }
+
+  // The complete track, translation included where YouTube has one. Shared by
+  // both export paths.
+  async function exportCues() {
+    const data = await requestExportData(settings.targetLang);
+    if (data && data.ok && Array.isArray(data.cues) && data.cues.length) {
+      const cues = data.cues.slice().sort((a, b) => a.start - b.start);
+      computeCueEnds(cues);
+      if (data.aligned === false && Array.isArray(data.tcues)) {
+        fillTransByTimestamp(cues, data.tcues.slice().sort((a, b) => a.start - b.start));
+      }
+      return cues;
+    }
+    return (cueList && cueList.length) ? cueList : null;
+  }
+
   // Main export entry. Returns a serializable result for the popup:
   //   { ok:true, count, variant } | { ok:false, reason:"nocues"|"notrans" }
-  async function handleExport(variant) {
+  async function handleExport(variant, useByo) {
     const v = (variant === "orig" || variant === "trans") ? variant : "bi";
 
     // ORIGINAL: the live cue list already holds the full original track.
@@ -1447,6 +1878,13 @@
       return triggerDownload(built.text, srtFilename("orig"))
         ? { ok: true, count: built.count, variant: "orig" }
         : { ok: false, reason: "nocues" };
+    }
+
+    // OWN-KEY ENGINE: opt-in per download (the popup has already shown the
+    // estimate and taken a confirmation), and pointless on a same-language
+    // track — there is nothing to translate.
+    if (useByo && settings.engine === "byo" && !cueSameLang) {
+      return runByoExport(v);
     }
 
     // TRANSLATION / BILINGUAL.
@@ -1462,16 +1900,7 @@
       cues = cueList;
     } else {
       // Fetch a complete paired set from inject (works in any backend mode).
-      const data = await requestExportData(settings.targetLang);
-      if (data && data.ok && Array.isArray(data.cues) && data.cues.length) {
-        cues = data.cues.slice().sort((a, b) => a.start - b.start);
-        computeCueEnds(cues);
-        if (data.aligned === false && Array.isArray(data.tcues)) {
-          fillTransByTimestamp(cues, data.tcues.slice().sort((a, b) => a.start - b.start));
-        }
-      } else if (cueList && cueList.length) {
-        cues = cueList;                 // at least try whatever the overlay holds
-      }
+      cues = await exportCues();
     }
 
     if (!cues || !cues.length) return { ok: false, reason: "nocues" };
@@ -1528,6 +1957,13 @@
     }
   }
 
+  // Fold our engine setting into the 3-value protocol inject.js speaks.
+  function injectMode() {
+    if (settings.engine === "byo") return "gtx";        // "give me the original"
+    if (settings.engine === "auto" && gtxFellBack) return "tlang";
+    return settings.engine;
+  }
+
   function sendConfig() {
     try {
       const nonce = ++configNonce;
@@ -1537,7 +1973,10 @@
         targetLang: settings.targetLang,
         // inject resolves "auto" against the captured track's kind (asr/manual).
         // After a network-dead gtx this video runs plain tlang instead.
-        mode: (settings.engine === "auto" && gtxFellBack) ? "tlang" : settings.engine,
+        // inject's protocol stays the 3-value one: "byo" means "don't fetch
+        // YouTube's translation, hand me the original" — exactly what "gtx"
+        // asks for, so it maps onto it and inject.js needs no change.
+        mode: injectMode(),
         nonce
       }, "*");
     } catch (_e) { /* ignore */ }
@@ -1582,10 +2021,19 @@
 
   function onNav() {
     currentVideoId = videoIdFromLocation();
+    hintedThisVideo = false;    // a new video may spend one more first-run hint
+    blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery
+    rearmedForVideo = false;    // and one CC re-arm allowance
+    armBlankWatch();            // re-arm the still-blank watchdog for this video
     transCache.clear();
     cueTrackId = "";            // the id describes transCache — reset together
                                 // (NOT in teardownAll: a disable/enable cycle
                                 // keeps the cache, so it must keep the id too)
+    // A download in progress belongs to the video that was on screen: finishing
+    // it here would name the file after the new one and keep spending on a
+    // track nobody is watching any more.
+    if (exportRun) exportRun.cancel = true;
+    exportPlan = null;
     gtxNetFails = 0;
     gtxFellBack = false;        // the fallback is per-video
     weEnabledCC = false;        // fresh video — re-evaluate caption state
@@ -1612,6 +2060,77 @@
       if (v && v !== currentVideoId) onNav();
     } catch (_e) { /* ignore */ }
   }, 500);
+
+  // ---- blank-overlay recovery ----------------------------------------------
+  // Reported case: a tab left on a video and restored when Chrome reopens shows
+  // no subtitles, while a freshly opened tab is fine. On that path the player
+  // can be back in place before our sniffer is listening, so no caption request
+  // is ever seen and the run commits to the scrape fallback with nothing to
+  // scrape. Rather than guess which of those happens, re-ask whenever the page
+  // is restored or revealed with an empty overlay. sendConfig() bumps the nonce,
+  // so a late reply from the previous attempt is discarded; the counter keeps a
+  // genuinely caption-less video from looping.
+  // Root cause of the reported case, confirmed by the user's own workaround
+  // (only a manual CC toggle fixed it): a restored tab comes back with
+  // YouTube's CC already pressed, so ensureCaptionsOn sees "already on" and
+  // never clicks — and the player has no reason to re-request the track, so
+  // inject.js never sees a timedtext URL and the overlay stays blank. Toggling
+  // CC off and straight back on is exactly the hand fix; do that instead of
+  // waiting for something that will not happen. End state is unchanged (on), so
+  // weEnabledCC is deliberately left alone.
+  function rearmCaptions() {
+    const player = getPlayer();
+    const cc = player && player.querySelector(".ytp-subtitles-button");
+    if (!cc) return false;
+    if (cc.getAttribute("aria-disabled") === "true") return false;
+    if (cc.getAttribute("aria-pressed") !== "true") return false;   // not our case
+    cc.click();                                                     // off
+    setTimeout(() => {
+      const p2 = getPlayer();
+      const cc2 = p2 && p2.querySelector(".ytp-subtitles-button");
+      if (cc2 && cc2.getAttribute("aria-pressed") !== "true") cc2.click();   // on
+    }, 250);
+    return true;
+  }
+
+  function recoverIfBlank(why) {
+    if (!settings.enabled) return;
+    if (!videoIdFromLocation()) return;               // not a video page
+    if (cueList && cueList.length) return;            // already working
+    if (dragging) return;                             // don't fight a gesture
+    if (blankRecoveries >= MAX_BLANK_RECOVERIES) return;
+    blankRecoveries++;
+    nocuesFallback = false;                           // let cue mode win again
+    sendConfig();                                     // arm inject with a fresh nonce
+    if (!rearmCaptions()) syncCaptions();              // else CC never armed at all
+    void why;                                         // kept for debugging reads
+  }
+
+  // The reported case never fires visibilitychange — the tab is already visible
+  // when the window comes back — so the real trigger is time: still blank a few
+  // seconds after load means it is not coming.
+  // Backstop only. The real trigger is inject.js's nocues (see onNoCues), which
+  // fires at 6s and knows whether a caption request was ever made. This timer
+  // exists for the case where nocues never arrives at all — e.g. the config
+  // never reached inject — so it can afford to be slow and quiet.
+  let blankWatchTimer = null;
+  function armBlankWatch() {
+    if (blankWatchTimer) clearTimeout(blankWatchTimer);
+    blankWatchTimer = setTimeout(() => {
+      blankWatchTimer = null;
+      recoverIfBlank("timeout");
+      if (blankRecoveries > 0 && blankRecoveries < MAX_BLANK_RECOVERIES) armBlankWatch();
+    }, 20000);
+  }
+
+  window.addEventListener("pageshow", (e) => {
+    if (e && e.persisted) { blankRecoveries = 0; onNav(); }   // back/forward cache
+    else armBlankWatch();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") recoverIfBlank("visible");
+  });
+  armBlankWatch();
 
   // ---- boot ----------------------------------------------------------------
   loadSettings().then(() => {
