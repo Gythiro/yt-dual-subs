@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="options.css" />
+  <title>Dual Subtitles for YouTube — setup</title>
+</head>
+<body>
+  <header class="ohd">
+    <span class="ohd-mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ytdsG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4db1ff"/>
+            <stop offset="1" stop-color="#1e7fd6"/>
+          </linearGradient>
+        </defs>
+        <rect width="32" height="32" rx="9" fill="url(#ytdsG)"/>
+        <rect x="7" y="11" width="13" height="3.4" rx="1.7" fill="#fff" opacity=".95"/>
+        <rect x="7" y="17.6" width="18" height="3.4" rx="1.7" fill="#fff" opacity=".7"/>
+      </svg>
+    </span>
+    <div>
+      <!-- Both lines are rewritten per section by options.js; the markup keeps
+           the setup wording so the page is never blank before boot. -->
+      <h1 id="pageTitle" data-i18n="optTitle">翻译服务设置</h1>
+      <p class="ohd-sub" id="pageIntro" data-i18n="optIntro">
+        选一个服务商，填上你自己的 API Key。Key 只保存在这台电脑上，字幕只发往你选的服务商。
+      </p>
+    </div>
+  </header>
+
+  <main class="owrap">
+    <div class="oside">
+      <!-- Section switch. First-run opens #start, so the first thing a new user
+           sees is the three-step page, not an API key form. -->
+      <nav class="onav" id="onav" aria-label="设置分区" data-i18n-aria="optSections">
+        <button type="button" class="onav-item" data-sec="start" data-i18n="optNavStart">新手入门</button>
+        <button type="button" class="onav-item on" data-sec="setup" data-i18n="optNavSetup">翻译服务</button>
+        <button type="button" class="onav-item" data-sec="langs" data-i18n="optNavLangs">字幕语言</button>
+        <button type="button" class="onav-item" data-sec="about" data-i18n="optNavAbout">关于</button>
+      </nav>
+
+      <!-- ---------------------------- provider list ------------------------ -->
+      <div class="plist-wrap" id="plistWrap">
+        <h2 class="olabel" data-i18n="byoProviderLabel">服务商</h2>
+        <ul class="plist" id="plist" role="tablist" aria-label="服务商"
+            data-i18n-aria="byoProviderLabel"></ul>
+      </div>
+    </div>
+
+    <!-- --------------------------------- detail --------------------------- -->
+    <section class="odetail" id="detail" role="tabpanel">
+      <div class="odetail-head">
+        <span id="pIcon"></span>
+        <h2 id="pName">—</h2>
+        <span class="okind" id="pKind" hidden></span>
+      </div>
+
+      <p class="olinks">
+        <a id="pKeyLink" target="_blank" rel="noopener" data-i18n="byoGetKey" hidden>去申请 Key</a>
+        <a id="pPricingLink" target="_blank" rel="noopener" data-i18n="optPricingLink" hidden>资费与免费额度</a>
+        <a id="pGuideLink" target="_blank" rel="noopener" data-i18n="byoGuide">还不会配？看教程</a>
+      </p>
+
+      <p class="oneed" id="needKey" hidden data-i18n="optNeedKey">
+        还没填 Key，这个服务商暂时不能用。
+      </p>
+
+      <div class="ofield" id="baseRow" hidden>
+        <label for="baseUrl" data-i18n="byoBaseLabel">接口地址（https）</label>
+        <input type="url" id="baseUrl" spellcheck="false" autocomplete="off"
+               placeholder="https://example.com/v1" />
+        <p class="ohint" data-i18n="optBaseHint">
+          填 Base URL 或完整接口地址都行，例如 https://example.com/v1
+          或 https://example.com/v1/chat/completions。
+        </p>
+      </div>
+
+      <div class="ofield" id="modelRow">
+        <label for="modelSel" data-i18n="byoModelLabel">模型</label>
+        <div class="orow">
+          <select id="modelSel"></select>
+          <button type="button" class="obtn ghost" id="fetchModels" data-i18n="optFetchModels">
+            用我的 Key 拉取模型
+          </button>
+        </div>
+        <input type="text" id="modelInput" spellcheck="false" autocomplete="off" hidden />
+        <p class="ohint" id="modelMsg" role="status" aria-live="polite" hidden></p>
+      </div>
+
+      <div class="ofield">
+        <label for="key">
+          <span data-i18n="byoKeyLabel">API Key</span>
+          <span class="ospacer"></span>
+          <label class="ochk"><input type="checkbox" id="showKey" />
+            <span data-i18n="optShowKey">显示</span></label>
+          <button type="button" class="olink" id="keyClear" hidden data-i18n="byoKeyClear">清除</button>
+        </label>
+        <input type="password" id="key" spellcheck="false" autocomplete="off" />
+      </div>
+
+      <button type="button" class="obtn primary" id="testBtn" data-i18n="byoTest">保存并测通</button>
+      <p class="omsg" id="msg" role="status" aria-live="polite" hidden></p>
+
+      <p class="onote" data-i18n="optAfterSetup">
+        配好之后回到扩展弹窗，把「翻译引擎」切到「自带 Key」。
+      </p>
+    </section>
+
+    <!-- --------------------------------- start ---------------------------- -->
+    <!-- Three things, not a manual: one line per step and one drawing per step.
+         The drawings are inline SVG rather than screenshots because a shot of
+         the player ages with YouTube and would need re-taking per locale — and
+         they use the extension's own look (dark box, white line over yellow) so
+         the page reads as the thing it describes.
+         Step 2 exists because two separate users reported "there are only three
+         positions" for a box that has been freely draggable since 3.2. -->
+    <section class="odetail ostart" id="secStart" hidden>
+      <ol class="osteps">
+        <li class="ostep">
+          <div class="ostep-txt">
+            <span class="ostep-n" aria-hidden="true">1</span>
+            <h2 data-i18n="startS1Title">打开视频就有了</h2>
+            <p data-i18n="startS1Body">任意一个有字幕的 YouTube 视频，双语字幕自动出现。</p>
+          </div>
+          <div class="ostep-art">
+            <div class="odemo" role="img" data-i18n-aria="startS1Alt"
+                 aria-label="播放器示意图：画面下方是一行原文和一行译文">
+              <svg viewBox="0 0 300 170" aria-hidden="true">
+                <rect x="1" y="1" width="298" height="168" rx="9" fill="#000" stroke="var(--line)"/>
+                <rect x="1" y="144" width="298" height="25" fill="#141414"/>
+                <rect x="14" y="155" width="169" height="3" rx="1.5" fill="var(--accent)" opacity=".9"/>
+                <rect x="183" y="155" width="103" height="3" rx="1.5" fill="#4a4a4a"/>
+                <g>
+                  <rect x="62" y="77" width="176" height="44" rx="6" fill="#080808" opacity=".62"/>
+                  <text x="70" y="92" fill="#fff" font-size="10.5"
+                        font-family="system-ui, sans-serif">There's two big reasons</text>
+                  <text x="70" y="111" fill="#ffe98a" font-size="11.5"
+                        font-family="system-ui, sans-serif">有两个重要的原因</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </li>
+
+        <li class="ostep">
+          <div class="ostep-txt">
+            <span class="ostep-n" aria-hidden="true">2</span>
+            <h2 data-i18n="startS2Title">想放哪儿就放哪儿</h2>
+            <p data-i18n="startS2Body">按住字幕框左上角的手柄，拖到画面任何位置。双击手柄复位。</p>
+          </div>
+          <div class="ostep-art">
+            <!-- 190 tall on purpose: the faded "before" box, the arrow and the
+                 "after" box all have to clear the control bar, or the drawing
+                 demonstrates the very overlap dragging is meant to avoid. -->
+            <div class="odemo" role="img" data-i18n-aria="startS2Alt"
+                 aria-label="播放器示意图：字幕框左上角有一个六点手柄，按住可以把字幕拖到别的位置">
+              <svg viewBox="0 0 300 190" aria-hidden="true">
+                <rect x="1" y="1" width="298" height="188" rx="9" fill="#000" stroke="var(--line)"/>
+                <rect x="1" y="164" width="298" height="25" fill="#141414"/>
+                <rect x="14" y="175" width="169" height="3" rx="1.5" fill="var(--accent)" opacity=".9"/>
+                <rect x="183" y="175" width="103" height="3" rx="1.5" fill="#4a4a4a"/>
+                <g opacity=".3">
+                  <rect x="62" y="33" width="176" height="44" rx="6" fill="#080808" opacity=".62"/>
+                  <text x="70" y="48" fill="#fff" font-size="10.5"
+                        font-family="system-ui, sans-serif">There's two big reasons</text>
+                  <text x="70" y="67" fill="#ffe98a" font-size="11.5"
+                        font-family="system-ui, sans-serif">有两个重要的原因</text>
+                </g>
+                <g transform="translate(62 9)">
+                  <rect width="21" height="21" rx="6" fill="#1b1b1b" stroke="var(--accent)"/>
+                  <g fill="var(--accent)">
+                    <circle cx="7.5" cy="6.5" r="1.5"/><circle cx="13.5" cy="6.5" r="1.5"/>
+                    <circle cx="7.5" cy="10.5" r="1.5"/><circle cx="13.5" cy="10.5" r="1.5"/>
+                    <circle cx="7.5" cy="14.5" r="1.5"/><circle cx="13.5" cy="14.5" r="1.5"/>
+                  </g>
+                </g>
+                <path d="M150 84 L150 104" stroke="var(--accent)" stroke-width="1.6"
+                      stroke-dasharray="4 4" fill="none" opacity=".85"/>
+                <path d="M146 99 l4 6 l4 -6" stroke="var(--accent)" stroke-width="1.6"
+                      fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <g>
+                  <rect x="62" y="113" width="176" height="44" rx="6" fill="#080808" opacity=".62"/>
+                  <text x="70" y="128" fill="#fff" font-size="10.5"
+                        font-family="system-ui, sans-serif">There's two big reasons</text>
+                  <text x="70" y="147" fill="#ffe98a" font-size="11.5"
+                        font-family="system-ui, sans-serif">有两个重要的原因</text>
+                </g>
+                <g transform="translate(62 89)">
+                  <rect width="21" height="21" rx="6" fill="#1b1b1b" stroke="var(--accent)"/>
+                  <g fill="var(--accent)">
+                    <circle cx="7.5" cy="6.5" r="1.5"/><circle cx="13.5" cy="6.5" r="1.5"/>
+                    <circle cx="7.5" cy="10.5" r="1.5"/><circle cx="13.5" cy="10.5" r="1.5"/>
+                    <circle cx="7.5" cy="14.5" r="1.5"/><circle cx="13.5" cy="14.5" r="1.5"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </li>
+
+        <li class="ostep">
+          <div class="ostep-txt">
+            <span class="ostep-n" aria-hidden="true">3</span>
+            <h2 data-i18n="startS3Title">想要更好的译文</h2>
+            <p data-i18n="startS3Body">
+              填上你自己的 API Key：整句翻译，还能导出整片 SRT。
+            </p>
+            <button type="button" class="obtn primary ostart-cta" id="startToSetup"
+                    data-i18n="startGoSetup">去配置翻译服务</button>
+          </div>
+          <div class="ostep-art">
+            <!-- Shows the difference instead of asserting it. -->
+            <div class="odemo" role="img" data-i18n-aria="startS3Alt"
+                 aria-label="对比图：免费引擎把一句话切成几段翻译，自带 Key 整句理解后再切回来">
+              <svg viewBox="0 0 300 170" aria-hidden="true">
+                <text x="8" y="14" fill="var(--muted)" font-size="10.5"
+                      font-family="system-ui, sans-serif" data-i18n="startPicFree">免费引擎</text>
+                <rect x="4" y="24" width="136" height="128" rx="8" fill="#000" stroke="var(--line)"/>
+                <text x="14" y="52" fill="#fff" font-size="10"
+                      font-family="system-ui, sans-serif">there's two big</text>
+                <text x="14" y="70" fill="#ffe98a" font-size="10.5"
+                      font-family="system-ui, sans-serif">有两个大的</text>
+                <text x="14" y="96" fill="#fff" font-size="10"
+                      font-family="system-ui, sans-serif">reasons one is</text>
+                <text x="14" y="114" fill="#ffe98a" font-size="10.5"
+                      font-family="system-ui, sans-serif">原因之一是</text>
+                <text x="14" y="140" fill="#8a8a8a" font-size="9.5"
+                      font-family="system-ui, sans-serif" data-i18n="startPicFreeNote">一句话被切成几段</text>
+
+                <text x="164" y="14" fill="var(--accent)" font-size="10.5" font-weight="600"
+                      font-family="system-ui, sans-serif" data-i18n="startPicByo">自带 Key</text>
+                <rect x="160" y="24" width="136" height="128" rx="8" fill="#000" stroke="var(--accent)"/>
+                <text x="170" y="66" fill="#fff" font-size="10"
+                      font-family="system-ui, sans-serif">there's two big</text>
+                <text x="170" y="84" fill="#fff" font-size="10"
+                      font-family="system-ui, sans-serif">reasons one is</text>
+                <text x="170" y="106" fill="#ffe98a" font-size="10.5"
+                      font-family="system-ui, sans-serif">有两个重要的原因，</text>
+                <text x="170" y="124" fill="#ffe98a" font-size="10.5"
+                      font-family="system-ui, sans-serif">第一个是……</text>
+                <text x="170" y="146" fill="var(--accent)" font-size="9.5"
+                      font-family="system-ui, sans-serif" data-i18n="startPicByoNote">整句理解后再切回来</text>
+              </svg>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <p class="ostart-foot">
+        <b data-i18n="startNoSubsQ">没出现字幕？</b>
+        <span data-i18n="startNoSubs">点一下播放器右下角的 CC 按钮，或者换个视频试试——直播和纯音乐视频通常本来就没有字幕。</span>
+      </p>
+    </section>
+
+    <!-- --------------------------------- langs ---------------------------- -->
+    <!-- The popup dropdown is a native <select> and an <option> cannot hold a
+         remove button — the same wall that moved provider setup here. So the
+         list is arranged here and the popup just shows the result. -->
+    <section class="odetail" id="secLangs" hidden>
+      <div class="olangs">
+        <div class="olang-col">
+          <h2 class="olabel" data-i18n="langsKept">弹窗里显示的</h2>
+          <p class="ohint" data-i18n="langsKeptHint">这些会出现在弹窗的「目标语言」下拉里。至少留一个。</p>
+          <ul class="olang-list" id="langKept"></ul>
+        </div>
+        <div class="olang-col">
+          <h2 class="olabel" data-i18n="langsMore">其他语言</h2>
+          <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。免费引擎都支持;DeepL 少数语言不支持,遇到会直说。</p>
+          <ul class="olang-list" id="langMore"></ul>
+        </div>
+      </div>
+      <p class="omsg" id="langMsg" role="status" aria-live="polite" hidden></p>
+      <button type="button" class="obtn ghost" id="langReset" data-i18n="langsReset">恢复默认</button>
+    </section>
+    <!-- --------------------------------- about ---------------------------- -->
+    <section class="odetail" id="secAbout" hidden>
+      <p class="oabout-ver">
+        <span data-i18n="aboutVersion">版本</span>
+        <b id="aboutVer">—</b>
+      </p>
+      <p data-i18n="aboutBlurb">
+        给 YouTube 加一层双语字幕：原文一行、译文一行，字体、颜色、位置都能自己调。
+        开源、免费、无广告。
+      </p>
+      <p class="oabout-privacy" data-i18n="aboutPrivacy">
+        我们没有服务器，也不做任何统计。字幕文本只发往你选择的翻译服务；
+        用自带 Key 时，Key 只保存在这台电脑上。
+      </p>
+      <p class="olinks">
+        <a id="aboutSite" target="_blank" rel="noopener" data-i18n="ftSiteLabel">官网</a>
+        <a id="aboutGithub" target="_blank" rel="noopener">GitHub</a>
+        <a id="aboutChangelog" target="_blank" rel="noopener" data-i18n="aboutChangelog">更新日志</a>
+        <a id="aboutFeedback" target="_blank" rel="noopener" data-i18n="optFeedbackLink">反馈问题</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="oft">
+    <p data-i18n="byoLocalHint">
+      Key 只存在这台电脑的浏览器里，不会上传；字幕文本只发往你选择的服务商。
+    </p>
+    <p class="odim" data-i18n="optTrademark">
+      各服务商名称与标志均为其各自所有者的商标。本扩展与它们没有任何关联，也未获其背书；标志仅用于标识你所选择的接口。
+    </p>
+    <p class="odim">
+      <a id="feedbackLink" target="_blank" rel="noopener" data-i18n="optFeedbackLink">反馈问题</a>
+    </p>
+  </footer>
+
+  <script src="languages.js"></script>
+  <script src="providers.js"></script>
+  <script src="provider-icons.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

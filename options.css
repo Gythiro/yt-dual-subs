@@ -1,0 +1,297 @@
+/* options.css — settings page. Same dark palette as popup.css; the tokens are
+   duplicated on purpose (popup.css pins body width to 360px, so it cannot be
+   linked here). Keep the two token blocks in step. */
+:root {
+  --bg: #0f0f0f;
+  --surface: #181818;
+  --surface-2: #212121;
+  --line: #303030;
+  --txt: #f1f1f1;
+  --muted: #aaaaaa;
+  --accent: #3ea6ff;
+  --accent-dim: rgba(62, 166, 255, 0.16);
+  --radius: 10px;
+  font-size: 14px;
+  /* Native widgets (checkbox, select popup, scrollbar) render dark instead of
+     stamping a white box onto the page. */
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--txt);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC",
+               "Microsoft YaHei", sans-serif;
+  line-height: 1.5;
+}
+
+button, input, select { font-family: inherit; }
+button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ------------------------------- header --------------------------------- */
+.ohd {
+  display: flex; gap: 14px; align-items: flex-start;
+  max-width: 960px; margin: 0 auto; padding: 28px 24px 18px;
+}
+.ohd-mark { flex: none; line-height: 0; }
+.ohd h1 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: .2px; }
+.ohd-sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; max-width: 62ch; }
+
+/* -------------------------------- layout -------------------------------- */
+.owrap {
+  max-width: 960px; margin: 0 auto; padding: 0 24px 8px;
+  display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start;
+}
+@media (max-width: 760px) {
+  .owrap { grid-template-columns: 1fr; }
+}
+
+.olabel {
+  margin: 0 0 8px;
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* ------------------------------ section nav ------------------------------ */
+.oside { display: flex; flex-direction: column; gap: 18px; }
+.onav {
+  display: flex; flex-direction: column; gap: 2px; padding: 5px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.onav-item {
+  padding: 9px 11px; border: 0; border-radius: 7px;
+  background: transparent; color: var(--muted); text-align: left;
+  font-size: 13.5px; cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.onav-item:hover { background: var(--surface-2); color: var(--txt); }
+.onav-item.on { background: var(--accent-dim); color: var(--accent); font-weight: 600; }
+.plist-wrap[hidden] { display: none; }
+
+/* -------------------------------- start --------------------------------- */
+/* One line per step, one drawing per step, sides alternating. The earlier
+   version was three paragraphs stacked in a single card — no amount of border
+   work fixes a wall of prose, so the structure changed rather than the skin. */
+/* .odetail is defined further down the file, so a bare .ostart would lose on
+   source order and leave a card drawn around the cards — write both classes. */
+.odetail.ostart {
+  background: transparent; border: 0; padding: 0; gap: 0;
+}
+.osteps { list-style: none; margin: 0; padding: 0; }
+.ostep {
+  display: grid; grid-template-columns: 1fr 260px; gap: 26px; align-items: center;
+  padding: 22px 24px; margin-bottom: 14px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.ostep:nth-child(even) { grid-template-columns: 260px 1fr; }
+.ostep:nth-child(even) .ostep-txt { order: 2; }
+.ostep:nth-child(even) .ostep-art { order: 1; }
+.ostep-n {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 29px; height: 29px; border-radius: 50%;
+  background: var(--accent-dim); color: var(--accent);
+  font-size: 14.5px; font-weight: 700; margin-bottom: 11px;
+}
+.ostep h2 { margin: 0 0 7px; font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+.ostep p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.odemo { border-radius: 9px; overflow: hidden; }
+/* Sized here, not on the element: height="auto" is not a valid SVG attribute
+   and Chrome logs it as a page error. */
+.odemo svg { display: block; width: 100%; height: auto; }
+.ostart-cta { margin-top: 15px; }
+.ostart-foot {
+  margin: 6px 0 0; padding-top: 17px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 13.5px;
+}
+.ostart-foot b { color: var(--txt); font-weight: 600; }
+
+/* One column well before the drawings get too narrow to read. */
+@media (max-width: 860px) {
+  .ostep, .ostep:nth-child(even) { grid-template-columns: 1fr; gap: 18px; }
+  .ostep:nth-child(even) .ostep-txt { order: 1; }
+  .ostep:nth-child(even) .ostep-art { order: 2; }
+}
+
+/* ------------------------------ languages -------------------------------- */
+.olangs { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+.olang-col .olabel { margin-bottom: 4px; }
+.olang-col .ohint { margin: 0 0 12px; max-width: 42ch; }
+.olang-list {
+  list-style: none; margin: 0; padding: 5px;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
+  max-height: 420px; overflow-y: auto;
+}
+.olang {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 9px; border-radius: 7px;
+}
+.olang:hover { background: rgba(255, 255, 255, .04); }
+.olang-name { flex: 1; min-width: 0; font-size: 13.5px; }
+.olang-en { color: var(--muted); font-size: 12px; }
+/* The button is the only control in the row, so it says what it does to a
+   screen reader through aria-label, not through a bare glyph. */
+.olang-btn {
+  flex: none; width: 26px; height: 26px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 7px; cursor: pointer;
+  font-size: 15px; line-height: 1;
+  transition: color .12s, border-color .12s, background .12s;
+}
+.olang-btn:hover { color: var(--txt); border-color: var(--muted); background: var(--surface); }
+.olang-btn.add:hover { color: var(--accent); border-color: var(--accent); }
+.olang-btn:disabled { opacity: .35; cursor: default; }
+.olang-empty { padding: 10px; color: var(--muted); font-size: 13px; }
+@media (max-width: 760px) {
+  .olangs { grid-template-columns: 1fr; }
+  .olang-list { max-height: 300px; }
+}
+
+/* -------------------------------- about --------------------------------- */
+.oabout-ver { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; }
+.oabout-ver b { color: var(--txt); font-weight: 600; }
+#secAbout p { max-width: 62ch; font-size: 13.5px; }
+.oabout-privacy { color: var(--muted); }
+
+/* ---------------------------- provider list ----------------------------- */
+.plist {
+  list-style: none; margin: 0; padding: 5px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.pitem {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 8px 9px; border: 0; border-radius: 7px;
+  background: transparent; color: var(--txt); text-align: left;
+  font-size: 13px; cursor: pointer;
+}
+.pitem:hover { background: var(--surface-2); }
+.pitem.on { background: var(--accent-dim); color: var(--accent); font-weight: 600; }
+.pitem-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pitem-ok { flex: none; font-size: 11px; color: #5fd38a; }
+.pitem.on .pitem-ok { color: inherit; }
+
+/* provider icon box: real mark or tinted monogram */
+.pico {
+  flex: none; width: 22px; height: 22px; border-radius: 6px;
+  display: inline-grid; place-items: center; overflow: hidden;
+}
+.pico-mark { color: #fff; }
+/* inset so the glyph is not edge-to-edge in the tile */
+.pico svg { width: 62%; height: 62%; display: block; }
+.pico-mono {
+  color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .3px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .35);
+}
+.pico-cjk { font-size: 12px; letter-spacing: 0; }
+
+/* -------------------------------- detail -------------------------------- */
+.odetail {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px; display: flex; flex-direction: column; gap: 16px;
+}
+/* An author `display` beats the UA's `[hidden] { display: none }`, so anything
+   toggled by the hidden attribute has to say so itself — the section switch
+   showed all three panels stacked without this. */
+.odetail[hidden] { display: none; }
+.odetail-head { display: flex; align-items: center; gap: 10px; }
+.odetail-head h2 { margin: 0; font-size: 16px; font-weight: 600; }
+.okind {
+  font-size: 10px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 5px; background: var(--accent-dim); color: var(--accent);
+}
+.okind[hidden] { display: none; }
+
+.olinks { margin: -6px 0 0; display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; }
+.olinks a { color: var(--accent); text-decoration: none; }
+.olinks a:hover { text-decoration: underline; }
+.olinks a[hidden] { display: none; }
+.olinks a::after { content: " ↗"; opacity: .6; }
+
+/* "no key yet" line — the one thing a first-time visitor must notice */
+.oneed {
+  margin: -6px 0 0; padding: 8px 11px; font-size: 12.5px;
+  color: #ffd88a; background: rgba(255, 216, 138, .08);
+  border: 1px solid rgba(255, 216, 138, .28); border-radius: 8px;
+}
+.oneed[hidden] { display: none; }
+
+.ofield { display: flex; flex-direction: column; gap: 7px; }
+.ofield[hidden] { display: none; }
+.ofield > label {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; color: var(--muted); letter-spacing: .3px;
+}
+.ospacer { flex: 1; }
+
+input[type="text"], input[type="url"], input[type="password"], select {
+  width: 100%; padding: 9px 11px; font-size: 13px;
+  background: var(--surface-2); color: var(--txt);
+  border: 1px solid var(--line); border-radius: 8px;
+}
+input::placeholder { color: #6d6d6d; }
+input[hidden] { display: none; }
+
+.orow { display: flex; gap: 9px; align-items: center; }
+.orow select { flex: 1; }
+
+.obtn {
+  padding: 9px 14px; font-size: 13px; font-weight: 600;
+  border: 0; border-radius: 8px; cursor: pointer;
+  transition: filter .12s, opacity .12s;
+}
+.obtn.primary { background: var(--accent); color: #06121f; align-self: flex-start; padding: 10px 18px; }
+.obtn.ghost {
+  flex: none; background: var(--surface-2); color: var(--txt);
+  border: 1px solid var(--line); font-weight: 500;
+}
+.obtn:hover { filter: brightness(1.1); }
+.obtn:disabled { opacity: .6; cursor: default; }
+
+.ochk { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); cursor: pointer; }
+/* Drawn by hand rather than left to the platform: an unchecked native checkbox
+   stamps a white square onto the dark card even with color-scheme: dark. */
+.ochk input {
+  appearance: none; -webkit-appearance: none; margin: 0;
+  width: 14px; height: 14px; cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px;
+  display: inline-grid; place-items: center;
+}
+.ochk input:checked { background: var(--accent); border-color: var(--accent); }
+.ochk input:checked::after {
+  content: "✓"; font-size: 10px; font-weight: 700; line-height: 1; color: #06121f;
+}
+.olink {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--accent); font-size: 11px;
+}
+.olink:hover { text-decoration: underline; }
+.olink[hidden] { display: none; }
+
+.ohint { margin: 0; font-size: 11.5px; color: var(--muted); }
+.ohint[hidden] { display: none; }
+.omsg { margin: -6px 0 0; font-size: 12.5px; color: var(--muted); }
+.omsg[hidden] { display: none; }
+.omsg.ok { color: #5fd38a; }
+.omsg.err { color: #ff8a8a; }
+.omsg.warn { color: #ffd88a; }
+
+.onote {
+  margin: 0; padding: 10px 12px; font-size: 12.5px; color: var(--muted);
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+}
+
+/* -------------------------------- footer -------------------------------- */
+.oft {
+  max-width: 960px; margin: 0 auto; padding: 20px 24px 36px;
+  display: flex; flex-direction: column; gap: 7px;
+  font-size: 12px; color: var(--muted);
+}
+.oft p { margin: 0; max-width: 78ch; }
+.odim { color: #7a7a7a; font-size: 11.5px; }
+.oft a { color: var(--accent); }
