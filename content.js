@@ -227,6 +227,44 @@
     return got && got.backend === "gtx" ? "gtx" : "auto";
   }
 
+  // ---- orphaned content script ---------------------------------------------
+  // Chrome leaves the PREVIOUS content script running in every open tab when
+  // the extension is reloaded or updated — a store update does this to every
+  // user with YouTube open, not just to us in development. Its timers keep
+  // firing, and the first chrome.* call throws "Extension context invalidated":
+  // one uncaught error per tick in the page console and in chrome://extensions,
+  // an overlay that has quietly stopped translating, and a drag whose position
+  // is never saved. Notice it, take the overlay away — this page belongs to the
+  // new script now — and go quiet. The tab's next load gets a live one.
+  let orphaned = false;
+  let navPollTimer = null;
+  // Declared here, with the other things goOrphan has to switch off, so it can
+  // never be reached before its own `let` has run.
+  let blankWatchTimer = null;
+
+  function extensionAlive() {
+    try { return !!(chrome.runtime && chrome.runtime.id); } catch (_e) { return false; }
+  }
+
+  function goOrphan() {
+    if (orphaned) return;
+    orphaned = true;
+    try { teardownAll(); } catch (_e) { /* ignore */ }
+    // Leave no dead control in the player either: this button would still
+    // toggle, and would put a subtitle box back that can never translate again.
+    try { if (toggleBtn) { toggleBtn.remove(); toggleBtn = null; } } catch (_e) { /* ignore */ }
+    if (navPollTimer) { clearInterval(navPollTimer); navPollTimer = null; }
+    if (blankWatchTimer) { clearTimeout(blankWatchTimer); blankWatchTimer = null; }
+  }
+
+  // The single door for every chrome.* call in this file. After invalidation
+  // they throw synchronously, and no caller should have to know that.
+  function extCall(fn) {
+    if (orphaned) return false;
+    if (!extensionAlive()) { goOrphan(); return false; }
+    try { fn(); return true; } catch (_e) { goOrphan(); return false; }
+  }
+
   // ---- settings ------------------------------------------------------------
   function loadSettings() {
     return new Promise((resolve) => {
@@ -429,12 +467,12 @@
   function maybeHintHandle() {
     if (hintedThisVideo || !overlay || !handleEl) return;
     hintedThisVideo = true;                    // one shot per video either way
-    chrome.storage.local.get({ handleHintsLeft: 0 }, (got) => {
+    extCall(() => chrome.storage.local.get({ handleHintsLeft: 0 }, (got) => {
       const left = Number(got && got.handleHintsLeft) || 0;
       if (left <= 0) return;
-      chrome.storage.local.set({ handleHintsLeft: left - 1 });
+      extCall(() => chrome.storage.local.set({ handleHintsLeft: left - 1 }));
       flashHandle(3600);
-    });
+    }));
   }
 
   function onHandlePointerDown(e) {
@@ -525,11 +563,11 @@
     if (dragSaveTimer) clearTimeout(dragSaveTimer);
     dragSaveTimer = setTimeout(() => {
       dragSaveTimer = null;
-      chrome.storage.sync.set({
+      extCall(() => chrome.storage.sync.set({
         posMode: "custom",
         posXpct: settings.posXpct,
         posYpct: settings.posYpct
-      });
+      }));
     }, 60);
   }
 
@@ -544,7 +582,7 @@
     dragMoved = false;
     settings.posMode = "preset";
     applyPosition();
-    chrome.storage.sync.set({ posMode: "preset" });
+    extCall(() => chrome.storage.sync.set({ posMode: "preset" }));
   }
 
   // ---- control-bar avoidance ----------------------------------------------
@@ -768,6 +806,10 @@
   let controlsObserver = null;
 
   function ensureToggleButton(retries) {
+    // A retry can still be pending from before the reload — the controls were
+    // not ready yet — and it must not put a dead button into a player the live
+    // script has already taken over.
+    if (orphaned) return;
     const player = getPlayer();
     const rc = player && player.querySelector(".ytp-right-controls");
     if (!rc) {                              // controls not ready yet — retry briefly
@@ -798,7 +840,7 @@
     updateToggleState();                     // instant button feedback
     applyStateToDom();                       // add/remove overlay immediately
     syncCaptions();                          // turn YouTube CC on/off to match
-    try { chrome.storage.sync.set({ enabled: settings.enabled }); } catch (_e) { /* ignore */ }
+    extCall(() => chrome.storage.sync.set({ enabled: settings.enabled }));
   }
 
   function updateToggleState() {
@@ -1055,7 +1097,7 @@
     transInflight.add(idx);
     const reqVid = cueVideoId;
     const reqEpoch = cueEpoch;
-    chrome.runtime.sendMessage(
+    const sent = extCall(() => chrome.runtime.sendMessage(
       { type: "translate", text: cue.text, targetLang: settings.targetLang },
       (resp) => {
         transInflight.delete(idx);
@@ -1070,7 +1112,10 @@
         }
         // on failure: leave cache empty so it can be retried when next active
       }
-    );
+    ));
+    // The call never left: clear the in-flight mark so nothing waits on a reply
+    // that cannot come.
+    if (!sent) transInflight.delete(idx);
   }
 
   // Warm upcoming cues' gtx translations so the translation line is ready the
@@ -1269,7 +1314,7 @@
           urgent: !!urgent
         }
       : { type: "translate", text: g.text, targetLang: settings.targetLang, urgent: !!urgent };
-    chrome.runtime.sendMessage(
+    const sent = extCall(() => chrome.runtime.sendMessage(
       request,
       (resp) => {
         transInflight.delete(ik);
@@ -1315,7 +1360,8 @@
           gtxNetFails = 0;           // a real HTTP answer — the endpoint is reachable
         }
       }
-    );
+    ));
+    if (!sent) transInflight.delete(ik);   // nothing left; do not wait on a reply
   }
 
   function onCues(data) {
@@ -1385,7 +1431,7 @@
       if (text !== lastSource) return;        // caption already moved on
       if (text === lastTransSource) return;   // identical text already shown
       const token = ++lastReqToken;
-      chrome.runtime.sendMessage(
+      extCall(() => chrome.runtime.sendMessage(
         { type: "translate", text, targetLang: settings.targetLang },
         (resp) => {
           if (chrome.runtime.lastError) return;
@@ -1397,7 +1443,7 @@
             setTranslation(dedupeTrans(resp.translated, text), text);
           }
         }
-      );
+      ));
     }, DEBOUNCE_MS);
   }
 
@@ -1767,15 +1813,14 @@
 
   function sendExportChunk(groups) {
     return new Promise((resolve) => {
-      try {
-        chrome.runtime.sendMessage(
-          { type: "exportTranslate", groups, targetLang: settings.targetLang },
-          (resp) => {
-            if (chrome.runtime.lastError) { resolve({ ok: false, code: "worker" }); return; }
-            resolve(resp || { ok: false, code: "worker" });
-          }
-        );
-      } catch (_e) { resolve({ ok: false, code: "worker" }); }
+      const sent = extCall(() => chrome.runtime.sendMessage(
+        { type: "exportTranslate", groups, targetLang: settings.targetLang },
+        (resp) => {
+          if (chrome.runtime.lastError) { resolve({ ok: false, code: "worker" }); return; }
+          resolve(resp || { ok: false, code: "worker" });
+        }
+      ));
+      if (!sent) resolve({ ok: false, code: "worker" });
     });
   }
 
@@ -1942,6 +1987,9 @@
   // BRIDGE <- inject.js
   // =========================================================================
   function onInjectMessage(evt) {
+    // Late cues from inject.js would restart the whole cue loop — a 120ms timer
+    // ticking forever in a tab whose extension is gone.
+    if (orphaned) return;
     if (evt.source !== window) return;
     const d = evt.data;
     if (!d || d.source !== "ytds-inject") return;
@@ -2020,6 +2068,7 @@
   }
 
   function onNav() {
+    if (orphaned) return;
     currentVideoId = videoIdFromLocation();
     hintedThisVideo = false;    // a new video may spend one more first-run hint
     blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery
@@ -2054,8 +2103,13 @@
   // URL rapidly and the yt-navigate-finish timing there is less battle-tested
   // than on watch pages, so also poll the location. Only a genuine videoId
   // change triggers; the event handler stays authoritative otherwise.
-  setInterval(() => {
+  navPollTimer = setInterval(() => {
     try {
+      // Liveness rides on a timer that already exists: in tlang mode a whole
+      // video can play without one chrome.* call, so an orphaned script would
+      // otherwise keep running — and keep the old overlay on screen — until
+      // something finally threw.
+      if (!extensionAlive()) { goOrphan(); return; }
       const v = videoIdFromLocation();
       if (v && v !== currentVideoId) onNav();
     } catch (_e) { /* ignore */ }
@@ -2094,6 +2148,7 @@
   }
 
   function recoverIfBlank(why) {
+    if (orphaned) return;
     if (!settings.enabled) return;
     if (!videoIdFromLocation()) return;               // not a video page
     if (cueList && cueList.length) return;            // already working
@@ -2113,7 +2168,6 @@
   // fires at 6s and knows whether a caption request was ever made. This timer
   // exists for the case where nocues never arrives at all — e.g. the config
   // never reached inject — so it can afford to be slow and quiet.
-  let blankWatchTimer = null;
   function armBlankWatch() {
     if (blankWatchTimer) clearTimeout(blankWatchTimer);
     blankWatchTimer = setTimeout(() => {
