@@ -119,7 +119,7 @@
 
   /* why band (update mode only) */
   .why{border-top:1px solid var(--line);background:var(--bg-2);padding:34px 0 38px}
-  .why h3{font-size:16px;letter-spacing:-0.01em}
+  .why h2,.why h3{font-size:16px;letter-spacing:-0.01em}
   .why p{color:var(--muted-2);font-size:14px;margin-top:8px;max-width:70ch}
   .why .fact{display:flex;gap:9px;align-items:flex-start;margin-top:8px;color:var(--muted-2);font-size:14px}
   .why .fact svg{flex:none;margin-top:4px;color:var(--ok)}
@@ -130,7 +130,7 @@
   .foot-brand .brand{margin-bottom:12px}
   .foot-brand p{color:var(--muted-2);font-size:14px}
   .foot-links{display:flex;gap:56px;flex-wrap:wrap}
-  .foot-col h4{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin:0 0 14px}
+  .foot-col h3{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin:0 0 14px}
   .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:10px;font-weight:500}
   .foot-col a:hover{color:var(--ink)}
   .foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
@@ -208,7 +208,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
           <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
           <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
           <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
@@ -216,7 +216,7 @@
       </div>
     </div>
     <div class="nav-right">
-      <div class="lang-toggle" role="group" aria-label="Language">
+      <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
         <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
         <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
       </div>
@@ -238,7 +238,7 @@
     <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
     <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
     <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
-    <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+    <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
     <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
     <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
     <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
@@ -381,7 +381,7 @@
         </li>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
           <p data-en><b>Captions now auto-enable</b> when you open a video directly from the address bar (cold load).</p>
-          <p data-zh><b>修复冷加载不自动开字幕：</b>从地址栏直接打开视频时也会自动开启 CC。</p>
+          <p data-zh><b>冷加载不自动开字幕：</b>从地址栏直接打开视频时也会自动开启 CC。</p>
         </li>
       </ul>
     </section>
@@ -399,7 +399,7 @@
         </li>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
           <p data-en><b>Drag handle</b> no longer lingers in fullscreen when player controls hide.</p>
-          <p data-zh><b>修复全屏拖动手柄</b>在播放器控件隐藏后不消失的问题。</p>
+          <p data-zh><b>全屏拖动手柄</b>在播放器控件隐藏后不消失的问题。</p>
         </li>
       </ul>
     </section>
@@ -409,8 +409,8 @@
 
 <div class="why upd-only">
   <div class="wrap">
-    <h3 data-en>Why am I seeing this page?</h3>
-    <h3 data-zh>为什么会打开这个页面？</h3>
+    <h2 data-en>Why am I seeing this page?</h2>
+    <h2 data-zh>为什么会打开这个页面？</h2>
     <p data-en>Chrome updated the extension automatically, and this release adds new features worth a quick look. We only open this page for feature releases — never for small fixes.</p>
     <p data-zh>Chrome 自动更新了扩展，而这次版本带来了值得一看的新功能。只有功能版本才会打开本页，小修小补绝不打扰。</p>
     <div class="fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Don't want this? Turn off "Open release notes after updates" in the extension popup.</span><span data-zh>不想看到？在扩展弹窗里关闭「更新后打开新功能介绍页」即可。</span></div>
@@ -428,18 +428,18 @@
       </div>
       <div class="foot-links">
         <div class="foot-col">
-          <h4><span data-en>Product</span><span data-zh>产品</span></h4>
+          <h3><span data-en>Product</span><span data-zh>产品</span></h3>
           <a href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge" target="_blank" rel="noopener">Chrome Web Store</a>
           <a href="./#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
           <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
           <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
-          <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
           <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
           <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
           <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
         <div class="foot-col">
-          <h4><span data-en>Open source</span><span data-zh>开放源代码</span></h4>
+          <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
@@ -456,6 +456,19 @@
 
 <script>
 (function () {
+
+  // aria-label cannot be switched by the CSS the rest of the page uses, so the
+  // two chrome controls carry both strings and are set here.
+  var ARIA = [
+    ["lang-toggle-group", "Language", "语言"],
+    ["navBurger", "Menu", "菜单"]
+  ];
+  var setAria = function (lang) {
+    ARIA.forEach(function (row) {
+      var el = document.getElementById(row[0]);
+      if (el) el.setAttribute("aria-label", lang === "zh" ? row[2] : row[1]);
+    });
+  };
   var STORAGE_KEY = "dsfy-lang";
   var params = new URLSearchParams(location.search);
 
@@ -466,6 +479,7 @@
     var zhBtn = document.getElementById("lang-zh");
     if (enBtn) enBtn.classList.toggle("active", lang === "en");
     if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    setAria(lang);
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
   };
 

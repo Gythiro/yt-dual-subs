@@ -130,7 +130,7 @@
   .foot-brand .brand{margin-bottom:12px}
   .foot-brand p{color:var(--muted-2);font-size:14px}
   .foot-links{display:flex;gap:56px;flex-wrap:wrap}
-  .foot-col h4{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin:0 0 14px}
+  .foot-col h3{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin:0 0 14px}
   .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:10px;font-weight:500}
   .foot-col a:hover{color:var(--ink)}
   .foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
@@ -208,7 +208,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
           <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
           <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
           <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
@@ -216,7 +216,7 @@
       </div>
     </div>
     <div class="nav-right">
-      <div class="lang-toggle" role="group" aria-label="Language">
+      <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
         <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
         <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
       </div>
@@ -238,7 +238,7 @@
     <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
     <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
     <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
-    <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+    <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
     <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
     <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
     <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
@@ -269,7 +269,7 @@
 
       <h3 data-en>1. What it costs</h3>
       <h3 data-zh>1. 花多少钱</h3>
-      <p data-en>You pay the provider directly for what you use — the extension takes no cut and has no server. Subtitles are short, so a video costs very little, but <b>it is not free by default</b>: check the provider's own pricing page before you rely on it. All three providers below have a free tier, and their limits change often enough that we link to the source instead of copying numbers here.</p>
+      <p data-en>You pay the provider directly for what you use — the extension takes no cut and has no server. Subtitles are short, so a video costs very little, but <b>it is not free by default</b>: check the provider's own pricing page before you rely on it. All three providers below have a free tier — though signup rules and card requirements vary by region — and their limits change often enough that we link to the source instead of copying numbers here.</p>
       <p data-zh>你按用量直接付给服务商——扩展不抽成、也没有服务器。字幕文本很短，一个视频的花费很小，但<b>默认并不是免费的</b>：依赖它之前先看服务商自己的定价页。下面三家都有免费额度，而额度和限速变动频繁，所以这里只给出处、不抄数字。</p>
 
       <h3 data-en>2. Network and region</h3>
@@ -293,7 +293,7 @@
       <ol class="steps">
         <li data-en>Open the extension popup → set <b>Engine</b> to <b>Your own key</b> → click <b>Configure…</b>.</li>
         <li data-zh>打开扩展弹窗 → 把<b>「翻译引擎」</b>切到<b>「自带 Key」</b> → 点<b>「配置…」</b>。</li>
-        <li data-en>Pick a provider in the list, paste your API key, leave the model on the recommended one. Want a different one? Hit <b>Fetch models with my key</b> and choose from what your key can actually reach — the list comes from the provider, so it is never out of date.</li>
+        <li data-en>Pick a provider in the list, paste your API key, leave the model on the recommended one. Want a different one? Hit <b>List models with my key</b> and choose from what your key can actually reach — the list comes from the provider, so it is never out of date.</li>
         <li data-zh>在列表里选一个服务商，粘贴你的 API Key，模型保持推荐值即可。想换别的？点<b>「用我的 Key 拉取模型」</b>，从你这把 Key 真正能用的模型里挑——列表是服务商现给的，不会过期。</li>
         <li data-en>Click <b>Save and test</b>. Chrome asks once for permission to reach that provider's domain — allow it, and you should see “Connected”.</li>
         <li data-zh>点<b>「保存并测通」</b>。Chrome 会问一次是否允许访问该服务商的域名——同意后应该看到「连接成功」。</li>
@@ -358,8 +358,8 @@
         <li data-zh>粘贴进扩展，点「保存并测通」。</li>
       </ol>
       <ul class="notes">
-        <li data-en><b>Recommended model:</b> <code>gemini-flash-latest</code> — the default. Do not pin an old version: we found <code>gemini-2.0-flash</code> already answering “quota exceeded” on free keys, which looks exactly like a broken extension.</li>
-        <li data-zh><b>推荐模型：</b><code>gemini-flash-latest</code>——默认值。<b>别钉旧版本号</b>：我们实测 <code>gemini-2.0-flash</code> 在免费 Key 上已经直接返回「额度用尽」，看起来就像插件坏了。</li>
+        <li data-en><b>Recommended model:</b> <code>gemini-flash-latest</code> — the default. Do not pin a specific version: we found <code>gemini-2.0-flash</code> already answering “quota exceeded” on free keys, which looks exactly like a broken extension.</li>
+        <li data-zh><b>推荐模型：</b><code>gemini-flash-latest</code>——默认值。<b>别把版本号钉死</b>：我们实测 <code>gemini-2.0-flash</code> 在免费 Key 上已经直接返回「额度用尽」，看起来就像插件坏了。</li>
         <li data-en>Not available in every country. If the test fails with a network error while other sites work, this is the likely reason.</li>
         <li data-zh>并非所有国家/地区都能访问。如果别的网站都正常、只有测通报网络错误，大概就是这个原因。</li>
       </ul>
@@ -532,18 +532,18 @@
       </div>
       <div class="foot-links">
         <div class="foot-col">
-          <h4><span data-en>Product</span><span data-zh>产品</span></h4>
+          <h3><span data-en>Product</span><span data-zh>产品</span></h3>
           <a href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge" target="_blank" rel="noopener">Chrome Web Store</a>
           <a href="./#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
           <a href="./#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
           <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
-          <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
           <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
           <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
           <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
         <div class="foot-col">
-          <h4><span data-en>Open source</span><span data-zh>开放源代码</span></h4>
+          <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
@@ -560,6 +560,19 @@
 
 <script>
 (function () {
+
+  // aria-label cannot be switched by the CSS the rest of the page uses, so the
+  // two chrome controls carry both strings and are set here.
+  var ARIA = [
+    ["lang-toggle-group", "Language", "语言"],
+    ["navBurger", "Menu", "菜单"]
+  ];
+  var setAria = function (lang) {
+    ARIA.forEach(function (row) {
+      var el = document.getElementById(row[0]);
+      if (el) el.setAttribute("aria-label", lang === "zh" ? row[2] : row[1]);
+    });
+  };
   var STORAGE_KEY = "dsfy-lang";
   var params = new URLSearchParams(location.search);
 
@@ -570,6 +583,7 @@
     var zhBtn = document.getElementById("lang-zh");
     if (enBtn) enBtn.classList.toggle("active", lang === "en");
     if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    setAria(lang);
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
   };
 

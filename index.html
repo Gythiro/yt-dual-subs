@@ -244,7 +244,7 @@
   .foot-brand .brand{margin-bottom:12px}
   .foot-brand p{color:var(--muted-2);font-size:14px}
   .foot-links{display:flex;gap:56px;flex-wrap:wrap}
-  .foot-col h4{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin:0 0 14px}
+  .foot-col h3{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin:0 0 14px}
   .foot-col a{display:block;color:var(--muted);font-size:14.5px;margin-bottom:10px;font-weight:500}
   .foot-col a:hover{color:var(--ink)}
   .foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
@@ -334,7 +334,7 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
           <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
           <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
           <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
@@ -342,7 +342,7 @@
       </div>
     </div>
     <div class="nav-right">
-      <div class="lang-toggle" role="group" aria-label="Language">
+      <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
         <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
         <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
       </div>
@@ -364,7 +364,7 @@
     <a href="#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
     <a href="#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
     <a href="#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
-    <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+    <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
     <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
     <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
     <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
@@ -392,7 +392,7 @@
         <span data-en>View on GitHub</span><span data-zh>在 GitHub 查看</span>
       </a>
     </div>
-    <p class="microcopy" id="microcopy"><span data-en>Also works on Edge</span><span data-zh>同样支持 Edge</span> <span class="sep">·</span> <span data-en>Chromium 111+</span><span data-zh>Chromium 111+</span> <span class="sep">·</span> <span data-en>no account</span><span data-zh>无需账号</span> <span class="sep">·</span> <span data-en>runs locally</span><span data-zh>本地运行</span></p>
+    <p class="microcopy" id="microcopy"><span data-en>Also works on Edge</span><span data-zh>同样支持 Edge</span> <span class="sep">·</span> <span data-en>Chromium 111+</span><span data-zh>Chromium 111+</span> <span class="sep">·</span> <span data-en>no account</span><span data-zh>本扩展无需注册</span> <span class="sep">·</span> <span data-en>runs locally</span><span data-zh>本地渲染</span></p>
 
     <div class="shot">
       <div class="glow" aria-hidden="true"></div>
@@ -409,8 +409,8 @@
     <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><b><span data-en>100% free</span><span data-zh>完全免费</span></b></span>
     <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>MIT</b> licensed</span><span data-zh><b>MIT</b> 许可</span></span>
     <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>No tracking</span><span data-zh>无追踪</span></span>
-    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>No account</span><span data-zh>无需账号</span></span>
-    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Runs locally</span><span data-zh>本地运行</span></span>
+    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>No account to create</span><span data-zh>本扩展无需注册</span></span>
+    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Renders locally</span><span data-zh>本地渲染</span></span>
     <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Open source</span><span data-zh>开放源代码</span></span>
   </div>
 </div>
@@ -471,7 +471,7 @@
         <ul class="anat">
           <li><span class="tag orig"><span data-en>Line 1</span><span data-zh>第一行</span></span><p data-en><b>Original language</b>, at full strength — exactly as spoken in the video.</p><p data-zh><b>原文</b>，完整清晰——与视频里说的一字不差。</p></li>
           <li><span class="tag tr"><span data-en>Line 2</span><span data-zh>第二行</span></span><p data-en><b>Your translation</b>, in a dimmer tint underneath, so the two never blur together.</p><p data-zh><b>你的译文</b>，以稍淡的色调置于下方，两行绝不会糊在一起。</p></li>
-          <li><span class="tag hide"><span data-en>Hidden</span><span data-zh>已隐藏</span></span><p data-en>YouTube's™ own caption layer is turned off, so <b>the two sources never overlap.</b></p><p data-zh>YouTube™ 自带的字幕层已关闭，因此<b>两个来源永不重叠。</b></p></li>
+          <li><span class="tag hide"><span data-en>Hidden</span><span data-zh>已隐藏</span></span><p data-en>YouTube™'s own caption layer is turned off, so <b>the two sources never overlap.</b></p><p data-zh>YouTube™ 自带的字幕层已关闭，因此<b>两个来源永不重叠。</b></p></li>
         </ul>
         <ul class="flist" style="margin-top:22px">
           <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Rendered from the <b>timed caption cues</b>, so lines switch by whole sentence — <b>no word-by-word jitter.</b></span><span data-zh>基于<b>带时间轴的字幕轴点</b>渲染，因此字幕整句切换——<b>不会逐字抖动。</b></span></li>
@@ -497,10 +497,10 @@
 
       <div class="row">
         <div class="txt">
-          <span class="eyebrow"><span data-en>Two translation engines</span><span data-zh>两套翻译引擎</span></span>
+          <span class="eyebrow"><span data-en>Two free engines, plus your own key</span><span data-zh>两套免费引擎，也可自带 Key</span></span>
           <h3 data-en>Translation that's aligned and lag-free</h3>
           <h3 data-zh>对齐精准、毫无延迟的翻译</h3>
-          <p data-en>Use YouTube's™ own whole-track translation for perfectly aligned, instant captions — and when a track can't be translated, fragmented captions are rebuilt into full sentences before Google translates them.</p>
+          <p data-en>Use YouTube™'s own whole-track translation for perfectly aligned, instant captions — and when a track can't be translated, fragmented captions are rebuilt into full sentences before Google translates them.</p>
           <p data-zh>使用 YouTube™ 自带的整轨翻译，字幕对齐精准、即时呈现——视频不支持翻译时，会先把碎片字幕拼回完整句子，再交给 Google 翻译。</p>
           <div class="engines">
             <div class="engine">
@@ -692,8 +692,8 @@
       </details>
       <details>
         <summary><span data-en>Will it slow the video down?</span><span data-zh>它会让视频变卡吗？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>No. YouTube's™ whole-track translation is instant and perfectly aligned, and the Google Translate fallback is prefetched ahead of playback so there's no lag. Lines are rendered from the timed cues, so they switch by whole sentence without flicker.</p>
-        <p data-zh>不会。YouTube™ 的整轨翻译即时呈现、对齐精准，Google 翻译回退方案也会在播放前提前预取，因此毫无延迟。字幕基于带时间轴的轴点渲染，整句切换、不会闪烁。</p>
+        <p data-en>No. YouTube™'s whole-track translation is instant and perfectly aligned, and the Smart sentences engine prefetches ahead of playback so there's no lag. Lines are rendered from the timed cues, so they switch by whole sentence without flicker.</p>
+        <p data-zh>不会。YouTube™ 的整轨翻译即时呈现、对齐精准，智能整句引擎也会在播放前提前预取，因此毫无延迟。字幕基于带时间轴的轴点渲染，整句切换、不会闪烁。</p>
       </details>
       <details>
         <summary><span data-en>The subtitles cover the video — how do I move them?</span><span data-zh>字幕挡住画面了，位置怎么调？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
@@ -702,7 +702,7 @@
       </details>
       <details>
         <summary><span data-en>Why do translations sometimes pause or not show up?</span><span data-zh>为什么翻译有时不出来、或者停一下？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>The Smart-sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate-limit. The extension notices, slows down and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already-translated sentences stay cached, and YouTube's own whole-track engine is never rate-limited.</p>
+        <p data-en>The Smart sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate-limit. The extension notices, slows down and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already-translated sentences stay cached, and YouTube's own whole-track engine is never rate-limited.</p>
         <p data-zh>智能整句引擎走的是 Google 免费公共接口，重度使用（超长视频、频繁拖进度条）时可能被短暂限流。扩展会自己发现并放慢重试：等待期间译文行显示「…」，翻译通常在几秒到一两分钟内自动恢复。已翻译过的句子有缓存不受影响；YouTube 自带的整轨翻译则完全没有限流。</p>
       </details>
     </div>
@@ -726,7 +726,7 @@
         <span data-en>View on GitHub</span><span data-zh>在 GitHub 查看</span>
       </a>
     </div>
-    <p class="microcopy"><span data-en>Free</span><span data-zh>免费</span> <span class="sep">·</span> MIT <span class="sep">·</span> <span data-en>no account</span><span data-zh>无需账号</span> <span class="sep">·</span> Chromium 111+</p>
+    <p class="microcopy"><span data-en>Free</span><span data-zh>免费</span> <span class="sep">·</span> MIT <span class="sep">·</span> <span data-en>no account</span><span data-zh>本扩展无需注册</span> <span class="sep">·</span> Chromium 111+</p>
   </div>
 </section>
 
@@ -740,18 +740,18 @@
       </div>
       <div class="foot-links">
         <div class="foot-col">
-          <h4><span data-en>Product</span><span data-zh>产品</span></h4>
+          <h3><span data-en>Product</span><span data-zh>产品</span></h3>
           <a href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge" target="_blank" rel="noopener">Chrome Web Store</a>
           <a href="#how"><span data-en>How it works</span><span data-zh>工作原理</span></a>
           <a href="#features"><span data-en>Features</span><span data-zh>功能特性</span></a>
           <a href="#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
-          <a href="guide.html"><span data-en>Use your own key</span><span data-zh>自带 Key 教程</span></a>
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
           <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
           <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
           <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
         <div class="foot-col">
-          <h4><span data-en>Open source</span><span data-zh>开放源代码</span></h4>
+          <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
@@ -769,7 +769,20 @@
 
 <script>
   (function () {
-    var STORAGE_KEY = "dsfy-lang";
+  
+  // aria-label cannot be switched by the CSS the rest of the page uses, so the
+  // two chrome controls carry both strings and are set here.
+  var ARIA = [
+    ["lang-toggle-group", "Language", "语言"],
+    ["navBurger", "Menu", "菜单"]
+  ];
+  var setAria = function (lang) {
+    ARIA.forEach(function (row) {
+      var el = document.getElementById(row[0]);
+      if (el) el.setAttribute("aria-label", lang === "zh" ? row[2] : row[1]);
+    });
+  };
+  var STORAGE_KEY = "dsfy-lang";
 
     function applyLangToImages(lang) {
       var imgs = document.querySelectorAll("img[data-src-en]");
@@ -814,7 +827,8 @@
       if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
       applyLangToImages(lang);
       applyEdgeCopy(lang);
-      try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+      setAria(lang);
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
     };
 
     window.toggleMenu = function () {
