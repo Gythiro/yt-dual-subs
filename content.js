@@ -2069,6 +2069,12 @@
 
   function onNav() {
     if (orphaned) return;
+    // Whatever is still queued belongs to the video being left: we would throw
+    // the answers away (cueEpoch), and on a run of shorts those requests are
+    // what earns the rate limit that the NEXT one waits out.
+    extCall(() => chrome.runtime.sendMessage({ type: "videoLeft" }, () => {
+      if (chrome.runtime.lastError) return;   // worker asleep: nothing queued anyway
+    }));
     currentVideoId = videoIdFromLocation();
     hintedThisVideo = false;    // a new video may spend one more first-run hint
     blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery

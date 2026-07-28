@@ -261,6 +261,22 @@ function flushLane(lane, why) {
   for (const job of jobs) job.reject(tag(new Error(why || "flushed"), { stale: true }));
 }
 
+// Everything still queued for a video the viewer has left is waste: content.js
+// throws the answers away anyway (cueEpoch), and on a run of shorts those
+// requests are exactly what pushes the free endpoint into rate limiting — which
+// the NEXT short then waits out behind a backoff, showing "…" the whole time.
+// Export chunks are not playback: they carry noShed, have no "next time the cue
+// is active" to be re-asked on, and stay.
+function dropPlaybackJobs(lane, why) {
+  for (const q of [lane.qUrgent, lane.qNormal]) {
+    for (let i = q.length - 1; i >= 0; i--) {
+      if (q[i].noShed) continue;
+      const [job] = q.splice(i, 1);
+      job.reject(tag(new Error(why || "left the video"), { stale: true, code: "stale" }));
+    }
+  }
+}
+
 function enqueue(lane, job) {
   // Deep backoff: shed prefetch instead of queueing it for a minute — content
   // simply re-requests when the sentence becomes active. The watched sentence
@@ -1035,6 +1051,12 @@ chrome.runtime.onInstalled.addListener((details) => {
 });
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  if (msg && msg.type === "videoLeft") {
+    dropPlaybackJobs(gtxLane, "left the video");
+    dropPlaybackJobs(byoLane, "left the video");
+    sendResponse({ ok: true });
+    return false;
+  }
   if (msg && msg.type === "translate") {
     translate(msg.text, msg.targetLang, msg.urgent)
       .then((translated) => sendResponse({ ok: true, translated }))
