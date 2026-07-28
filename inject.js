@@ -190,6 +190,13 @@
         }
       }
       text = text.replace(/\s+/g, " ").trim();
+      // Auto-generated tracks carry the broadcast captioning convention for a
+      // change of speaker — ">>", and ">>>" for a change of topic. It means
+      // nothing to someone reading subtitles under a video, and it does not
+      // stay put: it goes to the translator as text and comes back sitting in
+      // front of the Chinese line too. Strip it where cue text is born, so the
+      // overlay, the translation and the exported SRT all agree.
+      text = text.replace(/(^|\s)>{2,}\s*/g, "$1").trim();
       if (!text) continue;          // skip style/window/blank events
       const start = typeof ev.tStartMs === "number" ? ev.tStartMs : 0;
       const dur = typeof ev.dDurationMs === "number" ? ev.dDurationMs : 0;
@@ -226,18 +233,25 @@
   // spending two more requests on it would only delay the fallback.
   const RETRY_DELAYS_MS = [300, 800];
 
-  function isHiccup(err) {
+  function isHiccup(err, retry429) {
     const s = err && err.status;
     if (typeof s !== "number") return true;   // network error / empty / bad JSON
-    return s === 429 || s >= 500;
+    if (s === 429) return !!retry429;
+    return s >= 500;
   }
 
-  async function fetchJson3Retry(url, wantVid) {
+  // retry429: for the ORIGINAL track, where being rate-limited means no
+  // subtitles at all, waiting a moment is worth it. NOT for the translation:
+  // measured on a real short, a 429 there was still a 429 twenty-one seconds
+  // later, so retrying inside the request only holds the first line back by
+  // another second before conceding to the sentence path anyway. That one gets
+  // the deferred second chance instead.
+  async function fetchJson3Retry(url, wantVid, retry429) {
     for (let i = 0; ; i++) {
       try {
         return await fetchJson3(url);
       } catch (err) {
-        if (i >= RETRY_DELAYS_MS.length || !isHiccup(err)) throw err;
+        if (i >= RETRY_DELAYS_MS.length || !isHiccup(err, retry429)) throw err;
         await new Promise((r) => setTimeout(r, RETRY_DELAYS_MS[i]));
         // Navigated away mid-retry: the caller discards the result anyway, and
         // the next video's own produce is already on its way.
@@ -295,19 +309,21 @@
     // token against a translation fetched with the next.
     const src = sourceUrl;
     let tlangFailed = false;
+    let tlangStatus = 0;            // 429 means "come back much later"
     try {
-      const origJson = await fetchJson3Retry(buildUrl(src, null), vid);
+      const origJson = await fetchJson3Retry(buildUrl(src, null), vid, true);
       const cues = parseJson3(origJson);
 
       let tcues = null;
       if (wantTlang) {
         try {
           const target = mapTlang(cfg.targetLang);
-          const transJson = await fetchJson3Retry(buildUrl(src, target), vid);
+          const transJson = await fetchJson3Retry(buildUrl(src, target), vid, false);
           tcues = parseJson3(transJson);
-        } catch (_e) {
+        } catch (err) {
           tcues = null;             // translation failed; orig still usable
           tlangFailed = true;
+          tlangStatus = (err && err.status) || 0;
         }
       }
 
@@ -341,7 +357,7 @@
       });
       // Rendering gtx right now is correct — but come back for the translation
       // once, instead of leaving the whole video on it.
-      if (tlangFailed) scheduleTlangReproduce(normKey(src));
+      if (tlangFailed) scheduleTlangReproduce(normKey(src), tlangStatus);
       checkTrackMismatch(vid, src);
     } catch (_e) {
       // could not fetch/parse — let content.js fall back to scraping, but only
@@ -367,7 +383,7 @@
     }
     const vid = currentVideoId;
     try {
-      const origJson = await fetchJson3Retry(buildUrl(sourceUrl, null), vid);
+      const origJson = await fetchJson3Retry(buildUrl(sourceUrl, null), vid, true);
       const cues = parseJson3(origJson);
       if (!cues.length) { post("exportdata", { ok: false, exportId }); return; }
 
@@ -375,7 +391,7 @@
       let aligned = null;
       if (targetLang) {
         try {
-          const transJson = await fetchJson3Retry(buildUrl(sourceUrl, mapTlang(targetLang)), vid);
+          const transJson = await fetchJson3Retry(buildUrl(sourceUrl, mapTlang(targetLang)), vid, false);
           tcues = parseJson3(transJson);
           aligned = cues.length === tcues.length;
           if (aligned) {
@@ -491,7 +507,13 @@
   // workaround people find. The in-request backoff only covers about a second.
   // Give the track ONE more attempt a few seconds later, with whatever pot is
   // freshest by then; if that fails too, gtx really is the answer.
+  // Measured on a real short (2026-07-27): YouTube answers the tlang endpoint
+  // with 429 for a sustained stretch — still 429 twenty-one seconds later — so
+  // the ordinary four-second second-chance would be spent on a door that is
+  // still shut. Rate limiting gets its own, longer wait; everything else stays
+  // quick, because most other failures are a blip.
   const TLANG_RETRY_MS = 4000;
+  const TLANG_RETRY_RATELIMIT_MS = 25000;
   let tlangRetriedFor = "";
   let tlangRetryTimer = null;
 
@@ -499,11 +521,12 @@
     if (tlangRetryTimer) { clearTimeout(tlangRetryTimer); tlangRetryTimer = null; }
   }
 
-  function scheduleTlangReproduce(trackKey) {
+  function scheduleTlangReproduce(trackKey, status) {
     if (!trackKey || tlangRetriedFor === trackKey) return;   // one shot per track
     tlangRetriedFor = trackKey;
     clearTlangRetry();
     const vid = currentVideoId;
+    const wait = status === 429 ? TLANG_RETRY_RATELIMIT_MS : TLANG_RETRY_MS;
     tlangRetryTimer = setTimeout(() => {
       tlangRetryTimer = null;
       if (!cfg || cfg.mode === "gtx") return;              // gtx is what was asked for
@@ -512,7 +535,7 @@
       if (!sourceUrl || normKey(sourceUrl) !== trackKey) return;
       producedForUrl = "";                                 // let the same URL through
       produceCues(true);
-    }, TLANG_RETRY_MS);
+    }, wait);
   }
 
   // ---- video-change reset --------------------------------------------------
