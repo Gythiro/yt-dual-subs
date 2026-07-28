@@ -296,6 +296,53 @@
     </section>
     ═════════════════════════════════════════════════════════════════════ -->
 
+    <section class="entry" data-ver="3.6.0">
+      <div class="head">
+        <span class="v mono">v3.6.0</span>
+        <span class="date">2026-07-27</span>
+        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
+      </div>
+      <ul>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>Translate with your own API key.</b> Bring a key from DeepSeek, Gemini, DeepL, Alibaba Bailian and a dozen more. Each sentence is understood as a whole and then split back across the subtitles, so the translation line turns over with the original instead of standing still. The key is stored on this computer only and is sent to nobody but the provider you picked.</p>
+          <p data-zh><b>可以用你自己的 API Key 翻译了。</b>支持 DeepSeek、Gemini、DeepL、阿里百炼等十余家。译文会整句理解之后再按字幕切回来，不再一整句杵在那儿不动。Key 只存在这台电脑上，除了你选的那家服务商，不会发往任何地方。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>Export a whole video through your own engine.</b> The SRT download can go through your provider instead of YouTube™'s free translation. It says how many requests it will take before it starts, shows progress, and can be stopped — and it is off by default, because it spends your quota and sends the whole track.</p>
+          <p data-zh><b>导出整片字幕也能走自带引擎。</b>下载 SRT 时可以用你自己的服务商翻译，而不是 YouTube™ 的免费整轨翻译。开始前会先告诉你大约几次请求，中途有进度、可以停；默认关闭，因为它会消耗你的额度、而且整片字幕会离开浏览器。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>Fifty target languages, and you choose which ones show.</b> The popup menu lists the ones you keep; the rest are one click away in Settings → Subtitle languages.</p>
+          <p data-zh><b>目标语言增加到 50 种，显示哪些由你决定。</b>弹窗下拉只列你留下的，其余的在「设置 → 字幕语言」里随时加回来。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>A settings page, reachable from the gear.</b> Getting started, translation service setup and About now live there. Seven more fonts, including a Chinese serif and a rounded face.</p>
+          <p data-zh><b>齿轮里有了独立设置页。</b>新手入门、翻译服务配置和「关于」都在里面。字体新增 7 种，含中文宋体与圆体。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>Everything reads bigger.</b> The smallest text went from 10.5px to 13px and nothing is under 12px any more.</p>
+          <p data-zh><b>整体字号调大。</b>最小的一档从 10.5px 提到 13px，全部文字不再低于 12px。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Subtitles dragged to the very bottom are no longer clipped</b>, and a tab restored after a browser restart shows subtitles again without touching the CC button.</p>
+          <p data-zh><b>字幕拖到最底部不再被裁掉半行</b>；关掉浏览器再打开、恢复出来的标签页也不用手动开关 CC 就能出字幕。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Shorts turn their captions on by themselves now</b>, and much sooner. A short has no CC button to press, so if your captions were switched off, nothing happened at all; now the track is asked for as soon as the player can answer — including the ones that used to stay blank until you swiped past them and came back.</p>
+          <p data-zh><b>Shorts 现在会自己把字幕打开</b>，而且快得多。短视频里没有 CC 按钮可点，所以此前只要你的字幕开关是关的，就一直是空白；现在播放器一能应答就去要字幕轨——快速连划时那些「划过去再划回来才出字幕」的短视频也一并修好了。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>The automatic engine falls back to per-sentence translation far less often.</b> One failed request used to keep a whole video on the fallback until you changed the engine by hand; it now tries again on its own. Speaker markers from auto-generated captions (<span class="mono">&gt;&gt;</span>) no longer show up in either line.</p>
+          <p data-zh><b>「自动」引擎不再动不动就整场退回逐句翻译。</b>此前只要有一次请求失败，整支视频就会一直停在退路上，除非你手动切引擎；现在它会自己再试。自动字幕里的换人说话标记（<span class="mono">&gt;&gt;</span>）也不会再出现在字幕里了。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Updating the extension no longer leaves a dead subtitle box behind</b> in tabs that were already open — the old box now steps aside, and reloading the tab brings the new one.</p>
+          <p data-zh><b>更新扩展后，已经开着的标签页不会再留下一个不再翻译的字幕框</b>——旧的会自己退场，刷新一下就是新的。</p>
+        </li>
+      </ul>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+    </section>
+
     <section class="entry" data-ver="3.5.1">
       <div class="head">
         <span class="v mono">v3.5.1</span>
@@ -448,7 +495,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.5.1 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.6.0 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
