@@ -1897,8 +1897,14 @@
 
   // The complete track, translation included where YouTube has one. Shared by
   // both export paths.
+  // Set when the last exportCues() could not get YouTube's translation because
+  // the endpoint was rate limiting us — the difference between "this video has
+  // no translation" and "come back in a minute".
+  let exportTransLimited = false;
+
   async function exportCues() {
     const data = await requestExportData(settings.targetLang);
+    exportTransLimited = !!(data && data.transStatus === 429);
     if (data && data.ok && Array.isArray(data.cues) && data.cues.length) {
       const cues = data.cues.slice().sort((a, b) => a.start - b.start);
       computeCueEnds(cues);
@@ -1949,7 +1955,9 @@
     }
 
     if (!cues || !cues.length) return { ok: false, reason: "nocues" };
-    if (!cues.some((c) => c.trans)) return { ok: false, reason: "notrans" };
+    if (!cues.some((c) => c.trans)) {
+      return { ok: false, reason: exportTransLimited ? "limited" : "notrans" };
+    }
 
     const built = buildSrt(cues, v);
     if (!built.count) return { ok: false, reason: "notrans" };
