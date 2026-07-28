@@ -578,6 +578,25 @@
   // makes). loadModule still goes first — it is what makes the captions module,
   // and therefore the tracklist, available to ask; the track is picked a beat
   // later, once it has loaded.
+  // What tracks does this video actually have? Two sources, and on shorts the
+  // obvious one lies: measured 2026-07-27 on a short whose only track is
+  // auto-generated, getOption("captions","tracklist") stayed EMPTY — before
+  // loadModule and six seconds after it — while the player's own response
+  // listed en/asr the whole time. Selecting that track by language code works
+  // perfectly; we just have to know it is there.
+  function captionTracksOf(p) {
+    try {
+      const list = p.getOption("captions", "tracklist");
+      if (Array.isArray(list) && list.length) return list;
+    } catch (_e) { /* ignore */ }
+    try {
+      const pr = playerResponseFor(currentVideoId);
+      const r = pr && pr.captions && pr.captions.playerCaptionsTracklistRenderer;
+      if (r && Array.isArray(r.captionTracks) && r.captionTracks.length) return r.captionTracks;
+    } catch (_e) { /* ignore */ }
+    return null;
+  }
+
   function nudgeCaptions() {
     try {
       const p = activePlayer();
@@ -596,10 +615,10 @@
           // nothing. Whatever is wrong here, another track switch won't fix it.
           const cur = p2.getOption("captions", "track");
           if (cur && cur.languageCode) return;
-          const list = p2.getOption("captions", "tracklist");
-          // No tracklist at all = a short with genuinely no captions. Selecting
-          // nothing is correct; the second window then concedes nocues.
-          if (!Array.isArray(list) || !list.length) return;
+          const list = captionTracksOf(p2);
+          // Nothing on either source = a short with genuinely no captions.
+          // Selecting nothing is correct; the second window concedes nocues.
+          if (!list) return;
           // First track: shorts carry one in practice, and if the player picked
           // the wrong language of several, checkTrackMismatch corrects it as
           // soon as the resulting fetch is sniffed.
@@ -617,25 +636,56 @@
   // selected, no fetch will ever happen. Start asking as soon as the player can
   // answer, and poll briefly because the captions module is usually not loaded
   // yet at config time. The 6s watchdog stays as the backstop.
+  const EARLY_TRIES = 8;        // 8 × 500ms ≈ 4s of asking
+  const EARLY_PATIENCE = 3;     // …of which the first ~1.5s just waits
+  let earlyRearmedFor = "";
+  let earlyRearmPending = false;
+
   function scheduleEarlyNudge(triesLeft) {
     if (!isShortsPage() || triesLeft <= 0) return;
     const vid = currentVideoId;
     setTimeout(() => {
       if (vid !== currentVideoId || sourceUrl) return;   // navigated / already flowing
+      if (earlyRearmPending) { scheduleEarlyNudge(triesLeft - 1); return; }
       let done = false;
       try {
         const p = activePlayer();
         if (p && typeof p.getOption === "function" && typeof p.setOption === "function") {
           const cur = p.getOption("captions", "track");
-          // A track is already selected: the player's own fetch is on its way,
-          // and switching tracks under it would only restart the download.
-          if (cur && cur.languageCode) return;
-          const list = p.getOption("captions", "tracklist");
-          if (Array.isArray(list) && list.length) {
-            p.setOption("captions", "track", { languageCode: list[0].languageCode });
-            done = true;
-          } else if (typeof p.loadModule === "function") {
-            p.loadModule("captions");     // no tracklist yet — ask for the module
+          if (cur && cur.languageCode) {
+            // A selected track normally means the player's own fetch is on its
+            // way, and switching under it would restart the download — so wait
+            // first. But swiping shorts quickly leaves the PREVIOUS short's
+            // selection in place while nothing is fetched for the new one:
+            // measured on Lee's machine as cur=en/asr, no timedtext, a minute
+            // of blank video, and swiping past and back fixed it. So patience
+            // has a limit: turn captions off and straight back ON — the same
+            // track, never a different language — which is what makes the
+            // player go and fetch.
+            if (triesLeft <= EARLY_TRIES - EARLY_PATIENCE && earlyRearmedFor !== vid) {
+              earlyRearmedFor = vid;
+              earlyRearmPending = true;
+              const lang = cur.languageCode;
+              p.setOption("captions", "track", {});
+              setTimeout(() => {
+                earlyRearmPending = false;
+                try {
+                  if (vid !== currentVideoId || sourceUrl) return;
+                  const p2 = activePlayer();
+                  if (p2 && typeof p2.setOption === "function") {
+                    p2.setOption("captions", "track", { languageCode: lang });
+                  }
+                } catch (_e) { /* ignore */ }
+              }, 300);
+            }
+          } else {
+            const list = captionTracksOf(p);
+            if (list) {
+              p.setOption("captions", "track", { languageCode: list[0].languageCode });
+              done = true;
+            } else if (typeof p.loadModule === "function") {
+              p.loadModule("captions");   // nothing to select yet — ask for the module
+            }
           }
         }
       } catch (_e) { /* ignore */ }
@@ -690,7 +740,7 @@
           produceCues(true);            // already captured for this video
         } else {
           armNocuesTimer();             // wait for player's timedtext fetch
-          scheduleEarlyNudge(8);        // …but on a short, ask the player now
+          scheduleEarlyNudge(EARLY_TRIES);   // …but on a short, ask the player now
         }
       } else if (d.type === "export-request") {
         // On-demand SRT export: build a COMPLETE bilingual cue set regardless of
