@@ -209,9 +209,21 @@
     return cues;
   }
 
+  // Our own timedtext fetches go through the very hooks that sniff the player's,
+  // so without this they look like "the player just asked again" — which now
+  // means something (it triggers the translation's second chance) and would
+  // spend an extra request on our own footsteps.
+  let selfFetching = 0;
+
   // page-context fetch — same-origin youtube.com so pot/signature stay valid.
   async function fetchJson3(url) {
-    const res = await fetch(url, { method: "GET", credentials: "include" });
+    selfFetching++;
+    let res;
+    try {
+      res = await fetch(url, { method: "GET", credentials: "include" });
+    } finally {
+      selfFetching--;
+    }
     if (!res.ok) {
       const err = new Error("timedtext http " + res.status);
       err.status = res.status;        // lets the retry tell a 429 from a 404
@@ -382,6 +394,7 @@
       return;
     }
     const vid = currentVideoId;
+    let transStatus = 0;
     try {
       const origJson = await fetchJson3Retry(buildUrl(sourceUrl, null), vid, true);
       const cues = parseJson3(origJson);
@@ -391,7 +404,9 @@
       let aligned = null;
       if (targetLang) {
         try {
-          const transJson = await fetchJson3Retry(buildUrl(sourceUrl, mapTlang(targetLang)), vid, false);
+          // Unlike playback, an export has no sentence path to fall back on and
+          // a person waiting for a file, so a rate limit is worth the retries.
+          const transJson = await fetchJson3Retry(buildUrl(sourceUrl, mapTlang(targetLang)), vid, true);
           tcues = parseJson3(transJson);
           aligned = cues.length === tcues.length;
           if (aligned) {
@@ -399,12 +414,15 @@
               cues[i].trans = tcues[i] ? tcues[i].text : "";
             }
           }
-        } catch (_e) {
+        } catch (err) {
           tcues = null; aligned = null;   // translation failed; orig still usable
+          transStatus = (err && err.status) || 0;
         }
       }
 
-      post("exportdata", { ok: true, cues, tcues, aligned, exportId });
+      // transStatus rides along so the popup can say "rate limited, try again in
+      // a moment" instead of "try another language", which is not the problem.
+      post("exportdata", { ok: true, cues, tcues, aligned, transStatus, exportId });
     } catch (_e) {
       post("exportdata", { ok: false, exportId });
     }
@@ -475,6 +493,7 @@
   function noteTimedtext(url) {
     try {
       if (!isTimedtext(url)) return;
+      if (selfFetching) return;              // our own request, not the player's
       lastTimedtextUrl = url;
       if (!hasTlang(url)) {
         // The player's original-track fetch — the only pot we may reuse.

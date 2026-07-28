@@ -482,6 +482,10 @@ function exportErrText(resp) {
   if (resp.reason === "cancelled") return t("exportCancelled", "已取消导出。");
   if (resp.reason === "byofail") return byoErrText(resp.code || "failed");
   if (resp.reason === "same") return t("backendStatusSame", "本视频字幕已是目标语言，无需翻译。");
+  if (resp.reason === "limited") {
+    return t("exportLimited",
+      "YouTube 暂时限制了整轨翻译，过一会儿再试；或者勾选「用自带 Key 翻译」。");
+  }
   if (resp.reason === "notrans") {
     return t("exportNoTrans", "这个视频拿不到译文，试试「整轨翻译」或换个目标语言。");
   }

@@ -66,6 +66,7 @@
   "exportWorking": {"message":"Generating…"},
   "exportDone": {"message":"Subtitles downloaded"},
   "exportNoTrans": {"message":"No translation available for this video — try the Whole-track engine or another target language."},
+  "exportLimited": {"message":"YouTube is rate-limiting whole-track translation right now — try again in a minute, or tick “Translate with my own key”."},
   "exportNoCues": {"message":"No downloadable subtitles — play a few seconds so captions load, then try again."},
   "exportNotYoutube": {"message":"Open a YouTube video page to export."},
   "exportFailed": {"message":"Export failed — refresh the page and try again."},
