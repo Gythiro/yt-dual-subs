@@ -87,8 +87,12 @@ function current() {
   return (ALLOW_CUSTOM_ENDPOINT || !p.custom) ? p : null;
 }
 
+// Four providers are known by a Chinese name at home and a romanised one
+// abroad (百炼 / Model Studio, 豆包 / Doubao, …). The literal in providers.js is
+// the Chinese one, so an English UI has to look the label up.
 function providerLabel(p) {
-  return p.custom ? t("byoCustom", "自定义（OpenAI 兼容）") : p.name;
+  if (p.custom) return t("byoCustom", "自定义（OpenAI 兼容）");
+  return p.nameKey ? t(p.nameKey, p.name) : p.name;
 }
 
 // ---- list ------------------------------------------------------------------

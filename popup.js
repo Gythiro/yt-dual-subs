@@ -401,7 +401,7 @@ function paintByoPanel() {
   }
   // Short name here: at 360px the full "Alibaba 百炼 (Qwen / DeepSeek)" would
   // eat the model name, which is the part that changes.
-  const label = p.short || p.name;
+  const label = (p.shortKey && t(p.shortKey, p.short)) || p.short || p.name;
   // Two different questions: which providers are set up (a saved key), and
   // which of those have actually answered a request (byoOk, written by the
   // settings page when a test passes). With more than one set up, switching
@@ -429,7 +429,7 @@ function paintByoPanel() {
     for (const x of configured) {
       const o = document.createElement("option");
       o.value = x.id;
-      const name = x.short || x.name;
+      const name = (x.shortKey && t(x.shortKey, x.short)) || x.short || x.name;
       o.textContent = okMap[x.id]
         ? name
         : name + " · " + t("popupByoUntested", "未验证");

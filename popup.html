@@ -50,8 +50,8 @@
   <section class="preview" id="preview" aria-label="实时预览" data-i18n-aria="previewAria">
     <div class="preview-frame">
       <div class="ytds-prev" id="prevOverlay">
-        <div class="ytds-prev-line ytds-prev-trans" id="prevTrans">敏捷的棕色狐狸</div>
-        <div class="ytds-prev-line ytds-prev-orig" id="prevOrig">The quick brown fox</div>
+        <div class="ytds-prev-line ytds-prev-trans" id="prevTrans" data-i18n="sampleTrans">敏捷的棕色狐狸</div>
+        <div class="ytds-prev-line ytds-prev-orig" id="prevOrig" data-i18n="sampleOrig">The quick brown fox</div>
       </div>
       <span class="preview-tag" data-i18n="previewTag">预览</span>
     </div>
@@ -245,9 +245,7 @@
       <!-- Says which of the two is about to happen. Without it, a user who paid
            for a key finds out only from the downloaded file. Text is set from
            popup.js because it changes with the checkbox. -->
-      <p class="engine-hint" id="exportEngineNote" hidden>
-        导出用的是 YouTube 自带的整轨翻译（免费、不消耗你的 API）。
-      </p>
+      <p class="engine-hint" id="exportEngineNote" hidden></p>
 
       <button id="exportBtn" type="button" class="export-btn" data-i18n="exportSrt">
         下载 SRT 字幕
@@ -316,7 +314,7 @@
     <div class="ft-sep" aria-hidden="true"></div>
     <div class="ft-row">
       <button id="reset" type="button" class="reset" data-i18n="resetAll">重置全部设置</button>
-      <p class="ver">v<span id="version">3.5.0</span></p>
+      <p class="ver">v<span id="version"></span></p>
     </div>
     <label class="chk ft-chk">
       <input type="checkbox" id="updateNotes" />

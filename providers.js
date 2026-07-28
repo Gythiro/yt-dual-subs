@@ -101,7 +101,7 @@
       tint: "#1F2937", initials: "K"
     },
     {
-      id: "glm", name: "智谱 GLM", short: "GLM", kind: "llm",
+      id: "glm", name: "智谱 GLM", nameKey: "provGlm", short: "GLM", kind: "llm",
       baseUrl: "https://open.bigmodel.cn/api/paas/v4",
       origin: "https://open.bigmodel.cn",
       defaultModel: "",
@@ -111,7 +111,8 @@
       tint: "#3859FF", initials: "智"
     },
     {
-      id: "qwen", name: "Alibaba 百炼 (Qwen / DeepSeek)", short: "百炼", kind: "llm",
+      id: "qwen", name: "Alibaba 百炼 (Qwen / DeepSeek)", nameKey: "provQwen",
+      short: "百炼", shortKey: "provQwenShort", kind: "llm",
       // The generic host serves workspace-scoped ("sk-ws-…") Bailian keys too,
       // verified R3-S3 — so users never need the custom-endpoint path for it.
       baseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1",
@@ -126,7 +127,8 @@
       tint: "#FF6A00", initials: "百"
     },
     {
-      id: "doubao", name: "豆包 (火山方舟)", short: "豆包", kind: "llm",
+      id: "doubao", name: "豆包 (火山方舟)", nameKey: "provDoubao",
+      short: "豆包", shortKey: "provDoubaoShort", kind: "llm",
       baseUrl: "https://ark.cn-beijing.volces.com/api/v3",
       origin: "https://ark.cn-beijing.volces.com",
       // Ark takes an endpoint id (ep-...) rather than a public model name.
@@ -137,7 +139,7 @@
       tint: "#1664FF", initials: "豆"
     },
     {
-      id: "siliconflow", name: "SiliconFlow 硅基流动", short: "SiliconFlow", kind: "llm",
+      id: "siliconflow", name: "SiliconFlow 硅基流动", nameKey: "provSiliconflow", short: "SiliconFlow", kind: "llm",
       baseUrl: "https://api.siliconflow.cn/v1",
       origin: "https://api.siliconflow.cn",
       defaultModel: "",

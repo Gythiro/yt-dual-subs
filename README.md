@@ -24,7 +24,7 @@ English | [简体中文](README.zh-CN.md)
 ---
 
 > [!IMPORTANT]
-> **No analytics, no tracking, no accounts.** Caption text is sent *only* to the translation service in use (YouTube's own, or Google Translate — picked per video by Auto mode, or pinned by you) to be translated. Settings live in `chrome.storage.sync` — nothing else leaves your browser.
+> **No analytics, no tracking, no accounts.** Caption text is sent *only* to the translation service in use — YouTube's own or Google Translate by default, or the provider you supply a key for — to be translated. Settings live in `chrome.storage.sync`; an API key you add is kept in `chrome.storage.local` on that machine only, is never synced, and goes nowhere but the provider you chose. Nothing else leaves your browser.
 
 ## ✨ What you get
 
@@ -50,8 +50,9 @@ English | [简体中文](README.zh-CN.md)
 
 - **Dual subtitles, one layer** — original on one line, your language on the other. YouTube's own caption layer is hidden, so the two never overlap.
 - **Per‑sentence, no jitter** — renders from the timed caption *cues* (not the rolling on‑screen text), so lines switch by whole sentence instead of flickering word by word.
-- **Two engines, smart default** — YouTube's own whole‑track translation whenever the video supports it, with a much smarter fallback: fragmented captions are **rebuilt into full sentences** before Google translates them, so ASR fragments stop reading like word salad. Prefetched ahead of playback.
-- **16 target languages** to choose from.
+- **Two free engines, smart default** — YouTube's own whole‑track translation whenever the video supports it, with a much smarter fallback: fragmented captions are **rebuilt into full sentences** before Google translates them, so ASR fragments stop reading like word salad. Prefetched ahead of playback.
+- **Or bring your own API key** — DeepSeek, Gemini, DeepL, Alibaba Bailian and a dozen more. Each sentence is understood as a whole and then split back across the cues, so the translation line turns over with the original instead of standing still. The key is stored on your own machine and is sent to nobody but the provider you picked.
+- **50 target languages**, and you choose which of them appear in the menu.
 
 </td>
 <td valign="top">
@@ -60,7 +61,7 @@ English | [简体中文](README.zh-CN.md)
 - **Draggable** — drop the subtitle box anywhere on the video; it persists, double‑click to reset. Works in fullscreen.
 - **Works on Shorts** — bilingual subtitles on the vertical player too, keeping up as you swipe.
 - **One‑click toggle** — a button right in the player's control bar turns everything on/off (and YouTube's CC with it).
-- **Export to SRT** — download the current video's subtitles as `.srt`: original, translation, or bilingual.
+- **Export to SRT** — download the current video's subtitles as `.srt`: original, translation, or bilingual. With your own key it can translate the whole track, and it tells you how many requests that will take before it starts.
 - **Robust by design** — survives SPA navigation, falls back to reading the on‑screen caption text if the cue fetch ever fails, and turns YouTube captions on for you automatically.
 
 </td>
@@ -130,7 +131,7 @@ The default **Auto** mode uses Whole‑track whenever the video's track can be t
 <details>
 <summary><b>⏳ Translations occasionally pause?</b></summary>
 
-The Smart‑sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate‑limit your IP. The extension notices, slows down, and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already‑translated sentences stay cached. If the video supports it, pinning **Whole‑track (YouTube)** in the popup avoids the free endpoint entirely. SRT export is unaffected — it uses a different path.
+The Smart‑sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate‑limit your IP. The extension notices, slows down, and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already‑translated sentences stay cached. If the video supports it, pinning **Whole‑track (YouTube)** in the popup avoids the free endpoint entirely — though YouTube's own translation can be briefly limited too, in which case the extension waits and asks again. The same applies to a bilingual SRT export, which is built from that whole‑track translation: if it is limited, the export says so; exporting **Original** always works, and an own‑key export goes through your provider instead.
 
 </details>
 
@@ -162,7 +163,7 @@ Issues and pull requests are welcome — [open one here](https://github.com/Gyth
 
 ## 🔒 Privacy
 
-No analytics, no tracking, no accounts. Caption text is sent **only** to the translation service you choose; settings are stored in `chrome.storage.sync`. Full policy: [PRIVACY.md](PRIVACY.md).
+No analytics, no tracking, no accounts. Caption text is sent **only** to the translation service you choose. Settings are stored in `chrome.storage.sync`; an API key you supply is stored in `chrome.storage.local` on that machine, never synced, and sent only as the authorization header of requests to the endpoint you picked. Full policy: [PRIVACY.md](PRIVACY.md).
 
 ## 🙏 Credits
 
