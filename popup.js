@@ -391,18 +391,67 @@ function paintByoPanel() {
   if (self.YTDS_ICONS) slot.appendChild(self.YTDS_ICONS.iconFor(p));
 
   const sum = $("byoSummary");
+  const pick = $("byoPick");
   const notSet = t("popupByoNotSet", "还没配置");
-  if (!p) { sum.textContent = notSet; return; }
-  const model = state.byoModel || p.defaultModel || "";
+  if (!p) {
+    sum.textContent = notSet;
+    sum.hidden = false;
+    if (pick) pick.hidden = true;
+    return;
+  }
   // Short name here: at 360px the full "Alibaba 百炼 (Qwen / DeepSeek)" would
   // eat the model name, which is the part that changes.
   const label = p.short || p.name;
-  // A provider with no key stored is "not set up" no matter what is selected.
-  chrome.storage.local.get({ byoKeys: {} }, (got) => {
-    const has = !!((got && got.byoKeys) || {})[p.id];
-    sum.textContent = has
-      ? label + (model ? " · " + model : "")
-      : label + " — " + notSet;
+  // Two different questions: which providers are set up (a saved key), and
+  // which of those have actually answered a request (byoOk, written by the
+  // settings page when a test passes). With more than one set up, switching
+  // between them is a popup-sized job — going to the settings page to click a
+  // name was both slower and, until this release, a way to end up on a
+  // provider with no key at all.
+  chrome.storage.local.get({ byoKeys: {}, byoOk: {} }, (got) => {
+    const keys = (got && got.byoKeys) || {};
+    const okMap = (got && got.byoOk) || {};
+    const configured = (P ? P.list : []).filter((x) => keys[x.id]);
+    const model = state.byoModel || p.defaultModel || "";
+
+    if (!pick || configured.length < 2) {
+      if (pick) pick.hidden = true;
+      sum.hidden = false;
+      sum.textContent = keys[p.id]
+        ? label + (model ? " · " + model : "")
+        : label + " — " + notSet;
+      return;
+    }
+
+    sum.hidden = true;
+    pick.hidden = false;
+    pick.textContent = "";
+    for (const x of configured) {
+      const o = document.createElement("option");
+      o.value = x.id;
+      const name = x.short || x.name;
+      o.textContent = okMap[x.id]
+        ? name
+        : name + " · " + t("popupByoUntested", "未验证");
+      pick.appendChild(o);
+    }
+    pick.value = p.id;
+  });
+}
+
+// Switching providers here changes only which of the set-up ones is in use;
+// keys, models and endpoints all stay where the settings page put them. The
+// model follows its own provider (byoModelBy), so going back and forth does not
+// quietly reset it to the default.
+function onPickProvider() {
+  const id = $("byoPick").value;
+  if (!id || id === state.byoProvider) return;
+  chrome.storage.sync.get({ byoModelBy: {} }, (got) => {
+    const byProvider = (got && got.byoModelBy) || {};
+    state.byoProvider = id;
+    state.byoModel = byProvider[id] || "";
+    chrome.storage.sync.set({ byoProvider: id, byoModel: state.byoModel });
+    paintByoPanel();
   });
 }
 
@@ -696,6 +745,8 @@ function wire() {
   // for a hash.
   $("openOptions").addEventListener("click", () => toOptions());
   $("byoConfigure").addEventListener("click", () => toOptions());
+  const pick = $("byoPick");
+  if (pick) pick.addEventListener("change", onPickProvider);
 
   // segmented: order
   document.querySelectorAll("#order button").forEach((b) =>

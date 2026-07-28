@@ -235,6 +235,28 @@ select:focus { border-color: var(--accent); }
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .byo-sum .link { flex: none; }
+/* Switching between providers that are already set up is a popup-sized job;
+   only ADDING one needs the settings page. Native select on purpose: it has to
+   sit in 360px next to an icon and a link, and it carries no icons of its own
+   (the tile to its left already shows which one is chosen). */
+.byo-pick {
+  flex: 1; min-width: 0;
+  appearance: none;
+  font: inherit; font-size: 13px;
+  color: var(--ink, #fff);
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 8px;
+  padding: 4px 26px 4px 9px;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 12px center, right 7px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.byo-pick:hover { border-color: rgba(255, 255, 255, .3); }
+.byo-pick option { background: #1b1b22; color: #fff; }
 /* provider tile, same shape as the options list */
 .pico {
   flex: none; width: 20px; height: 20px; border-radius: 6px;

@@ -175,6 +175,20 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 .pitem-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pitem-ok { flex: none; font-size: 11px; color: #5fd38a; }
 .pitem.on .pitem-ok { color: inherit; }
+/* Which provider the extension actually translates with. The highlight means
+   "this is the panel you are looking at" and nothing more, so being in use
+   needs to say so in words. */
+.pitem-inuse {
+  flex: none;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(95, 211, 138, 0.16);
+  color: #5fd38a;
+  white-space: nowrap;
+}
+.pitem.on .pitem-inuse { background: rgba(255, 255, 255, 0.18); color: inherit; }
 
 /* provider icon box: real mark or tinted monogram */
 .pico {
