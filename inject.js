@@ -205,10 +205,45 @@
   // page-context fetch — same-origin youtube.com so pot/signature stay valid.
   async function fetchJson3(url) {
     const res = await fetch(url, { method: "GET", credentials: "include" });
-    if (!res.ok) throw new Error("timedtext http " + res.status);
+    if (!res.ok) {
+      const err = new Error("timedtext http " + res.status);
+      err.status = res.status;        // lets the retry tell a 429 from a 404
+      throw err;
+    }
     const txt = await res.text();
     if (!txt) throw new Error("timedtext empty body");
     return JSON.parse(txt);
+  }
+
+  // One hiccup used to cost the whole video. When the tlang fetch throws,
+  // produceCues concedes `tcues = null`; content.js reads that as "this track
+  // has no YouTube translation" and runs the rest of the video on the
+  // per-sentence gtx path — which is why switching the engine to YouTube and
+  // back appears to "fix" it (a fresh config forces a fresh fetch). So retry
+  // the failures that are hiccups: a dropped connection, a 429 from a burst, a
+  // 5xx, a rotated pot, the empty body YouTube serves when it is unhappy, or a
+  // truncated response. A 4xx that is not 429 is an answer, not a hiccup —
+  // spending two more requests on it would only delay the fallback.
+  const RETRY_DELAYS_MS = [300, 800];
+
+  function isHiccup(err) {
+    const s = err && err.status;
+    if (typeof s !== "number") return true;   // network error / empty / bad JSON
+    return s === 429 || s >= 500;
+  }
+
+  async function fetchJson3Retry(url, wantVid) {
+    for (let i = 0; ; i++) {
+      try {
+        return await fetchJson3(url);
+      } catch (err) {
+        if (i >= RETRY_DELAYS_MS.length || !isHiccup(err)) throw err;
+        await new Promise((r) => setTimeout(r, RETRY_DELAYS_MS[i]));
+        // Navigated away mid-retry: the caller discards the result anyway, and
+        // the next video's own produce is already on its way.
+        if (wantVid && wantVid !== currentVideoId) throw err;
+      }
+    }
   }
 
   // ---- bridge to content.js ------------------------------------------------
@@ -255,18 +290,24 @@
     // single line when this flag rides along with the cues.
     const sameLang = isSameLang(trackLangOf(sourceUrl), cfg.targetLang);
     const wantTlang = !sameLang && cfg.mode !== "gtx";
+    // Pin ONE pot-bearing URL for both legs: sourceUrl is refreshed on every
+    // pot rotation, so reading it twice could pair an original fetched with one
+    // token against a translation fetched with the next.
+    const src = sourceUrl;
+    let tlangFailed = false;
     try {
-      const origJson = await fetchJson3(buildUrl(sourceUrl, null));
+      const origJson = await fetchJson3Retry(buildUrl(src, null), vid);
       const cues = parseJson3(origJson);
 
       let tcues = null;
       if (wantTlang) {
         try {
           const target = mapTlang(cfg.targetLang);
-          const transJson = await fetchJson3(buildUrl(sourceUrl, target));
+          const transJson = await fetchJson3Retry(buildUrl(src, target), vid);
           tcues = parseJson3(transJson);
         } catch (_e) {
           tcues = null;             // translation failed; orig still usable
+          tlangFailed = true;
         }
       }
 
@@ -295,10 +336,13 @@
         // drop cached translations when the TRACK changes on the same video
         // (CC language switch / auto-dub mismatch fix) — same cache keys,
         // different text.
-        trackId: normKey(sourceUrl),
+        trackId: normKey(src),
         nonce: myNonce
       });
-      checkTrackMismatch(vid, sourceUrl);
+      // Rendering gtx right now is correct — but come back for the translation
+      // once, instead of leaving the whole video on it.
+      if (tlangFailed) scheduleTlangReproduce(normKey(src));
+      checkTrackMismatch(vid, src);
     } catch (_e) {
       // could not fetch/parse — let content.js fall back to scraping, but only
       // if we are still on the same video the fetch was started for.
@@ -321,8 +365,9 @@
       post("exportdata", { ok: false, exportId });
       return;
     }
+    const vid = currentVideoId;
     try {
-      const origJson = await fetchJson3(buildUrl(sourceUrl, null));
+      const origJson = await fetchJson3Retry(buildUrl(sourceUrl, null), vid);
       const cues = parseJson3(origJson);
       if (!cues.length) { post("exportdata", { ok: false, exportId }); return; }
 
@@ -330,7 +375,7 @@
       let aligned = null;
       if (targetLang) {
         try {
-          const transJson = await fetchJson3(buildUrl(sourceUrl, mapTlang(targetLang)));
+          const transJson = await fetchJson3Retry(buildUrl(sourceUrl, mapTlang(targetLang)), vid);
           tcues = parseJson3(transJson);
           aligned = cues.length === tcues.length;
           if (aligned) {
@@ -425,9 +470,49 @@
         if (key !== sourceKey) {
           sourceKey = key;
           onSourceCaptured();
+        } else if (tlangRetryTimer && key === tlangRetriedFor) {
+          // Same track, fresh capture — so a fresh pot — while a translation
+          // retry is still pending. This is a better moment for it than the
+          // timer's: whatever went wrong, it is now being asked again with the
+          // token the player itself just used.
+          clearTlangRetry();
+          producedForUrl = "";
+          produceCues(true);
         }
       }
     } catch (_e) { /* never throw */ }
+  }
+
+  // A failed tlang fetch is STICKY, and that is what users report as "auto keeps
+  // falling back to Google": produceCues stamps producedForUrl at start, and a
+  // later pot rotation on the same track does not re-produce (normKey is
+  // deliberately pot-blind), so nothing tries again for the rest of the video —
+  // switching the engine by hand is the only recovery, which is exactly the
+  // workaround people find. The in-request backoff only covers about a second.
+  // Give the track ONE more attempt a few seconds later, with whatever pot is
+  // freshest by then; if that fails too, gtx really is the answer.
+  const TLANG_RETRY_MS = 4000;
+  let tlangRetriedFor = "";
+  let tlangRetryTimer = null;
+
+  function clearTlangRetry() {
+    if (tlangRetryTimer) { clearTimeout(tlangRetryTimer); tlangRetryTimer = null; }
+  }
+
+  function scheduleTlangReproduce(trackKey) {
+    if (!trackKey || tlangRetriedFor === trackKey) return;   // one shot per track
+    tlangRetriedFor = trackKey;
+    clearTlangRetry();
+    const vid = currentVideoId;
+    tlangRetryTimer = setTimeout(() => {
+      tlangRetryTimer = null;
+      if (!cfg || cfg.mode === "gtx") return;              // gtx is what was asked for
+      // Covers a video change too: that clears sourceUrl, and the next video's
+      // capture has a different track key.
+      if (!sourceUrl || normKey(sourceUrl) !== trackKey) return;
+      producedForUrl = "";                                 // let the same URL through
+      produceCues(true);
+    }, TLANG_RETRY_MS);
   }
 
   // ---- video-change reset --------------------------------------------------
@@ -443,6 +528,10 @@
         sourceKey = "";
         producedForUrl = "";
         clearNocuesTimer();
+        // The latch itself is keyed by track, so the next video gets its own
+        // second chance without resetting anything; this just stops a pending
+        // timer from waking up for a video nobody is watching.
+        clearTlangRetry();
         return true;
       }
     } catch (_e) { /* never throw */ }
@@ -457,6 +546,80 @@
   // give it one more window before conceding nocues.
   let nudgedForVid = "";
 
+  // The only way captions can be turned on inside a short: there is no CC
+  // button for content.js to click. loadModule alone does NOT arm them —
+  // measured 2026-07-27 on a short with one caption track, with the account's
+  // CC preference off: the module loaded, the player kept "Subtitles/CC turned
+  // off", and no timedtext was ever fetched, through two full nocues windows.
+  // SELECTING a track is what arms them (same call the auto-dub track fix
+  // makes). loadModule still goes first — it is what makes the captions module,
+  // and therefore the tracklist, available to ask; the track is picked a beat
+  // later, once it has loaded.
+  function nudgeCaptions() {
+    try {
+      const p = activePlayer();
+      if (!p) return;
+      if (typeof p.loadModule === "function") p.loadModule("captions");
+      const vidAtNudge = currentVideoId;
+      setTimeout(() => {
+        try {
+          if (sourceUrl) return;                    // the module alone did it
+          if (vidAtNudge !== currentVideoId) return;
+          const p2 = activePlayer();
+          if (!p2 || typeof p2.getOption !== "function" ||
+                     typeof p2.setOption !== "function") return;
+          // Already on a track (the early nudge got there first, or the user
+          // did): re-selecting it would restart the caption download for
+          // nothing. Whatever is wrong here, another track switch won't fix it.
+          const cur = p2.getOption("captions", "track");
+          if (cur && cur.languageCode) return;
+          const list = p2.getOption("captions", "tracklist");
+          // No tracklist at all = a short with genuinely no captions. Selecting
+          // nothing is correct; the second window then concedes nocues.
+          if (!Array.isArray(list) || !list.length) return;
+          // First track: shorts carry one in practice, and if the player picked
+          // the wrong language of several, checkTrackMismatch corrects it as
+          // soon as the resulting fetch is sniffed.
+          p2.setOption("captions", "track", { languageCode: list[0].languageCode });
+        } catch (_e) { /* ignore */ }
+      }, 400);
+    } catch (_e) { /* ignore */ }
+  }
+
+  // Waiting out the 6s nocues window before touching the player costs about
+  // seven seconds of blank video on EVERY short whose captions are off — the
+  // window exists for the watch page, where a slow player can still fetch
+  // captions by itself and 6s of patience is cheaper than fighting it. On a
+  // short nothing else is coming: there is no CC button, so if no track is
+  // selected, no fetch will ever happen. Start asking as soon as the player can
+  // answer, and poll briefly because the captions module is usually not loaded
+  // yet at config time. The 6s watchdog stays as the backstop.
+  function scheduleEarlyNudge(triesLeft) {
+    if (!isShortsPage() || triesLeft <= 0) return;
+    const vid = currentVideoId;
+    setTimeout(() => {
+      if (vid !== currentVideoId || sourceUrl) return;   // navigated / already flowing
+      let done = false;
+      try {
+        const p = activePlayer();
+        if (p && typeof p.getOption === "function" && typeof p.setOption === "function") {
+          const cur = p.getOption("captions", "track");
+          // A track is already selected: the player's own fetch is on its way,
+          // and switching tracks under it would only restart the download.
+          if (cur && cur.languageCode) return;
+          const list = p.getOption("captions", "tracklist");
+          if (Array.isArray(list) && list.length) {
+            p.setOption("captions", "track", { languageCode: list[0].languageCode });
+            done = true;
+          } else if (typeof p.loadModule === "function") {
+            p.loadModule("captions");     // no tracklist yet — ask for the module
+          }
+        }
+      } catch (_e) { /* ignore */ }
+      if (!done) scheduleEarlyNudge(triesLeft - 1);
+    }, 500);
+  }
+
   function armNocuesTimer() {
     clearNocuesTimer();
     const vid = currentVideoId;
@@ -468,10 +631,7 @@
       if (sourceUrl) return;               // a capture raced the timer — all good
       if (isShortsPage() && nudgedForVid !== vid) {
         nudgedForVid = vid;
-        try {
-          const p = activePlayer();
-          if (p && typeof p.loadModule === "function") p.loadModule("captions");
-        } catch (_e) { /* ignore */ }
+        nudgeCaptions();
         armNocuesTimer();                  // one extra window after the nudge
         return;
       }
@@ -507,6 +667,7 @@
           produceCues(true);            // already captured for this video
         } else {
           armNocuesTimer();             // wait for player's timedtext fetch
+          scheduleEarlyNudge(8);        // …but on a short, ask the player now
         }
       } else if (d.type === "export-request") {
         // On-demand SRT export: build a COMPLETE bilingual cue set regardless of
