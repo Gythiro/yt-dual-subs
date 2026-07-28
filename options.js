@@ -43,8 +43,18 @@ function uiLang() {
 }
 
 let state = { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN" };
+// Which provider's panel is on screen. Deliberately NOT state.byoProvider:
+// clicking a name in the list means "let me set this one up", and it used to
+// switch the whole extension over to it on the spot — even with no key saved,
+// which quietly broke translation until the user noticed. Nothing is switched
+// until a key actually goes through (see persist), or the user picks a
+// configured provider from the popup.
+let editing = "";
 const storedKeys = Object.create(null);     // providerId -> true (never the value)
 const fetchedModels = Object.create(null);  // providerId -> [model ids]
+// Per-provider model, so switching between two configured providers does not
+// throw away the model chosen for either.
+let modelsBy = Object.create(null);
 
 const CUSTOM_MODEL = "__custom__";
 
@@ -67,8 +77,12 @@ function providerList() {
   return P.list.filter((p) => ALLOW_CUSTOM_ENDPOINT || !p.custom);
 }
 
+function modelFor(id) {
+  return modelsBy[id] || "";
+}
+
 function current() {
-  const p = P.get(state.byoProvider);
+  const p = P.get(editing);
   if (!p) return null;
   return (ALLOW_CUSTOM_ENDPOINT || !p.custom) ? p : null;
 }
@@ -85,9 +99,9 @@ function renderList() {
     const li = document.createElement("li");
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "pitem" + (p.id === state.byoProvider ? " on" : "");
+    btn.className = "pitem" + (p.id === editing ? " on" : "");
     btn.setAttribute("role", "tab");
-    btn.setAttribute("aria-selected", String(p.id === state.byoProvider));
+    btn.setAttribute("aria-selected", String(p.id === editing));
     btn.appendChild(ICONS.iconFor(p));
 
     const name = document.createElement("span");
@@ -95,7 +109,14 @@ function renderList() {
     name.textContent = providerLabel(p);
     btn.appendChild(name);
 
-    if (storedKeys[p.id]) {
+    // Which one the extension is actually translating with — the thing the
+    // highlight used to imply and no longer does.
+    if (p.id === state.byoProvider) {
+      const inUse = document.createElement("span");
+      inUse.className = "pitem-inuse";
+      inUse.textContent = t("optInUse", "使用中");
+      btn.appendChild(inUse);
+    } else if (storedKeys[p.id]) {
       const ok = document.createElement("span");
       ok.className = "pitem-ok";
       ok.textContent = "✓";
@@ -104,10 +125,8 @@ function renderList() {
     }
 
     btn.addEventListener("click", () => {
-      if (state.byoProvider === p.id) return;
-      state.byoProvider = p.id;
-      state.byoModel = "";            // the new provider's own default applies
-      chrome.storage.sync.set({ byoProvider: p.id, byoModel: "" });
+      if (editing === p.id) return;
+      editing = p.id;                 // set it up; nothing switches yet
       showMsg("", null);
       showModelMsg("", null);
       renderList();
@@ -131,7 +150,7 @@ function modelChoices(p) {
   };
   (p.models || []).forEach(add);
   (fetchedModels[p.id] || []).forEach(add);
-  add(state.byoModel);
+  add(modelFor(p.id));
   add(p.defaultModel);
   return out;
 }
@@ -156,14 +175,14 @@ function renderModelField(p) {
   customOpt.textContent = t("optModelCustom", "自定义…");
   sel.appendChild(customOpt);
 
-  const saved = state.byoModel || p.defaultModel;
+  const saved = modelFor(p.id) || p.defaultModel;
   const known = saved && choices.includes(saved);
   sel.value = known ? saved : CUSTOM_MODEL;
   sel.hidden = false;
 
   const typing = sel.value === CUSTOM_MODEL;
   input.hidden = !typing;
-  input.value = typing ? (state.byoModel || "") : "";
+  input.value = typing ? (modelFor(p.id) || "") : "";
   input.placeholder = t("byoModelRequired", "必填：模型名");
 
   if (!choices.length) {
@@ -269,17 +288,32 @@ function plan() {
   return { provider: p, origins, typedKey, model, baseUrl };
 }
 
+// Saving a key IS the moment to switch to that provider: the user typed it and
+// pressed the button. Clicking around the list is not, which is why this is the
+// only place byoProvider moves from inside the settings page.
 function persist(pl) {
   state.byoProvider = pl.provider.id;
   state.byoModel = pl.model;
   state.byoBaseUrl = pl.baseUrl;
+  modelsBy[pl.provider.id] = pl.model;
   // One set() so content.js re-cues once instead of three times.
   chrome.storage.sync.set({
     byoProvider: state.byoProvider,
     byoModel: state.byoModel,
-    byoBaseUrl: state.byoBaseUrl
+    byoBaseUrl: state.byoBaseUrl,
+    byoModelBy: Object.assign({}, modelsBy)
   });
   return pl.typedKey ? saveKey(pl.provider.id, pl.typedKey) : Promise.resolve();
+}
+
+// Which providers have answered a real request, so the popup can say which of
+// the saved keys is known to work rather than just "saved".
+function markVerified(id, ok) {
+  chrome.storage.local.get({ byoOk: {} }, (got) => {
+    const map = (got && got.byoOk) || {};
+    if (ok) map[id] = true; else delete map[id];
+    chrome.storage.local.set({ byoOk: map });
+  });
 }
 
 function saveKey(id, key) {
@@ -344,8 +378,11 @@ async function runTest(pl) {
     const resp = await sendToBackground({ type: "byoTest", targetLang: state.targetLang });
     if (resp && resp.ok) {
       const sample = String(resp.sample || "").slice(0, 60);
+      markVerified(pl.provider.id, true);
+      renderList();
       showMsg(tsub("byoTestOk", [sample], "连接成功：" + sample), "ok");
     } else {
+      markVerified(pl.provider.id, false);
       showMsg(errText(resp && resp.code), "err");
     }
   } finally {
@@ -598,6 +635,7 @@ function wire() {
     const p = current();
     if (!p) return;
     await saveKey(p.id, null);
+    markVerified(p.id, false);
     paintKeyField(p);
     renderList();
     showMsg(t("byoKeyCleared", "已清除本机保存的 Key。"), null);
@@ -627,16 +665,25 @@ showSection(location.hash.slice(1));
 wire();
 
 chrome.storage.sync.get(
-  { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN", langShown: null },
+  { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN", langShown: null,
+    byoModelBy: {} },
   (got) => {
     state = Object.assign(state, got || {});
+    modelsBy = Object.assign(Object.create(null), (got && got.byoModelBy) || {});
+    // The active provider's model is authoritative for it — older profiles have
+    // byoModel but no byoModelBy yet.
+    if (state.byoProvider && state.byoModel && !modelsBy[state.byoProvider]) {
+      modelsBy[state.byoProvider] = state.byoModel;
+    }
     langKept = (got && Array.isArray(got.langShown) && got.langShown.length)
       ? LANGS.shown(got.langShown) : null;
     renderLangs();
-    // Land on the first preset rather than an empty page on first open.
+    // Open on whatever is in use; failing that, the first preset — an empty
+    // page on first open would be worse. Either way nothing is switched.
+    editing = state.byoProvider;
     if (!current()) {
       const first = providerList()[0];
-      if (first) state.byoProvider = first.id;
+      if (first) editing = first.id;
     }
     chrome.storage.local.get({ byoKeys: {} }, (loc) => {
       for (const id of Object.keys((loc && loc.byoKeys) || {})) storedKeys[id] = true;
