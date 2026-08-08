@@ -236,6 +236,7 @@
   // an overlay that has quietly stopped translating, and a drag whose position
   // is never saved. Notice it, take the overlay away — this page belongs to the
   // new script now — and go quiet. The tab's next load gets a live one.
+  // Firefox can destroy the old script world before it removes its DOM.
   let orphaned = false;
   let navPollTimer = null;
   // Declared here, with the other things goOrphan has to switch off, so it can
@@ -401,6 +402,9 @@
     const player = getPlayer();
     if (!player) return null;
     if (overlay && overlay.isConnected) return overlay;
+
+    // Firefox can leave UI from a destroyed content-script world after reload.
+    for (const oldOverlay of player.querySelectorAll("#ytds-overlay")) oldOverlay.remove();
 
     overlay = document.createElement("div");
     overlay.id = "ytds-overlay";
@@ -817,6 +821,8 @@
       return;
     }
     if (toggleBtn && toggleBtn.isConnected) { updateToggleState(); return; }
+    // Remove the stale Firefox reload control before adding this instance's.
+    for (const oldToggle of rc.querySelectorAll(".ytds-toggle")) oldToggle.remove();
     toggleBtn = document.createElement("button");
     toggleBtn.className = "ytp-button ytds-toggle";
     toggleBtn.type = "button";

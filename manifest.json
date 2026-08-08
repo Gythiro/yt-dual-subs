@@ -4,7 +4,7 @@
   "name": "__MSG_extName__",
   "version": "3.6.0",
   "description": "__MSG_extDesc__",
-  "minimum_chrome_version": "102",
+  "minimum_chrome_version": "121",
   "permissions": ["storage"],
   "host_permissions": [
     "https://translate.googleapis.com/*"
@@ -25,7 +25,14 @@
     "https://api.deepl.com/*"
   ],
   "background": {
+    "scripts": ["providers.js", "languages.js", "background.js"],
     "service_worker": "background.js"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "yt-dual-subs@gythiro.github.io",
+      "strict_min_version": "128.0"
+    }
   },
   "options_ui": {
     "page": "options.html",

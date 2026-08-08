@@ -15,7 +15,9 @@
 // ahead of prefetch. No internal retries for transport errors: a failed request
 // is simply re-issued by content.js when its cue is next active.
 
-importScripts("providers.js", "languages.js");
+// Firefox MV3 runs this as an event page and loads these scripts from the
+// manifest. Chromium runs it as a service worker, which needs importScripts.
+if (typeof importScripts === "function") importScripts("providers.js", "languages.js");
 const PROVIDERS = self.YTDS_PROVIDERS;
 const LANGS = self.YTDS_LANGS;
 
