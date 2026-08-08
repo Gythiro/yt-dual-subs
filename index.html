@@ -316,6 +316,8 @@
   .sec-links{display:flex;flex-wrap:wrap;gap:26px;justify-content:center;margin-top:20px}
   .sec-links a{color:var(--accent-2);font-size:15.5px;font-weight:600;white-space:nowrap}
   .sec-links a:hover{text-decoration:underline}
+  .faq details p a{color:var(--accent-2);font-weight:600}
+  .faq details p a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -705,6 +707,11 @@
         <summary><span data-en>Why do translations sometimes pause or not show up?</span><span data-zh>为什么翻译有时不出来、或者停一下？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
         <p data-en>The Smart sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate-limit. The extension notices, slows down and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already-translated sentences stay cached. YouTube's own whole-track translation can be limited too — when that happens the extension falls back to the sentence engine and comes back for the whole-track version a little later.</p>
         <p data-zh>智能整句引擎走的是 Google 免费公共接口，重度使用（超长视频、频繁拖进度条）时可能被短暂限流。扩展会自己发现并放慢重试：等待期间译文行显示「…」，翻译通常在几秒到一两分钟内自动恢复。已翻译过的句子有缓存不受影响。YouTube 自带的整轨翻译同样可能被限流——真遇上时扩展会先用整句引擎顶上，过一会儿再回头去要整轨译文。</p>
+      </details>
+      <details>
+        <summary><span data-en>Is the feature I want planned?</span><span data-zh>我想要的功能有没有计划？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
+        <p data-en>The <a href="roadmap.html">roadmap</a> says what is planned, what is being built, and what is not happening yet — with the reason for each. If what you want is not on it, <a href="feedback.html">say so</a>: most of what is on that list started as somebody's message.</p>
+        <p data-zh><a href="roadmap.html">开发计划页</a>写着计划做什么、正在做什么、暂时不做什么——每一条都写了原因。如果你想要的不在上面，<a href="feedback.html">说一声就行</a>：那个列表上的大多数条目，最初都是别人发来的一句话。</p>
       </details>
     </div>
   </div>
