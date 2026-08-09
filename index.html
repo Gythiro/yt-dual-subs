@@ -195,6 +195,9 @@
   .srt pre .t{color:var(--muted-2)}
   .srt pre .o{color:#fff}
   .srt pre .x{color:var(--translation)}
+  /* The SRT sample IS this section's visual — it stands where the image column
+     goes, so it needs no top margin and has to clear the frame's glow. */
+  .media-frame .srt{margin-top:0;position:relative;z-index:1}
 
   /* languages */
   .langs-band{text-align:center}
@@ -576,6 +579,9 @@
           <h3 data-zh>把字幕随身带走</h3>
           <p data-en>Download the current video's subtitles as a standard <span class="mono" style="color:var(--ink)">.srt</span> file — the original language, the translation, or both together as a bilingual file. With your own API key it can translate the whole track for you, and it says how many requests that will take before it starts.</p>
           <p data-zh>把当前视频的字幕下载为标准的 <span class="mono" style="color:var(--ink)">.srt</span> 文件——可选原文、译文，或两者合并成一份双语文件。填了自己的 API Key 之后，还可以让它整片翻译，开始前会先告诉你大约要几次请求。</p>
+        </div>
+        <div class="media-frame">
+          <div class="glow" aria-hidden="true"></div>
           <div class="srt">
             <div class="head">
               <span class="fn">subtitles.srt</span>
@@ -589,12 +595,6 @@
 00:00:04,120 --&gt; 00:00:07,480</span>
 <span class="o">The best ideas start as questions.</span>
 <span class="x">最好的想法都始于提问。</span></pre>
-          </div>
-        </div>
-        <div class="media-frame">
-          <div class="glow" aria-hidden="true"></div>
-          <div class="card-img">
-            <img class="ar-compare" src="assets/compare-en.png" data-src-en="assets/compare-en.png" data-src-zh="assets/compare-zh.png" width="1080" height="1440" alt="Clean, separated bilingual subtitle lines that can be exported to an SRT file.">
           </div>
         </div>
       </div>
