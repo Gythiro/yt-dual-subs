@@ -205,6 +205,11 @@
   .lang-count .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:28px auto 0}
   .chip{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px;font-weight:500;color:var(--muted);background:rgba(255,255,255,0.02)}
+  /* The chips say how many languages there are; the shot says you get to choose
+     which ones. Same aspect as the file (1280x703) so nothing is letterboxed. */
+  .lang-note{color:var(--muted);margin-top:22px;font-size:16px}
+  .lang-shot{max-width:900px;margin:26px auto 0;border:1px solid var(--line-2);border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.45);background:#0b0b12}
+  .lang-shot img{display:block;width:100%;height:auto;aspect-ratio:1280/703}
   .chip:hover{color:var(--ink);border-color:var(--line-2)}
 
   /* privacy */
@@ -625,6 +630,11 @@
       <span class="chip">Türkçe</span>
       <span class="chip">Tiếng Việt</span>
       <span class="chip">ภาษาไทย</span>
+    </div>
+    <p class="lang-note" data-en>The popup's menu is yours to edit: keep the ones you use, add any of the rest.</p>
+    <p class="lang-note" data-zh>弹窗里的下拉由你决定：常用的留着，其余的随时加进来。</p>
+    <div class="lang-shot">
+      <img src="assets/langs-en.png" data-src-en="assets/langs-en.png" data-src-zh="assets/langs-zh.png" width="1280" height="703" alt="The extension's settings page on the subtitle-languages panel: one column lists the languages shown in the popup, each removable, and a second column lists the rest, each addable.">
     </div>
   </div>
 </section>
