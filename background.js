@@ -1625,7 +1625,7 @@ async function resolveTts(lang, askedProvider) {
 
 
 
-// Qwen-TTS speaks ten languages, not fifty; anything else is refused the same
+// Qwen-TTS speaks eleven languages, not fifty; anything else is refused the same
 // honest way Chirp 3 refuses what it has no voice for.
 const QWEN_TTS_LANGS = new Set([
   "zh-CN", "zh-TW", "en", "fr", "de", "ru", "it", "es", "pt", "ja", "ko"

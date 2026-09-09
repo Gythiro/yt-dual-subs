@@ -24,7 +24,7 @@ English | [简体中文](README.zh-CN.md)
 ---
 
 > [!IMPORTANT]
-> **No analytics, no tracking, no accounts.** Caption text is sent *only* to the translation service in use — YouTube's own or Google Translate by default, or the provider you supply a key for — to be translated. Settings live in `chrome.storage.sync`; an API key you add is kept in `chrome.storage.local` on that machine only, is never synced, and goes nowhere but the provider you chose. Nothing else leaves your browser.
+> **No analytics, no tracking, no accounts.** Caption text leaves the browser only for the services you choose: the translation service in use — YouTube's own or Google Translate by default, or the provider you supply a key for — plus, if you turn them on, the voice service that reads lines aloud and the provider you ask for a summary. Settings live in `chrome.storage.sync`; an API key you add is kept in `chrome.storage.local` on that machine only, is never synced, and goes nowhere but the provider you chose. Nothing else leaves your browser.
 
 ## ✨ What you get
 
@@ -59,7 +59,9 @@ English | [简体中文](README.zh-CN.md)
 </td>
 <td valign="top">
 
-- **Fully customizable** — per‑line font, size, text colour, background colour + opacity, outline, line spacing, and which line sits on top. Live preview in the popup.
+- **Fully customizable** — per‑line font (the fonts really installed on this computer, or a file you import), size, text colour, background colour + opacity and outline; the spacing between the lines and which one sits on top. Live preview in the popup.
+- **Summarize a video into chapters** — one line of TL;DR plus timestamped chapters, in the language you read, through your own key or a local model; from the small menu behind the arrow on the player's subtitle button.
+- **Three keyboard shortcuts** — subtitles on/off, read-aloud on/off, translation line on/off; unbound until you bind them in Chrome's shortcut settings.
 - **Draggable** — drop the subtitle box anywhere on the video; it persists, double‑click to reset. Works in fullscreen.
 - **Works on Shorts** — bilingual subtitles on the vertical player too, keeping up as you swipe.
 - **One‑click toggle** — a button right in the player's control bar turns everything on/off (and YouTube's CC with it).
@@ -169,7 +171,7 @@ Issues and pull requests are welcome — [open one here](https://github.com/Gyth
 
 ## 🔒 Privacy
 
-No analytics, no tracking, no accounts. Caption text is sent **only** to the translation service you choose. Settings are stored in `chrome.storage.sync`; an API key you supply is stored in `chrome.storage.local` on that machine, never synced, and sent only as the authorization header of requests to the endpoint you picked. Full policy: [PRIVACY.md](PRIVACY.md).
+No analytics, no tracking, no accounts. Caption text is sent **only** to the services you choose: the translation service, and — only if you turn them on — the voice service that reads lines aloud and the provider that writes a summary. Settings are stored in `chrome.storage.sync`; an API key you supply is stored in `chrome.storage.local` on that machine, never synced, and sent only as the authorization header of requests to the endpoint you picked. Full policy: [PRIVACY.md](PRIVACY.md).
 
 ## 🙏 Credits
 
