@@ -933,11 +933,22 @@
   // content.js sends `fit` — the absolute video rate at which it just would —
   // and the video slows toward it, never below 76% of the user's own rate
   // (the clamp a 200k-user competitor shipped). The moment the rate turns up
-  // anywhere we did not put it, the user has taken the wheel: back off for
-  // the rest of this video (nav restores the benefit of the doubt).
+  // anywhere we did not put it, the dial moved under us. That used to latch a
+  // hands-off for the REST of the video — and the first muted completeness run
+  // caught the latch tripping at second zero of a fresh video: YouTube's own
+  // session-rate restore (the "remember my speed" write) landed while the
+  // first line's fit was already held, read as "the user grabbed the dial",
+  // and every rate ask for the whole video was ignored (applied:0, player
+  // pinned). Anyone with a remembered non-1x speed and read-aloud on hit the
+  // same latch every single video. So a move is an EVENT now, not a state:
+  // let go, tell content the new base, and let the next line decide against
+  // it. A viewer's explicit choice still wins every gap — we never overwrite
+  // it while not holding — and a dense line slowing under them is exactly
+  // what the sizing (and D114's completeness mode) is FOR.
   let rateSavedBase = -1;       // the user's own rate, to give back
   let rateSet = -1;             // what the player actually became after our set
-  let rateUserTouched = false;  // user moved the rate mid-video: hands off
+  let rateMoved = false;        // the dial moved under a hold JUST NOW (edge,
+                                // rides one report; never a lasting hands-off)
   // Who owns the rate right now, said out loud. This side is the only one that
   // knows: content used to work it out by watching the element and reading
   // back our own slowdown as the viewer's choice — three separate bugs from
@@ -953,30 +964,30 @@
     // The viewer's own rate: what we saved when we took the wheel, or simply
     // what the player is at when we are not holding it.
     const base = rateSavedBase >= 0 ? rateSavedBase : cur;
-    const stamp = applied + "|" + base + "|" + (rateUserTouched ? 1 : 0);
+    const stamp = applied + "|" + base + "|" + (rateMoved ? 1 : 0);
     if (stamp === rateSaid) return;
     rateSaid = stamp;
-    post("ttsrate", { applied: applied, base: base, touched: rateUserTouched });
+    post("ttsrate", { applied: applied, base: base, touched: rateMoved });
+    rateMoved = false;              // an edge: said once, then over
   }
   function rateRestore(p, cur) {
     if (rateSavedBase < 0) return;
     if (cur === rateSet) p.setPlaybackRate(rateSavedBase);
-    else rateUserTouched = true;
+    else rateMoved = true;          // their new rate stays; content re-learns it
     rateSavedBase = -1; rateSet = -1;
     rateReport(p);
   }
   function shareRate(p, on, fit) {
     if (typeof p.getPlaybackRate !== "function" ||
         typeof p.setPlaybackRate !== "function") return;
-    if (rateUserTouched) return;
     const cur = p.getPlaybackRate();
     if (!on || typeof fit !== "number" || !(fit > 0)) {
       rateRestore(p, cur);                      // line over, or this line fits
       return;
     }
-    if (rateSet >= 0 && cur !== rateSet) {      // moved since we set it
-      rateUserTouched = true;
-      rateSavedBase = -1; rateSet = -1;
+    if (rateSet >= 0 && cur !== rateSet) {      // moved since we set it: let
+      rateMoved = true;                         // go, re-learn, next line
+      rateSavedBase = -1; rateSet = -1;         // decides against the new base
       // Redundant today — duck() reports after every message, so this state
       // reaches content either way, and a mutation removing this line stays
       // green. Kept because shareRate's own contract is "report what you
@@ -991,10 +1002,18 @@
     }
     if (rateSavedBase < 0) rateSavedBase = base;
     // Snap UP to the player's 0.05 steps ourselves: its own snapping rounds
-    // DOWN (measured on the real player), which would cut under the 76%
-    // floor. The epsilon keeps float dust (0.9*20 = 18.000…004) from
-    // ceiling one step too far.
-    const want = Math.max(0.76 * base, fit);
+    // DOWN (measured on the real player), which would cut under the floor.
+    // The epsilon keeps float dust (0.9*20 = 18.000…004) from ceiling one
+    // step too far.
+    //
+    // The floor here is DEFENSE, not policy: content's sizing already floors
+    // its asks (0.76 of the user's rate normally, 0.25 in "read everything"
+    // mode — D114). When this line still said 0.76 it silently clamped every
+    // completeness ask back up, and the first muted 2x run read over=37/40
+    // with the sizing believing fits it never got. A quarter of the user's
+    // rate matches the deepest ask content can make; anything below that is
+    // a malformed message and gets the old refusal.
+    const want = Math.max(0.25 * base, fit);
     p.setPlaybackRate(Math.ceil(want * 20 - 1e-9) / 20);
     rateSet = p.getPlaybackRate();              // read back all the same: the
                                                 // comparand is what it BECAME
@@ -1020,7 +1039,7 @@
         duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1;
         rateSavedBase = -1; rateSet = -1;
       }
-      if (nav) { rateUserTouched = false; rateSaid = ""; }  // new video, fresh benefit
+      if (nav) { rateMoved = false; rateSaid = ""; }  // new video, fresh slate
       if (p) rateReport(p);
     } catch (_e) {
       duckRampClear();

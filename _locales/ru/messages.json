@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "Дальше — $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "В этом видео фраз: $N$ · пропущено: $M$ ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "перевод не успел"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Вся дорожка субтитров уйдёт в $PROVIDER$ (частей: $PARTS$), за счёт вашей квоты.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Составляю… часть $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "Пропущено частей: $N$; остальное выше.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Субтитры",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Подойдёт и базовый URL, и полный адрес, например http://localhost:8880/v1 или http://localhost:8880/v1/audio/speech (локальные озвучивающие серверы вроде Kokoro или openai-edge-tts). Ключ можно оставить пустым; обычный http работает только для loopback-адресов."
+  },
+  "optTtsNeedUrl": {
+    "message": "Адрес ещё не указан — этим провайдером нельзя пользоваться, пока вы его не добавите."
+  },
+  "ttsSkipRefused": {
+    "message": "провайдер отклонил эти запросы"
+  },
+  "statusTrackRetry": {
+    "message": "Дорожка субтитров не пришла — повторяем автоматически. Некогда ждать? Обновите страницу, чтобы попробовать сразу."
+  },
+  "ttsCompleteLabel": {
+    "message": "Дочитывать каждую строку до конца, не обрывая (в плотных местах видео замедляется)"
+  },
+  "ttsCompleteHint": {
+    "message": "На высокой скорости длинные строки часто теряют конец. С этой настройкой видео замедляется ровно настолько, насколько нужно строке — не ниже четверти выбранной скорости — и догоняет в паузах."
   }
 }

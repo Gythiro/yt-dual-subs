@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "A partir de ahora: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "$N$ frase(s) en este vídeo · $M$ omitida(s) ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "la traducción no llegó a tiempo"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Esto enviará toda la pista de subtítulos a $PROVIDER$, en $PARTS$ parte(s), con tu propia cuota.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Resumiendo… parte $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "Fallo en $N$ parte(s); el resto está arriba.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Subtítulos",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Sirve una URL base o un endpoint completo, p. ej. http://localhost:8880/v1 o http://localhost:8880/v1/audio/speech (servidores de voz locales como Kokoro u openai-edge-tts). La clave puede quedar vacía; http simple solo funciona con direcciones de bucle local."
+  },
+  "optTtsNeedUrl": {
+    "message": "Aún no hay dirección de endpoint: este proveedor no se puede usar hasta que añadas una."
+  },
+  "ttsSkipRefused": {
+    "message": "el proveedor rechazó esas solicitudes"
+  },
+  "statusTrackRetry": {
+    "message": "La pista de subtítulos no ha llegado; se reintenta automáticamente. ¿Prisa? Recarga la página para intentarlo ya."
+  },
+  "ttsCompleteLabel": {
+    "message": "Leer cada línea completa, sin cortarla (la imagen se ralentiza en partes densas)"
+  },
+  "ttsCompleteHint": {
+    "message": "A más velocidad, las líneas largas suelen perder el final. Con esto activado, la imagen se ralentiza lo que haga falta —nunca por debajo de un cuarto de tu velocidad elegida— y recupera en los huecos."
   }
 }

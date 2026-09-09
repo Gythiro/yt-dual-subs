@@ -45,13 +45,18 @@ const cfg = {
   ttsProvider: "local-speech",
   ttsVoice: "",          // read-aloud voice ("" = the provider's default)
   ttsRegion: "",         // Azure only: the region its key is bound to ("eastus")
+  // custom-speech only. Its OWN key on purpose: byoBaseUrl already belongs to
+  // the translation pane's custom entry, and two editable endpoints sharing
+  // one key overwrite each other (the D105 scar).
+  ttsBaseUrl: "",
   ttsModelBy: {}         // per-provider speech-model override (settings page)
 };
 
 const cfgReady = new Promise((resolve) => {
   chrome.storage.sync.get(
     { engine: "auto", backend: "tlang", byoProvider: "", byoModel: "", byoBaseUrl: "",
-      ttsProvider: "local-speech", ttsVoice: "", ttsRegion: "", ttsModelBy: {} },
+      ttsProvider: "local-speech", ttsVoice: "", ttsRegion: "", ttsBaseUrl: "",
+      ttsModelBy: {} },
     (got) => {
       got = got || {};
       // Same read-side migration as content.js: a stored "gtx" backend was a
@@ -67,6 +72,7 @@ const cfgReady = new Promise((resolve) => {
       cfg.ttsProvider = String(got.ttsProvider || "");
       cfg.ttsVoice = String(got.ttsVoice || "");
       cfg.ttsRegion = String(got.ttsRegion || "");
+      cfg.ttsBaseUrl = String(got.ttsBaseUrl || "");
       cfg.ttsModelBy = (got.ttsModelBy && typeof got.ttsModelBy === "object")
         ? got.ttsModelBy : {};
       resolve();
@@ -85,7 +91,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
   }
   // Read-aloud settings ride the same listener but must NOT flush the
   // translation lane — a voice change has nothing to do with queued subtitles.
-  for (const k of ["ttsProvider", "ttsVoice", "ttsRegion"]) {
+  for (const k of ["ttsProvider", "ttsVoice", "ttsRegion", "ttsBaseUrl"]) {
     if (!(k in changes)) continue;
     const v = changes[k].newValue;
     cfg[k] = typeof v === "string" ? v : cfg[k];
@@ -1359,11 +1365,26 @@ async function resolveTts(lang, askedProvider) {
   // are the three named "Google …"), and for those the browser sends the line
   // to its own maker. Nothing we can gate: the utterance goes through the Web
   // Speech API, not through us. What we can do is not claim otherwise.
+  // The custom server's address is configuration, not registry: parsed the
+  // same way (and by the same parser) as the translation pane's custom base.
+  let baseUrl = p.baseUrl;
+  let origin = p.origin;
+  if (p.custom) {
+    const parsed = PROVIDERS.parseCustomBase(cfg.ttsBaseUrl);
+    if (!parsed) throw tag(new Error("bad tts base url"), { noKey: true, code: "badBaseUrl" });
+    baseUrl = parsed.baseUrl;
+    origin = parsed.origin;
+  }
   let key = "";
   if (!p.keyless) {
     key = await keyForTts(p.id);
-    if (!key) throw tag(new Error("no tts api key"), { noKey: true, code: "noKey" });
-    await ensureHostPermission(p.origin);
+    // A custom endpoint may not want a key at all (Piper/Kokoro servers ignore
+    // auth) — there an empty key means "send no Authorization header", the
+    // same bargain resolveByo strikes for its custom sibling.
+    if (!key && !p.custom) throw tag(new Error("no tts api key"), { noKey: true, code: "noKey" });
+    // …and its origin may be one the manifest cannot name (a tunnel domain):
+    // soft-check it and let CORS decide, exactly as resolveByo does.
+    await ensureHostPermission(origin, { soft: !!p.custom });
   }
   // A voice belongs to ONE provider: "alloy" spliced into Google's naming
   // scheme yields zh-CN-Chirp3-HD-alloy, which is a 400 and reads to the user
@@ -1402,7 +1423,7 @@ async function resolveTts(lang, askedProvider) {
       throw tag(new Error("no azure region"), { noKey: true, code: "noRegion" });
     }
   }
-  return { provider: p, key, voice,
+  return { provider: p, key, voice, baseUrl,
     model: ((cfg.ttsModelBy || {})[p.id] || p.defaultModel || ""), region };
 }
 
@@ -1721,14 +1742,15 @@ async function ttsSynthesize(text, t, targetLang) {
       }
     };
   } else {
+    // No key = no Authorization header at all (custom endpoints; the named
+    // OpenAI provider cannot get here keyless — resolveTts threw).
+    const headers = { "Content-Type": "application/json" };
+    if (t.key) headers["Authorization"] = "Bearer " + t.key;
     req = {
-      url: t.provider.baseUrl + "/audio/speech",
+      url: (t.baseUrl || t.provider.baseUrl) + "/audio/speech",
       init: {
         method: "POST",
-        headers: {
-          "Authorization": "Bearer " + t.key,
-          "Content-Type": "application/json"
-        },
+        headers: headers,
         body: JSON.stringify({
           model: t.model,
           voice: t.voice,

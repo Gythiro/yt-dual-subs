@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "これ以降は $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "この動画で $N$ 文 · $M$ 文スキップ（$W$）",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "訳が間に合わなかった"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "字幕トラック全体を $PROVIDER$ に送ります（$PARTS$ 分割）。あなたの利用枠を使います。",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "要約中… $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "$N$ 個のパートは要約できませんでした。残りは上記のとおりです。",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "字幕",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "ベース URL でも完全なエンドポイントでも構いません。例: http://localhost:8880/v1、http://localhost:8880/v1/audio/speech（Kokoro や openai-edge-tts などのローカル読み上げサーバー）。キーは空でも構いません。http はループバックアドレスのみ使えます。"
+  },
+  "optTtsNeedUrl": {
+    "message": "エンドポイントのアドレスが未入力です。追加するまでこのプロバイダーは使えません。"
+  },
+  "ttsSkipRefused": {
+    "message": "プロバイダーがリクエストを拒否しました"
+  },
+  "statusTrackRetry": {
+    "message": "字幕トラックを取得できていません。自動で再試行中です。急ぐ場合はページを再読み込みするとすぐやり直せます。"
+  },
+  "ttsCompleteLabel": {
+    "message": "各行を最後まで読み上げて途切れさせない（密集部分では映像が遅くなります）"
+  },
+  "ttsCompleteHint": {
+    "message": "倍速では長い行の最後が次の行に消されがちです。オンにすると、その行に必要なだけ映像が遅くなり（選んだ速度の 4 分の 1 を下回りません）、隙間で追いつきます。"
   }
 }

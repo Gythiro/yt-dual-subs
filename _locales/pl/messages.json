@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "Od teraz: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "W tym filmie $N$ zdań · pominięto $M$ ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "tłumaczenie nie zdążyło"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "To wyśle całą ścieżkę napisów do $PROVIDER$ (części: $PARTS$), na Twój własny limit.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Podsumowuję… część $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "Nie udało się podsumować $N$ części; reszta powyżej.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Napisy",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Zadziała zarówno bazowy URL, jak i pełny punkt końcowy, np. http://localhost:8880/v1 lub http://localhost:8880/v1/audio/speech (lokalne serwery mowy, jak Kokoro czy openai-edge-tts). Klucz może pozostać pusty; zwykłe http działa tylko dla adresów pętli zwrotnej."
+  },
+  "optTtsNeedUrl": {
+    "message": "Brak adresu punktu końcowego — z tego dostawcy nie można korzystać, dopóki go nie dodasz."
+  },
+  "ttsSkipRefused": {
+    "message": "dostawca odrzucił te żądania"
+  },
+  "statusTrackRetry": {
+    "message": "Ścieżka napisów nie dotarła — ponawiam automatycznie. W pośpiechu? Odśwież stronę, aby spróbować od razu."
+  },
+  "ttsCompleteLabel": {
+    "message": "Doczytuj każdą linię do końca, bez ucinania (w gęstych fragmentach obraz zwalnia)"
+  },
+  "ttsCompleteHint": {
+    "message": "Przy większych prędkościach długie linie często tracą końcówkę. Po włączeniu obraz zwalnia tyle, ile linia potrzebuje — nigdy poniżej jednej czwartej wybranej prędkości — i nadrabia w przerwach."
   }
 }

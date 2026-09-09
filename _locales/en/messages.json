@@ -557,7 +557,9 @@
   "popupModelSwitched": {
     "message": "From here on: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -842,7 +844,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "$N$ lines here · $M$ skipped ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "translation not ready in time"
@@ -936,17 +948,35 @@
   "sumConfirm": {
     "message": "This will send the whole subtitle track to $PROVIDER$, in $PARTS$ part(s), on your own quota.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Summarizing… part $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "$N$ part(s) could not be summarized; the rest is above.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Subtitles",
@@ -964,5 +994,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "A base URL or a full endpoint both work, e.g. http://localhost:8880/v1 or http://localhost:8880/v1/audio/speech (local speech servers like Kokoro or openai-edge-tts). The key may stay empty; plain http works only for loopback addresses."
+  },
+  "optTtsNeedUrl": {
+    "message": "No endpoint address yet — this provider can't be used until you add one."
+  },
+  "ttsSkipRefused": {
+    "message": "the provider refused those requests"
+  },
+  "statusTrackRetry": {
+    "message": "The subtitle track hasn't arrived — retrying automatically. In a hurry? Refresh the page to try again now."
+  },
+  "ttsCompleteLabel": {
+    "message": "Finish every line, never cut it short (the picture slows in dense parts)"
+  },
+  "ttsCompleteHint": {
+    "message": "At higher speeds long lines often lose their tail to the next one. With this on, the picture slows as much as the line needs — never below a quarter of your chosen speed — and catches back up in the gaps."
   }
 }

@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "Bundan sonra: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "Bu videoda $N$ cümle · $M$ atlandı ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "çeviri zamanında gelmedi"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Bu, altyazı parçasının tamamını $PROVIDER$ hizmetine gönderir ($PARTS$ parça), kendi kotanızdan.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Özetleniyor… bölüm $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "$N$ bölüm özetlenemedi; kalanı yukarıda.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Altyazılar",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Temel URL de tam uç nokta da olur, örn. http://localhost:8880/v1 veya http://localhost:8880/v1/audio/speech (Kokoro veya openai-edge-tts gibi yerel konuşma sunucuları). Anahtar boş kalabilir; düz http yalnızca geri döngü adreslerinde çalışır."
+  },
+  "optTtsNeedUrl": {
+    "message": "Henüz uç nokta adresi yok — bir tane eklemeden bu sağlayıcı kullanılamaz."
+  },
+  "ttsSkipRefused": {
+    "message": "sağlayıcı bu istekleri reddetti"
+  },
+  "statusTrackRetry": {
+    "message": "Altyazı parçası gelmedi — otomatik olarak yeniden deneniyor. Aceleniz mi var? Hemen denemek için sayfayı yenileyin."
+  },
+  "ttsCompleteLabel": {
+    "message": "Her satırı sonuna kadar oku, asla kesme (yoğun bölümlerde görüntü yavaşlar)"
+  },
+  "ttsCompleteHint": {
+    "message": "Yüksek hızlarda uzun satırların sonu çoğu kez bir sonrakine kaptırılır. Bu açıkken görüntü satırın gerektirdiği kadar yavaşlar — seçtiğin hızın dörtte birinin altına inmez — ve boşluklarda arayı kapatır."
   }
 }

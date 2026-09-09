@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "ต่อจากนี้ใช้ $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "วิดีโอนี้ $N$ ประโยค · ข้าม $M$ ประโยค ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "คำแปลมาไม่ทัน"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "จะส่งแทร็กคำบรรยายทั้งหมดไปยัง $PROVIDER$ แบ่งเป็น $PARTS$ ส่วน โดยใช้โควตาของคุณเอง",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "กำลังสรุป… ส่วนที่ $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "สรุปไม่ได้ $N$ ส่วน ส่วนที่เหลืออยู่ด้านบน",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "คำบรรยาย",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "ใส่ได้ทั้ง Base URL หรือปลายทางแบบเต็ม เช่น http://localhost:8880/v1 หรือ http://localhost:8880/v1/audio/speech (เซิร์ฟเวอร์เสียงในเครื่องอย่าง Kokoro หรือ openai-edge-tts) คีย์เว้นว่างได้ ส่วน http ธรรมดาใช้ได้เฉพาะที่อยู่ loopback เท่านั้น"
+  },
+  "optTtsNeedUrl": {
+    "message": "ยังไม่ได้ใส่ที่อยู่ปลายทาง — ต้องเพิ่มก่อนจึงจะใช้ผู้ให้บริการรายนี้ได้"
+  },
+  "ttsSkipRefused": {
+    "message": "ผู้ให้บริการปฏิเสธคำขอเหล่านั้น"
+  },
+  "statusTrackRetry": {
+    "message": "ยังไม่ได้รับแทร็กคำบรรยาย กำลังลองใหม่อัตโนมัติ ถ้ารีบ ให้รีเฟรชหน้าเพื่อลองใหม่ทันที"
+  },
+  "ttsCompleteLabel": {
+    "message": "อ่านแต่ละบรรทัดให้จบ ไม่ตัดกลางคัน (ช่วงที่พูดถี่ ภาพจะช้าลง)"
+  },
+  "ttsCompleteHint": {
+    "message": "ที่ความเร็วสูง บรรทัดยาวมักถูกบรรทัดถัดไปตัดท้าย เมื่อเปิด ภาพจะช้าลงเท่าที่บรรทัดนั้นต้องการ (ไม่ต่ำกว่าหนึ่งในสี่ของความเร็วที่เลือก) แล้วไล่ตามทันในช่วงว่าง"
   }
 }

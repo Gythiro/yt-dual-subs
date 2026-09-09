@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "이후로는 $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "이 영상에서 $N$문장 · $M$문장 건너뜀($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "번역이 제때 오지 않음"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "자막 트랙 전체를 $PROVIDER$(으)로 보냅니다($PARTS$개 부분). 본인 할당량을 사용합니다.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "요약 중… $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "$N$개 부분은 요약하지 못했습니다. 나머지는 위에 있습니다.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "자막",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "베이스 URL이든 전체 엔드포인트든 모두 됩니다. 예: http://localhost:8880/v1 또는 http://localhost:8880/v1/audio/speech (Kokoro, openai-edge-tts 같은 로컬 음성 서버). 키는 비워 둬도 됩니다. http는 루프백 주소에서만 사용할 수 있습니다."
+  },
+  "optTtsNeedUrl": {
+    "message": "엔드포인트 주소가 아직 없습니다. 주소를 추가해야 이 제공업체를 사용할 수 있습니다."
+  },
+  "ttsSkipRefused": {
+    "message": "제공업체가 요청을 거부했습니다"
+  },
+  "statusTrackRetry": {
+    "message": "자막 트랙을 받지 못했습니다. 자동으로 다시 시도하는 중입니다. 급하면 페이지를 새로고침해 바로 다시 시도하세요."
+  },
+  "ttsCompleteLabel": {
+    "message": "모든 줄을 끝까지 읽고 자르지 않기 (대사가 몰리면 화면이 느려집니다)"
+  },
+  "ttsCompleteHint": {
+    "message": "배속에서는 긴 줄의 끝이 다음 줄에 잘리기 쉽습니다. 켜면 그 줄에 필요한 만큼 화면이 느려지고(선택한 배속의 4분의 1 아래로는 내려가지 않음) 틈에서 다시 따라잡습니다."
   }
 }

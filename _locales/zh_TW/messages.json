@@ -557,7 +557,9 @@
   "popupModelSwitched": {
     "message": "之後使用 $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -842,7 +844,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "本影片 $N$ 句 · 跳過 $M$ 句（$W$）",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "譯文沒趕上"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "會把整條字幕發給 $PROVIDER$，分 $PARTS$ 段，花的是你自己的額度。",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "總結中… 第 $DONE$/$TOTAL$ 段",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "有 $N$ 段沒能總結，以上是其餘部分。",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "字幕",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "填 Base URL 或完整介面位址都可以，例如 http://localhost:8880/v1 或 http://localhost:8880/v1/audio/speech（Kokoro、openai-edge-tts 這類本機朗讀服務）。金鑰可以留空；http 只有本機回環位址能用。"
+  },
+  "optTtsNeedUrl": {
+    "message": "還沒填介面位址，這個服務商暫時用不了。"
+  },
+  "ttsSkipRefused": {
+    "message": "服務商拒絕了請求"
+  },
+  "statusTrackRetry": {
+    "message": "字幕軌沒拿到，正在自動重試；急的話重新整理頁面立即重來。"
+  },
+  "ttsCompleteLabel": {
+    "message": "每句讀完不截斷（密集處畫面會更慢）"
+  },
+  "ttsCompleteHint": {
+    "message": "開倍速時長句常被下一句頂掉結尾。打開後畫面會按需要放慢到讀完為止（最低不低於你所選倍速的四分之一），空隙處再追回來。"
   }
 }

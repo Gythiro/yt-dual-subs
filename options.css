@@ -468,6 +468,10 @@ input[hidden] { display: none; }
 .ochk input {
   appearance: none; -webkit-appearance: none; margin: 0;
   width: 16px; height: 16px; cursor: pointer;
+  /* A label long enough to wrap (ru's completeness row was the first) squeezes
+     the box below the 16px it declares — flex shaves the one pixel the click
+     target audit then flags. The box is not the flexible part of this row. */
+  flex: none;
   /* Border one step brighter than --line: on the card the unchecked box was
      near-invisible (audit P2), and a control you cannot find is not a control. */
   background: var(--surface-2); border: 1px solid #4a4e53; border-radius: 4px;

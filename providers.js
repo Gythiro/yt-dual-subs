@@ -271,6 +271,7 @@
     const path = u.pathname
       .replace(/\/+$/, "")
       .replace(/\/chat\/completions$/, "")
+      .replace(/\/audio\/speech$/, "")
       .replace(/\/completions$/, "");
     return { baseUrl: u.origin + path, origin: u.origin };
   }
@@ -573,6 +574,11 @@
     // The local engine's voices are whatever this machine has; the page that
     // enumerated them is the only authority, so nothing here can vet them.
     if (p.localVoices) return true;
+    // A custom server's voices are whatever it serves; the user's typed name
+    // is the only authority there — same reasoning as the local engine above.
+    // A NAME, though: the preview path hands this whatever the message
+    // carried, and "anything truthy" would bless an object as a voice.
+    if (p.custom) return typeof voice === "string";
     if ((p.voices || []).includes(voice)) return true;
     return !!p.listVoices && ttsVoiceShapeOk(p, voice);
   }
@@ -849,6 +855,29 @@
       keyUrl: "https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices",
       pricingUrl: "https://azure.microsoft.com/pricing/details/cognitive-services/speech-services/",
       tint: "#0078D4", initials: "Az"
+    },
+    {
+      // The read-aloud twin of the translation pane's "custom": a local TTS
+      // server speaking the OpenAI shape (Piper wrappers, Kokoro-FastAPI,
+      // openai-edge-tts all ship /v1/audio/speech). Same rules as its sibling:
+      // the address is ITS OWN key (ttsBaseUrl — D105 is the scar from two
+      // editable endpoints sharing one), an empty key means "send no
+      // Authorization header", and the voice is hand-typed because these
+      // servers rarely publish a voice list (D109).
+      id: "custom-speech", name: "Custom (OpenAI-compatible)", nameKey: "byoCustom",
+      kind: "openai-speech",
+      custom: true,
+      short: "Custom", shortKey: "byoCustom",
+      baseUrl: "", origin: "",
+      // The OpenAI-compat convention: servers that ignore the field accept it,
+      // servers that require one (openai-edge-tts) want exactly this.
+      defaultModel: "tts-1",
+      models: [],
+      voices: [], defaultVoice: "",
+      keyHint: "",
+      keyUrl: "", pricingUrl: "",
+      // Same slate as the translation pane's custom tile — they are one idea.
+      tint: "#5C6B7A", initials: "…"
     }
   ];
   const TTS_BY_ID = Object.create(null);

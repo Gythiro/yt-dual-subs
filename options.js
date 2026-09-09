@@ -1046,6 +1046,13 @@ function ttsKeysRefresh() {
   chrome.storage.local.get({ ttsKeys: {} }, (got) => {
     const keys = (got && got.ttsKeys) || {};
     for (const p of P.tts.list) ttsStored[p.id] = !!keys[p.id];
+    // The custom entry is configured by its ADDRESS, not a key — read it after
+    // the loop above so the key sweep cannot clobber the answer.
+    chrome.storage.sync.get({ ttsBaseUrl: "" }, (sy) => {
+      ttsStored["custom-speech"] = ttsStored["custom-speech"] ||
+        !!P.parseCustomBase((sy && sy.ttsBaseUrl) || "");
+      if (listSec === "readaloud") renderList();
+    });
     if (listSec === "readaloud") renderList();
   });
 }
@@ -1098,6 +1105,21 @@ function paintTtsKeyField(p) {
   // provider that says so gets the field.
   const regionRow = $("ttsRegionRow");
   if (regionRow) regionRow.hidden = !p.needsRegion;
+  // The custom server's address, in the same seat the translation pane gives
+  // its sibling. The draft in the field survives repaints (same guard the
+  // region field uses: never yank what the user is typing).
+  const urlRow = $("ttsBaseUrlRow");
+  if (urlRow) {
+    urlRow.hidden = !p.custom;
+    const urlInp = $("ttsBaseUrl");
+    if (p.custom && urlInp && document.activeElement !== urlInp && !urlInp.value) {
+      chrome.storage.sync.get({ ttsBaseUrl: "" }, (got) => {
+        if (document.activeElement !== urlInp && !urlInp.value) {
+          urlInp.value = (got && got.ttsBaseUrl) || "";
+        }
+      });
+    }
+  }
   chrome.storage.local.get({ ttsKeys: {} }, (got) => {
     const key = ((got && got.ttsKeys) || {})[p.id] || "";
     ttsStored[p.id] = !!key;
@@ -1172,6 +1194,31 @@ function showTtsVoiceMsg(text, kind) {
 function paintTtsVoices(p) {
   const sel = $("ttsVoiceSel");
   sel.textContent = "";
+  // A custom server rarely publishes a voice list, so the menu gives way to a
+  // typed name — the user's word is the authority there (ttsVoiceOwned says
+  // the same). The select never paints for it, and everything below that
+  // dresses the select is skipped.
+  const typedInp = $("ttsVoiceInput");
+  if (typedInp) typedInp.hidden = !p.custom;
+  sel.hidden = !!p.custom;
+  if (p.custom) {
+    if (typedInp && document.activeElement !== typedInp && !typedInp.value) {
+      typedInp.value = state.ttsVoice || "";
+    }
+    showTtsVoiceMsg("", null);
+    const preview = $("ttsPreview");
+    if (preview) preview.disabled = false;
+    const row = $("ttsFetchRow");
+    if (row) row.hidden = true;
+    const keyField = $("ttsKey");
+    if (keyField) {
+      const field = keyField.closest(".ofield");
+      if (field) field.hidden = false;
+    }
+    const testBtn = $("ttsTestBtn");
+    if (testBtn) testBtn.hidden = false;
+    return;
+  }
   const choices = p.localVoices
     ? localVoicesFor(state.targetLang) : ttsVoiceChoices(p);
   // An empty list for the browser's own voices is almost never the truth. It
@@ -1331,6 +1378,12 @@ function persistTts(p, typedKey) {
 // one this provider will honour, it stays. Only a stored voice this provider
 // would not accept is replaced.
 function voiceToSave(p) {
+  // The typed name IS the choice for a custom server — there is no menu to
+  // disagree with it.
+  if (p && p.custom) {
+    const inp = $("ttsVoiceInput");
+    return inp ? inp.value.trim() : (state.ttsVoice || "");
+  }
   const sel = $("ttsVoiceSel");
   const stored = state.ttsVoice || "";
   const offered = Array.prototype.some.call(sel.options, (o) => o.value === stored);
@@ -1384,6 +1437,14 @@ function ttsLock() {
         return res("noRegion");
       }
       if (p.keyless) return res("");
+      // The custom server unlocks on its ADDRESS: an empty key is a valid
+      // configuration there (no Authorization header), so the key check below
+      // must never be the thing that keeps the switch locked.
+      if (p.custom) {
+        return chrome.storage.sync.get({ ttsBaseUrl: "" }, (g2) => {
+          res(P.parseCustomBase((g2 && g2.ttsBaseUrl) || "") ? "" : "noUrl");
+        });
+      }
       chrome.storage.local.get({ ttsKeys: {} }, (got) => {
         res(((got && got.ttsKeys) || {})[p.id] ? "" : "noKey");
       });
@@ -1393,6 +1454,7 @@ function ttsLock() {
 
 const TTS_LOCK_KEYS = {
   noKey: ["optNeedKey", "还没填 Key，这个服务商暂时用不了。"],
+  noUrl: ["optTtsNeedUrl", "还没填接口地址，这个服务商暂时用不了。"],
   noRegion: ["ttsErrNoRegion", "先填你 Azure Key 所在的服务区域（如 eastus）再测通。"],
   noSynth: ["ttsNoSynth", "这台电脑没有可用的朗读音色。"]
 };
@@ -1435,7 +1497,9 @@ function paintTtsUse() {
 function paintTtsModel(p) {
   const row = $("ttsModelRow");
   if (!row) return;
-  const has = !!(p && p.models && p.models.length);
+  // The custom entry documents no models but its servers still read the
+  // field, so it gets the free entry (defaulting to the OpenAI-compat "tts-1").
+  const has = !!(p && ((p.models && p.models.length) || p.custom));
   row.hidden = !has;
   if (!has) return;
   const sel = $("ttsModelSel"), inp = $("ttsModelInput");
@@ -1481,6 +1545,15 @@ function initReadaloud() {
   // Loudness sliders. Live-written on input (the popup's sliders set the
   // precedent): the spoken line follows ttsVolume while it sounds, and the
   // duck depth rides the next duck message.
+  const complete = $("ttsComplete");
+  if (complete) {
+    chrome.storage.sync.get({ ttsComplete: false }, (got) => {
+      complete.checked = !!(got && got.ttsComplete);
+    });
+    complete.addEventListener("change", () => {
+      chrome.storage.sync.set({ ttsComplete: complete.checked });
+    });
+  }
   for (const [id, defV] of [["ttsVolume", 100], ["ttsDuckPct", 25]]) {
     const r = $(id);
     if (!r) continue;
@@ -1810,7 +1883,16 @@ function initReadaloud() {
     const p = ttsProvider();
     if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
     const typed = $("ttsKey").value.trim();
-    if (!typed && !ttsStored[p.id]) { showTtsMsg(errText("noKey"), "err"); return; }
+    // An empty key is a valid custom configuration (no Authorization header)
+    // — the same bargain the translation pane's custom entry strikes.
+    if (!typed && !ttsStored[p.id] && !p.custom) { showTtsMsg(errText("noKey"), "err"); return; }
+    // The address is read synchronously: permissions.request() below must be
+    // reached inside the click gesture, so nothing may await before it.
+    let customBase = null;
+    if (p.custom) {
+      customBase = P.parseCustomBase($("ttsBaseUrl").value);
+      if (!customBase) { showTtsMsg(errText("badBaseUrl"), "err"); return; }
+    }
     const btn = $("ttsTestBtn");
     const label = btn.textContent;
     btn.disabled = true;
@@ -1818,10 +1900,18 @@ function initReadaloud() {
     const done = () => { btn.disabled = false; btn.textContent = label; };
     showTtsMsg("", null);
     try {
-      // First statement inside the gesture — see the header comment.
-      chrome.permissions.request({ origins: [p.origin + "/*"] }, (granted) => {
-        if (chrome.runtime.lastError || !granted) { done(); showTtsMsg(errText("noPerm"), "err"); return; }
-        persistTts(p, typed)
+      // First statement inside the gesture — see the header comment. A custom
+      // origin may be unrequestable by design (a tunnel domain the manifest
+      // cannot name); refusal there downgrades to "let CORS decide", exactly
+      // as the translation pane's custom flow does.
+      const askOrigins = customBase ? [customBase.origin + "/*"] : [p.origin + "/*"];
+      chrome.permissions.request({ origins: askOrigins }, (granted) => {
+        if ((chrome.runtime.lastError || !granted) && !p.custom) { done(); showTtsMsg(errText("noPerm"), "err"); return; }
+        const writeUrl = customBase
+          ? new Promise((r) => chrome.storage.sync.set(
+              { ttsBaseUrl: $("ttsBaseUrl").value.trim() }, r))
+          : Promise.resolve();
+        writeUrl.then(() => persistTts(p, typed))
           // Named here too. persistTts resolves when the WRITE lands; the
           // worker's cfg is refreshed by a storage.onChanged listener, which
           // is a separate async path — so "save, then test" could still be
@@ -1831,7 +1921,8 @@ function initReadaloud() {
           // voiceOwned then fails and the probe quietly plays the new
           // family's default instead of the one on the menu.
           .then(() => sendToBackground({ type: "ttsTest", provider: p.id,
-            targetLang: state.targetLang, voice: $("ttsVoiceSel").value }))
+            targetLang: state.targetLang,
+            voice: p.custom ? voiceToSave(p) : $("ttsVoiceSel").value }))
           .then((resp) => {
             if (resp && resp.ok) {
               const kb = Math.max(1, Math.round((resp.bytes || 0) / 1024));
@@ -1884,6 +1975,11 @@ function initCrossPageSync() {
         const v = !!c.ttsEnabled.newValue;
         if (en && en.checked !== v) en.checked = v;
       }
+      if (c.ttsComplete) {
+        const cm = $("ttsComplete");
+        const v = !!c.ttsComplete.newValue;
+        if (cm && cm.checked !== v) cm.checked = v;
+      }
       for (const id of ["ttsVolume", "ttsDuckPct"]) {
         if (!c[id]) continue;
         const r = $(id);
@@ -1896,6 +1992,15 @@ function initCrossPageSync() {
           const label = $(id + "V");
           if (label) label.textContent = v + "%";
         }
+      }
+      if (c.ttsBaseUrl) {
+        const urlInp = $("ttsBaseUrl");
+        const v = String(c.ttsBaseUrl.newValue || "");
+        if (urlInp && urlInp.value !== v && document.activeElement !== urlInp) {
+          urlInp.value = v;
+        }
+        paintTtsUse();               // the address is what unlocks custom
+        ttsKeysRefresh();            // …and what earns its tick on the left
       }
       if (c.ttsProvider || c.ttsVoice) {
         if (c.ttsProvider) state.ttsProvider = String(c.ttsProvider.newValue || "");

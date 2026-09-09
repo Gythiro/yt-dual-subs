@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "Từ đây dùng $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "$N$ câu trong video này · bỏ qua $M$ ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "bản dịch chưa kịp"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Sẽ gửi toàn bộ phụ đề tới $PROVIDER$, chia $PARTS$ phần, dùng hạn mức của bạn.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Đang tóm tắt… phần $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "$N$ phần không tóm tắt được; phần còn lại ở trên.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Phụ đề",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Điền Base URL hoặc địa chỉ endpoint đầy đủ đều được, ví dụ http://localhost:8880/v1 hoặc http://localhost:8880/v1/audio/speech (máy chủ đọc cục bộ như Kokoro hay openai-edge-tts). Khóa có thể để trống; http thường chỉ dùng được với địa chỉ loopback."
+  },
+  "optTtsNeedUrl": {
+    "message": "Chưa điền địa chỉ endpoint — phải thêm vào thì mới dùng được nhà cung cấp này."
+  },
+  "ttsSkipRefused": {
+    "message": "nhà cung cấp đã từ chối các yêu cầu đó"
+  },
+  "statusTrackRetry": {
+    "message": "Chưa nhận được luồng phụ đề — đang tự động thử lại. Vội thì tải lại trang để thử ngay."
+  },
+  "ttsCompleteLabel": {
+    "message": "Đọc trọn từng câu, không cắt ngang (đoạn dày lời thì hình sẽ chậm lại)"
+  },
+  "ttsCompleteHint": {
+    "message": "Ở tốc độ cao, câu dài hay bị câu sau cắt mất phần đuôi. Bật lên thì hình sẽ chậm đúng mức câu cần (không thấp hơn một phần tư tốc độ bạn chọn) rồi đuổi kịp ở chỗ trống."
   }
 }

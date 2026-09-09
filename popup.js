@@ -27,6 +27,7 @@ const DEFAULTS = {
   byoProvider: "",             // providers.js id
   byoModel: "",                // empty = the provider's default model
   byoBaseUrl: "",              // custom provider only (https, validated)
+  ttsBaseUrl: "",              // custom read-aloud endpoint (its own key: D105)
   updateNotes: true,           // open release notes page after feature updates
   // Steady-cruise backdoor keys (no UI here or anywhere yet): content.js
   // sizes read-aloud with them in dense stretches; listed to keep the
@@ -412,6 +413,17 @@ async function paintEngineStatus() {
   const r = await sendToTab(tab.id, { type: "engineStatus" });
   if (!r || !r.ok) return;                  // not a YouTube video page
 
+  // The caption track itself is missing and the recovery loop is on it. This
+  // outranks every note below: nothing about engines or languages is true of
+  // a video whose track never arrived.
+  if (r.trackWait) {
+    el.textContent = t("statusTrackRetry",
+      "字幕轨没拿到，正在自动重试；急的话刷新页面立即重来。");
+    el.classList.add("warn");
+    el.hidden = false;
+    return;
+  }
+
   if (r.same) {
     // The track already speaks the target language, so the overlay renders a
     // single line. Shown in EVERY engine mode (it answers "why is there only
@@ -556,6 +568,11 @@ function skipWhyText(code) {
       code === "neverBegan" || code === "nosynth") {
     return t("ttsSkipSilent", "没出声");
   }
+  // Everything else is a provider's own refusal code (429, quota, auth…).
+  // These used to map to the empty string, so the reader saw a bare
+  // "skipped 40" with nothing to act on — reported in exactly those words
+  // ("明明跳过了很多 它却不显示", 2026-08-31).
+  if (code) return t("ttsSkipRefused", "服务商拒绝了请求");
   return "";
 }
 
@@ -582,6 +599,9 @@ function ttsUsable(p, keys, region) {
   // Keyless means the browser speaks it, which is only true where the browser
   // actually can: no speechSynthesis, no offer.
   if (p.localVoices && !(typeof speechSynthesis !== "undefined")) return false;
+  // The custom server is configured by its ADDRESS; an empty key is a valid
+  // setup there (no Authorization header) — mirrors resolveTts.
+  if (p.custom) return !!String(state.ttsBaseUrl || "").trim();
   if (!p.keyless && !(keys || {})[p.id]) return false;
   if (p.needsRegion && !TTS_REGION_OK.test(String(region || "").trim().toLowerCase())) {
     return false;

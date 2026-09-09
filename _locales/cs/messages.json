@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "Od teď: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "V tomto videu $N$ vět · $M$ přeskočeno ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "překlad nestihl dorazit"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Tím se celá stopa titulků pošle službě $PROVIDER$ (částí: $PARTS$), na váš vlastní limit.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Shrnuji… část $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "Nepodařilo se shrnout částí: $N$; výše je zbytek.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Titulky",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Funguje základní URL i úplný endpoint, např. http://localhost:8880/v1 nebo http://localhost:8880/v1/audio/speech (místní hlasové servery jako Kokoro nebo openai-edge-tts). Klíč může zůstat prázdný; prosté http funguje jen pro adresy zpětné smyčky."
+  },
+  "optTtsNeedUrl": {
+    "message": "Zatím žádná adresa endpointu — tohoto poskytovatele nelze používat, dokud ji nepřidáte."
+  },
+  "ttsSkipRefused": {
+    "message": "poskytovatel tyto požadavky odmítl"
+  },
+  "statusTrackRetry": {
+    "message": "Stopa titulků nedorazila — zkouší se to automaticky znovu. Spěcháte? Obnovte stránku a zkuste to hned."
+  },
+  "ttsCompleteLabel": {
+    "message": "Dočíst každý řádek do konce, nikdy neuseknout (v hustých pasážích se obraz zpomalí)"
+  },
+  "ttsCompleteHint": {
+    "message": "Při vyšší rychlosti dlouhé řádky často přijdou o konec. Se zapnutou volbou se obraz zpomalí přesně o tolik, kolik řádek potřebuje — nikdy pod čtvrtinu zvolené rychlosti — a v mezerách to dožene."
   }
 }

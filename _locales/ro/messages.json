@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "De acum: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "Propoziții: $N$ în acest videoclip · omise: $M$ ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "traducerea nu a sosit la timp"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Aceasta va trimite întreaga pistă de subtitrări către $PROVIDER$ (părți: $PARTS$), pe cota ta.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Se rezumă… partea $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "Eșec la $N$ parte/părți; restul este mai sus.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Subtitrări",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Merge atât un URL de bază, cât și un endpoint complet, de ex. http://localhost:8880/v1 sau http://localhost:8880/v1/audio/speech (servere vocale locale precum Kokoro sau openai-edge-tts). Cheia poate rămâne goală; http simplu funcționează doar pentru adrese de loopback."
+  },
+  "optTtsNeedUrl": {
+    "message": "Încă nu există adresa endpointului — acest furnizor nu poate fi folosit până nu adaugi una."
+  },
+  "ttsSkipRefused": {
+    "message": "furnizorul a refuzat acele cereri"
+  },
+  "statusTrackRetry": {
+    "message": "Pista de subtitrări nu a sosit — se reîncearcă automat. Grăbit? Reîncarcă pagina ca să încerci imediat."
+  },
+  "ttsCompleteLabel": {
+    "message": "Citește fiecare rând până la capăt, fără tăieri (în pasajele dense imaginea încetinește)"
+  },
+  "ttsCompleteHint": {
+    "message": "La viteze mari, rândurile lungi își pierd adesea finalul. Cu opțiunea pornită, imaginea încetinește atât cât are nevoie rândul — niciodată sub un sfert din viteza aleasă — și recuperează în pauze."
   }
 }

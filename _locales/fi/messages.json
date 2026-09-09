@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "Tästä eteenpäin: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "Tässä videossa $N$ lausetta · $M$ ohitettu ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "käännös ei ehtinyt"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Tämä lähettää koko tekstitysraidan palvelulle $PROVIDER$, $PARTS$ osassa, omalla kiintiölläsi.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Tiivistetään… osa $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "$N$ osaa ei voitu tiivistää; loput ovat yllä.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Tekstitykset",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Sekä perus-URL että täysi päätepiste käyvät, esim. http://localhost:8880/v1 tai http://localhost:8880/v1/audio/speech (paikalliset puhepalvelimet kuten Kokoro tai openai-edge-tts). Avaimen voi jättää tyhjäksi; pelkkä http toimii vain loopback-osoitteille."
+  },
+  "optTtsNeedUrl": {
+    "message": "Päätepisteen osoite puuttuu — tätä palveluntarjoajaa ei voi käyttää ennen kuin lisäät sen."
+  },
+  "ttsSkipRefused": {
+    "message": "palveluntarjoaja hylkäsi nämä pyynnöt"
+  },
+  "statusTrackRetry": {
+    "message": "Tekstitysraita ei saapunut — yritetään automaattisesti uudelleen. Kiire? Päivitä sivu ja yritä heti."
+  },
+  "ttsCompleteLabel": {
+    "message": "Lue jokainen rivi loppuun asti, älä katkaise (tiheissä kohdissa kuva hidastuu)"
+  },
+  "ttsCompleteHint": {
+    "message": "Suurilla nopeuksilla pitkät rivit menettävät usein loppunsa. Kun tämä on päällä, kuva hidastuu juuri sen verran kuin rivi vaatii — ei koskaan alle neljäsosaan valitsemastasi nopeudesta — ja kirii kiinni tauoissa."
   }
 }

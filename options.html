@@ -324,6 +324,19 @@
         <label for="ttsProviderSel" data-i18n="byoProviderLabel">服务商</label>
         <select id="ttsProviderSel"></select>
       </div>
+      <!-- custom-speech only: the server's address, its own key on purpose
+           (ttsBaseUrl — never byoBaseUrl, see the D105 scar). Same labels as
+           the translation pane's custom row: they are one idea. -->
+      <div class="ofield" id="ttsBaseUrlRow" hidden>
+        <label for="ttsBaseUrl" data-i18n="byoBaseLabel">接口地址</label>
+        <input type="url" id="ttsBaseUrl" spellcheck="false" autocomplete="off"
+               placeholder="http://localhost:8880/v1" />
+        <p class="ohint" data-i18n="optTtsBaseHint">
+          填 Base URL 或完整接口地址都行，例如 http://localhost:8880/v1
+          或 http://localhost:8880/v1/audio/speech（Kokoro、openai-edge-tts
+          这类本机朗读服务）。Key 可以留空；http 只有本机回环地址能用。
+        </p>
+      </div>
       <div class="ofield">
         <div class="ofield-head">
           <label for="ttsKey" data-i18n="byoKeyLabel">API Key</label>
@@ -372,6 +385,8 @@
              not save: you can listen your way down the list first. -->
         <div class="orow">
           <select id="ttsVoiceSel"></select>
+          <input type="text" id="ttsVoiceInput" hidden spellcheck="false"
+                 autocomplete="off" placeholder="af_bella" />
           <button type="button" class="obtn ghost" id="ttsPreview"
                   data-i18n="ttsPreview">试听</button>
         </div>
@@ -420,6 +435,13 @@
             <b id="ttsDuckPctV">25%</b></label>
           <input type="range" id="ttsDuckPct" min="0" max="100" step="5" />
         </div>
+        <!-- Completeness over speed: the ONE mechanism that survives the
+             physics at 2x (设计定案 D114). Off = today's behaviour exactly. -->
+        <div class="orow">
+          <label class="ochk"><input type="checkbox" id="ttsComplete" />
+            <span data-i18n="ttsCompleteLabel">每句读完不截断（密集处画面会更慢）</span></label>
+        </div>
+        <p class="ohint" data-i18n="ttsCompleteHint">开倍速时长句常被下一句顶掉结尾。打开后画面会按需要放慢到读完为止（最低不低于你所选倍速的四分之一），空隙处再追回来。</p>
       </div>
       <p class="ohint" data-i18n="ttsPrivacyNote">用浏览器自带的音色时，什么都不会发出去——是你这台电脑自己在念。用云服务商时，要朗读的文本只发给你选择的那一家，Key 只存在本机。</p>
     </section>

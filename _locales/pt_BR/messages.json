@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "A partir de agora: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "$N$ frase(s) neste vídeo · $M$ ignorada(s) ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "a tradução não chegou a tempo"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "Isto vai enviar a trilha de legendas inteira para $PROVIDER$, em $PARTS$ parte(s), usando a sua cota.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Resumindo… parte $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "Falha em $N$ parte(s); o resto está acima.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Legendas",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Tanto uma URL base quanto um endpoint completo funcionam, por ex. http://localhost:8880/v1 ou http://localhost:8880/v1/audio/speech (servidores de voz locais como Kokoro ou openai-edge-tts). A chave pode ficar vazia; http simples só funciona em endereços de loopback."
+  },
+  "optTtsNeedUrl": {
+    "message": "Ainda não há endereço de endpoint — este provedor não pode ser usado até você adicionar um."
+  },
+  "ttsSkipRefused": {
+    "message": "o provedor recusou essas solicitações"
+  },
+  "statusTrackRetry": {
+    "message": "A trilha de legendas não chegou — tentando de novo automaticamente. Com pressa? Recarregue a página para tentar agora."
+  },
+  "ttsCompleteLabel": {
+    "message": "Ler cada linha até o fim, sem cortar (a imagem desacelera nas partes densas)"
+  },
+  "ttsCompleteHint": {
+    "message": "Em velocidades altas, linhas longas costumam perder o final. Com isso ativo, a imagem desacelera o quanto a linha precisar — nunca abaixo de um quarto da velocidade escolhida — e recupera nas pausas."
   }
 }

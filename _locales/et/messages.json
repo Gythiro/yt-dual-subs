@@ -506,7 +506,9 @@
   "popupModelSwitched": {
     "message": "Edaspidi: $MODEL$",
     "placeholders": {
-      "model": { "content": "$1" }
+      "model": {
+        "content": "$1"
+      }
     }
   },
   "popupModelNone": {
@@ -771,7 +773,17 @@
   },
   "ttsStatusCountsWhy": {
     "message": "Selles videos $N$ lauset · $M$ vahele jäetud ($W$)",
-    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
   },
   "ttsSkipLate": {
     "message": "tõlge ei jõudnud õigeks ajaks kohale"
@@ -932,17 +944,35 @@
   "sumConfirm": {
     "message": "See saadab kogu subtiitririda teenusele $PROVIDER$, $PARTS$ osas, sinu kvoodi arvelt.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
-    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
   },
   "sumWorking": {
     "message": "Teen kokkuvõtet… osa $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
-    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
   },
   "sumFailedPart": {
     "message": "$N$ osa ei õnnestunud kokku võtta; ülejäänu on üleval.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
-    "placeholders": {"n": {"content": "$1"}}
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "menuSubtitles": {
     "message": "Subtiitrid",
@@ -960,5 +990,23 @@
         "example": "28"
       }
     }
+  },
+  "optTtsBaseHint": {
+    "message": "Sobib nii baas-URL kui ka täielik otspunkt, nt http://localhost:8880/v1 või http://localhost:8880/v1/audio/speech (kohalikud kõneserverid nagu Kokoro või openai-edge-tts). Võtme võib tühjaks jätta; tavaline http töötab ainult loopback-aadressidel."
+  },
+  "optTtsNeedUrl": {
+    "message": "Otspunkti aadress puudub — seda teenusepakkujat ei saa kasutada enne, kui selle lisad."
+  },
+  "ttsSkipRefused": {
+    "message": "teenusepakkuja lükkas need päringud tagasi"
+  },
+  "statusTrackRetry": {
+    "message": "Subtiitririba ei saabunud — proovitakse automaatselt uuesti. Kiire? Värskenda lehte, et kohe uuesti proovida."
+  },
+  "ttsCompleteLabel": {
+    "message": "Loe iga rida lõpuni, ära katkesta (tihedates kohtades muutub pilt aeglasemaks)"
+  },
+  "ttsCompleteHint": {
+    "message": "Suurel kiirusel kaotavad pikad read tihti lõpu. Kui see on sees, aeglustub pilt täpselt nii palju, kui rida vajab — mitte alla veerandi valitud kiirusest — ja jõuab vahedes järele."
   }
 }

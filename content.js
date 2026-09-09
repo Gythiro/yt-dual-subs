@@ -43,6 +43,11 @@
     ttsCruise: true,
     ttsCruiseRate: 1.25,
     ttsCruiseVideo: 0.85,
+    // Read every line to its end, letting the picture sink as deep as the
+    // line needs (floored at 25% of the user's own rate) instead of holding
+    // the 0.76 floor and cutting the tail. Off by default: it trades speed
+    // for completeness, and that is the listener's call (D114).
+    ttsComplete: false,
     engine: "auto",              // "auto" | "tlang" | "gtx" | "byo" (source of
                                  // truth since 3.4; "byo" = own key, since 3.6)
     backend: "tlang",            // legacy pre-3.4 key ("tlang" | "gtx"); kept as a
@@ -247,7 +252,8 @@
   // bookkeeping
   let currentVideoId = videoIdFromLocation();
   let nocuesFallback = false;   // true once we've committed to scrape mode
-  let blankRecoveries = 0;      // bounded re-asks when the overlay stays empty
+  let blankRecoveries = 0;      // paced re-asks when the overlay stays empty
+  let blankNextAt = 0;          // earliest next recovery (the pacing half)
   let rearmedForVideo = false;  // CC already force-toggled once for this video
   const MAX_BLANK_RECOVERIES = 3;
   let configNonce = 0;          // monotonic; echoed by inject.js to reject stale replies
@@ -365,6 +371,9 @@
     applyStateToDom();
     if (overlay) styleOverlay();   // position/fonts/colors/bg/stroke/sizes apply live
     if ("enabled" in changes) syncCaptions();   // master switch flipped from popup
+    // …and switching ON re-arms the still-blank watch, which stops re-arming
+    // itself while the extension is off (armBlankWatch checks before looping).
+    if ("enabled" in changes && settings.enabled) armBlankWatch();
     // The in-player menu shows these same keys. Flipped from the popup or
     // another tab while it is open, its ticks went stale and the next press
     // acted on what the screen showed — the opposite of what was wanted. And
@@ -1897,6 +1906,9 @@
   // (inject.js), so 1.4x speech inside a 0.76x picture fits 1.84x of speech
   // into one cue with no debt at all. Only past THAT does drift start.
   const TTS_VIDEO_FLOOR = 0.76;
+  // "Read everything" mode's hard floor: the picture may sink to a quarter of
+  // the user's own rate for a line that needs it, never further (D114).
+  const TTS_COMPLETE_FLOOR = 0.25;
   const TTS_FIT_CEILING = TTS_RATE_MAX / TTS_VIDEO_FLOOR;
   let ttsDebtMs = 0;
   // Every line goes on air a little after its cue: the cue loop samples every
@@ -2536,7 +2548,18 @@
       // real speaking time and costs no drift, and only what is STILL missing
       // after that is borrowed. Skipping the slowdown here and borrowing the
       // whole shortfall would owe far more than the line actually needed.
-      fit = vRate * TTS_VIDEO_FLOOR;
+      // With "read everything" on, the floor is the line's own need — the
+      // picture sinks exactly as deep as speech at the ceiling requires, and
+      // no deeper — hard-floored at a quarter of the user's rate so one
+      // pathological line cannot park the video (debt absorbs past that).
+      // Measured 2026-08-31: at 2x the fixed floor cuts the tail of nearly
+      // every dense line (need median 3.2 vs 1.84 absorbed); this is the one
+      // mechanism that buys completeness at any speed, chosen over a deeper
+      // fixed floor (2.58 still loses to the median) by both outside reviews.
+      fit = settings.ttsComplete
+        ? Math.max(vRate * TTS_COMPLETE_FLOOR,
+            Math.min((TTS_RATE_MAX * ownMs) / durMs, vRate * TTS_VIDEO_FLOOR))
+        : vRate * TTS_VIDEO_FLOOR;
       // What the cue is worth in wall time once the picture is at that floor,
       // against what the line needs at the comfortable ceiling.
       const wallHave = ownMs / fit;
@@ -2980,7 +3003,10 @@
     // cannot correct.
     rate = 1; fit = undefined;
     if (ownNeed > TTS_FIT_CEILING && ownMs) {
-      fit = vRate * TTS_VIDEO_FLOOR;                // same free tier first
+      fit = settings.ttsComplete                    // same complete-mode floor
+        ? Math.max(vRate * TTS_COMPLETE_FLOOR,      // as the audio path above
+            Math.min((TTS_RATE_MAX * ownMs) / est, vRate * TTS_VIDEO_FLOOR))
+        : vRate * TTS_VIDEO_FLOOR;                  // same free tier first
       const wallHave = ownMs / fit;
       const wallWant = est / TTS_RATE_MAX;
       const borrow = Math.min(Math.max(0, wallWant - wallHave),
@@ -3002,8 +3028,13 @@
     // mid-line, note how much of it the estimate says was thrown away.
     if (localUtter && localStartedAt) {
       const rem = localEstMs - (Date.now() - localStartedAt);
-      if (isFinite(rem) && rem > 150)
+      if (isFinite(rem) && rem > 150) {
+        // Same event as the audio path's takeover cut, so the same counter:
+        // `over` used to describe only one of the two engines, and the local
+        // half's cut tails were invisible in every diagnostic read.
+        ttsOverran++;
         ttsTraceAdd({ k: "cut", by: "lcancel", i: idx, cutMs: Math.round(rem) });
+      }
     }
     ttsTraceAdd({ k: "lfit", i: idx, vt: Math.round(vv.currentTime * 1000),
       est: Math.round(est), left: Math.round(leftMs), own: Math.round(ownMs),
@@ -3185,6 +3216,10 @@
     // skip in an earlier one was final the moment its window closed.
     if (cueToGroup && cueToGroup[idx] != null && cueToGroup[idx] === ttsSkipGroup) {
       ttsSkipped = Math.max(0, ttsSkipped - ttsSkipCharged);
+      // The why-tally must follow, or reasons long since refunded keep the
+      // majority vote and the popup names a fault that healed itself. Group
+      // refunds only ever charge noText (ttsSkipGroup is set nowhere else).
+      ttsSkipWhy.noText = Math.max(0, (ttsSkipWhy.noText || 0) - ttsSkipCharged);
       ttsSkipGroup = -1;
       ttsSkipCharged = 0;
     }
@@ -3751,6 +3786,8 @@
     if (typeof data.nonce === "number" && data.nonce !== configNonce) return; // stale (nonce)
     nocuesFallback = false;
     stopFallback();                 // cue mode wins; stop scraping
+    blankRecoveries = 0;            // recovery worked (or was never needed):
+    blankNextAt = 0;                // the paced budget refills on real cues
     // The viewer's rate, before any line has asked for anything: the sampler
     // below runs on the cue tick, and the first line can be sized before the
     // first tick. (Not separately provable in the rig — the tick lands inside
@@ -3972,6 +4009,10 @@
         // this track's own 429, or the cross-video gate steering new videos
         // clear. The popup says so instead of a bare "smart sentences".
         tlangLimited: cueTlangStatus === 429 || tlangGated,
+        // The caption track is missing and the paced recovery (recoverIfBlank)
+        // is working on it. The popup says so instead of standing silent over
+        // a frozen overlay — the 2026-08-31 freeze was invisible end to end.
+        trackWait: blankRecoveries > 0 && (!cueList || !cueList.length),
         // Read-aloud, for the popup's status line: is a line sounding right
         // now, and how this video went so far (skips answer "why the gaps").
         tts: settings.ttsEnabled ? {
@@ -4710,6 +4751,7 @@
     currentVideoId = videoIdFromLocation();
     hintedThisVideo = false;    // a new video may spend one more first-run hint
     blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery
+    blankNextAt = 0;
     ttsStop(true);              // never carry a speaking line across videos
     ttsUserBase = 0;            // the next video is told afresh
     ttsAsked = 0;
@@ -4808,12 +4850,28 @@
     if (cueList && cueList.length &&
         !(overlay && overlay.classList.contains("ytds-empty"))) return;
     if (dragging) return;                             // don't fight a gesture
-    if (blankRecoveries >= MAX_BLANK_RECOVERIES) return;
+    // The budget used to be a lifetime three, twenty seconds apart — and a
+    // YouTube-side limit window outlives all three (measured 2026-08-31: three
+    // runs of eleven froze, each dead for the rest of the video with the
+    // overlay holding its last line and the status row saying nothing). So it
+    // paces instead of conceding: past the three quick shots the interval
+    // widens (blankDelayMs), and cues actually arriving refills the budget
+    // (onCues). Event-driven callers (bfcache, visibility) ride the same
+    // pacing, so a burst of triggers cannot machine-gun the player either.
+    if (Date.now() < blankNextAt) return;
     blankRecoveries++;
+    blankNextAt = Date.now() + blankDelayMs();
     nocuesFallback = false;                           // let cue mode win again
     sendConfig();                                     // arm inject with a fresh nonce
     if (!rearmCaptions()) syncCaptions();              // else CC never armed at all
     void why;                                         // kept for debugging reads
+  }
+
+  // 20s for the three quick shots, then 40/80/160/300s capped — wide enough to
+  // sit out a rate-limit window, alive enough to notice the moment it lifts.
+  function blankDelayMs() {
+    if (blankRecoveries <= MAX_BLANK_RECOVERIES) return 20000;
+    return Math.min(20000 * Math.pow(2, blankRecoveries - MAX_BLANK_RECOVERIES), 300000);
   }
 
   // The reported case never fires visibilitychange — the tab is already visible
@@ -4828,8 +4886,12 @@
     blankWatchTimer = setTimeout(() => {
       blankWatchTimer = null;
       recoverIfBlank("timeout");
-      if (blankRecoveries > 0 && blankRecoveries < MAX_BLANK_RECOVERIES) armBlankWatch();
-    }, 20000);
+      // Persistent, not only mid-recovery: a pipe that dies MID-video (a track
+      // refetch that never comes back) had no watcher at all once startup's
+      // shots were spent — the other half of the same 2026-08-31 measurement.
+      // Cheap while healthy: the guard above returns before touching anything.
+      if (!orphaned && settings.enabled) armBlankWatch();
+    }, blankDelayMs());
   }
 
   window.addEventListener("pageshow", (e) => {
@@ -4841,6 +4903,7 @@
       // stale-cue guard above used to block even that). Fire it now, and once
       // more after YouTube has had a moment to repaint on its own.
       blankRecoveries = 0;
+      blankNextAt = 0;
       onNav();
       recoverIfBlank("bfcache");
       setTimeout(() => recoverIfBlank("bfcache-late"), 1200);
