@@ -299,10 +299,17 @@
 
   // Which engine generation a fetched Google id belongs to. The id carries it,
   // so the menu can group by it instead of listing four families as one wall.
-  function ttsVoiceTier(voiceId) {
+  // The provider is optional and only matters for the one case where the id
+  // carries no tier but the voice still belongs to one: a Google family short
+  // name ("Achernar") IS a Chirp 3 HD voice — the worker builds the full id
+  // from it. Without this the collapsed names from mergeFetched land in the
+  // untiered bucket and Google's best tier is the one group with no heading.
+  function ttsVoiceTier(voiceId, p) {
     const m = /^[a-z]{2,3}-[A-Z]{2}-(Chirp3-HD|Neural2|Wavenet|Standard|Studio|Polyglot)-/
       .exec(String(voiceId || ""));
-    return m ? m[1] : "";
+    if (m) return m[1];
+    if (p && p.kind === "google-tts" && (p.voices || []).indexOf(voiceId) >= 0) return "Chirp3-HD";
+    return "";
   }
 
   // A fetched id and a built-in short name are often the SAME voice under two
@@ -313,17 +320,32 @@
   // 44% echo. Keeping the SHORT name is the deliberate half of this: the short
   // one follows the reader across all fifty languages, the full one is pinned
   // to the language it was fetched for.
+  //
+  // What the first version got wrong: it DROPPED the echo, and the language
+  // catalogue then showed only what was left. Those thirty were not noise —
+  // they are Chirp 3 HD, the best tier Google sells and the one the default
+  // (Kore) lives in, and the fetch answering with them is positive proof they
+  // work in this language. So pressing "fetch" made the thirty best voices,
+  // and the default among them, vanish from the menu until you pressed the way
+  // back. Reported on a real machine as "拉取音色后变成这样了".
+  // So: the echo is COLLAPSED onto the short name, not dropped. Same one-entry-
+  // per-voice result, same short spelling that follows the reader — but the
+  // voice stays on the menu. Confirmed names come first: they are the better
+  // tier, and the family default is among them.
   function ttsMergeFetched(p, fetched) {
     const family = (p && p.voices) || [];
     const seen = new Set();
-    const out = [];
+    const confirmed = [];
+    const fresh = [];
     for (const id of fetched || []) {
-      if (!id || seen.has(id)) continue;
-      if (family.some((b) => id === b || id.slice(-(b.length + 1)) === "-" + b)) continue;
-      seen.add(id);
-      out.push(id);
+      if (!id) continue;
+      const echoOf = family.find((b) => id === b || id.slice(-(b.length + 1)) === "-" + b);
+      const keep = echoOf || id;
+      if (seen.has(keep)) continue;
+      seen.add(keep);
+      (echoOf ? confirmed : fresh).push(keep);
     }
-    return out;
+    return confirmed.concat(fresh);
   }
 
   // Turn an id into something a person can choose between. Three shapes reach
@@ -333,8 +355,30 @@
   //   Google full — the engine generation, which is the real difference between
   //                 cmn-CN-Wavenet-A and cmn-CN-Standard-A
   // Anything else is returned untouched rather than mangled into a guess.
+  // The nine ElevenLabs ids this extension ships are that service's own
+  // long-standing defaults, and every one of them has a name people know it
+  // by. Without this the menu is nine twenty-character tokens — measured on a
+  // real machine and reported as "the voices are all garbled", which is
+  // exactly what an opaque id looks like when the row beside it says Achernar.
+  const ELEVEN_NAMES = {
+    "21m00Tcm4TlvDq8ikWAM": ["Rachel", "f"],
+    "AZnzlk1XvdvUeBnXmlld": ["Domi", "f"],
+    "EXAVITQu4vr4xnSDxMaL": ["Bella", "f"],
+    "ErXwobaYiN019PkySvjV": ["Antoni", "m"],
+    "MF3mGyEYCl7XYWbV9V6O": ["Elli", "f"],
+    "TxGEqnHWrfWFTfGW9XjX": ["Josh", "m"],
+    "VR6AewLTigWG4xSOukaG": ["Arnold", "m"],
+    "pNInz6obpgDQGcFmaJgB": ["Adam", "m"],
+    "yoZ06aMxZJJ28mfd3POQ": ["Sam", "m"]
+  };
+
   function ttsVoiceLabel(voiceId, langNativeName, genderWord) {
     const id = String(voiceId || "");
+    const el = ELEVEN_NAMES[id];
+    if (el) {
+      const g = genderWord ? genderWord(el[1]) : "";
+      return g ? el[0] + " · " + g : el[0];
+    }
     // Azure numbers its revisions inside the name — Xiaoxiao2, JennyV2 — so the
     // name part has to admit digits here exactly as the shape check does, or a
     // voice that is accepted for speaking is still shown as a raw id.
@@ -375,14 +419,49 @@
   // naming a voice that is not the one speaking. Falling back to the whole set
   // when nothing matches beats an empty menu — some systems tag a voice with
   // the base language only.
-  function ttsLocalVoiceNames(synth, lang) {
-    if (!synth) return [];
+  // Apple ships two packs of machine voices with every Mac — Eloquence (the
+  // eight names below, each cloned per language) and the Effects novelties.
+  // Measured on a real profile: 111 of 199 voices were these. They are
+  // accessibility voices, not junk, so they stay choosable — but at the
+  // BOTTOM, under their own heading (the maintainer's call, 2026-08-24),
+  // burying the usable ones. Matched by the base name before the bracket;
+  // macOS localises voice names on non-English systems, in which case the
+  // match simply misses and the voice stays in the main list — degraded, not
+  // wrong. Windows has neither pack, so the group never appears there.
+  const MAC_MACHINE_VOICES = new Set([
+    // Eloquence
+    "Eddy", "Flo", "Grandma", "Grandpa", "Reed", "Rocko", "Sandy", "Shelley",
+    // Effects
+    "Albert", "Bad News", "Bahh", "Bells", "Boing", "Bubbles", "Cellos",
+    "Good News", "Jester", "Organ", "Superstar", "Trinoids", "Whisper",
+    "Wobble", "Zarvox"
+  ]);
+  function ttsLocalVoiceIsMachine(name) {
+    const base = String(name || "").split(" (")[0];
+    return MAC_MACHINE_VOICES.has(base);
+  }
+
+  // The one list both surfaces render, split so both can head the machine
+  // voices the same way. localVoiceNames stays the flat answer — ordinary
+  // voices first, machine voices last — so every existing caller gets the
+  // ordering for free.
+  function ttsLocalVoiceSplit(synth, lang) {
+    if (!synth) return { normal: [], machine: [] };
     let all = [];
-    try { all = synth.getVoices() || []; } catch (_e) { return []; }
+    try { all = synth.getVoices() || []; } catch (_e) { return { normal: [], machine: [] }; }
     const base = String(lang || "").split("-")[0].toLowerCase();
     const hit = all.filter(
       (v) => String(v.lang || "").toLowerCase().split("-")[0] === base);
-    return (hit.length ? hit : all).map((v) => v.name);
+    const names = (hit.length ? hit : all).map((v) => v.name);
+    return {
+      normal: names.filter((n) => !ttsLocalVoiceIsMachine(n)),
+      machine: names.filter(ttsLocalVoiceIsMachine)
+    };
+  }
+
+  function ttsLocalVoiceNames(synth, lang) {
+    const s = ttsLocalVoiceSplit(synth, lang);
+    return s.normal.concat(s.machine);
   }
 
   // A fetched voice is not in the built-in table, so it is recognised by shape:
@@ -699,6 +778,7 @@
       get: (id) => TTS_BY_ID[id] || null,
       voiceLabel: ttsVoiceLabel,
       localVoiceNames: ttsLocalVoiceNames,
+      localVoiceSplit: ttsLocalVoiceSplit,
       voiceShapeOk: ttsVoiceShapeOk,
       voiceOwned: ttsVoiceOwned,
       voiceTier: ttsVoiceTier,

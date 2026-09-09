@@ -816,5 +816,17 @@
   },
   "ttsErrNoAudio": {
     "message": "L'audio non è arrivato — riprova o scegli un'altra voce."
+  },
+  "ttsRobotVoices": {
+    "message": "Robotico",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Lasciami selezionare e copiare il testo dei sottotitoli",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSubtitles": {
+    "message": "Sottotitoli",
+    "description": "Row label in the small in-player menu. One word."
   }
 }

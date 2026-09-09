@@ -32,6 +32,7 @@ const DEFAULTS = {
   rowGap: 4,
   position: "bottom",          // "top" | "center" | "bottom"
   posMode: "preset",           // "preset" | "custom"
+  selectText: false,           // lines take the pointer for select-and-copy
   posXpct: 50,
   posYpct: 90,
   // original line
@@ -549,6 +550,11 @@ let ttsPaintGen = 0;
 // that is offering "configure…" contradicts itself, and the card is the one
 // holding the evidence (key, region, registry).
 let ttsCardReady = false;
+// Retry state for the local voice list, module-level so a repaint triggered by
+// the retry itself does not start a second chain.
+let localVoiceRetry = 0;
+let localVoiceTimer = 0;
+
 async function paintTtsCard() {
   let ready = false;
   let current = null;                // the provider actually in use
@@ -646,9 +652,16 @@ function paintTtsVoicePick(usable, current, storedVoice) {
   // The browser's own engine has no list of its own: its voices are whatever
   // this machine has, narrowed to the language being read. Everything else
   // ships its family with it.
-  const voicesOf = (p) => (p.localVoices
-    ? self.YTDS_PROVIDERS.tts.localVoiceNames(window.speechSynthesis, state.targetLang)
-    : (p.voices || []));
+  // …and remember when the local family came back empty, so the painter can
+  // heal itself below instead of trusting one poll at open time.
+  let localCameBackEmpty = false;
+  const voicesOf = (p) => {
+    if (!p.localVoices) return p.voices || [];
+    const got = self.YTDS_PROVIDERS.tts.localVoiceNames(
+      window.speechSynthesis, state.targetLang);
+    if (!got.length) localCameBackEmpty = true;
+    return got;
+  };
   if (usable.length > 1) {
     for (const p of usable) {
       // The local family's group can be momentarily empty — the machine has
@@ -659,7 +672,21 @@ function paintTtsVoicePick(usable, current, storedVoice) {
       // known by a Chinese name abroad, and an English reader with one key
       // configured was shown a group headed 浏览器内置（免费）.
       g.label = p.nameKey ? t(p.nameKey, p.name) : p.name;
+      // Machine voices last inside the family's group — providers.js orders
+      // the flat list that way. optgroups cannot nest, so here the heading is
+      // implicit; the single-provider path below gets the labelled group.
       for (const v of voicesOf(p)) addVoice(g, p, v);
+      sel.appendChild(g);
+    }
+  } else if (current.localVoices) {
+    const split = self.YTDS_PROVIDERS.tts.localVoiceSplit(
+      window.speechSynthesis, state.targetLang);
+    if (!split.normal.length && !split.machine.length) localCameBackEmpty = true;
+    for (const v of split.normal) addVoice(sel, current, v);
+    if (split.machine.length) {
+      const g = document.createElement("optgroup");
+      g.label = t("ttsRobotVoices", "机器音");
+      for (const v of split.machine) addVoice(g, current, v);
       sel.appendChild(g);
     }
   } else {
@@ -697,6 +724,20 @@ function paintTtsVoicePick(usable, current, storedVoice) {
   const voice = storedVoice && choices.includes(storedVoice)
     ? storedVoice : (current.defaultVoice || choices[0] || "");
   sel.value = current.id + "|" + voice;
+  // The first version of this lived in initTtsWatch as a poll at open time —
+  // seven tries over about three and a half seconds — and D67 refuted that
+  // shape on the settings page: a machine that finishes later, or a provider
+  // switched to while the table is still cold, lands after the poll gave up
+  // and announces nothing, because by then the table WAS already built. Heal
+  // the paint instead of timing the machine: whenever this card draws an
+  // empty local list, draw it again shortly. Same shape as options.js.
+  if (localCameBackEmpty && localVoiceRetry < 8) {
+    localVoiceRetry++;
+    clearTimeout(localVoiceTimer);
+    localVoiceTimer = setTimeout(paintTtsCard, 120 * localVoiceRetry);
+  } else if (!localCameBackEmpty) {
+    localVoiceRetry = 0;
+  }
 }
 
 // The settings page can pull the ground out from under this card while it is
@@ -729,6 +770,9 @@ function initTtsWatch() {
     if (synth && typeof synth.addEventListener === "function") {
       synth.addEventListener("voiceschanged", () => { paintTtsCard(); });
     }
+    // The event alone is not enough — it only comes if the table was NOT
+    // already built when we asked. That half is handled where the list is
+    // actually drawn (see the self-healing retry at the end of paintTtsVoices).
   } catch (_e) { /* an engine without the event simply paints once */ }
 }
 
@@ -1209,6 +1253,7 @@ function bindLineControls() {
 function bindUI() {
   $("enabled").checked = state.enabled;
   $("updateNotes").checked = !!state.updateNotes;
+  $("selectText").checked = !!state.selectText;
   paintLangs();
   $("backend").value = state.engine;
   $("backendGtxHint").hidden = state.engine !== "gtx";
@@ -1231,6 +1276,7 @@ function wire() {
   $("enabled").addEventListener("change", (e) => setKey("enabled", e.target.checked));
   $("diagCopy").addEventListener("click", onDiagCopy);
   $("updateNotes").addEventListener("change", (e) => setKey("updateNotes", e.target.checked));
+  $("selectText").addEventListener("change", (e) => setKey("selectText", e.target.checked));
   $("targetLang").addEventListener("change", (e) => {
     if (e.target.value === MANAGE) {
       e.target.value = state.targetLang;   // put it back before leaving
@@ -1373,10 +1419,14 @@ function wire() {
     }, 2600);
   });
 
-  // A popup can be dismissed the moment a drag ends, taking any pending timer
-  // with it. `change` fires on release for range and colour inputs, so the last
-  // value of a gesture is always written even if the debounce never fires.
-  document.querySelectorAll('input[type="range"], input[type="color"]').forEach((el) =>
+  // A popup can be dismissed the moment a gesture ends, taking any pending
+  // timer with it. `change` fires on release for range and colour inputs and
+  // on the click itself for checkboxes — for all of them it IS the end of the
+  // gesture, so flush there and the last value is written even if the
+  // debounce never fires. Checkboxes were missing from this list: tick one,
+  // close the popup inside 180ms, and the tick silently never happened.
+  document.querySelectorAll(
+    'input[type="range"], input[type="color"], input[type="checkbox"]').forEach((el) =>
     el.addEventListener("change", () => flushWrites(1)));
 
   // row gap

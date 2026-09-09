@@ -51,6 +51,13 @@
     rowGap: 4,                   // px between the two lines
     position: "bottom",          // preset anchor: "top" | "center" | "bottom"
     posMode: "preset",           // "preset" | "custom" (custom set by dragging)
+    // Let the pointer reach the two subtitle lines so their text can be
+    // selected and copied (asked for by a reader collecting vocabulary,
+    // 2026-08-24). OFF by default and that is deliberate: the overlay sits in
+    // the click-to-pause hotspot at the bottom of the picture, and click-
+    // through is a contract every viewer relies on. Most people never copy a
+    // line; the ones who do turn this on once.
+    selectText: false,
     posXpct: 50,                 // % of player width  (overlay center x) when custom
     posYpct: 90,                 // % of player height (overlay center y) when custom
     // original line
@@ -261,6 +268,12 @@
     // Leave no dead control in the player either: this button would still
     // toggle, and would put a subtitle box back that can never translate again.
     try { if (toggleBtn) { toggleBtn.remove(); toggleBtn = null; } } catch (_e) { /* ignore */ }
+    moreEl = null;
+    try { closeMenu(); } catch (_e) { /* ignore */ }
+    try { document.removeEventListener("mousedown", onDocMouseDownForMenu, true); } catch (_e) { /* ignore */ }
+    try { document.removeEventListener("selectionchange", flushHeldLines); } catch (_e) { /* ignore */ }
+    try { window.removeEventListener("mouseup", onAnyMouseUp, true); } catch (_e) { /* ignore */ }
+    try { window.removeEventListener("click", onStrayClick, true); } catch (_e) { /* ignore */ }
     // A connected observer is not idle: it runs its callback on every mutation
     // YouTube makes to the bar, and holds this whole dead scope alive doing it.
     // Timers were being cleared here; this was not.
@@ -326,6 +339,13 @@
     applyStateToDom();
     if (overlay) styleOverlay();   // position/fonts/colors/bg/stroke/sizes apply live
     if ("enabled" in changes) syncCaptions();   // master switch flipped from popup
+    // The in-player menu shows these same keys. Flipped from the popup or
+    // another tab while it is open, its ticks went stale and the next press
+    // acted on what the screen showed — the opposite of what was wanted. And
+    // with the whole extension switched off elsewhere, a live menu was left
+    // floating over a player whose overlay had just been torn down.
+    paintMenuRows();
+    if ("enabled" in changes && !settings.enabled) closeMenu();
     // Read-aloud off, or a different voice/provider: what is queued or sounding
     // belongs to the old setting — stop it rather than letting it finish wrong.
     // targetLang belongs here too, and did not use to: it goes down the recue
@@ -371,7 +391,12 @@
     // now sit next to each other in the popup: one of them answering on the
     // next line and the other at once reads as the slower one being broken.
     // Off-air it needs no message — the next duck carries the new depth.
-    if ("ttsDuckPct" in changes && ttsAudio && !ttsAudio.paused && !ttsAudio.ended) {
+    // localUtter as well as ttsAudio: the browser's own voice is the provider
+    // everybody starts on, and it has no audio element — so on the default
+    // engine this slider did nothing at all while a line was being read, which
+    // is the only time it does anything.
+    if ("ttsDuckPct" in changes &&
+        ((ttsAudio && !ttsAudio.paused && !ttsAudio.ended) || localUtter)) {
       ttsDuck(true, ttsFit);
     }
     // Same-language/dedupe paints depend on WHICH line is visible (the single
@@ -495,6 +520,10 @@
 
     overlay.appendChild(transEl);
     overlay.appendChild(origEl);
+    for (const el of [transEl, origEl]) {
+      el.addEventListener("mousedown", onLineMouseDown);
+      el.addEventListener("contextmenu", onLineContextMenu);
+    }
     buildHandle();                  // drag grip (its listeners die with overlay)
     overlay.classList.toggle("ytds-shorts", isShorts());
     player.appendChild(overlay);
@@ -806,6 +835,7 @@
 
   function styleOverlay() {
     if (!overlay) return;
+    applySelectText();
 
     // spacing + order
     overlay.style.gap = (Number(settings.rowGap) || 0) + "px";
@@ -869,18 +899,225 @@
     scheduleLift();                // text height changed — re-check the bar gap
   }
 
+  // Writing textContent replaces the node's children, which destroys any
+  // Selection inside it — even when the string is identical. Three things
+  // write these lines while a reader could be dragging across them: the "…"
+  // placeholder 400ms in, the translation landing afterwards, and a late
+  // per-cue reply. Selecting a line while the video played therefore lost the
+  // selection twice before the words even settled. Hold the write instead;
+  // the pending text is flushed when the selection collapses. Nothing about
+  // the clock is touched — cueTick, the look-ahead and read-aloud all carry
+  // on, only these two nodes stand still.
+  let pendingOrig = null, pendingTrans = null;
+  function selectionInside(el) {
+    if (!settings.selectText || !el) return false;
+    let s = null;
+    try { s = window.getSelection(); } catch (_e) { return false; }
+    if (!s || s.isCollapsed || !s.anchorNode) return false;
+    return el.contains(s.anchorNode) || el.contains(s.focusNode);
+  }
+
   function setOriginal(text) {
     if (!ensureOverlay()) return;
-    origEl.textContent = text || "";
+    const next = text || "";
+    if (selectionInside(origEl)) { pendingOrig = next; return; }
+    pendingOrig = null;
+    origEl.textContent = next;
     updateEmptyState();
   }
 
   function setTranslation(text, forSource) {
     if (!ensureOverlay()) return;
-    transEl.textContent = text || "";
+    const next = text || "";
     if (arguments.length > 1) lastTransSource = forSource || "";
+    if (selectionInside(transEl)) { pendingTrans = next; return; }
+    pendingTrans = null;
+    transEl.textContent = next;
     updateEmptyState();
   }
+
+  // An advert, a track switch or a torn-down overlay must not be held back by
+  // a selection: the hold exists for late TRANSLATIONS, and holding the BLANK
+  // kept the previous sentence painted over an ad for as long as the viewer's
+  // selection lived — the exact bug the ad branch was written to prevent.
+  function forceBlankLines() {
+    pendingOrig = null;
+    pendingTrans = null;
+    if (!overlay) return;
+    origEl.textContent = "";
+    transEl.textContent = "";
+    lastTransSource = "";
+    updateEmptyState();
+  }
+
+  // The selection let go: catch the lines up with whatever they missed.
+  function flushHeldLines() {
+    if (!overlay) return;
+    if (pendingOrig !== null && !selectionInside(origEl)) {
+      origEl.textContent = pendingOrig; pendingOrig = null;
+    }
+    if (pendingTrans !== null && !selectionInside(transEl)) {
+      transEl.textContent = pendingTrans; pendingTrans = null;
+    }
+    updateEmptyState();
+  }
+  document.addEventListener("selectionchange", flushHeldLines);
+
+  // ---- selecting subtitle text --------------------------------------------
+  // The overlay is a CHILD of #movie_player, not a layer under it, so the
+  // moment a line accepts the pointer its events bubble straight up to the
+  // player and YouTube pauses the video on the click. mousedown is stopped
+  // (never prevented — preventing it is what starts a selection) and so is
+  // contextmenu, or right-click-copy would open YouTube's menu instead of the
+  // browser's.
+  //
+  // The stray click is the other half: press on a line, drag off it, release
+  // over the picture, and the click event fires on their nearest common
+  // ancestor — the player. One click, eaten in the capture phase, only when a
+  // press on a line started it.
+  // Two flags, two lifetimes. selectGesture lives from a press on a line to
+  // ITS OWN mouseup — and several real gestures end without any click at all
+  // (ctrl-click opening a context menu, a press dragged out of the window),
+  // which left the old single flag armed until it ate the viewer's next
+  // honest click on the player. The mouseup decides whether the ONE click
+  // that may follow it is a stray (released off the line) and arms
+  // strayClickArmed for exactly that click.
+  let selectGesture = false;
+  let strayClickArmed = false;
+  function onLineMouseDown(e) {
+    if (!settings.selectText || e.button !== 0) return;
+    selectGesture = true;
+    strayClickArmed = false;
+    e.stopPropagation();
+  }
+  function onLineContextMenu(e) {
+    if (!settings.selectText) return;
+    e.stopPropagation();
+  }
+  function onAnyMouseUp(e) {
+    if (!selectGesture) return;
+    selectGesture = false;
+    strayClickArmed = !(overlay && overlay.contains(e.target));
+  }
+  function onStrayClick(e) {
+    if (!strayClickArmed) return;
+    strayClickArmed = false;
+    e.stopPropagation();
+    e.preventDefault();
+  }
+  window.addEventListener("mouseup", onAnyMouseUp, true);
+  window.addEventListener("click", onStrayClick, true);
+
+  function applySelectText() {
+    if (!overlay) return;
+    overlay.classList.toggle("ytds-select", !!settings.selectText);
+    if (!settings.selectText) { selectGesture = false; flushHeldLines(); }
+  }
+
+  // ---- the in-player menu (behind the toggle button's arrow) ---------------
+  // Entry plan B, picked 2026-08-24: the button keeps its one job — a click
+  // still toggles the subtitles — and a small arrow in its corner pulls out a
+  // menu with the high-frequency switches, so turning read-aloud or
+  // select-and-copy on or off no longer needs the popup. Every row writes the
+  // SAME sync key the popup writes and lets storage.onChanged do the real
+  // work, so the two UIs cannot drift apart.
+  let menuEl = null;
+  let moreEl = null;
+
+  function ct(key, fb) {
+    try { return chrome.i18n.getMessage(key) || fb; } catch (_e) { return fb; }
+  }
+
+  const MENU_ROWS = [
+    { key: "enabled", label: () => ct("menuSubtitles", "字幕") },
+    { key: "ttsEnabled", label: () => ct("optNavReadaloud", "朗读") },
+    { key: "selectText", label: () => ct("selectTextLabel", "允许选中复制字幕文本") },
+    { key: "openOptions", label: () => ct("openOptions", "设置"), action: true }
+  ];
+
+  function closeMenu() {
+    if (menuEl) { try { menuEl.remove(); } catch (_e) { /* ignore */ } menuEl = null; }
+  }
+
+  function paintMenuRows() {
+    if (!menuEl) return;
+    for (const el of menuEl.querySelectorAll(".ytds-mi[data-key]")) {
+      const k = el.getAttribute("data-key");
+      if (k === "openOptions") continue;
+      el.setAttribute("aria-pressed", settings[k] ? "true" : "false");
+    }
+  }
+
+  function openMenu() {
+    if (orphaned) return;
+    closeMenu();
+    const player = getPlayer();
+    if (!player || !toggleBtn || !toggleBtn.isConnected) return;
+    menuEl = document.createElement("div");
+    menuEl.className = "ytds-menu";
+    // Presses inside the menu are the menu's business — they must neither
+    // close it (the document listener below) nor pause the player.
+    menuEl.addEventListener("mousedown", (e) => e.stopPropagation());
+    for (const row of MENU_ROWS) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "ytds-mi";
+      b.setAttribute("data-key", row.key);
+      b.textContent = row.label();
+      if (!row.action) b.setAttribute("aria-pressed", settings[row.key] ? "true" : "false");
+      b.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (orphaned) { closeMenu(); return; }
+        if (row.action) {
+          // A content script has no openOptionsPage; the worker opens it.
+          extCall(() => chrome.runtime.sendMessage({ type: "openOptions" }));
+          closeMenu();
+          return;
+        }
+        const next = !settings[row.key];
+        settings[row.key] = next;              // optimistic, like onToggleClick
+        paintMenuRows();
+        if (row.key === "enabled") { updateToggleState(); applyStateToDom(); syncCaptions(); }
+        if (row.key === "selectText") applySelectText();
+        // Read-aloud is the one key whose storage round-trip is audible: the
+        // press said off, a reply already in flight said a whole line, and
+        // onChanged only stopped things a beat later. Do locally what the
+        // listener would do — stop now, and on the way back on offer the line
+        // on screen to the engine instead of waiting for the next boundary.
+        if (row.key === "ttsEnabled") {
+          // ttsStop here survives mutation for the same reason the reply-path
+          // check does — each currently covers for the other — and is kept for
+          // the same reason: it is the half that silences audio ALREADY
+          // speaking, which no reply-side check can reach.
+          if (!next) ttsStop();
+          else if (activeCueIdx >= 0 && cueList && cueList[activeCueIdx]) {
+            const vv2 = getVideo();
+            const cue2 = cueList[activeCueIdx];
+            ttsOnCue(activeCueIdx, cue2,
+              vv2 ? Math.max(0, vv2.currentTime * 1000 - (cue2.start || 0)) : 0);
+          }
+        }
+        extCall(() => chrome.storage.sync.set({ [row.key]: next }));
+      });
+      menuEl.appendChild(b);
+    }
+    // Right-aligned over the button, above the control bar. The menu is a
+    // child of the player, so the offsets are player-relative.
+    const pr = player.getBoundingClientRect();
+    const br = toggleBtn.getBoundingClientRect();
+    menuEl.style.right = Math.max(8, Math.round(pr.right - br.right)) + "px";
+    menuEl.style.bottom = Math.max(48, Math.round(pr.bottom - br.top) + 4) + "px";
+    player.appendChild(menuEl);
+  }
+
+  function onDocMouseDownForMenu(e) {
+    if (!menuEl) return;
+    if (menuEl.contains(e.target)) return;
+    if (moreEl && moreEl.contains(e.target)) return;   // the arrow itself toggles
+    closeMenu();
+  }
+  document.addEventListener("mousedown", onDocMouseDownForMenu, true);
 
   // ---- in-player quick toggle (YouTube control bar) ------------------------
   // A small button in the player's right-controls that flips the whole
@@ -913,6 +1150,12 @@
       '<rect x="5.6" y="13" width="11" height="1.8" rx="0.9" fill="currentColor"></rect>' +
       "</svg>";
     toggleBtn.addEventListener("click", onToggleClick, true);
+    moreEl = document.createElement("span");
+    moreEl.className = "ytds-toggle-more";
+    moreEl.textContent = "▾";
+    // No listener of its own: onToggleClick runs in the CAPTURE phase on the
+    // button, so it sees the arrow's clicks first and routes them to the menu.
+    toggleBtn.appendChild(moreEl);
     rc.insertBefore(toggleBtn, rc.firstChild);   // leftmost of the right group
     updateToggleState();
     observeControls(rc);
@@ -921,6 +1164,10 @@
   function onToggleClick(e) {
     e.preventDefault();
     e.stopPropagation();
+    if (moreEl && (e.target === moreEl || moreEl.contains(e.target))) {
+      if (menuEl) closeMenu(); else openMenu();
+      return;
+    }
     settings.enabled = !settings.enabled;   // optimistic
     updateToggleState();                     // instant button feedback
     applyStateToDom();                       // add/remove overlay immediately
@@ -954,6 +1201,7 @@
     controlsObserver = new MutationObserver(() => {
       if (!toggleBtn || !toggleBtn.isConnected) {
         toggleBtn = null;
+        closeMenu();               // its anchor just went; coordinates are stale
         ensureToggleButton(0);
       }
     });
@@ -1097,6 +1345,10 @@
   // catches the long ones, and holding the video quiet a moment too long is a
   // smaller fault than talking over the voice.
   const TTS_LOCAL_PER_CHAR_MS = 240;
+  // How long a finishing line may hold the next one back. The audio path has
+  // had this from the start (400ms, measured remaining); here the remaining
+  // is an ESTIMATE, so the window is slightly wider to absorb its error.
+  const TTS_LOCAL_GRACE_MS = 500;
   let localTimer = 0;
   // Lines decoded but not yet on air, by cue index. Their bytes live in a
   // closure inside ttsPlay, so this is the only handle anything else has on
@@ -1114,6 +1366,13 @@
   let ttsPausedWith = false;
   let ttsBlobUrl = "";
   let ttsSpokenIdx = -1;        // last cue index we started speaking
+  // Skips charged against the sentence currently on screen, so a claim that
+  // lands late can take them back. "Skipped" is a verdict, and at cue start
+  // it is only provisional: the words may still arrive with time to spare.
+  // Billing at the start and speaking anyway left the popup calling a line it
+  // had just read "skipped" (measured in the rig).
+  let ttsSkipGroup = -1;        // which group the provisional skips belong to
+  let ttsSkipCharged = 0;       // how many were charged against it
   // Synthesis runs ahead of playback: idx -> { text, audio, url, bytes }.
   // One line ahead — which is what this was — is only enough while every line
   // is long. On a run of short cues the answer for line N+1 lands after its
@@ -1123,10 +1382,23 @@
   //
   // The three numbers below are what stop it being unbounded, and they are
   // caps rather than targets: the window is as deep as the caps allow.
-  const TTS_AHEAD_CUES = 6;              // how far ahead to look at all
-  const TTS_AHEAD_MAX = 6;               // decoded lines held at once
+  // How far ahead to look, in SECONDS OF VIDEO — not in cues. A cue is the
+  // wrong unit for a buffer: a sentence spans about three of them, so "six
+  // cues" was two sentences in group mode, about fourteen seconds, while the
+  // translation beside it was already warmed twenty-eight seconds out
+  // (PREFETCH_GROUPS) and in whole-track mode the entire track is in hand. The
+  // thing that decides whether a line is ever waited for is how many seconds
+  // of speech are ready, so that is what this counts.
+  //
+  // It is a REACH, not a budget: the caps below still decide how much is
+  // actually held and how much is in flight, and a deep backoff still sheds
+  // the lot. What this changes is that the reach no longer shrinks to nothing
+  // exactly where the sentences are longest.
+  const TTS_AHEAD_MS = 45000;
+  const TTS_AHEAD_CUES = 60;             // ceiling, so a track of 0.2s cues ends
+  const TTS_AHEAD_MAX = 10;              // decoded lines held at once
   const TTS_AHEAD_BYTES = 4 * 1024 * 1024;
-  const TTS_AHEAD_INFLIGHT = 2;          // synthesis requests in the air at once
+  const TTS_AHEAD_INFLIGHT = 3;          // synthesis requests in the air at once
   let ttsAhead = new Map();
   // idx -> { token, text } for the request in flight for it. A Set could not
   // tell two requests for the same index apart, and there can be two: an index
@@ -1179,6 +1451,20 @@
                                 // translation wasn't ready, or whose synthesis
                                 // failed; nav resets both
 
+  // Is line j inside the window anchored at `from`? Both bounds, one place:
+  // the fill uses it to decide what to ask for, the reply uses it to refuse an
+  // answer the window has moved past, and the prune uses it to let go. Three
+  // copies of this rule drifting apart is how a line gets fetched, refused on
+  // arrival, and fetched again.
+  function ttsWithinAhead(j, from) {
+    if (!cueList || j <= from || j >= cueList.length) return false;
+    if (j > from + TTS_AHEAD_CUES) return false;
+    const a = cueList[from] && cueList[from].start;
+    const b = cueList[j] && cueList[j].start;
+    if (a == null || b == null) return true;   // no timing: the count decides
+    return b - a <= TTS_AHEAD_MS;
+  }
+
   function ttsAheadDrop(idx) {
     const held = ttsAhead.get(idx);
     if (!held) return;
@@ -1222,6 +1508,8 @@
     if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } ttsAudio = null; }
     if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } ttsBlobUrl = ""; }
     if (localTimer) { clearTimeout(localTimer); localTimer = 0; }
+    if (localDeferTimer) { clearTimeout(localDeferTimer); localDeferTimer = 0; }
+    localStartedAt = 0;
     if (localUtter) {
       localUtter = null;
       try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (_e) { /* ignore */ }
@@ -1260,9 +1548,17 @@
           const p = ttsAudio.play();
           if (p && p.catch) p.catch(() => { /* the next cue takes over */ });
         }
+        // Unconditionally, and this is the whole point: the paused flag lives
+        // on speechSynthesis itself, not on the utterance, and cancel() does
+        // not clear it. Pause while a line is speaking, then let that line go
+        // away — a video change, a provider change, read-aloud switched off —
+        // and there is nothing left holding a reference to resume through. The
+        // engine stays paused, every later line is queued into it and says
+        // nothing, and pressing play does not help. Pause once and read-aloud
+        // is over for the rest of the video.
+        try { window.speechSynthesis && window.speechSynthesis.resume(); }
+        catch (_e) { /* no engine here: nothing to resume */ }
         if (localUtter) {
-          try { window.speechSynthesis && window.speechSynthesis.resume(); }
-          catch (_e) { /* ignore */ }
           // Re-armed at the ceiling rather than the estimate: how much of the
           // line is left to say is not knowable here, and releasing the duck
           // late is the error this path is written to prefer.
@@ -1350,6 +1646,131 @@
     return out;
   }
 
+  // (The guard that used to be documented here — "is the line this audio was
+  // made for still the line on screen" — lived one rewrite and is gone: it
+  // compared source sentences, and on per-cue aligned answers that let a
+  // stale slice take the speaker from the one actually talking. The story,
+  // and the claim-based guard that replaced it, are with ttsClaimStillCurrent
+  // below.)
+
+  // A line whose translation was not ready when its cue began is skipped, and
+  // that is the right call: spoken two seconds late it would talk over the one
+  // after it. What was wrong is that nothing ever came back for it. cueTick
+  // does not re-enter a cue it is already on, and the reply that fills the
+  // cache paints the screen without telling read-aloud — so on a long sentence
+  // the words sat there, unspoken, for their whole seven seconds with room to
+  // spare, and the status line said nothing was wrong.
+  //
+  // Offer the line once, at the moment its words exist, and only while it is
+  // still the line on screen with nothing claimed for it. The claim ttsOnCue
+  // writes is what stops this from firing twice; ttsFitFor is what decides
+  // whether what is left is enough to say it in.
+  function ttsCatchUp(gIdx) {
+    if (!settings.ttsEnabled || orphaned) return;
+    if (activeCueIdx < 0 || !cueList || !cueToGroup) return;
+    if (cueToGroup[activeCueIdx] !== gIdx) return;
+    // Paused means stop — the pause follower only acts when the state FLIPS,
+    // so audio started after the pause would have nobody to stop it: it spoke
+    // over a frozen frame (measured in the rig). The line is forfeited, same
+    // as if its translation had never come. Adverts likewise: cueTick clears
+    // the overlay on its next turn, but this callback can land inside the
+    // 120ms before it does.
+    const v = getVideo();
+    if (!v || v.paused || isAdShowing()) return;
+    // Survives mutation, deliberately kept: ttsOnCue's own guards (same index,
+    // then same text in the same group) already stop a second CLAIM from
+    // becoming a second voice, so removing this line does not turn any
+    // assertion red. What it does turn is a claim that is taken and then
+    // handed straight back — ttsAheadTake pulls the prefetched line out of the
+    // window and the dedupe branch revokes it — for every late reply on a
+    // sentence that is already speaking. Cheap to keep, and the thing it
+    // guards is one refactor of ttsOnCue away from being a real double-read.
+    if (ttsSpokenIdx >= 0 && cueToGroup[ttsSpokenIdx] === gIdx) return;
+    const cue = cueList[activeCueIdx];
+    if (!cue) return;
+    // From the LINE's start, not the slice's: a group-text sentence caught up
+    // on its second slice is already a slice deep, and "just arrived" here
+    // meant the whole sentence played from the top over its own second half.
+    const into = Math.max(0, v.currentTime * 1000 - ttsLineStartMs(activeCueIdx));
+    ttsOnCue(activeCueIdx, cue, into);
+  }
+
+  // Whether the request claimed under cue `idx` still owns the speaker. The
+  // speaker belongs to the CLAIM (ttsSpokenIdx, written before the round
+  // trip), never to the source sentence.
+  //
+  // The original guard was `idx === activeCueIdx`, and it dropped whole
+  // sentences: the claim sits on the FIRST slice, the rest of the group
+  // dedupes against it, and synthesis outlasts one slice. The first rewrite
+  // compared "same source sentence" instead — and introduced the opposite
+  // failure on own-key aligned answers, where every slice speaks ITS OWN line
+  // and claims in turn: a slow reply for slice one took the speaker over
+  // while slice two was already talking — stale words, and on the local
+  // engine a cancel() of the line actually being said. The review that
+  // caught it was right: the sentence is not who owns the speaker.
+  //
+  // So, the claim test. Group-text mode: the dedupe keeps ttsSpokenIdx on the
+  // first slice all sentence long, so the slow reply still lands — the
+  // original fix survives. Per-cue mode: the next slice's claim moves
+  // ttsSpokenIdx and the stale reply is refused. The containment test bounds
+  // the rest: a reply whose line the playhead has left entirely (a seek, or
+  // past the window into the next line's time) is dropped, not spoken over
+  // whatever is there now. Everything else still goes through ttsStop and the
+  // epoch: new video, advert, read-aloud off, target-language change.
+  function ttsClaimStillCurrent(idx) {
+    if (idx !== ttsSpokenIdx) return false;      // superseded by a later claim
+    if (idx === activeCueIdx) return true;       // plainly on screen
+    const v = getVideo();
+    if (!v) return false;
+    const now = v.currentTime * 1000;
+    const nx = ttsWindowEnd(idx);
+    return now >= ttsLineStartMs(idx) && (nx == null || nx.start == null || now < nx.start);
+  }
+
+  // One sentence-worth of speech, or one slice-worth? Own-key aligned answers
+  // fill the per-cue cache and every slice speaks its own line; the
+  // group-text engines cache one string for the whole sentence and the other
+  // slices dedupe away. Which granularity a cue is on decides where its line
+  // STARTS (how far in are we) and where its window ENDS (who takes over).
+  // The per-cue cache is the honest witness: it exists exactly when the
+  // slices have lines of their own.
+  function ttsPerCueInGroup(idx) {
+    return transCache.has(cueVideoId + " " + idx);
+  }
+
+  function ttsLineStartMs(idx) {
+    if (cueToGroup && sentGroups && cueToGroup[idx] != null && !ttsPerCueInGroup(idx)) {
+      const grp = sentGroups[cueToGroup[idx]];
+      if (grp && grp.start != null) return grp.start;
+    }
+    const c = cueList && cueList[idx];
+    return (c && c.start) || 0;
+  }
+
+  // Where this LINE's window ends — the cue that will actually take over from
+  // it, which in group mode is the first cue of the NEXT SENTENCE, not the
+  // next slice of this one. Both callers used cueList[idx + 1] and so measured
+  // a sentence against a third of the time it owns: a 1.2s utterance in a 1.5s
+  // sentence was told it had 0.4s, pinned to 1.4x and handed inject a fit of
+  // 0.47 (clamped to 0.76) — the video slowed, audibly, on every multi-cue
+  // sentence, for nothing. Measured in the rig; the number above is the one it
+  // printed. The slice boundary was never a deadline: the rest of the group
+  // dedupes away and nothing takes over there.
+  // …but only where the sentence really IS the line. On per-cue answers the
+  // next slice claims and takes over, so the slice is the window. And a last
+  // sentence with nothing after it ends at its own end — the old fallback
+  // was the claimed CUE's end, one slice again, which brought the squeeze
+  // this function removes back on every video's final line.
+  function ttsWindowEnd(idx) {
+    if (cueToGroup && sentGroups && cueToGroup[idx] != null && !ttsPerCueInGroup(idx)) {
+      const grp = sentGroups[cueToGroup[idx]];
+      if (grp && grp.endIdx != null) {
+        return (cueList && cueList[grp.endIdx + 1]) || { start: grp.end };
+      }
+    }
+    return (cueList && cueList[idx + 1]) || null;
+  }
+
   function ttsDecode(b64, mime) {
     const bin = atob(b64);
     const bytes = new Uint8Array(bin.length);
@@ -1428,8 +1849,7 @@
         // Storing it decoded a blob that nothing would use and that only the
         // NEXT fill would free — and if the playhead is between cues at that
         // moment there is no next fill, so it was held until one came.
-        if (activeCueIdx >= 0 &&
-            (j <= activeCueIdx || j > activeCueIdx + TTS_AHEAD_CUES)) return;
+        if (activeCueIdx >= 0 && !ttsWithinAhead(j, activeCueIdx)) return;
         try {
           const d = ttsDecode(resp.b64, resp.mime);
           // base64 length, not decoded bytes: a third too big, and it is a cap
@@ -1464,14 +1884,14 @@
   // Slide the window to sit just after `idx` and fill whatever it can.
   function ttsFillAhead(idx) {
     for (const k of Array.from(ttsAhead.keys())) {
-      if (k <= idx || k > idx + TTS_AHEAD_CUES) ttsAheadDrop(k);
+      if (!ttsWithinAhead(k, idx)) ttsAheadDrop(k);
     }
     for (const k of Array.from(ttsAheadAsking.keys())) {
       // Not cancellable. The reply is refused on arrival (see ttsAheadAsk) —
       // it used to be decoded, given a blob and stored, and only pruned by
       // the NEXT fill. Either way the slot has to stop counting against a
       // window it is no longer inside.
-      if (k <= idx || k > idx + TTS_AHEAD_CUES) ttsAheadAsking.delete(k);
+      if (!ttsWithinAhead(k, idx)) ttsAheadAsking.delete(k);
     }
     if (ttsAheadOff) return;
     // What the window is already holding or waiting for. A sentence group gives
@@ -1494,7 +1914,7 @@
     // group carries the very same words, so fetching it would be paying for a
     // copy of what is being said right now.
     if (ttsSpokenText) held.add(ttsSpokenText);
-    for (let j = idx + 1; j <= idx + TTS_AHEAD_CUES; j++) {
+    for (let j = idx + 1; ttsWithinAhead(j, idx); j++) {
       if (ttsAheadAsking.size >= TTS_AHEAD_INFLIGHT) return;
       if (ttsAhead.size >= TTS_AHEAD_MAX || ttsAheadBytes >= TTS_AHEAD_BYTES) return;
       if (ttsAhead.has(j) || ttsAheadAsking.has(j)) continue;
@@ -1550,7 +1970,7 @@
     // mid-track left one blob behind per line in flight.
     ttsPendingRelease.set(idx, release);
     const takeover = () => {
-      if (myEpoch !== ttsEpoch || idx !== activeCueIdx) {
+      if (myEpoch !== ttsEpoch || !ttsClaimStillCurrent(idx)) {
         release();                 // superseded while waiting: never played
         return;
       }
@@ -1569,7 +1989,7 @@
       // Kept so a mid-line duck-depth change can be re-sent WITH it: the fit is
       // what holds this line's video slow-down, and a duck message without it
       // reads as "this line fits" and restores the rate (inject shareRate).
-      ttsFit = ttsFitFor(audio, cue, cueList && cueList[idx + 1]);
+      ttsFit = ttsFitFor(audio, cue, ttsWindowEnd(idx));
       // Dropped into the middle of a line: start the speech from where the
       // line has got to. Read from the top it would be talking about something
       // already watched past, and it would run over everything after it — the
@@ -1578,7 +1998,7 @@
       // should take exactly as long as what is left to watch.
       if (enteredAtMs > TTS_SEEK_IN_MS) {
         const vv = getVideo();
-        const nx = cueList && cueList[idx + 1];
+        const nx = ttsWindowEnd(idx);
         const winEnd = nx && nx.start != null ? nx.start
           : (cue && cue.end != null ? cue.end : 0);
         const leftS = vv && winEnd ? Math.max(0, (winEnd - vv.currentTime * 1000) / 1000) : 0;
@@ -1658,6 +2078,9 @@
   // works — that is a message to inject.js and has nothing to do with how the
   // sound is made.
   let localUtter = null;
+  let localStartedAt = 0;       // when the CURRENT utterance began speaking
+  let localEstMs = 0;           // its estimated length at its rate
+  let localDeferTimer = 0;      // one pending "start after the last word" slot
   // Chrome loads the machine's voice table asynchronously: the first call
   // returns an empty array and the list announces itself later on
   // "voiceschanged". Asking once at load starts that fetch long before the
@@ -1677,12 +2100,54 @@
       synth.addEventListener("voiceschanged", take);
     } catch (_e) { /* no local engine here: the API path is unaffected */ }
   })();
-  function ttsSpeakLocal(text, lang, voiceName, myEpoch) {
+  function ttsSpeakLocal(text, lang, voiceName, myEpoch, idx) {
     const synth = window.speechSynthesis;
     if (!synth) { ttsSkipped++; ttsErr = "failed"; ttsFailRun++; return; }
+    // Size the line BEFORE speaking it, from the estimate the watchdog already
+    // trusts. This path shipped with none of the audio path's three tiers —
+    // rate never set, fit never sent, cancel() unconditional — so on the
+    // engine every fresh install starts with, a dense line lost its last words
+    // to the next one, every time. The estimate is rough; the tiers only need
+    // it to be the right order of magnitude.
+    const est = Math.max(300, String(text || "").length * TTS_LOCAL_PER_CHAR_MS);
+    let rate = 1, fit, estAtRate = est;
+    const doSpeak = () => {
+    // The full set of guards, not just the epoch. The QA round found every
+    // one of these missing here while the audio takeover had them all: a
+    // grace timer that expired during a pause spoke over the frozen frame
+    // (doSpeak's resume() even pulled the engine back up to do it), an ad or
+    // the switch going off mid-defer changed neither epoch nor claim, and a
+    // catch-up already checks the same list one layer up. Same answers, same
+    // door.
+    if (myEpoch !== ttsEpoch || orphaned || !settings.ttsEnabled) return;
+    const vv = getVideo();
+    if (!vv || vv.paused || isAdShowing()) return;
+    // Sized HERE, not when the wait began: the audio path measures its window
+    // at takeover time, and a deferred line that measured early spoke at a
+    // rate chosen for a window that no longer existed — the grace ate the
+    // margin its own maths had counted on, and a same-cue seek during the
+    // wait had the same effect for free.
+    const nx = idx != null ? ttsWindowEnd(idx) : null;
+    const leftMs = nx && nx.start != null
+      ? Math.max(300, nx.start - vv.currentTime * 1000) : 0;
+    const vRate = vv.playbackRate || 1;
+    const needRate = leftMs ? (est * vRate) / leftMs : 0;
+    rate = 1; fit = undefined;
+    if (needRate > 1) {
+      rate = Math.min(1.4, needRate);
+      if (needRate > 1.4) fit = (1.4 * leftMs) / est;
+    }
+    estAtRate = est / rate;
     try { synth.cancel(); } catch (_e) { /* ignore */ }
+    // Somebody else's pause is still our silence. The flag is global — another
+    // extension, a stray call, our own pause across a video change — and a
+    // speak() into a paused engine queues without a sound. Costs nothing when
+    // it is already running. Safe HERE because the guards above just refused
+    // a paused video: this cannot be the arm that lifts our own follow-pause.
+    try { synth.resume(); } catch (_e) { /* ignore */ }
     const u = new SpeechSynthesisUtterance(text);
     if (lang) u.lang = lang;
+    u.rate = rate;
     u.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
     {
       // The live call is the authority when it has an answer; the primed list
@@ -1712,6 +2177,7 @@
       clearTimeout(localTimer);
       localTimer = 0;
       localUtter = null;
+      localStartedAt = 0;
       ttsDuck(false);
     };
     // The line never began. Not the same event as done(): nothing was said, so
@@ -1754,15 +2220,39 @@
       // skipped" over total silence.
       ttsSpoken++;
       ttsFailRun = 0;
+      localStartedAt = Date.now();
+      localEstMs = estAtRate;
       clearTimeout(localTimer);
       localTimer = setTimeout(done, Math.min(TTS_LOCAL_MAX_MS,
-        Math.max(TTS_LOCAL_MIN_MS, text.length * TTS_LOCAL_PER_CHAR_MS)));
+        Math.max(TTS_LOCAL_MIN_MS, estAtRate)));
     });
     localUtter = u;
     clearTimeout(localTimer);
     localTimer = setTimeout(neverBegan, TTS_LOCAL_START_MS);
-    ttsDuck(true);                 // no fit: this path cannot size the line
+    ttsDuck(true, fit);            // sized up front, same three tiers as audio
     try { synth.speak(u); } catch (_e) { neverBegan(); }
+    };
+    // GRACE: the audio path has let a finishing line say its last word since
+    // the takeover was written; this path cancelled it mid-syllable. When OUR
+    // utterance is speaking and its estimate says it is within a breath of
+    // done, wait that breath out. Only ours — a foreign utterance has no
+    // estimate and keeps the old behaviour. Newest line wins the one slot:
+    // a third line clears the wait and re-decides.
+    clearTimeout(localDeferTimer);
+    localDeferTimer = 0;
+    if (localUtter && localStartedAt) {
+      const remain = localEstMs - (Date.now() - localStartedAt);
+      if (remain > 0 && remain <= TTS_LOCAL_GRACE_MS) {
+        const myClaim = ttsSpokenIdx;
+        localDeferTimer = setTimeout(() => {
+          localDeferTimer = 0;
+          if (ttsSpokenIdx !== myClaim) return;   // a newer line took the slot
+          doSpeak();                              // …which re-checks everything else
+        }, remain + 40);
+        return;
+      }
+    }
+    doSpeak();
   }
 
   function ttsOnCue(idx, cue, enteredAtMs) {
@@ -1780,7 +2270,16 @@
     // Not ready at cue start: skipped, never caught up on. Same reason the
     // fill still runs — a line whose own translation has not landed is exactly
     // the case the chain has to survive.
-    if (!text) { ttsSkipped++; ttsFillAhead(idx); return; }
+    if (!text) {
+      ttsSkipped++;
+      const g = cueToGroup && cueToGroup[idx] != null ? cueToGroup[idx] : -1;
+      if (g >= 0) {
+        if (g === ttsSkipGroup) ttsSkipCharged++;
+        else { ttsSkipGroup = g; ttsSkipCharged = 1; }
+      }
+      ttsFillAhead(idx);
+      return;
+    }
     // A sentence group hands the same translation to every cue it covers, and
     // this used to dedupe on the cue index alone — so a three-cue group read
     // one sentence three times. Only inside the group: the same words in a
@@ -1797,6 +2296,14 @@
     }
     ttsSpokenIdx = idx;
     ttsSpokenText = text;
+    // The line is claimed after all, so the skips billed while its words were
+    // missing were provisional — take them back. Only for THIS sentence: a
+    // skip in an earlier one was final the moment its window closed.
+    if (cueToGroup && cueToGroup[idx] != null && cueToGroup[idx] === ttsSkipGroup) {
+      ttsSkipped = Math.max(0, ttsSkipped - ttsSkipCharged);
+      ttsSkipGroup = -1;
+      ttsSkipCharged = 0;
+    }
     const myEpoch = ttsEpoch;
     if (pre) {
       ttsPlay(idx, cue, pre.audio, pre.url, myEpoch, enteredAtMs);
@@ -1831,7 +2338,16 @@
         ttsFillAhead(activeCueIdx >= 0 ? activeCueIdx : idx);
       };
       if (chrome.runtime.lastError) { fillNow(); return; }
-      if (myEpoch !== ttsEpoch || idx !== activeCueIdx) { fillNow(); return; }
+      if (myEpoch !== ttsEpoch || !ttsClaimStillCurrent(idx)) { fillNow(); return; }
+      // The switch can go off between the ask and this reply — the menu made
+      // that a one-press window. The fill already checked it; the speaking
+      // path did not, and it is the audible half.
+      // Survives mutation, deliberately kept: in today's wiring the menu's own
+      // ttsStop (epoch) or onChanged's (also epoch) always gets there first,
+      // so no rig scenario can make this line the only barrier. It stays
+      // because every OTHER off-path is one refactor away from opening the
+      // race this line closes, and the QA review asked for both halves.
+      if (!settings.ttsEnabled) { return; }
       if (resp && resp.ok && resp.local) {
         // The keyless local engine: the reply is "say this yourself", so there
         // is nothing a look-ahead could hold. Learn it here — this is the
@@ -1839,7 +2355,7 @@
         // line on the DEFAULT provider, for the whole video.
         ttsAheadOff = true;
         ttsAheadClear();
-        ttsSpeakLocal(text, resp.lang, resp.voice, myEpoch);
+        ttsSpeakLocal(text, resp.lang, resp.voice, myEpoch, idx);
         return;
       }
       if (!resp || !resp.ok || !resp.b64) {
@@ -1890,8 +2406,7 @@
       if (activeCueIdx !== -1) {
         activeCueIdx = -1;
         activeGroupIdx = -1;
-        setOriginal("");
-        setTranslation("", "");
+        forceBlankLines();
         ttsStop();
       }
       return;
@@ -1923,7 +2438,11 @@
     // current one. On an ordinary play-through this is one poll interval; after
     // a seek it is however far in the viewer landed. Measured HERE, at the
     // transition, so that a slow synthesis cannot be mistaken for a seek.
-    ttsOnCue(idx, cue, Math.max(0, t - (cue.start || 0)));
+    // How far into the LINE, not the slice: a seek landing on the third slice
+    // of a sentence is deep into the sentence, and measuring from the slice
+    // said "just arrived" — the whole sentence then played from the top
+    // against a window that only had its tail left.
+    ttsOnCue(idx, cue, Math.max(0, t - ttsLineStartMs(idx)));
   }
 
   // What the translation line shows when there is nothing to translate:
@@ -2258,6 +2777,7 @@
               activeCueIdx <= g.endIdx && cueList) {
             const orig = cueList[activeCueIdx].text;
             setTranslation(dedupeTrans(resp.values[activeCueIdx - g.startIdx], orig), orig);
+            ttsCatchUp(gIdx);
           }
           return;
         }
@@ -2274,6 +2794,7 @@
           if (activeGroupIdx === gIdx && activeCueIdx >= 0 && cueList) {
             const orig = cueList[activeCueIdx].text;
             setTranslation(out === "" ? sameLangLine(orig) : out, orig);
+            ttsCatchUp(gIdx);
           }
           return;
         }
@@ -2989,6 +3510,8 @@
   function teardownAll() {
     stopCueLoop();
     stopFallback();
+    pendingOrig = null;              // held text belongs to the old video
+    pendingTrans = null;
     removeOverlay();
     cueList = null;
     tcueList = null;

@@ -1177,11 +1177,29 @@ function googleVoiceName(t, lang) {
 // lang: the target language the line will be READ in. Optional — the two
 // callers that have it pass it, and without it the language check below is
 // skipped rather than guessed at.
-async function resolveTts(lang) {
-  const p = PROVIDERS.tts.get(cfg.ttsProvider);
+//
+// askedProvider: for the settings page's two buttons ONLY. cfg is refreshed by
+// a storage.onChanged listener, which is a different async path from the write
+// the page just made — so "save, then test" could reach here before cfg had
+// caught up, and Preview could reach here having never written at all (the
+// provider dropdown does not save on change; the language one does). Both ways
+// the worker resolved a DIFFERENT provider from the one on screen, and the
+// honest answer it gave for the browser's own engine — "nothing to synthesize"
+// — was rendered by the page as "connection failed", for a request that never
+// touched the network. Measured on a real machine 2026-08-24.
+// The override only picks WHICH provider; the key, host permission and voice
+// checks below are unchanged, so naming a provider you have not configured
+// gets the real "no key" answer instead of a spurious success.
+async function resolveTts(lang, askedProvider) {
+  const p = PROVIDERS.tts.get(askedProvider || cfg.ttsProvider);
   if (!p) throw tag(new Error("no tts provider selected"), { noKey: true, code: "noProvider" });
-  // The browser's own voices need no key and no host: there is nothing to
-  // authorize because nothing leaves the machine.
+  // The browser's own voices need no key and no host: there is no endpoint of
+  // OURS to authorize. That is not the same as "nothing leaves the machine" —
+  // which is what this used to say, and it is not true of all of them. Chrome
+  // also offers its own online voices (localService === false; on a Mac those
+  // are the three named "Google …"), and for those the browser sends the line
+  // to its own maker. Nothing we can gate: the utterance goes through the Web
+  // Speech API, not through us. What we can do is not claim otherwise.
   let key = "";
   if (!p.keyless) {
     key = await keyForTts(p.id);
@@ -1596,23 +1614,47 @@ async function ttsSynthesize(text, t, targetLang) {
   return b64FromBuf(buf);
 }
 
+// The language a settings-page message names, if it is one we offer: shape
+// checked so nothing unprintable can ride in it, then membership checked
+// against the one list of target languages. Anything else answers "", and the
+// caller reads storage as before.
+function ttsAskedLang(raw) {
+  const s = String(raw || "");
+  if (!/^[a-z]{2,3}(-[A-Za-z]{2,4})?$/.test(s)) return "";
+  return self.YTDS_LANGS && self.YTDS_LANGS.get && self.YTDS_LANGS.get(s) ? s : "";
+}
+
 // User-initiated probe from the options page — the read-aloud twin of byoTest.
 // The probe speaks in the CURRENT target language: for Google that is the
 // language the voice name is built from, so testing anything else would pass
 // on a voice that then fails on the first real subtitle.
-async function ttsTest(voiceOverride) {
+async function ttsTest(voiceOverride, asked) {
   // The language first, and then resolve WITH it. This was the one path that
   // resolved without it, which made it the one path that would cheerfully
   // sample a voice the video is not going to get: the settings page said
   // "connected — sampled with Xiaoyi", played Xiaoyi, and YouTube then read
   // the line in the family default. A button whose whole job is to tell you
   // whether this will work has to be asked the same question the playback is.
-  const targetLang = await new Promise((resolve) => {
+  //
+  // The page may name the language too. The language dropdown DOES write on
+  // change, so reading storage is usually right — but "usually" is the same
+  // race the provider had, one storage round-trip wide, and a button pressed
+  // the instant after a change is exactly when it is open. Shape-checked
+  // rather than trusted: a value that is not a language tag is ignored, not
+  // spliced into a request.
+  const a = asked || {};
+  // Shape first, then membership. The shape alone let "en-US" through — well
+  // formed, not one of our fifty — and the Google path then threw
+  // unsupportedTarget for a language the extension does not offer, while
+  // playback, reading the stored code, worked fine. An unknown code falls
+  // back to storage exactly like a malformed one.
+  const named = ttsAskedLang(a.targetLang);
+  const targetLang = named || await new Promise((resolve) => {
     chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
       resolve((got && got.targetLang) || "zh-CN");
     });
   });
-  const t = await resolveTts(targetLang);
+  const t = await resolveTts(targetLang, a.provider);
   if (t.provider.kind === "local-speech") {
     // Nothing to probe: no key, no endpoint. The settings page speaks the
     // sample itself, which IS the test.
@@ -1757,11 +1799,16 @@ async function byoModels(providerId) {
 // that is empty on a train, and the built-in family list is the answer when
 // this fails. Google filters server-side; Azure returns everything it has and
 // is narrowed here, which is why the result is cached rather than re-fetched.
-async function ttsVoices() {
-  const t = await resolveTts();
+async function ttsVoices(asked) {
+  // Same two races the test button had, and it got neither fix at the time:
+  // the provider dropdown does not write on change, and cfg refreshes on a
+  // different async path than the page's write — so "fetch voices" could ask
+  // whatever storage still held instead of the provider on screen.
+  const a = asked || {};
+  const t = await resolveTts(undefined, a.provider);
   const p = t.provider;
   if (!p.listVoices) return { voices: [], listable: false };
-  const targetLang = await new Promise((resolve) => {
+  const targetLang = ttsAskedLang(a.targetLang) || await new Promise((resolve) => {
     chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
       resolve((got && got.targetLang) || "zh-CN");
     });
@@ -1796,6 +1843,7 @@ async function ttsVoices() {
     // overlap between two pages of a library someone is editing while we walk
     // it. Insertion order is kept, so the list is still the endpoint's order.
     const seen = new Set();
+    const names = {};
     let token = "";
     for (let page = 0; page < 5; page++) {
       try {
@@ -1808,7 +1856,11 @@ async function ttsVoices() {
       await ttsThrowForStatus(res);
       const data = await res.json().catch(() => null);
       for (const v of (data && data.voices) || []) {
-        if (v && v.voice_id) seen.add(v.voice_id);
+        if (!v || !v.voice_id) continue;
+        seen.add(v.voice_id);
+        // The id is opaque; the service just told us what it is called. Losing
+        // that turns the picker into a column of tokens.
+        if (v.name) names[v.voice_id] = String(v.name);
       }
       const next = (data && data.has_more && data.next_page_token) || "";
       // A server that does not recognise the parameter answers page one again,
@@ -1818,7 +1870,7 @@ async function ttsVoices() {
       if (!next || next === token) break;
       token = next;
     }
-    return { voices: [...seen], listable: true };
+    return { voices: [...seen], names: names, listable: true };
   }
   // azure-speech
   try {
@@ -1967,6 +2019,13 @@ chrome.runtime.onInstalled.addListener((details) => {
 });
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  if (msg && msg.type === "openOptions") {
+    // The in-player menu's settings row. A content script cannot call
+    // openOptionsPage itself; this is the whole errand.
+    try { chrome.runtime.openOptionsPage(); } catch (_e) { /* ignore */ }
+    sendResponse({ ok: true });
+    return false;
+  }
   if (msg && msg.type === "videoLeft") {
     dropPlaybackJobs(gtxLane, "left the video");
     dropPlaybackJobs(byoLane, "left the video");
@@ -2023,7 +2082,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "ttsVoices") {
     cfgReady
-      .then(ttsVoices)
+      .then(() => ttsVoices({ provider: msg.provider, targetLang: msg.targetLang }))
       .then((r) => sendResponse({ ok: true, voices: r.voices, listable: r.listable }))
       .catch((err) => sendResponse({
         ok: false,
@@ -2056,7 +2115,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "ttsTest") {
     cfgReady
-      .then(() => ttsTest(msg.voice))
+      .then(() => ttsTest(msg.voice, { provider: msg.provider, targetLang: msg.targetLang }))
       .then((r) => sendResponse({ ok: true, bytes: r.bytes, ms: r.ms, voice: r.voice,
         b64: r.b64, mime: r.mime, local: r.local, lang: r.lang }))
       .catch((err) => sendResponse({

@@ -860,7 +860,14 @@ function paintTtsKeyField(p) {
 
 // Who the voice is and which language it grew up speaking — the accent it
 // carries into all the others. The raw id says neither.
+// Names a provider gave us for ids that carry none of their own. ElevenLabs
+// ids are twenty opaque characters; the service knows them as Rachel and Josh,
+// and it says so in the same reply that lists them. Session-scoped like
+// fetchedVoices: the built-in family is the durable answer.
+const fetchedVoiceNames = Object.create(null);
+
 function voiceLabel(v) {
+  if (fetchedVoiceNames[v]) return fetchedVoiceNames[v];
   try {
     return P.tts.voiceLabel(v, (code) => {
       const info = LANGS.get(code);
@@ -898,11 +905,38 @@ function localVoicesFor(lang) {
   return P.tts.localVoiceNames(window.speechSynthesis, lang);
 }
 
+// Retries for an empty local list, cleared whenever one paints non-empty.
+let localVoiceRetry = 0;
+let localVoiceTimer = 0;
+
 function paintTtsVoices(p) {
   const sel = $("ttsVoiceSel");
   sel.textContent = "";
   const choices = p.localVoices
     ? localVoicesFor(state.targetLang) : ttsVoiceChoices(p);
+  // An empty list for the browser's own voices is almost never the truth. It
+  // means Chrome has not built its voice table YET: getVoices() answers with
+  // an empty array until it has, and announces it with voiceschanged — but
+  // only if the table was not ALREADY built when we asked. Open this page with
+  // the default provider selected and the event never comes: measured on a
+  // real machine, 0 voices at load and 199 a moment later, with the menu still
+  // empty because nothing repainted. Reported as "the browser built-in one
+  // cannot be chosen at all".
+  //
+  // So the painter heals itself rather than trusting one event or one poll at
+  // startup: whenever it draws an empty local list, it tries again shortly.
+  // That covers the cold page, a provider switched while still cold, and a
+  // voice pack that finishes installing later.
+  if (p.localVoices && !choices.length && localVoiceRetry < 8) {
+    localVoiceRetry++;
+    clearTimeout(localVoiceTimer);
+    localVoiceTimer = setTimeout(() => {
+      const now = ttsProvider();
+      if (now && now.localVoices) paintTtsVoices(now);
+    }, 120 * localVoiceRetry);
+  } else if (choices.length) {
+    localVoiceRetry = 0;
+  }
   const inLanguage = !p.localVoices && voiceCatalogue === "language" &&
     (fetchedVoices[p.id] || []).length > 0;
   const add = (parent, v) => {
@@ -918,7 +952,7 @@ function paintTtsVoices(p) {
     const tiers = [];
     const byTier = Object.create(null);
     for (const v of choices) {
-      const tier = P.tts.voiceTier(v);          // "" for providers whose ids carry none
+      const tier = P.tts.voiceTier(v, p);       // "" for providers whose ids carry none
       if (!byTier[tier]) { byTier[tier] = []; tiers.push(tier); }
       byTier[tier].push(v);
     }
@@ -931,6 +965,18 @@ function paintTtsVoices(p) {
       const g = document.createElement("optgroup");
       g.label = tier;
       byTier[tier].forEach((v) => add(g, v));
+      sel.appendChild(g);
+    }
+  } else if (p.localVoices) {
+    // Ordinary voices in the open, the machine packs at the bottom under
+    // their own heading — the maintainer's call; single source in providers.js so the
+    // popup renders the identical shape.
+    const split = P.tts.localVoiceSplit(window.speechSynthesis, state.targetLang);
+    split.normal.forEach((v) => add(sel, v));
+    if (split.machine.length) {
+      const g = document.createElement("optgroup");
+      g.label = t("ttsRobotVoices", "机器音");
+      split.machine.forEach((v) => add(g, v));
       sel.appendChild(g);
     }
   } else {
@@ -1126,6 +1172,13 @@ function initReadaloud() {
   // with an empty picker — the one screen where "no voices" reads as "this
   // feature is broken" rather than "this provider has none".
   const synth = window.speechSynthesis;
+  // Listening is not enough. Chrome answers getVoices() with an empty array
+  // until its table is built and announces it with voiceschanged — but ONLY if
+  // the table was not already built when we asked. Open this page a second
+  // time, or open it after anything else has warmed the engine, and the event
+  // never comes: the picker for the engine everybody starts on stays empty and
+  // there is nothing to select. Reported from a real machine as "the browser
+  // built-in one cannot be chosen at all". So ask again, a few times, briefly.
   if (synth && typeof synth.addEventListener === "function") {
     synth.addEventListener("voiceschanged", () => {
       const p = ttsProvider();
@@ -1237,7 +1290,9 @@ function initReadaloud() {
     btn.textContent = t("ttsFetching", "拉取中…");
     const done = () => { btn.disabled = false; btn.textContent = label; };
     showTtsVoiceMsg("", null);
-    sendToBackground({ type: "ttsVoices" })
+    // Which provider and which language, same as the two probe buttons: this
+    // button had the same two races and got neither fix at the time.
+    sendToBackground({ type: "ttsVoices", provider: p.id, targetLang: state.targetLang })
       .then((resp) => {
         if (!resp || !resp.ok) {
           // Falling back to the built-in family is the honest failure: a voice
@@ -1249,6 +1304,7 @@ function initReadaloud() {
         // Exact-string filtering kept "cmn-CN-Chirp3-HD-Achernar" alongside the
         // "Achernar" already on offer — the same voice twice, thirty times over.
         const extra = P.tts.mergeFetched(p, resp.voices);
+        for (const k in (resp.names || {})) fetchedVoiceNames[k] = resp.names[k];
         fetchedVoices[p.id] = extra;
         if (extra.length) voiceCatalogue = "language";
         paintTtsVoices(p);
@@ -1318,13 +1374,39 @@ function initReadaloud() {
     const done = () => { btn.disabled = false; btn.textContent = label; };
     showTtsMsg("", null);
     if (previewAudio) { try { previewAudio.pause(); } catch (_e) { /* ignore */ } }
-    sendToBackground({ type: "ttsTest", voice: $("ttsVoiceSel").value })
+    // Say WHICH provider and WHICH language, rather than letting the worker
+    // read them back out of storage. The provider dropdown does not write on
+    // change at all, and the language one writes on a different async path
+    // from this message — so the worker used to answer about a provider that
+    // was not the one on screen. When that was the browser's own engine its
+    // honest "nothing to synthesize" arrived here as a bare no-audio reply and
+    // was painted "connection failed", for a request that never left the
+    // machine. Reproduced 2026-08-24 with the storage row to prove it.
+    sendToBackground({ type: "ttsTest", voice: $("ttsVoiceSel").value,
+      provider: p.id, targetLang: state.targetLang })
       .then((resp) => {
-        if (!resp || !resp.ok || !resp.b64) {
+        if (!resp || !resp.ok) {
           showTtsMsg(errText(resp && resp.code), "err");
           done();
           return;
         }
+        if (resp.local) {
+          // Unreachable today, kept as a stated fallback: the localVoices
+          // branch above returns before any message is sent, and the worker
+          // resolves the provider this page names — so a local answer cannot
+          // come back on this path unless one of those two facts changes.
+          // If it ever does, speaking the sample here is still the right
+          // behaviour, and cheaper than rediscovering the "connection failed"
+          // lie this block was written against.
+          // Nothing failed and nothing was fetched: the resolved provider has
+          // no endpoint. Speak it here, which is what this button means for
+          // that engine — never an error message about a network that was
+          // never asked.
+          speakLocalSample($("ttsVoiceSel").value);
+          done();
+          return;
+        }
+        if (!resp.b64) { showTtsMsg(errText(resp.code), "err"); done(); return; }
         playPreview(resp, done);
       })
       .catch((err) => { showTtsMsg(errText((err && err.code) || "failed"), "err"); done(); });
@@ -1346,7 +1428,16 @@ function initReadaloud() {
       chrome.permissions.request({ origins: [p.origin + "/*"] }, (granted) => {
         if (chrome.runtime.lastError || !granted) { done(); showTtsMsg(errText("noPerm"), "err"); return; }
         persistTts(p, typed)
-          .then(() => sendToBackground({ type: "ttsTest" }))
+          // Named here too. persistTts resolves when the WRITE lands; the
+          // worker's cfg is refreshed by a storage.onChanged listener, which
+          // is a separate async path — so "save, then test" could still be
+          // tested against the previous provider.
+          // …and the voice. cfg.ttsVoice refreshes on the same other path,
+          // so "save, then test" could sample the PREVIOUS provider's voice —
+          // voiceOwned then fails and the probe quietly plays the new
+          // family's default instead of the one on the menu.
+          .then(() => sendToBackground({ type: "ttsTest", provider: p.id,
+            targetLang: state.targetLang, voice: $("ttsVoiceSel").value }))
           .then((resp) => {
             if (resp && resp.ok) {
               const kb = Math.max(1, Math.round((resp.bytes || 0) / 1024));
@@ -1435,6 +1526,23 @@ function initCrossPageSync() {
         // language, so this page went on offering — and saving — a voice the
         // engine had already stopped using.
         if (v) state.targetLang = v;
+        // The fetched catalogue is pinned to the language it was fetched FOR
+        // — the message under the menu says so. Keeping it on screen across a
+        // language change made the menu lie: long ids the engine would now
+        // refuse, listed as if choosable. Back to the family, which is the
+        // catalogue that follows the reader; fetching again is one click.
+        if (voiceCatalogue === "language") {
+          voiceCatalogue = "family";
+          for (const k in fetchedVoices) delete fetchedVoices[k];
+          // The message element directly — showTtsVoiceMsg is a local of the
+          // wiring function, not reachable from this listener. Calling it
+          // here threw a ReferenceError that the listener swallowed, the
+          // repaint below never ran, and the voided catalogue stayed on
+          // screen looking exactly as if this branch did not exist. (The
+          // worklog's "node --check passes ≠ the scope is right", again.)
+          const vm = $("ttsVoiceMsg");
+          if (vm) { vm.textContent = ""; vm.hidden = true; }
+        }
         const shownTts = ttsProvider();
         if (shownTts) paintTtsVoices(shownTts);
       }

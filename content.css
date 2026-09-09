@@ -125,6 +125,53 @@ html.ytds-active .caption-window {
 .ytds-handle.ytds-dragging { cursor: grabbing; }
 .ytds-handle svg { width: 21px; height: 15px; display: block; pointer-events: none; }
 
+/* Selecting subtitle text (opt-in). Only the LINES take the pointer — the
+   overlay box itself stays pointer-events:none, so the gaps between and
+   around the lines still click through to the player. The bracketed
+   -webkit- twin matters: the player forces user-select:none down the tree,
+   and Chrome still reads the prefixed form. */
+/* The toggle button's pull-out corner and its menu. Extension palette
+   (设计规范 §一): surfaces #1f2124/#27292c, text #f1f1f1, accent #3ea6ff. */
+.ytds-toggle { position: relative; }
+.ytds-toggle-more {
+  position: absolute; right: 1px; bottom: 1px;
+  width: 17px; height: 17px; line-height: 17px;
+  font-size: 9px; text-align: center; color: #fff;
+  border-radius: 3px; opacity: 0; pointer-events: auto;
+}
+.ytds-toggle:hover .ytds-toggle-more,
+.ytds-toggle:focus-visible .ytds-toggle-more { opacity: .9; }
+.ytds-toggle-more:hover { background: rgba(255, 255, 255, .18); }
+.ytds-menu {
+  position: absolute; z-index: 70;
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: 190px; padding: 4px;
+  background: #1f2124; border: 1px solid #33363a; border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .55);
+  pointer-events: auto;
+}
+.ytds-mi {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  margin: 0; padding: 7px 10px; border: 0; border-radius: 6px;
+  background: transparent; color: #f1f1f1; text-align: left;
+  font: 400 13px/1.3 Roboto, Arial, sans-serif; cursor: pointer;
+  /* The select row reuses the popup's full-sentence label; de/en run long.
+     Wrap inside a bounded width instead of stretching the menu off the
+     player. */
+  white-space: normal; max-width: 250px;
+}
+.ytds-mi:hover { background: #27292c; }
+.ytds-mi::after { content: ""; min-width: 14px; text-align: right; color: #3ea6ff; }
+.ytds-mi[aria-pressed="true"]::after { content: "\2713"; }
+.ytds-mi[data-key="openOptions"]::after { content: "\2197"; color: #b6b9be; }
+
+#ytds-overlay.ytds-select .ytds-line {
+  pointer-events: auto;
+  cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 /* While dragging, the box floats as one frosted pane: the user is moving a
    thing, not loose text. A translucent white wash was invisible over bright
    footage (a red BBC banner ate it), so this blurs what is behind it instead.

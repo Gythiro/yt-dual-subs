@@ -816,5 +816,17 @@
   },
   "ttsErrNoAudio": {
     "message": "오디오가 전달되지 않았습니다 — 다시 시도하거나 다른 음성을 선택하세요."
+  },
+  "ttsRobotVoices": {
+    "message": "로봇",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "자막 텍스트 선택 및 복사",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSubtitles": {
+    "message": "자막",
+    "description": "Row label in the small in-player menu. One word."
   }
 }
