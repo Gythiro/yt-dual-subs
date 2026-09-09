@@ -6,7 +6,7 @@
     "message": "YouTube용 이중 자막 — 원문과 번역을 겹치지 않는 하나의 레이어에 표시합니다."
   },
   "headerSub": {
-    "message": "YouTube™용 · 이중 자막, 단일 레이어"
+    "message": "YouTube™용 · 이중 자막, 단일 레이어"
   },
   "disclaimer": {
     "message": "YouTube 또는 Google과 제휴하지 않습니다."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "날쌘 갈색 여우"
-  },
-  "sampleTransComma": {
-    "message": "갈색 여우가 뛰고,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Azure 키의 서비스 지역을 먼저 입력하세요 (예: eastus)."
+  },
+  "startPicChop1": {
+    "message": "두 개의 큰"
+  },
+  "startPicChop2": {
+    "message": "이유 하나는"
+  },
+  "startPicWhole1": {
+    "message": "큰 이유가 두 가지 있는데,"
+  },
+  "startPicWhole2": {
+    "message": "첫 번째는…"
+  },
+  "secLineStyle": {
+    "message": "줄 스타일"
+  },
+  "ttsOpenSettings": {
+    "message": "읽어주기 설정"
+  },
+  "ttsGroupSetup": {
+    "message": "제공업체 및 키"
+  },
+  "ttsGroupPlayback": {
+    "message": "재생"
   }
 }

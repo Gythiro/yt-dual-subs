@@ -6,10 +6,10 @@
     "message": "YouTube 雙語字幕——原文與譯文單層顯示,互不重疊。"
   },
   "headerSub": {
-    "message": "for YouTube™ · 雙語單層字幕"
+    "message": "for YouTube™ · 雙語單層字幕"
   },
   "disclaimer": {
-    "message": "非 YouTube / Google 官方出品,與其無關聯。"
+    "message": "非 YouTube / Google 官方出品，與其無關聯。"
   },
   "enableTitle": {
     "message": "啟用 / 停用"
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "敏捷的棕色狐狸"
-  },
-  "sampleTransComma": {
-    "message": "有兩個重要的原因，"
   },
   "provQwen": {
     "message": "Alibaba 百煉 (Qwen / DeepSeek)"
@@ -106,6 +103,9 @@
   },
   "secLayout": {
     "message": "版面配置"
+  },
+  "secLineStyle": {
+    "message": "行樣式"
   },
   "orderLabel": {
     "message": "上下順序"
@@ -323,13 +323,13 @@
     "message": "還不會設定?看教學"
   },
   "byoLocalHint": {
-    "message": "Key 只存在這台電腦的瀏覽器裡,不會上傳;字幕文字只傳往你選擇的服務商。"
+    "message": "Key 只存在這台電腦的瀏覽器裡，不會上傳；字幕文字只傳往你選擇的服務商。"
   },
   "byoErrNoProvider": {
     "message": "先選一個服務商。"
   },
   "byoErrNoKey": {
-    "message": "先填 API Key,下面的連結可以去申請。"
+    "message": "先填 API Key，下面的連結可以去申請。"
   },
   "byoErrNoModel": {
     "message": "這家需要手動填模型名稱。"
@@ -412,10 +412,10 @@
     "message": "使用中"
   },
   "optAfterSetup": {
-    "message": "設定好之後回到擴充功能彈窗,把「翻譯引擎」切到「自備 Key」。"
+    "message": "設定好之後回到擴充功能彈窗，把「翻譯引擎」切到「自備 Key」。"
   },
   "optTrademark": {
-    "message": "各服務商名稱與標誌均為其各自所有者的商標。本擴充功能與它們沒有任何關聯,也未獲其背書或贊助;標誌僅用於標示你所選擇的介面。"
+    "message": "各服務商名稱與標誌均為其各自所有者的商標。本擴充功能與它們沒有任何關聯，也未獲其背書或贊助；標誌僅用於標示你所選擇的介面。"
   },
   "optSections": {
     "message": "分區"
@@ -436,22 +436,22 @@
     "message": "打開影片就有了"
   },
   "startS1Body": {
-    "message": "任何一部有字幕的 YouTube 影片,雙語字幕自動出現。"
+    "message": "任何一部有字幕的 YouTube 影片，雙語字幕自動出現。"
   },
   "startS2Title": {
     "message": "想放哪裡就放哪裡"
   },
   "startS2Body": {
-    "message": "按住字幕框左上角的握把,拖到畫面任何位置。連按兩下握把即可復位。"
+    "message": "按住字幕框左上角的握把，拖到畫面任何位置。連按兩下握把即可復位。"
   },
   "startS2Alt": {
-    "message": "播放器示意圖:字幕框左上角有一個六點握把,按住可以把字幕拖到別的位置"
+    "message": "播放器示意圖：字幕框左上角有一個六點握把，按住可以把字幕拖到別的位置"
   },
   "startS3Title": {
     "message": "想要更好的譯文"
   },
   "startS3Body": {
-    "message": "填上你自己的 API Key:整句翻譯,還能匯出整部影片的 SRT。"
+    "message": "填上你自己的 API Key：整句翻譯，還能匯出整部影片的 SRT。"
   },
   "startGoSetup": {
     "message": "去設定翻譯服務"
@@ -505,10 +505,10 @@
     "message": "未驗證"
   },
   "exportUsesYouTube": {
-    "message": "匯出用的是 YouTube 內建的整軌翻譯——免費,不消耗你的 API。"
+    "message": "匯出用的是 YouTube 內建的整軌翻譯——免費，不消耗你的 API。"
   },
   "exportUseByo": {
-    "message": "用自備 Key 翻譯(更貼合,消耗額度)"
+    "message": "用自備 Key 翻譯（更貼合，消耗額度）"
   },
   "exportByoNote": {
     "message": "整部影片的字幕會交給你的服務商、用你的 Key 翻譯,消耗額度;按匯出後會先給出預估。"
@@ -589,10 +589,10 @@
     "message": "填 Base URL 或完整介面網址都行,例如 https://example.com/v1 或 https://example.com/v1/chat/completions。"
   },
   "startS1Alt": {
-    "message": "播放器示意圖:畫面下方是一行原文和一行譯文"
+    "message": "播放器示意圖：畫面下方是一行原文和一行譯文"
   },
   "startS3Alt": {
-    "message": "對比圖:免費引擎把一句話切成幾段翻譯,自備 Key 整句理解後再切回來"
+    "message": "對比圖：免費引擎把一句話切成幾段翻譯，自備 Key 整句理解後再切回來"
   },
   "startPicFree": {
     "message": "免費引擎"
@@ -607,10 +607,10 @@
     "message": "整句理解後再切回來"
   },
   "startNoSubsQ": {
-    "message": "沒出現字幕?"
+    "message": "沒出現字幕？"
   },
   "startNoSubs": {
-    "message": "按一下播放器右下角的 CC 按鈕,或換部影片試試——直播和純音樂影片通常本來就沒有字幕。"
+    "message": "按一下播放器右下角的 CC 按鈕，或換部影片試試——直播和純音樂影片通常本來就沒有字幕。"
   },
   "langManage": {
     "message": "管理語言…"
@@ -705,6 +705,12 @@
   "ttsVolLabel": {
     "message": "朗讀音量"
   },
+  "ttsGroupSetup": {
+    "message": "服務商與 Key"
+  },
+  "ttsGroupPlayback": {
+    "message": "播放"
+  },
   "ttsDuckLabel": {
     "message": "朗讀時的原聲音量"
   },
@@ -713,6 +719,9 @@
   },
   "ttsStatusOn": {
     "message": "朗讀已開"
+  },
+  "ttsOpenSettings": {
+    "message": "朗讀設定"
   },
   "ttsStatusCounts": {
     "message": "本影片 $N$ 句 · 跳過 $M$ 句",
@@ -730,5 +739,17 @@
   },
   "ttsErrNoRegion": {
     "message": "先填你 Azure Key 所在的服務區域（如 eastus）再測通。"
+  },
+  "startPicChop1": {
+    "message": "有兩個大的"
+  },
+  "startPicChop2": {
+    "message": "原因之一是"
+  },
+  "startPicWhole1": {
+    "message": "有兩個重要的原因，"
+  },
+  "startPicWhole2": {
+    "message": "第一個是……"
   }
 }

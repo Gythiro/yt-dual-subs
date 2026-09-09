@@ -6,7 +6,7 @@
     "message": "Sottotitoli bilingue per YouTube — originale e traduzione in un unico livello, senza sovrapposizioni."
   },
   "headerSub": {
-    "message": "per YouTube™ · Bilingue, un solo livello"
+    "message": "per YouTube™ · Bilingue, un solo livello"
   },
   "disclaimer": {
     "message": "Non affiliato a YouTube o Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "La veloce volpe marrone"
-  },
-  "sampleTransComma": {
-    "message": "La volpe marrone salta,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Inserisci prima l'area del servizio della tua chiave Azure (ad es. eastus)."
+  },
+  "startPicChop1": {
+    "message": "c'è due grandi"
+  },
+  "startPicChop2": {
+    "message": "motivi uno è"
+  },
+  "startPicWhole1": {
+    "message": "Ci sono due grandi motivi,"
+  },
+  "startPicWhole2": {
+    "message": "il primo è…"
+  },
+  "secLineStyle": {
+    "message": "Stile riga"
+  },
+  "ttsOpenSettings": {
+    "message": "Impostazioni lettura ad alta voce"
+  },
+  "ttsGroupSetup": {
+    "message": "Fornitore e chiave"
+  },
+  "ttsGroupPlayback": {
+    "message": "Riproduzione"
   }
 }

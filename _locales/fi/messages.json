@@ -6,7 +6,7 @@
     "message": "Kaksikieliset tekstitykset YouTubelle — alkuperäinen ja käännös samassa kerroksessa ilman päällekkäisyyttä."
   },
   "headerSub": {
-    "message": "YouTubelle™ · Kaksikielinen, yksi kerros"
+    "message": "YouTubelle™ · Kaksikielinen, yksi kerros"
   },
   "disclaimer": {
     "message": "Ei sidoksissa YouTubeen tai Googleen."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Nopea ruskea kettu"
-  },
-  "sampleTransComma": {
-    "message": "Ruskea kettu hyppää,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Anna ensin Azure-avaimesi palvelualue (esim. eastus)."
+  },
+  "startPicChop1": {
+    "message": "on kaksi isoa"
+  },
+  "startPicChop2": {
+    "message": "syytä, yksi on"
+  },
+  "startPicWhole1": {
+    "message": "On kaksi isoa syytä,"
+  },
+  "startPicWhole2": {
+    "message": "ensimmäinen on…"
+  },
+  "secLineStyle": {
+    "message": "Rivityyli"
+  },
+  "ttsOpenSettings": {
+    "message": "Lue ääneen -asetukset"
+  },
+  "ttsGroupSetup": {
+    "message": "Tarjoaja ja avain"
+  },
+  "ttsGroupPlayback": {
+    "message": "Toisto"
   }
 }

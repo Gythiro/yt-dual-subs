@@ -6,10 +6,10 @@
     "message": "YouTube 双语字幕——原文与译文单层显示,互不重叠。"
   },
   "headerSub": {
-    "message": "for YouTube™ · 双语单层字幕"
+    "message": "for YouTube™ · 双语单层字幕"
   },
   "disclaimer": {
-    "message": "非 YouTube / Google 官方出品,与其无关联。"
+    "message": "非 YouTube / Google 官方出品，与其无关联。"
   },
   "enableTitle": {
     "message": "启用 / 禁用"
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "敏捷的棕色狐狸"
-  },
-  "sampleTransComma": {
-    "message": "有两个重要的原因，"
   },
   "provQwen": {
     "message": "Alibaba 百炼 (Qwen / DeepSeek)"
@@ -106,6 +103,9 @@
   },
   "secLayout": {
     "message": "布局"
+  },
+  "secLineStyle": {
+    "message": "行样式"
   },
   "orderLabel": {
     "message": "上下顺序"
@@ -323,13 +323,13 @@
     "message": "还不会配?看教程"
   },
   "byoLocalHint": {
-    "message": "Key 只存在这台电脑的浏览器里,不会上传;字幕文本只发往你选择的服务商。"
+    "message": "Key 只存在这台电脑的浏览器里，不会上传；字幕文本只发往你选择的服务商。"
   },
   "byoErrNoProvider": {
     "message": "先选一个服务商。"
   },
   "byoErrNoKey": {
-    "message": "先填 API Key,下面的链接可以去申请。"
+    "message": "先填 API Key，下面的链接可以去申请。"
   },
   "byoErrNoModel": {
     "message": "这家需要手动填模型名。"
@@ -412,10 +412,10 @@
     "message": "使用中"
   },
   "optAfterSetup": {
-    "message": "配好之后回到扩展弹窗,把「翻译引擎」切到「自带 Key」。"
+    "message": "配好之后回到扩展弹窗，把「翻译引擎」切到「自带 Key」。"
   },
   "optTrademark": {
-    "message": "各服务商名称与标志均为其各自所有者的商标。本扩展与它们没有任何关联,也未获其背书或赞助;标志仅用于标识你所选择的接口。"
+    "message": "各服务商名称与标志均为其各自所有者的商标。本扩展与它们没有任何关联，也未获其背书或赞助；标志仅用于标识你所选择的接口。"
   },
   "optSections": {
     "message": "分区"
@@ -436,22 +436,22 @@
     "message": "打开视频就有了"
   },
   "startS1Body": {
-    "message": "任意一个有字幕的 YouTube 视频,双语字幕自动出现。"
+    "message": "任意一个有字幕的 YouTube 视频，双语字幕自动出现。"
   },
   "startS2Title": {
     "message": "想放哪儿就放哪儿"
   },
   "startS2Body": {
-    "message": "按住字幕框左上角的手柄,拖到画面任何位置。双击手柄复位。"
+    "message": "按住字幕框左上角的手柄，拖到画面任何位置。双击手柄复位。"
   },
   "startS2Alt": {
-    "message": "播放器示意图:字幕框左上角有一个六点手柄,按住可以把字幕拖到别的位置"
+    "message": "播放器示意图：字幕框左上角有一个六点手柄，按住可以把字幕拖到别的位置"
   },
   "startS3Title": {
     "message": "想要更好的译文"
   },
   "startS3Body": {
-    "message": "填上你自己的 API Key:整句翻译,还能导出整片 SRT。"
+    "message": "填上你自己的 API Key：整句翻译，还能导出整片 SRT。"
   },
   "startGoSetup": {
     "message": "去配置翻译服务"
@@ -505,10 +505,10 @@
     "message": "未验证"
   },
   "exportUsesYouTube": {
-    "message": "导出用的是 YouTube 自带的整轨翻译——免费,不消耗你的 API。"
+    "message": "导出用的是 YouTube 自带的整轨翻译——免费，不消耗你的 API。"
   },
   "exportUseByo": {
-    "message": "用自带 Key 翻译(更贴合,消耗额度)"
+    "message": "用自带 Key 翻译（更贴合，消耗额度）"
   },
   "exportByoNote": {
     "message": "整片字幕会交给你的服务商、用你的 Key 翻译,消耗额度;点导出后会先给出预估。"
@@ -589,10 +589,10 @@
     "message": "填 Base URL 或完整接口地址都行,例如 https://example.com/v1 或 https://example.com/v1/chat/completions。"
   },
   "startS1Alt": {
-    "message": "播放器示意图:画面下方是一行原文和一行译文"
+    "message": "播放器示意图：画面下方是一行原文和一行译文"
   },
   "startS3Alt": {
-    "message": "对比图:免费引擎把一句话切成几段翻译,自带 Key 整句理解后再切回来"
+    "message": "对比图：免费引擎把一句话切成几段翻译，自带 Key 整句理解后再切回来"
   },
   "startPicFree": {
     "message": "免费引擎"
@@ -607,10 +607,10 @@
     "message": "整句理解后再切回来"
   },
   "startNoSubsQ": {
-    "message": "没出现字幕?"
+    "message": "没出现字幕？"
   },
   "startNoSubs": {
-    "message": "点一下播放器右下角的 CC 按钮,或者换个视频试试——直播和纯音乐视频通常本来就没有字幕。"
+    "message": "点一下播放器右下角的 CC 按钮，或者换个视频试试——直播和纯音乐视频通常本来就没有字幕。"
   },
   "langManage": {
     "message": "管理语言…"
@@ -705,6 +705,12 @@
   "ttsVolLabel": {
     "message": "朗读音量"
   },
+  "ttsGroupSetup": {
+    "message": "服务商与 Key"
+  },
+  "ttsGroupPlayback": {
+    "message": "播放"
+  },
   "ttsDuckLabel": {
     "message": "朗读时的原声音量"
   },
@@ -713,6 +719,9 @@
   },
   "ttsStatusOn": {
     "message": "朗读已开"
+  },
+  "ttsOpenSettings": {
+    "message": "朗读设置"
   },
   "ttsStatusCounts": {
     "message": "本视频 $N$ 句 · 跳过 $M$ 句",
@@ -730,5 +739,17 @@
   },
   "ttsErrNoRegion": {
     "message": "先填你 Azure Key 所在的服务区域（如 eastus）再测通。"
+  },
+  "startPicChop1": {
+    "message": "有两个大的"
+  },
+  "startPicChop2": {
+    "message": "原因之一是"
+  },
+  "startPicWhole1": {
+    "message": "有两个重要的原因，"
+  },
+  "startPicWhole2": {
+    "message": "第一个是……"
   }
 }

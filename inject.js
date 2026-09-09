@@ -794,9 +794,14 @@
       return;
     }
     if (rateSavedBase < 0) rateSavedBase = base;
-    p.setPlaybackRate(Math.max(0.76 * base, fit));
-    rateSet = p.getPlaybackRate();              // read back: the player may
-                                                // clamp to its own steps
+    // Snap UP to the player's 0.05 steps ourselves: its own snapping rounds
+    // DOWN (measured on the real player), which would cut under the 76%
+    // floor. The epsilon keeps float dust (0.9*20 = 18.000…004) from
+    // ceiling one step too far.
+    const want = Math.max(0.76 * base, fit);
+    p.setPlaybackRate(Math.ceil(want * 20 - 1e-9) / 20);
+    rateSet = p.getPlaybackRate();              // read back all the same: the
+                                                // comparand is what it BECAME
     if (rateSet === rateSavedBase) { rateSavedBase = -1; rateSet = -1; }
   }
 

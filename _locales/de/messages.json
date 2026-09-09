@@ -6,7 +6,7 @@
     "message": "Zweisprachige Untertitel für YouTube — Original und Übersetzung in einer Ebene ohne Überlappung."
   },
   "headerSub": {
-    "message": "für YouTube™ · Zweisprachig, eine Ebene"
+    "message": "für YouTube™ · Zweisprachig, eine Ebene"
   },
   "disclaimer": {
     "message": "Nicht mit YouTube oder Google verbunden."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Der schnelle braune Fuchs"
-  },
-  "sampleTransComma": {
-    "message": "Der braune Fuchs springt,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -314,7 +311,7 @@
     "message": "Hilfe beim Einrichten?"
   },
   "byoLocalHint": {
-    "message": "Der Schlüssel bleibt in diesem Browser, auf diesem Rechner — er wird nie hochgeladen. Untertiteltext geht nur an den von Ihnen gewählten Anbieter."
+    "message": "Der Schlüssel bleibt in diesem Browser, auf diesem Rechner — er wird nie hochgeladen. Untertiteltext geht nur an den von dir gewählten Anbieter."
   },
   "byoErrNoProvider": {
     "message": "Zuerst einen Anbieter wählen."
@@ -353,7 +350,7 @@
     "message": "Dieser Endpunkt ist nicht erreichbar (Netzwerk oder regionale Einschränkung)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "Dieser Anbieter hat kein Ziel für Ihre gewählte Sprache — Sprache oder Engine ändern."
+    "message": "Dieser Anbieter hat kein Ziel für deine gewählte Sprache — Sprache oder Engine ändern."
   },
   "byoErrFailed": {
     "message": "Verbindung fehlgeschlagen. In einem Moment erneut versuchen."
@@ -362,7 +359,7 @@
     "message": "Übersetzungsdienst einrichten"
   },
   "optIntro": {
-    "message": "Wählen Sie einen Anbieter und fügen Sie Ihren eigenen API-Schlüssel ein. Der Schlüssel bleibt auf diesem Rechner, und Untertiteltext geht nur an den von Ihnen gewählten Anbieter."
+    "message": "Wähle einen Anbieter und füge deinen eigenen API-Schlüssel ein. Der Schlüssel bleibt auf diesem Rechner, und Untertiteltext geht nur an den von dir gewählten Anbieter."
   },
   "optPricingLink": {
     "message": "Preise & kostenloses Kontingent"
@@ -403,7 +400,7 @@
     "message": "in Verwendung"
   },
   "optAfterSetup": {
-    "message": "Wenn Sie hier fertig sind, öffnen Sie das Popup der Erweiterung und setzen Sie die Engine auf „Eigener Schlüssel“."
+    "message": "Wenn du hier fertig bist, öffne das Popup der Erweiterung und setze die Engine auf „Eigener Schlüssel“."
   },
   "optTrademark": {
     "message": "Alle Anbieternamen und Logos sind Marken ihrer jeweiligen Inhaber. Diese Erweiterung ist mit keinem von ihnen verbunden, wird von ihnen weder empfohlen noch gesponsert; die Marken dienen nur zur Identifizierung der gewählten API."
@@ -421,7 +418,7 @@
     "message": "Über"
   },
   "startIntro": {
-    "message": "Drei Dinge. Sie müssen nichts einrichten, um es zu nutzen."
+    "message": "Drei Dinge. Du musst nichts einrichten, um es zu nutzen."
   },
   "startS1Title": {
     "message": "Ein Video öffnen — das war’s"
@@ -448,7 +445,7 @@
     "message": "Übersetzungsdienst einrichten"
   },
   "aboutIntro": {
-    "message": "Was das ist, und wohin Ihr Text geht."
+    "message": "Was das ist, und wohin dein Text geht."
   },
   "aboutVersion": {
     "message": "Version"
@@ -457,7 +454,7 @@
     "message": "Eine zweite Untertitelzeile für YouTube: das Original in einer Zeile, die Übersetzung in der anderen, Schrift, Farbe und Position nach Wunsch. Open Source, kostenlos, ohne Werbung."
   },
   "aboutPrivacy": {
-    "message": "Wir haben keinen Server und erheben keine Statistiken. Untertiteltext geht nur an den von Ihnen gewählten Übersetzungsdienst; mit eigenem Schlüssel wird dieser nur auf diesem Computer gespeichert."
+    "message": "Wir haben keinen Server und erheben keine Statistiken. Untertiteltext geht nur an den von dir gewählten Übersetzungsdienst; mit eigenem Schlüssel wird dieser nur auf diesem Computer gespeichert."
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll"
@@ -481,16 +478,16 @@
     "message": "nicht getestet"
   },
   "exportUsesYouTube": {
-    "message": "Der Download nutzt YouTubes eigene Übersetzung der gesamten Spur — kostenlos, und Ihr API-Schlüssel wird nicht verbraucht."
+    "message": "Der Download nutzt YouTubes eigene Übersetzung der gesamten Spur — kostenlos, und dein API-Schlüssel wird nicht verbraucht."
   },
   "exportUseByo": {
     "message": "Mit meinem Schlüssel übersetzen (treffender, verbraucht Kontingent)"
   },
   "exportByoNote": {
-    "message": "Die gesamte Spur wird von Ihrem Anbieter mit Ihrem Schlüssel übersetzt. Sie sehen eine Schätzung, bevor etwas gesendet wird."
+    "message": "Die gesamte Spur wird von deinem Anbieter mit deinem Schlüssel übersetzt. Du siehst eine Schätzung, bevor etwas gesendet wird."
   },
   "exportConfirm": {
-    "message": "$N$ Untertitelzeilen mit $NAME$ übersetzen — etwa $REQ$ Anfragen gegen Ihr eigenes Kontingent. Die gesamte Spur verlässt Ihren Browser zu diesem Anbieter; während der Wiedergabe werden nur die tatsächlich angesehenen Teile gesendet.",
+    "message": "$N$ Untertitelzeilen mit $NAME$ übersetzen — etwa $REQ$ Anfragen gegen dein eigenes Kontingent. Die gesamte Spur verlässt deinen Browser zu diesem Anbieter; während der Wiedergabe werden nur die tatsächlich angesehenen Teile gesendet.",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -559,7 +556,7 @@
     "message": "Im Chrome Web Store bewerten"
   },
   "optNeedKey": {
-    "message": "Noch kein Schlüssel — dieser Anbieter kann erst verwendet werden, wenn Sie einen hinzufügen."
+    "message": "Noch kein Schlüssel — dieser Anbieter kann erst verwendet werden, wenn du einen hinzufügst."
   },
   "optBaseHint": {
     "message": "Eine Basis-URL oder ein vollständiger Endpunkt funktionieren beide, z. B. https://example.com/v1 oder https://example.com/v1/chat/completions."
@@ -586,7 +583,7 @@
     "message": "Keine Untertitel zu sehen?"
   },
   "startNoSubs": {
-    "message": "Klicken Sie auf die CC-Taste unten rechts im Player, oder versuchen Sie ein anderes Video — Livestreams und Musikvideos haben oft gar keine."
+    "message": "Klicke auf die CC-Taste unten rechts im Player, oder versuche ein anderes Video — Livestreams und Musikvideos haben oft gar keine."
   },
   "langManage": {
     "message": "Sprachen verwalten…"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Gib zuerst die Serviceregion deines Azure-Schlüssels ein (z. B. eastus)."
+  },
+  "startPicChop1": {
+    "message": "es gibt zwei große"
+  },
+  "startPicChop2": {
+    "message": "Gründe einer ist"
+  },
+  "startPicWhole1": {
+    "message": "Es gibt zwei große Gründe,"
+  },
+  "startPicWhole2": {
+    "message": "der erste ist…"
+  },
+  "secLineStyle": {
+    "message": "Zeilenstil"
+  },
+  "ttsOpenSettings": {
+    "message": "Vorlese-Einstellungen"
+  },
+  "ttsGroupSetup": {
+    "message": "Anbieter & Schlüssel"
+  },
+  "ttsGroupPlayback": {
+    "message": "Wiedergabe"
   }
 }

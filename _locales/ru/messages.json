@@ -6,7 +6,7 @@
     "message": "Двуязычные субтитры для YouTube — оригинал и перевод в одном слое без перекрытия."
   },
   "headerSub": {
-    "message": "для YouTube™ · Двуязычные, один слой"
+    "message": "для YouTube™ · Двуязычные, один слой"
   },
   "disclaimer": {
     "message": "Не связано с YouTube или Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Быстрая бурая лиса"
-  },
-  "sampleTransComma": {
-    "message": "Быстрая коричневая лиса,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Сначала введите регион службы вашего ключа Azure (например, eastus)."
+  },
+  "startPicChop1": {
+    "message": "есть две большие"
+  },
+  "startPicChop2": {
+    "message": "причины, одна —"
+  },
+  "startPicWhole1": {
+    "message": "Есть две большие причины,"
+  },
+  "startPicWhole2": {
+    "message": "первая из них —…"
+  },
+  "secLineStyle": {
+    "message": "Стиль строки"
+  },
+  "ttsOpenSettings": {
+    "message": "Настройки озвучки"
+  },
+  "ttsGroupSetup": {
+    "message": "Провайдер и ключ"
+  },
+  "ttsGroupPlayback": {
+    "message": "Воспроизведение"
   }
 }

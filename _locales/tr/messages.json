@@ -6,7 +6,7 @@
     "message": "YouTube için iki dilli altyazı — orijinal ve çeviri, çakışmayan tek katmanda."
   },
   "headerSub": {
-    "message": "YouTube™ için · İki dilli, tek katman"
+    "message": "YouTube™ için · İki dilli, tek katman"
   },
   "disclaimer": {
     "message": "YouTube veya Google ile bağlantılı değildir."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Hızlı kahverengi tilki"
-  },
-  "sampleTransComma": {
-    "message": "Kahverengi tilki atlar,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Önce Azure anahtarınızın hizmet bölgesini girin (ör. eastus)."
+  },
+  "startPicChop1": {
+    "message": "iki büyük"
+  },
+  "startPicChop2": {
+    "message": "neden var biri"
+  },
+  "startPicWhole1": {
+    "message": "İki büyük neden var,"
+  },
+  "startPicWhole2": {
+    "message": "ilki ise…"
+  },
+  "secLineStyle": {
+    "message": "Satır stili"
+  },
+  "ttsOpenSettings": {
+    "message": "Sesli okuma ayarları"
+  },
+  "ttsGroupSetup": {
+    "message": "Sağlayıcı ve anahtar"
+  },
+  "ttsGroupPlayback": {
+    "message": "Oynatma"
   }
 }

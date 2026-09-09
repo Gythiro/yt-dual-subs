@@ -668,6 +668,34 @@ function persistTts(p, typedKey) {
   });
 }
 
+// The playback half only unlocks once the STORED provider can actually sound
+// (registry hit, and a key unless the provider is keyless — the same predicate
+// the popup's card uses). The dropdown draft does not count: switching it
+// without saving changes nothing about what the engine plays with.
+function ttsReady() {
+  const p = P.tts.get(state.ttsProvider || "");
+  if (!p) return Promise.resolve(false);
+  if (p.keyless) return Promise.resolve(true);
+  return new Promise((res) => {
+    chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+      res(!!(((got && got.ttsKeys) || {})[p.id]));
+    });
+  });
+}
+
+function paintTtsUse() {
+  const use = $("ttsUse");
+  if (!use) return;
+  ttsReady().then((ready) => {
+    $("ttsNeedKey").hidden = ready;
+    use.classList.toggle("locked", !ready);
+    for (const id of ["ttsEnabled", "ttsVolume", "ttsDuckPct"]) {
+      const el = $(id);
+      if (el) el.disabled = !ready;
+    }
+  });
+}
+
 function initReadaloud() {
   const sel = $("ttsProviderSel");
   if (!sel) return;
@@ -717,6 +745,7 @@ function initReadaloud() {
   sel.value = cur.id;
   paintTtsKeyField(cur);
   paintTtsVoices(cur);
+  paintTtsUse();
 
   sel.addEventListener("change", () => {
     const p = ttsProvider();
@@ -734,7 +763,10 @@ function initReadaloud() {
     chrome.storage.local.get({ ttsKeys: {} }, (got) => {
       const keys = Object.assign({}, (got && got.ttsKeys) || {});
       delete keys[p.id];
-      chrome.storage.local.set({ ttsKeys: keys }, () => paintTtsKeyField(p));
+      chrome.storage.local.set({ ttsKeys: keys }, () => {
+        paintTtsKeyField(p);
+        paintTtsUse();             // clearing the stored provider's key re-locks
+      });
     });
   });
   $("ttsTestBtn").addEventListener("click", () => {
@@ -764,7 +796,8 @@ function initReadaloud() {
             }
           })
           .catch((err) => showTtsMsg(errText((err && err.code) || "failed"), "err"))
-          .then(() => { paintTtsKeyField(p); done(); }, () => { paintTtsKeyField(p); done(); });
+          .then(() => { paintTtsKeyField(p); paintTtsUse(); done(); },
+                () => { paintTtsKeyField(p); paintTtsUse(); done(); });
       });
     } catch (_e) {
       done();
@@ -784,7 +817,10 @@ function initStartTarget() {
   for (const info of LANGS.all()) {
     const o = document.createElement("option");
     o.value = info.code;
-    o.textContent = localName(info);
+    // The language's own name, same source as the popup's dropdown — one
+    // setting must not have two names ("中文（简体）" here, not Intl's
+    // country-flavored "中文（中国）").
+    o.textContent = info.native || localName(info);
     sel.appendChild(o);
   }
   sel.value = state.targetLang || "zh-CN";

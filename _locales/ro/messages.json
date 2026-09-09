@@ -6,7 +6,7 @@
     "message": "Subtitrări bilingve pentru YouTube — originalul și traducerea într-un singur strat, fără suprapunere."
   },
   "headerSub": {
-    "message": "pentru YouTube™ · Bilingv, un singur strat"
+    "message": "pentru YouTube™ · Bilingv, un singur strat"
   },
   "disclaimer": {
     "message": "Nu este afiliat cu YouTube sau Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Vulpea brună iute"
-  },
-  "sampleTransComma": {
-    "message": "Vulpea brună sare,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Introduceți mai întâi regiunea de serviciu a cheii Azure (de ex. eastus)."
+  },
+  "startPicChop1": {
+    "message": "sunt două mari"
+  },
+  "startPicChop2": {
+    "message": "motive unul e"
+  },
+  "startPicWhole1": {
+    "message": "Sunt două motive mari,"
+  },
+  "startPicWhole2": {
+    "message": "primul este…"
+  },
+  "secLineStyle": {
+    "message": "Stil linie"
+  },
+  "ttsOpenSettings": {
+    "message": "Setări citire vocală"
+  },
+  "ttsGroupSetup": {
+    "message": "Furnizor și cheie"
+  },
+  "ttsGroupPlayback": {
+    "message": "Redare"
   }
 }

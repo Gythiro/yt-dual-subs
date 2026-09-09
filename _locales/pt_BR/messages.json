@@ -6,7 +6,7 @@
     "message": "Legendas bilíngues para o YouTube — original e tradução numa só camada, sem sobreposição."
   },
   "headerSub": {
-    "message": "para YouTube™ · Bilíngue, camada única"
+    "message": "para YouTube™ · Bilíngue, camada única"
   },
   "disclaimer": {
     "message": "Não afiliado ao YouTube nem ao Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "A rápida raposa marrom"
-  },
-  "sampleTransComma": {
-    "message": "A raposa marrom salta,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Informe primeiro a região do serviço da sua chave do Azure (ex.: eastus)."
+  },
+  "startPicChop1": {
+    "message": "tem duas grandes"
+  },
+  "startPicChop2": {
+    "message": "razões uma é"
+  },
+  "startPicWhole1": {
+    "message": "Há duas grandes razões,"
+  },
+  "startPicWhole2": {
+    "message": "a primeira é…"
+  },
+  "secLineStyle": {
+    "message": "Estilo da linha"
+  },
+  "ttsOpenSettings": {
+    "message": "Configurações de leitura em voz alta"
+  },
+  "ttsGroupSetup": {
+    "message": "Provedor e chave"
+  },
+  "ttsGroupPlayback": {
+    "message": "Reprodução"
   }
 }

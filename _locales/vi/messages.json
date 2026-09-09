@@ -6,7 +6,7 @@
     "message": "Phụ đề song ngữ cho YouTube — bản gốc và bản dịch trong một lớp không chồng lên nhau."
   },
   "headerSub": {
-    "message": "cho YouTube™ · Song ngữ, một lớp"
+    "message": "cho YouTube™ · Song ngữ, một lớp"
   },
   "disclaimer": {
     "message": "Không liên kết với YouTube hay Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Con cáo nâu nhanh nhẹn"
-  },
-  "sampleTransComma": {
-    "message": "Con cáo nâu nhảy,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Trước tiên hãy nhập khu vực dịch vụ của khóa Azure (ví dụ: eastus)."
+  },
+  "startPicChop1": {
+    "message": "có hai cái lớn"
+  },
+  "startPicChop2": {
+    "message": "lý do một là"
+  },
+  "startPicWhole1": {
+    "message": "Có hai lý do lớn,"
+  },
+  "startPicWhole2": {
+    "message": "cái đầu tiên là…"
+  },
+  "secLineStyle": {
+    "message": "Kiểu dòng"
+  },
+  "ttsOpenSettings": {
+    "message": "Cài đặt đọc to"
+  },
+  "ttsGroupSetup": {
+    "message": "Nhà cung cấp và khóa"
+  },
+  "ttsGroupPlayback": {
+    "message": "Phát"
   }
 }

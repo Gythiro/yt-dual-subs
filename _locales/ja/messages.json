@@ -6,7 +6,7 @@
     "message": "YouTube向けバイリンガル字幕 — 原文と翻訳を重ねずに1つのレイヤーで表示。"
   },
   "headerSub": {
-    "message": "YouTube™ 向け · バイリンガル、単一レイヤー"
+    "message": "YouTube™ 向け · バイリンガル、単一レイヤー"
   },
   "disclaimer": {
     "message": "YouTube および Google とは関係ありません。"
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "すばしこい茶色のキツネ"
-  },
-  "sampleTransComma": {
-    "message": "茶色のキツネが跳び、"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio（Qwen / DeepSeek）"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "先に Azure キーのサービスリージョンを入力してください（例: eastus）。"
+  },
+  "startPicChop1": {
+    "message": "二つある大きな"
+  },
+  "startPicChop2": {
+    "message": "理由　一つは"
+  },
+  "startPicWhole1": {
+    "message": "理由は二つあって、"
+  },
+  "startPicWhole2": {
+    "message": "一つ目は…"
+  },
+  "secLineStyle": {
+    "message": "行のスタイル"
+  },
+  "ttsOpenSettings": {
+    "message": "読み上げ設定"
+  },
+  "ttsGroupSetup": {
+    "message": "プロバイダーとキー"
+  },
+  "ttsGroupPlayback": {
+    "message": "再生"
   }
 }

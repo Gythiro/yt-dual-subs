@@ -1005,16 +1005,28 @@
   let ttsAudio = null;
   let ttsBlobUrl = "";
   let ttsSpokenIdx = -1;        // last cue index we started speaking
+  let ttsNext = null;           // { idx, text, audio, url } — the NEXT line,
+                                // fetched and decoded while the current one
+                                // speaks, so its cue starts with zero latency
+                                // (synthesis latency is what eats the cue
+                                // window and gets lines cut — measured live)
   let ttsSpoken = 0;            // lines spoken on THIS video (popup status)
   let ttsSkipped = 0;           // lines skipped on this video — a line whose
                                 // translation wasn't ready, or whose synthesis
                                 // failed; nav resets both
+
+  function ttsDropNext() {
+    if (!ttsNext) return;
+    try { URL.revokeObjectURL(ttsNext.url); } catch (_e) { /* ignore */ }
+    ttsNext = null;
+  }
 
   function ttsStop(navigated) {
     ttsEpoch++;
     ttsSpokenIdx = -1;
     if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } ttsAudio = null; }
     if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } ttsBlobUrl = ""; }
+    ttsDropNext();
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: false, nav: !!navigated }, "*"); }
     catch (_e) { /* ignore */ }
   }
@@ -1033,10 +1045,119 @@
   // What the user is reading right now — the only text worth speaking. "…" is
   // the in-flight placeholder, and same-language videos have nothing to speak.
   // null = nothing to speak, ever (not a skip); "" = not ready (a skip).
+  // A line that is nothing but a bracketed stage note — （笑声）/(Applause)/
+  // [Music] — or a ♪ lyric marker has no voice to give it: null, not a skip.
+  const TTS_STAGE_NOTE = /^[（(\[【〔♪♫♬].*[）)\]】〕♪♫♬]$/;
   function ttsSpeakableText() {
     if (cueSameLang || !transEl) return null;
     const text = (transEl.textContent || "").trim();
-    return text === "…" ? "" : text;
+    if (text === "…") return "";
+    if (TTS_STAGE_NOTE.test(text) || text.charAt(0) === "♪") return null;
+    return text;
+  }
+
+  function ttsDecode(b64, mime) {
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const url = URL.createObjectURL(new Blob([bytes], { type: mime || "audio/mpeg" }));
+    return { url, audio: new Audio(url) };
+  }
+
+  // Fit the line into what is LEFT of its cue at the moment it can start —
+  // the full cue length would understate the squeeze once any latency has
+  // spent part of it. Mild speech speed-up first (past 1.4× turns into
+  // chipmunk); when even 1.4× cannot fit, return the absolute video rate at
+  // which it just would, and inject.js slows toward it (never below 76% of
+  // the user's own rate). Still not enough? The line runs long and the next
+  // line's start wins.
+  function ttsFitFor(audio, cue, next) {
+    const durMs = (audio.duration || 0) * 1000;
+    const v = getVideo();
+    const vRate = (v && v.playbackRate) || 1;
+    // The line's real window runs to the NEXT line's start, not to its own
+    // cue end — the gap between cues is free speaking time (the competitor's
+    // continuous track eats it too), and an overlapping next cue takes over
+    // at ITS start, making the window honestly shorter.
+    const endMs = next && next.start != null ? next.start
+      : (cue && cue.end != null ? cue.end : 0);
+    const leftMs = Math.max(300, v && endMs
+      ? endMs - v.currentTime * 1000
+      : (cue && cue.dur) || 0);
+    const needRate = (durMs * vRate) / leftMs;
+    let fit;
+    if (needRate > 1) {
+      audio.playbackRate = Math.min(1.4, needRate);
+      if (needRate > 1.4) fit = (1.4 * leftMs) / durMs;
+    }
+    return fit;
+  }
+
+  // Fetch the NEXT line while the current one speaks, decoded to a ready
+  // Audio — its cue then starts with zero latency. Synthesis latency is what
+  // eats the cue window and got lines cut mid-word (measured live; the
+  // competitor avoids it by pre-synthesizing everything). Whole-track cues
+  // carry the translation; other engines fall back to the network path,
+  // which the grace window still softens.
+  function ttsPrefetch(idx) {
+    ttsDropNext();
+    const next = cueList && cueList[idx + 1];
+    const ntext = next && typeof next.trans === "string" ? next.trans.trim() : "";
+    if (!ntext || TTS_STAGE_NOTE.test(ntext) || ntext.charAt(0) === "♪") return;
+    const nEpoch = ttsEpoch;
+    extCall(() => chrome.runtime.sendMessage(
+      { type: "ttsSpeak", text: ntext, targetLang: settings.targetLang }, (resp) => {
+        if (chrome.runtime.lastError) return;
+        if (nEpoch !== ttsEpoch || !resp || !resp.ok || !resp.b64) return;
+        if (ttsNext) return;               // a newer prefetch already landed
+        try {
+          const d = ttsDecode(resp.b64, resp.mime);
+          ttsNext = { idx: idx + 1, text: ntext, audio: d.audio, url: d.url };
+        } catch (_e) { /* best-effort */ }
+      }));
+  }
+
+  // Put ONE decoded line on air: wait out the grace window, take over from
+  // the sounding line, size the fit at the true start moment, play, and arm
+  // the next line's prefetch.
+  function ttsPlay(idx, cue, audio, url, myEpoch) {
+    const takeover = () => {
+      if (myEpoch !== ttsEpoch || idx !== activeCueIdx) {
+        // superseded while waiting: this line never played, free its bytes
+        try { URL.revokeObjectURL(url); } catch (_e) { /* ignore */ }
+        return;
+      }
+      const prev = ttsAudio, prevUrl = ttsBlobUrl;
+      if (prev) { try { prev.pause(); } catch (_e) { /* ignore */ } }
+      if (prevUrl) { try { URL.revokeObjectURL(prevUrl); } catch (_e) { /* ignore */ } }
+      ttsAudio = audio;
+      ttsBlobUrl = url;
+      audio.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
+      audio.addEventListener("ended", () => {
+        if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
+        ttsDuck(false);
+      });
+      ttsDuck(true, ttsFitFor(audio, cue, cueList && cueList[idx + 1]));
+      ttsSpoken++;
+      audio.play().catch(() => { if (myEpoch === ttsEpoch) ttsDuck(false); });
+    };
+    const arm = () => {
+      // GRACE: when the sounding line is within a breath of finishing, let
+      // it say its last word and start this one right after — a line cut
+      // mid-syllable is the louder wrong. Anything longer still yields:
+      // the next line's start wins, as designed.
+      const prev = ttsAudio;
+      const prevLeft = prev && !prev.paused && !prev.ended && isFinite(prev.duration)
+        ? Math.max(0, (prev.duration - prev.currentTime) / (prev.playbackRate || 1) * 1000)
+        : 0;
+      if (prevLeft > 0 && prevLeft <= 400) setTimeout(takeover, prevLeft + 30);
+      else takeover();
+    };
+    if (isFinite(audio.duration) && audio.duration > 0) arm();
+    else audio.addEventListener("loadedmetadata", () => {
+      if (myEpoch !== ttsEpoch) return;
+      arm();
+    }, { once: true });
   }
 
   function ttsOnCue(idx, cue) {
@@ -1047,58 +1168,27 @@
     if (!text) { ttsSkipped++; return; }     // not ready at cue start: skip, never catch up
     ttsSpokenIdx = idx;
     const myEpoch = ttsEpoch;
+    // The prefetched line, if it is THIS line, goes on air with no round-trip.
+    const pre = ttsNext && ttsNext.idx === idx && ttsNext.text === text ? ttsNext : null;
+    if (pre) ttsNext = null;                 // consumed — ttsPlay owns the url now
+    // Arm the NEXT line's prefetch on every cue, not after a successful play:
+    // in a run of short lines the first synthesis comes back after its cue has
+    // passed, and a prefetch gated on playing would never start — the whole
+    // run stays silent (measured live). Arming here makes line N+1 ready even
+    // when line N loses its race, so the chain always ignites.
+    ttsPrefetch(idx);
+    if (pre) {
+      ttsPlay(idx, cue, pre.audio, pre.url, myEpoch);
+      return;
+    }
     extCall(() => chrome.runtime.sendMessage(
       { type: "ttsSpeak", text, targetLang: settings.targetLang }, (resp) => {
       if (chrome.runtime.lastError) return;
       if (myEpoch !== ttsEpoch || idx !== activeCueIdx) return;   // stale by now
       if (!resp || !resp.ok || !resp.b64) { ttsSkipped++; return; } // quiet skip; options page diagnoses
       try {
-        const bin = atob(resp.b64);
-        const bytes = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-        if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } }
-        if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } }
-        ttsBlobUrl = URL.createObjectURL(new Blob([bytes], { type: resp.mime || "audio/mpeg" }));
-        const audio = new Audio(ttsBlobUrl);
-        audio.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
-        ttsAudio = audio;
-        audio.addEventListener("loadedmetadata", () => {
-          if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
-          // Fit the line into its cue: mild speech speed-up first — anything
-          // past 1.4× turns into chipmunk. When even 1.4× cannot fit, share
-          // the burden with the video for this one line: pass the absolute
-          // rate at which 1.4× speech just fits, and inject.js slows toward
-          // it (never below 76% of the user's own rate — the proven clamp).
-          // Still not enough? The line runs long and the next line's start
-          // wins (pause above). The blob is local, so metadata fires before
-          // play() has audio to start: duck sits here to ride one message.
-          const durMs = (audio.duration || 0) * 1000;
-          const cueMs = Math.max(300, (cue && cue.dur) || 0);
-          const v = getVideo();
-          const vRate = (v && v.playbackRate) || 1;   // wall-clock cue length is cueMs/vRate
-          const needRate = (durMs * vRate) / cueMs;   // speech rate that would just fit
-          let fit;
-          if (needRate > 1) {
-            audio.playbackRate = Math.min(1.4, needRate);
-            if (needRate > 1.4) fit = (1.4 * cueMs) / durMs;
-          }
-          ttsDuck(true, fit);
-        });
-        audio.addEventListener("ended", () => {
-          if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
-          ttsDuck(false);
-        });
-        ttsSpoken++;
-        audio.play().catch(() => { if (myEpoch === ttsEpoch) ttsDuck(false); });
-        // Warm the worker's cache for the next line so its start is not spent
-        // on the network. Fire-and-forget: the bytes are not kept here.
-        const next = cueList && cueList[idx + 1];
-        if (next && next.trans) {
-          extCall(() => chrome.runtime.sendMessage(
-            { type: "ttsSpeak", text: next.trans, targetLang: settings.targetLang }, () => {
-              if (chrome.runtime.lastError) return;
-            }));
-        }
+        const d = ttsDecode(resp.b64, resp.mime);
+        ttsPlay(idx, cue, d.audio, d.url, myEpoch);
       } catch (_e) { ttsDuck(false); }
     }));
   }

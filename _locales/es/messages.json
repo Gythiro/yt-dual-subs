@@ -6,7 +6,7 @@
     "message": "Subtítulos bilingües para YouTube: original y traducción en una sola capa, sin solaparse."
   },
   "headerSub": {
-    "message": "para YouTube™ · Bilingüe, una sola capa"
+    "message": "para YouTube™ · Bilingüe, una sola capa"
   },
   "disclaimer": {
     "message": "No está afiliado a YouTube ni a Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "El veloz zorro marrón"
-  },
-  "sampleTransComma": {
-    "message": "El rápido zorro marrón,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Introduce primero la región del servicio de tu clave de Azure (p. ej. eastus)."
+  },
+  "startPicChop1": {
+    "message": "hay dos grandes"
+  },
+  "startPicChop2": {
+    "message": "razones una es"
+  },
+  "startPicWhole1": {
+    "message": "Hay dos grandes razones,"
+  },
+  "startPicWhole2": {
+    "message": "la primera es…"
+  },
+  "secLineStyle": {
+    "message": "Estilo de línea"
+  },
+  "ttsOpenSettings": {
+    "message": "Ajustes de lectura en voz alta"
+  },
+  "ttsGroupSetup": {
+    "message": "Proveedor y clave"
+  },
+  "ttsGroupPlayback": {
+    "message": "Reproducción"
   }
 }

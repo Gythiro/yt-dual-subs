@@ -394,6 +394,58 @@ async function refreshTtsStatus() {
   el.hidden = false;
 }
 
+// ---- read-aloud card ---------------------------------------------------------
+// The switch and the volume are per-video decisions, so they live here at one
+// hop; voice, region and ducking stay on the options page behind the status
+// button (HCI audit, 设计规范 §5). Exactly one of the two head rows shows.
+async function paintTtsCard() {
+  let ready = false;
+  try {
+    const got = await new Promise((res) =>
+      chrome.storage.sync.get({ ttsProvider: "" }, res));
+    const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts.get(got && got.ttsProvider);
+    if (p) {
+      // "keyless" is the hook for the built-in speechSynthesis engine; every
+      // provider shipped today needs its key before the switch is honest.
+      if (p.keyless) {
+        ready = true;
+      } else {
+        const loc = await new Promise((res) =>
+          chrome.storage.local.get({ ttsKeys: {} }, res));
+        ready = !!((loc && loc.ttsKeys) || {})[p.id];
+      }
+    }
+  } catch (_e) { /* unconfigured is the safe face */ }
+  $("ttsSetupRow").hidden = ready;
+  $("ttsSwitchRow").hidden = !ready;
+  $("ttsEnabledChk").checked = !!state.ttsEnabled;
+  // The slider only while it would be audible: a volume control for a switch
+  // that is off promises something the off state cannot deliver.
+  $("ttsVolRow").hidden = !(ready && state.ttsEnabled);
+  $("ttsVol").value = state.ttsVolume;
+  $("ttsVolV").textContent = state.ttsVolume + "%";
+}
+
+// ---- line-style card fold ----------------------------------------------------
+// Folded by default; opening it sticks (storage.local, per machine — screen
+// habits are not preferences worth syncing). The ten controls then only occupy
+// the popup for people actually styling their lines.
+function setLineFold(open, persist) {
+  $("lineCard").classList.toggle("open", !!open);
+  $("lineFold").setAttribute("aria-expanded", String(!!open));
+  $("lineBody").hidden = !open;
+  if (persist) {
+    try { chrome.storage.local.set({ uiLineOpen: !!open }); } catch (_e) { /* ignore */ }
+  }
+}
+function initLineFold() {
+  try {
+    chrome.storage.local.get({ uiLineOpen: false }, (got) => {
+      setLineFold(!!(got && got.uiLineOpen), false);
+    });
+  } catch (_e) { /* stays folded */ }
+}
+
 // ---- diagnostics ------------------------------------------------------------
 // One click, one plain-text bundle: exactly the facts a "translations don't
 // show up" report needs and that no user ever types by hand (store reviews
@@ -532,6 +584,9 @@ function paintByoPanel() {
       sum.textContent = keys[p.id]
         ? label + (model ? " · " + model : "")
         : label + " — " + notSet;
+      // The model id is the part users compare against a bill or a doc, and in
+      // long-label locales the row ellipsizes it — hover keeps the full text.
+      sum.title = sum.textContent;
       return;
     }
 
@@ -861,6 +916,26 @@ function wire() {
   const pick = $("byoPick");
   if (pick) pick.addEventListener("change", onPickProvider);
 
+  // ---- read-aloud card ---
+  // Both doors land on the read-aloud pane: the empty state to set it up, the
+  // status line for the low-frequency knobs (voice, region, ducking).
+  $("ttsConfigure").addEventListener("click", () => toOptions("#readaloud"));
+  $("ttsStatus").addEventListener("click", () => toOptions("#readaloud"));
+  $("ttsEnabledChk").addEventListener("change", (e) => {
+    setKey("ttsEnabled", e.target.checked);
+    paintTtsCard();                // the volume row follows the switch
+    refreshTtsStatus();            // and the status line follows both
+  });
+  $("ttsVol").addEventListener("input", (e) => {
+    $("ttsVolV").textContent = e.target.value + "%";
+    setKey("ttsVolume", +e.target.value);   // content.js re-levels a playing line
+  });
+
+  // line-style card fold
+  $("lineFold").addEventListener("click", () => {
+    setLineFold($("lineBody").hidden, true);
+  });
+
   // segmented: order
   document.querySelectorAll("#order button").forEach((b) =>
     b.addEventListener("click", () => { setKey("order", b.dataset.val); paintSegs(); }));
@@ -954,6 +1029,7 @@ function wire() {
     bindUI();
     refreshEngineStatus();
     refreshTtsStatus();              // reset turned read-aloud off: hide its line
+    paintTtsCard();                  // …and put the switch row back to unchecked
   });
 }
 
@@ -1036,8 +1112,10 @@ self.YTDS_I18N.init().then(() => {
     showVersion();
     bindUI();
     wire();
+    initLineFold();
     refreshEngineStatus();
     refreshTtsStatus();
+    paintTtsCard();
     resumeExport();
   });
 });

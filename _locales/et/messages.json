@@ -6,7 +6,7 @@
     "message": "Kakskeelsed subtiitrid YouTube'ile — originaal ja tõlge ühes kattumiseta kihis."
   },
   "headerSub": {
-    "message": "YouTube™ jaoks · Kakskeelne, üks kiht"
+    "message": "YouTube™ jaoks · Kakskeelne, üks kiht"
   },
   "disclaimer": {
     "message": "Ei ole seotud YouTube'i ega Google'iga."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Kiire pruun rebane"
-  },
-  "sampleTransComma": {
-    "message": "Pruun rebane hüppab,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Sisesta esmalt oma Azure’i võtme teenusepiirkond (nt eastus)."
+  },
+  "startPicChop1": {
+    "message": "on kaks suurt"
+  },
+  "startPicChop2": {
+    "message": "põhjust üks on"
+  },
+  "startPicWhole1": {
+    "message": "On kaks suurt põhjust,"
+  },
+  "startPicWhole2": {
+    "message": "esimene neist on…"
+  },
+  "secLineStyle": {
+    "message": "Rea stiil"
+  },
+  "ttsOpenSettings": {
+    "message": "Ettelugemise seaded"
+  },
+  "ttsGroupSetup": {
+    "message": "Teenusepakkuja ja võti"
+  },
+  "ttsGroupPlayback": {
+    "message": "Taasesitus"
   }
 }

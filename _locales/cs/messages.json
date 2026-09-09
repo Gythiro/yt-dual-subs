@@ -6,7 +6,7 @@
     "message": "Dvojjazyčné titulky pro YouTube — originál a překlad v jedné vrstvě, bez překrývání."
   },
   "headerSub": {
-    "message": "pro YouTube™ · Dvojjazyčné, jedna vrstva"
+    "message": "pro YouTube™ · Dvojjazyčné, jedna vrstva"
   },
   "disclaimer": {
     "message": "Není přidruženo k YouTube ani Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Rychlá hnědá liška"
-  },
-  "sampleTransComma": {
-    "message": "Hnědá liška skáče,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Nejprve zadejte oblast služby svého klíče Azure (např. eastus)."
+  },
+  "startPicChop1": {
+    "message": "jsou dva velké"
+  },
+  "startPicChop2": {
+    "message": "důvody první je"
+  },
+  "startPicWhole1": {
+    "message": "Jsou dva velké důvody,"
+  },
+  "startPicWhole2": {
+    "message": "ten první je…"
+  },
+  "secLineStyle": {
+    "message": "Styl řádku"
+  },
+  "ttsOpenSettings": {
+    "message": "Nastavení čtení nahlas"
+  },
+  "ttsGroupSetup": {
+    "message": "Poskytovatel a klíč"
+  },
+  "ttsGroupPlayback": {
+    "message": "Přehrávání"
   }
 }

@@ -2,12 +2,14 @@
    duplicated on purpose (popup.css pins body width to 360px, so it cannot be
    linked here). Keep the two token blocks in step. */
 :root {
-  --bg: #0f0f0f;
-  --surface: #181818;
-  --surface-2: #212121;
-  --line: #303030;
+  /* Option C "surface" (2026-08-21, the picked palette): the neutral greys move to a
+     slightly cool tint — tinted, never pure (craft-floor). */
+  --bg: #0e0f11;
+  --surface: #17181b;
+  --surface-2: #1f2124;
+  --line: #27292c;
   --txt: #f1f1f1;
-  --muted: #aaaaaa;
+  --muted: #b6b9be;
   --accent: #3ea6ff;
   --accent-dim: rgba(62, 166, 255, 0.16);
   --radius: 10px;
@@ -23,6 +25,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--txt);
+  line-break: strict;          /* CJK kinsoku: no line-initial ー / small kana */
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC",
                "Microsoft YaHei", sans-serif;
   line-height: 1.5;
@@ -31,8 +34,18 @@ body {
 button, input, select { font-family: inherit; }
 button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline-offset: 2px;
 }
+
+/* Option C: the browser-default surfaces come from OUR palette, not the UA's
+   (selection, scrollbar, control accents, link underlines). */
+::selection { background: var(--accent-dim); color: var(--txt); }
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-thumb { background: #3a3d41; border-radius: 8px; }
+body::-webkit-scrollbar-thumb:hover { background: #4a4e53; }
+body::-webkit-scrollbar-track { background: transparent; }
+input[type="range"], input[type="checkbox"] { accent-color: var(--accent); }
+a { text-underline-offset: 3px; }
 
 /* ------------------------------- header --------------------------------- */
 .ohd {
@@ -41,7 +54,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 }
 .ohd-mark { flex: none; line-height: 0; }
 .ohd h1 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: .2px; }
-.ohd-sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; max-width: 62ch; }
+.ohd-sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; max-width: 62ch; text-wrap: balance; }
 
 /* -------------------------------- layout -------------------------------- */
 .owrap {
@@ -54,9 +67,11 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 
 .olabel {
   margin: 0 0 8px;
-  font-size: 11px; font-weight: 600; color: var(--muted);
-  text-transform: uppercase; letter-spacing: 1px;
+  font-size: 11px; font-weight: 600; color: #8c9095;
+  text-transform: uppercase; letter-spacing: 1.7px;
 }
+/* a group label mid-section: more air above than below (设计规范 §2) */
+.olabel-gap { margin-top: 14px; }
 
 /* ------------------------------ section nav ------------------------------ */
 .oside { display: flex; flex-direction: column; gap: 18px; }
@@ -83,13 +98,25 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 .odetail.ostart {
   background: transparent; border: 0; padding: 0; gap: 0;
 }
+/* The translation-language confirm block: the one decision this page asks of
+   a fresh install, carded so it reads as one thing (it used to be a bare row
+   and a hint floating over the steps — the ugliest corner of the page). */
+.otgt {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 15px 18px 13px; margin-bottom: 24px;
+}
+.otgt .orow label { flex: none; white-space: nowrap; font-weight: 600; }
+.otgt select { flex: 1; min-width: 0; }
+.otgt .ohint { margin: 9px 1px 0; font-size: 12px; line-height: 1.55; }
 .osteps { list-style: none; margin: 0; padding: 0; }
 .ostep {
   display: grid; grid-template-columns: 1fr 260px; gap: 26px; align-items: center;
-  padding: 22px 24px; margin-bottom: 14px;
+  padding: 22px 24px; margin-bottom: 16px;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
 }
 .ostep:nth-child(even) { grid-template-columns: 260px 1fr; }
+/* The comparison needs more room than a drawing: two text cards side by side. */
+.ostep:has(.ocmp-pair) { grid-template-columns: 1fr 310px; }
 .ostep:nth-child(even) .ostep-txt { order: 2; }
 .ostep:nth-child(even) .ostep-art { order: 1; }
 .ostep-n {
@@ -98,12 +125,58 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
   background: var(--accent-dim); color: var(--accent);
   font-size: 14.5px; font-weight: 700; margin-bottom: 11px;
 }
-.ostep h2 { margin: 0 0 7px; font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
-.ostep p { margin: 0; color: var(--muted); font-size: 14.5px; }
-.odemo { border-radius: 9px; overflow: hidden; }
+.ostep h2 { margin: 0 0 7px; font-size: 18px; font-weight: 600; letter-spacing: -.01em; text-wrap: balance; }
+/* Scoped to the text column: a bare `.ostep p` used to reach into the
+   comparison cards and flatten their colored lines (cascade audit, R2). */
+.ostep-txt p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.odemo { border-radius: 9px; overflow: hidden; position: relative; container-type: inline-size; }
 /* Sized here, not on the element: height="auto" is not a valid SVG attribute
    and Chrome logs it as a page error. */
 .odemo svg { display: block; width: 100%; height: auto; }
+
+/* The subtitle captions inside the step drawings, as HTML overlays positioned
+   over the svg's caption boxes (spec §6-3: no typeset text inside SVG). The
+   font tracks the drawing's width via container units; a line that still does
+   not fit ellipsizes — which is what a real subtitle box would do. */
+.odemo-cap {
+  position: absolute; display: flex; flex-direction: column;
+  justify-content: center; gap: 1cqw; padding: 0 3cqw; overflow: hidden;
+}
+.odemo-cap p {
+  margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  line-height: 1.35;
+}
+.odemo-cap .cap-orig { color: #fff; font-size: clamp(8px, 3.6cqw, 11.5px); }
+.odemo-cap .cap-trans { color: #ffe98a; font-size: clamp(9px, 4cqw, 12.5px); }
+.cap-s1  { left: 20.67%; top: 45.29%; width: 58.67%; height: 25.88%; }
+.cap-s2a { left: 20.67%; top: 17.37%; width: 58.67%; height: 23.16%; opacity: .3; }
+.cap-s2b { left: 20.67%; top: 59.47%; width: 58.67%; height: 23.16%; }
+
+/* The free-vs-own-key comparison, as HTML so every line can wrap in every
+   locale (spec §6-3). The two cards stretch to one height and their note
+   lines sit on one baseline; the chopped side spaces its orig/trans PAIRS
+   apart (that is the "chopped" feel), the whole side keeps its sentence
+   together. */
+.ocmp-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ocmp { display: flex; flex-direction: column; min-width: 0; }
+.ocmp-h {
+  margin: 0 0 7px 2px; font-size: 10.5px; letter-spacing: .4px;
+  text-transform: uppercase; color: var(--muted);
+  min-height: 2.8em; display: flex; align-items: flex-end;   /* two-line worst case: cards stay level */
+}
+.ocmp-h.on { color: var(--accent); font-weight: 600; }
+.ocmp-card {
+  background: #000; border: 1px solid var(--line); border-radius: 8px;
+  padding: 12px 12px 10px; flex: 1;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.ocmp-card.on { border-color: var(--accent); }
+.ocmp-card p { overflow-wrap: break-word; min-width: 0; }
+.ocmp-orig { margin: 0; color: #fff; font-size: 11px; }
+.ocmp-trans { margin: 0; color: #ffe98a; font-size: 12px; }
+.ocmp-card:not(.on) .ocmp-trans { margin-bottom: 7px; }   /* pair gaps = chopped */
+.ocmp-note { margin: auto 0 0; padding-top: 8px; color: #8a8a8a; font-size: 10.5px; text-wrap: balance; }
+.ocmp-note.on { color: var(--muted); }
 .ostart-cta { margin-top: 15px; }
 .ostart-foot {
   margin: 6px 0 0; padding-top: 17px; border-top: 1px solid var(--line);
@@ -113,7 +186,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 
 /* One column well before the drawings get too narrow to read. */
 @media (max-width: 860px) {
-  .ostep, .ostep:nth-child(even) { grid-template-columns: 1fr; gap: 18px; }
+  .ostep, .ostep:nth-child(even), .ostep:has(.ocmp-pair) { grid-template-columns: 1fr; gap: 18px; }
   .ostep:nth-child(even) .ostep-txt { order: 1; }
   .ostep:nth-child(even) .ostep-art { order: 2; }
 }
@@ -248,7 +321,7 @@ input[type="text"], input[type="url"], input[type="password"], select {
   background: var(--surface-2); color: var(--txt);
   border: 1px solid var(--line); border-radius: 8px;
 }
-input::placeholder { color: #6d6d6d; }
+input::placeholder { color: #8c9095; }   /* token-table grey, 5.0:1 on surface-2 (spec §2) */
 input[hidden] { display: none; }
 
 .orow { display: flex; gap: 9px; align-items: center; }
@@ -261,6 +334,13 @@ input[hidden] { display: none; }
 #ttsRegionRow > label { flex: none; white-space: nowrap; }
 #ttsRegionRow input { flex: 1; min-width: 0; }
 .orow[hidden] { display: none; }
+
+/* Slider rows stack: label + readout above, full-width track below — the
+   readouts form a column whatever length the locale's label is. */
+.orow:has(> input[type="range"]) { flex-direction: column; align-items: stretch; gap: 7px; }
+.orow:has(> input[type="range"]) > label {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+}
 
 /* ranges (read-aloud loudness) — same look as the popup's sliders */
 .orow input[type="range"] {
@@ -281,7 +361,7 @@ input[hidden] { display: none; }
 .orow label b {
   font-weight: 600; color: var(--accent);
   font-variant-numeric: tabular-nums;
-  display: inline-block; min-width: 4ch;
+  display: inline-block; min-width: 4ch; text-align: right;
 }
 
 .obtn {
@@ -297,15 +377,25 @@ input[hidden] { display: none; }
 .obtn:hover { filter: brightness(1.1); }
 .obtn:disabled { opacity: .6; cursor: default; }
 
+/* read-aloud playback half: same column rhythm as the section, and a locked
+   face while the stored provider has no key — the inputs carry the real
+   `disabled`, the class only dims what they cannot do. */
+.otts-use { display: flex; flex-direction: column; gap: 16px; }
+.otts-use.locked { opacity: .55; }
+.otts-use.locked .ochk, .otts-use.locked input { cursor: default; }
+
 .ochk { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); cursor: pointer; }
 /* Drawn by hand rather than left to the platform: an unchecked native checkbox
    stamps a white square onto the dark card even with color-scheme: dark. */
 .ochk input {
   appearance: none; -webkit-appearance: none; margin: 0;
   width: 14px; height: 14px; cursor: pointer;
-  background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px;
+  /* Border one step brighter than --line: on the card the unchecked box was
+     near-invisible (audit P2), and a control you cannot find is not a control. */
+  background: var(--surface-2); border: 1px solid #4a4e53; border-radius: 4px;
   display: inline-grid; place-items: center;
 }
+.ochk:hover input:not(:checked) { border-color: var(--muted); }
 .ochk input:checked { background: var(--accent); border-color: var(--accent); }
 .ochk input:checked::after {
   content: "✓"; font-size: 10px; font-weight: 700; line-height: 1; color: #06121f;
@@ -337,5 +427,5 @@ input[hidden] { display: none; }
   font-size: 12px; color: var(--muted);
 }
 .oft p { margin: 0; max-width: 78ch; }
-.odim { color: #7a7a7a; font-size: 11.5px; }
+.odim { color: #82868c; font-size: 11.5px; text-wrap: pretty; }   /* tinted, 5.2:1 on bg (spec §2) */
 .oft a { color: var(--accent); }

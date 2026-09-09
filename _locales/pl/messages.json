@@ -6,7 +6,7 @@
     "message": "Dwujęzyczne napisy do YouTube — oryginał i tłumaczenie w jednej, nienakładającej się warstwie."
   },
   "headerSub": {
-    "message": "do YouTube™ · Dwujęzyczne, jedna warstwa"
+    "message": "do YouTube™ · Dwujęzyczne, jedna warstwa"
   },
   "disclaimer": {
     "message": "Niepowiązane z YouTube ani Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "Szybki brązowy lis"
-  },
-  "sampleTransComma": {
-    "message": "Brązowy lis skacze,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -730,5 +727,29 @@
   },
   "ttsErrNoRegion": {
     "message": "Najpierw wprowadź region usługi swojego klucza Azure (np. eastus)."
+  },
+  "startPicChop1": {
+    "message": "są dwa duże"
+  },
+  "startPicChop2": {
+    "message": "powody jeden to"
+  },
+  "startPicWhole1": {
+    "message": "Są dwa duże powody,"
+  },
+  "startPicWhole2": {
+    "message": "pierwszy to…"
+  },
+  "secLineStyle": {
+    "message": "Styl wiersza"
+  },
+  "ttsOpenSettings": {
+    "message": "Ustawienia czytania na głos"
+  },
+  "ttsGroupSetup": {
+    "message": "Dostawca i klucz"
+  },
+  "ttsGroupPlayback": {
+    "message": "Odtwarzanie"
   }
 }

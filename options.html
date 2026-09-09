@@ -118,14 +118,23 @@
          the page reads as the thing it describes.
          Step 2 exists because two separate users reported "there are only three
          positions" for a box that has been freely draggable since 3.2. -->
+    <!-- Two demo-sentence families ON PURPOSE: steps 1-2 show the overlay's
+         FORM and reuse sampleOrig/sampleTrans — the same pair the popup's live
+         preview shows, so the page previews the product consistently. Step 3
+         compares translation QUALITY and needs its own chop/whole pair
+         (startPicChop*/Whole*). Unifying them would break one or the other. -->
     <section class="odetail ostart" id="secStart" hidden>
-      <div class="orow">
-        <label for="startTargetSel" data-i18n="startTargetLabel">译文语言</label>
-        <select id="startTargetSel"></select>
+      <!-- The single decision a fresh install asks for — one card, not loose
+           controls floating over the steps. -->
+      <div class="otgt">
+        <div class="orow">
+          <label for="startTargetSel" data-i18n="startTargetLabel">译文语言</label>
+          <select id="startTargetSel"></select>
+        </div>
+        <p class="ohint" data-i18n="startTargetHint">
+          装好时按你浏览器的语言偏好猜了一个。不对就在这里换，之后也随时能在弹窗里改。
+        </p>
       </div>
-      <p class="ohint" data-i18n="startTargetHint">
-        装好时按你浏览器的语言偏好猜了一个。不对就在这里换，之后也随时能在弹窗里改。
-      </p>
       <ol class="osteps">
         <li class="ostep">
           <div class="ostep-txt">
@@ -143,12 +152,12 @@
                 <rect x="183" y="155" width="103" height="3" rx="1.5" fill="#4a4a4a"/>
                 <g>
                   <rect x="62" y="77" width="176" height="44" rx="6" fill="#080808" opacity=".62"/>
-                  <text x="70" y="92" fill="#fff" font-size="10.5"
-                        font-family="system-ui, sans-serif" data-i18n="sampleOrig">There's two big reasons</text>
-                  <text x="70" y="111" fill="#ffe98a" font-size="11.5"
-                        font-family="system-ui, sans-serif" data-i18n="sampleTrans">有两个重要的原因</text>
                 </g>
               </svg>
+              <div class="odemo-cap cap-s1" aria-hidden="true">
+                <p class="cap-orig" data-i18n="sampleOrig">There's two big reasons</p>
+                <p class="cap-trans" data-i18n="sampleTrans">有两个重要的原因</p>
+              </div>
             </div>
           </div>
         </li>
@@ -172,10 +181,6 @@
                 <rect x="183" y="175" width="103" height="3" rx="1.5" fill="#4a4a4a"/>
                 <g opacity=".3">
                   <rect x="62" y="33" width="176" height="44" rx="6" fill="#080808" opacity=".62"/>
-                  <text x="70" y="48" fill="#fff" font-size="10.5"
-                        font-family="system-ui, sans-serif" data-i18n="sampleOrig">There's two big reasons</text>
-                  <text x="70" y="67" fill="#ffe98a" font-size="11.5"
-                        font-family="system-ui, sans-serif" data-i18n="sampleTrans">有两个重要的原因</text>
                 </g>
                 <g transform="translate(62 9)">
                   <rect width="21" height="21" rx="6" fill="#1b1b1b" stroke="var(--accent)"/>
@@ -191,10 +196,6 @@
                       fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 <g>
                   <rect x="62" y="113" width="176" height="44" rx="6" fill="#080808" opacity=".62"/>
-                  <text x="70" y="128" fill="#fff" font-size="10.5"
-                        font-family="system-ui, sans-serif" data-i18n="sampleOrig">There's two big reasons</text>
-                  <text x="70" y="147" fill="#ffe98a" font-size="11.5"
-                        font-family="system-ui, sans-serif" data-i18n="sampleTrans">有两个重要的原因</text>
                 </g>
                 <g transform="translate(62 89)">
                   <rect width="21" height="21" rx="6" fill="#1b1b1b" stroke="var(--accent)"/>
@@ -205,6 +206,14 @@
                   </g>
                 </g>
               </svg>
+              <div class="odemo-cap cap-s2a" aria-hidden="true">
+                <p class="cap-orig" data-i18n="sampleOrig">There's two big reasons</p>
+                <p class="cap-trans" data-i18n="sampleTrans">有两个重要的原因</p>
+              </div>
+              <div class="odemo-cap cap-s2b" aria-hidden="true">
+                <p class="cap-orig" data-i18n="sampleOrig">There's two big reasons</p>
+                <p class="cap-trans" data-i18n="sampleTrans">有两个重要的原因</p>
+              </div>
             </div>
           </div>
         </li>
@@ -220,38 +229,35 @@
                     data-i18n="startGoSetup">去配置翻译服务</button>
           </div>
           <div class="ostep-art">
-            <!-- Shows the difference instead of asserting it. -->
-            <div class="odemo" role="img" data-i18n-aria="startS3Alt"
+            <!-- Shows the difference instead of asserting it. HTML, not SVG:
+                 SVG text neither wraps nor shrinks, and this card is all text
+                 (design spec §6-3, after the en overflow). The English lines
+                 are the shared "foreign original"; the yellow lines are what
+                 a reader of the CURRENT UI language sees as its translation —
+                 English UI shows the Spanish demo, same precedent as
+                 sampleTrans. Chopped keys read broken ON PURPOSE. -->
+            <div class="odemo ocmp-pair" role="img" data-i18n-aria="startS3Alt"
                  aria-label="对比图：免费引擎把一句话切成几段翻译，自带 Key 整句理解后再切回来">
-              <svg viewBox="0 0 300 170" aria-hidden="true">
-                <text x="8" y="14" fill="var(--muted)" font-size="10.5"
-                      font-family="system-ui, sans-serif" data-i18n="startPicFree">免费引擎</text>
-                <rect x="4" y="24" width="136" height="128" rx="8" fill="#000" stroke="var(--line)"/>
-                <text x="14" y="52" fill="#fff" font-size="10"
-                      font-family="system-ui, sans-serif">there's two big</text>
-                <text x="14" y="70" fill="#ffe98a" font-size="10.5"
-                      font-family="system-ui, sans-serif">有两个大的</text>
-                <text x="14" y="96" fill="#fff" font-size="10"
-                      font-family="system-ui, sans-serif">reasons one is</text>
-                <text x="14" y="114" fill="#ffe98a" font-size="10.5"
-                      font-family="system-ui, sans-serif">原因之一是</text>
-                <text x="14" y="140" fill="#8a8a8a" font-size="9.5"
-                      font-family="system-ui, sans-serif" data-i18n="startPicFreeNote">一句话被切成几段</text>
-
-                <text x="164" y="14" fill="var(--accent)" font-size="10.5" font-weight="600"
-                      font-family="system-ui, sans-serif" data-i18n="startPicByo">自带 Key</text>
-                <rect x="160" y="24" width="136" height="128" rx="8" fill="#000" stroke="var(--accent)"/>
-                <text x="170" y="66" fill="#fff" font-size="10"
-                      font-family="system-ui, sans-serif">there's two big</text>
-                <text x="170" y="84" fill="#fff" font-size="10"
-                      font-family="system-ui, sans-serif">reasons one is</text>
-                <text x="170" y="106" fill="#ffe98a" font-size="10.5"
-                      font-family="system-ui, sans-serif" data-i18n="sampleTransComma">有两个重要的原因，</text>
-                <text x="170" y="124" fill="#ffe98a" font-size="10.5"
-                      font-family="system-ui, sans-serif">第一个是……</text>
-                <text x="170" y="146" fill="var(--accent)" font-size="9.5"
-                      font-family="system-ui, sans-serif" data-i18n="startPicByoNote">整句理解后再切回来</text>
-              </svg>
+              <div class="ocmp">
+                <p class="ocmp-h" data-i18n="startPicFree">免费引擎</p>
+                <div class="ocmp-card">
+                  <p class="ocmp-orig" data-i18n-keep>there's two big</p>
+                  <p class="ocmp-trans" data-i18n="startPicChop1">有两个大的</p>
+                  <p class="ocmp-orig" data-i18n-keep>reasons one is</p>
+                  <p class="ocmp-trans" data-i18n="startPicChop2">原因之一是</p>
+                  <p class="ocmp-note" data-i18n="startPicFreeNote">一句话被切成几段</p>
+                </div>
+              </div>
+              <div class="ocmp">
+                <p class="ocmp-h on" data-i18n="startPicByo">自带 Key</p>
+                <div class="ocmp-card on">
+                  <p class="ocmp-orig" data-i18n-keep>there's two big</p>
+                  <p class="ocmp-orig" data-i18n-keep>reasons one is</p>
+                  <p class="ocmp-trans" data-i18n="startPicWhole1">有两个重要的原因，</p>
+                  <p class="ocmp-trans" data-i18n="startPicWhole2">第一个是……</p>
+                  <p class="ocmp-note on" data-i18n="startPicByoNote">整句理解后再切回来</p>
+                </div>
+              </div>
             </div>
           </div>
         </li>
@@ -286,6 +292,11 @@
     <!-- --------------------------------- about ---------------------------- -->
     <!-- ------------------------------- read-aloud -------------------------- -->
     <section class="odetail" id="secReadaloud" hidden>
+      <!-- Two groups on purpose (HCI audit §5): the one-time setup half and the
+           playback half people come back for. The playback half stays locked
+           until the STORED provider has its key — a switch that cannot sound
+           must not accept a tick (the popup enforces the same gate). -->
+      <h2 class="olabel" data-i18n="ttsGroupSetup">服务商与 Key</h2>
       <div class="orow">
         <label for="ttsProviderSel" data-i18n="byoProviderLabel">服务商</label>
         <select id="ttsProviderSel"></select>
@@ -325,22 +336,29 @@
       </div>
       <button type="button" class="obtn primary" id="ttsTestBtn" data-i18n="byoTest">保存并测通</button>
       <p class="omsg" id="ttsMsg" role="status" aria-live="polite" hidden></p>
-      <div class="orow">
-        <label class="ochk"><input type="checkbox" id="ttsEnabled" />
-          <span data-i18n="ttsEnableLabel">在视频里朗读译文</span></label>
-      </div>
-      <p class="ohint" data-i18n="ttsEnableHint">
-        开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，不会追读。朗读期间视频音量会自动压低；句子长到读不完时，视频会稍微放慢来配合。
+
+      <h2 class="olabel olabel-gap" data-i18n="ttsGroupPlayback">播放</h2>
+      <p class="oneed" id="ttsNeedKey" hidden data-i18n="optNeedKey">
+        还没填 Key，这个服务商暂时不能用。
       </p>
-      <div class="orow">
-        <label for="ttsVolume"><span data-i18n="ttsVolLabel">朗读音量</span>
-          <b id="ttsVolumeV">100%</b></label>
-        <input type="range" id="ttsVolume" min="10" max="100" step="5" />
-      </div>
-      <div class="orow">
-        <label for="ttsDuckPct"><span data-i18n="ttsDuckLabel">朗读时的原声音量</span>
-          <b id="ttsDuckPctV">25%</b></label>
-        <input type="range" id="ttsDuckPct" min="0" max="100" step="5" />
+      <div class="otts-use" id="ttsUse">
+        <div class="orow">
+          <label class="ochk"><input type="checkbox" id="ttsEnabled" />
+            <span data-i18n="ttsEnableLabel">在视频里朗读译文</span></label>
+        </div>
+        <p class="ohint" data-i18n="ttsEnableHint">
+          开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，不会追读。朗读期间视频音量会自动压低；句子长到读不完时，视频会稍微放慢来配合。
+        </p>
+        <div class="orow">
+          <label for="ttsVolume"><span data-i18n="ttsVolLabel">朗读音量</span>
+            <b id="ttsVolumeV">100%</b></label>
+          <input type="range" id="ttsVolume" min="10" max="100" step="5" />
+        </div>
+        <div class="orow">
+          <label for="ttsDuckPct"><span data-i18n="ttsDuckLabel">朗读时的原声音量</span>
+            <b id="ttsDuckPctV">25%</b></label>
+          <input type="range" id="ttsDuckPct" min="0" max="100" step="5" />
+        </div>
       </div>
       <p class="ohint" data-i18n="ttsPrivacyNote">
         朗读用你自己的 Key。要朗读的文本只发给你选择的这一家服务商；Key 只存在本机。
@@ -381,9 +399,7 @@
     <p data-i18n="byoLocalHint">
       Key 只存在这台电脑的浏览器里，不会上传；字幕文本只发往你选择的服务商。
     </p>
-    <p class="odim" data-i18n="optTrademark">
-      各服务商名称与标志均为其各自所有者的商标。本扩展与它们没有任何关联，也未获其背书；标志仅用于标识你所选择的接口。
-    </p>
+    <p class="odim" data-i18n="optTrademark">各服务商名称与标志均为其各自所有者的商标。本扩展与它们没有任何关联，也未获其背书或赞助；标志仅用于标识你所选择的接口。</p>
     <p class="odim">
       <a id="feedbackLink" target="_blank" rel="noopener" data-i18n="optFeedbackLink">反馈问题</a>
     </p>

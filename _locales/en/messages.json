@@ -6,7 +6,7 @@
     "message": "Bilingual subtitles for YouTube — original and translation in one non-overlapping layer."
   },
   "headerSub": {
-    "message": "for YouTube™ · Bilingual, single layer"
+    "message": "for YouTube™ · Bilingual, single layer"
   },
   "disclaimer": {
     "message": "Not affiliated with YouTube or Google."
@@ -28,9 +28,6 @@
   },
   "sampleTrans": {
     "message": "El zorro marrón salta"
-  },
-  "sampleTransComma": {
-    "message": "El zorro marrón salta,"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -106,6 +103,9 @@
   },
   "secLayout": {
     "message": "Layout"
+  },
+  "secLineStyle": {
+    "message": "Line style"
   },
   "orderLabel": {
     "message": "Order"
@@ -505,7 +505,7 @@
     "message": "not tested"
   },
   "exportUsesYouTube": {
-    "message": "The download uses YouTube's own whole-track translation — free, and it does not spend your API key."
+    "message": "The download uses YouTube's own whole-track translation — free, and it does not spend your API key."
   },
   "exportUseByo": {
     "message": "Translate with my own key (closer match, spends quota)"
@@ -705,6 +705,12 @@
   "ttsVolLabel": {
     "message": "Read-aloud volume"
   },
+  "ttsGroupSetup": {
+    "message": "Provider & key"
+  },
+  "ttsGroupPlayback": {
+    "message": "Playback"
+  },
   "ttsDuckLabel": {
     "message": "Original audio while speaking"
   },
@@ -713,6 +719,9 @@
   },
   "ttsStatusOn": {
     "message": "Read-aloud on"
+  },
+  "ttsOpenSettings": {
+    "message": "Read-aloud settings"
   },
   "ttsStatusCounts": {
     "message": "$N$ lines this video · $M$ skipped",
@@ -730,5 +739,21 @@
   },
   "ttsErrNoRegion": {
     "message": "Enter the service region of your Azure key first (e.g. eastus)."
+  },
+  "startPicChop1": {
+    "message": "hay dos grandes",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "razones una es",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Hay dos grandes razones,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "la primera es…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
   }
 }

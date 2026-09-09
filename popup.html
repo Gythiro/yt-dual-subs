@@ -23,7 +23,7 @@
     </div>
     <div class="hd-text">
       <h1>Dual Subtitles</h1>
-      <p class="hd-sub" data-i18n="headerSub">for YouTube™ · Bilingual, single layer</p>
+      <p class="hd-sub" data-i18n="headerSub">for YouTube™ · Bilingual, single layer</p>
     </div>
     <!-- The only unconditional way into the settings page. Before this, it was
          reachable solely from the own-key panel, so anyone on the default
@@ -95,9 +95,6 @@
         </p>
         <p class="engine-hint" id="backendGtxHint" hidden data-i18n="backendGtxHint">使用 Google 免费接口，重度使用可能被短暂限流；扩展会自动放慢并重试。</p>
         <p class="engine-msg" id="backendStatus" role="status" aria-live="polite" hidden></p>
-        <!-- Read-aloud status: only when the options-page switch is on. The
-             skip count answers "why did some lines stay silent". -->
-        <p class="engine-msg" id="ttsStatus" hidden></p>
         <button type="button" id="diagCopy" class="diag-btn" data-i18n="diagCopy">复制诊断信息</button>
       </div>
 
@@ -112,6 +109,43 @@
                   data-i18n="popupByoConfigure">配置…</button>
         </div>
       </div>
+    </section>
+
+    <!-- ============================ 朗读 ============================ -->
+    <!-- Read-aloud lives one click deep, not three: the switch and the volume
+         are per-video decisions (HCI audit, 设计规范 §5), while voice, region
+         and ducking stay on the options page. Exactly one of the two rows shows:
+         the setup row until a provider with a key exists, the switch after. -->
+    <section class="card" id="ttsCard">
+      <h2 class="card-title" data-i18n="optNavReadaloud">朗读</h2>
+
+      <!-- The empty state IS the entry (§5-3): without this row the feature is
+           invisible until someone wanders into the options page. -->
+      <div class="row row-split" id="ttsSetupRow" hidden>
+        <span class="tts-off" data-i18n="ttsEnableLabel">在视频里朗读译文</span>
+        <button type="button" class="link" id="ttsConfigure"
+                data-i18n="popupByoConfigure">配置…</button>
+      </div>
+
+      <div class="row check-row" id="ttsSwitchRow" hidden>
+        <label class="chk">
+          <input type="checkbox" id="ttsEnabledChk" />
+          <span data-i18n="ttsEnableLabel">在视频里朗读译文</span>
+        </label>
+      </div>
+
+      <!-- The mid-watch adjustment that opened the HCI case file: one hop. -->
+      <div class="row" id="ttsVolRow" hidden>
+        <label for="ttsVol"><span data-i18n="ttsVolLabel">朗读音量</span>
+          <b id="ttsVolV">100%</b></label>
+        <input type="range" id="ttsVol" min="10" max="100" step="5" />
+      </div>
+
+      <!-- Status doubles as the door to the low-frequency settings (voice,
+           region, ducking): a button, not a dead line. Text is assembled by
+           refreshTtsStatus(); the chevron is CSS so textContent stays clean. -->
+      <button type="button" class="tts-status" id="ttsStatus" hidden
+              data-i18n-title="ttsOpenSettings" data-i18n-aria="ttsOpenSettings"></button>
     </section>
 
     <!-- ============================ 布局 ============================ -->
@@ -156,7 +190,19 @@
     </section>
 
     <!-- ====================== 行样式（标签页） ====================== -->
-    <section class="card">
+    <!-- Folded by default, and the state sticks (storage.local): styling is
+         intense for a week after install and then never touched, so the ten
+         controls only stay on screen for the people actually using them
+         (§5-4). The chevron transition is decorative, so it may animate. -->
+    <section class="card card-fold" id="lineCard">
+      <button type="button" class="fold-head" id="lineFold"
+              aria-expanded="false" aria-controls="lineBody">
+        <h2 class="card-title" data-i18n="secLineStyle">行样式</h2>
+        <svg class="fold-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div id="lineBody" hidden>
       <div class="tabs" id="lineTabs" role="tablist" aria-label="字幕行" data-i18n-aria="lineTabsAria">
         <button class="tab" id="tab-trans" data-line="trans" type="button" role="tab"
                 aria-controls="lineEditor" aria-selected="true" data-i18n="tabTrans">译文</button>
@@ -222,6 +268,7 @@
           <label for="lineStrokeOpacity"><span data-i18n="strokeOpacity">描边不透明度</span> <b id="lineStrokeOpacityV">0%</b></label>
           <input type="range" id="lineStrokeOpacity" min="0" max="1" step="0.05" />
         </div>
+      </div>
       </div>
     </section>
 
