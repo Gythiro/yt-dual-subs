@@ -6,7 +6,7 @@
     "message": "YouTube용 이중 자막 — 원문과 번역을 겹치지 않는 하나의 레이어에 표시합니다."
   },
   "headerSub": {
-    "message": "YouTube™용 · 이중 자막, 단일 레이어"
+    "message": "YouTube™ · 단일 레이어"
   },
   "disclaimer": {
     "message": "YouTube 또는 Google과 제휴하지 않습니다."
@@ -1270,5 +1270,9 @@
   "backendStatusNoTrack": {
     "message": "이 영상에 캡션 트랙이 없어 표시할 내용이 없습니다.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "popupSummarize": {
+    "message": "이 동영상 요약하기",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   }
 }

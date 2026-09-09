@@ -388,6 +388,15 @@ async function refreshEngineStatus() {
 // not here.
 const BYO_SETUP_CODES = new Set(["noKey", "noProvider"]);
 
+// The summary button appears only where its panel can open: a page with a
+// player. Everything else about "can this be summarised" — a free engine, no
+// key, a video with no caption track — is answered by the panel itself, in the
+// player, so there is exactly one predicate and it lives with the feature.
+function paintSumBtn(r) {
+  const btn = $("sumOpen");
+  if (btn) btn.hidden = !(r && r.ok && r.video);
+}
+
 async function paintEngineStatus() {
   const el = $("backendStatus");
   if (!el) return;
@@ -429,6 +438,7 @@ async function paintEngineStatus() {
   if (!tab || tab.id == null) return;
   const r = await sendToTab(tab.id, { type: "engineStatus" });
   if (r && r.ok) noteTabLang(r.lang);
+  paintSumBtn(r);
   if (!r || !r.ok) return;                  // not a YouTube video page
 
   // The caption track itself is missing and the recovery loop is on it. This
@@ -1110,7 +1120,7 @@ async function probeFontsNow() {
         for (const id of need) if (cov[id][l] !== null) m[id] = cov[id][l];
         out[l] = m;
       }
-      chrome.storage.local.set({ fontCov: { sig: (cached && cached.sig) || "", cov: out } });
+      chrome.storage.local.set({ fontCov: { cov: out } });
     } catch (_e) { /* ignore */ }
   }
   fontCov = cov;
@@ -2214,6 +2224,14 @@ function wire() {
   guardArrows($("targetLang"));
 
   // backend info tooltip
+  $("sumOpen").addEventListener("click", async () => {
+    const tab = await getActiveTab();
+    if (!tab || tab.id == null) return;
+    await sendToTab(tab.id, { type: "openSummary" }, 800);
+    // The panel opens inside the player, and a 360px popup sits on top of it.
+    window.close();
+  });
+
   $("backendInfo").addEventListener("click", () => {
     const tip = $("backendTip");
     const open = tip.hidden;

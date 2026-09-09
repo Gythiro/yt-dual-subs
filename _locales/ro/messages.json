@@ -6,7 +6,7 @@
     "message": "Subtitrări bilingve pentru YouTube — originalul și traducerea într-un singur strat, fără suprapunere."
   },
   "headerSub": {
-    "message": "pentru YouTube™ · bilingv, un singur strat"
+    "message": "YouTube™ · un singur strat"
   },
   "disclaimer": {
     "message": "Nu este afiliat cu YouTube sau Google."
@@ -1270,5 +1270,9 @@
   "backendStatusNoTrack": {
     "message": "Nu s-a găsit nicio pistă de subtitrare pentru acest videoclip, deci nu este nimic de afișat.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "popupSummarize": {
+    "message": "Rezumă acest videoclip",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   }
 }

@@ -6,7 +6,7 @@
     "message": "คำบรรยายสองภาษาสำหรับ YouTube — ต้นฉบับและคำแปลในชั้นเดียว ไม่ทับซ้อนกัน"
   },
   "headerSub": {
-    "message": "สำหรับ YouTube™ · สองภาษา ชั้นเดียว"
+    "message": "YouTube™ · ชั้นเดียว"
   },
   "disclaimer": {
     "message": "ไม่ได้มีส่วนเกี่ยวข้องกับ YouTube หรือ Google"
@@ -1270,5 +1270,9 @@
   "backendStatusNoTrack": {
     "message": "ไม่พบแทร็กคำบรรยายสำหรับวิดีโอนี้ จึงไม่มีอะไรให้แสดง",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "popupSummarize": {
+    "message": "สรุปวิดีโอนี้",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   }
 }

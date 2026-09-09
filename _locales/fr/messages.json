@@ -6,7 +6,7 @@
     "message": "Sous-titres bilingues pour YouTube — original et traduction dans une seule couche, sans chevauchement."
   },
   "headerSub": {
-    "message": "pour YouTube™ · bilingue, une seule couche"
+    "message": "YouTube™ · une couche"
   },
   "disclaimer": {
     "message": "Non affilié à YouTube ni à Google."
@@ -1270,5 +1270,9 @@
   "backendStatusNoTrack": {
     "message": "Aucune piste de sous-titres n’a été trouvée pour cette vidéo, il n’y a donc rien à afficher.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "popupSummarize": {
+    "message": "Résumer cette vidéo",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   }
 }

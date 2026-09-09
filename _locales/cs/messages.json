@@ -6,7 +6,7 @@
     "message": "Dvojjazyčné titulky pro YouTube — originál a překlad v jedné vrstvě, bez překrývání."
   },
   "headerSub": {
-    "message": "pro YouTube™ · dvojjazyčné, jedna vrstva"
+    "message": "YouTube™ · jedna vrstva"
   },
   "disclaimer": {
     "message": "Není přidruženo k YouTube ani Google."
@@ -1270,5 +1270,9 @@
   "backendStatusNoTrack": {
     "message": "U tohoto videa se nenašla žádná titulková stopa, takže není co zobrazit.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "popupSummarize": {
+    "message": "Shrň toto video",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   }
 }

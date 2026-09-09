@@ -127,12 +127,20 @@
     // `state.ttsProvider || "off"` could not print "off" even once: a user who
     // had never touched read-aloud was reported as running it on the browser's
     // voices, and support would chase a feature that was not on.
+    // Which speech providers put a region in their address. Named here rather
+    // than reached for through the registry: this file runs in the popup and
+    // the settings page and must not depend on either having loaded it.
+    const ttsUsesRegion = (id) => id === "azure-speech";
     if (!cfg.ttsEnabled) {
       L.push("read-aloud: off");
     } else {
       L.push("read-aloud: on — " + (state.ttsProvider || "?") +
         (state.ttsVoice ? " / " + state.ttsVoice : "") +
-        (cfg.ttsRegion ? " / " + cfg.ttsRegion : "") +
+        // Only where a region is part of the address. It is stored per
+        // machine, not per provider, so a region typed for Azure months ago
+        // was printed beside the browser's own voices — which have no region,
+        // and reading one there sends the diagnosis somewhere it cannot go.
+        (cfg.ttsRegion && ttsUsesRegion(state.ttsProvider) ? " / " + cfg.ttsRegion : "") +
         ", finish-every-line " + (cfg.ttsComplete ? "on" : "off") +
         ", cruise " + (cfg.ttsCruise ? "on" : "off") +
         ", volume " + cfg.ttsVolume + " duck " + cfg.ttsDuckPct + "%");

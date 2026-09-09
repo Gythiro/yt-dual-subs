@@ -1198,7 +1198,6 @@ async function probeFontsNow(lang, only) {
   const fonts = allFonts();
   if (!F || !fonts || fontProbing === lang) return;
   const ids = fonts.map((f) => f.id);
-  const sig = ids.join("\n");
   // A font's verdict for a language does not depend on what else is
   // installed, so verdicts are kept per id: a list that changed (an import
   // added or removed, a font installed) costs measuring the new ids only,
@@ -1256,7 +1255,11 @@ async function probeFontsNow(lang, only) {
         for (const id of ids) if (id in fontCov[l]) m[id] = fontCov[l][id];
         cov[l] = m;
       }
-      chrome.storage.local.set({ fontCov: { sig, cov } });
+      // No signature field: it was written here and in the popup and read
+      // nowhere. What actually invalidates an entry is per id (an id that is
+      // gone is pruned above, an unmeasured one is null), and a dead field
+      // that looks like a checksum invites the next reader to trust it.
+      chrome.storage.local.set({ fontCov: { cov } });
     });
   } catch (_e) { /* ignore */ }
 }
@@ -1844,10 +1847,19 @@ function ttsProvider() {
   return P.tts.get($("ttsProviderSel").value) || null;
 }
 
-function showTtsMsg(text, kind) {
+function showTtsMsg(text, kind, detail) {
   const el = $("ttsMsg");
   el.textContent = text || "";
   el.className = "omsg" + (kind ? " " + kind : "");
+  // The provider's own sentence under ours, the same way showMsg does it on
+  // the translate side — a refusal's specific half ("voice not found") is the
+  // half that tells the reader what to change.
+  if (text && detail) {
+    const line = document.createElement("span");
+    line.className = "omsg-raw";
+    line.textContent = detail;
+    el.appendChild(line);
+  }
   el.hidden = !text;
 }
 
@@ -2566,6 +2578,11 @@ function initReadaloud() {
     const synth = window.speechSynthesis;
     if (!synth) { showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err"); return; }
     try { synth.cancel(); } catch (_e) { /* ignore */ }
+    // cancel() does not clear the paused flag — it lives on speechSynthesis
+    // itself and outlives whoever set it (a content script torn down mid-pause
+    // is the usual way). Without this the Preview button is silent, and
+    // nothing on this page can explain why.
+    try { synth.resume(); } catch (_e) { /* ignore */ }
     const lang = state.targetLang || "zh-CN";
     const u = new SpeechSynthesisUtterance(
       (LANGS && LANGS.sample ? LANGS.sample(lang) : "") || "Hello.");
@@ -2770,7 +2787,7 @@ function initReadaloud() {
       provider: p.id, targetLang: state.targetLang })
       .then((resp) => {
         if (!resp || !resp.ok) {
-          showTtsMsg(testErrText(resp && resp.code, p), "err");
+          showTtsMsg(testErrText(resp && resp.code, p), "err", resp && resp.detail);
           done();
           return;
         }
@@ -2790,7 +2807,7 @@ function initReadaloud() {
           done();
           return;
         }
-        if (!resp.b64) { showTtsMsg(errText(resp.code), "err"); done(); return; }
+        if (!resp.b64) { showTtsMsg(errText(resp.code), "err", resp && resp.detail); done(); return; }
         playPreview(resp, done);
       })
       .catch((err) => { showTtsMsg(errText((err && err.code) || "failed"), "err"); done(); });
@@ -2866,7 +2883,7 @@ function initReadaloud() {
               // substitute for hearing it.
               playPreview(resp);
             } else {
-              showTtsMsg(testErrText(resp && resp.code, p), "err");
+              showTtsMsg(testErrText(resp && resp.code, p), "err", resp && resp.detail);
             }
           })
           .catch((err) => showTtsMsg(errText((err && err.code) || "failed"), "err"))

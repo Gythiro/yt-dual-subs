@@ -6,7 +6,7 @@
     "message": "Dwujęzyczne napisy do YouTube — oryginał i tłumaczenie w jednej, nienakładającej się warstwie."
   },
   "headerSub": {
-    "message": "do YouTube™ · dwujęzyczne, jedna warstwa"
+    "message": "YouTube™ · jedna warstwa"
   },
   "disclaimer": {
     "message": "Niepowiązane z YouTube ani Google."
@@ -1270,5 +1270,9 @@
   "backendStatusNoTrack": {
     "message": "Nie znaleziono ścieżki napisów dla tego filmu, więc nie ma nic do wyświetlenia.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "popupSummarize": {
+    "message": "Podsumuj ten film",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   }
 }

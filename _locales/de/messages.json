@@ -6,7 +6,7 @@
     "message": "Zweisprachige Untertitel für YouTube — Original und Übersetzung in einer Ebene ohne Überlappung."
   },
   "headerSub": {
-    "message": "für YouTube™ · zweisprachig, eine Ebene"
+    "message": "YouTube™ · eine Ebene"
   },
   "disclaimer": {
     "message": "Nicht mit YouTube oder Google verbunden."
@@ -1270,5 +1270,9 @@
   "backendStatusNoTrack": {
     "message": "Für dieses Video wurde keine Untertitelspur gefunden, daher gibt es nichts anzuzeigen.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "popupSummarize": {
+    "message": "Video zusammenfassen",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   }
 }

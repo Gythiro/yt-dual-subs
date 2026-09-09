@@ -73,9 +73,13 @@ a:focus-visible,
 .hd-mark svg { display: block; width: 32px; height: 32px; }
 .hd-text { flex: 1; min-width: 0; }
 .hd h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .2px; }
-.hd-sub { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); text-wrap: balance; }
-/* Katakana loanwords must not be split mid-word ("バイリ / ンガル"). */
-:lang(ja) .hd-sub, :lang(ko) .hd-sub { word-break: keep-all; }
+/* One line, always. `text-wrap: balance` evened the two lines by LENGTH and
+   knew nothing about meaning, which is how the separator ended up hanging off
+   the end of line one. The line is now two short segments — the trademark and
+   the one thing the title does not already say — so the dot sits between them
+   where a dot belongs, and no locale needs a second line. */
+.hd-sub { margin: 2px 0 0; font-size: 12.5px; color: var(--muted);
+  line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* switch */
 /* Sits left of the master switch: always present, whatever the engine is. */
@@ -491,6 +495,19 @@ select:focus { border-color: var(--accent); }
   font-size: 13px; cursor: pointer; padding: 0; flex: none;
 }
 .link:hover { text-decoration: underline; }
+
+/* "Summarize this video" — a secondary action under the provider row, not a
+   primary: the card's job is still choosing who translates. Accent on a dim
+   accent wash reads as "you may press this" without competing with the engine
+   select above it. */
+.sum-btn {
+  display: block; width: 100%; margin: 11px 0 0; padding: 9px 10px;
+  font: inherit; font-size: 13px; font-weight: 600;
+  color: var(--accent); background: var(--accent-dim);
+  border: 1px solid var(--accent); border-radius: 8px; cursor: pointer;
+}
+.sum-btn:hover { background: rgba(62, 166, 255, 0.24); }
+.sum-btn[hidden] { display: none; }
 
 /* ranges */
 input[type="range"] {

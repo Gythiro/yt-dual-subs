@@ -6,7 +6,7 @@
     "message": "Bilingual subtitles for YouTube — original and translation in one non-overlapping layer."
   },
   "headerSub": {
-    "message": "for YouTube™ · bilingual, single layer"
+    "message": "YouTube™ · single layer"
   },
   "disclaimer": {
     "message": "Not affiliated with YouTube or Google."
@@ -610,6 +610,10 @@
   },
   "popupByoConfigure": {
     "message": "Configure…"
+  },
+  "popupSummarize": {
+    "message": "Summarize this video",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
   },
   "popupByoNotSet": {
     "message": "not set up"

@@ -468,6 +468,13 @@
 
       post("cues", {
         cues, tcues, aligned, trackKind: kind, sameLang,
+        // WHICH target these answers are about. sameLang and the aligned
+        // translations are both computed against cfg.targetLang as it stands
+        // right now; a capture still in flight when the reader picks another
+        // language answers a question nobody is asking any more. Content-side
+        // this is the difference between "no translation needed" and a stale
+        // verdict about a target that changed a second ago.
+        forLang: cfg.targetLang,
         // Why the translation leg is missing, when it is: 0 = it isn't (or was
         // never asked), 429 = YouTube is rate-limiting it, anything else = that
         // HTTP status. content.js turns 429 into the cross-video gate and the

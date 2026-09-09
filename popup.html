@@ -23,7 +23,7 @@
     </div>
     <div class="hd-text">
       <h1>Dual Subtitles</h1>
-      <p class="hd-sub" data-i18n="headerSub">for YouTube™ · 双语单层字幕</p>
+      <p class="hd-sub" data-i18n="headerSub">YouTube™ · 单层字幕</p>
     </div>
     <!-- The only unconditional way into the settings page. Before this, it was
          reachable solely from the own-key panel, so anyone on the default
@@ -133,6 +133,15 @@
              data-i18n-aria="popupModelPick" aria-label="翻译模型"></div>
         <p class="byo-msg" id="byoModelMsg" role="status" aria-live="polite" hidden></p>
       </div>
+
+      <!-- Summarising is the other thing the translation service does, so it
+           sits under the row that says which service that is. It only opens
+           the panel in the player: the popup is 360px and dies on focus loss,
+           which is no place to read chapters, and the panel already says who
+           it will send to and what it will cost before anything is sent.
+           Hidden unless the page has a player (engineStatus.video). -->
+      <button type="button" class="sum-btn" id="sumOpen" hidden
+              data-i18n="popupSummarize">总结此视频</button>
     </section>
 
     <!-- ============================ 朗读 ============================ -->

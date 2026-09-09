@@ -366,6 +366,15 @@
     try { window.removeEventListener("mouseup", onAnyMouseUp, true); } catch (_e) { /* ignore */ }
     try { window.removeEventListener("click", onStrayClick, true); } catch (_e) { /* ignore */ }
     try { if (localVoicesTake && window.speechSynthesis) window.speechSynthesis.removeEventListener("voiceschanged", localVoicesTake); } catch (_e) { /* ignore */ }
+    // The paused flag lives on speechSynthesis, survives us, and cancel() does
+    // not clear it (see ttsFollowPause). An instance that is torn down while
+    // holding a pause — an extension reload, which is every ↻ during
+    // development — leaves the engine paused for the whole browser, and every
+    // later utterance anywhere, including the settings page's Preview, is
+    // queued into it and says nothing. Hand it back before dying.
+    try {
+      if (window.speechSynthesis) { window.speechSynthesis.cancel(); window.speechSynthesis.resume(); }
+    } catch (_e) { /* no engine here: nothing to hand back */ }
     // inject.js keeps producing cues for a config it still holds; tell it the
     // listener is gone (plain postMessage: chrome.* is dead by now).
     try { window.postMessage({ source: "ytds-content", type: "bye" }, "*"); } catch (_e) { /* ignore */ }
@@ -3324,6 +3333,11 @@
   (function primeLocalVoices() {
     try {
       const synth = typeof window !== "undefined" && window.speechSynthesis;
+      // Somebody else's pause is still our silence, and the flag outlives the
+      // page that set it: a previous instance of this script (or another
+      // extension) can have been torn down mid-pause, and nothing else will
+      // ever clear it. Costs nothing when the engine is already running.
+      try { if (synth) synth.resume(); } catch (_e) { /* ignore */ }
       if (!synth) return;
       const take = () => {
         if (orphaned) return;         // an orphaned script keeps no state warm
@@ -3535,7 +3549,7 @@
       ttsSpoken++;
       ttsFailRun = 0;
       localStartedAt = Date.now();
-      localEstMs = Math.max(estAtRate, estGuard / rate);
+      localEstMs = estAtRate;          // honest: this answers "how much is left"
       // Feed the start-latency budget with what actually happened — only for
       // networked voices; a machine voice's ~0 would drag the average under
       // what the "Google …" voices really cost.
@@ -3547,12 +3561,19 @@
         }
       }
       clearTimeout(localTimer);
+      // The GUARD estimate, not the honest one. This timer exists for a voice
+      // that never fires `end`; firing it early is not a small error, because
+      // done() hands the slot back and the next line then cancel-then-speaks
+      // over an utterance that is still sounding — the wedge documented on the
+      // `start` handler, heard as total silence. Measured 2026-09-10: with the
+      // honest Latin ruler here (80ms/char) the watchdog fired at a third of a
+      // real English line and every browser voice went quiet.
       localTimer = setTimeout(done, Math.min(TTS_LOCAL_MAX_MS,
         Math.max(TTS_LOCAL_MIN_MS,
           // Slack past the tuned ceiling: the estimate's fixed overheads do
           // not shrink with rate, and some machine voices clamp the rate we
           // asked for — a halved watchdog then un-ducked mid-sentence.
-          rate > TTS_RATE_MAX ? estAtRate * 1.25 + 150 : estAtRate)));
+          rate > TTS_RATE_MAX ? (estGuard / rate) * 1.25 + 150 : estGuard / rate)));
     });
     localUtter = u;
     clearTimeout(localTimer);
@@ -4301,7 +4322,23 @@
     cueVideoId = data.videoId || currentVideoId;
     cueTrackKind = data.trackKind === "asr" ? "asr"
                  : data.trackKind ? "manual" : "";
-    cueSameLang = !!data.sameLang;
+    // Answers computed for a target the reader has since changed away from are
+    // not answers. A capture in flight when the language changed carries a
+    // sameLang verdict about the OLD target and aligned translations in the OLD
+    // language; the popup then says "this video needs no translation" over a
+    // target that plainly does (reported on a real machine 2026-09-10, after
+    // switching target away and back). The cues themselves are still the source
+    // track, so keep them and drop only what was decided for the wrong target —
+    // the fresh capture the language change already asked for will replace it.
+    const forOurTarget = !data.forLang || data.forLang === settings.targetLang;
+    cueSameLang = !!data.sameLang && forOurTarget;
+    if (!forOurTarget) {
+      cueAligned = null;                       // its trans are in the old language
+      tcueList = null;
+      for (const c of cueList) if (c) c.trans = "";
+      ttsTraceAdd({ k: "stale", why: "lang", was: String(data.forLang || ""),
+        now: String(settings.targetLang || "") });
+    }
 
     if (!cueList.length) { onNoCues(data); return; }
     // A different TRACK on the same video (user switched the CC language, or
@@ -4384,6 +4421,7 @@
   function fallbackTick() {
     if (!settings.enabled) return;
     const text = readNativeCaption();
+    fallbackPace(!!text);
     if (text === lastSource) return;
     lastSource = text;
 
@@ -4398,14 +4436,50 @@
     scheduleTranslate(text);
   }
 
+  // The on-screen scrape runs five times a second so a caption that appears is
+  // picked up in the same breath. On a video that has NO caption track it finds
+  // nothing, every tick, until the reader moves on — a querySelectorAll five
+  // times a second for the length of a film, for an answer that is not coming.
+  // So it backs off: after a sustained empty stretch it drops to one look a
+  // second, and snaps straight back the moment there is text (the reader
+  // turning CC on mid-video is exactly that moment). Backing off rather than
+  // stopping is deliberate — stopping needs something to restart it, and the
+  // thing that would have to notice is this loop.
+  const FALLBACK_FAST_MS = 200;
+  const FALLBACK_SLOW_MS = 1000;
+  const FALLBACK_EMPTY_BEFORE_SLOW = 75;      // 15s of nothing at the fast rate
+  let fallbackEmptyRun = 0;
+  let fallbackEveryMs = FALLBACK_FAST_MS;
+  function fallbackPace(hasText) {
+    if (hasText) {
+      fallbackEmptyRun = 0;
+      if (fallbackEveryMs !== FALLBACK_FAST_MS && pollTimer) {
+        fallbackEveryMs = FALLBACK_FAST_MS;
+        clearInterval(pollTimer);
+        pollTimer = setInterval(fallbackTick, fallbackEveryMs);
+      }
+      return;
+    }
+    if (fallbackEveryMs !== FALLBACK_FAST_MS) return;        // already slow
+    if (++fallbackEmptyRun < FALLBACK_EMPTY_BEFORE_SLOW) return;
+    if (!pollTimer) return;
+    fallbackEveryMs = FALLBACK_SLOW_MS;
+    clearInterval(pollTimer);
+    pollTimer = setInterval(fallbackTick, fallbackEveryMs);
+  }
+
   function startFallback() {
     if (pollTimer) return;
     ensureOverlay();
-    pollTimer = setInterval(fallbackTick, 200);
+    fallbackEmptyRun = 0;
+    fallbackEveryMs = FALLBACK_FAST_MS;
+    pollTimer = setInterval(fallbackTick, fallbackEveryMs);
   }
 
   function stopFallback() {
     if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    fallbackEmptyRun = 0;
+    fallbackEveryMs = FALLBACK_FAST_MS;
     if (debounceTimer) { clearTimeout(debounceTimer); debounceTimer = null; }
     lastSource = "";
     lastTransSource = "";
@@ -4453,6 +4527,17 @@
       sendResponse({ ok: flashHandle(3600) });
       return;                                               // sync reply
     }
+    // The popup's "summarize this video" button. It opens the SAME panel the
+    // player menu's Summary row opens — deliberately not a second entry point
+    // with its own idea of when summarising is possible: openSummary already
+    // asks the worker what is configured and draws "you need your own service"
+    // or the spend confirmation itself. Duplicating that predicate in the popup
+    // is how a card ends up promising what the engine will not do.
+    if (msg.type === "openSummary") {
+      openSummary();
+      sendResponse({ ok: true });
+      return;                                               // sync reply
+    }
     if (msg.type === "engineStatus") {
       // popup status line: which engine is ACTUALLY rendering this video (the
       // resolved outcome, not the setting — tlang can fail into gtx and auto
@@ -4470,6 +4555,10 @@
         provider: settings.engine === "byo" ? settings.byoProvider : "",
         same: !!(cueList && cueList.length && cueSameLang),
         track: cueTrackKind || "none",
+        // Whether this page has a player at all. The popup shows its summary
+        // button only here: on the home page or search results the panel has
+        // nowhere to open, and a button that does nothing is worse than none.
+        video: !!getPlayer(),
         // inject.js gave up waiting for a track (6 s, nothing captured, and
         // re-pressing CC did not help) and the on-screen fallback has found
         // no caption text either: the commonest support question, "no

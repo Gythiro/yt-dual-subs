@@ -372,13 +372,14 @@ a { text-underline-offset: 3px; }
    "Eigene Brow…" told a reader nothing they could act on, and the badge beside
    them made it worse by taking the width first. A provider's name is the one
    thing this list exists to say. */
-/* flex-basis max-content: a name that does not fit beside the chip takes the
-   line for itself and the chip wraps under it (the factory default, "Your
-   browser's own voices (free)", lost its bracket in five locales when the
-   chip took its width first). Short names still share the line. */
-.pitem-name { flex: 1 1 max-content; min-width: 0; overflow-wrap: anywhere; white-space: normal;
-  line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  overflow: hidden; }
+/* The name takes whatever line one has left BESIDE the icon and wraps inside
+   itself; only the "in use" chip drops to a second line when it no longer
+   fits. `flex-basis: max-content` was tried first and pushed the icon onto a
+   line of its own above the name in every long locale — the icon belongs with
+   the name it labels. No line clamp: the factory default, "Your browser's own
+   voices (free)", is exactly the name that lost its bracket to one. */
+.pitem-name { flex: 1 1 0; min-width: 10em; overflow-wrap: anywhere; white-space: normal;
+  line-height: 1.25; }
 .pitem-ok { flex: none; display: inline-flex; color: #5fd38a; }
 .pitem-ok svg { width: 13px; height: 13px; display: block; }
 .pitem.on .pitem-ok { color: inherit; }

@@ -1757,6 +1757,14 @@ async function withTtsRetry(run) {
 // two buttons of the same card meant one backend fault got two explanations,
 // depending on whether the user pressed test or fetch voices.
 async function ttsThrowForStatus(res) {
+  // A 2xx answer IS the payload — the JSON that carries audioContent, the mp3
+  // bytes, or the SSE stream — and the caller reads it next. Reading the body
+  // HERE for a detail string that is only ever used inside a thrown error
+  // consumes the stream, and every SUCCESSFUL synthesis then came back empty:
+  // google-tts as noAudio (res.json() on a spent body), qwen-tts as a locked
+  // stream ("connection failed"), the arrayBuffer providers as noAudio. A 2xx
+  // never throws from here, so there is nothing to explain — leave the body be.
+  if (res.ok) return;
   // Read once, carry on everything thrown from here: the provider's own
   // sentence is usually the specific half. Google answers 403 with "Cloud
   // Text-to-Speech API has not been used in project … Enable it by visiting",
@@ -2838,7 +2846,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       .catch((err) => sendResponse({
         ok: false,
         code: (err && err.code) || "failed",
-        error: String(err)
+        error: String(err),
+        // What the provider actually said. The translate test and the voice
+        // list both carry this; the synthesis test dropped it, so the settings
+        // page could only show the generic "try another voice" over a refusal
+        // whose own words ("voice not found", "API not enabled") were the fix.
+        detail: (err && err.detail) || ""
       }));
     return true;
   }
