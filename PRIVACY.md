@@ -30,7 +30,7 @@ There is **no developer-operated backend**. No data is ever sent to the develope
 ## Data the extension processes locally
 
 ### 1. Your settings (stored locally in your browser)
-Your display preferences — target language, translation engine, subtitle position, fonts, colors, sizes, and on/off state — are saved using the browser's `chrome.storage.sync` API. This data stays in your own browser profile and is synced by **your browser account** across your own devices. It is **not transmitted to the developer** and contains no personal information.
+Your display preferences — translation language, translation engine, subtitle position, fonts, colors, sizes, and on/off state — are saved using the browser's `chrome.storage.sync` API. This data stays in your own browser profile and is synced by **your browser account** across your own devices. It is **not transmitted to the developer** and contains no personal information.
 
 ### 2. Caption text (sent only to the service you chose — to translate, or, on your explicit click, to summarize)
 To show a translated line, the extension reads the caption/subtitle text of the video you are **currently watching** and sends that text to a translation service **solely to obtain the translation**, which is then displayed back to you as an overlay. Depending on the engine selected in the settings — chosen by you, or picked per video by the default **Auto** mode:

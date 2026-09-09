@@ -64,7 +64,7 @@
     "message": "Traducere"
   },
   "targetLang": {
-    "message": "Limba țintă"
+    "message": "Limba de traducere"
   },
   "backendLabel": {
     "message": "Motor"
@@ -100,7 +100,7 @@
     "message": "Limitat de endpointul de traducere — se încetinește și se reîncearcă automat. Liniile deja traduse rămân funcționale."
   },
   "backendStatusSame": {
-    "message": "Subtitrările acestui videoclip sunt deja în limba țintă — nu e nimic de tradus."
+    "message": "Subtitrările acestui videoclip sunt deja în limba de traducere — nu e nimic de tradus."
   },
   "secLayout": {
     "message": "Aspect"
@@ -232,7 +232,7 @@
     "message": "Subtitrări descărcate"
   },
   "exportNoTrans": {
-    "message": "Nu există traducere pentru acest videoclip — încearcă motorul Pistă întreagă sau altă limbă țintă."
+    "message": "Nu există traducere pentru acest videoclip — încearcă motorul Pistă întreagă sau altă limbă de traducere."
   },
   "exportLimited": {
     "message": "YouTube limitează momentan traducerea întregii piste — încearcă din nou peste un minut. Cu cheia ta configurată, cardul de export oferă o bifă care ocolește limita."
@@ -435,7 +435,7 @@
     "message": "Despre"
   },
   "startIntro": {
-    "message": "Trei lucruri. Nu trebuie să configurezi nimic ca s-o folosești."
+    "message": "Patru lucruri. Nu trebuie să configurezi nimic ca s-o folosești."
   },
   "startS1Title": {
     "message": "Deschide un video — gata"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "înțeleasă întreagă, reîmpărțită"
   },
+  "startS4Title": {
+    "message": "Playerul ascunde un mic meniu"
+  },
+  "startS4Body": {
+    "message": "Săgeata mică de lângă butonul de subtitrări deschide un meniu: citire cu voce, selectare text, rezumatul videoclipului și setări — fără a părăsi playerul."
+  },
+  "startS4Alt": {
+    "message": "Ilustrația playerului: o săgeată mică lângă butonul de subtitrări, dreapta jos, deschide un mic meniu"
+  },
+  "menuHintBubble": {
+    "message": "Citire cu voce, rezumatul videoclipului, selectare text — totul e în spatele acestei săgeți"
+  },
   "langManage": {
     "message": "Gestionează limbile…"
   },
   "optNavLangs": {
-    "message": "Limbi de subtitrare"
+    "message": "Limbi de traducere"
   },
   "langsIntro": {
     "message": "Limbile în care fereastra pop-up îți oferă traducerea."
@@ -632,13 +644,13 @@
     "message": "Afișate în pop-up"
   },
   "langsKeptHint": {
-    "message": "Acestea apar în meniul de limbă țintă al pop-up-ului. Păstrează cel puțin una."
+    "message": "Acestea apar în meniul limbii de traducere al pop-up-ului. Păstrează cel puțin una."
   },
   "langsMore": {
     "message": "Alte limbi"
   },
   "langsMoreHint": {
-    "message": "Apasă + ca să adaugi una. Lista urmează limbile țintă indicate de motoarele gratuite și de DeepL."
+    "message": "Apasă + ca să adaugi una. Lista urmează limbile de traducere acceptate de motoarele gratuite și de DeepL."
   },
   "langsReset": {
     "message": "Restabilește implicitele"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Aceea era în uz, deci limba țintă este acum $NAME$",
+    "message": "Aceea era în uz, deci limba de traducere este acum $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Automat — urmează browserul"
   },
   "uiLocaleHint": {
-    "message": "Limba meniurilor și a setărilor extensiei. Câteva etichete desenate pe video urmează în continuare limba browserului. Limba în care sunt traduse subtitrările se alege în fereastra extensiei; panoul „Limbi de subtitrare” decide doar ce limbi apar acolo."
+    "message": "Limba meniurilor și a setărilor extensiei. Câteva etichete desenate pe video urmează în continuare limba browserului. Limba de traducere a subtitrărilor se alege în fereastra extensiei; panoul „Limbi de traducere” decide doar ce limbi apar acolo."
   },
   "cmdToggleSubs": {
     "message": "Activează sau dezactivează subtitrările"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "La viteze mari, rândurile lungi își pierd adesea finalul. Cu opțiunea pornită, imaginea încetinește atât cât are nevoie rândul — niciodată sub un sfert din viteza aleasă — și recuperează în pauze."
+  },
+  "ttsCompleteHintText": {
+    "message": "La această viteză destule rânduri sunt tăiate — cu „Citește fiecare rând până la capăt” pornit, imaginea încetinește cât e nevoie și fiecare rând e citit întreg."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Activează"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Nu mai afișa"
+  },
+  "provLocalSpeechShort": {
+    "message": "Browser"
   }
 }

@@ -64,7 +64,7 @@
     "message": "Bản dịch"
   },
   "targetLang": {
-    "message": "Ngôn ngữ đích"
+    "message": "Ngôn ngữ dịch"
   },
   "backendLabel": {
     "message": "Công cụ"
@@ -100,7 +100,7 @@
     "message": "Đang bị endpoint dịch giới hạn tốc độ — tự chậm lại và thử lại. Các dòng đã dịch vẫn hoạt động."
   },
   "backendStatusSame": {
-    "message": "Phụ đề video này đã đúng ngôn ngữ đích — không cần dịch."
+    "message": "Phụ đề video này đã đúng ngôn ngữ dịch — không cần dịch."
   },
   "secLayout": {
     "message": "Bố cục"
@@ -232,7 +232,7 @@
     "message": "Đã tải phụ đề"
   },
   "exportNoTrans": {
-    "message": "Không có bản dịch cho video này — thử công cụ Toàn phụ đề hoặc ngôn ngữ đích khác."
+    "message": "Không có bản dịch cho video này — thử công cụ Toàn phụ đề hoặc ngôn ngữ dịch khác."
   },
   "exportLimited": {
     "message": "YouTube đang giới hạn tốc độ dịch toàn bộ phụ đề — thử lại sau một phút. Khi đã thiết lập khóa riêng, thẻ xuất có ô chọn để vượt qua giới hạn này."
@@ -435,7 +435,7 @@
     "message": "Giới thiệu"
   },
   "startIntro": {
-    "message": "Ba điều. Bạn không cần thiết lập gì để dùng."
+    "message": "Bốn điều. Bạn không cần thiết lập gì để dùng."
   },
   "startS1Title": {
     "message": "Mở một video — thế thôi"
@@ -619,26 +619,38 @@
   "startPicByoNote": {
     "message": "hiểu cả câu, tách lại"
   },
+  "startS4Title": {
+    "message": "Trong trình phát có một menu nhỏ"
+  },
+  "startS4Body": {
+    "message": "Mũi tên nhỏ cạnh nút phụ đề sẽ mở menu: đọc to, chọn văn bản, tóm tắt video và cài đặt — không cần rời trình phát."
+  },
+  "startS4Alt": {
+    "message": "Hình minh họa trình phát: mũi tên nhỏ cạnh nút phụ đề ở góc dưới bên phải mở ra một menu nhỏ"
+  },
+  "menuHintBubble": {
+    "message": "Đọc to, tóm tắt video, chọn văn bản — tất cả nằm sau mũi tên nhỏ này"
+  },
   "langManage": {
     "message": "Quản lý ngôn ngữ…"
   },
   "optNavLangs": {
-    "message": "Ngôn ngữ phụ đề"
+    "message": "Danh sách ngôn ngữ dịch"
   },
   "langsIntro": {
-    "message": "Ngôn ngữ đích mà popup đề xuất dịch sang."
+    "message": "Những ngôn ngữ dịch mà popup đề xuất."
   },
   "langsKept": {
     "message": "Hiện trong popup"
   },
   "langsKeptHint": {
-    "message": "Hiện trong menu ngôn ngữ đích của popup. Giữ ít nhất một."
+    "message": "Hiện trong menu ngôn ngữ dịch của popup. Giữ ít nhất một."
   },
   "langsMore": {
     "message": "Ngôn ngữ khác"
   },
   "langsMoreHint": {
-    "message": "Nhấn + để thêm. Danh sách bám theo các ngôn ngữ đích mà công cụ miễn phí và DeepL nêu ra."
+    "message": "Nhấn + để thêm. Danh sách bám theo các ngôn ngữ dịch mà công cụ miễn phí và DeepL hỗ trợ."
   },
   "langsReset": {
     "message": "Khôi phục mặc định"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Ngôn ngữ đó đang dùng, nên đích giờ là $NAME$",
+    "message": "Ngôn ngữ đó đang dùng, nên ngôn ngữ dịch giờ là $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Tự động — theo trình duyệt"
   },
   "uiLocaleHint": {
-    "message": "Ngôn ngữ menu và cài đặt của tiện ích này. Một số nhãn hiện trên video vẫn theo ngôn ngữ trình duyệt. Phụ đề được dịch sang ngôn ngữ nào thì chọn trong cửa sổ pop-up; mục “Ngôn ngữ phụ đề” chỉ quyết định pop-up liệt kê những ngôn ngữ nào."
+    "message": "Ngôn ngữ menu và cài đặt của tiện ích này. Một số nhãn hiện trên video vẫn theo ngôn ngữ trình duyệt. Ngôn ngữ dịch của phụ đề chọn trong cửa sổ pop-up; mục “Danh sách ngôn ngữ dịch” chỉ quyết định pop-up liệt kê những ngôn ngữ nào."
   },
   "cmdToggleSubs": {
     "message": "Bật hoặc tắt phụ đề"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Ở tốc độ cao, câu dài hay bị câu sau cắt mất phần đuôi. Bật lên thì hình sẽ chậm đúng mức câu cần (không thấp hơn một phần tư tốc độ bạn chọn) rồi đuổi kịp ở chỗ trống."
+  },
+  "ttsCompleteHintText": {
+    "message": "Ở tốc độ này khá nhiều câu bị cắt ngang — bật “Đọc trọn từng câu, không cắt ngang” thì hình sẽ chậm lại khi cần và câu nào cũng được đọc trọn."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Bật"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Đừng hiện lại"
+  },
+  "provLocalSpeechShort": {
+    "message": "Trình duyệt"
   }
 }

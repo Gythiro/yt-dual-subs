@@ -753,7 +753,9 @@
       // whatever the operating system has, and it speaks locally, so nothing
       // here can reach a network: no key, no host, no request.
       id: "local-speech", name: "浏览器内置（免费）", nameKey: "provLocalSpeech",
-      short: "浏览器", kind: "local-speech",
+      // shortKey too: the bare short leaked Chinese into nineteen
+      // locales' popup voice row (spotted in the de cuthint shot, 2026-09-01).
+      short: "浏览器", shortKey: "provLocalSpeechShort", kind: "local-speech",
       baseUrl: "", origin: "",
       keyless: true,
       // The machine decides. The settings page fills this from

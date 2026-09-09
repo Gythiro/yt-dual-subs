@@ -41,7 +41,7 @@ English | [简体中文](README.zh-CN.md)
 
 <h3>Every line, styled your way.</h3>
 
-<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-popup.png" width="320" alt="The settings popup with live preview: target language, the engine set to your own key with a provider picker below it, and layout controls">
+<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-popup.png" width="320" alt="The settings popup with live preview: translation language, the engine set to your own key with a provider picker below it, and layout controls">
 
 </td>
 </tr>
@@ -52,7 +52,7 @@ English | [简体中文](README.zh-CN.md)
 - **Whole sentences** — renders from the timed caption *cues* rather than the rolling on‑screen text, so a line changes when the sentence does.
 - **Two free engines, smart default** — YouTube's own whole‑track translation whenever the video supports it, with a much smarter fallback: fragmented captions are **rebuilt into full sentences** before Google translates them, so ASR fragments stop reading like word salad. Prefetched ahead of playback.
 - **Or bring your own API key** — twelve providers, including DeepSeek, Gemini, DeepL and Alibaba Cloud Model Studio. Each sentence is understood as a whole and then split back across the cues, so the translation line turns over with the original instead of standing still. The key is stored on your own machine and is sent to nobody but the provider you picked.
-- **50 target languages**, and you choose which of them appear in the menu.
+- **50 translation languages**, and you choose which of them appear in the menu.
 - **Read the translation aloud** — each line is spoken as it appears, with the video's own audio ducked underneath and slowed a touch when a line is too long to fit. Your browser's own voices work with no key at all; five cloud providers are there if you want better ones, including Chinese regional voices and your own cloned ones. Preview a voice before you commit to it.
 - **Speaks your language, not just ours** — the interface itself comes in 20 languages, picked automatically and switchable by hand.
 
@@ -97,7 +97,7 @@ Works on **Chrome, Edge, and other Chromium browsers**, version 111+ (required f
 
 ## ⚙️ Usage
 
-- **Toolbar icon** → settings popup: target language, translation engine, line order, position, spacing, and per‑line styling — all with a live preview.
+- **Toolbar icon** → settings popup: translation language, translation engine, line order, position, spacing, and per‑line styling — all with a live preview.
 - **Gear icon** (top-right of the popup) → the settings page: getting started, translation-service setup for your own key, and which languages appear in the menu.
 - **Control‑bar button** (the caption icon next to the gear): one‑click on/off. Blue = on, grey = off.
 - **Drag** the subtitle box by its handle (appears top‑left when you hover the player); **double‑click** the handle to reset its position.

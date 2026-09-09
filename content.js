@@ -300,6 +300,7 @@
     // toggle, and would put a subtitle box back that can never translate again.
     try { if (toggleBtn) { toggleBtn.remove(); toggleBtn = null; } } catch (_e) { /* ignore */ }
     moreEl = null;
+    try { hideMenuBubble(); } catch (_e) { /* ignore */ }
     try { closeMenu(); } catch (_e) { /* ignore */ }
     try { sumClose(); } catch (_e) { /* ignore */ }
     try { document.removeEventListener("mousedown", onDocMouseDownForMenu, true); } catch (_e) { /* ignore */ }
@@ -626,6 +627,75 @@
     }));
   }
 
+  // The corner menu gets the same bargain: a 9px arrow is the door to
+  // read-aloud, copy, summary and settings, and nobody finds it unprompted
+  // (the owner's call, 2026-09-01: teach it in onboarding AND pulse it).
+  // Unlike the grip, UPDATES seed this one too — the menu is new, so
+  // long-time users have never seen the arrow either (background.js seeds
+  // once). Opened once = discovered = retired for good.
+  let menuHintedThisVideo = false;
+  let menuHintKilled = false;
+  let menuBubbleEl = null;
+  let menuBubbleTimer = null;
+
+  // The words half of the hint: a one-time callout above the button saying
+  // what the arrow IS. The pulse alone was judged too small on the real
+  // machine (the arrow is 9px; owner, 2026-09-01) — the bubble carries the
+  // meaning and is itself the door: clicking it opens the menu.
+  function hideMenuBubble() {
+    if (menuBubbleTimer) { clearTimeout(menuBubbleTimer); menuBubbleTimer = null; }
+    if (menuBubbleEl) { menuBubbleEl.remove(); menuBubbleEl = null; }
+  }
+
+  function showMenuBubble() {
+    hideMenuBubble();
+    const player = getPlayer();
+    if (!player || !toggleBtn || !toggleBtn.isConnected) return;
+    const b = document.createElement("div");
+    b.className = "ytds-menu-bubble";
+    b.textContent = ct("menuHintBubble",
+      "朗读、视频总结、选中复制——都在这个小箭头菜单里");
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      openMenu();                              // openMenu retires the hint
+    });
+    player.appendChild(b);
+    // Above the button, tail near the arrow. Measured, not guessed: the
+    // control bar's height varies with player size and theater mode.
+    const pr = player.getBoundingClientRect();
+    const br = toggleBtn.getBoundingClientRect();
+    if (br.width && br.height && pr.width) {
+      b.style.right = Math.max(8, Math.round(pr.right - br.right - 2)) + "px";
+      b.style.bottom = Math.round(pr.bottom - br.top + 10) + "px";
+    } else {
+      // Mid-SPA-navigation the button can measure 0x0 (caught on the real
+      // machine: the bubble computed itself into the middle of the frame).
+      // A fixed bottom-right anchor is where the button will be anyway.
+      b.style.right = "12px";
+      b.style.bottom = "64px";
+    }
+    menuBubbleEl = b;
+    menuBubbleTimer = setTimeout(hideMenuBubble, 6500);
+  }
+
+  function maybeHintMenu() {
+    if (menuHintedThisVideo || menuHintKilled) return;
+    if (!toggleBtn || !toggleBtn.isConnected || !moreEl) return;
+    menuHintedThisVideo = true;                // one shot per video either way
+    extCall(() => chrome.storage.local.get({ menuHintsLeft: 0 }, (got) => {
+      const left = Number(got && got.menuHintsLeft) || 0;
+      if (left <= 0 || menuHintKilled) return;
+      extCall(() => chrome.storage.local.set({ menuHintsLeft: left - 1 }));
+      if (!toggleBtn || !toggleBtn.isConnected) return;
+      toggleBtn.classList.add("ytds-menu-hint");
+      showMenuBubble();
+      setTimeout(() => {
+        if (toggleBtn) toggleBtn.classList.remove("ytds-menu-hint");
+      }, 6500);
+    }));
+  }
+
   function onHandlePointerDown(e) {
     const player = getPlayer();
     if (!player) return;
@@ -942,7 +1012,7 @@
     overlay.classList.toggle("ytds-empty", empty);
     // The moment there is something on screen is the moment the grip is worth
     // pointing at — before that there is no box to drag.
-    if (!empty) maybeHintHandle();
+    if (!empty) { maybeHintHandle(); maybeHintMenu(); }
     // Synchronously, in the same task as the text change: leaving this to the
     // rAF in scheduleLift() let a taller line paint one frame outside the
     // player before being pulled back (measured 76px of overflow for a frame
@@ -1321,8 +1391,12 @@
       // said out loud BEFORE the first request, the export precedent.
       const b2 = sumBody();
       if (!b2) return;
+      // Display through the provider's shortKey (the raw short put 「百炼」
+      // into nineteen locales here); identity checks above stay on the raw
+      // name — a cache must not change identity with the UI language.
+      const provName = (info.nameKey && ct(info.nameKey, info.name)) || info.name;
       b2.appendChild(sumNode("p", null,
-        tsub("sumConfirm", [info.name, String(chunks.length)],
+        tsub("sumConfirm", [provName, String(chunks.length)],
           "会把整条字幕发给 $1$，分 $2$ 段，花的是你自己的额度。")));
       b2.appendChild(sumButton(ct("sumStart", "开始总结"), "ytds-sum-primary",
         () => { if (myEpoch === sumEpoch) sumRun(chunks, info.name); }));
@@ -1405,6 +1479,14 @@
     closeMenu();
     const player = getPlayer();
     if (!player || !toggleBtn || !toggleBtn.isConnected) return;
+    // Opened once = the arrow is discovered: retire the first-run pulse for
+    // good (one write, ever — the guard keeps every later open silent).
+    if (!menuHintKilled) {
+      menuHintKilled = true;
+      toggleBtn.classList.remove("ytds-menu-hint");
+      hideMenuBubble();
+      extCall(() => chrome.storage.local.set({ menuHintsLeft: 0 }));
+    }
     menuEl = document.createElement("div");
     menuEl.className = "ytds-menu";
     // Presses inside the menu are the menu's business — they must neither
@@ -1858,6 +1940,9 @@
   // optimistically the moment a duck goes out, then corrected by inject's
   // report — the element's own ratechange can beat the postMessage back.
   let ttsAsked = 0;
+  // The duck currently on the wire pressed the original all the way to 0
+  // (completeness deep-sink) — such a duck is restored, never held.
+  let ttsDuckZero = false;
   // What inject says it is holding right now (0 = it has let go). This is the
   // half the element cannot tell us: clearing a fit and the player actually
   // giving the rate back are two different moments, and the ticks in between
@@ -1887,6 +1972,17 @@
   // covers one or two overrunning lines and is paid back within a couple of
   // roomy ones. Under it a line is never cut; at it, it is.
   const TTS_DEBT_MAX_MS = 1200;
+  // A tlang SPAN may wait longer for the previous tail. Paired 1x runs
+  // (2026-09-01, three segments): tlang cut 3/4/3 tails per 75s where gtx cut
+  // none, and the cut rows were late=0 with 1612-2411ms of tail left — healthy
+  // lines whose only fault was a neighbour that ran long, capped at 1200.
+  // 2500 covers every one of those measured tails; the ledger (ttsDebtMs)
+  // stays clamped at TTS_DEBT_MAX_MS, so sizing, the urgent tier and cruise
+  // all keep their shipped numbers — the lateness a longer wait leaves behind
+  // shows up in the NEXT line's measured lateNow and shrinks its wait, which
+  // is the only backoff this needs (three-way review 2026-09-01: the flat-EXTRA
+  // variant was rejected twice over for defeating exactly that decay).
+  const TTS_SPAN_WAIT_MAX_MS = 2500;
   // Under this the debt is settled: no repayment pressure on the speech rate.
   const TTS_DEBT_CLEAR_MS = 150;
   // Cruise may not UNLOCK while this much is owed. Repayment shortens every
@@ -1910,6 +2006,22 @@
   // the user's own rate for a line that needs it, never further (D114).
   const TTS_COMPLETE_FLOOR = 0.25;
   const TTS_FIT_CEILING = TTS_RATE_MAX / TTS_VIDEO_FLOOR;
+  // The comfortable ceiling was tuned for 1x viewing and stayed ABSOLUTE while
+  // the need it faces scales with the viewer's rate (ownNeed = dur*vRate/own):
+  // at 2x the viewer already accepts 2x original audio, yet speech held at 1.4
+  // cut the tail of ~84% of dense lines (measured 2026-08-31). So the ceiling
+  // follows the rate — never below the tuned 1.4, never past 2.0 (time-stretch
+  // beyond that turns choppy even with pitch preserved, and 2.0 already
+  // matches the tempo the viewer chose). At <=1.4x every number is identical
+  // to before (four-way review 2026-09-01, 4/4; the owner's own ask).
+  function ttsRateMaxFor(vRate) {
+    return Math.min(2, Math.max(TTS_RATE_MAX, vRate || 1));
+  }
+  // The urgent gear keeps its exact distance above the ceiling (1.55/1.4, so a
+  // 1x viewer still gets precisely today's 1.55), capped in step with it.
+  function ttsRateUrgentFor(cap) {
+    return Math.min(2.2, cap * (TTS_RATE_URGENT / TTS_RATE_MAX));
+  }
   let ttsDebtMs = 0;
   // Every line goes on air a little after its cue: the cue loop samples every
   // 120ms and the bytes still have to decode. That offset is constant, it does
@@ -1984,9 +2096,16 @@
     // in between: keep the state and both counters — flapping here would just
     // move the square wave one level up
   }
-  function ttsCruiseSpeech(rate) {
-    const r = Math.max(1, Math.min(1.4, Number(settings.ttsCruiseRate) || 1.25));
-    return Math.min(1.4, Math.max(rate || 1, r));
+  // `cap` is the ceiling IN FORCE for this line (comfortable or urgent).
+  // Before it existed this clamp hard-coded 1.4 — which made the urgent gear
+  // dead code: the debt clamp below the cap assignment pulled every 1.55 back
+  // to 1.4 while the fallback fit had been computed FOR 1.55, so the most
+  // urgent lines got a video that slowed less AND speech that never sped up.
+  // Present since the gear was built; found by the 2026-09-01 four-way QA.
+  function ttsCruiseSpeech(rate, cap) {
+    const top = cap || TTS_RATE_MAX;
+    const r = Math.max(1, Math.min(top, Number(settings.ttsCruiseRate) || 1.25));
+    return Math.min(top, Math.max(rate || 1, r));
   }
   function ttsCruiseFit(fit, vRate) {
     const f = Math.max(0.5, Math.min(1, Number(settings.ttsCruiseVideo) || 0.85));
@@ -2170,6 +2289,15 @@
   const TTS_DUCK_HOLD_MS = 1400;
   let ttsHoldTimer = 0;
   function ttsDuckOffOrHold(idx) {
+    // A zero-duck never crosses a line boundary as zero: a gap at 0 is
+    // silence, and a failed next line would park it there. But restoring all
+    // the way UP and re-muting 300ms later was worse — the round trip's
+    // give-back ramp raced the next duck and poisoned the saved volume (the
+    // 80→20→15→5→0 walk-down, fixed in inject too), and the full-volume blip
+    // between deep lines was its own noise. So the mute is DEMOTED to the
+    // stored duck level first; the ordinary hold/off logic below then treats
+    // it like any speaking-level duck.
+    if (ttsDuckZero) ttsDuck(true);
     if (settings.ttsEnabled && !orphaned && idx != null && cueList) {
       const v = getVideo();
       const nx = ttsWindowEnd(idx);
@@ -2199,8 +2327,26 @@
     // ratechange — and a ratechange with no ask on record reads as the viewer
     // reaching for the dial.
     ttsAsked = (on && typeof fit === "number" && fit > 0) ? fit : 0;
+    // Deep sink fades the original by the ABSOLUTE rate, with the knob as the
+    // ceiling. The first cut of this compared fit to 70% of the viewer's OWN
+    // rate — at 2x that muted original playing at 1.0-1.4x absolute, which is
+    // perfectly intelligible, and the owner's knob at 100% counted for
+    // nothing ("原声直接静音", 2026-09-01). Garble is a property of the
+    // absolute playback rate: above 0.7x the original is speech and gets the
+    // full knob; below 0.5x it is garble at any volume and goes to zero even
+    // over a loud knob; between them it fades linearly. Only completeness
+    // mode can sink below 0.7x absolute at normal viewing rates, so the knob
+    // keeps its plain meaning everywhere else. inject's 200ms volume ramp
+    // turns each step into a fade. (四方合成:sub 的绝对阈值诊断 + 三方的
+    // 「旋钮是天花板」共识;端点 0.5/0.7 = garble 区上沿 / 原 1x deep 阈值。)
+    let pct = settings.ttsDuckPct;
+    if (on && settings.ttsComplete && typeof fit === "number" && fit > 0) {
+      const audible = Math.max(0, Math.min(1, (fit - 0.5) / 0.2));
+      pct = Math.round(settings.ttsDuckPct * audible);
+    }
+    ttsDuckZero = !!(on && pct === 0 && typeof fit === "number");
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: !!on,
-      pct: settings.ttsDuckPct, fit: fit }, "*"); }
+      pct: pct, fit: fit }, "*"); }
     catch (_e) { /* ignore */ }
   }
 
@@ -2543,7 +2689,8 @@
     // it is scaled by the rate in force before joining a window read off the
     // video's own clock.
     let fit, borrowed = 0;
-    if (ownNeed > TTS_FIT_CEILING) {
+    const rateCap = ttsRateMaxFor(vRate);
+    if (ownNeed > rateCap / TTS_VIDEO_FLOOR) {
       // Spend the free tier first. The picture goes to its floor, which buys
       // real speaking time and costs no drift, and only what is STILL missing
       // after that is borrowed. Skipping the slowdown here and borrowing the
@@ -2558,12 +2705,12 @@
       // fixed floor (2.58 still loses to the median) by both outside reviews.
       fit = settings.ttsComplete
         ? Math.max(vRate * TTS_COMPLETE_FLOOR,
-            Math.min((TTS_RATE_MAX * ownMs) / durMs, vRate * TTS_VIDEO_FLOOR))
+            Math.min((rateCap * ownMs) / durMs, vRate * TTS_VIDEO_FLOOR))
         : vRate * TTS_VIDEO_FLOOR;
       // What the cue is worth in wall time once the picture is at that floor,
       // against what the line needs at the comfortable ceiling.
       const wallHave = ownMs / fit;
-      const wallWant = durMs / TTS_RATE_MAX;
+      const wallWant = durMs / rateCap;
       borrowed = Math.min(Math.max(0, wallWant - wallHave),
         Math.max(0, TTS_DEBT_MAX_MS - ttsDebtMs));
       leftMs = (wallHave + borrowed) * fit;         // back to video ms
@@ -2571,21 +2718,22 @@
     }
     // Past 60% of the cap a line that still will not fit gets one gear beyond
     // the comfortable ceiling, rather than losing its end.
-    const cap = (ttsDebtMs > TTS_DEBT_MAX_MS * 0.6 && needRate > TTS_RATE_MAX)
-      ? TTS_RATE_URGENT : TTS_RATE_MAX;
+    const cap = (ttsDebtMs > TTS_DEBT_MAX_MS * 0.6 && needRate > rateCap)
+      ? ttsRateUrgentFor(rateCap) : rateCap;
     if (needRate > 1) {
       audio.playbackRate = Math.min(cap, needRate);
       if (needRate > cap && fit == null) fit = (cap * leftMs) / durMs;
     }
     if (ttsCruising) {
-      audio.playbackRate = ttsCruiseSpeech(audio.playbackRate);
+      audio.playbackRate = ttsCruiseSpeech(audio.playbackRate, cap);
       fit = ttsCruiseFit(fit, vRate);
     }
     // Repayment is made out of speech, never out of the video: slowing the
     // picture to catch up would make the lag both longer AND more visible.
-    // While anything is owed the speech holds at the cruise floor.
+    // While anything is owed the speech holds at the cruise floor — clamped to
+    // the cap IN FORCE, never back down through it (the dead-gear bug).
     if (ttsDebtMs > TTS_DEBT_CLEAR_MS)
-      audio.playbackRate = ttsCruiseSpeech(audio.playbackRate);
+      audio.playbackRate = ttsCruiseSpeech(audio.playbackRate, cap);
     ttsTraceAdd({ k: "fit", vt: v ? Math.round(v.currentTime * 1000) : -1,
       dur: Math.round(durMs), left: Math.round(leftMs), own: Math.round(ownMs),
       debt: Math.round(ttsDebtMs), bor: Math.round(borrowed),
@@ -2757,6 +2905,12 @@
     // not free a line that was still waiting to start. Turning read-aloud off
     // mid-track left one blob behind per line in flight.
     ttsPendingRelease.set(idx, release);
+    // What the arm decided, for the cut row: how much tail the previous line
+    // still had (wanted) and how much of that the debt budget let us wait out
+    // (waited). wanted>waited is the capped cut the D113 instrumentation reads
+    // offline — the join with the arm row used to be by-hand (planned-vs-
+    // actual, four-way review C1).
+    let armWantedMs = 0, armWaitedMs = 0;
     const takeover = () => {
       if (myEpoch !== ttsEpoch || !ttsClaimStillCurrent(idx)) {
         release();                 // superseded while waiting: never played
@@ -2781,7 +2935,8 @@
           // No "who was cut" index here: ttsSpokenIdx is already the NEW
           // line's by claim time, and naming the wrong line reads as fact.
           // The cut line is the one the previous fit row belongs to.
-          ttsTraceAdd({ k: "cut", by: "take", i: idx, cutMs: cutMs });
+          ttsTraceAdd({ k: "cut", by: "take", i: idx, cutMs: cutMs,
+            wanted: Math.round(armWantedMs), waited: Math.round(armWaitedMs) });
         } else {
           ttsTraceAdd({ k: "end", i: -1 });   // finished to the sample; the
                                               // takeover just beat the event
@@ -2843,8 +2998,25 @@
         ? Math.max(0, (prev.duration - prev.currentTime) / (prev.playbackRate || 1) * 1000)
         : 0;
       const lateNow = ttsLatenessMs(idx);
-      const canWait = Math.max(0, TTS_DEBT_MAX_MS - lateNow);
+      // Spans (tlang's merged sentences) get the longer cap — see the constant.
+      const spanHere = !!(cueToSpan && speechSpans && cueToSpan[idx] != null);
+      let canWait = Math.max(0,
+        (spanHere ? TTS_SPAN_WAIT_MAX_MS : TTS_DEBT_MAX_MS) - lateNow);
+      // Never wait past this line's OWN window: a takeover that lands after
+      // the next line's start is refused by ttsClaimStillCurrent, and the
+      // line that politely waited vanishes without a count or a trace row.
+      // That hole predates the longer cap; the cap doubles the exposure, so
+      // the wait now leaves at least enough room to actually speak.
+      const vw = getVideo();
+      const nxw = ttsWindowEnd(idx);
+      if (vw && nxw && nxw.start != null) {
+        const roomWall = (nxw.start - vw.currentTime * 1000)
+          / (vw.playbackRate || 1) - 150;
+        canWait = Math.min(canWait, Math.max(0, roomWall));
+      }
       const wait = Math.min(prevLeft, canWait);
+      armWantedMs = prevLeft;
+      armWaitedMs = wait;
       ttsTraceAdd({ k: "arm", i: idx, left: Math.round(prevLeft),
         late: Math.round(lateNow), wait: Math.round(wait),
         g: wait >= prevLeft && prevLeft > 0 });
@@ -3002,25 +3174,28 @@
     // can work off. Half a budget it may be wrong about beats a whole one it
     // cannot correct.
     rate = 1; fit = undefined;
-    if (ownNeed > TTS_FIT_CEILING && ownMs) {
+    const rateCap = ttsRateMaxFor(vRate);           // same rate-following
+    if (ownNeed > rateCap / TTS_VIDEO_FLOOR && ownMs) {   // ceiling as audio
       fit = settings.ttsComplete                    // same complete-mode floor
         ? Math.max(vRate * TTS_COMPLETE_FLOOR,      // as the audio path above
-            Math.min((TTS_RATE_MAX * ownMs) / est, vRate * TTS_VIDEO_FLOOR))
+            Math.min((rateCap * ownMs) / est, vRate * TTS_VIDEO_FLOOR))
         : vRate * TTS_VIDEO_FLOOR;                  // same free tier first
       const wallHave = ownMs / fit;
-      const wallWant = est / TTS_RATE_MAX;
+      const wallWant = est / rateCap;
       const borrow = Math.min(Math.max(0, wallWant - wallHave),
         Math.max(0, TTS_DEBT_MAX_MS - ttsDebtMs) * 0.5);
       leftMs = (wallHave + borrow) * fit;
       needRate = est / (wallHave + borrow);
     }
     if (needRate > 1) {
-      rate = Math.min(TTS_RATE_MAX, needRate);
-      if (needRate > TTS_RATE_MAX && fit == null) fit = (TTS_RATE_MAX * leftMs) / est;
+      rate = Math.min(rateCap, needRate);           // no urgent gear on an
+      if (needRate > rateCap && fit == null) {      // estimate (deliberate)
+        fit = (rateCap * leftMs) / est;
+      }
     }
-    if (ttsDebtMs > TTS_DEBT_CLEAR_MS) rate = ttsCruiseSpeech(rate);
+    if (ttsDebtMs > TTS_DEBT_CLEAR_MS) rate = ttsCruiseSpeech(rate, rateCap);
     if (ttsCruising) {
-      rate = ttsCruiseSpeech(rate);
+      rate = ttsCruiseSpeech(rate, rateCap);
       fit = ttsCruiseFit(fit, vRate);
     }
     estAtRate = est / rate;
@@ -3122,7 +3297,11 @@
       }
       clearTimeout(localTimer);
       localTimer = setTimeout(done, Math.min(TTS_LOCAL_MAX_MS,
-        Math.max(TTS_LOCAL_MIN_MS, estAtRate)));
+        Math.max(TTS_LOCAL_MIN_MS,
+          // Slack past the tuned ceiling: the estimate's fixed overheads do
+          // not shrink with rate, and some machine voices clamp the rate we
+          // asked for — a halved watchdog then un-ducked mid-sentence.
+          rate > TTS_RATE_MAX ? estAtRate * 1.25 + 150 : estAtRate)));
     });
     localUtter = u;
     clearTimeout(localTimer);
@@ -4750,6 +4929,8 @@
     }));
     currentVideoId = videoIdFromLocation();
     hintedThisVideo = false;    // a new video may spend one more first-run hint
+    menuHintedThisVideo = false; // and one more arrow pulse, same budget shape
+    hideMenuBubble();            // a callout must not outlive its video
     blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery
     blankNextAt = 0;
     ttsStop(true);              // never carry a speaking line across videos

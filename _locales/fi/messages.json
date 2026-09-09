@@ -64,7 +64,7 @@
     "message": "Käännös"
   },
   "targetLang": {
-    "message": "Kohdekieli"
+    "message": "Käännöskieli"
   },
   "backendLabel": {
     "message": "Moottori"
@@ -100,7 +100,7 @@
     "message": "Käännösrajapinta on asettanut käyttörajoituksen — hidastetaan ja yritetään automaattisesti uudelleen. Jo käännetyt rivit toimivat edelleen."
   },
   "backendStatusSame": {
-    "message": "Tämän videon tekstitykset ovat jo kohdekielelläsi — ei käännettävää."
+    "message": "Tämän videon tekstitykset ovat jo käännöskielelläsi — ei käännettävää."
   },
   "secLayout": {
     "message": "Asettelu"
@@ -232,7 +232,7 @@
     "message": "Tekstitykset ladattu"
   },
   "exportNoTrans": {
-    "message": "Tälle videolle ei ole käännöstä — kokeile koko raidan moottoria tai toista kohdekieltä."
+    "message": "Tälle videolle ei ole käännöstä — kokeile koko raidan moottoria tai toista käännöskieltä."
   },
   "exportLimited": {
     "message": "YouTube rajoittaa koko raidan käännöstä juuri nyt — yritä uudelleen minuutin kuluttua. Kun oma avain on asetettu, vientikortti tarjoaa rastin, jolla rajoituksen voi kiertää."
@@ -435,7 +435,7 @@
     "message": "Tietoja"
   },
   "startIntro": {
-    "message": "Kolme asiaa. Käyttöä varten ei tarvitse säätää mitään."
+    "message": "Neljä asiaa. Käyttöä varten ei tarvitse säätää mitään."
   },
   "startS1Title": {
     "message": "Avaa video — siinä kaikki"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "ymmärretty kokonaan, jaettu takaisin"
   },
+  "startS4Title": {
+    "message": "Soittimessa on pieni valikko"
+  },
+  "startS4Body": {
+    "message": "Tekstityspainikkeen vieressä oleva pieni nuoli avaa valikon: lue ääneen, tekstin valinta, videon tiivistelmä ja asetukset — poistumatta soittimesta."
+  },
+  "startS4Alt": {
+    "message": "Soittimen kuva: pieni nuoli tekstityspainikkeen vieressä oikealla alhaalla avaa pienen valikon"
+  },
+  "menuHintBubble": {
+    "message": "Lue ääneen, videon tiivistelmä, tekstin valinta — kaikki tämän pienen nuolen takana"
+  },
   "langManage": {
     "message": "Hallitse kieliä…"
   },
   "optNavLangs": {
-    "message": "Tekstityskielet"
+    "message": "Käännöskielet"
   },
   "langsIntro": {
     "message": "Mitä kieliä ponnahdusikkuna tarjoaa käännöskohteeksi."
@@ -632,13 +644,13 @@
     "message": "Näytetään ponnahdusikkunassa"
   },
   "langsKeptHint": {
-    "message": "Nämä näkyvät ponnahdusikkunan kohdekielivalikossa. Pidä vähintään yksi."
+    "message": "Nämä näkyvät ponnahdusikkunan käännöskielivalikossa. Pidä vähintään yksi."
   },
   "langsMore": {
     "message": "Muut kielet"
   },
   "langsMoreHint": {
-    "message": "Paina + lisätäksesi kielen. Lista seuraa kohdekieliä, jotka ilmaiset moottorit ja DeepL ilmoittavat."
+    "message": "Paina + lisätäksesi kielen. Lista seuraa käännöskieliä, joita ilmaiset moottorit ja DeepL tukevat."
   },
   "langsReset": {
     "message": "Palauta oletukset"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Se oli käytössä, joten kohdekieli on nyt $NAME$",
+    "message": "Se oli käytössä, joten käännöskieli on nyt $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Automaattinen — seuraa selainta"
   },
   "uiLocaleHint": {
-    "message": "Tämän laajennuksen omien valikoiden ja asetusten kieli. Muutama suoraan videolle piirretty teksti seuraa yhä selaimen kieltä. Kielen, jolle tekstitykset käännetään, valitset ponnahdusikkunassa; ”Tekstityskielet”-näkymä päättää vain, mitkä kielet siellä näkyvät."
+    "message": "Tämän laajennuksen omien valikoiden ja asetusten kieli. Muutama suoraan videolle piirretty teksti seuraa yhä selaimen kieltä. Tekstitysten käännöskieli valitaan ponnahdusikkunassa; ”Käännöskielet”-näkymä päättää vain, mitkä kielet siellä näkyvät."
   },
   "cmdToggleSubs": {
     "message": "Tekstitys päälle tai pois"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Suurilla nopeuksilla pitkät rivit menettävät usein loppunsa. Kun tämä on päällä, kuva hidastuu juuri sen verran kuin rivi vaatii — ei koskaan alle neljäsosaan valitsemastasi nopeudesta — ja kirii kiinni tauoissa."
+  },
+  "ttsCompleteHintText": {
+    "message": "Tällä nopeudella moni rivi katkeaa kesken — kun ”Lue jokainen rivi loppuun asti” on päällä, kuva hidastuu tarpeen mukaan ja jokainen rivi luetaan loppuun."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Ota käyttöön"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Älä näytä enää"
+  },
+  "provLocalSpeechShort": {
+    "message": "Selain"
   }
 }

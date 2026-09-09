@@ -64,7 +64,7 @@
     "message": "Překlad"
   },
   "targetLang": {
-    "message": "Cílový jazyk"
+    "message": "Jazyk překladu"
   },
   "backendLabel": {
     "message": "Překladač"
@@ -100,7 +100,7 @@
     "message": "Překladový endpoint omezil přístup — zpomaluji a automaticky zkouším znovu. Už přeložené řádky fungují dál."
   },
   "backendStatusSame": {
-    "message": "Titulky tohoto videa už jsou v cílovém jazyce — není co překládat."
+    "message": "Titulky tohoto videa už jsou v jazyce překladu — není co překládat."
   },
   "secLayout": {
     "message": "Rozložení"
@@ -232,7 +232,7 @@
     "message": "Titulky staženy"
   },
   "exportNoTrans": {
-    "message": "Pro toto video není překlad k dispozici — zkuste překladač Celá stopa nebo jiný cílový jazyk."
+    "message": "Pro toto video není překlad k dispozici — zkuste překladač Celá stopa nebo jiný jazyk překladu."
   },
   "exportLimited": {
     "message": "YouTube teď omezuje překlad celé stopy — zkuste to za minutu znovu. S nastaveným vlastním klíčem nabízí karta exportu zaškrtnutí, které to obejde."
@@ -367,7 +367,7 @@
     "message": "K této adrese se nelze připojit: server neběží, nebo zatím nepovoluje přístup rozšíření (OLLAMA_ORIGINS u Ollamy, přepínač CORS v LM Studiu)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "Tento poskytovatel nemá cíl pro zvolený jazyk — změňte jazyk nebo překladač."
+    "message": "Tento poskytovatel neumí přeložit do zvoleného jazyka — změňte jazyk nebo překladač."
   },
   "byoErrFailed": {
     "message": "Připojení selhalo. Zkuste to za chvíli znovu."
@@ -435,7 +435,7 @@
     "message": "O rozšíření"
   },
   "startIntro": {
-    "message": "Tři věci. K používání nic nastavovat nemusíte."
+    "message": "Čtyři věci. K používání nic nastavovat nemusíte."
   },
   "startS1Title": {
     "message": "Otevřete video — a hotovo"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "pochopena celá, zase rozdělena"
   },
+  "startS4Title": {
+    "message": "V přehrávači je malé menu"
+  },
+  "startS4Body": {
+    "message": "Malá šipka vedle tlačítka titulků otevře menu: čtení nahlas, výběr textu, shrnutí videa a nastavení — bez opuštění přehrávače."
+  },
+  "startS4Alt": {
+    "message": "Ilustrace přehrávače: malá šipka vedle tlačítka titulků vpravo dole otevře malé menu"
+  },
+  "menuHintBubble": {
+    "message": "Čtení nahlas, shrnutí videa, výběr textu — vše se skrývá za touto šipkou"
+  },
   "langManage": {
     "message": "Spravovat jazyky…"
   },
   "optNavLangs": {
-    "message": "Jazyky titulků"
+    "message": "Jazyky překladu"
   },
   "langsIntro": {
     "message": "Které jazyky vám vyskakovací okno nabízí k překladu."
@@ -632,13 +644,13 @@
     "message": "Ve vyskakovacím okně"
   },
   "langsKeptHint": {
-    "message": "Zobrazují se v nabídce cílového jazyka vyskakovacího okna. Ponechte alespoň jeden."
+    "message": "Zobrazují se v nabídce jazyka překladu vyskakovacího okna. Ponechte alespoň jeden."
   },
   "langsMore": {
     "message": "Další jazyky"
   },
   "langsMoreHint": {
-    "message": "Stiskněte + pro přidání. Seznam vychází z cílových jazyků, které uvádějí bezplatné překladače a DeepL."
+    "message": "Stiskněte + pro přidání. Seznam vychází z jazyků překladu, které podporují bezplatné překladače a DeepL."
   },
   "langsReset": {
     "message": "Obnovit výchozí"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Ten se používal, cílový jazyk je teď $NAME$",
+    "message": "Ten se používal, jazyk překladu je teď $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Automaticky — podle prohlížeče"
   },
   "uiLocaleHint": {
-    "message": "Jazyk nabídek a nastavení tohoto rozšíření. Několik popisků vykreslených přímo ve videu se stále řídí jazykem prohlížeče. Jazyk, do kterého se titulky překládají, se vybírá ve vyskakovacím okně; panel „Jazyky titulků“ jen určuje, které jazyky okno nabízí."
+    "message": "Jazyk nabídek a nastavení tohoto rozšíření. Několik popisků vykreslených přímo ve videu se stále řídí jazykem prohlížeče. Jazyk překladu titulků se vybírá ve vyskakovacím okně; panel „Jazyky překladu“ jen určuje, které jazyky okno nabízí."
   },
   "cmdToggleSubs": {
     "message": "Zapnout nebo vypnout titulky"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Při vyšší rychlosti dlouhé řádky často přijdou o konec. Se zapnutou volbou se obraz zpomalí přesně o tolik, kolik řádek potřebuje — nikdy pod čtvrtinu zvolené rychlosti — a v mezerách to dožene."
+  },
+  "ttsCompleteHintText": {
+    "message": "Při této rychlosti se dost řádků usekává — se zapnutým „Dočíst každý řádek do konce“ se obraz podle potřeby zpomalí a každý řádek se dočte."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Zapnout"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Už nezobrazovat"
+  },
+  "provLocalSpeechShort": {
+    "message": "Prohlížeč"
   }
 }

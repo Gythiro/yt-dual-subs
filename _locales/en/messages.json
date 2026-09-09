@@ -67,7 +67,7 @@
     "message": "Translation"
   },
   "targetLang": {
-    "message": "Target language"
+    "message": "Translation language"
   },
   "backendLabel": {
     "message": "Engine"
@@ -112,7 +112,7 @@
     "message": "Copy failed — take a screenshot instead"
   },
   "backendStatusSame": {
-    "message": "This video's subtitles are already in your target language — nothing to translate."
+    "message": "This video's subtitles are already in your translation language — nothing to translate."
   },
   "secLayout": {
     "message": "Layout"
@@ -250,7 +250,7 @@
     "message": "Subtitles downloaded"
   },
   "exportNoTrans": {
-    "message": "No translation available for this video — try the Whole-track engine or another target language."
+    "message": "No translation available for this video — try the Whole-track engine or another translation language."
   },
   "exportLimited": {
     "message": "YouTube is rate-limiting whole-track translation right now — try again in a minute. With your own key set up, the export card offers a tick that goes around it."
@@ -385,7 +385,7 @@
     "message": "Cannot reach that address: either the server is not running, or it has not been told to allow the extension (OLLAMA_ORIGINS for Ollama, the CORS switch in LM Studio)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "This provider has no target for your chosen language — change the language or the engine."
+    "message": "This provider cannot translate into your chosen language — change the language or the engine."
   },
   "byoErrFailed": {
     "message": "Connection failed. Try again in a moment."
@@ -453,7 +453,7 @@
     "message": "About"
   },
   "startIntro": {
-    "message": "Three things. You do not have to set anything up to use it."
+    "message": "Four things. You do not have to set anything up to use it."
   },
   "startS1Title": {
     "message": "Open a video — that's it"
@@ -492,7 +492,7 @@
     "message": "Auto — follow the browser"
   },
   "uiLocaleHint": {
-    "message": "The language of this extension's own menus and settings. A few labels drawn on the video itself still follow the browser's language. The language your subtitles are translated into is chosen in the popup; the “Subtitle languages” pane only decides which languages the popup lists."
+    "message": "The language of this extension's own menus and settings. A few labels drawn on the video itself still follow the browser's language. The translation language is chosen in the popup; the “Translation languages” pane only decides which languages the popup lists."
   },
   "cmdToggleSubs": {
     "message": "Subtitles on or off"
@@ -670,6 +670,18 @@
   "startPicByoNote": {
     "message": "understood whole, split back"
   },
+  "startS4Title": {
+    "message": "There's a little menu in the player"
+  },
+  "startS4Body": {
+    "message": "The small arrow next to the subtitle button opens a menu: read aloud, select text, video summary and settings — without leaving the player."
+  },
+  "startS4Alt": {
+    "message": "Player illustration: a small arrow next to the subtitle button, bottom right, opens a small menu"
+  },
+  "menuHintBubble": {
+    "message": "Read aloud, video summary, select text — all behind this little arrow"
+  },
   "troubleTitle": {
     "message": "Something wrong"
   },
@@ -689,7 +701,7 @@
     "message": "Manage languages…"
   },
   "optNavLangs": {
-    "message": "Subtitle languages"
+    "message": "Translation languages"
   },
   "optNavReadaloud": {
     "message": "Read aloud"
@@ -756,19 +768,19 @@
     "message": "When on, each subtitle's translation is spoken as it appears; a line whose translation isn't ready in time is skipped rather than caught up on later. While a line speaks, the video's own audio drops to the level set below. A cloud voice that runs long also slows the video a little — your browser's own voices do not report a length, so they cannot."
   },
   "langsIntro": {
-    "message": "Which languages the popup offers you to translate into."
+    "message": "Which translation languages the popup offers."
   },
   "langsKept": {
     "message": "Shown in the popup"
   },
   "langsKeptHint": {
-    "message": "These appear in the popup's target-language menu. Keep at least one."
+    "message": "These appear in the popup's translation-language menu. Keep at least one."
   },
   "langsMore": {
     "message": "Other languages"
   },
   "langsMoreHint": {
-    "message": "Press + to add one. The list follows what the free engines and DeepL give as target languages."
+    "message": "Press + to add one. The list follows the translation languages the free engines and DeepL support."
   },
   "langsReset": {
     "message": "Restore defaults"
@@ -797,7 +809,7 @@
     }
   },
   "langsSwitched": {
-    "message": "That one was in use, so the target is now $NAME$",
+    "message": "That one was in use, so the translation language is now $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1012,5 +1024,17 @@
   },
   "ttsCompleteHint": {
     "message": "At higher speeds long lines often lose their tail to the next one. With this on, the picture slows as much as the line needs — never below a quarter of your chosen speed — and catches back up in the gaps."
+  },
+  "ttsCompleteHintText": {
+    "message": "Quite a few lines are being cut short at this speed — with “Finish every line” on, the picture slows as needed and every line gets read out."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Turn on"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Don't show again"
+  },
+  "provLocalSpeechShort": {
+    "message": "Browser"
   }
 }

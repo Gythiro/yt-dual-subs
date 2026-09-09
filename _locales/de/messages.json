@@ -64,7 +64,7 @@
     "message": "Übersetzung"
   },
   "targetLang": {
-    "message": "Zielsprache"
+    "message": "Übersetzungssprache"
   },
   "backendLabel": {
     "message": "Engine"
@@ -100,7 +100,7 @@
     "message": "Vom Übersetzungsendpunkt gedrosselt — Tempo wird reduziert und automatisch erneut versucht. Bereits übersetzte Zeilen funktionieren weiter."
   },
   "backendStatusSame": {
-    "message": "Die Untertitel dieses Videos sind bereits in der Zielsprache — nichts zu übersetzen."
+    "message": "Die Untertitel dieses Videos sind bereits in der Übersetzungssprache — nichts zu übersetzen."
   },
   "secLayout": {
     "message": "Layout"
@@ -232,7 +232,7 @@
     "message": "Untertitel heruntergeladen"
   },
   "exportNoTrans": {
-    "message": "Keine Übersetzung für dieses Video — versuche die Engine „Ganze Spur“ oder eine andere Zielsprache."
+    "message": "Keine Übersetzung für dieses Video — versuche die Engine „Ganze Spur“ oder eine andere Übersetzungssprache."
   },
   "exportLimited": {
     "message": "YouTube drosselt gerade die Übersetzung ganzer Spuren — in einer Minute erneut versuchen. Mit eigenem Schlüssel bietet die Export-Karte ein Häkchen, das das umgeht."
@@ -367,7 +367,7 @@
     "message": "Diese Adresse ist nicht erreichbar: Entweder läuft der Server nicht, oder er erlaubt der Erweiterung den Zugriff noch nicht (OLLAMA_ORIGINS bei Ollama, der CORS-Schalter in LM Studio)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "Dieser Anbieter hat kein Ziel für deine gewählte Sprache — Sprache oder Engine ändern."
+    "message": "Dieser Anbieter kann nicht in deine gewählte Sprache übersetzen — Sprache oder Engine ändern."
   },
   "byoErrFailed": {
     "message": "Verbindung fehlgeschlagen. In einem Moment erneut versuchen."
@@ -435,7 +435,7 @@
     "message": "Über"
   },
   "startIntro": {
-    "message": "Drei Dinge. Du musst nichts einrichten, um es zu nutzen."
+    "message": "Vier Dinge. Du musst nichts einrichten, um es zu nutzen."
   },
   "startS1Title": {
     "message": "Ein Video öffnen — das war’s"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "ganz verstanden, wieder aufgeteilt"
   },
+  "startS4Title": {
+    "message": "Im Player steckt ein kleines Menü"
+  },
+  "startS4Body": {
+    "message": "Der kleine Pfeil neben dem Untertitel-Button öffnet ein Menü: Vorlesen, Textauswahl, Video-Zusammenfassung und Einstellungen – ohne den Player zu verlassen."
+  },
+  "startS4Alt": {
+    "message": "Player-Illustration: Ein kleiner Pfeil neben dem Untertitel-Button unten rechts öffnet ein kleines Menü"
+  },
+  "menuHintBubble": {
+    "message": "Vorlesen, Video-Zusammenfassung, Textauswahl – alles hinter diesem kleinen Pfeil"
+  },
   "langManage": {
     "message": "Sprachen verwalten…"
   },
   "optNavLangs": {
-    "message": "Untertitelsprachen"
+    "message": "Übersetzungssprachen"
   },
   "langsIntro": {
     "message": "Welche Sprachen das Popup zum Übersetzen anbietet."
@@ -632,13 +644,13 @@
     "message": "Im Popup angezeigt"
   },
   "langsKeptHint": {
-    "message": "Diese erscheinen im Zielsprachen-Menü des Popups. Mindestens eine behalten."
+    "message": "Diese erscheinen im Übersetzungssprachen-Menü des Popups. Mindestens eine behalten."
   },
   "langsMore": {
     "message": "Weitere Sprachen"
   },
   "langsMoreHint": {
-    "message": "Mit + eine hinzufügen. Die Liste folgt den Zielsprachen, die die kostenlosen Engines und DeepL angeben."
+    "message": "Mit + eine hinzufügen. Die Liste folgt den Übersetzungssprachen, die die kostenlosen Engines und DeepL unterstützen."
   },
   "langsReset": {
     "message": "Standard wiederherstellen"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Die war in Verwendung, Zielsprache ist jetzt $NAME$",
+    "message": "Die war in Verwendung, Übersetzungssprache ist jetzt $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Automatisch — dem Browser folgen"
   },
   "uiLocaleHint": {
-    "message": "Die Sprache der Menüs und Einstellungen dieser Erweiterung. Einige direkt auf dem Video eingeblendete Beschriftungen folgen weiterhin der Browsersprache. Die Zielsprache der Untertitel wird im Popup gewählt; der Bereich „Untertitelsprachen“ legt nur fest, welche Sprachen das Popup anbietet."
+    "message": "Die Sprache der Menüs und Einstellungen dieser Erweiterung. Einige direkt auf dem Video eingeblendete Beschriftungen folgen weiterhin der Browsersprache. Die Übersetzungssprache der Untertitel wird im Popup gewählt; der Bereich „Übersetzungssprachen“ legt nur fest, welche Sprachen das Popup anbietet."
   },
   "cmdToggleSubs": {
     "message": "Untertitel ein/aus"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Bei höherem Tempo verliert eine lange Zeile ihr Ende oft an die nächste. Ist dies an, wird das Bild so weit verlangsamt, wie die Zeile braucht — nie unter ein Viertel deines gewählten Tempos — und holt in den Pausen wieder auf."
+  },
+  "ttsCompleteHintText": {
+    "message": "Bei diesem Tempo werden etliche Zeilen abgeschnitten — mit „Jede Zeile zu Ende lesen“ wird das Bild nach Bedarf langsamer und jede Zeile zu Ende gelesen."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Einschalten"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Nicht mehr anzeigen"
+  },
+  "provLocalSpeechShort": {
+    "message": "Browser"
   }
 }

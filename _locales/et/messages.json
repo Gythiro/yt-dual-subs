@@ -64,7 +64,7 @@
     "message": "Tõlge"
   },
   "targetLang": {
-    "message": "Sihtkeel"
+    "message": "Tõlkekeel"
   },
   "backendLabel": {
     "message": "Mootor"
@@ -100,7 +100,7 @@
     "message": "Tõlke otspunkt piirab päringuid — aeglustame ja proovime automaatselt uuesti. Juba tõlgitud read jäävad tööle."
   },
   "backendStatusSame": {
-    "message": "Selle video subtiitrid on juba sihtkeeles — tõlkida pole midagi."
+    "message": "Selle video subtiitrid on juba tõlkekeeles — tõlkida pole midagi."
   },
   "secLayout": {
     "message": "Paigutus"
@@ -232,7 +232,7 @@
     "message": "Subtiitrid allalaaditud"
   },
   "exportNoTrans": {
-    "message": "Selle video jaoks pole tõlget — proovi kogu raja mootorit või teist sihtkeelt."
+    "message": "Selle video jaoks pole tõlget — proovi kogu raja mootorit või teist tõlkekeelt."
   },
   "exportLimited": {
     "message": "YouTube piirab hetkel kogu raja tõlkimist — proovi minuti pärast uuesti. Oma võtme seadistamisel pakub ekspordikaart linnukest, mis sellest mööda läheb."
@@ -367,7 +367,7 @@
     "message": "Sellele aadressile ei saa ühendust: server ei tööta või pole veel laiendusele juurdepääsu lubanud (Ollamas OLLAMA_ORIGINS, LM Studios CORS-lüliti)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "Sellel teenusepakkujal pole valitud keele jaoks sihtkeelt — muuda keelt või mootorit."
+    "message": "See teenusepakkuja ei oska valitud keelde tõlkida — muuda keelt või mootorit."
   },
   "byoErrFailed": {
     "message": "Ühendus ebaõnnestus. Proovi hetke pärast uuesti."
@@ -435,7 +435,7 @@
     "message": "Teave"
   },
   "startIntro": {
-    "message": "Kolm asja. Kasutamiseks ei pea midagi seadistama."
+    "message": "Neli asja. Kasutamiseks ei pea midagi seadistama."
   },
   "startS1Title": {
     "message": "Ava video — see ongi kõik"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "tervikuna mõistetud, tagasi jaotatud"
   },
+  "startS4Title": {
+    "message": "Pleieris on väike menüü"
+  },
+  "startS4Body": {
+    "message": "Väike nool subtiitrinupu kõrval avab menüü: ettelugemine, teksti valimine, video kokkuvõte ja seaded — pleierist lahkumata."
+  },
+  "startS4Alt": {
+    "message": "Pleieri illustratsioon: väike nool subtiitrinupu kõrval all paremal avab väikese menüü"
+  },
+  "menuHintBubble": {
+    "message": "Ettelugemine, video kokkuvõte, teksti valimine — kõik on selle väikese noole taga"
+  },
   "langManage": {
     "message": "Halda keeli…"
   },
   "optNavLangs": {
-    "message": "Subtiitrite keeled"
+    "message": "Tõlkekeeled"
   },
   "langsIntro": {
     "message": "Millistesse keeltesse hüpikaken tõlkimist pakub."
@@ -632,13 +644,13 @@
     "message": "Kuvatakse hüpikaknas"
   },
   "langsKeptHint": {
-    "message": "Need kuvatakse hüpikakna sihtkeele menüüs. Jäta alles vähemalt üks."
+    "message": "Need kuvatakse hüpikakna tõlkekeele menüüs. Jäta alles vähemalt üks."
   },
   "langsMore": {
     "message": "Muud keeled"
   },
   "langsMoreHint": {
-    "message": "Vajuta + lisamiseks. Loend järgib sihtkeeli, mille toovad välja tasuta mootorid ja DeepL."
+    "message": "Vajuta + lisamiseks. Loend järgib tõlkekeeli, mida tasuta mootorid ja DeepL toetavad."
   },
   "langsReset": {
     "message": "Taasta vaikeväärtused"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "See oli kasutusel, seega on sihtkeel nüüd $NAME$",
+    "message": "See oli kasutusel, seega on tõlkekeel nüüd $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Automaatne — järgi brauserit"
   },
   "uiLocaleHint": {
-    "message": "Selle laienduse enda menüüde ja seadete keel. Mõni otse videole joonistatud silt järgib endiselt brauseri keelt. Mis keelde subtiitrid tõlgitakse, valitakse hüpikaknas; „Subtiitrite keeled“ paneel otsustab ainult selle, millised keeled hüpikaknas loetletakse."
+    "message": "Selle laienduse enda menüüde ja seadete keel. Mõni otse videole joonistatud silt järgib endiselt brauseri keelt. Subtiitrite tõlkekeel valitakse hüpikaknas; „Tõlkekeeled“ paneel otsustab ainult selle, millised keeled hüpikaknas loetletakse."
   },
   "cmdToggleSubs": {
     "message": "Subtiitrid sisse või välja"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Suurel kiirusel kaotavad pikad read tihti lõpu. Kui see on sees, aeglustub pilt täpselt nii palju, kui rida vajab — mitte alla veerandi valitud kiirusest — ja jõuab vahedes järele."
+  },
+  "ttsCompleteHintText": {
+    "message": "Sellel kiirusel jääb päris mitu rida pooleli — kui „Loe iga rida lõpuni“ on sees, aeglustub pilt vajadust mööda ja iga rida loetakse lõpuni."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Lülita sisse"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Ära enam näita"
+  },
+  "provLocalSpeechShort": {
+    "message": "Brauser"
   }
 }

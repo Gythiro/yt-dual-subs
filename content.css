@@ -318,6 +318,63 @@ html.ytds-active .caption-window {
   68%      { transform: scale(1.45); }
   86%      { transform: scale(1.08); }
 }
+
+/* First runs only, the menu's turn: the arrow is 9px of text, which is why it
+   goes undiscovered — pulse it on the first few videos (install AND update:
+   the menu itself is new), retire it the moment the menu opens once. Scale +
+   glow like the grip; blue is the extension's accent, and inside the player
+   it is what says "this one is ours, not YouTube's". */
+.ytds-toggle.ytds-menu-hint .ytds-toggle-more {
+  display: inline-block;                /* a bare span cannot transform */
+  color: #3ea6ff;
+  text-shadow: 0 0 10px rgba(62, 166, 255, 0.95), 0 0 3px rgba(62, 166, 255, 0.8);
+  /* The grip's numbers exactly: 1.42x/3 was judged "not big enough" there,
+     and 1.7x/4 was judged the same HERE (owner, 2026-09-01) — so the arrow
+     gets the full 1.8 peak the grip earned, plus the halo below. */
+  animation: ytds-menu-nudge 0.85s ease-in-out 4;
+}
+/* The arrow is 9px even at 1.8x, so the BUTTON carries a halo too — on dark
+   footage the ring is what the corner of the eye actually catches. */
+.ytds-toggle.ytds-menu-hint {
+  border-radius: 6px;
+  box-shadow: 0 0 0 2px rgba(62, 166, 255, 0.55), 0 0 18px rgba(62, 166, 255, 0.75);
+}
+@keyframes ytds-menu-nudge {
+  0%, 100% { transform: scale(1); }
+  22%      { transform: scale(1.80); }
+  45%      { transform: scale(1.05); }
+  68%      { transform: scale(1.45); }
+  86%      { transform: scale(1.08); }
+}
+/* The one-time callout that says what the arrow IS — the pulse catches the
+   eye, the words carry the meaning (owner asked for both). Extension tokens,
+   not YouTube's; clickable = the context entrance itself. */
+.ytds-menu-bubble {
+  position: absolute;
+  z-index: 62;
+  max-width: 280px;
+  padding: 9px 13px;
+  background: #1f2124;
+  color: #f1f1f1;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  font: 500 13px/1.45 system-ui, -apple-system, "Segoe UI", Roboto,
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  cursor: pointer;
+}
+.ytds-menu-bubble::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background: #1f2124;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
 @media (prefers-reduced-motion: reduce) {
   #ytds-overlay.ytds-hint .ytds-handle { animation: none; }
 }

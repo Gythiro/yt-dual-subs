@@ -38,7 +38,7 @@
       <nav class="onav" id="onav" aria-label="设置分区" data-i18n-aria="optSections">
         <button type="button" class="onav-item" data-sec="start" data-i18n="optNavStart">新手入门</button>
         <button type="button" class="onav-item on" data-sec="setup" data-i18n="optNavSetup">翻译服务</button>
-        <button type="button" class="onav-item" data-sec="langs" data-i18n="optNavLangs">字幕语言</button>
+        <button type="button" class="onav-item" data-sec="langs" data-i18n="optNavLangs">译文语言列表</button>
         <button type="button" class="onav-item" data-sec="readaloud" data-i18n="optNavReadaloud">朗读</button>
         <button type="button" class="onav-item" data-sec="about" data-i18n="optNavAbout">关于</button>
       </nav>
@@ -264,6 +264,51 @@
             </div>
           </div>
         </li>
+
+        <li class="ostep">
+          <div class="ostep-txt">
+            <span class="ostep-n" aria-hidden="true">4</span>
+            <h2 data-i18n="startS4Title">播放器里还有个小菜单</h2>
+            <p data-i18n="startS4Body">字幕开关旁的小箭头会展开菜单：朗读、选中复制、视频总结和设置，不用离开播放器。</p>
+          </div>
+          <div class="ostep-art">
+            <!-- The arrow is the whole lesson, so it is the one accent-colored
+                 shape; the menu is four blank pills on purpose — labels are
+                 the real menu's job, and SVG text neither wraps nor localizes
+                 (设计规范 §6-3). -->
+            <div class="odemo" role="img" data-i18n-aria="startS4Alt"
+                 aria-label="播放器示意图：右下角字幕开关旁有一个小箭头，点开是一个小菜单">
+              <svg viewBox="0 0 300 170" aria-hidden="true">
+                <rect x="1" y="1" width="298" height="168" rx="9" fill="#000" stroke="var(--line)"/>
+                <rect x="1" y="144" width="298" height="25" fill="#141414"/>
+                <rect x="14" y="155" width="120" height="3" rx="1.5" fill="var(--accent)" opacity=".9"/>
+                <rect x="134" y="155" width="96" height="3" rx="1.5" fill="#4a4a4a"/>
+                <g>
+                  <rect x="240" y="147.5" width="24" height="16" rx="3.4" fill="none"
+                        stroke="#e8e8e8" stroke-width="1.6"/>
+                  <rect x="244" y="152" width="8" height="2.2" rx="1.1" fill="#e8e8e8"/>
+                  <rect x="244" y="156.6" width="13" height="2.2" rx="1.1" fill="#e8e8e8"/>
+                </g>
+                <path d="M271 152.5 l4.4 5.6 4.4 -5.6 z" fill="var(--accent)"/>
+                <g>
+                  <rect x="192" y="50" width="94" height="88" rx="8"
+                        fill="#1f2124" stroke="var(--line)"/>
+                  <rect x="201" y="61" width="9" height="9" rx="2.5" fill="none"
+                        stroke="#8c9095" stroke-width="1.5"/>
+                  <rect x="216" y="63.5" width="52" height="4" rx="2" fill="#8c9095"/>
+                  <rect x="201" y="81" width="9" height="9" rx="2.5" fill="none"
+                        stroke="#8c9095" stroke-width="1.5"/>
+                  <rect x="216" y="83.5" width="44" height="4" rx="2" fill="#8c9095"/>
+                  <rect x="201" y="101" width="9" height="9" rx="2.5" fill="none"
+                        stroke="#8c9095" stroke-width="1.5"/>
+                  <rect x="216" y="103.5" width="48" height="4" rx="2" fill="#8c9095"/>
+                  <rect x="199" y="118" width="80" height="1" fill="#2a2d31"/>
+                  <rect x="216" y="125.5" width="40" height="4" rx="2" fill="#8c9095"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </li>
       </ol>
 
     </section>
@@ -276,12 +321,12 @@
       <div class="olangs">
         <div class="olang-col">
           <h2 class="olabel" data-i18n="langsKept">弹窗里显示的</h2>
-          <p class="ohint" data-i18n="langsKeptHint">这些会出现在弹窗的「目标语言」下拉里。至少留一个。</p>
+          <p class="ohint" data-i18n="langsKeptHint">这些会出现在弹窗的「译文语言」下拉里。至少留一个。</p>
           <ul class="olang-list" id="langKept"></ul>
         </div>
         <div class="olang-col">
           <h2 class="olabel" data-i18n="langsMore">其他语言</h2>
-          <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。这份列表按免费引擎和 DeepL 给出的目标语言来列。</p>
+          <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。这份列表按免费引擎和 DeepL 支持的译文语言来列。</p>
           <ul class="olang-list" id="langMore"></ul>
         </div>
       </div>
@@ -410,8 +455,9 @@
       <!-- No data-i18n: paintTtsUse writes this line, because which of the
            three reasons it is (no key / no region / this browser cannot speak)
            is only known at paint time. The text below is the fallback the
-           first paint replaces. -->
-      <p class="oneed" id="ttsNeedKey" hidden>
+           first paint replaces; data-i18n-keep sanctions it for the leak
+           scanner the same way it already does for the runtime. -->
+      <p class="oneed" id="ttsNeedKey" hidden data-i18n-keep>
         还没填 Key，这个服务商暂时用不了。
       </p>
       <div class="otts-use" id="ttsUse">
@@ -458,7 +504,7 @@
         <label for="uiLocaleSel" data-i18n="uiLocaleLabel">界面语言</label>
         <select id="uiLocaleSel"></select>
       </div>
-      <p class="ohint" data-i18n="uiLocaleHint">只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文用哪种语言，在弹窗里选；「字幕语言」那一面只决定弹窗里列出哪些语言。</p>
+      <p class="ohint" data-i18n="uiLocaleHint">只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文语言在弹窗里选；「译文语言列表」那一面只决定弹窗里列出哪些语言。</p>
       <!-- Keyboard shortcuts live here and not in the popup: they are bound
            once and never touched again (design spec §5, the two-layer rule).
            The keys themselves belong to Chrome — this row is a door to its

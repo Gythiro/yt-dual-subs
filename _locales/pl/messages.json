@@ -64,7 +64,7 @@
     "message": "Tłumaczenie"
   },
   "targetLang": {
-    "message": "Język docelowy"
+    "message": "Język tłumaczenia"
   },
   "backendLabel": {
     "message": "Silnik"
@@ -100,7 +100,7 @@
     "message": "Serwer tłumaczeń ograniczył zapytania — zwalniam i ponawiam automatycznie. Już przetłumaczone linie nadal działają."
   },
   "backendStatusSame": {
-    "message": "Napisy tego filmu są już w języku docelowym — nie ma nic do tłumaczenia."
+    "message": "Napisy tego filmu są już w języku tłumaczenia — nie ma nic do tłumaczenia."
   },
   "secLayout": {
     "message": "Układ"
@@ -232,7 +232,7 @@
     "message": "Napisy pobrane"
   },
   "exportNoTrans": {
-    "message": "Brak tłumaczenia dla tego filmu — spróbuj silnika Cała ścieżka albo innego języka docelowego."
+    "message": "Brak tłumaczenia dla tego filmu — spróbuj silnika Cała ścieżka albo innego języka tłumaczenia."
   },
   "exportLimited": {
     "message": "YouTube właśnie ogranicza tłumaczenie całej ścieżki — spróbuj za minutę. Z własnym kluczem karta eksportu oferuje zaznaczenie, które to omija."
@@ -435,7 +435,7 @@
     "message": "Informacje"
   },
   "startIntro": {
-    "message": "Trzy rzeczy. Nic nie musisz konfigurować, żeby korzystać."
+    "message": "Cztery rzeczy. Nic nie musisz konfigurować, żeby korzystać."
   },
   "startS1Title": {
     "message": "Otwórz film — tyle wystarczy"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "zrozumiane w całości, rozdzielone"
   },
+  "startS4Title": {
+    "message": "W odtwarzaczu kryje się małe menu"
+  },
+  "startS4Body": {
+    "message": "Mała strzałka obok przycisku napisów otwiera menu: czytanie na głos, zaznaczanie tekstu, podsumowanie filmu i ustawienia — bez wychodzenia z odtwarzacza."
+  },
+  "startS4Alt": {
+    "message": "Ilustracja odtwarzacza: mała strzałka obok przycisku napisów w prawym dolnym rogu otwiera małe menu"
+  },
+  "menuHintBubble": {
+    "message": "Czytanie na głos, podsumowanie filmu, zaznaczanie tekstu — wszystko kryje się za tą strzałką"
+  },
   "langManage": {
     "message": "Zarządzaj językami…"
   },
   "optNavLangs": {
-    "message": "Języki napisów"
+    "message": "Języki tłumaczenia"
   },
   "langsIntro": {
     "message": "Języki, na które możesz tłumaczyć w popupie."
@@ -632,13 +644,13 @@
     "message": "Widoczne w popupie"
   },
   "langsKeptHint": {
-    "message": "Pojawiają się w menu języka docelowego popupu. Zostaw przynajmniej jeden."
+    "message": "Pojawiają się w menu języka tłumaczenia popupu. Zostaw przynajmniej jeden."
   },
   "langsMore": {
     "message": "Inne języki"
   },
   "langsMoreHint": {
-    "message": "Naciśnij +, aby dodać. Lista podąża za językami docelowymi, które podają darmowe silniki i DeepL."
+    "message": "Naciśnij +, aby dodać. Lista podąża za językami tłumaczenia, które obsługują darmowe silniki i DeepL."
   },
   "langsReset": {
     "message": "Przywróć domyślne"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Ten był w użyciu, więc celem jest teraz $NAME$",
+    "message": "Ten był w użyciu, więc językiem tłumaczenia jest teraz $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Auto — jak w przeglądarce"
   },
   "uiLocaleHint": {
-    "message": "Język menu i ustawień samego rozszerzenia. Kilka etykiet rysowanych na filmie nadal podąża za językiem przeglądarki. Język, na który tłumaczone są napisy, wybiera się w okienku rozszerzenia; panel „Języki napisów” decyduje tylko o tym, które języki są w nim wypisane."
+    "message": "Język menu i ustawień samego rozszerzenia. Kilka etykiet rysowanych na filmie nadal podąża za językiem przeglądarki. Język tłumaczenia napisów wybiera się w okienku rozszerzenia; panel „Języki tłumaczenia” decyduje tylko o tym, które języki są w nim wypisane."
   },
   "cmdToggleSubs": {
     "message": "Włącz lub wyłącz napisy"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Przy większych prędkościach długie linie często tracą końcówkę. Po włączeniu obraz zwalnia tyle, ile linia potrzebuje — nigdy poniżej jednej czwartej wybranej prędkości — i nadrabia w przerwach."
+  },
+  "ttsCompleteHintText": {
+    "message": "Przy tej prędkości sporo linii jest ucinanych — z włączonym „Doczytuj każdą linię do końca” obraz zwalnia w razie potrzeby i każda linia jest doczytywana."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Włącz"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Nie pokazuj więcej"
+  },
+  "provLocalSpeechShort": {
+    "message": "Przeglądarka"
   }
 }

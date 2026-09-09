@@ -14,8 +14,10 @@
   const TIMEDTEXT_MARK = "/api/timedtext";
 
   // Most recently seen timedtext URL of any kind.
-  // The player's ORIGINAL-track fetch: a timedtext URL WITHOUT a "tlang" param.
-  // This is the only URL whose "pot" we may reuse.
+  // The source-track URL whose "pot" we reuse. Usually the player's own
+  // original-track fetch (no "tlang" param); when the player's selected track
+  // is a YouTube auto-translate one, derived from that fetch by dropping its
+  // tlang — the pot holds either way (see noteTimedtext).
   let sourceUrl = "";
   // The videoId that sourceUrl was captured for. produceCues bails if this no
   // longer matches the current location video, so a stale (previous-video) URL
@@ -612,25 +614,50 @@
     try {
       if (!isTimedtext(url)) return;
       if (selfUrls.has(url)) return;         // this exact request is ours
-      if (!hasTlang(url)) {
-        // The player's original-track fetch — the only pot we may reuse.
-        // Always keep the freshest exact URL (pot can rotate), but only treat
-        // it as a NEW source (and re-produce) when the track identity changes.
+      if (hasTlang(url)) {
+        // The player's selected track can be one of YouTube's OWN
+        // auto-translate tracks ("Russian (auto-generated) >> English"):
+        // then every request the player makes carries tlang=, and waiting
+        // for a tlang-free URL means waiting forever — six seconds later the
+        // video is declared cue-less while a perfectly reusable capture just
+        // went by (reported 2026-09-01: a Russian video with that selection
+        // preloaded showed no subtitles until a manual track change). The
+        // URL minus its tlang IS the source-track URL: lang= still names the
+        // source language, and the pot holds for both legs — produceCues has
+        // always fetched original AND translation off one captured URL.
+        // Only a NEW track takes this path; pot refreshes keep riding the
+        // tlang-free branch below, so this cannot re-trigger a produce loop.
         const key = normKey(url);
-        sourceUrl = url;
+        if (key === sourceKey) return;
+        let stripped = "";
+        try {
+          const u = new URL(url, location.href);
+          u.searchParams.delete("tlang");
+          stripped = u.toString();
+        } catch (_e) { return; }
+        sourceUrl = stripped;
         sourceVid = vidOfUrl(url);
-        if (key !== sourceKey) {
-          sourceKey = key;
-          onSourceCaptured();
-        } else if (tlangRetryTimer && key === tlangRetriedFor) {
-          // Same track, fresh capture — so a fresh pot — while a translation
-          // retry is still pending. This is a better moment for it than the
-          // timer's: whatever went wrong, it is now being asked again with the
-          // token the player itself just used.
-          clearTlangRetry();
-          producedForUrl = "";
-          produceCues(true);
-        }
+        sourceKey = key;
+        onSourceCaptured();
+        return;
+      }
+      // The player's original-track fetch — the plainest pot to reuse.
+      // Always keep the freshest exact URL (pot can rotate), but only treat
+      // it as a NEW source (and re-produce) when the track identity changes.
+      const key = normKey(url);
+      sourceUrl = url;
+      sourceVid = vidOfUrl(url);
+      if (key !== sourceKey) {
+        sourceKey = key;
+        onSourceCaptured();
+      } else if (tlangRetryTimer && key === tlangRetriedFor) {
+        // Same track, fresh capture — so a fresh pot — while a translation
+        // retry is still pending. This is a better moment for it than the
+        // timer's: whatever went wrong, it is now being asked again with the
+        // token the player itself just used.
+        clearTlangRetry();
+        producedForUrl = "";
+        produceCues(true);
       }
     } catch (_e) { /* never throw */ }
   }
@@ -857,7 +884,9 @@
   // it to "restore" would be the louder bug. Both halves therefore remember
   // what they actually SET — never recompute at restore time: the duck depth
   // is a live setting, and the player may snap a rate to its own steps.
-  let duckSavedVol = -1;        // the user's volume, to give back
+  let duckSavedVol = -1;
+  let duckRestoreTo = -1;       // give-back ramp's destination (-1 = no ramp):
+                                // the only honest "user volume" mid-restore        // the user's volume, to give back
   let duckSetVol = -1;          // the level we are holding (the ramp's target)
   // The 25%↔100% square wave was audible on every dense passage, so the two
   // transitions ramp over ~200ms instead of stepping. Ownership is no longer
@@ -899,6 +928,21 @@
     if (typeof p.getVolume !== "function" || typeof p.setVolume !== "function") return;
     if (on) {
       const share = Math.max(0, Math.min(100, typeof pct === "number" ? pct : 25));
+      // A duck landing while the give-back ramp is still climbing must not
+      // read the player: mid-ramp it holds a half-restored value, and saving
+      // THAT as "the user's volume" walked the audio down a step per line —
+      // 80→20→15→5→0 in four boundaries on a real 2x run (2026-09-01), and
+      // the zero stuck until the page reloaded. The user's volume is the
+      // ramp's TARGET; adopt it and let this duck start from there.
+      if (duckSavedVol < 0 && duckRestoreTo >= 0) {
+        duckRampClear();
+        duckSavedVol = duckRestoreTo;
+        duckRestoreTo = -1;
+        duckSetVol = Math.round(duckSavedVol * share / 100);
+        duckLastWrote = duckSetVol;
+        p.setVolume(duckSetVol);
+        return;
+      }
       if (duckSavedVol >= 0) {
         // Already ducked, and the depth moved under us: the popup's two volume
         // sliders sit together, so this one has to answer as promptly as the
@@ -923,7 +967,8 @@
       if (duckSavedVol < 0) return;
       const giveBack = duckSavedVol;
       if (p.getVolume() === duckLastWrote) {
-        duckRampTo(p, giveBack, () => { duckLastWrote = -1; });
+        duckRestoreTo = giveBack;
+        duckRampTo(p, giveBack, () => { duckLastWrote = -1; duckRestoreTo = -1; });
       }
       duckSavedVol = -1; duckSetVol = -1;
     }

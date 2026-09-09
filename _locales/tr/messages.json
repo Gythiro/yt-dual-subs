@@ -64,7 +64,7 @@
     "message": "Çeviri"
   },
   "targetLang": {
-    "message": "Hedef dil"
+    "message": "Çeviri dili"
   },
   "backendLabel": {
     "message": "Motor"
@@ -100,7 +100,7 @@
     "message": "Çeviri hizmeti hız sınırı uyguluyor — yavaşlatılıp otomatik yeniden deneniyor. Çevrilmiş satırlar çalışmaya devam eder."
   },
   "backendStatusSame": {
-    "message": "Bu videonun altyazıları zaten hedef dilinizde — çevrilecek bir şey yok."
+    "message": "Bu videonun altyazıları zaten çeviri dilinizde — çevrilecek bir şey yok."
   },
   "secLayout": {
     "message": "Düzen"
@@ -232,7 +232,7 @@
     "message": "Altyazılar indirildi"
   },
   "exportNoTrans": {
-    "message": "Bu video için çeviri yok — Tüm parça motorunu veya başka bir hedef dil deneyin."
+    "message": "Bu video için çeviri yok — Tüm parça motorunu veya başka bir çeviri dili deneyin."
   },
   "exportLimited": {
     "message": "YouTube şu anda tüm parça çevirisini hız sınırına takıyor — bir dakika sonra tekrar deneyin. Kendi anahtarınız kuruluysa dışa aktarma kartı bunu atlatan bir işaret kutusu sunar."
@@ -367,7 +367,7 @@
     "message": "Bu adrese ulaşılamıyor: ya sunucu çalışmıyor ya da eklentinin erişimine henüz izin vermiyor (Ollama'da OLLAMA_ORIGINS, LM Studio'da CORS anahtarı)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "Bu sağlayıcının seçtiğin dil için hedefi yok — dili veya motoru değiştir."
+    "message": "Bu sağlayıcı seçtiğiniz dile çeviremiyor — dili veya motoru değiştirin."
   },
   "byoErrFailed": {
     "message": "Bağlantı başarısız. Biraz sonra tekrar deneyin."
@@ -435,7 +435,7 @@
     "message": "Hakkında"
   },
   "startIntro": {
-    "message": "Üç şey. Kullanmak için hiçbir şey kurmana gerek yok."
+    "message": "Dört şey. Kullanmak için hiçbir şey kurmana gerek yok."
   },
   "startS1Title": {
     "message": "Bir video açın — bu kadar"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "bütün olarak anlaşıldı, yeniden bölündü"
   },
+  "startS4Title": {
+    "message": "Oynatıcıda küçük bir menü var"
+  },
+  "startS4Body": {
+    "message": "Altyazı düğmesinin yanındaki küçük ok bir menü açar: sesli okuma, metin seçimi, video özeti ve ayarlar — oynatıcıdan çıkmadan."
+  },
+  "startS4Alt": {
+    "message": "Oynatıcı çizimi: sağ altta altyazı düğmesinin yanındaki küçük ok küçük bir menü açar"
+  },
+  "menuHintBubble": {
+    "message": "Sesli okuma, video özeti, metin seçimi — hepsi bu küçük okun arkasında"
+  },
   "langManage": {
     "message": "Dilleri yönet…"
   },
   "optNavLangs": {
-    "message": "Altyazı dilleri"
+    "message": "Çeviri dilleri"
   },
   "langsIntro": {
     "message": "Popup'un çeviri için sunduğu diller."
@@ -632,13 +644,13 @@
     "message": "Popup'ta görünenler"
   },
   "langsKeptHint": {
-    "message": "Bunlar popup'un hedef dil menüsünde görünür. En az birini tutun."
+    "message": "Bunlar popup'un çeviri dili menüsünde görünür. En az birini tutun."
   },
   "langsMore": {
     "message": "Diğer diller"
   },
   "langsMoreHint": {
-    "message": "Eklemek için + tuşuna basın. Liste, ücretsiz motorların ve DeepL'in belirttiği hedef dilleri izler."
+    "message": "Eklemek için + tuşuna basın. Liste, ücretsiz motorların ve DeepL'in desteklediği çeviri dillerini izler."
   },
   "langsReset": {
     "message": "Varsayılanları geri yükle"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "O dil kullanımdaydı, hedef artık $NAME$",
+    "message": "O dil kullanımdaydı, çeviri dili artık $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Otomatik — tarayıcıyı takip et"
   },
   "uiLocaleHint": {
-    "message": "Bu eklentinin kendi menü ve ayarlarının dili. Videonun üzerine çizilen birkaç etiket hâlâ tarayıcının dilini izler. Altyazıların hangi dile çevrileceği açılır pencerede seçilir; “Altyazı dilleri” bölümü yalnızca açılır pencerede hangi dillerin listeleneceğini belirler."
+    "message": "Bu eklentinin kendi menü ve ayarlarının dili. Videonun üzerine çizilen birkaç etiket hâlâ tarayıcının dilini izler. Altyazıların çeviri dili açılır pencerede seçilir; “Çeviri dilleri” bölümü yalnızca açılır pencerede hangi dillerin listeleneceğini belirler."
   },
   "cmdToggleSubs": {
     "message": "Altyazıları aç veya kapat"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Yüksek hızlarda uzun satırların sonu çoğu kez bir sonrakine kaptırılır. Bu açıkken görüntü satırın gerektirdiği kadar yavaşlar — seçtiğin hızın dörtte birinin altına inmez — ve boşluklarda arayı kapatır."
+  },
+  "ttsCompleteHintText": {
+    "message": "Bu hızda epey satır yarıda kesiliyor — “Her satırı sonuna kadar oku” açıkken görüntü gerektiği kadar yavaşlar ve her satır sonuna dek okunur."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Aç"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Bir daha gösterme"
+  },
+  "provLocalSpeechShort": {
+    "message": "Tarayıcı"
   }
 }

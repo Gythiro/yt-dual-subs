@@ -428,7 +428,7 @@ async function paintEngineStatus() {
     // The track already speaks the target language, so the overlay renders a
     // single line. Shown in EVERY engine mode (it answers "why is there only
     // one line?"), unlike the engine line below which is auto-mode-only.
-    el.textContent = t("backendStatusSame", "本视频字幕已是目标语言，无需翻译。");
+    el.textContent = t("backendStatusSame", "本视频字幕已是译文语言，无需翻译。");
     el.hidden = false;
     return;
   }
@@ -471,6 +471,10 @@ async function paintEngineStatus() {
 // skipped lines are the answer to "why did some stay silent". One snapshot per
 // popup open; the counts are a hint, not a ledger.
 async function refreshTtsStatus() {
+  // The hint is (re)evaluated on every paint INCLUDING the early returns — a
+  // hint left standing after the status row hid is the stale-row bug class.
+  // Null hides it until fresh engine data proves it should show.
+  paintCompleteHint(null);
   const el = $("ttsStatus");
   if (!el) return;
   el.hidden = true;
@@ -478,6 +482,7 @@ async function refreshTtsStatus() {
   const tab = await getActiveTab();
   if (!tab || tab.id == null) return;
   const r = await sendToTab(tab.id, { type: "engineStatus" });
+  paintCompleteHint(r && r.ok ? r : null);
   if (!r || !r.ok || !r.tts) return;        // not a video page, or a stale script
   // From `state`, not a fresh read: a voice pick writes storage and refreshes
   // this line in the same breath, and a read racing that write would name the
@@ -531,6 +536,45 @@ async function refreshTtsStatus() {
   el.textContent = head + (voice ? " (" + ttsVoiceLabel(voice) + ")" : "") + " · " + counts;
   ttsStatusA11y(el);
   el.hidden = false;
+}
+
+// The completeness switch's door. Shows only when THIS video at THIS speed is
+// audibly cutting tails (over/spoken >= 15%, at least 6 cuts, 12 lines heard,
+// rate >= 1.25) and the switch is off — the case where the reader does not
+// know the cure exists (four-way review Q2, 4/4: hint over default-change; the panel
+// put the bar anywhere in 15-25%). It shipped at 25% — a number from BEFORE
+// the speech-rate slope landed beside it: post-slope a 2x video runs ~20-25%
+// cut (measured 2026-09-01, 84% -> 25% on the same clip), so the door never
+// opened and the owner reported exactly that. One tap flips the real setting;
+// "never" is a permanent per-machine dismissal, matching its words.
+function paintCompleteHint(r) {
+  const row = $("ttsCompleteHint");
+  if (!row) return;
+  const t2 = r && r.tts;
+  const want = !!(t2 && !state.ttsComplete && (t2.uRate || 0) >= 1.25 &&
+    (t2.spoken || 0) >= 12 && (t2.over || 0) >= 6 &&
+    t2.over / Math.max(1, t2.spoken) >= 0.15);
+  if (!want) { row.hidden = true; return; }
+  chrome.storage.local.get({ ytdsCompleteHintOff: 0 }, (got) => {
+    if (got && got.ytdsCompleteHintOff) { row.hidden = true; return; }
+    row.hidden = false;
+  });
+}
+
+function initCompleteHint() {
+  const on = $("ttsCompleteHintOn"), off = $("ttsCompleteHintOff"), row = $("ttsCompleteHint");
+  if (!on || !off || !row) return;
+  on.addEventListener("click", () => {
+    // Direct write, not the debounced helper: the reader just chose, and the
+    // running video should slow on its very next line.
+    state.ttsComplete = true;
+    chrome.storage.sync.set({ ttsComplete: true });
+    row.hidden = true;
+  });
+  off.addEventListener("click", () => {
+    chrome.storage.local.set({ ytdsCompleteHintOff: 1 });
+    row.hidden = true;
+  });
 }
 
 // Will the engine actually find this voice on THIS machine? For every provider
@@ -823,6 +867,13 @@ function initTtsWatch() {
         state[k] = changes[k].newValue == null ? "" : String(changes[k].newValue);
         touched = true;
       }
+      // The completeness switch can be flipped on the settings page while this
+      // popup is open; the cut-hint reads it, so it must follow (and so must
+      // the hint's own visibility, via the same repaint).
+      if (changes.ttsComplete) {
+        state.ttsComplete = !!changes.ttsComplete.newValue;
+        touched = true;
+      }
       if (touched) { paintTtsCard(); refreshTtsStatus(); }
     });
   } catch (_e) { /* without it the card is simply as stale as it used to be */ }
@@ -1020,8 +1071,15 @@ function paintByoPanel() {
     const keys = (got && got.byoKeys) || {};
     const okMap = (got && got.byoOk) || {};
     // "Set up" means a saved key — except the custom endpoint, whose whole
-    // configuration may be just a base URL (a keyless local server).
-    const isSetUp = (x) => !!keys[x.id] || (x.custom && !!state.byoBaseUrl);
+    // configuration may be just a base URL (a keyless local server), and the
+    // keyless presets (Ollama), where the only proof there is anything at that
+    // address is a passed Save-and-test (byoOk). Keys alone answered this
+    // until 2026-09-01: a tested Ollama was then offered nowhere — the menu
+    // skipped it, this row called it unconfigured, and the picker sat empty
+    // at full CSS width because its value matched no option.
+    const isSetUp = (x) => !!keys[x.id] ||
+      (x.custom && !!state.byoBaseUrl) ||
+      (x.noKey && !!okMap[x.id]);
     const configured = (P ? P.list : []).filter(isSetUp);
     const model = state.byoModel || p.defaultModel || "";
     // The model used to be half of this line's text. It is now the row's own
@@ -1591,13 +1649,13 @@ function startPoll(tabId) {
 function exportErrText(resp) {
   if (resp.reason === "cancelled") return t("exportCancelled", "已取消导出。");
   if (resp.reason === "byofail") return byoErrText(resp.code || "failed", activeProvider());
-  if (resp.reason === "same") return t("backendStatusSame", "本视频字幕已是目标语言，无需翻译。");
+  if (resp.reason === "same") return t("backendStatusSame", "本视频字幕已是译文语言，无需翻译。");
   if (resp.reason === "limited") {
     return t("exportLimited",
       "YouTube 暂时限制了整轨翻译，过一会儿再试。配好自己的 Key 之后，导出卡片上会多一个勾选，可以绕开它。");
   }
   if (resp.reason === "notrans") {
-    return t("exportNoTrans", "这个视频拿不到译文，试试「整轨翻译」或换个目标语言。");
+    return t("exportNoTrans", "这个视频拿不到译文，试试「整轨翻译」或换个译文语言。");
   }
   return t("exportNoCues", "没有可下载的字幕，先播放几秒让字幕加载，再试一次。");
 }
@@ -1660,7 +1718,9 @@ async function onExportClick() {
     // and nothing is spent, so there is nothing to confirm.
     if (!plan.requests) { setExportBusy(false, false); return runExport(true); }
     const p = activeProvider();
-    const name = (p && (p.short || p.name)) || "";
+    // Through the shortKey like every other place a short name is shown: the
+    // bare `p.short` put 「百炼」 into nineteen locales' confirm sentence.
+    const name = (p && ((p.shortKey && t(p.shortKey, p.short)) || p.short || p.name)) || "";
     showConfirm(tsub("exportConfirm",
       [name, String(plan.lines), String(plan.requests)],
       "将用「" + name + "」翻译 " + plan.lines + " 条字幕，约 " + plan.requests +
@@ -2115,6 +2175,7 @@ self.YTDS_I18N.init().then(() => {
   applyI18n();                     // localize static markup before first paint
   initFooterLinks();
   initWhatsNew();
+  initCompleteHint();
   // get(null): fetch only what is actually stored, so normalizeEngine can tell
   // "engine never set" apart from an explicit value (see content.js).
   chrome.storage.sync.get(null, (got) => {

@@ -63,7 +63,7 @@
       <h2 class="card-title" data-i18n="secTranslation">翻译</h2>
 
       <div class="row">
-        <label for="targetLang" data-i18n="targetLang">目标语言</label>
+        <label for="targetLang" data-i18n="targetLang">译文语言</label>
         <!-- Filled from languages.js at boot: only the languages this user
              keeps, plus a last entry that opens the manager. The full list is
              fifty long and an <option> cannot hold a remove button, so the
@@ -194,6 +194,14 @@
            assembled by refreshTtsStatus(); the chevron is CSS. -->
       <button type="button" class="tts-status" id="ttsStatus" hidden
               data-i18n-title="ttsOpenSettings" data-i18n-aria="ttsOpenSettings"></button>
+      <!-- Shows itself only when THIS video at THIS speed is cutting line
+           tails and the completeness switch is off — a door, not a resident
+           control (交互架构 §5-4: transient, self-hiding, one tap). -->
+      <p class="engine-msg warn" id="ttsCompleteHint" role="status" hidden>
+        <span data-i18n="ttsCompleteHintText">此倍速下不少句子被截断——开启「每句读完」后画面会按需放慢，句句读完。</span>
+        <button type="button" class="link" id="ttsCompleteHintOn" data-i18n="ttsCompleteHintOn">开启</button>
+        <button type="button" class="link" id="ttsCompleteHintOff" data-i18n="ttsCompleteHintNever">不再提示</button>
+      </p>
     </section>
 
     <!-- ============================ 布局 ============================ -->

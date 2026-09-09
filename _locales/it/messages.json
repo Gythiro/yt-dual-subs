@@ -64,7 +64,7 @@
     "message": "Traduzione"
   },
   "targetLang": {
-    "message": "Lingua di destinazione"
+    "message": "Lingua di traduzione"
   },
   "backendLabel": {
     "message": "Motore"
@@ -100,7 +100,7 @@
     "message": "Limite raggiunto dall'endpoint di traduzione — rallentamento e nuovi tentativi automatici. Le righe già tradotte restano visibili."
   },
   "backendStatusSame": {
-    "message": "I sottotitoli di questo video sono già nella lingua di destinazione — niente da tradurre."
+    "message": "I sottotitoli di questo video sono già nella lingua di traduzione — niente da tradurre."
   },
   "secLayout": {
     "message": "Disposizione"
@@ -232,7 +232,7 @@
     "message": "Sottotitoli scaricati"
   },
   "exportNoTrans": {
-    "message": "Nessuna traduzione disponibile per questo video — prova il motore Traccia intera o un'altra lingua di destinazione."
+    "message": "Nessuna traduzione disponibile per questo video — prova il motore Traccia intera o un'altra lingua di traduzione."
   },
   "exportLimited": {
     "message": "YouTube sta limitando in questo momento la traduzione dell'intera traccia — riprova tra un minuto. Con una chiave tua, la scheda di esportazione offre una spunta per aggirarlo."
@@ -367,7 +367,7 @@
     "message": "Impossibile raggiungere questo indirizzo: o il server non è in esecuzione, o non consente ancora l'accesso all'estensione (OLLAMA_ORIGINS per Ollama, l'opzione CORS in LM Studio)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "Questo provider non ha una destinazione per la lingua scelta — cambia lingua o motore."
+    "message": "Questo provider non può tradurre nella lingua scelta — cambia lingua o motore."
   },
   "byoErrFailed": {
     "message": "Connessione non riuscita. Riprova tra un attimo."
@@ -435,7 +435,7 @@
     "message": "Informazioni"
   },
   "startIntro": {
-    "message": "Tre cose. Non serve configurare nulla per usarlo."
+    "message": "Quattro cose. Non serve configurare nulla per usarlo."
   },
   "startS1Title": {
     "message": "Apri un video — e basta"
@@ -619,26 +619,38 @@
   "startPicByoNote": {
     "message": "capita intera, risuddivisa"
   },
+  "startS4Title": {
+    "message": "Nel player c'è un piccolo menu"
+  },
+  "startS4Body": {
+    "message": "La freccetta accanto al pulsante dei sottotitoli apre un menu: leggi ad alta voce, selezione testo, riassunto del video e impostazioni, senza uscire dal player."
+  },
+  "startS4Alt": {
+    "message": "Illustrazione del player: una freccetta accanto al pulsante dei sottotitoli, in basso a destra, apre un piccolo menu"
+  },
+  "menuHintBubble": {
+    "message": "Leggi ad alta voce, riassunto del video, selezione testo: tutto dietro questa freccetta"
+  },
   "langManage": {
     "message": "Gestisci le lingue…"
   },
   "optNavLangs": {
-    "message": "Lingue dei sottotitoli"
+    "message": "Lingue di traduzione"
   },
   "langsIntro": {
-    "message": "Quali lingue il popup ti offre per la traduzione."
+    "message": "Quali lingue di traduzione ti offre il popup."
   },
   "langsKept": {
     "message": "Mostrate nel popup"
   },
   "langsKeptHint": {
-    "message": "Compaiono nel menu della lingua di destinazione del popup. Lasciane almeno una."
+    "message": "Compaiono nel menu della lingua di traduzione del popup. Lasciane almeno una."
   },
   "langsMore": {
     "message": "Altre lingue"
   },
   "langsMoreHint": {
-    "message": "Premi + per aggiungerne una. L'elenco segue le lingue di destinazione indicate dai motori gratuiti e da DeepL."
+    "message": "Premi + per aggiungerne una. L'elenco segue le lingue di traduzione supportate dai motori gratuiti e da DeepL."
   },
   "langsReset": {
     "message": "Ripristina predefinite"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Quella era in uso, quindi la destinazione ora è $NAME$",
+    "message": "Quella era in uso, quindi la lingua di traduzione ora è $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Auto — segui il browser"
   },
   "uiLocaleHint": {
-    "message": "La lingua dei menu e delle impostazioni dell'estensione. Alcune etichette disegnate sul video seguono ancora la lingua del browser. La lingua in cui vengono tradotti i sottotitoli si sceglie nel popup; il pannello «Lingue dei sottotitoli» decide solo quali lingue il popup elenca."
+    "message": "La lingua dei menu e delle impostazioni dell'estensione. Alcune etichette disegnate sul video seguono ancora la lingua del browser. La lingua di traduzione dei sottotitoli si sceglie nel popup; il pannello «Lingue di traduzione» decide solo quali lingue il popup elenca."
   },
   "cmdToggleSubs": {
     "message": "Attivare o disattivare i sottotitoli"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "Alle velocità alte le righe lunghe perdono spesso la coda. Attivandolo, il video rallenta quanto serve — mai sotto un quarto della velocità scelta — e recupera nelle pause."
+  },
+  "ttsCompleteHintText": {
+    "message": "A questa velocità parecchie righe vengono tagliate: con «Leggere ogni riga fino in fondo» il video rallenta quanto serve e ogni riga viene letta per intero."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Attiva"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Non mostrare più"
+  },
+  "provLocalSpeechShort": {
+    "message": "Browser"
   }
 }

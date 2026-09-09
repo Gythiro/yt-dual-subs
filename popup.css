@@ -416,6 +416,14 @@ select:focus { border-color: var(--accent); }
   background: var(--surface);
   max-height: 178px; overflow-y: auto;
 }
+/* The menu scrolls inside its own box, so it grows its own scrollbar — and an
+   unstyled one is the browser's wide light default, a slab brighter than
+   anything else on the card (reported with a screenshot, 2026-09-01). Same
+   palette as the body's bar (设计规范 §一). */
+.pmenu::-webkit-scrollbar { width: 8px; }
+.pmenu::-webkit-scrollbar-thumb { background: #3a3d41; border-radius: 8px; }
+.pmenu::-webkit-scrollbar-thumb:hover { background: #4a4e53; }
+.pmenu::-webkit-scrollbar-track { background: transparent; }
 .pmenu[hidden] { display: none; }
 .pmenu-item {
   display: flex; align-items: center; gap: 7px; width: 100%;

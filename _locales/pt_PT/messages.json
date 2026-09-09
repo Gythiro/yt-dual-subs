@@ -64,7 +64,7 @@
     "message": "Tradução"
   },
   "targetLang": {
-    "message": "Idioma de destino"
+    "message": "Idioma da tradução"
   },
   "backendLabel": {
     "message": "Motor"
@@ -100,7 +100,7 @@
     "message": "Limitado pelo endpoint de tradução — a abrandar e a tentar novamente automaticamente. As linhas já traduzidas continuam a funcionar."
   },
   "backendStatusSame": {
-    "message": "As legendas deste vídeo já estão no idioma de destino — nada a traduzir."
+    "message": "As legendas deste vídeo já estão no idioma da tradução — nada a traduzir."
   },
   "secLayout": {
     "message": "Disposição"
@@ -232,7 +232,7 @@
     "message": "Legendas descarregadas"
   },
   "exportNoTrans": {
-    "message": "Não há tradução disponível para este vídeo — experimente o motor Faixa completa ou outro idioma de destino."
+    "message": "Não há tradução disponível para este vídeo — experimente o motor Faixa completa ou outro idioma de tradução."
   },
   "exportLimited": {
     "message": "O YouTube está a limitar a tradução da faixa completa neste momento — tente novamente daqui a um minuto. Com a sua própria chave configurada, o cartão de exportação oferece um visto que a contorna."
@@ -367,7 +367,7 @@
     "message": "Não foi possível aceder a esse endereço: ou o servidor não está a correr, ou ainda não permite o acesso da extensão (OLLAMA_ORIGINS no Ollama, o interruptor CORS no LM Studio)."
   },
   "byoErrUnsupportedTarget": {
-    "message": "Este fornecedor não tem o idioma escolhido como destino — mude o idioma ou o motor."
+    "message": "Este fornecedor não consegue traduzir para o idioma escolhido — mude o idioma ou o motor."
   },
   "byoErrFailed": {
     "message": "A ligação falhou. Tente novamente dentro de momentos."
@@ -435,7 +435,7 @@
     "message": "Acerca de"
   },
   "startIntro": {
-    "message": "Três coisas. Não precisa de configurar nada para o usar."
+    "message": "Quatro coisas. Não precisa de configurar nada para o usar."
   },
   "startS1Title": {
     "message": "Abra um vídeo — e pronto"
@@ -619,11 +619,23 @@
   "startPicByoNote": {
     "message": "frase inteira, depois dividida"
   },
+  "startS4Title": {
+    "message": "Há um pequeno menu no leitor"
+  },
+  "startS4Body": {
+    "message": "A pequena seta junto ao botão de legendas abre um menu: ler em voz alta, seleção de texto, resumo do vídeo e definições — sem sair do leitor."
+  },
+  "startS4Alt": {
+    "message": "Ilustração do leitor: uma pequena seta junto ao botão de legendas, em baixo à direita, abre um pequeno menu"
+  },
+  "menuHintBubble": {
+    "message": "Ler em voz alta, resumo do vídeo, seleção de texto — tudo atrás desta pequena seta"
+  },
   "langManage": {
     "message": "Gerir idiomas…"
   },
   "optNavLangs": {
-    "message": "Idiomas das legendas"
+    "message": "Idiomas de tradução"
   },
   "langsIntro": {
     "message": "As línguas que o popup te oferece para traduzir."
@@ -632,13 +644,13 @@
     "message": "Mostradas no popup"
   },
   "langsKeptHint": {
-    "message": "Aparecem no menu de língua de destino do popup. Mantém pelo menos uma."
+    "message": "Aparecem no menu de idioma de tradução do popup. Mantém pelo menos uma."
   },
   "langsMore": {
     "message": "Outras línguas"
   },
   "langsMoreHint": {
-    "message": "Prima + para adicionar. A lista segue os idiomas de destino indicados pelos motores gratuitos e pelo DeepL."
+    "message": "Prima + para adicionar. A lista segue os idiomas de tradução aceites pelos motores gratuitos e pelo DeepL."
   },
   "langsReset": {
     "message": "Repor predefinições"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "Essa estava em uso, por isso o destino é agora $NAME$",
+    "message": "Essa estava em uso, por isso o idioma da tradução é agora $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "Automático — seguir o navegador"
   },
   "uiLocaleHint": {
-    "message": "O idioma dos menus e das definições da extensão. Algumas etiquetas desenhadas sobre o vídeo continuam a seguir o idioma do navegador. O idioma para o qual as legendas são traduzidas escolhe-se no popup; o painel “Idiomas das legendas” só decide que idiomas o popup lista."
+    "message": "O idioma dos menus e das definições da extensão. Algumas etiquetas desenhadas sobre o vídeo continuam a seguir o idioma do navegador. O idioma da tradução das legendas escolhe-se no popup; o painel “Idiomas de tradução” só decide que idiomas o popup lista."
   },
   "cmdToggleSubs": {
     "message": "Ativar ou desativar as legendas"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "A velocidades altas, as linhas longas perdem muitas vezes o final. Com isto ativo, a imagem abranda o que a linha precisar — nunca abaixo de um quarto da velocidade escolhida — e recupera nas pausas."
+  },
+  "ttsCompleteHintText": {
+    "message": "A esta velocidade várias linhas estão a ser cortadas — com “Ler cada linha até ao fim”, a imagem abranda conforme necessário e cada linha é lida por inteiro."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Ativar"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Não mostrar novamente"
+  },
+  "provLocalSpeechShort": {
+    "message": "Navegador"
   }
 }

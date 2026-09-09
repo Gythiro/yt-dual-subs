@@ -64,7 +64,7 @@
     "message": "번역"
   },
   "targetLang": {
-    "message": "대상 언어"
+    "message": "번역 언어"
   },
   "backendLabel": {
     "message": "엔진"
@@ -100,7 +100,7 @@
     "message": "번역 엔드포인트에서 속도 제한 중 — 속도를 낮추고 자동으로 재시도합니다. 이미 번역된 줄은 계속 표시됩니다."
   },
   "backendStatusSame": {
-    "message": "이 동영상의 자막이 이미 대상 언어입니다 — 번역할 내용이 없습니다."
+    "message": "이 동영상의 자막이 이미 번역 언어입니다 — 번역할 내용이 없습니다."
   },
   "secLayout": {
     "message": "레이아웃"
@@ -232,7 +232,7 @@
     "message": "자막을 다운로드했습니다"
   },
   "exportNoTrans": {
-    "message": "이 동영상에는 번역이 없습니다 — 전체 트랙 엔진이나 다른 대상 언어를 사용해 보세요."
+    "message": "이 동영상에는 번역이 없습니다 — 전체 트랙 엔진이나 다른 번역 언어를 사용해 보세요."
   },
   "exportLimited": {
     "message": "YouTube가 지금 전체 트랙 번역을 제한하고 있습니다. 잠시 후 다시 시도하세요. 내 키를 설정해 두면 내보내기 카드에 이를 우회하는 체크가 나타납니다."
@@ -435,7 +435,7 @@
     "message": "정보"
   },
   "startIntro": {
-    "message": "세 가지입니다. 별도 설정 없이 바로 쓸 수 있습니다."
+    "message": "네 가지입니다. 별도 설정 없이 바로 쓸 수 있습니다."
   },
   "startS1Title": {
     "message": "동영상만 열면 됩니다"
@@ -619,26 +619,38 @@
   "startPicByoNote": {
     "message": "전체를 이해한 뒤 다시 나눔"
   },
+  "startS4Title": {
+    "message": "플레이어 안에 작은 메뉴가 있습니다"
+  },
+  "startS4Body": {
+    "message": "자막 버튼 옆의 작은 화살표를 누르면 메뉴가 열립니다. 읽어주기, 텍스트 선택, 동영상 요약, 설정을 플레이어를 벗어나지 않고 쓸 수 있습니다."
+  },
+  "startS4Alt": {
+    "message": "플레이어 그림: 오른쪽 아래 자막 버튼 옆의 작은 화살표를 누르면 작은 메뉴가 열립니다"
+  },
+  "menuHintBubble": {
+    "message": "읽어주기, 동영상 요약, 텍스트 선택 — 모두 이 작은 화살표 안에 있습니다"
+  },
   "langManage": {
     "message": "언어 관리…"
   },
   "optNavLangs": {
-    "message": "자막 언어"
+    "message": "번역 언어 목록"
   },
   "langsIntro": {
-    "message": "팝업에서 번역할 대상 언어로 제공하는 언어입니다."
+    "message": "팝업에서 고를 수 있는 번역 언어입니다."
   },
   "langsKept": {
     "message": "팝업에 표시"
   },
   "langsKeptHint": {
-    "message": "팝업의 대상 언어 메뉴에 표시됩니다. 하나 이상은 남겨 두세요."
+    "message": "팝업의 번역 언어 메뉴에 표시됩니다. 하나 이상은 남겨 두세요."
   },
   "langsMore": {
     "message": "기타 언어"
   },
   "langsMoreHint": {
-    "message": "+를 눌러 추가하세요. 목록은 무료 엔진과 DeepL이 대상 언어로 제시하는 언어를 따릅니다."
+    "message": "+를 눌러 추가하세요. 목록은 무료 엔진과 DeepL이 지원하는 번역 언어를 따릅니다."
   },
   "langsReset": {
     "message": "기본값 복원"
@@ -667,7 +679,7 @@
     }
   },
   "langsSwitched": {
-    "message": "사용 중이던 언어라서 대상이 이제 $NAME$입니다",
+    "message": "사용 중이던 언어라서 번역 언어가 이제 $NAME$입니다",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -687,7 +699,7 @@
     "message": "자동 — 브라우저 따름"
   },
   "uiLocaleHint": {
-    "message": "이 확장 프로그램의 메뉴와 설정 언어입니다. 영상 위에 그려지는 몇몇 라벨은 여전히 브라우저 언어를 따릅니다. 자막을 어떤 언어로 번역할지는 팝업에서 고릅니다. “자막 언어” 화면은 팝업에 어떤 언어가 나올지만 정합니다."
+    "message": "이 확장 프로그램의 메뉴와 설정 언어입니다. 영상 위에 그려지는 몇몇 라벨은 여전히 브라우저 언어를 따릅니다. 자막의 번역 언어는 팝업에서 고릅니다. “번역 언어 목록” 화면은 팝업에 어떤 언어가 나올지만 정합니다."
   },
   "cmdToggleSubs": {
     "message": "자막 켜기/끄기"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "배속에서는 긴 줄의 끝이 다음 줄에 잘리기 쉽습니다. 켜면 그 줄에 필요한 만큼 화면이 느려지고(선택한 배속의 4분의 1 아래로는 내려가지 않음) 틈에서 다시 따라잡습니다."
+  },
+  "ttsCompleteHintText": {
+    "message": "이 배속에서는 많은 줄이 잘리고 있습니다. ‘모든 줄을 끝까지 읽고 자르지 않기’를 켜면 필요한 만큼 화면이 느려지고 모든 줄을 끝까지 읽습니다."
+  },
+  "ttsCompleteHintOn": {
+    "message": "켜기"
+  },
+  "ttsCompleteHintNever": {
+    "message": "다시 표시 안 함"
+  },
+  "provLocalSpeechShort": {
+    "message": "브라우저"
   }
 }

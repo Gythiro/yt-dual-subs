@@ -56,6 +56,10 @@ let state = { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN"
 // configured provider from the popup.
 let editing = "";
 const storedKeys = Object.create(null);     // providerId -> true (never the value)
+// providerId -> true once a Save-and-test passed (mirror of storage.local
+// byoOk). For a keyless preset (Ollama) this is the only proof it is set up —
+// keys alone left a tested Ollama with no ✓ in the list, ever.
+const verifiedOk = Object.create(null);
 const fetchedModels = Object.create(null);  // providerId -> [model ids]
 
 // ---- fetched catalogues, kept across reloads -------------------------------
@@ -245,7 +249,7 @@ function renderList() {
       inUse.className = "pitem-inuse";
       inUse.textContent = t("optInUse", "使用中");
       btn.appendChild(inUse);
-    } else if (mode.stored[p.id]) {
+    } else if (mode.stored[p.id] || (p.noKey && verifiedOk[p.id])) {
       const ok = document.createElement("span");
       ok.className = "pitem-ok";
       ok.textContent = "✓";
@@ -498,8 +502,14 @@ function plan() {
 // extension translates with.
 function persistForProvider(pl) {
   modelsBy[pl.provider.id] = pl.model;
-  chrome.storage.sync.set({ byoModelBy: Object.assign({}, modelsBy) });
-  return pl.typedKey ? saveKey(pl.provider.id, pl.typedKey) : Promise.resolve();
+  // Resolve only when the write has COMMITTED (the set callback), not when it
+  // was fired. The probe that follows this promise reads storage in the
+  // worker; a fire-and-forget set let that read land on yesterday's model —
+  // the first Save-and-test after a switch failed, the second passed
+  // (reported 2026-09-01 with an Ollama 404).
+  return new Promise((resolve) =>
+    chrome.storage.sync.set({ byoModelBy: Object.assign({}, modelsBy) }, resolve)
+  ).then(() => (pl.typedKey ? saveKey(pl.provider.id, pl.typedKey) : undefined));
 }
 
 // …and the decision itself. Kept separate because it used to be inseparable:
@@ -513,19 +523,26 @@ function persist(pl) {
   state.byoModel = pl.model;
   state.byoBaseUrl = pl.baseUrl;
   modelsBy[pl.provider.id] = pl.model;
-  // One set() so content.js re-cues once instead of three times.
-  chrome.storage.sync.set({
-    byoProvider: state.byoProvider,
-    byoModel: state.byoModel,
-    byoBaseUrl: state.byoBaseUrl,
-    byoModelBy: Object.assign({}, modelsBy)
-  });
-  return pl.typedKey ? saveKey(pl.provider.id, pl.typedKey) : Promise.resolve();
+  // One set() so content.js re-cues once instead of three times — and awaited
+  // to its callback, so the caller's .then() means "on disk", not "requested"
+  // (same commit-before-probe bargain as persistForProvider above).
+  return new Promise((resolve) =>
+    chrome.storage.sync.set({
+      byoProvider: state.byoProvider,
+      byoModel: state.byoModel,
+      byoBaseUrl: state.byoBaseUrl,
+      byoModelBy: Object.assign({}, modelsBy)
+    }, resolve)
+  ).then(() => (pl.typedKey ? saveKey(pl.provider.id, pl.typedKey) : undefined));
 }
 
 // Which providers have answered a real request, so the popup can say which of
 // the saved keys is known to work rather than just "saved".
 function markVerified(id, ok) {
+  // The in-page mirror first: for a keyless preset the list's ✓ hangs on this
+  // (storedKeys never lights for it), so the row must not wait on storage.
+  if (ok) verifiedOk[id] = true; else delete verifiedOk[id];
+  renderList();
   chrome.storage.local.get({ byoOk: {} }, (got) => {
     const map = (got && got.byoOk) || {};
     if (ok) map[id] = true; else delete map[id];
@@ -2238,8 +2255,9 @@ chrome.storage.sync.get(
       const first = providerList()[0];
       if (first) editing = first.id;
     }
-    chrome.storage.local.get({ byoKeys: {}, [CATALOG_STORE]: {} }, (loc) => {
+    chrome.storage.local.get({ byoKeys: {}, byoOk: {}, [CATALOG_STORE]: {} }, (loc) => {
       for (const id of Object.keys((loc && loc.byoKeys) || {})) storedKeys[id] = true;
+      for (const id of Object.keys((loc && loc.byoOk) || {})) verifiedOk[id] = true;
       catalogs = Object.assign(Object.create(null), (loc && loc[CATALOG_STORE]) || {});
       renderList();
       renderDetail();

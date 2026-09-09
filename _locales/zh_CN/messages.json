@@ -67,7 +67,7 @@
     "message": "翻译"
   },
   "targetLang": {
-    "message": "目标语言"
+    "message": "译文语言"
   },
   "backendLabel": {
     "message": "翻译引擎"
@@ -112,7 +112,7 @@
     "message": "复制失败 — 请改用截图"
   },
   "backendStatusSame": {
-    "message": "本视频字幕已是目标语言，无需翻译。"
+    "message": "本视频字幕已是译文语言，无需翻译。"
   },
   "secLayout": {
     "message": "布局"
@@ -250,7 +250,7 @@
     "message": "已下载字幕"
   },
   "exportNoTrans": {
-    "message": "这个视频拿不到译文，试试「整轨翻译」或换个目标语言。"
+    "message": "这个视频拿不到译文，试试「整轨翻译」或换个译文语言。"
   },
   "exportLimited": {
     "message": "YouTube 暂时限制了整轨翻译，过一会儿再试。配好自己的 Key 之后，导出卡片上会多一个勾选，可以绕开它。"
@@ -385,7 +385,7 @@
     "message": "连不上这个地址：要么服务没在跑，要么它还没允许扩展访问（Ollama 用 OLLAMA_ORIGINS，LM Studio 开 CORS 开关）。"
   },
   "byoErrUnsupportedTarget": {
-    "message": "这家不支持当前目标语言，换语言或换引擎。"
+    "message": "这家不支持当前译文语言，换语言或换引擎。"
   },
   "byoErrFailed": {
     "message": "连接失败，稍后再试。"
@@ -453,7 +453,7 @@
     "message": "关于"
   },
   "startIntro": {
-    "message": "三件事。不配置任何东西也能用。"
+    "message": "四件事。不配置任何东西也能用。"
   },
   "startS1Title": {
     "message": "打开视频就有了"
@@ -492,7 +492,7 @@
     "message": "自动（跟随浏览器）"
   },
   "uiLocaleHint": {
-    "message": "只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文用哪种语言，在弹窗里选；「字幕语言」那一面只决定弹窗里列出哪些语言。"
+    "message": "只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文语言在弹窗里选；「译文语言列表」那一面只决定弹窗里列出哪些语言。"
   },
   "cmdToggleSubs": {
     "message": "开关字幕"
@@ -670,6 +670,18 @@
   "startPicByoNote": {
     "message": "整句理解后再切回来"
   },
+  "startS4Title": {
+    "message": "播放器里还有个小菜单"
+  },
+  "startS4Body": {
+    "message": "字幕开关旁的小箭头会展开菜单：朗读、选中复制、视频总结和设置，不用离开播放器。"
+  },
+  "startS4Alt": {
+    "message": "播放器示意图：右下角字幕开关旁有一个小箭头，点开是一个小菜单"
+  },
+  "menuHintBubble": {
+    "message": "朗读、视频总结、选中复制——都在这个小箭头菜单里"
+  },
   "troubleTitle": {
     "message": "遇到问题"
   },
@@ -689,7 +701,7 @@
     "message": "管理语言…"
   },
   "optNavLangs": {
-    "message": "字幕语言"
+    "message": "译文语言列表"
   },
   "optNavReadaloud": {
     "message": "朗读"
@@ -756,19 +768,19 @@
     "message": "开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，之后也不会补读。朗读期间，视频音量会降到下面设定的档位。用云端音色时，句子长到读不完还会让视频稍微放慢——浏览器自带的音色报不出时长，所以做不到这一点。"
   },
   "langsIntro": {
-    "message": "弹窗里可以选哪些目标语言。"
+    "message": "弹窗里可以选哪些译文语言。"
   },
   "langsKept": {
     "message": "弹窗里显示的"
   },
   "langsKeptHint": {
-    "message": "这些会出现在弹窗的「目标语言」下拉里。至少留一个。"
+    "message": "这些会出现在弹窗的「译文语言」下拉里。至少留一个。"
   },
   "langsMore": {
     "message": "其他语言"
   },
   "langsMoreHint": {
-    "message": "点 + 加进上面的列表。这份列表按免费引擎和 DeepL 给出的目标语言来列。"
+    "message": "点 + 加进上面的列表。这份列表按免费引擎和 DeepL 支持的译文语言来列。"
   },
   "langsReset": {
     "message": "恢复默认"
@@ -797,7 +809,7 @@
     }
   },
   "langsSwitched": {
-    "message": "它正在使用中，目标语言已改为「$NAME$」",
+    "message": "它正在使用中，译文语言已改为「$NAME$」",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1008,5 +1020,17 @@
   },
   "ttsCompleteHint": {
     "message": "开倍速时长句常被下一句顶掉结尾。打开后画面会按需要放慢到读完为止（最低不低于你所选倍速的四分之一），空隙处再追回来。"
+  },
+  "ttsCompleteHintText": {
+    "message": "此倍速下不少句子被截断——开启「每句读完」后画面会按需放慢，句句读完。"
+  },
+  "ttsCompleteHintOn": {
+    "message": "开启"
+  },
+  "ttsCompleteHintNever": {
+    "message": "不再提示"
+  },
+  "provLocalSpeechShort": {
+    "message": "浏览器"
   }
 }

@@ -80,6 +80,37 @@ const cfgReady = new Promise((resolve) => {
   );
 });
 
+// A user-initiated probe (Save-and-test, voice test) answers "does what I
+// JUST saved work" — so it must read what was saved, not what this worker has
+// heard about. The mirror above is fed by storage.onChanged, and the probe
+// message can outrun that delivery: the options page writes, then sends, and
+// Chrome guarantees no order between the two pipelines. On the losing side
+// the probe resolved yesterday's provider/model — the first Save-and-test
+// after switching to Ollama asked it for the previous provider's model and
+// got a 404 dressed as "接口拒绝了请求" (reported 2026-09-01, every first
+// click). One fresh read per probe; playback paths stay on the mirror.
+function cfgRefresh() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(
+      { byoProvider: cfg.byoProvider, byoModel: cfg.byoModel,
+        byoBaseUrl: cfg.byoBaseUrl, ttsProvider: cfg.ttsProvider,
+        ttsVoice: cfg.ttsVoice, ttsRegion: cfg.ttsRegion,
+        ttsBaseUrl: cfg.ttsBaseUrl, ttsModelBy: cfg.ttsModelBy },
+      (got) => {
+        got = got || {};
+        for (const k of ["byoProvider", "byoModel", "byoBaseUrl",
+          "ttsProvider", "ttsVoice", "ttsRegion", "ttsBaseUrl"]) {
+          if (typeof got[k] === "string") cfg[k] = got[k];
+        }
+        if (got.ttsModelBy && typeof got.ttsModelBy === "object") {
+          cfg.ttsModelBy = got.ttsModelBy;
+        }
+        resolve();
+      }
+    );
+  });
+}
+
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== "sync") return;
   let byoChanged = false;
@@ -1209,6 +1240,60 @@ function summarizeJob(messages, label) {
   })));
 }
 
+// The prompts name the target language, but a small model summarizing an
+// English track happily ignores that for a chunk or two — the panel then
+// mixes chapters in two languages (reported 2026-09-01, screenshot: English
+// TLDR over a Chinese chapter). For a target written in a script Latin text
+// cannot fake, that wrongness is measurable; for Latin targets it is not, and
+// the check stays out of the way.
+const SUM_SCRIPTS = {
+  zh: /[\u3400-\u4DBF\u4E00-\u9FFF]/, ja: /[\u3040-\u30FF\u4E00-\u9FFF]/,
+  ko: /[\u1100-\u11FF\uAC00-\uD7AF]/, ru: /[\u0400-\u04FF]/,
+  uk: /[\u0400-\u04FF]/, bg: /[\u0400-\u04FF]/, sr: /[\u0400-\u04FF]/,
+  el: /[\u0370-\u03FF]/, th: /[\u0E00-\u0E7F]/, ar: /[\u0600-\u06FF]/,
+  fa: /[\u0600-\u06FF]/, ur: /[\u0600-\u06FF]/, he: /[\u0590-\u05FF]/,
+  iw: /[\u0590-\u05FF]/, hi: /[\u0900-\u097F]/, mr: /[\u0900-\u097F]/,
+  ne: /[\u0900-\u097F]/, bn: /[\u0980-\u09FF]/, ta: /[\u0B80-\u0BFF]/,
+  te: /[\u0C00-\u0C7F]/, kn: /[\u0C80-\u0CFF]/, ml: /[\u0D00-\u0D7F]/,
+  gu: /[\u0A80-\u0AFF]/, pa: /[\u0A00-\u0A7F]/, ka: /[\u10A0-\u10FF]/,
+  hy: /[\u0530-\u058F]/, km: /[\u1780-\u17FF]/, lo: /[\u0E80-\u0EFF]/,
+  my: /[\u1000-\u109F]/, si: /[\u0D80-\u0DFF]/, am: /[\u1200-\u137F]/
+};
+function sumLangHolds(text, targetLang) {
+  const re = SUM_SCRIPTS[String(targetLang || "").split("-")[0].toLowerCase()];
+  if (!re) return true;                 // Latin-script target: cannot judge
+  let expected = 0, latin = 0;
+  for (const ch of String(text || "")) {
+    if (re.test(ch)) expected++;
+    else if (/[A-Za-z]/.test(ch)) latin++;
+  }
+  // Names, numbers and code legitimately stay Latin (the prompt says so), so
+  // the bar is only that the expected script CARRIES the answer. Under 40
+  // letters there is not enough text to accuse anyone.
+  if (expected + latin < 40) return true;
+  return expected / (expected + latin) >= 0.5;
+}
+// One reinforced retry per failed piece: a second sentence in the system
+// prompt, not a new protocol. At most one extra request, and only when a
+// non-Latin target came back Latin — the button was pressed for a summary the
+// reader can read, and this is the cheapest way to still deliver one.
+function sumStrict(messages, targetLang) {
+  const note = "\nIMPORTANT: Write the ENTIRE answer in " + sumLang(targetLang) +
+    " — translate the content. Only proper names, numbers and code stay as-is.";
+  return messages.map((m, i) => (i === 0
+    ? { role: m.role, content: m.content + note } : m));
+}
+async function sumJobChecked(messages, targetLang, label) {
+  const first = await summarizeJob(messages, label);
+  const text = String(Array.isArray(first) ? (first[0] || "") : (first || ""));
+  if (sumLangHolds(text, targetLang)) return text;
+  const again = await summarizeJob(sumStrict(messages, targetLang), label + " retry");
+  const t2 = String(Array.isArray(again) ? (again[0] || "") : (again || ""));
+  // A retry that still fails the check does not beat the original — keep the
+  // first answer rather than pay for a third attempt.
+  return sumLangHolds(t2, targetLang) && t2 ? t2 : text;
+}
+
 // DeepL target codes, from the same shared table. Regional variants are
 // required for EN and PT; ZH-HANS / ZH-HANT are the two Chinese targets.
 // A language with no entry has no DeepL target, and saying so beats silently
@@ -2176,7 +2261,8 @@ chrome.runtime.onInstalled.addListener((details) => {
     deriveTargetLang();
     // Let the drag grip show itself on the first few videos. Install only:
     // an upgrade must not pester people who already know how to drag.
-    try { chrome.storage.local.set({ handleHintsLeft: 3 }); } catch (_e) {}
+    // The corner-menu arrow rides along — new installs have never seen it.
+    try { chrome.storage.local.set({ handleHintsLeft: 3, menuHintsLeft: 3 }); } catch (_e) {}
     // The extension's own page, not the site: it works offline, it is already
     // in the user's language, and step 2 (the subtitle box can be dragged) is
     // the one thing new users demonstrably miss.
@@ -2186,6 +2272,18 @@ chrome.runtime.onInstalled.addListener((details) => {
     return;
   }
   if (details.reason !== "update") return;
+  // The corner menu is NEW: people updating have never seen the arrow either,
+  // so its pulse seeds once here too — and only once. The key's very presence
+  // (even a spent 0) marks the budget as already given, so later updates
+  // never re-pester (the grip's install-only rule, kept for a feature that
+  // this time is genuinely new to everyone).
+  try {
+    chrome.storage.local.get({ menuHintsLeft: null }, (got) => {
+      if (!got || got.menuHintsLeft == null) {
+        chrome.storage.local.set({ menuHintsLeft: 3 });
+      }
+    });
+  } catch (_e) { /* ignore */ }
   const prev = details.previousVersion || "";
   if (!prev || prev === cur) return;
   chrome.storage.local.get({ updShownFor: "" }, (got) => {
@@ -2346,34 +2444,38 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "sumInfo") {
     cfgReady.then(async () => {
-      let name = "", configured = false, kind = "";
+      let name = "", nameKey = "", configured = false, kind = "";
       try {
         const t = await resolveByo({ needModel: false });
         configured = true;
         kind = t.provider.kind;
         name = t.provider.short || t.provider.name || t.provider.id;
+        // The worker has no locale table; the content script does. Send the
+        // key so the confirm sentence can say "Browser", not 「浏览器」.
+        nameKey = t.provider.shortKey || "";
       } catch (_e) { /* unconfigured: the empty state says so */ }
-      sendResponse({ ok: true, configured: configured, kind: kind, name: name });
+      sendResponse({ ok: true, configured: configured, kind: kind, name: name,
+        nameKey: nameKey });
     }).catch(() => sendResponse({ ok: false }));
     return true;
   }
   if (msg && msg.type === "sumMap") {
-    summarizeJob(sumMapMessages(String(msg.text || ""), msg.targetLang), "sum map")
-      .then((v) => sendResponse({ ok: true, notes: String(Array.isArray(v) ? (v[0] || "") : (v || "")) }))
+    sumJobChecked(sumMapMessages(String(msg.text || ""), msg.targetLang), msg.targetLang, "sum map")
+      .then((v) => sendResponse({ ok: true, notes: v }))
       .catch((err) => sendResponse({ ok: false,
         code: (err && err.code) || "failed", error: String(err) }));
     return true;
   }
   if (msg && msg.type === "sumReduce") {
-    summarizeJob(sumReduceMessages((msg.notes || []).map(String), msg.targetLang), "sum reduce")
-      .then((v) => sendResponse({ ok: true, summary: String(Array.isArray(v) ? (v[0] || "") : (v || "")) }))
+    sumJobChecked(sumReduceMessages((msg.notes || []).map(String), msg.targetLang), msg.targetLang, "sum reduce")
+      .then((v) => sendResponse({ ok: true, summary: v }))
       .catch((err) => sendResponse({ ok: false,
         code: (err && err.code) || "failed", error: String(err) }));
     return true;
   }
   if (msg && msg.type === "sumOnce") {
-    summarizeJob(sumOnceMessages(String(msg.text || ""), msg.targetLang), "sum once")
-      .then((v) => sendResponse({ ok: true, summary: String(Array.isArray(v) ? (v[0] || "") : (v || "")) }))
+    sumJobChecked(sumOnceMessages(String(msg.text || ""), msg.targetLang), msg.targetLang, "sum once")
+      .then((v) => sendResponse({ ok: true, summary: v }))
       .catch((err) => sendResponse({ ok: false,
         code: (err && err.code) || "failed", error: String(err) }));
     return true;
@@ -2434,6 +2536,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "byoTest") {
     cfgReady
+      .then(cfgRefresh)
       .then(() => byoTest(msg.targetLang || "zh-CN"))
       .then((r) => sendResponse({ ok: true, sample: r.sample }))
       .catch((err) => sendResponse({
@@ -2445,6 +2548,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "ttsTest") {
     cfgReady
+      .then(cfgRefresh)
       .then(() => ttsTest(msg.voice, { provider: msg.provider, targetLang: msg.targetLang }))
       .then((r) => sendResponse({ ok: true, bytes: r.bytes, ms: r.ms, voice: r.voice,
         b64: r.b64, mime: r.mime, local: r.local, lang: r.lang }))
