@@ -3,7 +3,7 @@
     "message": "Dual Subtitles for YouTube™"
   },
   "extDesc": {
-    "message": "YouTube 雙語字幕——原文與譯文單層顯示,互不重疊。"
+    "message": "YouTube 雙語字幕——原文與譯文單層顯示，互不重疊。"
   },
   "headerSub": {
     "message": "for YouTube™ · 雙語單層字幕"
@@ -31,6 +31,15 @@
   },
   "provQwen": {
     "message": "Alibaba 百煉 (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "阿里雲百鍊 Qwen-TTS"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "瀏覽器內建音色（免費）"
   },
   "provQwenShort": {
     "message": "百煉"
@@ -78,16 +87,16 @@
     "message": "<b>自動</b>：優先使用 YouTube 整軌翻譯，影片不支援時自動切換到智慧整句。<br><b>整軌翻譯</b>：YouTube 自帶的整軌翻譯，逐條對齊。重度使用時 YouTube 可能短暫限流——擴充功能會等一會兒再要一次。<br><b>智慧整句</b>：先把碎片字幕拼回完整句子，再呼叫 Google 免費介面翻譯——軌道亂時比整軌翻譯通順；重度使用同樣可能被限流，擴充功能會自動放慢重試。<br><b>自帶 Key</b>：把拼好的整句傳給你設定的服務商。"
   },
   "backendGtxHint": {
-    "message": "使用 Google 免費介面,重度使用可能被短暫限流;擴充功能會自動放慢並重試。"
+    "message": "使用 Google 免費介面，重度使用可能被短暫限流；擴充功能會自動放慢並重試。"
   },
   "backendStatusTlang": {
-    "message": "本影片:整軌翻譯（YouTube）"
+    "message": "本影片：整軌翻譯（YouTube）"
   },
   "backendStatusGtx": {
-    "message": "本影片:智慧整句（Google）"
+    "message": "本影片：智慧整句（Google）"
   },
   "backendStatusLimited": {
-    "message": "翻譯介面暫時限流,已自動放慢重試;已翻譯的句子不受影響。"
+    "message": "翻譯介面暫時限流，已自動放慢重試；已翻譯的句子不受影響。"
   },
   "diagCopy": {
     "message": "複製診斷資訊"
@@ -99,13 +108,16 @@
     "message": "複製失敗 — 請改用截圖"
   },
   "backendStatusSame": {
-    "message": "本影片字幕已是目標語言,無需翻譯。"
+    "message": "本影片字幕已是目標語言，無需翻譯。"
   },
   "secLayout": {
     "message": "版面配置"
   },
   "secLineStyle": {
     "message": "行樣式"
+  },
+  "secLineStyleHint": {
+    "message": "字型 · 顏色 · 字級"
   },
   "orderLabel": {
     "message": "上下順序"
@@ -207,7 +219,7 @@
     "message": "拖曳移動字幕 · 按兩下復位"
   },
   "handleAria": {
-    "message": "拖曳移動字幕,按兩下復位"
+    "message": "拖曳移動字幕，按兩下復位"
   },
   "secExport": {
     "message": "匯出字幕"
@@ -234,25 +246,25 @@
     "message": "已下載字幕"
   },
   "exportNoTrans": {
-    "message": "這部影片無法取得譯文,試試「整軌翻譯」或換個目標語言。"
+    "message": "這部影片無法取得譯文，試試「整軌翻譯」或換個目標語言。"
   },
   "exportLimited": {
     "message": "YouTube 暫時限制了整軌翻譯，過一會兒再試；或者勾選「用自帶 Key 翻譯」。"
   },
   "exportNoCues": {
-    "message": "沒有可下載的字幕,先播放幾秒讓字幕載入,再試一次。"
+    "message": "沒有可下載的字幕，先播放幾秒讓字幕載入，再試一次。"
   },
   "exportNotYoutube": {
     "message": "請在 YouTube 影片頁面使用匯出。"
   },
   "exportFailed": {
-    "message": "匯出失敗,請重新整理頁面後再試。"
+    "message": "匯出失敗，請重新整理頁面後再試。"
   },
   "updateNotesLabel": {
     "message": "更新後打開新功能介紹頁"
   },
   "trackWarnDubOnly": {
-    "message": "提示:此影片只有 AI 配音的自動字幕,沒有原聲語言的字幕軌,雙語字幕可能和聲音對不上。"
+    "message": "提示：此影片只有 AI 配音的自動字幕，沒有原聲語言的字幕軌，雙語字幕可能和聲音對不上。"
   },
   "whatsNewRow": {
     "message": "看看 v$VER$ 更新了什麼 →",
@@ -263,7 +275,7 @@
     }
   },
   "backendStatusByo": {
-    "message": "本影片:自備 Key（$NAME$）",
+    "message": "本影片：自備 Key（$NAME$）",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -280,7 +292,7 @@
     "message": "模型"
   },
   "byoModelRequired": {
-    "message": "必填:模型名稱"
+    "message": "必填：模型名稱"
   },
   "byoKeyLabel": {
     "message": "API Key"
@@ -309,7 +321,7 @@
     "message": "測試中…"
   },
   "byoTestOk": {
-    "message": "連線成功,試譯:$SAMPLE$",
+    "message": "連線成功，試譯：$SAMPLE$",
     "placeholders": {
       "sample": {
         "content": "$1"
@@ -320,7 +332,7 @@
     "message": "去申請 Key"
   },
   "byoGuide": {
-    "message": "還不會設定?看教學"
+    "message": "還不會設定？看教學"
   },
   "byoLocalHint": {
     "message": "Key 只存在這台電腦的瀏覽器裡，不會上傳；字幕文字只傳往你選擇的服務商。"
@@ -338,22 +350,22 @@
     "message": "介面網址必須是 https:// 開頭的完整網址。"
   },
   "byoErrNoPerm": {
-    "message": "沒有授權存取這個介面網域,無法連線。"
+    "message": "沒有授權存取這個介面網域，無法連線。"
   },
   "byoErrAuth": {
     "message": "Key 被拒絕(401/403):檢查是否複製完整、是否已開通。"
   },
   "byoErrLimited": {
-    "message": "服務商限流,已自動放慢重試。"
+    "message": "服務商限流，已自動放慢重試。"
   },
   "byoErrQuota": {
     "message": "這個 Key 本期額度已用完。"
   },
   "byoErrBadRequest": {
-    "message": "介面拒絕了請求:模型名稱或介面網址可能不對。"
+    "message": "介面拒絕了請求：模型名稱或介面網址可能不對。"
   },
   "byoErrBadShape": {
-    "message": "模型沒按要求逐行回覆,自動拆小重試也失敗了——換個模型試試。"
+    "message": "模型沒按要求逐行回覆，自動拆小重試也失敗了——換個模型試試。"
   },
   "byoErrReasoning": {
     "message": "這個模型只輸出了思考過程、沒給譯文——換一個非推理(non-thinking)模型。"
@@ -362,16 +374,16 @@
     "message": "連不上這個介面(網路或區域限制)。"
   },
   "byoErrUnsupportedTarget": {
-    "message": "這家不支援目前的目標語言,換語言或換引擎。"
+    "message": "這家不支援目前的目標語言，換語言或換引擎。"
   },
   "byoErrFailed": {
-    "message": "連線失敗,稍後再試。"
+    "message": "連線失敗，稍後再試。"
   },
   "optTitle": {
     "message": "翻譯服務設定"
   },
   "optIntro": {
-    "message": "選一個服務商,填上你自己的 API Key。Key 只儲存在這台電腦上,字幕文字只傳往你選的服務商。"
+    "message": "選一個服務商，填上你自己的 API Key。Key 只儲存在這台電腦上，字幕文字只傳往你選的服務商。"
   },
   "optPricingLink": {
     "message": "費用與免費額度"
@@ -397,7 +409,7 @@
     "message": "自訂…"
   },
   "optNoModelsYet": {
-    "message": "還沒有模型清單——用你的 Key 取得一份,或直接手填。"
+    "message": "還沒有模型清單——用你的 Key 取得一份，或直接手填。"
   },
   "optShowKey": {
     "message": "顯示"
@@ -457,7 +469,7 @@
     "message": "去設定翻譯服務"
   },
   "aboutIntro": {
-    "message": "這是什麼,以及你的字幕會送到哪裡。"
+    "message": "這是什麼，以及你的字幕會送到哪裡。"
   },
   "aboutVersion": {
     "message": "版本"
@@ -478,10 +490,10 @@
     "message": "安裝時按你瀏覽器的語言偏好猜了一個。不對就在這裡換，之後也隨時能在彈窗裡改。"
   },
   "aboutBlurb": {
-    "message": "為 YouTube 加上一層雙語字幕:原文一行、譯文一行,字型、顏色、位置都能自己調。開源、免費、無廣告。"
+    "message": "為 YouTube 加上一層雙語字幕：原文一行、譯文一行，字型、顏色、位置都能自己調。開源、免費、無廣告。"
   },
   "aboutPrivacy": {
-    "message": "我們沒有伺服器,也不做任何統計。字幕文字只會送往你選擇的翻譯服務;使用自備 Key 時,Key 只會保存在這台電腦上。"
+    "message": "我們沒有伺服器，也不做任何統計。字幕文字只會送往你選擇的翻譯服務；使用自備 Key 時，Key 只會保存在這台電腦上。"
   },
   "aboutChangelog": {
     "message": "更新日誌"
@@ -511,10 +523,10 @@
     "message": "用自備 Key 翻譯（更貼合，消耗額度）"
   },
   "exportByoNote": {
-    "message": "整部影片的字幕會交給你的服務商、用你的 Key 翻譯,消耗額度;按匯出後會先給出預估。"
+    "message": "整部影片的字幕會交給你的服務商、用你的 Key 翻譯，消耗額度；按匯出後會先給出預估。"
   },
   "exportConfirm": {
-    "message": "將用「$NAME$」翻譯 $N$ 條字幕,約 $REQ$ 次請求,消耗你自己的額度。整軌字幕會離開瀏覽器送給該服務商——播放時只會送出你看過的片段。",
+    "message": "將用「$NAME$」翻譯 $N$ 條字幕，約 $REQ$ 次請求，消耗你自己的額度。整軌字幕會離開瀏覽器送給該服務商——播放時只會送出你看過的片段。",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -583,10 +595,10 @@
     "message": "去 Chrome 商店評分"
   },
   "optNeedKey": {
-    "message": "還沒填 Key,這個服務商暫時用不了。"
+    "message": "還沒填 Key，這個服務商暫時用不了。"
   },
   "optBaseHint": {
-    "message": "填 Base URL 或完整介面網址都行,例如 https://example.com/v1 或 https://example.com/v1/chat/completions。"
+    "message": "填 Base URL 或完整介面網址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。"
   },
   "startS1Alt": {
     "message": "播放器示意圖：畫面下方是一行原文和一行譯文"
@@ -606,11 +618,20 @@
   "startPicByoNote": {
     "message": "整句理解後再切回來"
   },
-  "startNoSubsQ": {
-    "message": "沒出現字幕？"
+  "troubleTitle": {
+    "message": "遇到問題"
   },
-  "startNoSubs": {
-    "message": "按一下播放器右下角的 CC 按鈕，或換部影片試試——直播和純音樂影片通常本來就沒有字幕。"
+  "troubleStep1": {
+    "message": "先看彈出視窗裡的開關是不是開著——關掉時整層字幕都不會出現。"
+  },
+  "troubleStep2": {
+    "message": "這部影片本身有沒有字幕？點播放器右下角的 CC 看看，沒有原文就加不出譯文。"
+  },
+  "troubleStep3": {
+    "message": "換一部熱門影片試試。別的正常、只有這部不行，多半是這部片子的字幕軌。"
+  },
+  "troubleDiagHint": {
+    "message": "還是不行的話，把診斷資訊貼進郵件或 issue——裡面有版本、引擎狀態和目前分頁在做什麼，能少來回幾輪。"
   },
   "langManage": {
     "message": "管理語言…"
@@ -626,6 +647,41 @@
   },
   "ttsVoiceLabel": {
     "message": "音色"
+  },
+  "ttsPreview": {
+    "message": "試聽"
+  },
+  "ttsPreviewPlaying": {
+    "message": "播放中…"
+  },
+  "ttsPreviewFail": {
+    "message": "播不出來——檢查 Key，或先「儲存並測試」"
+  },
+  "ttsFetchVoices": {
+    "message": "擷取這個語言的更多音色"
+  },
+  "ttsFetching": {
+    "message": "擷取中…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "已切到這個語言專屬的 $N$ 個音色，它們只對目前譯文語言有效。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "回到跟著語言走的音色"
+  },
+  "ttsVoicesNone": {
+    "message": "這家在這個語言下沒有額外音色——內建的那些照樣能用。"
+  },
+  "ttsVoiceFemale": {
+    "message": "女聲"
+  },
+  "ttsVoiceMale": {
+    "message": "男聲"
   },
   "ttsTestOk": {
     "message": "連線成功：試音 $KB$ KB（$VOICE$）",
@@ -689,7 +745,7 @@
     }
   },
   "langsSwitched": {
-    "message": "它正在使用中,目標語言已改為「$NAME$」",
+    "message": "它正在使用中，目標語言已改為「$NAME$」",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -713,6 +769,9 @@
   },
   "ttsDuckLabel": {
     "message": "朗讀時的原聲音量"
+  },
+  "ttsDuckShort": {
+    "message": "原聲音量"
   },
   "ttsStatusSpeaking": {
     "message": "朗讀中"

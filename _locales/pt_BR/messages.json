@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "entendida por inteiro, redividida"
   },
-  "startNoSubsQ": {
-    "message": "As legendas não aparecem?"
-  },
-  "startNoSubs": {
-    "message": "Clique no botão CC no canto inferior direito do player ou tente outro vídeo — transmissões ao vivo e videoclipes muitas vezes não têm nenhuma."
-  },
   "langManage": {
     "message": "Gerenciar idiomas…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Reprodução"
+  },
+  "ttsDuckShort": {
+    "message": "Áudio original"
+  },
+  "secLineStyleHint": {
+    "message": "Fonte · Cor · Tamanho"
+  },
+  "troubleTitle": {
+    "message": "Algo deu errado"
+  },
+  "troubleStep1": {
+    "message": "Confira primeiro o interruptor no popup — desligado, a camada de legendas some por completo."
+  },
+  "troubleStep2": {
+    "message": "Este vídeo sequer tem legendas? Experimente o botão CC no player: sem o original, não há o que traduzir."
+  },
+  "troubleStep3": {
+    "message": "Tente um vídeo popular. Se o resto funciona e só este não, costuma ser a faixa de legendas deste vídeo."
+  },
+  "troubleDiagHint": {
+    "message": "Ainda travado? Cole as informações de diagnóstico no e-mail ou no issue — elas trazem a versão, o estado do mecanismo e o que a aba atual está fazendo, o que evita uma ou duas idas e voltas."
+  },
+  "ttsPreview": {
+    "message": "Prévia"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Reproduzindo…"
+  },
+  "ttsPreviewFail": {
+    "message": "Não foi possível reproduzir — verifique a chave e tente Salvar e testar"
+  },
+  "ttsFetchVoices": {
+    "message": "Buscar mais vozes para este idioma"
+  },
+  "ttsFetching": {
+    "message": "Buscando…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Agora aparecem as $N$ vozes deste idioma. Elas funcionam só neste idioma de destino.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Voltar às vozes que acompanham seu idioma"
+  },
+  "ttsVoicesNone": {
+    "message": "Este provedor não tem vozes extras para este idioma — as integradas ainda funcionam."
+  },
+  "ttsVoiceFemale": {
+    "message": "feminina"
+  },
+  "ttsVoiceMale": {
+    "message": "masculina"
+  },
+  "provLocalSpeech": {
+    "message": "Vozes nativas do navegador (grátis)"
   }
 }

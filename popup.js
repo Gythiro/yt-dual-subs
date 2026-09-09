@@ -11,6 +11,12 @@ const DEFAULTS = {
   ttsVolume: 100,              // spoken line's own loudness, 0-100 (Audio.volume)
   ttsDuckPct: 25,              // original audio while a line speaks, as % of the
                                // user's own volume (inject.js ducks to this)
+  // Which voice speaks. Kept in `state` so the card and the status line read
+  // the pick that was just made rather than racing storage for it; the keys
+  // themselves live in storage.local and are never mirrored here.
+  ttsProvider: "local-speech", // the keyless engine, so the switch works unconfigured
+  ttsVoice: "",                // "" = the provider's default
+  ttsRegion: "",               // Azure only: its key is bound to a region
   langShown: null,             // popup/options only: which target languages the
                                // dropdown offers. null = the shipped defaults.
   engine: "auto",              // "auto" | "tlang" | "gtx" | "byo" (source of
@@ -297,7 +303,25 @@ function sendToTab(tabId, msg) {
 // engine) > auto's per-video decision (muted) > hidden. Reads the limit gate
 // from chrome.storage.session (written by background.js on state transitions)
 // and the resolved engine from the content script of the active tab.
+// The diagnostics button rides the engine status line and appears only when
+// that line is a complaint: beside a warning it reads as "copy THIS fault",
+// which is what a support reply needs. The permanent, tell-people-about-it
+// entry is on the settings page (About) — the commonest report, "no subtitles
+// at all", raises no warning for this to hang off.
+function paintDiagBtn() {
+  const btn = $("diagCopy");
+  const el = $("backendStatus");
+  if (!btn || !el) return;
+  btn.hidden = el.hidden || !el.classList.contains("warn");
+}
+
+// One exit for a function with eight early returns: whatever paintEngineStatus
+// decided, the diagnostics button is re-gated on the way out.
 async function refreshEngineStatus() {
+  try { await paintEngineStatus(); } finally { paintDiagBtn(); }
+}
+
+async function paintEngineStatus() {
   const el = $("backendStatus");
   if (!el) return;
   el.hidden = true;
@@ -372,17 +396,36 @@ async function refreshTtsStatus() {
   const el = $("ttsStatus");
   if (!el) return;
   el.hidden = true;
-  if (!state.ttsEnabled) return;
+  if (!state.ttsEnabled || !ttsCardReady) return;
   const tab = await getActiveTab();
   if (!tab || tab.id == null) return;
   const r = await sendToTab(tab.id, { type: "engineStatus" });
   if (!r || !r.ok || !r.tts) return;        // not a video page, or a stale script
+  // From `state`, not a fresh read: a voice pick writes storage and refreshes
+  // this line in the same breath, and a read racing that write would name the
+  // voice the user just moved off. `state` is what the pick set.
   let voice = "";
   try {
-    const got = await chrome.storage.sync.get({ ttsProvider: "", ttsVoice: "" });
-    const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts.get(got.ttsProvider);
-    voice = (got && got.ttsVoice) || (p && p.defaultVoice) || "";
+    const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts.get(state.ttsProvider);
+    // The engine falls back when a stored voice is not this provider's, so the
+    // line must name the voice that will actually speak.
+    const stored = state.ttsVoice || "";
+    const P2 = self.YTDS_PROVIDERS;
+    voice = (p && P2.tts.voiceOwned(p, stored) &&
+             P2.tts.voiceAppliesTo(p, stored, state.targetLang))
+      ? stored : ((p && p.defaultVoice) || stored || "");
   } catch (_e) { /* no voice shown, the line still counts */ }
+  // Nothing has spoken and the engine said why: lead with the reason. A stored
+  // key is not a working one (it is saved before the test runs), and since the
+  // popup can switch provider by picking a voice, the settings page is no
+  // longer guaranteed to have shown the user the failure.
+  el.classList.toggle("err", !!r.tts.err);
+  if (r.tts.err) {
+    el.textContent = byoErrText(r.tts.err);
+    ttsStatusA11y(el);
+    el.hidden = false;
+    return;
+  }
   const head = r.tts.speaking
     ? t("ttsStatusSpeaking", "朗读中")
     : t("ttsStatusOn", "朗读已开");
@@ -390,40 +433,194 @@ async function refreshTtsStatus() {
     [String(r.tts.spoken), String(r.tts.skipped)],
     "本视频 " + r.tts.spoken + " 句 · 跳过 " + r.tts.skipped + " 句");
   // Half-width parens even in CJK: the voice name is a Latin token ("nova").
-  el.textContent = head + (voice ? " (" + voice + ")" : "") + " · " + counts;
+  el.textContent = head + (voice ? " (" + ttsVoiceLabel(voice) + ")" : "") + " · " + counts;
+  ttsStatusA11y(el);
   el.hidden = false;
 }
 
+// The button carries a static aria-label ("read-aloud settings"), and an
+// aria-label WINS over the text inside — so a screen reader announced the
+// destination and never the status itself. Fold both together: what it says,
+// then where it goes.
+function ttsStatusA11y(el) {
+  const dest = t("ttsOpenSettings", "朗读设置");
+  el.setAttribute("aria-label", el.textContent + (dest ? " · " + dest : ""));
+}
+
 // ---- read-aloud card ---------------------------------------------------------
-// The switch and the volume are per-video decisions, so they live here at one
-// hop; voice, region and ducking stay on the options page behind the status
-// button (HCI audit, 设计规范 §5). Exactly one of the two head rows shows.
+// The switch, both volumes and the voice are per-video decisions (the
+// competitor ships all four in its popup too), so they live here at one hop;
+// region, testing and adding providers stay on the options page behind the
+// status button (HCI audit, 设计规范 §5). Exactly one of the two head rows shows.
+
+// Can this provider actually speak, right now, without visiting the settings
+// page? A stored key is NOT enough: the key is saved before the test runs, so
+// Azure can hold a key and still be missing the region that becomes its
+// request host. Offering it would hand the user a switch that only produces
+// silence. Same predicate as options.js's ttsReady — they must not drift.
+// ("keyless" is the hook for the built-in speechSynthesis engine.)
+const TTS_REGION_OK = /^[a-z0-9]{1,42}$/;      // mirrors background.js resolveTts
+function ttsUsable(p, keys, region) {
+  if (!p) return false;
+  // Keyless means the browser speaks it, which is only true where the browser
+  // actually can: no speechSynthesis, no offer.
+  if (p.localVoices && !(typeof speechSynthesis !== "undefined")) return false;
+  if (!p.keyless && !(keys || {})[p.id]) return false;
+  if (p.needsRegion && !TTS_REGION_OK.test(String(region || "").trim().toLowerCase())) {
+    return false;
+  }
+  return true;
+}
+
+// Two storage reads deep, so a second call can land first. Only the newest
+// paint is allowed to touch the DOM.
+let ttsPaintGen = 0;
+// What the card decided: a status line claiming "speaking" underneath a card
+// that is offering "configure…" contradicts itself, and the card is the one
+// holding the evidence (key, region, registry).
+let ttsCardReady = false;
 async function paintTtsCard() {
   let ready = false;
+  let current = null;                // the provider actually in use
+  let usable = [];                   // every provider that could speak right now
+  const gen = ++ttsPaintGen;
   try {
     const got = await new Promise((res) =>
-      chrome.storage.sync.get({ ttsProvider: "" }, res));
-    const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts.get(got && got.ttsProvider);
-    if (p) {
-      // "keyless" is the hook for the built-in speechSynthesis engine; every
-      // provider shipped today needs its key before the switch is honest.
-      if (p.keyless) {
-        ready = true;
-      } else {
-        const loc = await new Promise((res) =>
-          chrome.storage.local.get({ ttsKeys: {} }, res));
-        ready = !!((loc && loc.ttsKeys) || {})[p.id];
+      chrome.storage.sync.get({ ttsProvider: "local-speech", ttsVoice: "", ttsRegion: "" }, res));
+    const loc = await new Promise((res) =>
+      chrome.storage.local.get({ ttsKeys: {} }, res));
+    if (gen !== ttsPaintGen) return;  // a newer paint already answered
+    const keys = (loc && loc.ttsKeys) || {};
+    const reg = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts;
+    if (reg) {
+      usable = reg.list.filter((p) => ttsUsable(p, keys, got && got.ttsRegion));
+      current = reg.get(got && got.ttsProvider);
+      // The stored provider may have stopped being usable — a key cleared on
+      // the settings page, an Azure region never filled in. Something keyless
+      // is still there, so fall back to it rather than telling the user the
+      // feature needs setting up: it does not.
+      if (!current || !usable.includes(current)) {
+        current = usable.find((p) => p.keyless) || null;
       }
+      ready = !!current;
+      if (ready) paintTtsVoicePick(usable, current, (got && got.ttsVoice) || "");
     }
   } catch (_e) { /* unconfigured is the safe face */ }
+  if (gen !== ttsPaintGen) return;
+  const was = ttsCardReady;
+  ttsCardReady = ready;
   $("ttsSetupRow").hidden = ready;
   $("ttsSwitchRow").hidden = !ready;
   $("ttsEnabledChk").checked = !!state.ttsEnabled;
-  // The slider only while it would be audible: a volume control for a switch
-  // that is off promises something the off state cannot deliver.
-  $("ttsVolRow").hidden = !(ready && state.ttsEnabled);
+  // Controls only while they would be audible: a knob for a switch that is
+  // off promises something the off state cannot deliver.
+  const live = ready && state.ttsEnabled;
+  $("ttsVolRow").hidden = !live;
   $("ttsVol").value = state.ttsVolume;
   $("ttsVolV").textContent = state.ttsVolume + "%";
+  $("ttsDuckRow").hidden = !live;
+  $("ttsDuck").value = state.ttsDuckPct;
+  $("ttsDuckV").textContent = state.ttsDuckPct + "%";
+  $("ttsVoiceRow").hidden = !live;
+  // Readiness just changed: the status line was drawn under the old answer.
+  if (was !== ready) refreshTtsStatus();
+}
+
+// One dropdown, both dimensions: every voice of every provider that has its
+// key, grouped per provider once there is more than one — choosing a voice is
+// choosing its provider (values are "providerId|voice", never bare: voice
+// names can repeat across providers).
+function ttsVoiceLabel(v) {
+  try {
+    return self.YTDS_PROVIDERS.tts.voiceLabel(v, (code) => {
+      const info = self.YTDS_LANGS && self.YTDS_LANGS.get(code);
+      return info ? info.native : "";
+    }, (g) => (g === "f" ? t("ttsVoiceFemale", "女声") : t("ttsVoiceMale", "男声")));
+  } catch (_e) { return v; }
+}
+
+function paintTtsVoicePick(usable, current, storedVoice) {
+  const sel = $("ttsVoicePick");
+  if (!sel) return;
+  sel.textContent = "";
+  const addVoice = (parent, p, v) => {
+    const o = document.createElement("option");
+    o.value = p.id + "|" + v;
+    // Who the voice is and where its accent comes from — the raw id says
+    // neither, and thirteen raw ids are a wall rather than a choice.
+    o.textContent = ttsVoiceLabel(v);
+    parent.appendChild(o);
+  };
+  // The browser's own engine has no list of its own: its voices are whatever
+  // this machine has, narrowed to the language being read. Everything else
+  // ships its family with it.
+  const voicesOf = (p) => (p.localVoices
+    ? self.YTDS_PROVIDERS.tts.localVoiceNames(window.speechSynthesis, state.targetLang)
+    : (p.voices || []));
+  if (usable.length > 1) {
+    for (const p of usable) {
+      // The local family's group can be momentarily empty — the machine has
+      // not answered yet — but it stays listed: "the free engine is always
+      // there" is a promise this card makes, and voiceschanged fills it in.
+      const g = document.createElement("optgroup");
+      g.label = p.name;
+      for (const v of voicesOf(p)) addVoice(g, p, v);
+      sel.appendChild(g);
+    }
+  } else {
+    for (const v of voicesOf(current)) addVoice(sel, current, v);
+  }
+  const choices = voicesOf(current);
+  // A voice fetched on the settings page is one the engine will honour but is
+  // not in the family we ship. Leaving it out of the menu did not stop it from
+  // speaking — it only stopped the menu from admitting which voice that was.
+  const P = self.YTDS_PROVIDERS;
+  if (storedVoice && !choices.includes(storedVoice) &&
+      P.tts.voiceOwned(current, storedVoice) &&
+      P.tts.voiceAppliesTo(current, storedVoice, state.targetLang)) {
+    const parent = usable.length > 1
+      ? Array.prototype.find.call(sel.children,
+        (g) => g.tagName === "OPTGROUP" && g.label === current.name) || sel
+      : sel;
+    addVoice(parent, current, storedVoice);
+    choices.push(storedVoice);
+  }
+  const voice = storedVoice && choices.includes(storedVoice)
+    ? storedVoice : (current.defaultVoice || choices[0] || "");
+  sel.value = current.id + "|" + voice;
+}
+
+// The settings page can pull the ground out from under this card while it is
+// open — clearing the key of the provider in use, or filling in the region that
+// was missing. Without this the popup keeps offering a switch that can only
+// produce silence (or keeps hiding one that would now work).
+function initTtsWatch() {
+  try {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === "local") {
+        if (changes.ttsKeys) paintTtsCard();
+        return;
+      }
+      if (area !== "sync") return;
+      let touched = false;
+      for (const k of ["ttsProvider", "ttsVoice", "ttsRegion"]) {
+        if (!changes[k]) continue;
+        state[k] = changes[k].newValue == null ? "" : String(changes[k].newValue);
+        touched = true;
+      }
+      if (touched) { paintTtsCard(); refreshTtsStatus(); }
+    });
+  } catch (_e) { /* without it the card is simply as stale as it used to be */ }
+  // The browser's own engine is the default, and its voice table arrives
+  // AFTER this page paints — the first synchronous getVoices() is empty in
+  // every Chrome. Same reason as the settings page: without this the shipped
+  // default has an empty voice menu here too.
+  try {
+    const synth = window.speechSynthesis;
+    if (synth && typeof synth.addEventListener === "function") {
+      synth.addEventListener("voiceschanged", () => { paintTtsCard(); });
+    }
+  } catch (_e) { /* an engine without the event simply paints once */ }
 }
 
 // ---- line-style card fold ----------------------------------------------------
@@ -930,6 +1127,22 @@ function wire() {
     $("ttsVolV").textContent = e.target.value + "%";
     setKey("ttsVolume", +e.target.value);   // content.js re-levels a playing line
   });
+  $("ttsDuck").addEventListener("input", (e) => {
+    $("ttsDuckV").textContent = e.target.value + "%";
+    setKey("ttsDuckPct", +e.target.value);  // rides the next duck message
+  });
+  // One change, both keys, one write: the engine reads them together and the
+  // options page follows through its storage listener.
+  $("ttsVoicePick").addEventListener("change", (e) => {
+    const cut = e.target.value.indexOf("|");
+    if (cut < 1) return;
+    const provider = e.target.value.slice(0, cut);
+    const voice = e.target.value.slice(cut + 1);
+    state.ttsProvider = provider;
+    state.ttsVoice = voice;
+    chrome.storage.sync.set({ ttsProvider: provider, ttsVoice: voice });
+    refreshTtsStatus();                     // the "(voice)" in the status line
+  });
 
   // line-style card fold
   $("lineFold").addEventListener("click", () => {
@@ -1020,11 +1233,16 @@ function wire() {
   $("reset").addEventListener("click", () => {
     state = { ...DEFAULTS };
     chrome.storage.sync.set(DEFAULTS);   // engine:"auto" + backend:"tlang" mirror included
-    // Reset means reset: don't leave orphan API keys on the machine. The panel
-    // also has its own "clear" button for doing this alone.
+    // Reset means reset: don't leave orphan API keys on the machine. Both
+    // stores, not just the translation one — read-aloud keys were surviving a
+    // reset that had already switched the feature off, so turning it back on
+    // silently resumed spending an account the user thought they had cleared.
+    // The panels also have their own "clear" buttons for doing this alone.
     try {
-      chrome.storage.local.remove("byoKeys");
+      chrome.storage.local.remove(["byoKeys", "ttsKeys"]);
+      chrome.storage.sync.remove(["ttsProvider", "ttsVoice", "ttsRegion"]);
       paintByoPanel();               // the summary must stop claiming a key
+      paintTtsCard();                // …and so must the read-aloud card
     } catch (_e) { /* ignore */ }
     bindUI();
     refreshEngineStatus();
@@ -1113,6 +1331,7 @@ self.YTDS_I18N.init().then(() => {
     bindUI();
     wire();
     initLineFold();
+    initTtsWatch();
     refreshEngineStatus();
     refreshTtsStatus();
     paintTtsCard();

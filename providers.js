@@ -261,6 +261,227 @@
 
   // Error code (from background.js) -> i18n key. Lives here so the popup and
   // the options page cannot drift apart on what a code means.
+  // A voice id is not a name. "zh-CN-XiaoxiaoMultilingualNeural" tells a user
+  // nothing they can act on, and a dropdown of thirteen of them is a wall.
+  // Azure bakes the two facts that matter into the id — who the voice is, and
+  // which language it grew up speaking, which is the accent it carries into
+  // every other one — so the label is parsed rather than kept in a table that
+  // would drift from the list above. Providers whose ids are already words
+  // (alloy, Kore) are left alone.
+  // A provider locale ("zh-CN", "en-US") onto one of our fifty target-language
+  // codes, so the label can borrow the language's own name from languages.js
+  // instead of keeping a second list of them here.
+  const VOICE_LOCALE_LANG = {
+    "zh-CN": "zh-CN", "zh-TW": "zh-TW", "en-US": "en", "en-GB": "en",
+    "en-AU": "en", "ja-JP": "ja", "ko-KR": "ko", "de-DE": "de", "fr-FR": "fr",
+    "fr-CA": "fr", "es-ES": "es", "es-MX": "es", "it-IT": "it",
+    "pt-BR": "pt", "pt-PT": "pt", "ru-RU": "ru", "nl-NL": "nl", "pl-PL": "pl",
+    "tr-TR": "tr", "sv-SE": "sv", "th-TH": "th", "vi-VN": "vi", "id-ID": "id",
+    "ar-SA": "ar", "hi-IN": "hi", "uk-UA": "uk"
+  };
+
+  // Chirp 3 HD ships the same thirty names across every locale it supports, and
+  // the gender belongs to the voice, not to the locale. Checked against
+  // Google's own voices.list for cmn-CN and en-US (2026-08-22): thirty names in
+  // both, zero disagreements — so one table answers for all fifty target
+  // languages. Google publishes this; nothing here is invented. It is the one
+  // understandable thing about a menu of star names, and the cheapest possible
+  // equivalent of what Azure's ids already carry.
+  const CHIRP3_GENDER = {
+    Achernar: "f", Achird: "m", Algenib: "m", Algieba: "m", Alnilam: "m",
+    Aoede: "f", Autonoe: "f", Callirrhoe: "f", Charon: "m", Despina: "f",
+    Enceladus: "m", Erinome: "f", Fenrir: "m", Gacrux: "f", Iapetus: "m",
+    Kore: "f", Laomedeia: "f", Leda: "f", Orus: "m", Puck: "m",
+    Pulcherrima: "f", Rasalgethi: "m", Sadachbia: "m", Sadaltager: "m",
+    Schedar: "m", Sulafat: "f", Umbriel: "m", Vindemiatrix: "f",
+    Zephyr: "f", Zubenelgenubi: "m"
+  };
+
+  // Which engine generation a fetched Google id belongs to. The id carries it,
+  // so the menu can group by it instead of listing four families as one wall.
+  function ttsVoiceTier(voiceId) {
+    const m = /^[a-z]{2,3}-[A-Z]{2}-(Chirp3-HD|Neural2|Wavenet|Standard|Studio|Polyglot)-/
+      .exec(String(voiceId || ""));
+    return m ? m[1] : "";
+  }
+
+  // A fetched id and a built-in short name are often the SAME voice under two
+  // spellings: Google answers "cmn-CN-Chirp3-HD-Achernar" for the "Achernar"
+  // already in the family list, and an exact-string merge kept both. Measured
+  // against the live list on 2026-08-22: of the 38 voices cmn-CN returns, 30
+  // were that, so the button's real yield is eight and the menu it produced was
+  // 44% echo. Keeping the SHORT name is the deliberate half of this: the short
+  // one follows the reader across all fifty languages, the full one is pinned
+  // to the language it was fetched for.
+  function ttsMergeFetched(p, fetched) {
+    const family = (p && p.voices) || [];
+    const seen = new Set();
+    const out = [];
+    for (const id of fetched || []) {
+      if (!id || seen.has(id)) continue;
+      if (family.some((b) => id === b || id.slice(-(b.length + 1)) === "-" + b)) continue;
+      seen.add(id);
+      out.push(id);
+    }
+    return out;
+  }
+
+  // Turn an id into something a person can choose between. Three shapes reach
+  // here and each carries a different useful fact:
+  //   Azure       — who the voice is, and the accent its home locale gives it
+  //   Chirp 3     — a star name, which says nothing, plus a published gender
+  //   Google full — the engine generation, which is the real difference between
+  //                 cmn-CN-Wavenet-A and cmn-CN-Standard-A
+  // Anything else is returned untouched rather than mangled into a guess.
+  function ttsVoiceLabel(voiceId, langNativeName, genderWord) {
+    const id = String(voiceId || "");
+    // Azure numbers its revisions inside the name — Xiaoxiao2, JennyV2 — so the
+    // name part has to admit digits here exactly as the shape check does, or a
+    // voice that is accepted for speaking is still shown as a raw id.
+    // Match the whole middle rather than trying to spell Azure's taxonomy in
+    // one pattern: it stacks decorations (Multilingual, Turbo, Dialects) and
+    // then numbers the revision after them — JennyMultilingualV2Neural. A
+    // pattern that guesses the order drops the names it does not predict back
+    // to a raw id, which is the failure this is here to prevent.
+    const az = /^([a-z]{2,3})-([A-Z]{2})-(.+)Neural$/.exec(id);
+    if (az) {
+      const person = az[3].replace(/(?:Multilingual|Turbo|Dialects)(?:V\d+)?$/, "") || az[3];
+      const code = VOICE_LOCALE_LANG[az[1] + "-" + az[2]];
+      const home = code && langNativeName ? langNativeName(code) : "";
+      return home ? person + " · " + home : person;
+    }
+    const tier = ttsVoiceTier(id);
+    if (tier) {
+      const rest = id.slice(id.indexOf(tier) + tier.length + 1);
+      // A Chirp 3 full id is the same voice as the short name we already ship;
+      // label it the same way so the two spellings never read as two voices.
+      if (tier === "Chirp3-HD") return ttsVoiceLabel(rest, langNativeName, genderWord);
+      return tier + " · " + rest;
+    }
+    const g = CHIRP3_GENDER[id];
+    if (g) {
+      const word = genderWord ? genderWord(g) : "";
+      return word ? id + " · " + word : id;
+    }
+    return id;
+  }
+
+  // The machine's own voices, narrowed to the language being read. Chrome
+  // fills this table asynchronously and the first synchronous call is empty,
+  // so every caller also has to repaint on "voiceschanged" — this decides only
+  // WHICH of the arrived voices belong to the language. Both surfaces read it
+  // from here rather than each keeping its own copy: the popup and the
+  // settings page disagreeing about what is on offer is how the picker starts
+  // naming a voice that is not the one speaking. Falling back to the whole set
+  // when nothing matches beats an empty menu — some systems tag a voice with
+  // the base language only.
+  function ttsLocalVoiceNames(synth, lang) {
+    if (!synth) return [];
+    let all = [];
+    try { all = synth.getVoices() || []; } catch (_e) { return []; }
+    const base = String(lang || "").split("-")[0].toLowerCase();
+    const hit = all.filter(
+      (v) => String(v.lang || "").toLowerCase().split("-")[0] === base);
+    return (hit.length ? hit : all).map((v) => v.name);
+  }
+
+  // A fetched voice is not in the built-in table, so it is recognised by shape:
+  // Azure ships "<lang>-<REGION>-<Name>Neural", Google full names that already
+  // carry their locale and family. Anything else is not this provider's and is
+  // refused rather than spliced into a request that cannot work.
+  function ttsVoiceShapeOk(p, voice) {
+    // The name part carries digits in Azure's own catalogue — Xiaoxiao2Neural,
+    // JennyMultilingualV2Neural are how it numbers revisions. Spelling it
+    // [A-Za-z]+ refused every one of them, so a voice the settings page had
+    // just fetched and offered was replaced by the default without a word.
+    // Still alphanumeric and still anchored to the -Neural suffix, so nothing
+    // that could rewrite a request gets through.
+    if (p.kind === "azure-speech") return /^[a-z]{2,3}-[A-Z]{2}-[A-Za-z0-9]+Neural$/.test(voice);
+    if (p.kind === "google-tts") {
+      return /^[a-z]{2,3}-[A-Z]{2}-(Chirp3-HD|Neural2|Wavenet|Standard|Studio|Polyglot)-/.test(voice);
+    }
+    // ElevenLabs ids are opaque 20-character tokens; anything else did not come
+    // from its list and must not be pasted into a URL path.
+    if (p.kind === "elevenlabs") return /^[A-Za-z0-9]{16,32}$/.test(voice);
+    return false;
+  }
+
+  // "Does this voice belong to this provider" — the one question the engine and
+  // both pickers have to answer the same way. They did not: the worker counted
+  // the built-in family PLUS anything shaped like this provider's (which is
+  // what fetching a language's voices hands back), while the popup counted the
+  // family alone. So a fetched voice was drawn as the family default and the
+  // menu named Kore while the engine spoke cmn-CN-Neural2-C. Same disease as
+  // the usability predicate that had to be pulled together in 1bf5ee4.
+  function ttsVoiceOwned(p, voice) {
+    if (!p || !voice) return false;
+    // The local engine's voices are whatever this machine has; the page that
+    // enumerated them is the only authority, so nothing here can vet them.
+    if (p.localVoices) return true;
+    if ((p.voices || []).includes(voice)) return true;
+    return !!p.listVoices && ttsVoiceShapeOk(p, voice);
+  }
+
+  // Which locale each provider speaks a target language in. These live here
+  // rather than in the worker because both pickers need the same answer: a
+  // voice fetched for one language must not be NAMED by a menu when the
+  // engine will not use it for the language being read now.
+  // Chirp 3 HD locales, per Google's published list (untested against a live
+  // key — the machine-check clause of the read-aloud test drive covers this).
+  // A target language that is not in the family is an honest unsupportedTarget,
+  // never an English voice mangling someone else's language.
+  const GOOGLE_TTS_LANG = {
+    "en": "en-US", "de": "de-DE", "es": "es-ES", "fr": "fr-FR", "it": "it-IT",
+    "ja": "ja-JP", "ko": "ko-KR", "nl": "nl-NL", "pl": "pl-PL", "pt": "pt-BR",
+    "ru": "ru-RU", "th": "th-TH", "tr": "tr-TR", "vi": "vi-VN", "id": "id-ID",
+    "hi": "hi-IN", "ar": "ar-XA", "uk": "uk-UA", "sw": "sw-KE", "bn": "bn-IN",
+    "mr": "mr-IN", "ta": "ta-IN", "te": "te-IN", "ur": "ur-IN",
+    // Chirp 3 grew from 29 locales to 57 between the 2026-01 snapshot this table
+    // was written from and 2026-08. Everything below was being told "this
+    // provider does not support your language" while Google supported it all
+    // along — a wrong answer, not a missing feature.
+    "sv": "sv-SE", "da": "da-DK", "no": "nb-NO", "fi": "fi-FI", "cs": "cs-CZ",
+    "el": "el-GR", "hu": "hu-HU", "ro": "ro-RO", "bg": "bg-BG", "sk": "sk-SK",
+    "sl": "sl-SI", "hr": "hr-HR", "sr": "sr-RS", "lt": "lt-LT", "lv": "lv-LV",
+    "et": "et-EE", "iw": "he-IL",
+    // Traditional Chinese has no Chirp 3 locale of its own; mainland Mandarin is
+    // the closest voice Google offers, and saying nothing at all would be worse.
+    "zh-CN": "cmn-CN", "zh-TW": "cmn-CN"
+    // Still genuinely absent from Chirp 3, and correctly reported as such:
+    // fa, ms, fil, af, ca, eu, is.
+  };
+
+  // Our fifty target codes onto the Azure locale whose voices speak them. Only
+  // needed to narrow the "list every voice" response — synthesis itself needs no
+  // locale, because the multilingual family follows the text.
+  const AZURE_TTS_LOCALE = {
+    "zh-CN": "zh-CN", "zh-TW": "zh-TW", "en": "en-US", "ja": "ja-JP",
+    "ko": "ko-KR", "es": "es-ES", "fr": "fr-FR", "de": "de-DE", "ru": "ru-RU",
+    "pt": "pt-BR", "it": "it-IT", "ar": "ar-SA", "hi": "hi-IN", "id": "id-ID",
+    "th": "th-TH", "vi": "vi-VN", "nl": "nl-NL", "pl": "pl-PL", "tr": "tr-TR",
+    "uk": "uk-UA", "sv": "sv-SE", "da": "da-DK", "no": "nb-NO", "fi": "fi-FI",
+    "cs": "cs-CZ", "el": "el-GR", "hu": "hu-HU", "ro": "ro-RO", "bg": "bg-BG",
+    "sk": "sk-SK", "sl": "sl-SI", "hr": "hr-HR", "sr": "sr-RS", "lt": "lt-LT",
+    "lv": "lv-LV", "et": "et-EE", "iw": "he-IL", "fa": "fa-IR", "bn": "bn-IN",
+    "ta": "ta-IN", "te": "te-IN", "mr": "mr-IN", "ur": "ur-PK", "ms": "ms-MY",
+    "fil": "fil-PH", "sw": "sw-KE", "af": "af-ZA", "ca": "ca-ES", "eu": "eu-ES",
+    "is": "is-IS"
+  };
+
+  // Does this voice apply to the language being read RIGHT NOW? A short family
+  // name always does — that is what "follows the reader" means. A fetched name
+  // carries the locale it was fetched for, and outside that locale the engine
+  // falls back to the family default. A menu that keeps naming it there is the
+  // same lie as naming a voice from another provider.
+  function ttsVoiceAppliesTo(p, voice, targetLang) {
+    if (!p || !voice) return false;
+    const carried = /^([a-z]{2,3}-[A-Z]{2})-/.exec(voice);
+    if (!carried) return true;
+    const want = p.kind === "google-tts" ? GOOGLE_TTS_LANG[targetLang || ""]
+      : p.kind === "azure-speech" ? AZURE_TTS_LOCALE[targetLang || ""] : "";
+    return !want || carried[1] === want;
+  }
+
   const ERROR_KEYS = {
     noProvider: "byoErrNoProvider",
     noKey: "byoErrNoKey",
@@ -298,7 +519,11 @@
       origin: "https://api.openai.com",
       defaultModel: "gpt-4o-mini-tts",
       // The speech voices are a fixed, documented set — no list endpoint to ask.
-      voices: ["alloy", "ash", "coral", "echo", "fable", "onyx", "nova", "sage", "shimmer"],
+      // The documented set, all of them cross-language. ballad/verse/marin/cedar
+      // arrived after the first cut and need gpt-4o-mini-tts, which is the
+      // default model above.
+      voices: ["alloy", "ash", "ballad", "cedar", "coral", "echo", "fable",
+               "marin", "nova", "onyx", "sage", "shimmer", "verse"],
       defaultVoice: "alloy",
       keyHint: "sk-…",
       keyUrl: "https://platform.openai.com/api-keys",
@@ -313,12 +538,94 @@
       // Chirp 3 HD short names; the worker builds "<locale>-Chirp3-HD-<name>"
       // from the CURRENT target language (see GOOGLE_TTS_LANG in background.js),
       // so one picked voice follows the user across languages.
-      voices: ["Kore", "Puck", "Charon", "Fenrir", "Aoede", "Leda", "Orus", "Zephyr"],
+      // The full documented Chirp 3 set. Eight was a cut made when there was
+      // no way to hear one before choosing it; Preview makes the rest useful
+      // rather than a wall of names.
+      voices: [
+        "Achernar", "Achird", "Algenib", "Algieba", "Alnilam", "Aoede",
+        "Autonoe", "Callirrhoe", "Charon", "Despina", "Enceladus", "Erinome",
+        "Fenrir", "Gacrux", "Iapetus", "Kore", "Laomedeia", "Leda", "Orus",
+        "Pulcherrima", "Puck", "Rasalgethi", "Sadachbia", "Sadaltager",
+        "Schedar", "Sulafat", "Umbriel", "Vindemiatrix", "Zephyr",
+        "Zubenelgenubi"
+      ],
       defaultVoice: "Kore",
+      // Google can be asked for the voices of ONE language; the built-in list
+      // above stays as the offline answer and as the cross-language family.
+      listVoices: true,
       keyHint: "AIza…",
       keyUrl: "https://console.cloud.google.com/apis/credentials",
       pricingUrl: "https://cloud.google.com/text-to-speech/pricing",
       tint: "#4285F4", initials: "G"
+    },
+    {
+      // The only one that asks for nothing. Chrome already ships voices; this
+      // is the entry that lets someone hear the feature at all before deciding
+      // whether it is worth an API key — and the answer to "read-aloud needs a
+      // paid account" being the first thing a new user meets. Quality is
+      // whatever the operating system has, and it speaks locally, so nothing
+      // here can reach a network: no key, no host, no request.
+      id: "local-speech", name: "浏览器内置（免费）", nameKey: "provLocalSpeech",
+      short: "浏览器", kind: "local-speech",
+      baseUrl: "", origin: "",
+      keyless: true,
+      // The machine decides. The settings page fills this from
+      // speechSynthesis.getVoices() for the language being read.
+      voices: [], defaultVoice: "",
+      localVoices: true,
+      keyHint: "",
+      tint: "#5f6368", initials: "◎"
+    },
+    {
+      // The one provider whose key many users already have: 百炼 is a
+      // translation provider here too, and its host is already declared. Its
+      // reason to exist next to the others is what none of them offer —
+      // Chinese regional voices (Beijing, Shanghai, Sichuan, Cantonese…) —
+      // and Mandarin that Chinese listeners rate above the global engines.
+      id: "qwen-tts", name: "阿里云百炼 Qwen-TTS", nameKey: "provQwenTts",
+      short: "Qwen-TTS", kind: "qwen-tts",
+      baseUrl: "https://dashscope.aliyuncs.com",
+      origin: "https://dashscope.aliyuncs.com",
+      defaultModel: "qwen3-tts-flash",
+      // A spread rather than all forty-eight: standard Mandarin of both
+      // genders, the English- and Russian-flavoured ones, and four dialects,
+      // which are the reason to pick this provider at all.
+      voices: [
+        "Cherry", "Ethan", "Serena", "Chelsie", "Nofish",
+        "Jennifer", "Ryan", "Katerina",
+        "Dylan", "Jada", "Sunny", "Rocky"
+      ],
+      defaultVoice: "Cherry",
+      keyHint: "sk-…",
+      keyUrl: "https://bailian.console.aliyun.com/?apiKey=1",
+      pricingUrl: "https://help.aliyun.com/zh/model-studio/models",
+      tint: "#FF6A00", initials: "百"
+    },
+    {
+      // The one to reach for when the language is not Chinese: a voice library
+      // an order of magnitude larger than anyone else's, cross-language like
+      // OpenAI's, and its own cloned voices if the user has made any. Plain
+      // binary mp3, which is the cleanest shape any of these providers has.
+      id: "elevenlabs", name: "ElevenLabs", nameKey: "provElevenlabs", short: "ElevenLabs", kind: "elevenlabs",
+      baseUrl: "https://api.elevenlabs.io",
+      origin: "https://api.elevenlabs.io",
+      // Multilingual v2 is the default on purpose: v3 speaks more languages
+      // but is not the model a new key reaches first, and the store copy must
+      // describe what people actually get.
+      defaultModel: "eleven_multilingual_v2",
+      // Voice ids, not names — ElevenLabs identifies by id and the label comes
+      // from the list endpoint. These are the documented stock voices.
+      voices: [
+        "21m00Tcm4TlvDq8ikWAM", "AZnzlk1XvdvUeBnXmlld", "EXAVITQu4vr4xnSDxMaL",
+        "ErXwobaYiN019PkySvjV", "MF3mGyEYCl7XYWbV9V6O", "TxGEqnHWrfWFTfGW9XjX",
+        "VR6AewLTigWG4xSOukaG", "pNInz6obpgDQGcFmaJgB", "yoZ06aMxZJJ28mfd3POQ"
+      ],
+      defaultVoice: "21m00Tcm4TlvDq8ikWAM",
+      listVoices: true,
+      keyHint: "sk_…",
+      keyUrl: "https://elevenlabs.io/app/settings/api-keys",
+      pricingUrl: "https://elevenlabs.io/pricing",
+      tint: "#000000", initials: "11"
     },
     {
       id: "azure-speech", name: "Azure Speech", short: "Azure", kind: "azure-speech",
@@ -330,11 +637,23 @@
       defaultModel: "",
       // The Multilingual neural family switches language by itself — the only
       // kind that can follow a translation whose language the user may change.
+      // Multilingual voices only — one voice follows the user across all fifty
+      // target languages (the strategy decided 2026-08-20). The home locale is
+      // still audible in the accent, so the list covers the flavours our users
+      // actually read in rather than only American English: Chinese first,
+      // since "the Chinese voices are better elsewhere" is what prompted this.
       voices: [
+        "zh-CN-XiaoxiaoMultilingualNeural", "zh-CN-YunfanMultilingualNeural",
+        "ja-JP-MasaruMultilingualNeural", "ko-KR-HyunsuMultilingualNeural",
         "en-US-AvaMultilingualNeural", "en-US-AndrewMultilingualNeural",
-        "en-US-EmmaMultilingualNeural", "en-US-BrianMultilingualNeural"
+        "en-US-EmmaMultilingualNeural", "en-US-BrianMultilingualNeural",
+        "de-DE-SeraphinaMultilingualNeural", "fr-FR-VivienneMultilingualNeural",
+        "es-ES-ArabellaMultilingualNeural", "it-IT-IsabellaMultilingualNeural"
       ],
       defaultVoice: "en-US-AvaMultilingualNeural",
+      // Azure lists every voice it has, with no language filter — the worker
+      // narrows it to the language being read before anything reaches a menu.
+      listVoices: true,
       keyHint: "",
       keyUrl: "https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices",
       pricingUrl: "https://azure.microsoft.com/pricing/details/cognitive-services/speech-services/",
@@ -355,7 +674,15 @@
     errorKey,
     tts: {
       list: TTS_PROVIDERS,
-      get: (id) => TTS_BY_ID[id] || null
+      get: (id) => TTS_BY_ID[id] || null,
+      voiceLabel: ttsVoiceLabel,
+      localVoiceNames: ttsLocalVoiceNames,
+      voiceShapeOk: ttsVoiceShapeOk,
+      voiceOwned: ttsVoiceOwned,
+      voiceTier: ttsVoiceTier,
+      mergeFetched: ttsMergeFetched,
+      voiceAppliesTo: ttsVoiceAppliesTo,
+      localeFor: { google: GOOGLE_TTS_LANG, azure: AZURE_TTS_LOCALE }
     }
   };
 })(typeof self !== "undefined" ? self : this);

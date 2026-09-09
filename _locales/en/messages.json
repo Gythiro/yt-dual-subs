@@ -32,6 +32,15 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Your browser's own voices (free)"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -106,6 +115,9 @@
   },
   "secLineStyle": {
     "message": "Line style"
+  },
+  "secLineStyleHint": {
+    "message": "Font · Color · Size"
   },
   "orderLabel": {
     "message": "Order"
@@ -606,11 +618,20 @@
   "startPicByoNote": {
     "message": "understood whole, split back"
   },
-  "startNoSubsQ": {
-    "message": "No subtitles showing?"
+  "troubleTitle": {
+    "message": "Something wrong"
   },
-  "startNoSubs": {
-    "message": "Click the CC button at the bottom right of the player, or try another video — live streams and music videos often have none at all."
+  "troubleStep1": {
+    "message": "Check the switch in the popup first — with it off, the whole subtitle layer stays away."
+  },
+  "troubleStep2": {
+    "message": "Does this video have subtitles at all? Try the CC button in the player: without an original there is nothing to translate."
+  },
+  "troubleStep3": {
+    "message": "Try a popular video. If everything else works and only this one does not, it is usually this video's subtitle track."
+  },
+  "troubleDiagHint": {
+    "message": "Still stuck? Paste the diagnostic info into your email or issue — it carries the version, the engine state and what the current tab is doing, which saves a round trip or two."
   },
   "langManage": {
     "message": "Manage languages…"
@@ -626,6 +647,41 @@
   },
   "ttsVoiceLabel": {
     "message": "Voice"
+  },
+  "ttsPreview": {
+    "message": "Preview"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Playing…"
+  },
+  "ttsPreviewFail": {
+    "message": "Could not play — check the key and try Save and test"
+  },
+  "ttsFetchVoices": {
+    "message": "Fetch more voices for this language"
+  },
+  "ttsFetching": {
+    "message": "Fetching…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Now showing this language's $N$ voices. They work for this target language only.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Back to voices that follow your language"
+  },
+  "ttsVoicesNone": {
+    "message": "This provider has no extra voices for this language — the built-in ones still work."
+  },
+  "ttsVoiceFemale": {
+    "message": "Female"
+  },
+  "ttsVoiceMale": {
+    "message": "Male"
   },
   "ttsTestOk": {
     "message": "Connected: test audio $KB$ KB ($VOICE$)",
@@ -713,6 +769,9 @@
   },
   "ttsDuckLabel": {
     "message": "Original audio while speaking"
+  },
+  "ttsDuckShort": {
+    "message": "Original audio"
   },
   "ttsStatusSpeaking": {
     "message": "Speaking"

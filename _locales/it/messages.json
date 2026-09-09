@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "capita intera, risuddivisa"
   },
-  "startNoSubsQ": {
-    "message": "Nessun sottotitolo visibile?"
-  },
-  "startNoSubs": {
-    "message": "Fai clic sul pulsante CC in basso a destra del player, oppure prova un altro video — le dirette e i video musicali spesso non ne hanno affatto."
-  },
   "langManage": {
     "message": "Gestisci le lingue…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Riproduzione"
+  },
+  "ttsDuckShort": {
+    "message": "Audio originale"
+  },
+  "secLineStyleHint": {
+    "message": "Font · Colore · Dimensione"
+  },
+  "troubleTitle": {
+    "message": "Qualcosa non va"
+  },
+  "troubleStep1": {
+    "message": "Controlla prima l'interruttore nel popup — se è spento, l'intero livello dei sottotitoli resta nascosto."
+  },
+  "troubleStep2": {
+    "message": "Questo video ha proprio dei sottotitoli? Prova il pulsante CC nel player: senza un originale non c'è niente da tradurre."
+  },
+  "troubleStep3": {
+    "message": "Prova un video popolare. Se tutto il resto funziona e solo questo no, di solito è la traccia sottotitoli di questo video."
+  },
+  "troubleDiagHint": {
+    "message": "Ancora bloccato? Incolla le info diagnostiche nell'email o nella segnalazione — riportano la versione, lo stato del motore e cosa sta facendo la scheda attuale, e ti risparmiano uno o due giri di messaggi."
+  },
+  "ttsPreview": {
+    "message": "Anteprima"
+  },
+  "ttsPreviewPlaying": {
+    "message": "In riproduzione…"
+  },
+  "ttsPreviewFail": {
+    "message": "Impossibile riprodurre — verifica la chiave e prova Salva e testa"
+  },
+  "ttsFetchVoices": {
+    "message": "Ottieni altre voci per questa lingua"
+  },
+  "ttsFetching": {
+    "message": "Caricamento…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Ora vedi le $N$ voci di questa lingua. Funzionano solo con questa lingua di destinazione.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Torna alle voci che seguono la tua lingua"
+  },
+  "ttsVoicesNone": {
+    "message": "Questo provider non ha voci extra per questa lingua — quelle integrate funzionano comunque."
+  },
+  "ttsVoiceFemale": {
+    "message": "femminile"
+  },
+  "ttsVoiceMale": {
+    "message": "maschile"
+  },
+  "provLocalSpeech": {
+    "message": "Voci del tuo browser (gratis)"
   }
 }

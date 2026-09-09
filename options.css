@@ -72,6 +72,11 @@ a { text-underline-offset: 3px; }
 }
 /* a group label mid-section: more air above than below (设计规范 §2) */
 .olabel-gap { margin-top: 14px; }
+/* CJK has no capitals — uppercase only mangles embedded Latin ("Key"→"KEY")
+   and 1.7px tracking scatters ideographs. applyI18n stamps <html lang>. */
+[lang^="zh"] .olabel, [lang^="ja"] .olabel, [lang^="ko"] .olabel {
+  text-transform: none; letter-spacing: .8px;
+}
 
 /* ------------------------------ section nav ------------------------------ */
 .oside { display: flex; flex-direction: column; gap: 18px; }
@@ -165,6 +170,9 @@ a { text-underline-offset: 3px; }
   min-height: 2.8em; display: flex; align-items: flex-end;   /* two-line worst case: cards stay level */
 }
 .ocmp-h.on { color: var(--accent); font-weight: 600; }
+[lang^="zh"] .ocmp-h, [lang^="ja"] .ocmp-h, [lang^="ko"] .ocmp-h {
+  text-transform: none;
+}
 .ocmp-card {
   background: #000; border: 1px solid var(--line); border-radius: 8px;
   padding: 12px 12px 10px; flex: 1;
@@ -195,6 +203,8 @@ a { text-underline-offset: 3px; }
 .olangs { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
 .olang-col .olabel { margin-bottom: 4px; }
 .olang-col .ohint { margin: 0 0 12px; max-width: 42ch; }
+/* a rare, destructive-ish action must not stretch into a full-width primary */
+#langReset { align-self: flex-start; }
 .olang-list {
   list-style: none; margin: 0; padding: 5px;
   background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
@@ -261,7 +271,10 @@ a { text-underline-offset: 3px; }
   color: #5fd38a;
   white-space: nowrap;
 }
-.pitem.on .pitem-inuse { background: rgba(255, 255, 255, 0.18); color: inherit; }
+/* On the selected row the chip cannot inherit the accent: accent-on-a-white-
+   wash composites to 2.99:1 (layout-audit caught what six screenshot rounds
+   did not). Full-strength text on the same wash reads at 8:1. */
+.pitem.on .pitem-inuse { background: rgba(255, 255, 255, 0.18); color: var(--txt); }
 
 /* provider icon box: real mark or tinted monogram */
 .pico {
@@ -299,6 +312,22 @@ a { text-underline-offset: 3px; }
 .olinks a:hover { text-decoration: underline; }
 .olinks a[hidden] { display: none; }
 .olinks a::after { content: " ↗"; opacity: .6; }
+/* The About view holds two cards; the view itself is just the column. */
+.oplain { display: flex; flex-direction: column; gap: 16px; }
+.oplain[hidden] { display: none; }
+/* The "something is wrong" card: a real button, not a link in disguise. */
+.otrouble-list {
+  margin: 0; padding-left: 1.35em;
+  display: flex; flex-direction: column; gap: 7px;
+  font-size: 13px; line-height: 1.55; color: var(--txt);
+}
+.otrouble-list li::marker { color: var(--muted); }
+.otrouble .orow { gap: 14px; }
+.otrouble .obtn { flex: none; }
+.olink-out { color: var(--accent); text-decoration: none; font-size: 12.5px; }
+.olink-out:hover { text-decoration: underline; }
+.olink-out::after { content: " ↗"; opacity: .6; }
+#aboutDiag.ok { color: #5fd38a; border-color: #5fd38a; }
 
 /* "no key yet" line — the one thing a first-time visitor must notice */
 .oneed {
@@ -326,6 +355,10 @@ input[hidden] { display: none; }
 
 .orow { display: flex; gap: 9px; align-items: center; }
 .orow select { flex: 1; }
+/* model row: select above, button below — side by side, the German label
+   ("Modelle mit meinem Schlüssel auflisten") blows the row apart. */
+#modelRow .orow { flex-direction: column; align-items: stretch; }
+#modelRow .obtn { align-self: flex-start; }
 
 /* The region label sits beside a flex:1 input; without this it wraps to two
    lines the moment the input claims its space. And the author display:flex on
@@ -385,11 +418,15 @@ input[hidden] { display: none; }
 .otts-use.locked .ochk, .otts-use.locked input { cursor: default; }
 
 .ochk { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); cursor: pointer; }
+/* The read-aloud master switch is a primary action, not an aside like "show
+   the key" — full text colour, same as the popup's switch row. */
+.ochk-primary { color: var(--txt); }
 /* Drawn by hand rather than left to the platform: an unchecked native checkbox
-   stamps a white square onto the dark card even with color-scheme: dark. */
+   stamps a white square onto the dark card even with color-scheme: dark.
+   16px to match the popup's .chk — 14px read as an afterthought (review R6). */
 .ochk input {
   appearance: none; -webkit-appearance: none; margin: 0;
-  width: 14px; height: 14px; cursor: pointer;
+  width: 16px; height: 16px; cursor: pointer;
   /* Border one step brighter than --line: on the card the unchecked box was
      near-invisible (audit P2), and a control you cannot find is not a control. */
   background: var(--surface-2); border: 1px solid #4a4e53; border-radius: 4px;
@@ -398,7 +435,7 @@ input[hidden] { display: none; }
 .ochk:hover input:not(:checked) { border-color: var(--muted); }
 .ochk input:checked { background: var(--accent); border-color: var(--accent); }
 .ochk input:checked::after {
-  content: "✓"; font-size: 10px; font-weight: 700; line-height: 1; color: #06121f;
+  content: "✓"; font-size: 11px; font-weight: 700; line-height: 1; color: #06121f;
 }
 .olink {
   background: none; border: 0; padding: 0; cursor: pointer;
@@ -427,5 +464,14 @@ input[hidden] { display: none; }
   font-size: 12px; color: var(--muted);
 }
 .oft p { margin: 0; max-width: 78ch; }
+/* The privacy and trademark paragraphs only where they are true of the pane:
+   keys are entered on setup (read-aloud repeats it inside its own card), and
+   provider marks appear on setup and read-aloud. showSection stamps data-sec. */
+.oft .oft-priv, .oft .oft-tm { display: none; }
+.oft[data-sec="setup"] .oft-priv { display: block; }
+.oft[data-sec="setup"] .oft-tm,
+.oft[data-sec="readaloud"] .oft-tm { display: block; }
+/* About answers "how do I reach you" inside its trouble card. */
+.oft[data-sec="about"] .oft-fb { display: none; }
 .odim { color: #82868c; font-size: 11.5px; text-wrap: pretty; }   /* tinted, 5.2:1 on bg (spec §2) */
 .oft a { color: var(--accent); }

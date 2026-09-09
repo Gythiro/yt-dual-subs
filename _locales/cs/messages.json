@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "pochopena celá, zase rozdělena"
   },
-  "startNoSubsQ": {
-    "message": "Titulky se nezobrazují?"
-  },
-  "startNoSubs": {
-    "message": "Klikněte na tlačítko CC vpravo dole v přehrávači, nebo zkuste jiné video — živé přenosy a hudební videa často žádné nemají."
-  },
   "langManage": {
     "message": "Spravovat jazyky…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Přehrávání"
+  },
+  "ttsDuckShort": {
+    "message": "Původní zvuk"
+  },
+  "secLineStyleHint": {
+    "message": "Písmo · Barva · Velikost"
+  },
+  "troubleTitle": {
+    "message": "Něco je špatně"
+  },
+  "troubleStep1": {
+    "message": "Nejdřív zkontrolujte přepínač v popupu — když je vypnutý, celá vrstva titulků se nezobrazí."
+  },
+  "troubleStep2": {
+    "message": "Má tohle video vůbec titulky? Zkuste tlačítko CC v přehrávači: bez originálu není co překládat."
+  },
+  "troubleStep3": {
+    "message": "Zkuste populární video. Pokud všechno ostatní funguje a jen tohle ne, jde obvykle o stopu titulků tohoto videa."
+  },
+  "troubleDiagHint": {
+    "message": "Pořád to nejde? Vložte diagnostické informace do e-mailu nebo hlášení — nesou verzi, stav enginu a co právě dělá aktuální karta, což ušetří jedno nebo dvě kolečka."
+  },
+  "ttsPreview": {
+    "message": "Náhled"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Přehrává se…"
+  },
+  "ttsPreviewFail": {
+    "message": "Nelze přehrát — zkontrolujte klíč a zkuste Uložit a otestovat"
+  },
+  "ttsFetchVoices": {
+    "message": "Načíst další hlasy pro tento jazyk"
+  },
+  "ttsFetching": {
+    "message": "Načítání…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Nyní vidíš $N$ hlasů pro tento jazyk. Fungují jen s tímto cílovým jazykem.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Zpět k hlasům, které sledují tvůj jazyk"
+  },
+  "ttsVoicesNone": {
+    "message": "Tento poskytovatel nemá další hlasy pro tento jazyk — vestavěné stále fungují."
+  },
+  "ttsVoiceFemale": {
+    "message": "ženský"
+  },
+  "ttsVoiceMale": {
+    "message": "mužský"
+  },
+  "provLocalSpeech": {
+    "message": "Vlastní hlasy prohlížeče (zdarma)"
   }
 }

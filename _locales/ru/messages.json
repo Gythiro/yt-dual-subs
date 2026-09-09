@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "понято целиком, разделено"
   },
-  "startNoSubsQ": {
-    "message": "Субтитров нет?"
-  },
-  "startNoSubs": {
-    "message": "Нажмите кнопку CC в правом нижнем углу плеера или откройте другое видео — у прямых трансляций и клипов субтитров часто нет."
-  },
   "langManage": {
     "message": "Управление языками…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Воспроизведение"
+  },
+  "ttsDuckShort": {
+    "message": "Оригинальное аудио"
+  },
+  "secLineStyleHint": {
+    "message": "Шрифт · Цвет · Размер"
+  },
+  "troubleTitle": {
+    "message": "Что-то не так"
+  },
+  "troubleStep1": {
+    "message": "Сначала проверьте переключатель в попапе — если он выключен, слой субтитров не появится."
+  },
+  "troubleStep2": {
+    "message": "Есть ли у этого видео субтитры? Нажмите кнопку CC в плеере: без оригинала переводить нечего."
+  },
+  "troubleStep3": {
+    "message": "Попробуйте популярное видео. Если всё остальное работает, а это нет — обычно дело в дорожке субтитров самого видео."
+  },
+  "troubleDiagHint": {
+    "message": "Всё ещё не получается? Вставьте диагностику в письмо или issue — там версия, состояние движка и что делает текущая вкладка, это сэкономит один-два круга переписки."
+  },
+  "ttsPreview": {
+    "message": "Предпросмотр"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Воспроизведение…"
+  },
+  "ttsPreviewFail": {
+    "message": "Не удалось воспроизвести — проверьте ключ и нажмите «Сохранить и проверить»"
+  },
+  "ttsFetchVoices": {
+    "message": "Загрузить ещё голоса для этого языка"
+  },
+  "ttsFetching": {
+    "message": "Загрузка…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Показаны $N$ голосов для этого языка. Они работают только с этим языком перевода.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Вернуться к голосам, которые следуют за языком"
+  },
+  "ttsVoicesNone": {
+    "message": "У этого провайдера нет дополнительных голосов для этого языка — встроенные по-прежнему работают."
+  },
+  "ttsVoiceFemale": {
+    "message": "женский"
+  },
+  "ttsVoiceMale": {
+    "message": "мужской"
+  },
+  "provLocalSpeech": {
+    "message": "Голоса браузера (бесплатно)"
   }
 }

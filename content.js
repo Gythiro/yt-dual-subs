@@ -324,12 +324,26 @@
         "ttsProvider" in changes || "ttsVoice" in changes) {
       ttsStop();
     }
+    // The complaint belonged to the old configuration — keeping it would make a
+    // fresh provider look broken before it has been asked for a single line.
+    // Region is in this list and not in the one above: it changes nothing that
+    // is queued, but it is exactly what turns a failing Azure into a working one.
+    if ("ttsProvider" in changes || "ttsVoice" in changes || "ttsRegion" in changes) {
+      ttsErr = "";
+    }
     // Loudness is a live control: the options slider should be audible on the
     // line that is speaking, not on the next one. Duck depth stays per-line —
     // it is sent with each duck message, and restore compares what was SET.
     if ("ttsVolume" in changes && ttsAudio) {
       try { ttsAudio.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100)); }
       catch (_e) { /* ignore */ }
+    }
+    // Duck depth is live too, while a line is actually ducking. The two sliders
+    // now sit next to each other in the popup: one of them answering on the
+    // next line and the other at once reads as the slower one being broken.
+    // Off-air it needs no message — the next duck carries the new depth.
+    if ("ttsDuckPct" in changes && ttsAudio && !ttsAudio.paused && !ttsAudio.ended) {
+      ttsDuck(true, ttsFit);
     }
     // Same-language/dedupe paints depend on WHICH line is visible (the single
     // line migrates to whichever is shown) — re-render the active cue, and
@@ -1011,6 +1025,16 @@
                                 // (synthesis latency is what eats the cue
                                 // window and gets lines cut — measured live)
   let ttsSpoken = 0;            // lines spoken on THIS video (popup status)
+  // Why the last line stayed silent, as a provider error code. Silence used to
+  // be reported only as a rising skip count, on the assumption that anyone who
+  // changed provider had just seen the options page test it — no longer true
+  // now that the popup switches provider by picking a voice. A stored key is
+  // not a working one: the key is saved before the test runs, so "saved" also
+  // covers "saved, then the test said no region".
+  let ttsErr = "";
+  // This line's fit (the absolute video rate at which it would just fit), kept
+  // only while it is on air so a live duck-depth change can carry it along.
+  let ttsFit;
   let ttsSkipped = 0;           // lines skipped on this video — a line whose
                                 // translation wasn't ready, or whose synthesis
                                 // failed; nav resets both
@@ -1026,6 +1050,11 @@
     ttsSpokenIdx = -1;
     if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } ttsAudio = null; }
     if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } ttsBlobUrl = ""; }
+    if (localUtter) {
+      localUtter = null;
+      try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (_e) { /* ignore */ }
+    }
+    ttsFit = undefined;             // it described the line that just stopped
     ttsDropNext();
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: false, nav: !!navigated }, "*"); }
     catch (_e) { /* ignore */ }
@@ -1137,7 +1166,11 @@
         if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
         ttsDuck(false);
       });
-      ttsDuck(true, ttsFitFor(audio, cue, cueList && cueList[idx + 1]));
+      // Kept so a mid-line duck-depth change can be re-sent WITH it: the fit is
+      // what holds this line's video slow-down, and a duck message without it
+      // reads as "this line fits" and restores the rate (inject shareRate).
+      ttsFit = ttsFitFor(audio, cue, cueList && cueList[idx + 1]);
+      ttsDuck(true, ttsFit);
       ttsSpoken++;
       audio.play().catch(() => { if (myEpoch === ttsEpoch) ttsDuck(false); });
     };
@@ -1158,6 +1191,64 @@
       if (myEpoch !== ttsEpoch) return;
       arm();
     }, { once: true });
+  }
+
+  // The browser's own voices, spoken here because a service worker has no
+  // speechSynthesis. No Audio element, so three things this path cannot do and
+  // does not pretend to: there is no duration until it has finished, so the
+  // video is never slowed to fit a line; there is no blob to cache; and the
+  // read-aloud volume rides the utterance instead of an element. Ducking still
+  // works — that is a message to inject.js and has nothing to do with how the
+  // sound is made.
+  let localUtter = null;
+  // Chrome loads the machine's voice table asynchronously: the first call
+  // returns an empty array and the list announces itself later on
+  // "voiceschanged". Asking once at load starts that fetch long before the
+  // first cue; the cached copy is what the lookup below reads. Without it a
+  // cue arriving during the gap finds nothing, and the line is spoken by the
+  // default voice while the menus name the one that was picked.
+  let localVoices = [];
+  (function primeLocalVoices() {
+    try {
+      const synth = typeof window !== "undefined" && window.speechSynthesis;
+      if (!synth) return;
+      const take = () => {
+        if (orphaned) return;         // an orphaned script keeps no state warm
+        try { localVoices = synth.getVoices() || []; } catch (_e) { /* keep the last good list */ }
+      };
+      take();
+      synth.addEventListener("voiceschanged", take);
+    } catch (_e) { /* no local engine here: the API path is unaffected */ }
+  })();
+  function ttsSpeakLocal(text, lang, voiceName, myEpoch) {
+    const synth = window.speechSynthesis;
+    if (!synth) { ttsSkipped++; ttsErr = "failed"; return; }
+    try { synth.cancel(); } catch (_e) { /* ignore */ }
+    const u = new SpeechSynthesisUtterance(text);
+    if (lang) u.lang = lang;
+    u.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
+    if (voiceName) {
+      // The live call is the authority when it has an answer; the primed list
+      // covers the window where it does not.
+      const all = (synth.getVoices() || []);
+      const pool = all.length ? all : localVoices;
+      const v = pool.find((x) => x && x.name === voiceName);
+      if (v) u.voice = v;
+    }
+    u.addEventListener("end", () => {
+      if (myEpoch !== ttsEpoch || localUtter !== u) return;
+      localUtter = null;
+      ttsDuck(false);
+    });
+    u.addEventListener("error", () => {
+      if (myEpoch !== ttsEpoch || localUtter !== u) return;
+      localUtter = null;
+      ttsDuck(false);
+    });
+    localUtter = u;
+    ttsDuck(true);                 // no fit: this path cannot size the line
+    ttsSpoken++;
+    try { synth.speak(u); } catch (_e) { localUtter = null; ttsDuck(false); }
   }
 
   function ttsOnCue(idx, cue) {
@@ -1185,7 +1276,17 @@
       { type: "ttsSpeak", text, targetLang: settings.targetLang }, (resp) => {
       if (chrome.runtime.lastError) return;
       if (myEpoch !== ttsEpoch || idx !== activeCueIdx) return;   // stale by now
-      if (!resp || !resp.ok || !resp.b64) { ttsSkipped++; return; } // quiet skip; options page diagnoses
+      if (resp && resp.ok && resp.local) {
+        ttsSpeakLocal(text, resp.lang, resp.voice, myEpoch);
+        return;
+      }
+      if (!resp || !resp.ok || !resp.b64) {
+        // Keep going — one bad line must not stop the run — but remember WHY,
+        // so the popup can say it instead of leaving the user with silence.
+        ttsSkipped++;
+        ttsErr = (resp && resp.code) || "failed";
+        return;
+      }
       try {
         const d = ttsDecode(resp.b64, resp.mime);
         ttsPlay(idx, cue, d.audio, d.url, myEpoch);
@@ -1760,9 +1861,13 @@
         // Read-aloud, for the popup's status line: is a line sounding right
         // now, and how this video went so far (skips answer "why the gaps").
         tts: settings.ttsEnabled ? {
-          speaking: !!(ttsAudio && !ttsAudio.paused && !ttsAudio.ended),
+          speaking: !!(ttsAudio && !ttsAudio.paused && !ttsAudio.ended) || !!localUtter,
           spoken: ttsSpoken,
-          skipped: ttsSkipped
+          skipped: ttsSkipped,
+          // Only while nothing has worked yet: one bad line among many is a
+          // hiccup and the counts already say so; nothing spoken at all is a
+          // configuration that cannot work, and that needs words.
+          err: ttsSpoken ? "" : ttsErr
         } : null,
         // For the popup's diagnostic bundle. The popup cannot read tab.url
         // (no tabs/host permission — a deliberate non-permission, see the SRT
@@ -2326,6 +2431,7 @@
     ttsStop(true);              // never carry a speaking line across videos
     ttsSpoken = 0;              // the popup's counts describe THIS video
     ttsSkipped = 0;
+    ttsErr = "";                // and so does the reason they stayed silent
     rearmedForVideo = false;    // and one CC re-arm allowance
     armBlankWatch();            // re-arm the still-blank watchdog for this video
     transCache.clear();

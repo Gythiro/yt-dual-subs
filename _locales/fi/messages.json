@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "ymmärretty kokonaan, jaettu takaisin"
   },
-  "startNoSubsQ": {
-    "message": "Tekstitykset eivät näy?"
-  },
-  "startNoSubs": {
-    "message": "Napsauta CC-painiketta soittimen oikeassa alakulmassa tai kokeile toista videota — livestriimeissä ja musiikkivideoissa ei usein ole tekstitystä lainkaan."
-  },
   "langManage": {
     "message": "Hallitse kieliä…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Toisto"
+  },
+  "ttsDuckShort": {
+    "message": "Alkuperäinen ääni"
+  },
+  "secLineStyleHint": {
+    "message": "Fontti · Väri · Koko"
+  },
+  "troubleTitle": {
+    "message": "Jotain vialla"
+  },
+  "troubleStep1": {
+    "message": "Tarkista ensin ponnahdusikkunan kytkin — pois päältä koko tekstityskerros pysyy poissa."
+  },
+  "troubleStep2": {
+    "message": "Onko tällä videolla tekstityksiä lainkaan? Kokeile soittimen CC-painiketta: ilman alkuperäistä ei ole mitään käännettävää."
+  },
+  "troubleStep3": {
+    "message": "Kokeile suosittua videota. Jos kaikki muu toimii ja vain tämä ei, vika on yleensä tämän videon tekstitysraidassa."
+  },
+  "troubleDiagHint": {
+    "message": "Yhä jumissa? Liitä diagnostiikkatiedot sähköpostiisi tai issueen — niissä on versio, moottorin tila ja mitä nykyinen välilehti tekee, mikä säästää yhden tai kaksi viestikierrosta."
+  },
+  "ttsPreview": {
+    "message": "Esikatselu"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Toistetaan…"
+  },
+  "ttsPreviewFail": {
+    "message": "Toisto epäonnistui — tarkista avain ja kokeile Tallenna ja testaa"
+  },
+  "ttsFetchVoices": {
+    "message": "Hae lisää ääniä tälle kielelle"
+  },
+  "ttsFetching": {
+    "message": "Haetaan…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Näkyvissä on tämän kielen $N$ ääntä. Ne toimivat vain tällä kohdekielellä.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Takaisin ääniin, jotka seuraavat kieltäsi"
+  },
+  "ttsVoicesNone": {
+    "message": "Tällä palveluntarjoajalla ei ole lisäääniä tälle kielelle — sisäänrakennetut äänet toimivat silti."
+  },
+  "ttsVoiceFemale": {
+    "message": "naisääni"
+  },
+  "ttsVoiceMale": {
+    "message": "miesääni"
+  },
+  "provLocalSpeech": {
+    "message": "Selaimesi omat äänet (ilmainen)"
   }
 }

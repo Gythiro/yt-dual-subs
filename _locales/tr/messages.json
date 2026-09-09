@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "bütün olarak anlaşıldı, yeniden bölündü"
   },
-  "startNoSubsQ": {
-    "message": "Altyazı görünmüyor mu?"
-  },
-  "startNoSubs": {
-    "message": "Oynatıcının sağ altındaki CC düğmesine tıkla veya başka bir video dene — canlı yayınlarda ve müzik videolarında çoğu zaman hiç yoktur."
-  },
   "langManage": {
     "message": "Dilleri yönet…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Oynatma"
+  },
+  "ttsDuckShort": {
+    "message": "Orijinal ses"
+  },
+  "secLineStyleHint": {
+    "message": "Yazı tipi · Renk · Boyut"
+  },
+  "troubleTitle": {
+    "message": "Bir sorun var"
+  },
+  "troubleStep1": {
+    "message": "Önce açılır penceredeki anahtarı kontrol edin — kapalıysa altyazı katmanı hiç görünmez."
+  },
+  "troubleStep2": {
+    "message": "Bu videoda hiç altyazı var mı? Oynatıcıdaki CC düğmesini deneyin: orijinal yoksa çevrilecek bir şey de yoktur."
+  },
+  "troubleStep3": {
+    "message": "Popüler bir video deneyin. Başka her şey çalışıyor ve yalnızca bu video çalışmıyorsa, sorun genellikle bu videonun altyazı izindedir."
+  },
+  "troubleDiagHint": {
+    "message": "Hâlâ takıldınız mı? Tanılama bilgilerini e-postanıza veya sorun bildiriminize yapıştırın — sürümü, motor durumunu ve geçerli sekmenin ne yaptığını içerir; bu da bir iki yazışma turunu kurtarır."
+  },
+  "ttsPreview": {
+    "message": "Önizle"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Oynatılıyor…"
+  },
+  "ttsPreviewFail": {
+    "message": "Oynatılamadı — anahtarı kontrol edip Kaydet ve dene'yi deneyin"
+  },
+  "ttsFetchVoices": {
+    "message": "Bu dil için daha fazla ses getir"
+  },
+  "ttsFetching": {
+    "message": "Getiriliyor…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Artık bu dile ait $N$ ses gösteriliyor. Yalnızca bu hedef dilde çalışır.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Dili takip eden seslere dön"
+  },
+  "ttsVoicesNone": {
+    "message": "Bu sağlayıcının bu dil için ek sesi yok — yerleşik sesler hâlâ çalışır."
+  },
+  "ttsVoiceFemale": {
+    "message": "kadın"
+  },
+  "ttsVoiceMale": {
+    "message": "erkek"
+  },
+  "provLocalSpeech": {
+    "message": "Tarayıcınızın kendi sesleri (ücretsiz)"
   }
 }

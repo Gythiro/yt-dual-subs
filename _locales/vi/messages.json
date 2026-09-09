@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "hiểu cả câu, tách lại"
   },
-  "startNoSubsQ": {
-    "message": "Không thấy phụ đề?"
-  },
-  "startNoSubs": {
-    "message": "Nhấp nút CC ở góc dưới phải trình phát, hoặc thử video khác — livestream và video nhạc thường không có phụ đề."
-  },
   "langManage": {
     "message": "Quản lý ngôn ngữ…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Phát"
+  },
+  "ttsDuckShort": {
+    "message": "Âm thanh gốc"
+  },
+  "secLineStyleHint": {
+    "message": "Phông chữ · Màu · Cỡ"
+  },
+  "troubleTitle": {
+    "message": "Có sự cố"
+  },
+  "troubleStep1": {
+    "message": "Hãy kiểm tra công tắc trên popup trước — khi tắt, toàn bộ lớp phụ đề sẽ không hiện."
+  },
+  "troubleStep2": {
+    "message": "Video này có phụ đề không? Thử nút CC trên trình phát: không có bản gốc thì không có gì để dịch."
+  },
+  "troubleStep3": {
+    "message": "Thử một video phổ biến. Nếu mọi thứ khác đều ổn mà chỉ video này không, thường là do luồng phụ đề của video."
+  },
+  "troubleDiagHint": {
+    "message": "Vẫn chưa được? Dán thông tin chẩn đoán vào email hoặc issue — gồm phiên bản, trạng thái engine và tab hiện tại đang làm gì, giúp tiết kiệm vài vòng hỏi đáp."
+  },
+  "ttsPreview": {
+    "message": "Nghe thử"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Đang phát…"
+  },
+  "ttsPreviewFail": {
+    "message": "Không phát được — kiểm tra khóa rồi thử Lưu và kiểm tra"
+  },
+  "ttsFetchVoices": {
+    "message": "Tải thêm giọng cho ngôn ngữ này"
+  },
+  "ttsFetching": {
+    "message": "Đang tải…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Đang hiển thị $N$ giọng dành riêng cho ngôn ngữ này. Chúng chỉ dùng được cho ngôn ngữ đích hiện tại.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Quay lại giọng đi theo ngôn ngữ của bạn"
+  },
+  "ttsVoicesNone": {
+    "message": "Nhà cung cấp này không có giọng bổ sung cho ngôn ngữ này — giọng có sẵn vẫn dùng được."
+  },
+  "ttsVoiceFemale": {
+    "message": "Nữ"
+  },
+  "ttsVoiceMale": {
+    "message": "Nam"
+  },
+  "provLocalSpeech": {
+    "message": "Giọng nói có sẵn trên trình duyệt (miễn phí)"
   }
 }

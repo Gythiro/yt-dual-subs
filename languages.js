@@ -89,6 +89,66 @@
 
   const byCode = new Map(LANGS.map((l) => [l.code, l]));
 
+  // One line per target language for the read-aloud preview: pressing Preview
+  // should let you hear the voice speaking the language you actually read in,
+  // not English. Written to be natural in each language rather than translated
+  // word for word from one original, and long enough (8-14 words) to carry
+  // some prosody. Not i18n strings — these follow the TRANSLATION language,
+  // not the interface one, so they live here beside the language table.
+  const TTS_SAMPLE = {
+    "zh-CN": "这就是朗读出来的声音，你可以先听一听。",
+    "zh-TW": "這就是朗讀出來的聲音，你可以先聽看看。",
+    "en": "This is the reading voice, so you can hear how it sounds.",
+    "ja": "読み上げるとこんな声になります、少し聞いてみてください。",
+    "ko": "이게 읽어 주는 목소리예요, 한번 들어 보세요.",
+    "es": "Así suena la voz que leerá la traducción, escúchala un momento.",
+    "fr": "C'est la voix qui lira la traduction, écoutez-la un instant.",
+    "de": "So klingt die Stimme, die den Text vorliest, hör selbst mal hin.",
+    "ru": "Так звучит этот голос, которым будет читаться перевод, послушайте.",
+    "pt": "Assim soa a voz que vai ler a tradução, ouça um pouco.",
+    "it": "Questa è la voce che leggerà la traduzione, ascoltala un attimo.",
+    "ar": "هذا هو الصوت الذي سيقرأ الترجمة، استمع إليه قليلا.",
+    "hi": "यह अनुवाद पढ़कर सुनाने वाली आवाज़ है, एक बार सुन लीजिए।",
+    "id": "Ini suara yang akan membacakan terjemahan, silakan didengar sebentar.",
+    "th": "นี่คือเสียงที่จะอ่านออกมา ลองฟังดูสักครู่",
+    "vi": "Đây là giọng đọc phần dịch, bạn hãy nghe thử một chút.",
+    "nl": "Dit is de voorleesstem, zodat je kunt horen hoe die klinkt.",
+    "pl": "Tak brzmi głos, który przeczyta tłumaczenie, posłuchaj chwilę.",
+    "tr": "İşte çeviriyi okuyan ses, nasıl olduğunu biraz dinleyin.",
+    "uk": "Ось так звучить голос, яким читатиметься переклад, послухайте.",
+    "sv": "Så här låter rösten som läser upp texten, lyssna en stund.",
+    "da": "Sådan lyder stemmen, der læser teksten op, lyt selv efter.",
+    "no": "Slik høres stemmen ut når den leser teksten, så du kan lytte.",
+    "fi": "Tämä on ääni, jolla käännös luetaan, kuuntele miltä se kuulostaa.",
+    "cs": "Toto je hlas, kterým se bude číst překlad, poslechněte si ho.",
+    "el": "Αυτή είναι η φωνή που θα διαβάζει τη μετάφραση, ακούστε την.",
+    "hu": "Így hangzik a felolvasó hang, hallgasd meg egy kicsit.",
+    "ro": "Așa sună vocea care va citi traducerea, ascultați-o puțin.",
+    "bg": "Това е гласът, с който ще се чете преводът, послушайте.",
+    "sk": "Toto je hlas, ktorým sa bude čítať preklad, vypočujte si ho.",
+    "sl": "To je glas, s katerim se bo bral prevod, poslušajte ga.",
+    "hr": "Ovo je glas kojim će se čitati prijevod, poslušajte ga.",
+    "sr": "Ово је глас којим ће се читати превод, послушајте га.",
+    "lt": "Tai balsas, kuriuo bus skaitomas vertimas, paklausykite jo.",
+    "lv": "Šī ir balss, ar kuru lasīs tulkojumu, paklausieties to.",
+    "et": "See on ettelugemise hääl, et saaksid kuulata, kuidas see kõlab.",
+    "iw": "ככה נשמע הקול שיקריא את התרגום, האזינו רגע.",
+    "fa": "این همان صدایی است که ترجمه را می‌خواند، گوش کنید.",
+    "bn": "এটাই সেই কণ্ঠস্বর যা অনুবাদ পড়ে শোনাবে, একবার শুনে দেখুন।",
+    "ta": "இதுதான் மொழிபெயர்ப்பை உரக்கப் படிக்கும் குரல், ஒருமுறை கேட்டுப் பாருங்கள்.",
+    "te": "ఇదే అనువాదాన్ని బిగ్గరగా చదివే స్వరం, ఒకసారి విని చూడండి.",
+    "mr": "हा भाषांतर वाचून सांगणारा आवाज आहे, एकदा ऐकून पाहा।",
+    "ur": "یہ ترجمہ پڑھ کر سنانے والی آواز ہے، ذرا سن کر دیکھیں۔",
+    "ms": "Ini suara yang akan membaca terjemahan, sila dengar sekejap.",
+    "fil": "Ganito ang tunog ng boses na magbabasa, pakinggan ninyo sandali.",
+    "sw": "Hii ndiyo sauti ya kusoma tafsiri, sikiliza jinsi inavyosikika.",
+    "af": "Dit is die voorleesstem, sodat jy kan hoor hoe dit klink.",
+    "ca": "Aquesta és la veu que llegirà la traducció, així la pots sentir.",
+    "eu": "Hau da itzulpena irakurriko duen ahotsa, entzun pixka bat.",
+    "is": "Svona hljómar röddin sem les textann, svo þú getir hlustað."
+  };
+
+
   const API = {
     all: () => LANGS.slice(),
     get: (code) => byCode.get(code) || null,
@@ -105,6 +165,8 @@
       for (const l of LANGS) out[l.code] = l.en;
       return out;
     },
+    // A line to speak when previewing a voice, in the language being read.
+    sample: (code) => TTS_SAMPLE[code] || TTS_SAMPLE.en,
     // DeepL's own codes; absent means DeepL cannot do it and must say so
     deeplTargets: () => {
       const out = {};

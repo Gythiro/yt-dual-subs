@@ -746,8 +746,21 @@
   function duckVolume(p, on, pct) {
     if (typeof p.getVolume !== "function" || typeof p.setVolume !== "function") return;
     if (on) {
-      if (duckSavedVol >= 0) return;            // already ducked
       const share = Math.max(0, Math.min(100, typeof pct === "number" ? pct : 25));
+      if (duckSavedVol >= 0) {
+        // Already ducked, and the depth moved under us: the popup's two volume
+        // sliders sit together, so this one has to answer as promptly as the
+        // other. Recompute from the SAVED volume, never from the ducked one —
+        // compounding would walk the audio down to nothing over a long line.
+        // Anything else (the same depth again, or the user moving the player's
+        // own volume) leaves it alone.
+        const want = Math.round(duckSavedVol * share / 100);
+        if (want !== duckSetVol && p.getVolume() === duckSetVol) {
+          duckSetVol = want;
+          p.setVolume(duckSetVol);
+        }
+        return;
+      }
       const v = p.getVolume();
       duckSavedVol = v;
       duckSetVol = Math.round(v * share / 100);

@@ -23,7 +23,7 @@
     </div>
     <div class="hd-text">
       <h1>Dual Subtitles</h1>
-      <p class="hd-sub" data-i18n="headerSub">for YouTube™ · Bilingual, single layer</p>
+      <p class="hd-sub" data-i18n="headerSub">for YouTube™ · 双语单层字幕</p>
     </div>
     <!-- The only unconditional way into the settings page. Before this, it was
          reachable solely from the own-key panel, so anyone on the default
@@ -95,7 +95,16 @@
         </p>
         <p class="engine-hint" id="backendGtxHint" hidden data-i18n="backendGtxHint">使用 Google 免费接口，重度使用可能被短暂限流；扩展会自动放慢并重试。</p>
         <p class="engine-msg" id="backendStatus" role="status" aria-live="polite" hidden></p>
-        <button type="button" id="diagCopy" class="diag-btn" data-i18n="diagCopy">复制诊断信息</button>
+        <!-- Only under a warning, and only in the popup: here it reads as "copy
+             THIS fault", which is what a support reply needs. It is not the
+             entry point people are told about — that one is permanent, on the
+             settings page's About pane, because the commonest complaint
+             ("no subtitles at all") raises no warning to hang this off.
+             Left of the divider it was an orphan between two closed groups:
+             a left-aligned line of small text under a centred four-icon grid,
+             read as a fifth item that did not fit (measured, and worse in de). -->
+        <button type="button" id="diagCopy" class="diag-btn" hidden
+                data-i18n="diagCopy">复制诊断信息</button>
       </div>
 
       <!-- --- BYO summary (setup itself lives on the options page) --- -->
@@ -134,16 +143,30 @@
         </label>
       </div>
 
-      <!-- The mid-watch adjustment that opened the HCI case file: one hop. -->
+      <!-- The mid-watch adjustments, most-touched first: both volumes (the HCI
+           case that opened this file), then the voice. -->
       <div class="row" id="ttsVolRow" hidden>
         <label for="ttsVol"><span data-i18n="ttsVolLabel">朗读音量</span>
           <b id="ttsVolV">100%</b></label>
         <input type="range" id="ttsVol" min="10" max="100" step="5" />
       </div>
+      <div class="row" id="ttsDuckRow" hidden>
+        <label for="ttsDuck"><span data-i18n="ttsDuckShort">原声音量</span>
+          <b id="ttsDuckV">25%</b></label>
+        <input type="range" id="ttsDuck" min="0" max="100" step="5" />
+      </div>
 
-      <!-- Status doubles as the door to the low-frequency settings (voice,
-           region, ducking): a button, not a dead line. Text is assembled by
-           refreshTtsStatus(); the chevron is CSS so textContent stays clean. -->
+      <!-- One dropdown carries both dimensions: voices grouped per configured
+           provider (optgroup), so picking a voice IS picking its provider —
+           the pattern byoPick set for translation. Filled by paintTtsCard(). -->
+      <div class="row" id="ttsVoiceRow" hidden>
+        <label for="ttsVoicePick" data-i18n="ttsVoiceLabel">音色</label>
+        <select id="ttsVoicePick"></select>
+      </div>
+
+      <!-- Status doubles as the door to the low-frequency settings (region,
+           test, adding a provider): a button, not a dead line. Text is
+           assembled by refreshTtsStatus(); the chevron is CSS. -->
       <button type="button" class="tts-status" id="ttsStatus" hidden
               data-i18n-title="ttsOpenSettings" data-i18n-aria="ttsOpenSettings"></button>
     </section>
@@ -198,6 +221,10 @@
       <button type="button" class="fold-head" id="lineFold"
               aria-expanded="false" aria-controls="lineBody">
         <h2 class="card-title" data-i18n="secLineStyle">行样式</h2>
+        <!-- A closed card has to say what is inside it: "Line style" is our
+             word, "font, colour, size" is what the store listing promises.
+             Costs one pixel of height (measured) and no extra row. -->
+        <span class="fold-hint" data-i18n="secLineStyleHint">字体 · 颜色 · 字号</span>
         <svg class="fold-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
              aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
@@ -299,7 +326,7 @@
       <p class="engine-hint" id="exportEngineNote" hidden></p>
 
       <button id="exportBtn" type="button" class="export-btn" data-i18n="exportSrt">
-        下载 SRT 字幕
+        下载 SRT
       </button>
 
       <!-- The estimate, in the popup rather than a native confirm(): a dialog
@@ -311,7 +338,7 @@
             取消
           </button>
           <button id="exportGo" type="button" class="confirm-go" data-i18n="exportConfirmGo">
-            继续
+            翻译并下载
           </button>
         </div>
       </div>
@@ -371,7 +398,7 @@
       <input type="checkbox" id="updateNotes" />
       <span data-i18n="updateNotesLabel">更新后打开新功能介绍页</span>
     </label>
-    <p class="disclaimer" data-i18n="disclaimer">Not affiliated with YouTube or Google.</p>
+    <p class="disclaimer" data-i18n="disclaimer">非 YouTube / Google 官方出品，与其无关联。</p>
   </footer>
 
   <script src="languages.js"></script>

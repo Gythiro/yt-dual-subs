@@ -39,7 +39,10 @@ const cfg = {
   byoProvider: "",       // providers.js id
   byoModel: "",
   byoBaseUrl: "",        // custom provider only
-  ttsProvider: "",       // read-aloud: providers.js tts registry id ("" = unset)
+  // Read-aloud starts on the browser's own voices: they need no key, so the
+  // feature can be tried by pressing one switch instead of opening an account
+  // somewhere first. A stored choice always wins over this.
+  ttsProvider: "local-speech",
   ttsVoice: "",          // read-aloud voice ("" = the provider's default)
   ttsRegion: ""          // Azure only: the region its key is bound to ("eastus")
 };
@@ -47,7 +50,7 @@ const cfg = {
 const cfgReady = new Promise((resolve) => {
   chrome.storage.sync.get(
     { engine: "auto", backend: "tlang", byoProvider: "", byoModel: "", byoBaseUrl: "",
-      ttsProvider: "", ttsVoice: "", ttsRegion: "" },
+      ttsProvider: "local-speech", ttsVoice: "", ttsRegion: "" },
     (got) => {
       got = got || {};
       // Same read-side migration as content.js: a stored "gtx" backend was a
@@ -954,13 +957,47 @@ function keyForTts(providerId) {
 
 // Same honest-error discipline as resolveByo: every unfinished-setup state has
 // its own code, and the message text never contains the key.
+// Which name to put in a Google request for the language being spoken now.
+function googleVoiceName(t, lang) {
+  const carried = /^([a-z]{2,3}-[A-Z]{2})-/.exec(t.voice);
+  if (carried && carried[1] === lang) return t.voice;   // fetched FOR this language
+  const short = carried
+    ? (t.provider.defaultVoice || (t.provider.voices || [])[0] || "")
+    : t.voice;
+  return lang + "-Chirp3-HD-" + short;
+}
+// Kept next to the request that depends on it: the pickers answer the same
+// question through PROVIDERS.tts.voiceAppliesTo, so a menu never names a voice
+// this function is about to replace.
+
 async function resolveTts() {
   const p = PROVIDERS.tts.get(cfg.ttsProvider);
   if (!p) throw tag(new Error("no tts provider selected"), { noKey: true, code: "noProvider" });
-  const key = await keyForTts(p.id);
-  if (!key) throw tag(new Error("no tts api key"), { noKey: true, code: "noKey" });
-  await ensureHostPermission(p.origin);
-  const voice = (cfg.ttsVoice || p.defaultVoice || "").trim();
+  // The browser's own voices need no key and no host: there is nothing to
+  // authorize because nothing leaves the machine.
+  let key = "";
+  if (!p.keyless) {
+    key = await keyForTts(p.id);
+    if (!key) throw tag(new Error("no tts api key"), { noKey: true, code: "noKey" });
+    await ensureHostPermission(p.origin);
+  }
+  // A voice belongs to ONE provider: "alloy" spliced into Google's naming
+  // scheme yields zh-CN-Chirp3-HD-alloy, which is a 400 and reads to the user
+  // as "read-aloud is broken". A stored voice that is not in this provider's
+  // list is stale — a provider switched somewhere that did not rewrite it, or
+  // a voice we stopped listing — so the provider's own default wins. The
+  // pickers show that same default, which keeps the UI honest about what is
+  // actually being spoken.
+  const stored = (cfg.ttsVoice || "").trim();
+  // "Belongs to this provider" is the built-in family PLUS anything the user
+  // fetched for a language on the settings page — otherwise the voice they
+  // just picked there would be bounced back to the default by the engine, and
+  // the menu would be describing something that never plays. Fetched ids are
+  // still shaped like this provider's, which is what the pattern checks.
+  // The local engine's voices are whatever this machine has, so the worker
+  // cannot vet them — the page that enumerated them is the only authority.
+  const known = PROVIDERS.tts.voiceOwned(p, stored);
+  const voice = known ? stored : (p.defaultVoice || (p.voices || [])[0] || "");
   let region = "";
   if (p.needsRegion) {
     // The region is spliced into the request HOST — gate it to a hostname
@@ -973,18 +1010,87 @@ async function resolveTts() {
   return { provider: p, key, voice, model: p.defaultModel, region };
 }
 
-// Chirp 3 HD locales, per Google's published list (untested against a live
-// key — the machine-check clause of the read-aloud test drive covers this).
-// A target language that is not in the family is an honest unsupportedTarget,
-// never an English voice mangling someone else's language.
-const GOOGLE_TTS_LANG = {
-  "en": "en-US", "de": "de-DE", "es": "es-ES", "fr": "fr-FR", "it": "it-IT",
-  "ja": "ja-JP", "ko": "ko-KR", "nl": "nl-NL", "pl": "pl-PL", "pt": "pt-BR",
-  "ru": "ru-RU", "th": "th-TH", "tr": "tr-TR", "vi": "vi-VN", "id": "id-ID",
-  "hi": "hi-IN", "ar": "ar-XA", "uk": "uk-UA", "sw": "sw-KE", "bn": "bn-IN",
-  "gu": "gu-IN", "kn": "kn-IN", "ml": "ml-IN", "mr": "mr-IN", "ta": "ta-IN",
-  "te": "te-IN", "ur": "ur-IN", "zh-CN": "cmn-CN", "zh-TW": "cmn-CN"
-};
+
+
+// Qwen-TTS speaks ten languages, not fifty; anything else is refused the same
+// honest way Chirp 3 refuses what it has no voice for.
+const QWEN_TTS_LANGS = new Set([
+  "zh-CN", "zh-TW", "en", "fr", "de", "ru", "it", "es", "pt", "ja", "ko"
+]);
+
+// DashScope streams speech back as base64 PCM segments — 24 kHz, 16-bit,
+// mono — with the finished file only offered as a URL on a storage host we
+// deliberately do not ask permission for. Wrapping the samples in a WAV header
+// here keeps everything on the one origin the user already granted.
+function wavFromPcm(pcm, sampleRate) {
+  const rate = sampleRate || 24000;
+  const out = new Uint8Array(44 + pcm.length);
+  const dv = new DataView(out.buffer);
+  const ascii = (off, str) => {
+    for (let i = 0; i < str.length; i++) out[off + i] = str.charCodeAt(i);
+  };
+  ascii(0, "RIFF");
+  dv.setUint32(4, 36 + pcm.length, true);
+  ascii(8, "WAVEfmt ");
+  dv.setUint32(16, 16, true);          // PCM header size
+  dv.setUint16(20, 1, true);           // format = PCM
+  dv.setUint16(22, 1, true);           // mono
+  dv.setUint32(24, rate, true);
+  dv.setUint32(28, rate * 2, true);    // byte rate (mono, 16-bit)
+  dv.setUint16(32, 2, true);           // block align
+  dv.setUint16(34, 16, true);          // bits per sample
+  ascii(36, "data");
+  dv.setUint32(40, pcm.length, true);
+  out.set(pcm, 44);
+  return out;
+}
+
+// What the bytes coming out of ttsSynthesize actually are. Everything is mp3
+// except Qwen, which arrives as PCM and leaves here wrapped as a WAV.
+function ttsMime(provider) {
+  return provider && provider.kind === "qwen-tts" ? "audio/wav" : "audio/mpeg";
+}
+
+function bytesFromB64(b64) {
+  const bin = atob(b64);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+// Read a DashScope SSE body and hand back everything its data: lines carried.
+async function qwenPcmFromSse(res) {
+  const reader = res.body && res.body.getReader ? res.body.getReader() : null;
+  if (!reader) throw tag(new Error("no stream"), { code: "badShape" });
+  const dec = new TextDecoder();
+  const parts = [];
+  let total = 0;
+  let buf = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let nl;
+    while ((nl = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, nl).trim();
+      buf = buf.slice(nl + 1);
+      if (line.slice(0, 5) !== "data:") continue;
+      let payload;
+      try { payload = JSON.parse(line.slice(5).trim()); } catch (_e) { continue; }
+      const d = payload && payload.output && payload.output.audio &&
+        payload.output.audio.data;
+      if (!d) continue;
+      const chunk = bytesFromB64(d);
+      parts.push(chunk);
+      total += chunk.length;
+    }
+  }
+  if (!total) throw tag(new Error("qwen returned no audio"), { code: "badShape" });
+  const pcm = new Uint8Array(total);
+  let at = 0;
+  for (const part of parts) { pcm.set(part, at); at += part.length; }
+  return pcm;
+}
 
 const escapeXml = (s) => String(s).replace(/[<>&'"]/g, (c) => (
   { "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" }[c]
@@ -1013,7 +1119,7 @@ async function ttsSynthesize(text, t, targetLang) {
       }
     };
   } else if (kind === "google-tts") {
-    const lang = GOOGLE_TTS_LANG[targetLang || ""];
+    const lang = PROVIDERS.tts.localeFor.google[targetLang || ""];
     if (!lang) {
       throw tag(new Error("chirp has no " + (targetLang || "?")),
         { unsupportedTarget: true, code: "unsupportedTarget" });
@@ -1025,8 +1131,51 @@ async function ttsSynthesize(text, t, targetLang) {
         headers: { "X-Goog-Api-Key": t.key, "Content-Type": "application/json" },
         body: JSON.stringify({
           input: { text: text },
-          voice: { languageCode: lang, name: lang + "-Chirp3-HD-" + t.voice },
+          // A fetched name already carries its locale and family; only the
+          // short family names get assembled. But a fetched name is PINNED to
+          // the language it was fetched for, and the reader can change target
+          // language afterwards — that sent languageCode ja-JP carrying a
+          // cmn-CN name, which is a 400 and a line that never speaks. The short
+          // family name is the one that follows the reader, so it answers.
+          voice: {
+            languageCode: lang,
+            name: googleVoiceName(t, lang)
+          },
           audioConfig: { audioEncoding: "MP3" }
+        })
+      }
+    };
+  } else if (kind === "elevenlabs") {
+    req = {
+      url: t.provider.baseUrl + "/v1/text-to-speech/" + encodeURIComponent(t.voice) +
+        "?output_format=mp3_44100_128",
+      init: {
+        method: "POST",
+        headers: { "xi-api-key": t.key, "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text, model_id: t.model || "eleven_multilingual_v2" })
+      }
+    };
+  } else if (kind === "qwen-tts") {
+    if (!QWEN_TTS_LANGS.has(targetLang || "")) {
+      throw tag(new Error("qwen-tts has no " + (targetLang || "?")),
+        { unsupportedTarget: true, code: "unsupportedTarget" });
+    }
+    req = {
+      url: t.provider.baseUrl +
+        "/api/v1/services/aigc/multimodal-generation/generation",
+      init: {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + t.key,
+          "Content-Type": "application/json",
+          // Streaming is not for speed here: the non-streaming reply hands
+          // back only a URL on a storage host, and asking for that host is a
+          // permission the feature does not need.
+          "X-DashScope-SSE": "enable"
+        },
+        body: JSON.stringify({
+          model: t.model || "qwen3-tts-flash",
+          input: { text: text, voice: t.voice }
         })
       }
     };
@@ -1068,6 +1217,9 @@ async function ttsSynthesize(text, t, targetLang) {
     if (!b64) throw tag(new Error("tts empty audio"), { code: "badShape" });
     return b64;
   }
+  if (kind === "qwen-tts") {
+    return b64FromBuf(wavFromPcm(await qwenPcmFromSse(res), 24000).buffer);
+  }
   const buf = await res.arrayBuffer();
   if (!buf || buf.byteLength === 0) {
     throw tag(new Error("tts empty audio"), { code: "badRequest" });
@@ -1079,18 +1231,40 @@ async function ttsSynthesize(text, t, targetLang) {
 // The probe speaks in the CURRENT target language: for Google that is the
 // language the voice name is built from, so testing anything else would pass
 // on a voice that then fails on the first real subtitle.
-async function ttsTest() {
+async function ttsTest(voiceOverride) {
   const t = await resolveTts();
+  if (t.provider.kind === "local-speech") {
+    // Nothing to probe: no key, no endpoint. The settings page speaks the
+    // sample itself, which IS the test.
+    const lang = await new Promise((resolve) => {
+      chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
+        resolve((got && got.targetLang) || "zh-CN");
+      });
+    });
+    return { bytes: 0, ms: 0, voice: voiceOverride || t.voice, local: true, lang };
+  }
+  // Previewing a voice you have not saved yet is the whole point of a preview:
+  // the caller may name one, and it is honoured only if it belongs to the
+  // provider actually resolved (the same guard resolveTts applies to storage).
+  if (voiceOverride && (t.provider.voices || []).includes(voiceOverride)) {
+    t.voice = voiceOverride;
+  }
   const targetLang = await new Promise((resolve) => {
     chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
       resolve((got && got.targetLang) || "zh-CN");
     });
   });
+  // A sentence in the language being READ, not "Hi." — the point is to hear
+  // this voice speak your language, and an English probe passes on a voice
+  // that then mangles the first real subtitle.
+  const line = (self.YTDS_LANGS && self.YTDS_LANGS.sample(targetLang)) || "Hi.";
   const started = Date.now();
-  const b64 = await ttsSynthesize("Hi.", t, targetLang);
+  const b64 = await ttsSynthesize(line, t, targetLang);
   const pad = b64.endsWith("==") ? 2 : b64.endsWith("=") ? 1 : 0;
   const bytes = Math.floor(b64.length * 3 / 4) - pad;
-  return { bytes, ms: Date.now() - started, voice: t.voice };
+  // The audio rides back so the settings page can play what it just paid for.
+  return { bytes, ms: Date.now() - started, voice: t.voice, b64,
+    mime: ttsMime(t.provider) };
 }
 
 // Speech for one subtitle line, as base64 the content script can turn into a
@@ -1114,6 +1288,12 @@ async function ttsSpeak(text, targetLang) {
   const line = String(text || "").trim();
   if (!line) throw tag(new Error("tts empty input"), { code: "badRequest" });
   const t = await resolveTts();
+  // Local speech never becomes bytes: a service worker has no
+  // speechSynthesis, and there would be nothing to cache anyway. The reply
+  // says "say this yourself" and the page that has a speaker does it.
+  if (t.provider.kind === "local-speech") {
+    return { local: true, voice: t.voice, lang: targetLang || "", cached: false };
+  }
   // The language is part of the identity: the same line synthesized under a
   // different target is different audio (Google even bakes it into the voice).
   const key = t.provider.id + "|" + t.voice + "|" + (targetLang || "") + "|" + line;
@@ -1121,7 +1301,7 @@ async function ttsSpeak(text, targetLang) {
   if (hit) {
     TTS_CACHE.delete(key);        // refresh recency
     TTS_CACHE.set(key, hit);
-    return { b64: hit, mime: "audio/mpeg", cached: true };
+    return { b64: hit, mime: ttsMime(t.provider), cached: true };
   }
   const b64 = await ttsSynthesize(line, t, targetLang);
   TTS_CACHE.set(key, b64);
@@ -1129,7 +1309,7 @@ async function ttsSpeak(text, targetLang) {
     const oldest = TTS_CACHE.keys().next().value;
     TTS_CACHE.delete(oldest);
   }
-  return { b64, mime: "audio/mpeg", cached: false };
+  return { b64, mime: ttsMime(t.provider), cached: false };
 }
 
 // ---------------------------------------------------------------------------
@@ -1178,6 +1358,72 @@ async function byoModels() {
   }
   const ids = ((data && data.data) || []).map((m) => m && m.id);
   return { models: PROVIDERS.usableModels(ids) };
+}
+
+// The read-aloud twin of byoModels: the voices this provider has FOR THE
+// LANGUAGE BEING READ. Deliberately a button on the settings page rather than
+// something the popup does on open — a menu that needs the network is a menu
+// that is empty on a train, and the built-in family list is the answer when
+// this fails. Google filters server-side; Azure returns everything it has and
+// is narrowed here, which is why the result is cached rather than re-fetched.
+async function ttsVoices() {
+  const t = await resolveTts();
+  const p = t.provider;
+  if (!p.listVoices) return { voices: [], listable: false };
+  const targetLang = await new Promise((resolve) => {
+    chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
+      resolve((got && got.targetLang) || "zh-CN");
+    });
+  });
+  let res;
+  if (p.kind === "google-tts") {
+    const lang = PROVIDERS.tts.localeFor.google[targetLang || ""];
+    if (!lang) {
+      throw tag(new Error("chirp has no " + targetLang),
+        { unsupportedTarget: true, code: "unsupportedTarget" });
+    }
+    try {
+      res = await fetch(p.baseUrl + "/v1/voices?languageCode=" + encodeURIComponent(lang),
+        { headers: { "X-Goog-Api-Key": t.key } });
+    } catch (_e) {
+      throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
+    }
+    await throwForStatus(res, "tts");
+    const data = await res.json().catch(() => null);
+    const names = ((data && data.voices) || [])
+      .map((v) => v && v.name).filter(Boolean);
+    return { voices: names, listable: true };
+  }
+  if (p.kind === "elevenlabs") {
+    try {
+      res = await fetch(p.baseUrl + "/v2/voices?page_size=100",
+        { headers: { "xi-api-key": t.key } });
+    } catch (_e) {
+      throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
+    }
+    await throwForStatus(res, "tts");
+    const data = await res.json().catch(() => null);
+    const ids = ((data && data.voices) || []).map((v) => v && v.voice_id).filter(Boolean);
+    return { voices: ids, listable: true };
+  }
+  // azure-speech
+  try {
+    res = await fetch("https://" + t.region + ".tts.speech.microsoft.com" +
+      "/cognitiveservices/voices/list",
+      { headers: { "Ocp-Apim-Subscription-Key": t.key } });
+  } catch (_e) {
+    throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
+  }
+  await throwForStatus(res, "tts");
+  const data = await res.json().catch(() => null);
+  const want = PROVIDERS.tts.localeFor.azure[targetLang || ""] || "";
+  const names = ((data && Array.isArray(data)) ? data : [])
+    // Only neural voices, and only the language being read: the raw list is
+    // several hundred long and most of it cannot say a word of it.
+    .filter((v) => v && v.ShortName && /Neural/i.test(v.VoiceType || v.ShortName))
+    .filter((v) => !want || String(v.Locale || "").toLowerCase() === want.toLowerCase())
+    .map((v) => v.ShortName);
+  return { voices: names, listable: true };
 }
 
 // Live target list, so a stale hard-coded table can never be the reason a user
@@ -1356,6 +1602,17 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       }));
     return true;
   }
+  if (msg && msg.type === "ttsVoices") {
+    cfgReady
+      .then(ttsVoices)
+      .then((r) => sendResponse({ ok: true, voices: r.voices, listable: r.listable }))
+      .catch((err) => sendResponse({
+        ok: false,
+        code: (err && err.code) || "failed",
+        error: String(err)
+      }));
+    return true;
+  }
   if (msg && msg.type === "byoModels") {
     cfgReady
       .then(byoModels)
@@ -1380,8 +1637,9 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "ttsTest") {
     cfgReady
-      .then(ttsTest)
-      .then((r) => sendResponse({ ok: true, bytes: r.bytes, ms: r.ms, voice: r.voice }))
+      .then(() => ttsTest(msg.voice))
+      .then((r) => sendResponse({ ok: true, bytes: r.bytes, ms: r.ms, voice: r.voice,
+        b64: r.b64, mime: r.mime, local: r.local, lang: r.lang }))
       .catch((err) => sendResponse({
         ok: false,
         code: (err && err.code) || "failed",
@@ -1392,7 +1650,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg && msg.type === "ttsSpeak") {
     cfgReady
       .then(() => ttsSpeak(msg.text, msg.targetLang))
-      .then((r) => sendResponse({ ok: true, b64: r.b64, mime: r.mime, cached: r.cached }))
+      .then((r) => sendResponse({ ok: true, b64: r.b64, mime: r.mime, cached: r.cached,
+        local: r.local, voice: r.voice, lang: r.lang }))
       .catch((err) => sendResponse({
         ok: false,
         code: (err && err.code) || "failed",

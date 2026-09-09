@@ -163,6 +163,11 @@ input:focus-visible,
   font-size: 11px; font-weight: 600; color: #8c9095;
   text-transform: uppercase; letter-spacing: 1.7px;
 }
+/* CJK has no capitals — uppercase only mangles embedded Latin, and 1.7px
+   tracking scatters ideographs (same rule as options.css). */
+[lang^="zh"] .card-title, [lang^="ja"] .card-title, [lang^="ko"] .card-title {
+  text-transform: none; letter-spacing: .8px;
+}
 
 .row { display: flex; flex-direction: column; gap: 7px; }
 /* display:flex above outranks the UA sheet's [hidden]{display:none}, so rows we
@@ -270,6 +275,10 @@ select:focus { border-color: var(--accent); }
 .tts-status:hover { color: var(--txt); }
 .tts-status:hover::after { color: var(--accent); transform: translateX(2px); }
 .tts-status[hidden] { display: none; }
+/* Nothing is coming out and we know why: the line says the reason, and the
+   chevron still leads to the pane where it gets fixed. */
+.tts-status.err { color: #ff8a8a; }
+.tts-status.err::after { color: #ff8a8a; }
 
 /* ====================== FOLDING CARD (line style) ====================== */
 /* The head is the card title made clickable; the negative margin lets the hit
@@ -281,6 +290,14 @@ select:focus { border-color: var(--accent); }
 }
 .card-fold.open .fold-head { margin-bottom: 0; padding-bottom: 0; }
 .fold-head .card-title { pointer-events: none; }
+/* Sits with the chevron, not under the title: a second line would push the
+   export card 17px further down, which is the thing the fold is here to fix. */
+.fold-hint {
+  margin-left: auto; margin-right: 8px;
+  font-size: 12px; color: var(--muted); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; min-width: 0;
+}
+.card-fold.open .fold-hint { visibility: hidden; }   /* the controls now say it */
 /* the hit area reaches the card edge, so the ring must sit inward to stay on it */
 .fold-head:focus-visible { outline-offset: -3px; border-radius: var(--radius); }
 .fold-chev {

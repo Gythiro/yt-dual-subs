@@ -26,7 +26,7 @@
            the setup wording so the page is never blank before boot. -->
       <h1 id="pageTitle" data-i18n="optTitle">翻译服务设置</h1>
       <p class="ohd-sub" id="pageIntro" data-i18n="optIntro">
-        选一个服务商，填上你自己的 API Key。Key 只保存在这台电脑上，字幕只发往你选的服务商。
+        选一个服务商，填上你自己的 API Key。Key 只保存在这台电脑上，字幕文本只发往你选的服务商。
       </p>
     </div>
   </header>
@@ -66,7 +66,7 @@
       </p>
 
       <p class="oneed" id="needKey" hidden data-i18n="optNeedKey">
-        还没填 Key，这个服务商暂时不能用。
+        还没填 Key，这个服务商暂时用不了。
       </p>
 
       <div class="ofield" id="baseRow" hidden>
@@ -155,8 +155,8 @@
                 </g>
               </svg>
               <div class="odemo-cap cap-s1" aria-hidden="true">
-                <p class="cap-orig" data-i18n="sampleOrig">There's two big reasons</p>
-                <p class="cap-trans" data-i18n="sampleTrans">有两个重要的原因</p>
+                <p class="cap-orig" data-i18n="sampleOrig">The quick brown fox</p>
+                <p class="cap-trans" data-i18n="sampleTrans">敏捷的棕色狐狸</p>
               </div>
             </div>
           </div>
@@ -207,12 +207,12 @@
                 </g>
               </svg>
               <div class="odemo-cap cap-s2a" aria-hidden="true">
-                <p class="cap-orig" data-i18n="sampleOrig">There's two big reasons</p>
-                <p class="cap-trans" data-i18n="sampleTrans">有两个重要的原因</p>
+                <p class="cap-orig" data-i18n="sampleOrig">The quick brown fox</p>
+                <p class="cap-trans" data-i18n="sampleTrans">敏捷的棕色狐狸</p>
               </div>
               <div class="odemo-cap cap-s2b" aria-hidden="true">
-                <p class="cap-orig" data-i18n="sampleOrig">There's two big reasons</p>
-                <p class="cap-trans" data-i18n="sampleTrans">有两个重要的原因</p>
+                <p class="cap-orig" data-i18n="sampleOrig">The quick brown fox</p>
+                <p class="cap-trans" data-i18n="sampleTrans">敏捷的棕色狐狸</p>
               </div>
             </div>
           </div>
@@ -263,10 +263,6 @@
         </li>
       </ol>
 
-      <p class="ostart-foot">
-        <b data-i18n="startNoSubsQ">没出现字幕？</b>
-        <span data-i18n="startNoSubs">点一下播放器右下角的 CC 按钮，或者换个视频试试——直播和纯音乐视频通常本来就没有字幕。</span>
-      </p>
     </section>
 
     <!-- --------------------------------- langs ---------------------------- -->
@@ -282,7 +278,7 @@
         </div>
         <div class="olang-col">
           <h2 class="olabel" data-i18n="langsMore">其他语言</h2>
-          <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。免费引擎都支持;DeepL 少数语言不支持,遇到会直说。</p>
+          <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。列出的语言，免费引擎和 DeepL 都支持。</p>
           <ul class="olang-list" id="langMore"></ul>
         </div>
       </div>
@@ -297,11 +293,20 @@
            until the STORED provider has its key — a switch that cannot sound
            must not accept a tick (the popup enforces the same gate). -->
       <h2 class="olabel" data-i18n="ttsGroupSetup">服务商与 Key</h2>
-      <div class="orow">
+      <!-- The translation pane has had this since 3.6; read-aloud shipped its
+           own keys — and Azure's region — with nowhere to look them up. -->
+      <p class="olinks">
+        <a id="ttsGuideLink" target="_blank" rel="noopener" data-i18n="byoGuide">还不会配？看教程</a>
+      </p>
+      <!-- Same field language as the translation pane (.ofield: label line on
+           top, control full-width below). The first cut used .orow with the
+           setup pane's composite key label inside — the label column collapsed
+           to ~100px, "清除" wrapped to a second line and nothing lined up. -->
+      <div class="ofield">
         <label for="ttsProviderSel" data-i18n="byoProviderLabel">服务商</label>
         <select id="ttsProviderSel"></select>
       </div>
-      <div class="orow">
+      <div class="ofield">
         <label for="ttsKey">
           <span data-i18n="byoKeyLabel">API Key</span>
           <span class="ospacer"></span>
@@ -313,7 +318,7 @@
       </div>
       <!-- Azure only: its key is bound to a region that becomes the request
            host. Hidden for every provider that has one fixed endpoint. -->
-      <div class="orow" id="ttsRegionRow" hidden>
+      <div class="ofield" id="ttsRegionRow" hidden>
         <label for="ttsRegion" data-i18n="ttsRegionLabel">服务区域</label>
         <input type="text" id="ttsRegion" list="ttsRegionList" placeholder="eastus"
                spellcheck="false" autocomplete="off" />
@@ -330,20 +335,40 @@
           <option value="australiaeast"></option>
         </datalist>
       </div>
-      <div class="orow">
+      <div class="ofield">
         <label for="ttsVoiceSel" data-i18n="ttsVoiceLabel">音色</label>
-        <select id="ttsVoiceSel"></select>
+        <!-- Preview sits with the voice it previews. It speaks a fixed line in
+             the language being READ, so you hear this voice handle your
+             language rather than an English probe that proves nothing. It does
+             not save: you can listen your way down the list first. -->
+        <div class="orow">
+          <select id="ttsVoiceSel"></select>
+          <button type="button" class="obtn ghost" id="ttsPreview"
+                  data-i18n="ttsPreview">试听</button>
+        </div>
+        <!-- The same bargain the translation pane strikes with models: a short
+             curated list that always works, and a button for the rest. The
+             built-in voices follow you across languages; the fetched ones are
+             this language's own, which is what you want when its accent
+             matters more than portability. -->
+        <div class="orow" id="ttsFetchRow" hidden>
+          <button type="button" class="obtn ghost" id="ttsFetchVoices"
+                  data-i18n="ttsFetchVoices">拉取这个语言的更多音色</button>
+          <button type="button" class="olink" id="ttsBackToFamily" hidden
+                  data-i18n="ttsBackToFamily">回到跟着语言走的音色</button>
+        </div>
+        <p class="ohint" id="ttsVoiceMsg" role="status" aria-live="polite" hidden></p>
       </div>
       <button type="button" class="obtn primary" id="ttsTestBtn" data-i18n="byoTest">保存并测通</button>
       <p class="omsg" id="ttsMsg" role="status" aria-live="polite" hidden></p>
 
       <h2 class="olabel olabel-gap" data-i18n="ttsGroupPlayback">播放</h2>
       <p class="oneed" id="ttsNeedKey" hidden data-i18n="optNeedKey">
-        还没填 Key，这个服务商暂时不能用。
+        还没填 Key，这个服务商暂时用不了。
       </p>
       <div class="otts-use" id="ttsUse">
         <div class="orow">
-          <label class="ochk"><input type="checkbox" id="ttsEnabled" />
+          <label class="ochk ochk-primary"><input type="checkbox" id="ttsEnabled" />
             <span data-i18n="ttsEnableLabel">在视频里朗读译文</span></label>
         </div>
         <p class="ohint" data-i18n="ttsEnableHint">
@@ -365,7 +390,10 @@
       </p>
     </section>
 
-    <section class="odetail" id="secAbout" hidden>
+    <!-- Two cards side by side in one view (the same move the Getting-started
+         steps make), not a card inside a card. -->
+    <section class="oplain" id="secAbout" hidden>
+      <div class="odetail">
       <p class="oabout-ver">
         <span data-i18n="aboutVersion">版本</span>
         <b id="aboutVer">—</b>
@@ -390,17 +418,50 @@
         <a id="aboutGithub" target="_blank" rel="noopener">GitHub</a>
         <a id="aboutChangelog" target="_blank" rel="noopener" data-i18n="aboutChangelog">更新日志</a>
         <a id="aboutRoadmap" target="_blank" rel="noopener" data-i18n="aboutRoadmap">开发计划</a>
-        <a id="aboutFeedback" target="_blank" rel="noopener" data-i18n="optFeedbackLink">反馈问题</a>
       </p>
+      </div>
+
+      <!-- A second card, not a sixth nav item. About is a page you READ
+           (version, interface language, blurb, privacy, links); copying a
+           diagnostic is something you DO, and dressed as a sixth link it read
+           as a broken one — grey and arrowless among five blue arrows, and
+           wide enough to push "Report a problem" onto its own line in German.
+           Support replies still point at one sentence that never changes:
+           settings → About → Copy diagnostic info. -->
+      <div class="odetail otrouble">
+        <h2 class="olabel" data-i18n="troubleTitle">遇到问题</h2>
+        <!-- Moved here from the bottom of Getting started: someone whose
+             subtitles never appeared does not go looking under "getting
+             started". -->
+        <ol class="otrouble-list">
+          <li data-i18n="troubleStep1">先看弹窗里的开关是不是开着——关掉时整层字幕都不出现。</li>
+          <li data-i18n="troubleStep2">这个视频本身有没有字幕？点播放器右下角的 CC 看看，没有原文就加不出译文。</li>
+          <li data-i18n="troubleStep3">换一个热门视频试试。别的正常、只有这条不行，多半是这条片子的字幕轨。</li>
+        </ol>
+        <p class="ohint" data-i18n="troubleDiagHint">
+          还是不行的话，把诊断信息贴进邮件或 issue——里面有版本、引擎状态和当前标签页在做什么，能少来回几轮。
+        </p>
+        <div class="orow">
+          <button type="button" class="obtn ghost" id="aboutDiag" data-i18n="diagCopy">复制诊断信息</button>
+          <a class="olink-out" id="troubleFeedback" target="_blank" rel="noopener"
+             data-i18n="optFeedbackLink">反馈问题</a>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer class="oft">
-    <p data-i18n="byoLocalHint">
+  <!-- Per-pane honesty: the privacy line only where keys are entered (setup;
+       read-aloud says it inside its own card), the trademark line only where
+       provider marks show. showSection stamps data-sec; feedback stays. -->
+  <footer class="oft" id="oft">
+    <p class="oft-priv" data-i18n="byoLocalHint">
       Key 只存在这台电脑的浏览器里，不会上传；字幕文本只发往你选择的服务商。
     </p>
-    <p class="odim" data-i18n="optTrademark">各服务商名称与标志均为其各自所有者的商标。本扩展与它们没有任何关联，也未获其背书或赞助；标志仅用于标识你所选择的接口。</p>
-    <p class="odim">
+    <p class="odim oft-tm" data-i18n="optTrademark">各服务商名称与标志均为其各自所有者的商标。本扩展与它们没有任何关联，也未获其背书或赞助；标志仅用于标识你所选择的接口。</p>
+    <!-- The only way to reach us from the panes that have no other; About
+         carries its own inside the trouble card, so it steps aside there
+         rather than saying the same thing a third time on one screen. -->
+    <p class="odim oft-fb">
       <a id="feedbackLink" target="_blank" rel="noopener" data-i18n="optFeedbackLink">反馈问题</a>
     </p>
   </footer>

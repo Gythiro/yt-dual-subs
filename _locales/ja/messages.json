@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio（Qwen / DeepSeek）"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio（Qwen-TTS）"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "文全体を理解して分割"
   },
-  "startNoSubsQ": {
-    "message": "字幕が出ませんか？"
-  },
-  "startNoSubs": {
-    "message": "プレーヤー右下のCCボタンをクリックするか、別の動画を試してください。ライブ配信やミュージックビデオには字幕がないことがよくあります。"
-  },
   "langManage": {
     "message": "言語を管理…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "再生"
+  },
+  "ttsDuckShort": {
+    "message": "元の音声"
+  },
+  "secLineStyleHint": {
+    "message": "フォント · 色 · サイズ"
+  },
+  "troubleTitle": {
+    "message": "うまく動かない"
+  },
+  "troubleStep1": {
+    "message": "まずポップアップのスイッチを確認してください。オフだと字幕レイヤー全体が表示されません。"
+  },
+  "troubleStep2": {
+    "message": "この動画に字幕はありますか？プレーヤーの CC ボタンを試してください。元がなければ翻訳するものがありません。"
+  },
+  "troubleStep3": {
+    "message": "人気の動画で試してみてください。他では動くのにこの動画だけ動かない場合、たいていはこの動画の字幕トラックの問題です。"
+  },
+  "troubleDiagHint": {
+    "message": "まだ解決しないときは、診断情報をメールや Issue に貼り付けてください。バージョン、エンジンの状態、現在のタブの状況が含まれているので、やり取りが減ります。"
+  },
+  "ttsPreview": {
+    "message": "プレビュー"
+  },
+  "ttsPreviewPlaying": {
+    "message": "再生中…"
+  },
+  "ttsPreviewFail": {
+    "message": "再生できません — キーを確認し、「保存してテスト」を試してください"
+  },
+  "ttsFetchVoices": {
+    "message": "この言語の音声をさらに取得"
+  },
+  "ttsFetching": {
+    "message": "取得中…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "この言語専用の $N$ 種類の音声に切り替えました。現在の翻訳言語でのみ使えます。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "言語に追従する音声に戻す"
+  },
+  "ttsVoicesNone": {
+    "message": "このプロバイダーにはこの言語の追加音声がありません — 組み込み音声は引き続き使えます。"
+  },
+  "ttsVoiceFemale": {
+    "message": "女性"
+  },
+  "ttsVoiceMale": {
+    "message": "男性"
+  },
+  "provLocalSpeech": {
+    "message": "ブラウザ標準の音声（無料）"
   }
 }

@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "înțeleasă întreagă, reîmpărțită"
   },
-  "startNoSubsQ": {
-    "message": "Nu apar subtitrări?"
-  },
-  "startNoSubs": {
-    "message": "Apasă butonul CC din dreapta jos a playerului sau încearcă alt video — transmisiunile live și videoclipurile muzicale adesea nu au deloc."
-  },
   "langManage": {
     "message": "Gestionează limbile…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Redare"
+  },
+  "ttsDuckShort": {
+    "message": "Audio original"
+  },
+  "secLineStyleHint": {
+    "message": "Font · Culoare · Dimensiune"
+  },
+  "troubleTitle": {
+    "message": "Ceva nu merge"
+  },
+  "troubleStep1": {
+    "message": "Verifică mai întâi comutatorul din popup — dacă e oprit, tot stratul de subtitrări rămâne ascuns."
+  },
+  "troubleStep2": {
+    "message": "Are acest videoclip subtitrări deloc? Încearcă butonul CC din player: fără un original nu există nimic de tradus."
+  },
+  "troubleStep3": {
+    "message": "Încearcă un videoclip popular. Dacă tot restul merge și doar acesta nu, de obicei e pista de subtitrări a videoclipului."
+  },
+  "troubleDiagHint": {
+    "message": "Tot nu merge? Lipește informațiile de diagnostic în e-mail sau în issue — conțin versiunea, starea motorului și ce face fila curentă, economisind un schimb de mesaje sau două."
+  },
+  "ttsPreview": {
+    "message": "Previzualizare"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Se redă…"
+  },
+  "ttsPreviewFail": {
+    "message": "Nu s-a putut reda — verifică cheia, apoi salvează și testează"
+  },
+  "ttsFetchVoices": {
+    "message": "Încarcă mai multe voci pentru această limbă"
+  },
+  "ttsFetching": {
+    "message": "Se încarcă…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Acum sunt afișate cele $N$ voci ale acestei limbi. Funcționează doar cu limba țintă curentă.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Înapoi la vocile care urmează limba ta"
+  },
+  "ttsVoicesNone": {
+    "message": "Acest furnizor nu are voci suplimentare pentru această limbă — cele integrate funcționează în continuare."
+  },
+  "ttsVoiceFemale": {
+    "message": "feminină"
+  },
+  "ttsVoiceMale": {
+    "message": "masculină"
+  },
+  "provLocalSpeech": {
+    "message": "Vocile proprii ale browserului (gratuit)"
   }
 }

@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "알리바바 모델 스튜디오 (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "전체를 이해한 뒤 다시 나눔"
   },
-  "startNoSubsQ": {
-    "message": "자막이 안 보이나요?"
-  },
-  "startNoSubs": {
-    "message": "플레이어 오른쪽 아래의 CC 버튼을 누르거나 다른 동영상을 시도해 보세요 — 라이브 스트림과 뮤직비디오에는 자막이 없는 경우가 많습니다."
-  },
   "langManage": {
     "message": "언어 관리…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "재생"
+  },
+  "ttsDuckShort": {
+    "message": "원본 오디오"
+  },
+  "secLineStyleHint": {
+    "message": "글꼴 · 색상 · 크기"
+  },
+  "troubleTitle": {
+    "message": "문제가 있어요"
+  },
+  "troubleStep1": {
+    "message": "먼저 팝업의 스위치를 확인하세요 — 꺼져 있으면 자막 레이어가 전혀 나타나지 않습니다."
+  },
+  "troubleStep2": {
+    "message": "이 영상에 자막이 있나요? 플레이어의 CC 버튼을 눌러 보세요. 원본이 없으면 번역할 내용이 없습니다."
+  },
+  "troubleStep3": {
+    "message": "인기 있는 영상을 열어 보세요. 다른 건 다 되고 이 영상만 안 되면, 대개 이 영상의 자막 트랙 문제입니다."
+  },
+  "troubleDiagHint": {
+    "message": "그래도 안 되나요? 진단 정보를 이메일이나 이슈에 붙여넣으세요 — 버전, 엔진 상태, 현재 탭이 무엇을 하고 있는지 담겨 있어 주고받는 횟수를 줄일 수 있습니다."
+  },
+  "ttsPreview": {
+    "message": "미리듣기"
+  },
+  "ttsPreviewPlaying": {
+    "message": "재생 중…"
+  },
+  "ttsPreviewFail": {
+    "message": "재생할 수 없습니다 — 키를 확인하고 저장 후 테스트를 시도하세요"
+  },
+  "ttsFetchVoices": {
+    "message": "이 언어의 음성을 더 가져오기"
+  },
+  "ttsFetching": {
+    "message": "가져오는 중…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "이 언어 전용 음성 $N$개로 전환했습니다. 현재 번역 언어에서만 사용됩니다.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "언어를 따라가는 음성으로 돌아가기"
+  },
+  "ttsVoicesNone": {
+    "message": "이 제공자에는 이 언어의 추가 음성이 없습니다 — 내장 음성은 계속 사용할 수 있습니다."
+  },
+  "ttsVoiceFemale": {
+    "message": "여성"
+  },
+  "ttsVoiceMale": {
+    "message": "남성"
+  },
+  "provLocalSpeech": {
+    "message": "브라우저 자체 음성 (무료)"
   }
 }

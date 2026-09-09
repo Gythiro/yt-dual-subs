@@ -5,7 +5,9 @@
   "version": "3.6.0",
   "description": "__MSG_extDesc__",
   "minimum_chrome_version": "111",
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "host_permissions": [
     "https://translate.googleapis.com/*"
   ],
@@ -24,7 +26,8 @@
     "https://api-free.deepl.com/*",
     "https://api.deepl.com/*",
     "https://texttospeech.googleapis.com/*",
-    "https://*.tts.speech.microsoft.com/*"
+    "https://*.tts.speech.microsoft.com/*",
+    "https://api.elevenlabs.io/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -35,16 +38,26 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["inject.js"],
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "inject.js"
+      ],
       "run_at": "document_start",
       "world": "MAIN",
       "all_frames": false
     },
     {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle",
       "all_frames": false
     }

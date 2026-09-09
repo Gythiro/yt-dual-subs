@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "tervikuna mõistetud, tagasi jaotatud"
   },
-  "startNoSubsQ": {
-    "message": "Subtiitreid ei kuvata?"
-  },
-  "startNoSubs": {
-    "message": "Klõpsa pleieri all paremal CC-nupul või proovi teist videot — otseülekannetel ja muusikavideotel sageli polegi subtiitreid."
-  },
   "langManage": {
     "message": "Halda keeli…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Taasesitus"
+  },
+  "ttsDuckShort": {
+    "message": "Originaalheli"
+  },
+  "secLineStyleHint": {
+    "message": "Font · Värv · Suurus"
+  },
+  "troubleTitle": {
+    "message": "Midagi on valesti"
+  },
+  "troubleStep1": {
+    "message": "Kontrolli esmalt hüpikakna lülitit — kui see on väljas, jääb kogu subtiitrite kiht peidus."
+  },
+  "troubleStep2": {
+    "message": "Kas sellel videol on üldse subtiitreid? Proovi mängijas CC-nuppu: ilma originaalita pole midagi tõlkida."
+  },
+  "troubleStep3": {
+    "message": "Proovi populaarset videot. Kui kõik muu töötab ja ainult see ei tööta, on tavaliselt tegu selle video subtiitrirajaga."
+  },
+  "troubleDiagHint": {
+    "message": "Ikka ummikus? Kleebi diagnostikainfo e-kirja või veateatesse — selles on versioon, mootori olek ja praeguse vahekaardi tegevus, mis säästab ühe-kaks edasi-tagasi kirjavahetust."
+  },
+  "ttsPreview": {
+    "message": "Eelvaade"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Esitan…"
+  },
+  "ttsPreviewFail": {
+    "message": "Ei õnnestunud esitada — kontrolli võtit ja proovi Salvesta ja testi"
+  },
+  "ttsFetchVoices": {
+    "message": "Hangi selle keele jaoks rohkem hääli"
+  },
+  "ttsFetching": {
+    "message": "Hangin…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Kuvatakse selle keele $N$ häält. Need töötavad ainult praeguse sihtkeelega.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Tagasi häälte juurde, mis järgivad su keelt"
+  },
+  "ttsVoicesNone": {
+    "message": "Sellel pakkujal pole selle keele jaoks lisahääli — sisseehitatud hääled töötavad endiselt."
+  },
+  "ttsVoiceFemale": {
+    "message": "naishääl"
+  },
+  "ttsVoiceMale": {
+    "message": "meeshääl"
+  },
+  "provLocalSpeech": {
+    "message": "Brauseri enda hääled (tasuta)"
   }
 }

@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "ganz verstanden, wieder aufgeteilt"
   },
-  "startNoSubsQ": {
-    "message": "Keine Untertitel zu sehen?"
-  },
-  "startNoSubs": {
-    "message": "Klicke auf die CC-Taste unten rechts im Player, oder versuche ein anderes Video — Livestreams und Musikvideos haben oft gar keine."
-  },
   "langManage": {
     "message": "Sprachen verwalten…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "Wiedergabe"
+  },
+  "ttsDuckShort": {
+    "message": "Originalton"
+  },
+  "secLineStyleHint": {
+    "message": "Schrift · Farbe · Größe"
+  },
+  "troubleTitle": {
+    "message": "Etwas stimmt nicht"
+  },
+  "troubleStep1": {
+    "message": "Prüfe zuerst den Schalter im Popup — ist er aus, bleibt die ganze Untertitel-Ebene weg."
+  },
+  "troubleStep2": {
+    "message": "Hat dieses Video überhaupt Untertitel? Probier den CC-Button im Player: ohne Original gibt es nichts zu übersetzen."
+  },
+  "troubleStep3": {
+    "message": "Versuch ein beliebtes Video. Wenn sonst alles funktioniert und nur dieses nicht, liegt es meist an der Untertitelspur dieses Videos."
+  },
+  "troubleDiagHint": {
+    "message": "Immer noch festgefahren? Füg die Diagnoseinfos in deine E-Mail oder das Issue ein — sie enthalten die Version, den Engine-Status und was der aktuelle Tab macht, das spart ein, zwei Rückfragen."
+  },
+  "ttsPreview": {
+    "message": "Vorschau"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Wiedergabe…"
+  },
+  "ttsPreviewFail": {
+    "message": "Konnte nicht abspielen — Schlüssel prüfen und Speichern und testen versuchen"
+  },
+  "ttsFetchVoices": {
+    "message": "Weitere Stimmen für diese Sprache laden"
+  },
+  "ttsFetching": {
+    "message": "Wird geladen…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Jetzt siehst du die $N$ Stimmen dieser Sprache. Sie funktionieren nur für diese Zielsprache.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Zurück zu Stimmen, die deiner Sprache folgen"
+  },
+  "ttsVoicesNone": {
+    "message": "Dieser Anbieter hat keine zusätzlichen Stimmen für diese Sprache — die integrierten funktionieren weiterhin."
+  },
+  "ttsVoiceFemale": {
+    "message": "weiblich"
+  },
+  "ttsVoiceMale": {
+    "message": "männlich"
+  },
+  "provLocalSpeech": {
+    "message": "Eigene Browser-Stimmen (kostenlos)"
   }
 }

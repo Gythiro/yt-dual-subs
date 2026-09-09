@@ -32,6 +32,12 @@
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
   },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
   "provQwenShort": {
     "message": "Model Studio"
   },
@@ -579,12 +585,6 @@
   "startPicByoNote": {
     "message": "เข้าใจทั้งก้อน แล้วแยกกลับ"
   },
-  "startNoSubsQ": {
-    "message": "ไม่เห็นคำบรรยาย?"
-  },
-  "startNoSubs": {
-    "message": "คลิกปุ่ม CC มุมขวาล่างของเครื่องเล่น หรือลองวิดีโออื่น — สดและมิวสิกวิดีโอมักไม่มีคำบรรยาย"
-  },
   "langManage": {
     "message": "จัดการภาษา…"
   },
@@ -751,5 +751,64 @@
   },
   "ttsGroupPlayback": {
     "message": "การเล่น"
+  },
+  "ttsDuckShort": {
+    "message": "เสียงต้นฉบับ"
+  },
+  "secLineStyleHint": {
+    "message": "ฟอนต์ · สี · ขนาด"
+  },
+  "troubleTitle": {
+    "message": "มีปัญหา"
+  },
+  "troubleStep1": {
+    "message": "ตรวจสวิตช์ในป๊อปอัปก่อน — ถ้าปิดอยู่ ชั้นซับไตเติลทั้งหมดจะไม่แสดง"
+  },
+  "troubleStep2": {
+    "message": "วิดีโอนี้มีซับไตเติลไหม? ลองกดปุ่ม CC ในเครื่องเล่น: ถ้าไม่มีต้นฉบับ ก็ไม่มีอะไรให้แปล"
+  },
+  "troubleStep3": {
+    "message": "ลองวิดีโอยอดนิยมดู ถ้าอย่างอื่นใช้ได้ มีแค่วิดีโอนี้ที่ไม่ได้ มักเป็นแทร็กซับไตเติลของวิดีโอนี้"
+  },
+  "troubleDiagHint": {
+    "message": "ยังแก้ไม่ได้? วางข้อมูลวินิจฉัยลงในอีเมลหรือ issue — มีเวอร์ชัน สถานะเอนจิน และแท็บปัจจุบันกำลังทำอะไร ช่วยลดการถามตอบไปมาได้"
+  },
+  "ttsPreview": {
+    "message": "ตัวอย่าง"
+  },
+  "ttsPreviewPlaying": {
+    "message": "กำลังเล่น…"
+  },
+  "ttsPreviewFail": {
+    "message": "เล่นไม่ได้ — ตรวจสอบคีย์แล้วลองบันทึกและทดสอบ"
+  },
+  "ttsFetchVoices": {
+    "message": "ดึงเสียงเพิ่มสำหรับภาษานี้"
+  },
+  "ttsFetching": {
+    "message": "กำลังดึง…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "กำลังแสดงเสียง $N$ เสียงของภาษานี้ ใช้ได้เฉพาะกับภาษาปลายทางนี้เท่านั้น",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "กลับไปที่เสียงที่เปลี่ยนตามภาษา"
+  },
+  "ttsVoicesNone": {
+    "message": "ผู้ให้บริการนี้ไม่มีเสียงเพิ่มสำหรับภาษานี้ — เสียงในตัวยังใช้ได้"
+  },
+  "ttsVoiceFemale": {
+    "message": "หญิง"
+  },
+  "ttsVoiceMale": {
+    "message": "ชาย"
+  },
+  "provLocalSpeech": {
+    "message": "เสียงของเบราว์เซอร์คุณเอง (ฟรี)"
   }
 }

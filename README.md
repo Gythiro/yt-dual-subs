@@ -53,6 +53,8 @@ English | [简体中文](README.zh-CN.md)
 - **Two free engines, smart default** — YouTube's own whole‑track translation whenever the video supports it, with a much smarter fallback: fragmented captions are **rebuilt into full sentences** before Google translates them, so ASR fragments stop reading like word salad. Prefetched ahead of playback.
 - **Or bring your own API key** — twelve providers, including DeepSeek, Gemini, DeepL and Alibaba Cloud Model Studio. Each sentence is understood as a whole and then split back across the cues, so the translation line turns over with the original instead of standing still. The key is stored on your own machine and is sent to nobody but the provider you picked.
 - **50 target languages**, and you choose which of them appear in the menu.
+- **Read the translation aloud** — each line is spoken as it appears, with the video's own audio ducked underneath and slowed a touch when a line is too long to fit. Your browser's own voices work with no key at all; five cloud providers are there if you want better ones, including Chinese regional voices and your own cloned ones. Preview a voice before you commit to it.
+- **Speaks your language, not just ours** — the interface itself comes in 20 languages, picked automatically and switchable by hand.
 
 </td>
 <td valign="top">

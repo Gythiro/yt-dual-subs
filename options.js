@@ -45,7 +45,7 @@ function uiLang() {
 }
 
 let state = { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN",
-              ttsProvider: "", ttsVoice: "" };
+              ttsProvider: "local-speech", ttsVoice: "" };
 // Which provider's panel is on screen. Deliberately NOT state.byoProvider:
 // clicking a name in the list means "let me set this one up", and it used to
 // switch the whole extension over to it on the spot — even with no key saved,
@@ -63,6 +63,11 @@ const CUSTOM_MODEL = "__custom__";
 
 // ---- i18n for static markup ------------------------------------------------
 function applyI18n() {
+  // CSS keys CJK-specific rules (uppercase off for group labels) off this.
+  try {
+    const ui = self.YTDS_I18N.effectiveLang();
+    if (ui) document.documentElement.lang = ui;
+  } catch (_e) { /* ignore */ }
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const s = t(el.dataset.i18n, "");
     if (s) el.textContent = s;
@@ -579,9 +584,122 @@ function showSection(name) {
   const def = SECTIONS[sec];
   $("pageTitle").textContent = t(def.title, $("pageTitle").textContent);
   $("pageIntro").textContent = t(def.intro, $("pageIntro").textContent);
+  // The footer's privacy/trademark lines show per pane (options.css keys off
+  // this attribute); the feedback link stays on every pane.
+  const oft = $("oft");
+  if (oft) oft.dataset.sec = sec;
   if (location.hash.slice(1) !== sec) {
     // replace, not push: the section switch is not somewhere "back" should go.
     history.replaceState(null, "", "#" + sec);
+  }
+}
+
+// ---- diagnostics (the permanent entry; the popup has a warning-only twin) ----
+// This page is not the YouTube tab, so it cannot ask "the active tab" what it
+// is rendering. It asks EVERY tab instead: only tabs carrying our content
+// script answer, which is exactly the set we want. No new permission — the
+// reply comes from a script we already inject, and tabs.query without the
+// "tabs" permission still returns ids. Several YouTube tabs open is not a
+// problem to disambiguate but a thing to report: all of them go in the bundle.
+function askYouTubeTabs() {
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = (v) => { if (!done) { done = true; resolve(v); } };
+    setTimeout(() => finish([]), 800);       // a page mid-load must not hang this
+    try {
+      chrome.tabs.query({}, (tabs) => {
+        const ids = (tabs || []).map((t) => t.id).filter((id) => id != null);
+        if (!ids.length) return finish([]);
+        const out = [];
+        let left = ids.length;
+        for (const id of ids) {
+          try {
+            chrome.tabs.sendMessage(id, { type: "engineStatus" }, (r) => {
+              void chrome.runtime.lastError;   // most tabs have no listener
+              if (r && r.ok) out.push(r);
+              if (--left === 0) finish(out);
+            });
+          } catch (_e) {
+            if (--left === 0) finish(out);
+          }
+        }
+      });
+    } catch (_e) { finish([]); }
+  });
+}
+
+async function buildDiagnostics() {
+  const L = [];
+  let ver = "";
+  try { ver = chrome.runtime.getManifest().version; } catch (_e) { /* ignore */ }
+  L.push("Dual Subtitles for YouTube — diagnostic");
+  L.push("version: " + (ver || "?"));
+  L.push("browser: " + navigator.userAgent);
+  let ui = "";
+  try { ui = (chrome.i18n && chrome.i18n.getUILanguage()) || ""; } catch (_e) { /* ignore */ }
+  let uiLocale = "auto";
+  try {
+    const got = await new Promise((res) => chrome.storage.sync.get({ uiLocale: "auto" }, res));
+    uiLocale = (got && got.uiLocale) || "auto";
+  } catch (_e) { /* ignore */ }
+  L.push("ui-language: " + (ui || "?") +
+    (uiLocale && uiLocale !== "auto" ? " (override: " + uiLocale + ")" : ""));
+  L.push("target-language: " + (state.targetLang || "?"));
+  L.push("engine-setting: " + (state.byoProvider
+    ? "byo (" + state.byoProvider + (state.byoModel ? " / " + state.byoModel : "") + ")"
+    : "see popup"));
+  L.push("read-aloud: " + (state.ttsProvider || "off") +
+    (state.ttsVoice ? " / " + state.ttsVoice : ""));
+  try {
+    if (chrome.storage.session) {
+      const got = await chrome.storage.session.get(["ytdsGtxGate", "ytdsByoGate", "ytdsByoStatus"]);
+      const gate = (name, g) => {
+        if (!g || !g.backoffMs) return name + ": clear";
+        const left = Math.max(0, Math.round(((g.gateUntil || 0) - Date.now()) / 1000));
+        return name + ": backoff " + Math.round(g.backoffMs / 1000) + "s" +
+          (left ? " (" + left + "s left)" : " (expired)");
+      };
+      L.push(gate("gtx-gate", got && got.ytdsGtxGate));
+      L.push(gate("byo-gate", got && got.ytdsByoGate));
+      const st = got && got.ytdsByoStatus;
+      if (st && st.code) L.push("byo-last-error: " + st.code + " (" + (st.provider || "?") + ")");
+    }
+  } catch (_e) { L.push("gates: unavailable"); }
+  const pages = await askYouTubeTabs();
+  if (!pages.length) {
+    L.push("page: no YouTube tab open");
+  } else {
+    pages.forEach((r, i) => {
+      const n = pages.length > 1 ? " #" + (i + 1) : "";
+      L.push("page" + n + ": " + (r.href || "youtube (id unknown)"));
+      L.push("video-engine" + n + ": " + (r.engine || "none yet") +
+        (r.provider ? " (" + r.provider + ")" : "") +
+        (r.same ? ", same-language" : "") +
+        (r.track && r.track !== "none" ? ", track=" + r.track : "") +
+        (r.fellBack ? ", fell-back" : "") +
+        (r.tts ? ", tts spoken=" + r.tts.spoken + " skipped=" + r.tts.skipped +
+          (r.tts.err ? " err=" + r.tts.err : "") : ""));
+    });
+  }
+  L.push("time: " + new Date().toISOString());
+  return L.join("\n");
+}
+
+async function onDiagCopy() {
+  const btn = $("aboutDiag");
+  try {
+    const text = await buildDiagnostics();
+    await navigator.clipboard.writeText(text);
+    if (btn) {
+      btn.classList.add("ok");
+      btn.textContent = t("diagCopied", "已复制 — 直接粘贴进邮件或 issue");
+      setTimeout(() => {
+        btn.classList.remove("ok");
+        btn.textContent = t("diagCopy", "复制诊断信息");
+      }, 2200);
+    }
+  } catch (_e) {
+    if (btn) btn.textContent = t("diagCopyFail", "复制失败 — 请改用截图");
   }
 }
 
@@ -596,7 +714,9 @@ function initAbout() {
   set("aboutGithub", "https://github.com/Gythiro/yt-dual-subs");
   set("aboutChangelog", SITE_URL + "updated.html?lang=" + lang + "&src=options");
   set("aboutRoadmap", SITE_URL + "roadmap.html?lang=" + lang + "&src=options");
-  set("aboutFeedback", SITE_URL + "feedback.html?lang=" + lang + "&src=options");
+  set("troubleFeedback", SITE_URL + "feedback.html?lang=" + lang + "&src=options");
+  const diag = $("aboutDiag");
+  if (diag) diag.addEventListener("click", onDiagCopy);
 }
 
 // ---- wiring ----------------------------------------------------------------
@@ -640,17 +760,102 @@ function paintTtsKeyField(p) {
   });
 }
 
+// Who the voice is and which language it grew up speaking — the accent it
+// carries into all the others. The raw id says neither.
+function voiceLabel(v) {
+  try {
+    return P.tts.voiceLabel(v, (code) => {
+      const info = LANGS.get(code);
+      return info ? info.native : "";
+    }, (g) => (g === "f" ? t("ttsVoiceFemale", "女声") : t("ttsVoiceMale", "男声")));
+  } catch (_e) { return v; }
+}
+
+// Voices fetched for one language, remembered per provider so switching back
+// and forth does not re-spend the round trip. Lives only for this page's life:
+// the built-in family is the durable answer and what the engine falls back to.
+const fetchedVoices = Object.create(null);   // providerId -> [voice id]
+
+// Two catalogues, never one list. The family a provider ships FOLLOWS the
+// reader across all fifty target languages; what "fetch this language's voices"
+// returns is PINNED to the language it was fetched for. Merging them produced a
+// menu where the two behaved differently and nothing said so — and, for Google,
+// where thirty of the thirty-eight fetched entries were the family list again
+// under longer names. So fetching switches which catalogue is on screen rather
+// than appending to it, and there is a way back.
+let voiceCatalogue = "family";          // "family" | "language"
+
+function ttsVoiceChoices(p) {
+  if (voiceCatalogue === "language" && (fetchedVoices[p.id] || []).length) {
+    return fetchedVoices[p.id].slice();
+  }
+  return (p.voices || []).slice();
+}
+
+// The machine's own voices, for the language being read. Chrome fills this
+// list asynchronously on first call, hence the event. The rule for "which of
+// them count" lives in providers.js so that this page and the popup cannot
+// drift into offering different menus.
+function localVoicesFor(lang) {
+  return P.tts.localVoiceNames(window.speechSynthesis, lang);
+}
+
 function paintTtsVoices(p) {
   const sel = $("ttsVoiceSel");
   sel.textContent = "";
-  for (const v of p.voices || []) {
+  const choices = p.localVoices
+    ? localVoicesFor(state.targetLang) : ttsVoiceChoices(p);
+  const inLanguage = !p.localVoices && voiceCatalogue === "language" &&
+    (fetchedVoices[p.id] || []).length > 0;
+  const add = (parent, v) => {
     const o = document.createElement("option");
     o.value = v;
-    o.textContent = v;
-    sel.appendChild(o);
+    o.textContent = voiceLabel(v);
+    parent.appendChild(o);
+  };
+  if (inLanguage) {
+    // The id carries the engine generation, and that is the actual difference
+    // between two entries whose names are both a single letter. Grouping by it
+    // turns a column of near-identical strings into a handful of short lists.
+    const tiers = [];
+    const byTier = Object.create(null);
+    for (const v of choices) {
+      const tier = P.tts.voiceTier(v);          // "" for providers whose ids carry none
+      if (!byTier[tier]) { byTier[tier] = []; tiers.push(tier); }
+      byTier[tier].push(v);
+    }
+    const grouped = tiers.filter(Boolean).length > 1;
+    for (const tier of tiers) {
+      // An untiered id has nothing to head a group with, and one group is a
+      // heading over the whole list — neither earns a label it would have to
+      // be given in twenty languages.
+      if (!tier || !grouped) { byTier[tier].forEach((v) => add(sel, v)); continue; }
+      const g = document.createElement("optgroup");
+      g.label = tier;
+      byTier[tier].forEach((v) => add(g, v));
+      sel.appendChild(g);
+    }
+  } else {
+    choices.forEach((v) => add(sel, v));
   }
   const want = state.ttsVoice || p.defaultVoice || "";
-  if (want && (p.voices || []).includes(want)) sel.value = want;
+  if (want && choices.includes(want)) sel.value = want;
+  const row = $("ttsFetchRow");
+  if (row) row.hidden = !p.listVoices;
+  const back = $("ttsBackToFamily");
+  if (back) back.hidden = !inLanguage;
+  const fetchBtn = $("ttsFetchVoices");
+  // Offering "fetch" again while its own result is on screen invites a second
+  // round trip for the same answer.
+  if (fetchBtn) fetchBtn.hidden = inLanguage;
+  // Nothing to key, nothing to test: the browser is already installed.
+  const keyField = $("ttsKey");
+  if (keyField) {
+    const field = keyField.closest(".ofield");
+    if (field) field.hidden = !!p.keyless;
+  }
+  const testBtn = $("ttsTestBtn");
+  if (testBtn) testBtn.hidden = !!p.keyless;
 }
 
 function persistTts(p, typedKey) {
@@ -672,13 +877,30 @@ function persistTts(p, typedKey) {
 // (registry hit, and a key unless the provider is keyless — the same predicate
 // the popup's card uses). The dropdown draft does not count: switching it
 // without saving changes nothing about what the engine plays with.
+// Mirrors popup.js's ttsUsable — the two must not drift, or one page offers a
+// switch the other knows cannot sound.
+const TTS_REGION_OK = /^[a-z0-9]{1,42}$/;      // mirrors background.js resolveTts
 function ttsReady() {
   const p = P.tts.get(state.ttsProvider || "");
   if (!p) return Promise.resolve(false);
-  if (p.keyless) return Promise.resolve(true);
+  // Mirrors popup.js ttsUsable: a browser without speechSynthesis cannot be
+  // offered the engine that depends on it.
+  if (p.localVoices) {
+    return Promise.resolve(typeof speechSynthesis !== "undefined");
+  }
   return new Promise((res) => {
-    chrome.storage.local.get({ ttsKeys: {} }, (got) => {
-      res(!!(((got && got.ttsKeys) || {})[p.id]));
+    chrome.storage.sync.get({ ttsRegion: "" }, (sy) => {
+      // Azure's key is bound to a region that becomes the request host, and the
+      // key is stored before the test runs — so "has a key" can still mean
+      // "cannot speak a single line".
+      if (p.needsRegion &&
+          !TTS_REGION_OK.test(String((sy && sy.ttsRegion) || "").trim().toLowerCase())) {
+        return res(false);
+      }
+      if (p.keyless) return res(true);
+      chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+        res(!!(((got && got.ttsKeys) || {})[p.id]));
+      });
     });
   });
 }
@@ -699,6 +921,10 @@ function paintTtsUse() {
 function initReadaloud() {
   const sel = $("ttsProviderSel");
   if (!sel) return;
+  const guide = $("ttsGuideLink");
+  if (guide) {
+    guide.href = SITE_URL + "guide.html?lang=" + uiLang() + "&src=options#readaloud";
+  }
   const en = $("ttsEnabled");
   if (en) {
     chrome.storage.sync.get({ ttsEnabled: false }, (got) => { en.checked = !!(got && got.ttsEnabled); });
@@ -732,6 +958,7 @@ function initReadaloud() {
     });
     region.addEventListener("input", () => {
       chrome.storage.sync.set({ ttsRegion: region.value.trim().toLowerCase() });
+      paintTtsUse();     // typing a valid region unlocks playback on the spot
     });
   }
   sel.textContent = "";
@@ -747,10 +974,38 @@ function initReadaloud() {
   paintTtsVoices(cur);
   paintTtsUse();
 
+  // The machine's voice table is not ready when this page paints: the first
+  // synchronous getVoices() returns an empty array in every Chrome, and the
+  // list announces itself afterwards. Painting once left the DEFAULT engine
+  // with an empty picker — the one screen where "no voices" reads as "this
+  // feature is broken" rather than "this provider has none".
+  const synth = window.speechSynthesis;
+  if (synth && typeof synth.addEventListener === "function") {
+    synth.addEventListener("voiceschanged", () => {
+      const p = ttsProvider();
+      if (!p || !p.localVoices) return;   // an API provider's list is ours, not the machine's
+      const vsel = $("ttsVoiceSel");
+      const had = vsel ? vsel.value : "";
+      paintTtsVoices(p);
+      // Chrome may announce more than once (a voice pack finishing later). A
+      // repaint must not undo a pick that has been made but not yet saved.
+      if (had && vsel && Array.prototype.some.call(vsel.options, (o) => o.value === had)) {
+        vsel.value = had;
+      }
+    });
+  }
+
   sel.addEventListener("change", () => {
     const p = ttsProvider();
     if (!p) return;
     showTtsMsg("", null);
+    // The fetch line answers a question about the provider that was on screen
+    // when it was asked ("switched to this language's 38 voices"). Left
+    // standing, it describes voices that are not in the dropdown underneath it.
+    showTtsVoiceMsg("", null);
+    // …and neither is the catalogue it switched to: another provider's fetched
+    // list is not this one's.
+    voiceCatalogue = "family";
     paintTtsKeyField(p);
     paintTtsVoices(p);
   });
@@ -769,6 +1024,135 @@ function initReadaloud() {
       });
     });
   });
+  // The local engine previews without a round trip — same sentence, same
+  // language, spoken by the machine.
+  function speakLocalSample(voiceName) {
+    const synth = window.speechSynthesis;
+    if (!synth) { showTtsMsg(t("ttsPreviewFail", "播不出来"), "err"); return; }
+    try { synth.cancel(); } catch (_e) { /* ignore */ }
+    const lang = state.targetLang || "zh-CN";
+    const u = new SpeechSynthesisUtterance(
+      (LANGS && LANGS.sample ? LANGS.sample(lang) : "") || "Hello.");
+    u.lang = lang;
+    const v = (synth.getVoices() || []).find((x) => x && x.name === voiceName);
+    if (v) u.voice = v;
+    try { synth.speak(u); } catch (_e) {
+      showTtsMsg(t("ttsPreviewFail", "播不出来"), "err");
+    }
+  }
+
+  // One player for both doors into it: Preview, and Save-and-test once it has
+  // proved the key. The blob is released when the line finishes.
+  let previewAudio = null;
+  function playPreview(resp, after) {
+    const done = () => { if (after) after(); };
+    if (!resp || !resp.b64) { done(); return; }
+    if (previewAudio) { try { previewAudio.pause(); } catch (_e) { /* ignore */ } }
+    try {
+      const bin = atob(resp.b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const url = URL.createObjectURL(new Blob([bytes], { type: resp.mime || "audio/mpeg" }));
+      previewAudio = new Audio(url);
+      const cleanup = () => { try { URL.revokeObjectURL(url); } catch (_e) { /* ignore */ } done(); };
+      previewAudio.addEventListener("ended", cleanup);
+      previewAudio.addEventListener("error", () => {
+        showTtsMsg(t("ttsPreviewFail", "播不出来"), "err");
+        cleanup();
+      });
+      previewAudio.play().catch(() => {
+        showTtsMsg(t("ttsPreviewFail", "播不出来"), "err");
+        cleanup();
+      });
+    } catch (_e) { done(); }
+  }
+
+  // Preview: hear the SELECTED voice — saved or not — speak a line in the
+  // language being read. Nothing is written; the audio comes back with the
+  // probe the worker already had to run, so this costs one synthesis and no
+  // extra plumbing. Permissions are not requested here: only a provider whose
+  // key went through Save-and-test can be previewed, and that flow already
+  // granted the host.
+  function showTtsVoiceMsg(text, kind) {
+    const el = $("ttsVoiceMsg");
+    if (!el) return;
+    el.textContent = text || "";
+    el.className = "ohint" + (kind ? " " + kind : "");
+    el.hidden = !text;
+  }
+
+  $("ttsFetchVoices").addEventListener("click", () => {
+    const p = ttsProvider();
+    if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
+    if (!ttsStored[p.id] && !p.keyless) { showTtsMsg(errText("noKey"), "err"); return; }
+    const btn = $("ttsFetchVoices");
+    const label = t("ttsFetchVoices", "拉取这个语言的更多音色");
+    btn.disabled = true;
+    btn.textContent = t("ttsFetching", "拉取中…");
+    const done = () => { btn.disabled = false; btn.textContent = label; };
+    showTtsVoiceMsg("", null);
+    sendToBackground({ type: "ttsVoices" })
+      .then((resp) => {
+        if (!resp || !resp.ok) {
+          // Falling back to the built-in family is the honest failure: a voice
+          // list is not something a user can type in by hand.
+          showTtsVoiceMsg(errText(resp && resp.code), "err");
+          done();
+          return;
+        }
+        // Exact-string filtering kept "cmn-CN-Chirp3-HD-Achernar" alongside the
+        // "Achernar" already on offer — the same voice twice, thirty times over.
+        const extra = P.tts.mergeFetched(p, resp.voices);
+        fetchedVoices[p.id] = extra;
+        if (extra.length) voiceCatalogue = "language";
+        paintTtsVoices(p);
+        // Say what changed and what it costs, not "more". These voices work for
+        // the language they were fetched for and no other.
+        showTtsVoiceMsg(extra.length
+          ? tsub("ttsVoicesSwitched", [String(extra.length)],
+            "已切到这个语言专属的 " + extra.length + " 个音色,它们只对当前译文语言有效。")
+          : t("ttsVoicesNone", "这家在这个语言下没有额外音色。"), extra.length ? "ok" : null);
+        done();
+      })
+      .catch((err) => { showTtsVoiceMsg(errText((err && err.code) || "failed"), "err"); done(); });
+  });
+
+  $("ttsBackToFamily").addEventListener("click", () => {
+    const p = ttsProvider();
+    if (!p) return;
+    voiceCatalogue = "family";
+    showTtsVoiceMsg("", null);
+    paintTtsVoices(p);
+  });
+
+  $("ttsPreview").addEventListener("click", () => {
+    const p = ttsProvider();
+    if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
+    if (!ttsStored[p.id] && !p.keyless) { showTtsMsg(errText("noKey"), "err"); return; }
+    if (p.localVoices) {
+      // Nothing to fetch: this page has a speaker and the browser has voices.
+      speakLocalSample($("ttsVoiceSel").value);
+      return;
+    }
+    const btn = $("ttsPreview");
+    const label = t("ttsPreview", "试听");
+    btn.disabled = true;
+    btn.textContent = t("ttsPreviewPlaying", "播放中…");
+    const done = () => { btn.disabled = false; btn.textContent = label; };
+    showTtsMsg("", null);
+    if (previewAudio) { try { previewAudio.pause(); } catch (_e) { /* ignore */ } }
+    sendToBackground({ type: "ttsTest", voice: $("ttsVoiceSel").value })
+      .then((resp) => {
+        if (!resp || !resp.ok || !resp.b64) {
+          showTtsMsg(errText(resp && resp.code), "err");
+          done();
+          return;
+        }
+        playPreview(resp, done);
+      })
+      .catch((err) => { showTtsMsg(errText((err && err.code) || "failed"), "err"); done(); });
+  });
+
   $("ttsTestBtn").addEventListener("click", () => {
     const p = ttsProvider();
     if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
@@ -789,8 +1173,11 @@ function initReadaloud() {
           .then((resp) => {
             if (resp && resp.ok) {
               const kb = Math.max(1, Math.round((resp.bytes || 0) / 1024));
-              showTtsMsg(tsub("ttsTestOk", [String(kb), resp.voice || ""],
+              showTtsMsg(tsub("ttsTestOk", [String(kb), voiceLabel(resp.voice || "")],
                 "连接成功：试音 " + kb + " KB（" + (resp.voice || "") + "）"), "ok");
+              // It already synthesized a real line; a byte count is a poor
+              // substitute for hearing it.
+              playPreview(resp);
             } else {
               showTtsMsg(errText(resp && resp.code), "err");
             }
@@ -804,6 +1191,80 @@ function initReadaloud() {
       showTtsMsg(errText("noPerm"), "err");
     }
   });
+}
+
+// ---- cross-page sync ---------------------------------------------------------
+// This page is a long-lived tab and the popup writes the same sync keys — a
+// switch flipped in the popup must not leave a stale one here (it did). One
+// listener, per-key dispatch; a control already holding the new value is left
+// alone, which also swallows the echo of this page's own writes. An unsaved
+// key draft is never repainted away.
+function initCrossPageSync() {
+  try {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === "local") {
+        if (changes.ttsKeys) {
+          paintTtsUse();                       // a key appearing/vanishing flips the lock
+          const p = ttsProvider();
+          if (p && $("ttsKey") && !$("ttsKey").value) paintTtsKeyField(p);
+        }
+        return;
+      }
+      if (area !== "sync") return;
+      const c = changes;
+      if (c.ttsEnabled) {
+        const en = $("ttsEnabled");
+        const v = !!c.ttsEnabled.newValue;
+        if (en && en.checked !== v) en.checked = v;
+      }
+      for (const id of ["ttsVolume", "ttsDuckPct"]) {
+        if (!c[id]) continue;
+        const r = $(id);
+        const v = String(c[id].newValue);
+        // A slider under the user's thumb is not repainted: the write that got
+        // here is almost certainly its own echo, and yanking the knob mid-drag
+        // makes the two pages fight (the region field guards the same way).
+        if (r && r.value !== v && document.activeElement !== r) {
+          r.value = v;
+          const label = $(id + "V");
+          if (label) label.textContent = v + "%";
+        }
+      }
+      if (c.ttsProvider || c.ttsVoice) {
+        if (c.ttsProvider) state.ttsProvider = String(c.ttsProvider.newValue || "");
+        if (c.ttsVoice) state.ttsVoice = String(c.ttsVoice.newValue || "");
+        // The dropdown means "the one I am setting up" — never drag it to the
+        // one now in use. Doing that would strand a half-typed key under
+        // another provider's name, and Save-and-test would store it there.
+        const sel = $("ttsProviderSel");
+        const shown = P.tts.get(sel && sel.value);
+        if (shown && shown.id === state.ttsProvider && c.ttsVoice) paintTtsVoices(shown);
+        paintTtsUse();
+      }
+      if (c.ttsRegion) {
+        const r = $("ttsRegion");
+        const v = String(c.ttsRegion.newValue || "");
+        if (r && document.activeElement !== r && r.value !== v) r.value = v;
+        paintTtsUse();          // a region is what unlocks Azure's playback half
+      }
+      if (c.targetLang) {
+        const sel = $("startTargetSel");
+        const v = String(c.targetLang.newValue || "");
+        if (sel && sel.value !== v) sel.value = v;
+      }
+      if (c.byoProvider) {
+        state.byoProvider = String(c.byoProvider.newValue || "");
+        renderList();                          // the "in use" tag follows the popup's pick
+      }
+      if (c.langShown) {
+        const next = c.langShown.newValue || null;
+        if (JSON.stringify(next) !== JSON.stringify(langKept)) {
+          langKept = next;
+          renderLangs();
+        }
+      }
+    });
+  } catch (_e) { /* no listener = the page behaves as before */ }
 }
 
 // The start page's translation-target confirmation. The install hook guessed a
@@ -936,7 +1397,7 @@ wire();
 
 chrome.storage.sync.get(
   { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN", langShown: null,
-    byoModelBy: {}, ttsProvider: "", ttsVoice: "" },
+    byoModelBy: {}, ttsProvider: "local-speech", ttsVoice: "" },
   (got) => {
     state = Object.assign(state, got || {});
     modelsBy = Object.assign(Object.create(null), (got && got.byoModelBy) || {});
@@ -962,6 +1423,8 @@ chrome.storage.sync.get(
       renderList();
       renderDetail();
     });
+    // After the first paint: every control below holds a value to compare with.
+    initCrossPageSync();
   }
 );
 });                                // ← self.YTDS_I18N.init() gate around boot
