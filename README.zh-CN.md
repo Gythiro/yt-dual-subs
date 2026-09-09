@@ -4,7 +4,7 @@
 
 # Dual Subtitles for YouTube™
 
-**一次看两种语言 —— 原文与译文同处一层、永不重叠，按整句干净切换。**
+**一次看两种语言 —— 原文与译文同处一层、互不遮挡，按整句干净切换。**
 
 [![Chrome Web Store 版本](https://img.shields.io/chrome-web-store/v/ndifcigakimmibkgeabchfaolhjpcmge?style=flat-square&logo=googlechrome&logoColor=white&label=chrome%20web%20store)](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)
 [![许可: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
@@ -32,7 +32,7 @@
 <tr>
 <td width="50%" valign="top" align="center">
 
-<h3>一层字幕，零重叠，零抖动。</h3>
+<h3>一层字幕，不重叠，整句切换。</h3>
 
 <img src="https://gythiro.github.io/yt-dual-subs/img/compare-zh.png" width="400" alt="前后对比：其他工具的原文与译文撞在一起；本扩展上下分明不重叠">
 
@@ -41,17 +41,17 @@
 
 <h3>每一行，随你调。</h3>
 
-<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-popup.zh.png" width="320" alt="带实时预览的设置弹窗：目标语言、翻译引擎与布局控制">
+<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-popup.zh.png" width="320" alt="带实时预览的设置弹窗：目标语言、引擎设为自带 Key 并在下方选服务商、以及布局控制">
 
 </td>
 </tr>
 <tr>
 <td valign="top">
 
-- **双语单层** —— 一行原文、一行译文；YouTube 自带字幕层被隐藏，两者永不重叠。
-- **整句切换，不抖动** —— 直接用带时间轴的字幕 *cue*（而非屏幕上滚动刷新的文本）渲染，按整句切换，不再逐词闪烁。
+- **双语单层** —— 一行原文、一行译文；YouTube 自带字幕层被隐藏，两者不会叠在一起。
+- **整句切换** —— 直接用带时间轴的字幕 *cue*（而非屏幕上滚动刷新的文本）渲染，句子换了字幕才换。
 - **两套免费引擎，聪明的默认值** —— 视频支持时用 YouTube 自带的整轨翻译；不支持时自动换用聪明得多的备选：先把碎片字幕**拼回完整句子**再交给 Google 翻译，碎片式「翻译腔渣渣」从根上消失。译文提前预取。
-- **也可以用自己的 API Key** —— DeepSeek、Gemini、DeepL、阿里百炼等十余家。译文整句理解之后再按字幕切回来，译文行跟着原文一起换，不再一整句杵着。Key 只存在你自己的机器上，除了你选的那家服务商不会发往任何地方。
+- **也可以用自己的 API Key** —— 共 12 家，含 DeepSeek、Gemini、DeepL、阿里百炼。译文整句理解之后再按字幕切回来，译文行跟着原文一起换，不再一整句杵着。Key 只存在你自己的机器上，除了你选的那家服务商不会发往任何地方。
 - **50 种目标语言**，显示哪几种由你决定。
 
 </td>
@@ -96,6 +96,7 @@
 ## ⚙️ 使用
 
 - **工具栏图标** → 设置弹窗：目标语言、翻译引擎、上下顺序、位置、行间距，以及每一行的样式，均带实时预览。
+- **齿轮图标**（弹窗右上角）→ 独立设置页：新手入门、自带 Key 的服务商配置、以及下拉里显示哪些语言。
 - **控制栏按钮**（齿轮旁边那个字幕框图标）：一键开/关。**蓝色 = 开，灰色 = 关。**
 - **拖动**：鼠标移到播放器上，字幕框左上角出现拖动手柄；**双击手柄**复位。
 - **导出**（弹窗 → 导出字幕）：把字幕下载成 `.srt` 文件 —— 可选原文、译文或双语。
@@ -115,9 +116,9 @@ YouTube 的字幕来自 `/api/timedtext` 接口，如今每次请求都需要一
 </details>
 
 <details>
-<summary><b>🔁 两套翻译引擎对比</b></summary>
+<summary><b>🔁 翻译引擎对比</b></summary>
 
-默认的**自动**模式：视频的字幕轨可翻译时用整轨翻译，不可翻译时自动切到智能整句。也可以在弹窗里手动指定任一引擎 —— 觉得整轨翻译读不通时，值得切到智能整句试试。
+默认的**自动**模式：视频的字幕轨可翻译时用整轨翻译，不可翻译时自动切到智能整句。也可以在弹窗里手动指定任一引擎 —— 觉得整轨翻译读不通时，值得切到智能整句试试。还有第三条路径默认关闭：把每句话发给你自己填了 Key 的服务商。下表只对比两套免费引擎。
 
 | | 整轨翻译（YouTube） | 智能整句（Google） |
 |---|---|---|
@@ -153,8 +154,11 @@ YouTube 的字幕来自 `/api/timedtext` 接口，如今每次请求都需要一
 |---|---|
 | `inject.js` | 主世界嗅探：抓取播放器带 `pot` 的 timedtext URL，取 cue + 译文 |
 | `content.js` | 覆盖层、cue 引擎、拖动、控制栏开关、读屏回退 |
-| `background.js` | 翻译 service worker（Google 接口） |
+| `background.js` | 翻译 service worker —— 三条车道：YouTube 整轨、Google 免费接口、你自己的服务商 |
 | `popup.html/.css/.js` | 带实时预览的设置界面 |
+| `options.html/.js` | 独立设置页：新手入门、服务商配置、语言管理、关于 |
+| `providers.js` | 服务商表 —— 接口地址、默认模型、各家的脾气 |
+| `languages.js` | 目标语言表（界面上那个语言数就是从它数出来的） |
 | `content.css` | 覆盖层样式 + 隐藏原生字幕 |
 
 欢迎提 Issue 和 Pull Request —— [入口在这里](https://github.com/Gythiro/yt-dual-subs/issues)。
@@ -167,7 +171,7 @@ YouTube 的字幕来自 `/api/timedtext` 接口，如今每次请求都需要一
 
 ## 🙏 致谢
 
-本项目是受（已停更、闭源的）*YouTube™ Dual Subtitles* 启发的**全新独立实现** —— 未使用其任何代码，并从根本上解决了重叠与逐词跳动的问题。
+本项目是受（已停更、闭源的）*YouTube™ Dual Subtitles* 启发的**全新独立实现** —— 未使用其任何代码，并把重叠与逐词跳动的问题放到源头去处理。
 
 ## 📜 许可
 

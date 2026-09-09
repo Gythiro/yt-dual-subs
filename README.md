@@ -32,7 +32,7 @@ English | [简体中文](README.zh-CN.md)
 <tr>
 <td width="50%" valign="top" align="center">
 
-<h3>One layer. Zero overlap. Zero flicker.</h3>
+<h3>One layer. No overlap. Whole sentences.</h3>
 
 <img src="https://gythiro.github.io/yt-dual-subs/img/compare-en.png" width="400" alt="Before and after: other tools let the two caption lines collide; Dual Subtitles for YouTube keeps them cleanly separated">
 
@@ -41,17 +41,17 @@ English | [简体中文](README.zh-CN.md)
 
 <h3>Every line, styled your way.</h3>
 
-<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-popup.png" width="320" alt="The settings popup with live preview: target language, engine toggle, and layout controls">
+<img src="https://gythiro.github.io/yt-dual-subs/img/screenshot-popup.png" width="320" alt="The settings popup with live preview: target language, the engine set to your own key with a provider picker below it, and layout controls">
 
 </td>
 </tr>
 <tr>
 <td valign="top">
 
-- **Dual subtitles, one layer** — original on one line, your language on the other. YouTube's own caption layer is hidden, so the two never overlap.
-- **Per‑sentence, no jitter** — renders from the timed caption *cues* (not the rolling on‑screen text), so lines switch by whole sentence instead of flickering word by word.
+- **Dual subtitles, one layer** — original on one line, your language on the other. YouTube's own caption layer is hidden, so the two don't collide.
+- **Whole sentences** — renders from the timed caption *cues* rather than the rolling on‑screen text, so a line changes when the sentence does.
 - **Two free engines, smart default** — YouTube's own whole‑track translation whenever the video supports it, with a much smarter fallback: fragmented captions are **rebuilt into full sentences** before Google translates them, so ASR fragments stop reading like word salad. Prefetched ahead of playback.
-- **Or bring your own API key** — DeepSeek, Gemini, DeepL, Alibaba Bailian and a dozen more. Each sentence is understood as a whole and then split back across the cues, so the translation line turns over with the original instead of standing still. The key is stored on your own machine and is sent to nobody but the provider you picked.
+- **Or bring your own API key** — twelve providers, including DeepSeek, Gemini, DeepL and Alibaba Cloud Model Studio. Each sentence is understood as a whole and then split back across the cues, so the translation line turns over with the original instead of standing still. The key is stored on your own machine and is sent to nobody but the provider you picked.
 - **50 target languages**, and you choose which of them appear in the menu.
 
 </td>
@@ -96,6 +96,7 @@ Works on **Chrome, Edge, and other Chromium browsers**, version 111+ (required f
 ## ⚙️ Usage
 
 - **Toolbar icon** → settings popup: target language, translation engine, line order, position, spacing, and per‑line styling — all with a live preview.
+- **Gear icon** (top-right of the popup) → the settings page: getting started, translation-service setup for your own key, and which languages appear in the menu.
 - **Control‑bar button** (the caption icon next to the gear): one‑click on/off. Blue = on, grey = off.
 - **Drag** the subtitle box by its handle (appears top‑left when you hover the player); **double‑click** the handle to reset its position.
 - **Export** (popup → *Export*): download the subtitles as an `.srt` file — choose original, translation, or bilingual.
@@ -117,7 +118,7 @@ YouTube serves caption tracks from an `/api/timedtext` endpoint that now require
 <details>
 <summary><b>🔁 Translation engines compared</b></summary>
 
-The default **Auto** mode uses Whole‑track whenever the video's track can be translated, and switches to Smart sentences when it can't. Either engine can also be pinned manually in the popup — Smart sentences is worth a try when the whole‑track wording reads badly.
+The default **Auto** mode uses Whole‑track whenever the video's track can be translated, and switches to Smart sentences when it can't. Either engine can also be pinned manually in the popup — Smart sentences is worth a try when the whole‑track wording reads badly. A third path, off by default, sends each sentence to a provider you supply a key for; the table below compares the two free engines.
 
 | | Whole‑track (YouTube) | Smart sentences (Google) |
 |---|---|---|
@@ -153,8 +154,11 @@ Plain vanilla JS/CSS — no build step, no dependencies.
 |---|---|
 | `inject.js` | MAIN‑world sniffer: captures the player's pot‑bearing timedtext URL, fetches cues + translation |
 | `content.js` | Overlay, cue engine, drag, control‑bar toggle, rendered‑scrape fallback |
-| `background.js` | Translation service worker (Google endpoint) |
+| `background.js` | Translation service worker — three lanes: YouTube whole‑track, Google's free endpoint, and your own provider |
 | `popup.html/.css/.js` | Settings UI with live preview |
+| `options.html/.js` | Settings page: getting started, provider setup, language management, about |
+| `providers.js` | The provider table — endpoints, default models, per‑provider quirks |
+| `languages.js` | The target-language table (the count the UI shows is derived from it) |
 | `content.css` | Overlay styling + native‑caption suppression |
 
 Issues and pull requests are welcome — [open one here](https://github.com/Gythiro/yt-dual-subs/issues).
@@ -167,7 +171,7 @@ No analytics, no tracking, no accounts. Caption text is sent **only** to the tra
 
 ## 🙏 Credits
 
-A clean‑room reimplementation inspired by the (closed‑source, discontinued) *YouTube™ Dual Subtitles* — built from scratch without using its code, with the overlap and word‑by‑word jitter problems solved at the source.
+A clean‑room reimplementation inspired by the (closed‑source, discontinued) *YouTube™ Dual Subtitles* — built from scratch without using its code, with the overlap and word‑by‑word jitter problems tackled at the source.
 
 ## 📜 License
 
