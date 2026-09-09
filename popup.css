@@ -219,6 +219,23 @@ select:focus { border-color: var(--accent); }
 /* engine hint + status line (translation card; hidden by default) */
 .engine-hint { margin: 0; font-size: 13px; color: var(--muted); }
 .engine-msg { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
+/* The support hand-rail: copies the state a bug report needs. A quiet text
+   button — it must read as an aside, never compete with the controls. */
+.diag-btn {
+  margin: 2px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  align-self: flex-start;
+}
+.diag-btn:hover { color: #f1f1f1; }
+.diag-btn.ok { color: #5fd38a; text-decoration: none; }
 .engine-msg.warn { color: #ffd88a; }
 .engine-msg.ok { color: #5fd38a; }
 .engine-msg.err { color: #ff8a8a; }

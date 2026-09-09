@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Phụ đề song ngữ cho YouTube — bản gốc và bản dịch trong một lớp không chồng lên nhau."
+  },
+  "headerSub": {
+    "message": "cho YouTube™ · Song ngữ, một lớp"
+  },
+  "disclaimer": {
+    "message": "Không liên kết với YouTube hay Google."
+  },
+  "enableTitle": {
+    "message": "Bật / tắt"
+  },
+  "openOptions": {
+    "message": "Cài đặt"
+  },
+  "enableAria": {
+    "message": "Bật tiện ích"
+  },
+  "previewTag": {
+    "message": "Xem trước"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Con cáo nâu nhanh nhẹn"
+  },
+  "sampleTransComma": {
+    "message": "Con cáo nâu nhảy,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Xem trước trực tiếp"
+  },
+  "secTranslation": {
+    "message": "Bản dịch"
+  },
+  "targetLang": {
+    "message": "Ngôn ngữ đích"
+  },
+  "backendLabel": {
+    "message": "Công cụ"
+  },
+  "backendInfo": {
+    "message": "Thông tin công cụ"
+  },
+  "backendAuto": {
+    "message": "Tự động (khuyên dùng)"
+  },
+  "backendTlang": {
+    "message": "Toàn phụ đề (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Câu thông minh (Google)"
+  },
+  "backendByo": {
+    "message": "Khóa của bạn (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Tự động</b>: dùng bản dịch toàn phụ đề của YouTube khi video hỗ trợ, và chuyển sang câu thông minh khi không hỗ trợ.<br><b>Toàn phụ đề</b>: bản dịch của chính YouTube; khớp từng dòng. Dùng nhiều có thể khiến YouTube giới hạn tạm thời — tiện ích sẽ chờ rồi thử lại.<br><b>Câu thông minh</b>: ghép phụ đề rời rạc thành câu hoàn chỉnh, rồi dịch qua endpoint miễn phí của Google — lời văn hay hơn toàn phụ đề khi phụ đề gốc lộn xộn, nhưng dùng nhiều cũng có thể bị giới hạn; tiện ích sẽ chậm lại và thử lại.<br><b>Khóa của bạn</b>: gửi câu đã ghép tới nhà cung cấp bạn đã cấu hình."
+  },
+  "backendGtxHint": {
+    "message": "Dùng endpoint miễn phí của Google — dùng nhiều có thể bị giới hạn tạm thời; tiện ích tự điều tiết và thử lại."
+  },
+  "backendStatusTlang": {
+    "message": "Video này: dịch toàn phụ đề (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Video này: câu thông minh (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Đang bị endpoint dịch giới hạn tốc độ — tự chậm lại và thử lại. Các dòng đã dịch vẫn hoạt động."
+  },
+  "backendStatusSame": {
+    "message": "Phụ đề video này đã đúng ngôn ngữ đích — không cần dịch."
+  },
+  "secLayout": {
+    "message": "Bố cục"
+  },
+  "orderLabel": {
+    "message": "Thứ tự"
+  },
+  "orderTransTop": {
+    "message": "Bản dịch ở trên"
+  },
+  "orderOrigTop": {
+    "message": "Bản gốc ở trên"
+  },
+  "positionLabel": {
+    "message": "Vị trí"
+  },
+  "posTop": {
+    "message": "Trên"
+  },
+  "posCenter": {
+    "message": "Giữa"
+  },
+  "posBottom": {
+    "message": "Dưới"
+  },
+  "posHint": {
+    "message": "Bạn cũng có thể kéo khung phụ đề trên video"
+  },
+  "posTryDrag": {
+    "message": "thử ngay"
+  },
+  "posTryNoVideo": {
+    "message": "Hãy mở video YouTube trước"
+  },
+  "resetPos": {
+    "message": "Đặt lại vị trí"
+  },
+  "rowGap": {
+    "message": "Giãn dòng"
+  },
+  "tabTrans": {
+    "message": "Bản dịch"
+  },
+  "tabOrig": {
+    "message": "Bản gốc"
+  },
+  "lineTabsAria": {
+    "message": "Dòng phụ đề"
+  },
+  "lineShow": {
+    "message": "Hiện dòng này"
+  },
+  "fontLabel": {
+    "message": "Phông"
+  },
+  "fontSystem": {
+    "message": "Mặc định hệ thống"
+  },
+  "fontMono": {
+    "message": "Đơn cách"
+  },
+  "fontCjk": {
+    "message": "Tối ưu CJK"
+  },
+  "sizeLabel": {
+    "message": "Cỡ chữ"
+  },
+  "colText": {
+    "message": "Chữ"
+  },
+  "colBg": {
+    "message": "Nền"
+  },
+  "colStroke": {
+    "message": "Viền"
+  },
+  "colTextAria": {
+    "message": "Màu chữ"
+  },
+  "colBgAria": {
+    "message": "Màu nền"
+  },
+  "colStrokeAria": {
+    "message": "Màu viền"
+  },
+  "bgOpacity": {
+    "message": "Độ đục nền"
+  },
+  "strokeOpacity": {
+    "message": "Độ đục viền"
+  },
+  "resetAll": {
+    "message": "Đặt lại mọi cài đặt"
+  },
+  "toggleTurnOff": {
+    "message": "Tắt phụ đề song ngữ"
+  },
+  "toggleTurnOn": {
+    "message": "Bật phụ đề song ngữ"
+  },
+  "handleTitle": {
+    "message": "Kéo để di chuyển · nhấp đúp để đặt lại"
+  },
+  "handleAria": {
+    "message": "Kéo để di chuyển phụ đề, nhấp đúp để đặt lại"
+  },
+  "secExport": {
+    "message": "Xuất"
+  },
+  "exportContent": {
+    "message": "Nội dung"
+  },
+  "exportBi": {
+    "message": "Song ngữ"
+  },
+  "exportOrig": {
+    "message": "Bản gốc"
+  },
+  "exportTrans": {
+    "message": "Bản dịch"
+  },
+  "exportSrt": {
+    "message": "Tải SRT"
+  },
+  "exportWorking": {
+    "message": "Đang tạo…"
+  },
+  "exportDone": {
+    "message": "Đã tải phụ đề"
+  },
+  "exportNoTrans": {
+    "message": "Không có bản dịch cho video này — thử công cụ Toàn phụ đề hoặc ngôn ngữ đích khác."
+  },
+  "exportLimited": {
+    "message": "YouTube đang giới hạn dịch toàn phụ đề — thử lại sau một phút, hoặc chọn “Dịch bằng khóa của tôi”."
+  },
+  "exportNoCues": {
+    "message": "Không có phụ đề để tải — phát vài giây để phụ đề tải xong, rồi thử lại."
+  },
+  "exportNotYoutube": {
+    "message": "Mở trang video YouTube để xuất."
+  },
+  "exportFailed": {
+    "message": "Xuất thất bại — tải lại trang rồi thử lại."
+  },
+  "updateNotesLabel": {
+    "message": "Mở ghi chú phát hành sau khi cập nhật"
+  },
+  "trackWarnDubOnly": {
+    "message": "Lưu ý: video này chỉ có phụ đề tự động lồng tiếng AI (không có track ngôn ngữ gốc), nên phụ đề song ngữ có thể không khớp với âm thanh."
+  },
+  "whatsNewRow": {
+    "message": "Xem có gì mới trong v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Video này: khóa của bạn ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Nhà cung cấp"
+  },
+  "byoBaseLabel": {
+    "message": "URL gốc API (https)"
+  },
+  "byoModelLabel": {
+    "message": "Mô hình"
+  },
+  "byoModelRequired": {
+    "message": "Bắt buộc: tên mô hình"
+  },
+  "byoKeyLabel": {
+    "message": "Khóa API"
+  },
+  "byoKeyClear": {
+    "message": "Xóa"
+  },
+  "byoKeyCleared": {
+    "message": "Khóa lưu trên máy này đã được xóa."
+  },
+  "byoKeySaved": {
+    "message": "đã lưu ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Tùy chỉnh (tương thích OpenAI)"
+  },
+  "byoTest": {
+    "message": "Lưu và kiểm tra"
+  },
+  "byoTesting": {
+    "message": "Đang kiểm tra…"
+  },
+  "byoTestOk": {
+    "message": "Đã kết nối. Mẫu: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Lấy khóa"
+  },
+  "byoGuide": {
+    "message": "Cần trợ giúp thiết lập?"
+  },
+  "byoLocalHint": {
+    "message": "Khóa chỉ lưu trong trình duyệt này, trên máy này — không bao giờ được tải lên. Văn bản phụ đề chỉ gửi đến nhà cung cấp bạn đã chọn."
+  },
+  "byoErrNoProvider": {
+    "message": "Hãy chọn nhà cung cấp trước."
+  },
+  "byoErrNoKey": {
+    "message": "Hãy nhập khóa API trước — liên kết bên dưới mở trang khóa của nhà cung cấp."
+  },
+  "byoErrNoModel": {
+    "message": "Nhà cung cấp này cần bạn nhập tên mô hình."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "URL gốc của API phải là địa chỉ https:// đầy đủ."
+  },
+  "byoErrNoPerm": {
+    "message": "Không có quyền truy cập máy chủ API đó thì tiện ích không thể kết nối."
+  },
+  "byoErrAuth": {
+    "message": "Khóa bị từ chối (401/403) — kiểm tra đã sao chép đầy đủ và khóa còn hiệu lực."
+  },
+  "byoErrLimited": {
+    "message": "Nhà cung cấp đang giới hạn tốc độ — đang chậm lại và tự động thử lại."
+  },
+  "byoErrQuota": {
+    "message": "Khóa này đã hết hạn mức cho kỳ hiện tại."
+  },
+  "byoErrBadRequest": {
+    "message": "Endpoint từ chối yêu cầu — tên mô hình hoặc URL gốc có thể sai."
+  },
+  "byoErrBadShape": {
+    "message": "Mô hình không trả lời từng dòng như yêu cầu, và các lần thử lại nhỏ hơn cũng thất bại — hãy thử mô hình khác."
+  },
+  "byoErrReasoning": {
+    "message": "Mô hình đó chỉ trả về chuỗi suy nghĩ, không có bản dịch — hãy chọn mô hình không suy luận."
+  },
+  "byoErrNetfail": {
+    "message": "Không thể kết nối endpoint đó (mạng hoặc hạn chế khu vực)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Nhà cung cấp này không hỗ trợ ngôn ngữ bạn đã chọn — hãy đổi ngôn ngữ hoặc công cụ."
+  },
+  "byoErrFailed": {
+    "message": "Kết nối thất bại. Hãy thử lại sau giây lát."
+  },
+  "optTitle": {
+    "message": "Thiết lập dịch vụ dịch"
+  },
+  "optIntro": {
+    "message": "Chọn nhà cung cấp và dán khóa API của bạn. Khóa lưu trên máy này, và văn bản phụ đề chỉ gửi đến nhà cung cấp bạn chọn."
+  },
+  "optPricingLink": {
+    "message": "Giá & gói miễn phí"
+  },
+  "optFetchModels": {
+    "message": "Liệt kê mô hình bằng khóa của tôi"
+  },
+  "optFetching": {
+    "message": "Đang liệt kê…"
+  },
+  "optModelsFetched": {
+    "message": "Tìm thấy $N$ mô hình",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Không liệt kê được mô hình — hãy nhập tên mô hình."
+  },
+  "optModelCustom": {
+    "message": "Tùy chỉnh…"
+  },
+  "optNoModelsYet": {
+    "message": "Chưa có danh sách mô hình — lấy bằng khóa của bạn, hoặc nhập tên."
+  },
+  "optShowKey": {
+    "message": "Hiện"
+  },
+  "optRecommended": {
+    "message": "đề xuất"
+  },
+  "optConfigured": {
+    "message": "Đã cấu hình"
+  },
+  "optInUse": {
+    "message": "đang dùng"
+  },
+  "optAfterSetup": {
+    "message": "Khi xong, mở popup tiện ích và đặt Công cụ thành \"Khóa của bạn\"."
+  },
+  "optTrademark": {
+    "message": "Mọi tên và logo nhà cung cấp đều là thương hiệu của chủ sở hữu tương ứng. Tiện ích này không liên kết với, không được chứng thực hay tài trợ bởi bất kỳ bên nào trong số đó; các nhãn hiệu chỉ được hiển thị để nhận diện API bạn đã chọn."
+  },
+  "optSections": {
+    "message": "Mục"
+  },
+  "optNavSetup": {
+    "message": "Dịch vụ dịch"
+  },
+  "optNavStart": {
+    "message": "Bắt đầu"
+  },
+  "optNavAbout": {
+    "message": "Giới thiệu"
+  },
+  "startIntro": {
+    "message": "Ba điều. Bạn không cần thiết lập gì để dùng."
+  },
+  "startS1Title": {
+    "message": "Mở một video — thế thôi"
+  },
+  "startS1Body": {
+    "message": "Mọi video YouTube có phụ đề: hai dòng tự hiện ra."
+  },
+  "startS2Title": {
+    "message": "Đặt chúng ở bất kỳ đâu"
+  },
+  "startS2Body": {
+    "message": "Giữ tay nắm góc trên-trái hộp phụ đề rồi kéo đi bất kỳ đâu. Nhấp đúp tay nắm để đưa về chỗ cũ."
+  },
+  "startS2Alt": {
+    "message": "Sơ đồ trình phát: tay nắm sáu chấm ở góc trên-trái hộp phụ đề, đang kéo sang vị trí khác"
+  },
+  "startS3Title": {
+    "message": "Muốn dịch tốt hơn"
+  },
+  "startS3Body": {
+    "message": "Thêm khóa API của bạn: dịch cả câu, và xuất SRT cho cả video."
+  },
+  "startGoSetup": {
+    "message": "Thiết lập dịch vụ dịch"
+  },
+  "aboutIntro": {
+    "message": "Đây là gì, và văn bản đi đâu."
+  },
+  "aboutVersion": {
+    "message": "Phiên bản"
+  },
+  "aboutBlurb": {
+    "message": "Một dòng phụ đề thứ hai cho YouTube: bản gốc một dòng, bản dịch dòng kia, phông chữ, màu và vị trí do bạn chọn. Mã nguồn mở, miễn phí, không quảng cáo."
+  },
+  "aboutPrivacy": {
+    "message": "Chúng tôi không có máy chủ và không thu thập thống kê. Văn bản phụ đề chỉ gửi đến dịch vụ dịch bạn chọn; với khóa của bạn, khóa chỉ được lưu trên máy tính này."
+  },
+  "aboutChangelog": {
+    "message": "Nhật ký thay đổi"
+  },
+  "aboutRoadmap": {
+    "message": "Lộ trình"
+  },
+  "optFeedbackLink": {
+    "message": "Báo lỗi"
+  },
+  "popupByoConfigure": {
+    "message": "Cấu hình…"
+  },
+  "popupByoNotSet": {
+    "message": "chưa thiết lập"
+  },
+  "popupByoPick": {
+    "message": "Nhà cung cấp dịch"
+  },
+  "popupByoUntested": {
+    "message": "chưa kiểm tra"
+  },
+  "exportUsesYouTube": {
+    "message": "Bản tải về dùng bản dịch toàn bộ của chính YouTube — miễn phí, không tốn khóa API của bạn."
+  },
+  "exportUseByo": {
+    "message": "Dịch bằng khóa của tôi (sát nghĩa hơn, tốn hạn mức)"
+  },
+  "exportByoNote": {
+    "message": "Toàn bộ phụ đề sẽ được nhà cung cấp dịch bằng khóa của bạn. Bạn sẽ thấy ước tính trước khi gửi bất cứ gì."
+  },
+  "exportConfirm": {
+    "message": "Dịch $N$ dòng phụ đề bằng $NAME$ — khoảng $REQ$ yêu cầu tính vào hạn mức của bạn. Toàn bộ phụ đề rời trình duyệt tới nhà cung cấp đó; khi phát, chỉ những phần bạn thực sự xem mới được gửi.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Dịch và tải xuống"
+  },
+  "exportConfirmBack": {
+    "message": "Hủy"
+  },
+  "exportStop": {
+    "message": "Dừng"
+  },
+  "exportStopping": {
+    "message": "Đang dừng…"
+  },
+  "exportProgress": {
+    "message": "Đang dịch… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ đoạn đã chuyển sang bản dịch của YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Đã hủy tải xuống."
+  },
+  "ftSite": {
+    "message": "Trang web"
+  },
+  "ftSiteLabel": {
+    "message": "Trang"
+  },
+  "ftFeedbackLabel": {
+    "message": "Phản hồi"
+  },
+  "ftReviewLabel": {
+    "message": "Đánh giá"
+  },
+  "ftGithub": {
+    "message": "Mã nguồn trên GitHub"
+  },
+  "ftFeedback": {
+    "message": "Gửi phản hồi hoặc báo lỗi"
+  },
+  "ftReview": {
+    "message": "Đánh giá trên Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Chưa có khóa — chưa dùng được nhà cung cấp này cho đến khi bạn thêm khóa."
+  },
+  "optBaseHint": {
+    "message": "URL gốc hoặc endpoint đầy đủ đều được, ví dụ https://example.com/v1 hoặc https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Sơ đồ trình phát: một dòng gốc và một dòng dịch nằm gần đáy hình"
+  },
+  "startS3Alt": {
+    "message": "So sánh: công cụ miễn phí dịch một câu thành từng mảnh, khóa của bạn hiểu cả câu rồi tách lại"
+  },
+  "startPicFree": {
+    "message": "Công cụ miễn phí"
+  },
+  "startPicFreeNote": {
+    "message": "một câu, bị cắt nhỏ"
+  },
+  "startPicByo": {
+    "message": "Khóa của bạn"
+  },
+  "startPicByoNote": {
+    "message": "hiểu cả câu, tách lại"
+  },
+  "startNoSubsQ": {
+    "message": "Không thấy phụ đề?"
+  },
+  "startNoSubs": {
+    "message": "Nhấp nút CC ở góc dưới phải trình phát, hoặc thử video khác — livestream và video nhạc thường không có phụ đề."
+  },
+  "langManage": {
+    "message": "Quản lý ngôn ngữ…"
+  },
+  "optNavLangs": {
+    "message": "Ngôn ngữ phụ đề"
+  },
+  "langsIntro": {
+    "message": "Ngôn ngữ đích mà popup đề xuất dịch sang."
+  },
+  "langsKept": {
+    "message": "Hiện trong popup"
+  },
+  "langsKeptHint": {
+    "message": "Hiện trong menu ngôn ngữ đích của popup. Giữ ít nhất một."
+  },
+  "langsMore": {
+    "message": "Ngôn ngữ khác"
+  },
+  "langsMoreHint": {
+    "message": "Nhấn + để thêm. Mọi ngôn ngữ đều dùng được với công cụ miễn phí và với DeepL."
+  },
+  "langsReset": {
+    "message": "Khôi phục mặc định"
+  },
+  "langsResetDone": {
+    "message": "Đã trở về danh sách mặc định."
+  },
+  "langsAddAria": {
+    "message": "Thêm"
+  },
+  "langsRemoveAria": {
+    "message": "Xóa"
+  },
+  "langsLastOne": {
+    "message": "Giữ ít nhất một"
+  },
+  "langsAllAdded": {
+    "message": "Mọi ngôn ngữ đã có trong danh sách."
+  },
+  "langsAdded": {
+    "message": "Đã thêm $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Ngôn ngữ đó đang dùng, nên đích giờ là $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Serif Trung"
+  },
+  "fontCjkRound": {
+    "message": "Chữ tròn Trung"
+  },
+  "uiLocaleLabel": {
+    "message": "Ngôn ngữ giao diện"
+  },
+  "uiLocaleAuto": {
+    "message": "Tự động — theo trình duyệt"
+  },
+  "uiLocaleHint": {
+    "message": "Chỉ là ngôn ngữ các điều khiển của chính tiện ích này. Phụ đề dịch sang ngôn ngữ nào thì chọn trong cửa sổ bật lên và mục “Ngôn ngữ phụ đề” — không phải ở đây."
+  },
+  "startTargetLabel": {
+    "message": "Ngôn ngữ dịch"
+  },
+  "startTargetHint": {
+    "message": "Được đoán từ tùy chọn ngôn ngữ trình duyệt khi tiện ích được cài đặt. Đổi tại đây nếu đoán sai — bạn có thể đổi trong popup bất cứ lúc nào."
+  },
+  "diagCopy": {
+    "message": "Sao chép thông tin chẩn đoán"
+  },
+  "diagCopied": {
+    "message": "Đã sao chép — dán vào email hoặc issue"
+  },
+  "diagCopyFail": {
+    "message": "Sao chép thất bại — hãy chụp màn hình thay thế"
+  },
+  "optNavReadaloud": {
+    "message": "Đọc to"
+  },
+  "ttsIntro": {
+    "message": "Đọc to dòng đã dịch bằng khóa của bạn. Thiết lập nhà cung cấp rồi thử tại đây."
+  },
+  "ttsVoiceLabel": {
+    "message": "Giọng nói"
+  },
+  "ttsTestOk": {
+    "message": "Đã kết nối: âm thanh thử $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Đọc to dùng khóa của bạn. Văn bản cần đọc chỉ gửi đến nhà cung cấp bạn chọn; khóa vẫn lưu trên máy này."
+  },
+  "ttsEnableLabel": {
+    "message": "Đọc to bản dịch trong video"
+  },
+  "ttsVolLabel": {
+    "message": "Âm lượng đọc to"
+  },
+  "ttsDuckLabel": {
+    "message": "Âm gốc khi đang nói"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Đang nói"
+  },
+  "ttsStatusOn": {
+    "message": "Đọc to đang bật"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ dòng video này · $M$ đã bỏ qua",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Khi bật, bản dịch mỗi phụ đề được đọc ngay khi xuất hiện; dòng chưa dịch kịp sẽ bị bỏ qua, không đọc bù. Âm thanh gốc của video được giảm khi đang đọc, và dòng quá dài sẽ làm chậm video một chút."
+  },
+  "ttsRegionLabel": {
+    "message": "Khu vực dịch vụ"
+  },
+  "ttsErrNoRegion": {
+    "message": "Trước tiên hãy nhập khu vực dịch vụ của khóa Azure (ví dụ: eastus)."
+  }
+}

@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "คำบรรยายสองภาษาสำหรับ YouTube — ต้นฉบับและคำแปลในชั้นเดียว ไม่ทับซ้อนกัน"
+  },
+  "headerSub": {
+    "message": "สำหรับ YouTube™ · สองภาษา ชั้นเดียว"
+  },
+  "disclaimer": {
+    "message": "ไม่ได้มีส่วนเกี่ยวข้องกับ YouTube หรือ Google"
+  },
+  "enableTitle": {
+    "message": "เปิด / ปิด"
+  },
+  "openOptions": {
+    "message": "ตั้งค่า"
+  },
+  "enableAria": {
+    "message": "เปิดใช้ส่วนขยาย"
+  },
+  "previewTag": {
+    "message": "ตัวอย่าง"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "สุนัขจิ้งจอกน้ำตาลตัวว่องไว"
+  },
+  "sampleTransComma": {
+    "message": "สุนัขจิ้งจอกน้ำตาลกระโดด,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "ตัวอย่างสด"
+  },
+  "secTranslation": {
+    "message": "การแปล"
+  },
+  "targetLang": {
+    "message": "ภาษาเป้าหมาย"
+  },
+  "backendLabel": {
+    "message": "เอ็นจิน"
+  },
+  "backendInfo": {
+    "message": "ข้อมูลเอ็นจิน"
+  },
+  "backendAuto": {
+    "message": "อัตโนมัติ (แนะนำ)"
+  },
+  "backendTlang": {
+    "message": "ทั้งแทร็ก (YouTube)"
+  },
+  "backendGtx": {
+    "message": "ประโยคอัจฉริยะ (Google)"
+  },
+  "backendByo": {
+    "message": "คีย์ของคุณเอง (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>อัตโนมัติ</b>: ใช้การแปลทั้งแทร็กของ YouTube เมื่อวิดีโอรองรับ และสลับไปใช้ประโยคอัจฉริยะเมื่อไม่รองรับ<br><b>ทั้งแทร็ก</b>: การแปลของ YouTube เอง จัดแนวคิวต่อคิว ใช้บ่อยอาจทำให้ YouTube จำกัดอัตราชั่วคราว — ส่วนขยายจะรอแล้วขอใหม่<br><b>ประโยคอัจฉริยะ</b>: ประกอบคำบรรยายที่ขาดเป็นท่อนให้เป็นประโยคสมบูรณ์ แล้วแปลผ่านปลายทางฟรีของ Google — ถ้อยคำดีกว่าโหมดทั้งแทร็กเมื่อแทร็กกระจัดกระจาย แต่ใช้บ่อยก็อาจถูกจำกัดอัตราได้เช่นกัน ส่วนขยายจะชะลอแล้วลองใหม่<br><b>คีย์ของคุณเอง</b>: ส่งประโยคที่ประกอบแล้วไปยังผู้ให้บริการที่คุณตั้งค่าไว้"
+  },
+  "backendGtxHint": {
+    "message": "ใช้ปลายทางฟรีของ Google — ใช้บ่อยอาจถูกจำกัดอัตราชั่วคราว ส่วนขยายจะปรับจังหวะและลองใหม่อัตโนมัติ"
+  },
+  "backendStatusTlang": {
+    "message": "วิดีโอนี้: การแปลทั้งแทร็ก (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "วิดีโอนี้: ประโยคอัจฉริยะ (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "ถูกจำกัดอัตราโดยปลายทางการแปล — กำลังชะลอและลองใหม่อัตโนมัติ บรรทัดที่แปลแล้วยังใช้ได้"
+  },
+  "backendStatusSame": {
+    "message": "คำบรรยายของวิดีโอนี้อยู่ในภาษาเป้าหมายอยู่แล้ว — ไม่ต้องแปล"
+  },
+  "secLayout": {
+    "message": "การจัดวาง"
+  },
+  "orderLabel": {
+    "message": "ลำดับ"
+  },
+  "orderTransTop": {
+    "message": "คำแปลอยู่บน"
+  },
+  "orderOrigTop": {
+    "message": "ต้นฉบับอยู่บน"
+  },
+  "positionLabel": {
+    "message": "ตำแหน่ง"
+  },
+  "posTop": {
+    "message": "บน"
+  },
+  "posCenter": {
+    "message": "กลาง"
+  },
+  "posBottom": {
+    "message": "ล่าง"
+  },
+  "posHint": {
+    "message": "ลากกล่องคำบรรยายบนวิดีโอได้ด้วย"
+  },
+  "posTryDrag": {
+    "message": "ลองเลย"
+  },
+  "posTryNoVideo": {
+    "message": "เปิดวิดีโอ YouTube ก่อน"
+  },
+  "resetPos": {
+    "message": "รีเซ็ตตำแหน่ง"
+  },
+  "rowGap": {
+    "message": "ระยะบรรทัด"
+  },
+  "tabTrans": {
+    "message": "คำแปล"
+  },
+  "tabOrig": {
+    "message": "ต้นฉบับ"
+  },
+  "lineTabsAria": {
+    "message": "บรรทัดคำบรรยาย"
+  },
+  "lineShow": {
+    "message": "แสดงบรรทัดนี้"
+  },
+  "fontLabel": {
+    "message": "แบบอักษร"
+  },
+  "fontSystem": {
+    "message": "ค่าเริ่มต้นของระบบ"
+  },
+  "fontMono": {
+    "message": "โมโนสเปซ"
+  },
+  "fontCjk": {
+    "message": "รองรับ CJK"
+  },
+  "sizeLabel": {
+    "message": "ขนาดตัวอักษร"
+  },
+  "colText": {
+    "message": "ข้อความ"
+  },
+  "colBg": {
+    "message": "พื้นหลัง"
+  },
+  "colStroke": {
+    "message": "เส้นขอบ"
+  },
+  "colTextAria": {
+    "message": "สีข้อความ"
+  },
+  "colBgAria": {
+    "message": "สีพื้นหลัง"
+  },
+  "colStrokeAria": {
+    "message": "สีเส้นขอบ"
+  },
+  "bgOpacity": {
+    "message": "ความทึบพื้นหลัง"
+  },
+  "strokeOpacity": {
+    "message": "ความทึบเส้นขอบ"
+  },
+  "resetAll": {
+    "message": "รีเซ็ตการตั้งค่าทั้งหมด"
+  },
+  "toggleTurnOff": {
+    "message": "ปิดคำบรรยายคู่"
+  },
+  "toggleTurnOn": {
+    "message": "เปิดคำบรรยายคู่"
+  },
+  "handleTitle": {
+    "message": "ลากเพื่อย้าย · ดับเบิลคลิกเพื่อรีเซ็ต"
+  },
+  "handleAria": {
+    "message": "ลากเพื่อย้ายคำบรรยาย ดับเบิลคลิกเพื่อรีเซ็ต"
+  },
+  "secExport": {
+    "message": "ส่งออก"
+  },
+  "exportContent": {
+    "message": "เนื้อหา"
+  },
+  "exportBi": {
+    "message": "สองภาษา"
+  },
+  "exportOrig": {
+    "message": "ต้นฉบับ"
+  },
+  "exportTrans": {
+    "message": "คำแปล"
+  },
+  "exportSrt": {
+    "message": "ดาวน์โหลด SRT"
+  },
+  "exportWorking": {
+    "message": "กำลังสร้าง…"
+  },
+  "exportDone": {
+    "message": "ดาวน์โหลดคำบรรยายแล้ว"
+  },
+  "exportNoTrans": {
+    "message": "ไม่มีคำแปลสำหรับวิดีโอนี้ — ลองใช้เอ็นจินทั้งแทร็กหรือภาษาเป้าหมายอื่น"
+  },
+  "exportLimited": {
+    "message": "YouTube กำลังจำกัดอัตราการแปลทั้งแทร็กอยู่ — ลองอีกครั้งในอีกนาที หรือเลือก “แปลด้วยคีย์ของฉัน”"
+  },
+  "exportNoCues": {
+    "message": "ไม่มีคำบรรยายให้ดาวน์โหลด — เล่นสักสองสามวินาทีให้คำบรรยายโหลด แล้วลองอีกครั้ง"
+  },
+  "exportNotYoutube": {
+    "message": "เปิดหน้าวิดีโอ YouTube เพื่อส่งออก"
+  },
+  "exportFailed": {
+    "message": "ส่งออกไม่สำเร็จ — รีเฟรชหน้าแล้วลองอีกครั้ง"
+  },
+  "updateNotesLabel": {
+    "message": "เปิดบันทึกประจำรุ่นหลังอัปเดต"
+  },
+  "trackWarnDubOnly": {
+    "message": "โปรดทราบ: วิดีโอนี้มีเฉพาะคำบรรยายอัตโนมัติจากการพากย์ AI (ไม่มีแทร็กภาษาต้นฉบับ) ดังนั้นคำบรรยายสองภาษาอาจไม่ตรงกับเสียง"
+  },
+  "whatsNewRow": {
+    "message": "ดูของใหม่ใน v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "วิดีโอนี้: คีย์ของคุณเอง ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "ผู้ให้บริการ"
+  },
+  "byoBaseLabel": {
+    "message": "URL ฐาน API (https)"
+  },
+  "byoModelLabel": {
+    "message": "โมเดล"
+  },
+  "byoModelRequired": {
+    "message": "จำเป็น: ชื่อโมเดล"
+  },
+  "byoKeyLabel": {
+    "message": "คีย์ API"
+  },
+  "byoKeyClear": {
+    "message": "ล้าง"
+  },
+  "byoKeyCleared": {
+    "message": "ลบคีย์ที่เก็บในเครื่องนี้แล้ว"
+  },
+  "byoKeySaved": {
+    "message": "บันทึกแล้ว ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "กำหนดเอง (รองรับ OpenAI)"
+  },
+  "byoTest": {
+    "message": "บันทึกแล้วทดสอบ"
+  },
+  "byoTesting": {
+    "message": "กำลังทดสอบ…"
+  },
+  "byoTestOk": {
+    "message": "เชื่อมต่อแล้ว ตัวอย่าง: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "รับคีย์"
+  },
+  "byoGuide": {
+    "message": "ต้องการความช่วยเหลือในการตั้งค่า?"
+  },
+  "byoLocalHint": {
+    "message": "คีย์อยู่แค่ในเบราว์เซอร์นี้ บนเครื่องนี้ — ไม่ถูกอัปโหลดไปที่ไหน คำบรรยายถูกส่งไปเฉพาะผู้ให้บริการที่คุณเลือก"
+  },
+  "byoErrNoProvider": {
+    "message": "เลือกผู้ให้บริการก่อน"
+  },
+  "byoErrNoKey": {
+    "message": "ใส่ API key ก่อน — ลิงก์ด้านล่างเปิดหน้าคีย์ของผู้ให้บริการ"
+  },
+  "byoErrNoModel": {
+    "message": "ผู้ให้บริการนี้ต้องใส่ชื่อโมเดล"
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API base URL ต้องเป็นที่อยู่ https:// แบบเต็ม"
+  },
+  "byoErrNoPerm": {
+    "message": "หากไม่ได้รับสิทธิ์เข้าถึงโฮสต์ API ส่วนขยายจะเชื่อมต่อไม่ได้"
+  },
+  "byoErrAuth": {
+    "message": "คีย์ถูกปฏิเสธ (401/403) — ตรวจว่าคัดลอกครบและยังใช้งานได้"
+  },
+  "byoErrLimited": {
+    "message": "ผู้ให้บริการจำกัดอัตราการเรียก — กำลังชะลอและลองใหม่ให้อัตโนมัติ"
+  },
+  "byoErrQuota": {
+    "message": "คีย์นี้โควตาหมดแล้วสำหรับรอบปัจจุบัน"
+  },
+  "byoErrBadRequest": {
+    "message": "ปลายทางปฏิเสธคำขอ — ชื่อโมเดลหรือ base URL อาจผิด"
+  },
+  "byoErrBadShape": {
+    "message": "โมเดลไม่ได้ตอบทีละบรรทัดตามที่ขอ และการลองใหม่ด้วยชุดเล็กกว่าก็ล้มเหลว — ลองโมเดลอื่น"
+  },
+  "byoErrReasoning": {
+    "message": "โมเดลนั้นส่งกลับแค่กระบวนการคิด ไม่มีคำแปล — เลือกโมเดลที่ไม่ใช่แบบคิดก่อนตอบ"
+  },
+  "byoErrNetfail": {
+    "message": "เข้าถึงปลายทางนั้นไม่ได้ (เครือข่ายหรือข้อจำกัดตามภูมิภาค)"
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "ผู้ให้บริการนี้ไม่มีภาษาเป้าหมายที่คุณเลือก — เปลี่ยนภาษาหรือเอนจิน"
+  },
+  "byoErrFailed": {
+    "message": "เชื่อมต่อไม่สำเร็จ ลองอีกครั้งในอีกสักครู่"
+  },
+  "optTitle": {
+    "message": "ตั้งค่าบริการแปล"
+  },
+  "optIntro": {
+    "message": "เลือกผู้ให้บริการแล้ววาง API key ของคุณ คีย์อยู่บนเครื่องนี้ และคำบรรยายถูกส่งไปเฉพาะผู้ให้บริการที่คุณเลือก"
+  },
+  "optPricingLink": {
+    "message": "ราคาและระดับฟรี"
+  },
+  "optFetchModels": {
+    "message": "แสดงรายการโมเดลด้วยคีย์ของฉัน"
+  },
+  "optFetching": {
+    "message": "กำลังดึงรายการ…"
+  },
+  "optModelsFetched": {
+    "message": "พบ $N$ โมเดล",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "ดึงรายการโมเดลไม่ได้ — พิมพ์ชื่อโมเดลแทน"
+  },
+  "optModelCustom": {
+    "message": "กำหนดเอง…"
+  },
+  "optNoModelsYet": {
+    "message": "ยังไม่มีรายการโมเดล — ดึงด้วยคีย์ของคุณ หรือพิมพ์ชื่อเลย"
+  },
+  "optShowKey": {
+    "message": "แสดง"
+  },
+  "optRecommended": {
+    "message": "แนะนำ"
+  },
+  "optConfigured": {
+    "message": "ตั้งค่าแล้ว"
+  },
+  "optInUse": {
+    "message": "กำลังใช้"
+  },
+  "optAfterSetup": {
+    "message": "เมื่อตั้งค่าเสร็จ เปิดป๊อปอัปของส่วนขยายแล้วตั้งเอนจินเป็น \"คีย์ของคุณเอง\""
+  },
+  "optTrademark": {
+    "message": "ชื่อและโลโก้ของผู้ให้บริการทั้งหมดเป็นเครื่องหมายการค้าของเจ้าของที่เกี่ยวข้อง ส่วนขยายนี้ไม่ได้สังกัด ไม่ได้รับการรับรอง และไม่ได้สปอนเซอร์โดยผู้ใด เครื่องหมายแสดงไว้เพื่อระบุ API ที่คุณเลือกเท่านั้น"
+  },
+  "optSections": {
+    "message": "หมวด"
+  },
+  "optNavSetup": {
+    "message": "บริการแปล"
+  },
+  "optNavStart": {
+    "message": "เริ่มต้นใช้งาน"
+  },
+  "optNavAbout": {
+    "message": "เกี่ยวกับ"
+  },
+  "startIntro": {
+    "message": "สามอย่างเท่านั้น ไม่ต้องตั้งค่าอะไรก็ใช้ได้"
+  },
+  "startS1Title": {
+    "message": "เปิดวิดีโอ — แค่นั้น"
+  },
+  "startS1Body": {
+    "message": "วิดีโอ YouTube ที่มีคำบรรยาย: สองบรรทัดจะปรากฏขึ้นเอง"
+  },
+  "startS2Title": {
+    "message": "วางตรงไหนก็ได้ที่ชอบ"
+  },
+  "startS2Body": {
+    "message": "จับจุดลากมุมซ้ายบนของกล่องคำบรรยาย แล้วลากไปที่ไหนก็ได้ ดับเบิลคลิกจุดลากเพื่อคืนตำแหน่งเดิม"
+  },
+  "startS2Alt": {
+    "message": "แผนภาพเครื่องเล่น: จุดลากหกจุดที่มุมซ้ายบนของกล่องคำบรรยาย กำลังลากไปตำแหน่งอื่น"
+  },
+  "startS3Title": {
+    "message": "อยากได้คำแปลที่ดีกว่า"
+  },
+  "startS3Body": {
+    "message": "เพิ่ม API key ของคุณ: แปลทั้งประโยค และส่งออก SRT ทั้งวิดีโอ"
+  },
+  "startGoSetup": {
+    "message": "ตั้งค่าบริการแปล"
+  },
+  "aboutIntro": {
+    "message": "นี่คืออะไร และข้อความของคุณไปที่ไหน"
+  },
+  "aboutVersion": {
+    "message": "เวอร์ชัน"
+  },
+  "aboutBlurb": {
+    "message": "บรรทัดคำบรรยายที่สองสำหรับ YouTube: ต้นฉบับบรรทัดหนึ่ง คำแปลอีกบรรทัด ปรับแบบอักษร สี และตำแหน่งได้ตามต้องการ โอเพนซอร์ส ฟรี ไม่มีโฆษณา"
+  },
+  "aboutPrivacy": {
+    "message": "เราไม่มีเซิร์ฟเวอร์และไม่เก็บสถิติ คำบรรยายถูกส่งไปเฉพาะบริการแปลที่คุณเลือก หากใช้คีย์ของคุณเอง คีย์จะถูกเก็บไว้บนคอมพิวเตอร์เครื่องนี้เท่านั้น"
+  },
+  "aboutChangelog": {
+    "message": "บันทึกการเปลี่ยนแปลง"
+  },
+  "aboutRoadmap": {
+    "message": "แผนงาน"
+  },
+  "optFeedbackLink": {
+    "message": "รายงานปัญหา"
+  },
+  "popupByoConfigure": {
+    "message": "ตั้งค่า…"
+  },
+  "popupByoNotSet": {
+    "message": "ยังไม่ตั้งค่า"
+  },
+  "popupByoPick": {
+    "message": "ผู้ให้บริการแปล"
+  },
+  "popupByoUntested": {
+    "message": "ยังไม่ทดสอบ"
+  },
+  "exportUsesYouTube": {
+    "message": "การดาวน์โหลดใช้การแปลทั้งแทร็กของ YouTube เอง — ฟรี และไม่ใช้โควตา API key ของคุณ"
+  },
+  "exportUseByo": {
+    "message": "แปลด้วยคีย์ของฉัน (ตรงกว่า ใช้โควตา)"
+  },
+  "exportByoNote": {
+    "message": "ทั้งแทร็กจะถูกแปลโดยผู้ให้บริการของคุณด้วยคีย์ของคุณ คุณจะเห็นประมาณการก่อนส่งอะไรออกไป"
+  },
+  "exportConfirm": {
+    "message": "แปลคำบรรยาย $N$ บรรทัดด้วย $NAME$ — ประมาณ $REQ$ คำขอจากโควตาของคุณ ทั้งแทร็กออกจากเบราว์เซอร์ไปยังผู้ให้บริการนั้น ระหว่างเล่นจะส่งเฉพาะส่วนที่คุณดูจริงเท่านั้น",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "แปลแล้วดาวน์โหลด"
+  },
+  "exportConfirmBack": {
+    "message": "ยกเลิก"
+  },
+  "exportStop": {
+    "message": "หยุด"
+  },
+  "exportStopping": {
+    "message": "กำลังหยุด…"
+  },
+  "exportProgress": {
+    "message": "กำลังแปล… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ ส่วนใช้การแปลของ YouTube แทน",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "ยกเลิกการดาวน์โหลดแล้ว"
+  },
+  "ftSite": {
+    "message": "เว็บไซต์"
+  },
+  "ftSiteLabel": {
+    "message": "ไซต์"
+  },
+  "ftFeedbackLabel": {
+    "message": "ข้อเสนอแนะ"
+  },
+  "ftReviewLabel": {
+    "message": "ให้คะแนน"
+  },
+  "ftGithub": {
+    "message": "ซอร์สโค้ดบน GitHub"
+  },
+  "ftFeedback": {
+    "message": "ส่งข้อเสนอแนะหรือรายงานบั๊ก"
+  },
+  "ftReview": {
+    "message": "ให้คะแนนใน Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "ยังไม่มีคีย์ — ใช้ผู้ให้บริการนี้ไม่ได้จนกว่าจะเพิ่มคีย์"
+  },
+  "optBaseHint": {
+    "message": "ใช้ได้ทั้ง base URL และปลายทางแบบเต็ม เช่น https://example.com/v1 หรือ https://example.com/v1/chat/completions"
+  },
+  "startS1Alt": {
+    "message": "แผนภาพเครื่องเล่น: บรรทัดต้นฉบับและบรรทัดคำแปลอยู่ใกล้ด้านล่างของภาพ"
+  },
+  "startS3Alt": {
+    "message": "เปรียบเทียบ: เอนจินฟรีแปลประโยคเดียวเป็นชิ้นๆ คีย์ของคุณเองเข้าใจทั้งประโยคแล้วแยกกลับ"
+  },
+  "startPicFree": {
+    "message": "เอนจินฟรี"
+  },
+  "startPicFreeNote": {
+    "message": "ประโยคเดียว ถูกหั่นเป็นชิ้น"
+  },
+  "startPicByo": {
+    "message": "คีย์ของคุณเอง"
+  },
+  "startPicByoNote": {
+    "message": "เข้าใจทั้งก้อน แล้วแยกกลับ"
+  },
+  "startNoSubsQ": {
+    "message": "ไม่เห็นคำบรรยาย?"
+  },
+  "startNoSubs": {
+    "message": "คลิกปุ่ม CC มุมขวาล่างของเครื่องเล่น หรือลองวิดีโออื่น — สดและมิวสิกวิดีโอมักไม่มีคำบรรยาย"
+  },
+  "langManage": {
+    "message": "จัดการภาษา…"
+  },
+  "optNavLangs": {
+    "message": "ภาษาคำบรรยาย"
+  },
+  "langsIntro": {
+    "message": "ภาษาที่ป๊อปอัปให้เลือกแปลเป็น"
+  },
+  "langsKept": {
+    "message": "แสดงในป๊อปอัป"
+  },
+  "langsKeptHint": {
+    "message": "ภาษาเหล่านี้จะแสดงในเมนูภาษาปลายทางของป๊อปอัป ต้องเหลืออย่างน้อยหนึ่งภาษา"
+  },
+  "langsMore": {
+    "message": "ภาษาอื่น"
+  },
+  "langsMoreHint": {
+    "message": "กด + เพื่อเพิ่ม ทุกภาษาในรายการใช้ได้กับเครื่องมือฟรีและ DeepL"
+  },
+  "langsReset": {
+    "message": "คืนค่าเริ่มต้น"
+  },
+  "langsResetDone": {
+    "message": "กลับเป็นรายการเริ่มต้นแล้ว"
+  },
+  "langsAddAria": {
+    "message": "เพิ่ม"
+  },
+  "langsRemoveAria": {
+    "message": "ลบ"
+  },
+  "langsLastOne": {
+    "message": "ต้องเหลืออย่างน้อยหนึ่งภาษา"
+  },
+  "langsAllAdded": {
+    "message": "ทุกภาษาอยู่ในรายการของคุณแล้ว"
+  },
+  "langsAdded": {
+    "message": "เพิ่ม $NAME$ แล้ว",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "ภาษานั้นกำลังถูกใช้ จึงเปลี่ยนปลายทางเป็น $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "จีนมีเชิง"
+  },
+  "fontCjkRound": {
+    "message": "จีนมน"
+  },
+  "uiLocaleLabel": {
+    "message": "ภาษาอินเทอร์เฟซ"
+  },
+  "uiLocaleAuto": {
+    "message": "อัตโนมัติ — ตามเบราว์เซอร์"
+  },
+  "uiLocaleHint": {
+    "message": "ใช้กับภาษาของปุ่มและข้อความในส่วนขยายนี้เท่านั้น ภาษาที่แปลคำบรรยายเลือกในป๊อปอัปและที่ “ภาษาคำบรรยาย” — ไม่ใช่ที่นี่"
+  },
+  "startTargetLabel": {
+    "message": "ภาษาที่แปล"
+  },
+  "startTargetHint": {
+    "message": "เดาจากค่ากำหนดภาษาของเบราว์เซอร์ตอนติดตั้งส่วนขยาย หากเดาผิด ให้เปลี่ยนที่นี่ — เปลี่ยนจากป๊อปอัปได้ทุกเมื่อ"
+  },
+  "diagCopy": {
+    "message": "คัดลอกข้อมูลวินิจฉัย"
+  },
+  "diagCopied": {
+    "message": "คัดลอกแล้ว — นำไปวางในอีเมลหรือ issue"
+  },
+  "diagCopyFail": {
+    "message": "คัดลอกไม่สำเร็จ — ถ่ายภาพหน้าจอแทน"
+  },
+  "optNavReadaloud": {
+    "message": "อ่านออกเสียง"
+  },
+  "ttsIntro": {
+    "message": "อ่านบรรทัดที่แปลแล้วออกเสียงด้วยคีย์ของคุณเอง ตั้งค่าผู้ให้บริการแล้วทดสอบที่นี่"
+  },
+  "ttsVoiceLabel": {
+    "message": "เสียง"
+  },
+  "ttsTestOk": {
+    "message": "เชื่อมต่อแล้ว: เสียงทดสอบ $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "การอ่านออกเสียงใช้คีย์ของคุณเอง ข้อความที่จะพูดถูกส่งไปยังผู้ให้บริการที่คุณเลือกเท่านั้น คีย์จะอยู่ในเครื่องนี้"
+  },
+  "ttsEnableLabel": {
+    "message": "อ่านคำแปลออกเสียงในวิดีโอ"
+  },
+  "ttsVolLabel": {
+    "message": "ระดับเสียงอ่านออกเสียง"
+  },
+  "ttsDuckLabel": {
+    "message": "เสียงต้นฉบับขณะพูด"
+  },
+  "ttsStatusSpeaking": {
+    "message": "กำลังพูด"
+  },
+  "ttsStatusOn": {
+    "message": "เปิดอ่านออกเสียง"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ บรรทัดในวิดีโอนี้ · ข้าม $M$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "เมื่อเปิด คำแปลของแต่ละคำบรรยายจะถูกอ่านออกเสียงทันทีที่ปรากฏ บรรทัดที่คำแปลยังไม่พร้อมทันเวลาจะถูกข้าม ไม่ตามอ่านย้อนหลัง เสียงวิดีโอจะถูกลดลงขณะกำลังอ่าน และถ้าบรรทัดยาวเกินไป วิดีโอจะช้าลงเล็กน้อย"
+  },
+  "ttsRegionLabel": {
+    "message": "ภูมิภาคบริการ"
+  },
+  "ttsErrNoRegion": {
+    "message": "กรอกภูมิภาคบริการของคีย์ Azure ก่อน (เช่น eastus)"
+  }
+}

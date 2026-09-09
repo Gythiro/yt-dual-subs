@@ -44,9 +44,13 @@ Only the caption text of the video you are actively watching is transmitted, and
 
 **One exception, and it is announced before it happens:** when you export a video's subtitles as an SRT file *and* tick "translate with my own key", the **whole caption track** of that video is sent to your provider — not just the part you have watched. The extension shows you how many requests that will take and asks you to confirm before anything is sent, and the option is off by default.
 
-### 3. Your own API key (optional)
+### 3. Read-aloud text (optional, off by default)
 
-If you choose to use your own translation provider, the key you enter is stored with `chrome.storage.local` **on that machine only**. It is deliberately **not** put in `chrome.storage.sync`, so it is never uploaded to your browser account or copied to your other devices. It is used for one thing: the authorization header of requests to the endpoint you selected. It is never sent to the developer — there is no server to send it to — and it is never shared with any other provider. Clearing it in the settings page removes it from the machine.
+The extension can read translated subtitle lines aloud (text-to-speech). This feature is **off by default** and only works after you enter your own speech API key on the settings page. While it is on, the **translated text of the line currently on screen** is sent to the **one speech provider you selected** — OpenAI, Google Cloud Text-to-Speech, or Microsoft Azure Speech — solely to synthesize the audio that is played back to you. The text goes to no one else, is not stored by the extension beyond a small in-memory replay cache, and the developer never receives it. The provider's handling of the text is governed by its own privacy policy. Turning the feature off, or removing the key, stops all such requests.
+
+### 4. Your own API key (optional)
+
+If you choose to use your own translation or speech provider, the key you enter is stored with `chrome.storage.local` **on that machine only**. It is deliberately **not** put in `chrome.storage.sync`, so it is never uploaded to your browser account or copied to your other devices. It is used for one thing: the authorization header of requests to the endpoint you selected. It is never sent to the developer — there is no server to send it to — and it is never shared with any other provider. Clearing it in the settings page removes it from the machine.
 
 ---
 
@@ -55,7 +59,7 @@ If you choose to use your own translation provider, the key you enter is stored 
 - **`storage`** — to save your subtitle preferences locally (see above), and an API key you choose to add.
 - **Host access to `www.youtube.com`** (content scripts) — to display the bilingual subtitle overlay inside the YouTube player and read the active caption track of the video you are watching.
 - **Host access to `translate.googleapis.com`** — to fetch machine translations of caption text for the Smart-sentences engine (used automatically when YouTube's own track translation is unavailable, or when selected manually).
-- **Optional host access to translation providers** — the extension ships with access to none of them. Each provider's domain is listed as an *optional* host permission, and Chrome asks you to grant exactly one of them at the moment you press "Save and test" for that provider. A provider you never choose is never contacted and never granted anything.
+- **Optional host access to translation and speech providers** — the extension ships with access to none of them. Each provider's domain (including the two speech endpoints, `texttospeech.googleapis.com` and `*.tts.speech.microsoft.com`) is listed as an *optional* host permission, and Chrome asks you to grant exactly one of them at the moment you press "Save and test" for that provider. A provider you never choose is never contacted and never granted anything.
 
 The extension requests the narrowest permissions needed for these features and nothing more. It does not request access to your tabs, browsing history, or any other websites.
 
@@ -63,7 +67,7 @@ The extension requests the narrowest permissions needed for these features and n
 
 ## Data sharing
 
-No user data is sold or shared with third parties. The only outbound data is caption text, sent to the translation service **you** have chosen — YouTube's own translation or Google Translate by default, or your own provider if you configured one — **exclusively to produce the translation you asked for.** Your API key travels with those requests as their authorization header and nowhere else.
+No user data is sold or shared with third parties. The only outbound data is caption text — sent to the translation service **you** have chosen (YouTube's own translation or Google Translate by default, or your own provider if you configured one) **exclusively to produce the translation you asked for**, and, only if you turned read-aloud on, the translated line sent to the speech provider you picked, exclusively to synthesize its audio. Your API key travels with those requests as their authorization header and nowhere else.
 
 ---
 

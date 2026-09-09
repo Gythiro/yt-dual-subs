@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Subtitrări bilingve pentru YouTube — originalul și traducerea într-un singur strat, fără suprapunere."
+  },
+  "headerSub": {
+    "message": "pentru YouTube™ · Bilingv, un singur strat"
+  },
+  "disclaimer": {
+    "message": "Nu este afiliat cu YouTube sau Google."
+  },
+  "enableTitle": {
+    "message": "Activează / dezactivează"
+  },
+  "openOptions": {
+    "message": "Setări"
+  },
+  "enableAria": {
+    "message": "Activează extensia"
+  },
+  "previewTag": {
+    "message": "Previzualizare"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Vulpea brună iute"
+  },
+  "sampleTransComma": {
+    "message": "Vulpea brună sare,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Previzualizare live"
+  },
+  "secTranslation": {
+    "message": "Traducere"
+  },
+  "targetLang": {
+    "message": "Limba țintă"
+  },
+  "backendLabel": {
+    "message": "Motor"
+  },
+  "backendInfo": {
+    "message": "Info motor"
+  },
+  "backendAuto": {
+    "message": "Automat (recomandat)"
+  },
+  "backendTlang": {
+    "message": "Pistă întreagă (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Propoziții inteligente (Google)"
+  },
+  "backendByo": {
+    "message": "Cheia ta (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Automat</b>: folosește traducerea pe pistă întreagă de la YouTube când videoclipul o suportă și trece la propoziții inteligente când nu.<br><b>Pistă întreagă</b>: traducerea proprie YouTube, aliniată linie cu linie. Folosirea intensă poate face ca YouTube să o limiteze temporar — extensia așteaptă și reîncearcă.<br><b>Propoziții inteligente</b>: reconstituie subtitrările fragmentate în propoziții complete, apoi le traduce prin endpointul gratuit Google — formulare mai bună decât pista întreagă pe piste dezordonate, dar folosirea intensă poate fi limitată și aici; extensia încetinește și reîncearcă.<br><b>Cheia ta</b>: trimite propoziția asamblată către furnizorul configurat."
+  },
+  "backendGtxHint": {
+    "message": "Folosește endpointul gratuit Google — folosirea intensă poate fi limitată temporar; extensia își reglează ritmul și reîncearcă automat."
+  },
+  "backendStatusTlang": {
+    "message": "Acest videoclip: traducere pe pistă întreagă (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Acest videoclip: propoziții inteligente (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Limitat de endpointul de traducere — se încetinește și se reîncearcă automat. Liniile deja traduse rămân funcționale."
+  },
+  "backendStatusSame": {
+    "message": "Subtitrările acestui videoclip sunt deja în limba țintă — nu e nimic de tradus."
+  },
+  "secLayout": {
+    "message": "Aspect"
+  },
+  "orderLabel": {
+    "message": "Ordine"
+  },
+  "orderTransTop": {
+    "message": "Traducerea deasupra"
+  },
+  "orderOrigTop": {
+    "message": "Originalul deasupra"
+  },
+  "positionLabel": {
+    "message": "Poziție"
+  },
+  "posTop": {
+    "message": "Sus"
+  },
+  "posCenter": {
+    "message": "Centru"
+  },
+  "posBottom": {
+    "message": "Jos"
+  },
+  "posHint": {
+    "message": "Poți trage caseta de subtitrare pe videoclip"
+  },
+  "posTryDrag": {
+    "message": "încearcă"
+  },
+  "posTryNoVideo": {
+    "message": "Deschide mai întâi un videoclip YouTube"
+  },
+  "resetPos": {
+    "message": "Resetează poziția"
+  },
+  "rowGap": {
+    "message": "Spațiere linii"
+  },
+  "tabTrans": {
+    "message": "Traducere"
+  },
+  "tabOrig": {
+    "message": "Original"
+  },
+  "lineTabsAria": {
+    "message": "Linie subtitrare"
+  },
+  "lineShow": {
+    "message": "Afișează această linie"
+  },
+  "fontLabel": {
+    "message": "Font"
+  },
+  "fontSystem": {
+    "message": "Implicit sistem"
+  },
+  "fontMono": {
+    "message": "Monospațiat"
+  },
+  "fontCjk": {
+    "message": "Compatibil CJK"
+  },
+  "sizeLabel": {
+    "message": "Mărime font"
+  },
+  "colText": {
+    "message": "Text"
+  },
+  "colBg": {
+    "message": "Fundal"
+  },
+  "colStroke": {
+    "message": "Contur"
+  },
+  "colTextAria": {
+    "message": "Culoare text"
+  },
+  "colBgAria": {
+    "message": "Culoare fundal"
+  },
+  "colStrokeAria": {
+    "message": "Culoare contur"
+  },
+  "bgOpacity": {
+    "message": "Opacitate fundal"
+  },
+  "strokeOpacity": {
+    "message": "Opacitate contur"
+  },
+  "resetAll": {
+    "message": "Resetează toate setările"
+  },
+  "toggleTurnOff": {
+    "message": "Dezactivează subtitrările bilingve"
+  },
+  "toggleTurnOn": {
+    "message": "Activează subtitrările bilingve"
+  },
+  "handleTitle": {
+    "message": "Trage pentru a muta · dublu clic pentru a reseta"
+  },
+  "handleAria": {
+    "message": "Trage pentru a muta subtitrările, dublu clic pentru a reseta"
+  },
+  "secExport": {
+    "message": "Exportare"
+  },
+  "exportContent": {
+    "message": "Conținut"
+  },
+  "exportBi": {
+    "message": "Bilingv"
+  },
+  "exportOrig": {
+    "message": "Original"
+  },
+  "exportTrans": {
+    "message": "Traducere"
+  },
+  "exportSrt": {
+    "message": "Descarcă SRT"
+  },
+  "exportWorking": {
+    "message": "Se generează…"
+  },
+  "exportDone": {
+    "message": "Subtitrări descărcate"
+  },
+  "exportNoTrans": {
+    "message": "Nu există traducere pentru acest videoclip — încearcă motorul Pistă întreagă sau altă limbă țintă."
+  },
+  "exportLimited": {
+    "message": "YouTube limitează acum traducerea pe pistă întreagă — reîncearcă într-un minut sau bifează „Traduce cu cheia mea”."
+  },
+  "exportNoCues": {
+    "message": "Nu există subtitrări de descărcat — redă câteva secunde ca să se încarce, apoi reîncearcă."
+  },
+  "exportNotYoutube": {
+    "message": "Deschide o pagină de videoclip YouTube pentru a exporta."
+  },
+  "exportFailed": {
+    "message": "Exportul a eșuat — reîncarcă pagina și reîncearcă."
+  },
+  "updateNotesLabel": {
+    "message": "Deschide notele de lansare după actualizări"
+  },
+  "trackWarnDubOnly": {
+    "message": "Atenție: acest videoclip are doar subtitrări automate din dublajul AI (fără pistă în limba originală), deci subtitrările bilingve s-ar putea să nu corespundă audio-ului."
+  },
+  "whatsNewRow": {
+    "message": "Vezi noutățile din v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Acest videoclip: cheia ta ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Furnizor"
+  },
+  "byoBaseLabel": {
+    "message": "URL de bază API (https)"
+  },
+  "byoModelLabel": {
+    "message": "Model"
+  },
+  "byoModelRequired": {
+    "message": "Obligatoriu: numele modelului"
+  },
+  "byoKeyLabel": {
+    "message": "Cheie API"
+  },
+  "byoKeyClear": {
+    "message": "Șterge"
+  },
+  "byoKeyCleared": {
+    "message": "Cheia salvată pe acest dispozitiv a fost ștearsă."
+  },
+  "byoKeySaved": {
+    "message": "salvat ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Personalizat (compatibil OpenAI)"
+  },
+  "byoTest": {
+    "message": "Salvează și testează"
+  },
+  "byoTesting": {
+    "message": "Se testează…"
+  },
+  "byoTestOk": {
+    "message": "Conectat. Exemplu: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Obține o cheie"
+  },
+  "byoGuide": {
+    "message": "Ai nevoie de ajutor la configurare?"
+  },
+  "byoLocalHint": {
+    "message": "Cheia rămâne în acest browser, pe acest computer — nu este încărcată nicăieri. Textul subtitrărilor ajunge doar la furnizorul ales."
+  },
+  "byoErrNoProvider": {
+    "message": "Alege mai întâi un furnizor."
+  },
+  "byoErrNoKey": {
+    "message": "Introdu mai întâi o cheie API — linkul de mai jos deschide pagina de chei a furnizorului."
+  },
+  "byoErrNoModel": {
+    "message": "Acest furnizor necesită un nume de model."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "URL-ul de bază al API-ului trebuie să fie o adresă https:// completă."
+  },
+  "byoErrNoPerm": {
+    "message": "Fără permisiunea de a accesa acel host API, extensia nu se poate conecta."
+  },
+  "byoErrAuth": {
+    "message": "Cheia a fost respinsă (401/403) — verifică dacă a fost copiată integral și este activă."
+  },
+  "byoErrLimited": {
+    "message": "Furnizorul limitează rata — încetinim și reîncercăm automat."
+  },
+  "byoErrQuota": {
+    "message": "Această cheie nu mai are cotă pentru perioada curentă."
+  },
+  "byoErrBadRequest": {
+    "message": "Endpointul a refuzat cererea — numele modelului sau URL-ul de bază ar putea fi greșite."
+  },
+  "byoErrBadShape": {
+    "message": "Modelul nu a răspuns linie cu linie, iar reîncercările mai mici au eșuat și ele — încearcă alt model."
+  },
+  "byoErrReasoning": {
+    "message": "Modelul a returnat doar lanțul de gândire, fără traducere — alege un model fără raționament intern."
+  },
+  "byoErrNetfail": {
+    "message": "Nu se poate ajunge la acel endpoint (rețea sau restricție regională)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Acest furnizor nu oferă limba aleasă — schimbă limba sau motorul."
+  },
+  "byoErrFailed": {
+    "message": "Conexiunea a eșuat. Încearcă din nou imediat."
+  },
+  "optTitle": {
+    "message": "Configurare serviciu de traducere"
+  },
+  "optIntro": {
+    "message": "Alege un furnizor și lipește cheia API. Cheia rămâne pe acest computer, iar textul subtitrărilor ajunge doar la furnizorul ales."
+  },
+  "optPricingLink": {
+    "message": "Prețuri și nivel gratuit"
+  },
+  "optFetchModels": {
+    "message": "Listează modelele cu cheia mea"
+  },
+  "optFetching": {
+    "message": "Se listează…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ modele găsite",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Nu s-au putut lista modelele — tastează numele modelului."
+  },
+  "optModelCustom": {
+    "message": "Personalizat…"
+  },
+  "optNoModelsYet": {
+    "message": "Nicio listă de modele încă — obține una cu cheia ta sau tastează numele."
+  },
+  "optShowKey": {
+    "message": "Arată"
+  },
+  "optRecommended": {
+    "message": "recomandat"
+  },
+  "optConfigured": {
+    "message": "Configurat"
+  },
+  "optInUse": {
+    "message": "în uz"
+  },
+  "optAfterSetup": {
+    "message": "Când termini aici, deschide fereastra extensiei și setează Motorul pe „Cheia ta”."
+  },
+  "optTrademark": {
+    "message": "Toate numele și logo-urile furnizorilor sunt mărci ale proprietarilor respectivi. Această extensie nu este afiliată, susținută sau sponsorizată de niciunul dintre ei; mărcile sunt afișate doar pentru a identifica API-ul ales."
+  },
+  "optSections": {
+    "message": "Secțiuni"
+  },
+  "optNavSetup": {
+    "message": "Serviciu de traducere"
+  },
+  "optNavStart": {
+    "message": "Primii pași"
+  },
+  "optNavAbout": {
+    "message": "Despre"
+  },
+  "startIntro": {
+    "message": "Trei lucruri. Nu trebuie să configurezi nimic ca s-o folosești."
+  },
+  "startS1Title": {
+    "message": "Deschide un video — gata"
+  },
+  "startS1Body": {
+    "message": "Orice video YouTube cu subtitrări: cele două linii apar de la sine."
+  },
+  "startS2Title": {
+    "message": "Pune-le unde vrei"
+  },
+  "startS2Body": {
+    "message": "Ține mânerul din stânga-sus al casetei de subtitrări și trage-o oriunde. Dublu clic pe mâner o readuce la loc."
+  },
+  "startS2Alt": {
+    "message": "Diagramă player: un mâner cu șase puncte în colțul stânga-sus al casetei de subtitrări, trasă în altă poziție"
+  },
+  "startS3Title": {
+    "message": "Vrei traduceri mai bune"
+  },
+  "startS3Body": {
+    "message": "Adaugă propria cheie API: traducere pe propoziții întregi și export SRT pentru tot videoul."
+  },
+  "startGoSetup": {
+    "message": "Configurează un serviciu de traducere"
+  },
+  "aboutIntro": {
+    "message": "Ce este și unde ajunge textul tău."
+  },
+  "aboutVersion": {
+    "message": "Versiune"
+  },
+  "aboutBlurb": {
+    "message": "O a doua linie de subtitrare pe YouTube: originalul pe una, traducerea pe cealaltă, cu font, culoare și poziție la alegerea ta. Open source, gratuit, fără reclame."
+  },
+  "aboutPrivacy": {
+    "message": "Nu avem server și nu colectăm statistici. Textul subtitrărilor ajunge doar la serviciul de traducere ales; cu cheia ta, cheia este stocată doar pe acest computer."
+  },
+  "aboutChangelog": {
+    "message": "Istoric modificări"
+  },
+  "aboutRoadmap": {
+    "message": "Foaie de parcurs"
+  },
+  "optFeedbackLink": {
+    "message": "Raportează o problemă"
+  },
+  "popupByoConfigure": {
+    "message": "Configurează…"
+  },
+  "popupByoNotSet": {
+    "message": "neconfigurat"
+  },
+  "popupByoPick": {
+    "message": "Furnizor de traducere"
+  },
+  "popupByoUntested": {
+    "message": "netestat"
+  },
+  "exportUsesYouTube": {
+    "message": "Descărcarea folosește traducerea YouTube a întregii piste — gratuită și nu consumă cheia API."
+  },
+  "exportUseByo": {
+    "message": "Traducere cu cheia mea (mai fidelă, consumă cotă)"
+  },
+  "exportByoNote": {
+    "message": "Întreaga pistă va fi tradusă de furnizorul tău cu cheia ta. Vei vedea o estimare înainte de a se trimite ceva."
+  },
+  "exportConfirm": {
+    "message": "Traduci $N$ linii de subtitrare cu $NAME$ — aproximativ $REQ$ cereri din cota ta. Întreaga pistă părăsește browserul către acel furnizor; în timpul redării se trimit doar părțile pe care le vizionezi efectiv.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Traduce și descarcă"
+  },
+  "exportConfirmBack": {
+    "message": "Anulează"
+  },
+  "exportStop": {
+    "message": "Oprește"
+  },
+  "exportStopping": {
+    "message": "Se oprește…"
+  },
+  "exportProgress": {
+    "message": "Se traduce… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ fragment(e) au trecut pe traducerea YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Descărcare anulată."
+  },
+  "ftSite": {
+    "message": "Site web"
+  },
+  "ftSiteLabel": {
+    "message": "Site"
+  },
+  "ftFeedbackLabel": {
+    "message": "Părere"
+  },
+  "ftReviewLabel": {
+    "message": "Evaluează"
+  },
+  "ftGithub": {
+    "message": "Codul sursă pe GitHub"
+  },
+  "ftFeedback": {
+    "message": "Trimite feedback sau raportează o eroare"
+  },
+  "ftReview": {
+    "message": "Evaluează-o în Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Nicio cheie încă — acest furnizor nu poate fi folosit până nu adaugi una."
+  },
+  "optBaseHint": {
+    "message": "Funcționează atât un URL de bază, cât și un endpoint complet, de ex. https://example.com/v1 sau https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Diagramă player: o linie originală și una tradusă, aproape de baza imaginii"
+  },
+  "startS3Alt": {
+    "message": "Comparație: motorul gratuit traduce o propoziție pe bucăți, cheia ta o înțelege întreagă și o reîmparte"
+  },
+  "startPicFree": {
+    "message": "Motor gratuit"
+  },
+  "startPicFreeNote": {
+    "message": "o propoziție, tăiată"
+  },
+  "startPicByo": {
+    "message": "Cheia ta"
+  },
+  "startPicByoNote": {
+    "message": "înțeleasă întreagă, reîmpărțită"
+  },
+  "startNoSubsQ": {
+    "message": "Nu apar subtitrări?"
+  },
+  "startNoSubs": {
+    "message": "Apasă butonul CC din dreapta jos a playerului sau încearcă alt video — transmisiunile live și videoclipurile muzicale adesea nu au deloc."
+  },
+  "langManage": {
+    "message": "Gestionează limbile…"
+  },
+  "optNavLangs": {
+    "message": "Limbi de subtitrare"
+  },
+  "langsIntro": {
+    "message": "Limbile în care fereastra pop-up îți oferă traducerea."
+  },
+  "langsKept": {
+    "message": "Afișate în pop-up"
+  },
+  "langsKeptHint": {
+    "message": "Acestea apar în meniul de limbă țintă al pop-up-ului. Păstrează cel puțin una."
+  },
+  "langsMore": {
+    "message": "Alte limbi"
+  },
+  "langsMoreHint": {
+    "message": "Apasă + ca să adaugi una. Fiecare limbă din listă funcționează cu motoarele gratuite și cu DeepL."
+  },
+  "langsReset": {
+    "message": "Restabilește implicitele"
+  },
+  "langsResetDone": {
+    "message": "Înapoi la lista implicită."
+  },
+  "langsAddAria": {
+    "message": "Adaugă"
+  },
+  "langsRemoveAria": {
+    "message": "Elimină"
+  },
+  "langsLastOne": {
+    "message": "Păstrează cel puțin una"
+  },
+  "langsAllAdded": {
+    "message": "Toate limbile sunt deja în listă."
+  },
+  "langsAdded": {
+    "message": "S-a adăugat $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Aceea era în uz, deci limba țintă este acum $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Serif chinezesc"
+  },
+  "fontCjkRound": {
+    "message": "Rotunjit chinezesc"
+  },
+  "uiLocaleLabel": {
+    "message": "Limba interfeței"
+  },
+  "uiLocaleAuto": {
+    "message": "Automat — urmează browserul"
+  },
+  "uiLocaleHint": {
+    "message": "Doar limba controalelor acestei extensii. Limba în care se traduc subtitrările se alege din popup și din „Limbi subtitrări” — nu de aici."
+  },
+  "startTargetLabel": {
+    "message": "Limba de traducere"
+  },
+  "startTargetHint": {
+    "message": "Detectată din preferințele de limbă ale browserului la instalarea extensiei. Schimbă-o aici dacă e greșită — poți modifica oricând din popup."
+  },
+  "diagCopy": {
+    "message": "Copiază info de diagnostic"
+  },
+  "diagCopied": {
+    "message": "Copiat — lipește-le într-un e-mail sau o problemă"
+  },
+  "diagCopyFail": {
+    "message": "Copierea a eșuat — fă o captură de ecran"
+  },
+  "optNavReadaloud": {
+    "message": "Citire cu voce"
+  },
+  "ttsIntro": {
+    "message": "Citește linia tradusă cu voce tare, cu cheia ta. Configurează un furnizor și testează-l aici."
+  },
+  "ttsVoiceLabel": {
+    "message": "Voce"
+  },
+  "ttsTestOk": {
+    "message": "Conectat: audio de test $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Citirea cu voce tare folosește cheia ta. Textul de citit ajunge doar la furnizorul ales; cheia rămâne pe acest computer."
+  },
+  "ttsEnableLabel": {
+    "message": "Citește traducerea cu voce tare în video"
+  },
+  "ttsVolLabel": {
+    "message": "Volum citire vocală"
+  },
+  "ttsDuckLabel": {
+    "message": "Audio original în timpul vorbirii"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Vorbește"
+  },
+  "ttsStatusOn": {
+    "message": "Citire vocală pornită"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ linii acest video · $M$ omise",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Când e activat, traducerea fiecărei subtitrări e rostită pe măsură ce apare; o linie a cărei traducere nu e gata la timp e omisă, fără să fie recuperată. Audio-ul videoclipului e redus cât timp se vorbește o linie, iar o linie prea lungă încetinește puțin videoclipul."
+  },
+  "ttsRegionLabel": {
+    "message": "Regiune serviciu"
+  },
+  "ttsErrNoRegion": {
+    "message": "Introduceți mai întâi regiunea de serviciu a cheii Azure (de ex. eastus)."
+  }
+}

@@ -732,6 +732,87 @@
   }
 
   // ---- receive config from content.js --------------------------------------
+  // ---- read-aloud ducking + speed sharing -----------------------------------
+  // Lower the player's own audio while a spoken line plays, through the
+  // player's API rather than video.volume — YouTube rewrites the element's
+  // volume from its own state, so the element is the wrong place to argue.
+  // Restore is POLITE: only when the value still sits where we put it. A user
+  // who grabbed a control mid-speech has expressed a preference, and stomping
+  // it to "restore" would be the louder bug. Both halves therefore remember
+  // what they actually SET — never recompute at restore time: the duck depth
+  // is a live setting, and the player may snap a rate to its own steps.
+  let duckSavedVol = -1;        // the user's volume, to give back
+  let duckSetVol = -1;          // what we set — the polite-restore comparand
+  function duckVolume(p, on, pct) {
+    if (typeof p.getVolume !== "function" || typeof p.setVolume !== "function") return;
+    if (on) {
+      if (duckSavedVol >= 0) return;            // already ducked
+      const share = Math.max(0, Math.min(100, typeof pct === "number" ? pct : 25));
+      const v = p.getVolume();
+      duckSavedVol = v;
+      duckSetVol = Math.round(v * share / 100);
+      p.setVolume(duckSetVol);
+    } else {
+      if (duckSavedVol < 0) return;
+      if (p.getVolume() === duckSetVol) p.setVolume(duckSavedVol);
+      duckSavedVol = -1; duckSetVol = -1;
+    }
+  }
+
+  // Speed sharing, one line at a time: when even 1.4× speech cannot fit a cue,
+  // content.js sends `fit` — the absolute video rate at which it just would —
+  // and the video slows toward it, never below 76% of the user's own rate
+  // (the clamp a 200k-user competitor shipped). The moment the rate turns up
+  // anywhere we did not put it, the user has taken the wheel: back off for
+  // the rest of this video (nav restores the benefit of the doubt).
+  let rateSavedBase = -1;       // the user's own rate, to give back
+  let rateSet = -1;             // what the player actually became after our set
+  let rateUserTouched = false;  // user moved the rate mid-video: hands off
+  function rateRestore(p, cur) {
+    if (rateSavedBase < 0) return;
+    if (cur === rateSet) p.setPlaybackRate(rateSavedBase);
+    else rateUserTouched = true;
+    rateSavedBase = -1; rateSet = -1;
+  }
+  function shareRate(p, on, fit) {
+    if (typeof p.getPlaybackRate !== "function" ||
+        typeof p.setPlaybackRate !== "function") return;
+    if (rateUserTouched) return;
+    const cur = p.getPlaybackRate();
+    if (!on || typeof fit !== "number" || !(fit > 0)) {
+      rateRestore(p, cur);                      // line over, or this line fits
+      return;
+    }
+    if (rateSet >= 0 && cur !== rateSet) {      // moved since we set it
+      rateUserTouched = true;
+      rateSavedBase = -1; rateSet = -1;
+      return;
+    }
+    const base = rateSavedBase >= 0 ? rateSavedBase : cur;
+    if (fit >= base) {                          // fits at the user's own rate
+      rateRestore(p, cur);
+      return;
+    }
+    if (rateSavedBase < 0) rateSavedBase = base;
+    p.setPlaybackRate(Math.max(0.76 * base, fit));
+    rateSet = p.getPlaybackRate();              // read back: the player may
+                                                // clamp to its own steps
+    if (rateSet === rateSavedBase) { rateSavedBase = -1; rateSet = -1; }
+  }
+
+  function duck(on, pct, fit, nav) {
+    try {
+      const p = activePlayer();
+      if (p) {
+        duckVolume(p, on, pct);
+        shareRate(p, on, fit);
+      }
+      if (nav) rateUserTouched = false;         // new video, fresh benefit
+    } catch (_e) {
+      duckSavedVol = -1; duckSetVol = -1; rateSavedBase = -1; rateSet = -1;
+    }
+  }
+
   window.addEventListener("message", (evt) => {
     try {
       if (evt.source !== window) return;
@@ -769,6 +850,8 @@
         checkVideoChange();
         currentVideoId = videoIdFromLocation();
         produceExport(d.targetLang, d.exportId);
+      } else if (d.type === "ttsDuck") {
+        duck(!!d.on, d.pct, d.fit, !!d.nav);
       }
     } catch (_e) { /* never throw */ }
   }, false);

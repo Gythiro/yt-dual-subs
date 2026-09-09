@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Kakskeelsed subtiitrid YouTube'ile — originaal ja tõlge ühes kattumiseta kihis."
+  },
+  "headerSub": {
+    "message": "YouTube™ jaoks · Kakskeelne, üks kiht"
+  },
+  "disclaimer": {
+    "message": "Ei ole seotud YouTube'i ega Google'iga."
+  },
+  "enableTitle": {
+    "message": "Luba / keela"
+  },
+  "openOptions": {
+    "message": "Seaded"
+  },
+  "enableAria": {
+    "message": "Luba laiendus"
+  },
+  "previewTag": {
+    "message": "Eelvaade"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Kiire pruun rebane"
+  },
+  "sampleTransComma": {
+    "message": "Pruun rebane hüppab,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Reaalajas eelvaade"
+  },
+  "secTranslation": {
+    "message": "Tõlge"
+  },
+  "targetLang": {
+    "message": "Sihtkeel"
+  },
+  "backendLabel": {
+    "message": "Mootor"
+  },
+  "backendInfo": {
+    "message": "Mootori teave"
+  },
+  "backendAuto": {
+    "message": "Automaatne (soovitatav)"
+  },
+  "backendTlang": {
+    "message": "Kogu rada (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Nutikad laused (Google)"
+  },
+  "backendByo": {
+    "message": "Oma võti (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Automaatne</b>: kasutab YouTube'i kogu raja tõlget alati, kui video seda toetab, ja lülitub nutikatele lausetele, kui ei toeta.<br><b>Kogu rada</b>: YouTube'i enda tõlge; joondatud rida rea haaval. Tihe kasutus võib YouTube'il lühidalt päringuid piirata — laiendus ootab ja küsib uuesti.<br><b>Nutikad laused</b>: koondab killustatud subtiitrid terviklikeks lauseteks ja tõlgib need Google'i tasuta otspunkti kaudu — segastel radadel on sõnastus parem kui kogu raja tõlkel, kuid tihe kasutus võib ka seal päringuid piirata; laiendus aeglustab ja proovib uuesti.<br><b>Oma võti</b>: saadab koostatud lause teie seadistatud teenusepakkujale."
+  },
+  "backendGtxHint": {
+    "message": "Kasutab Google'i tasuta otspunkti — tihe kasutus võib lühidalt päringuid piirata; laiendus kohandab tempot ja proovib automaatselt uuesti."
+  },
+  "backendStatusTlang": {
+    "message": "See video: kogu raja tõlge (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "See video: nutikad laused (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Tõlke otspunkt piirab päringuid — aeglustame ja proovime automaatselt uuesti. Juba tõlgitud read jäävad tööle."
+  },
+  "backendStatusSame": {
+    "message": "Selle video subtiitrid on juba sihtkeeles — tõlkida pole midagi."
+  },
+  "secLayout": {
+    "message": "Paigutus"
+  },
+  "orderLabel": {
+    "message": "Järjestus"
+  },
+  "orderTransTop": {
+    "message": "Tõlge üleval"
+  },
+  "orderOrigTop": {
+    "message": "Originaal üleval"
+  },
+  "positionLabel": {
+    "message": "Asukoht"
+  },
+  "posTop": {
+    "message": "Üleval"
+  },
+  "posCenter": {
+    "message": "Keskel"
+  },
+  "posBottom": {
+    "message": "All"
+  },
+  "posHint": {
+    "message": "Subtiitrikasti saab videol ka lohistada"
+  },
+  "posTryDrag": {
+    "message": "proovi"
+  },
+  "posTryNoVideo": {
+    "message": "Ava esmalt YouTube'i video"
+  },
+  "resetPos": {
+    "message": "Lähtesta asukoht"
+  },
+  "rowGap": {
+    "message": "Reavahe"
+  },
+  "tabTrans": {
+    "message": "Tõlge"
+  },
+  "tabOrig": {
+    "message": "Originaal"
+  },
+  "lineTabsAria": {
+    "message": "Subtiitri rida"
+  },
+  "lineShow": {
+    "message": "Näita seda rida"
+  },
+  "fontLabel": {
+    "message": "Kirjatüüp"
+  },
+  "fontSystem": {
+    "message": "Süsteemi vaikimisi"
+  },
+  "fontMono": {
+    "message": "Ühelaiuseline"
+  },
+  "fontCjk": {
+    "message": "CJK-sõbralik"
+  },
+  "sizeLabel": {
+    "message": "Fondi suurus"
+  },
+  "colText": {
+    "message": "Tekst"
+  },
+  "colBg": {
+    "message": "Taust"
+  },
+  "colStroke": {
+    "message": "Kontuur"
+  },
+  "colTextAria": {
+    "message": "Teksti värv"
+  },
+  "colBgAria": {
+    "message": "Tausta värv"
+  },
+  "colStrokeAria": {
+    "message": "Kontuuri värv"
+  },
+  "bgOpacity": {
+    "message": "Tausta läbipaistmatus"
+  },
+  "strokeOpacity": {
+    "message": "Kontuuri läbipaistmatus"
+  },
+  "resetAll": {
+    "message": "Lähtesta kõik seaded"
+  },
+  "toggleTurnOff": {
+    "message": "Lülita kakskeelsed subtiitrid välja"
+  },
+  "toggleTurnOn": {
+    "message": "Lülita kakskeelsed subtiitrid sisse"
+  },
+  "handleTitle": {
+    "message": "Lohista liigutamiseks · topeltklõps lähtestamiseks"
+  },
+  "handleAria": {
+    "message": "Lohista subtiitreid, topeltklõps lähtestab"
+  },
+  "secExport": {
+    "message": "Eksport"
+  },
+  "exportContent": {
+    "message": "Sisu"
+  },
+  "exportBi": {
+    "message": "Kakskeelne"
+  },
+  "exportOrig": {
+    "message": "Originaal"
+  },
+  "exportTrans": {
+    "message": "Tõlge"
+  },
+  "exportSrt": {
+    "message": "Laadi SRT alla"
+  },
+  "exportWorking": {
+    "message": "Koostamine…"
+  },
+  "exportDone": {
+    "message": "Subtiitrid allalaaditud"
+  },
+  "exportNoTrans": {
+    "message": "Selle video jaoks pole tõlget — proovi kogu raja mootorit või teist sihtkeelt."
+  },
+  "exportLimited": {
+    "message": "YouTube piirab praegu kogu raja tõlget — proovi minuti pärast uuesti või märgi „Tõlgi oma võtmega“."
+  },
+  "exportNoCues": {
+    "message": "Allalaaditavaid subtiitreid pole — lase videol paar sekundit mängida, et subtiitrid laaditaks, ja proovi uuesti."
+  },
+  "exportNotYoutube": {
+    "message": "Ava eksportimiseks YouTube'i videoleht."
+  },
+  "exportFailed": {
+    "message": "Eksport ebaõnnestus — värskenda lehte ja proovi uuesti."
+  },
+  "updateNotesLabel": {
+    "message": "Ava pärast uuendusi väljalaskemärkmed"
+  },
+  "trackWarnDubOnly": {
+    "message": "Tähelepanu: sellel videol on ainult AI-dubleeritud automaatsed subtiitrid (originaalkeele rada puudub), seega kakskeelsed subtiitrid ei pruugi heliga kokku minna."
+  },
+  "whatsNewRow": {
+    "message": "Vaata, mis on uut v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "See video: oma võti ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Teenusepakkuja"
+  },
+  "byoBaseLabel": {
+    "message": "API baas-URL (https)"
+  },
+  "byoModelLabel": {
+    "message": "Mudel"
+  },
+  "byoModelRequired": {
+    "message": "Nõutav: mudeli nimi"
+  },
+  "byoKeyLabel": {
+    "message": "API võti"
+  },
+  "byoKeyClear": {
+    "message": "Tühjenda"
+  },
+  "byoKeyCleared": {
+    "message": "Sellele seadmele salvestatud võti on eemaldatud."
+  },
+  "byoKeySaved": {
+    "message": "salvestatud ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Kohandatud (OpenAI-ühilduv)"
+  },
+  "byoTest": {
+    "message": "Salvesta ja testi"
+  },
+  "byoTesting": {
+    "message": "Testimine…"
+  },
+  "byoTestOk": {
+    "message": "Ühendatud. Näidis: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Hangi võti"
+  },
+  "byoGuide": {
+    "message": "Vajad abi seadistamisel?"
+  },
+  "byoLocalHint": {
+    "message": "Võti jääb sellesse brauserisse, sellele arvutile — seda ei laadita kunagi üles. Subtiitrite tekst läheb ainult valitud teenusepakkujale."
+  },
+  "byoErrNoProvider": {
+    "message": "Vali esmalt teenusepakkuja."
+  },
+  "byoErrNoKey": {
+    "message": "Sisesta esmalt API võti — allolev link avab teenusepakkuja võtmelehe."
+  },
+  "byoErrNoModel": {
+    "message": "See teenusepakkuja vajab sisestatud mudeli nime."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API baas-URL peab olema täielik https:// aadress."
+  },
+  "byoErrNoPerm": {
+    "message": "Ilma loata selle API hostini jõuda ei saa laiendus ühenduda."
+  },
+  "byoErrAuth": {
+    "message": "Võti lükati tagasi (401/403) — kontrolli, et see on täielikult kopeeritud ja aktiivne."
+  },
+  "byoErrLimited": {
+    "message": "Teenusepakkuja piirab päringute sagedust — aeglustan ja proovin automaatselt uuesti."
+  },
+  "byoErrQuota": {
+    "message": "Selle võtme kvoot on käesolevaks perioodiks otsas."
+  },
+  "byoErrBadRequest": {
+    "message": "Lõpp-punkt keeldus päringust — mudeli nimi või baas-URL võib olla vale."
+  },
+  "byoErrBadShape": {
+    "message": "Mudel ei vastanud rida-realt nagu palutud ja ka väiksemad korduskatsed ebaõnnestusid — proovi teist mudelit."
+  },
+  "byoErrReasoning": {
+    "message": "See mudel tagastas ainult mõtteahela, mitte tõlget — vali mudel, mis ei mõtle."
+  },
+  "byoErrNetfail": {
+    "message": "Selle lõpp-punktini ei pääse (võrgu- või piirkondlik piirang)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Sellel teenusepakkujal pole valitud keele jaoks sihtkeelt — muuda keelt või mootorit."
+  },
+  "byoErrFailed": {
+    "message": "Ühendus ebaõnnestus. Proovi hetke pärast uuesti."
+  },
+  "optTitle": {
+    "message": "Tõlketeenuse seadistus"
+  },
+  "optIntro": {
+    "message": "Vali teenusepakkuja ja kleebi oma API võti. Võti jääb sellele arvutile ning subtiitrite tekst läheb ainult valitud teenusepakkujale."
+  },
+  "optPricingLink": {
+    "message": "Hinnad ja tasuta tase"
+  },
+  "optFetchModels": {
+    "message": "Loetle mudelid võtmega"
+  },
+  "optFetching": {
+    "message": "Loetlemine…"
+  },
+  "optModelsFetched": {
+    "message": "Leitud $N$ mudelit",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Mudeleid ei saanud loetleda — sisesta mudeli nimi käsitsi."
+  },
+  "optModelCustom": {
+    "message": "Kohandatud…"
+  },
+  "optNoModelsYet": {
+    "message": "Mudelite loendit veel pole — too see võtmega või sisesta nimi käsitsi."
+  },
+  "optShowKey": {
+    "message": "Näita"
+  },
+  "optRecommended": {
+    "message": "soovitatud"
+  },
+  "optConfigured": {
+    "message": "Seadistatud"
+  },
+  "optInUse": {
+    "message": "kasutusel"
+  },
+  "optAfterSetup": {
+    "message": "Kui oled siin valmis, ava laienduse hüpikaken ja sea Mootoriks „Oma võti“."
+  },
+  "optTrademark": {
+    "message": "Kõik teenusepakkujate nimed ja logod on nende vastavate omanike kaubamärgid. See laiendus ei ole ühegagi neist seotud, nende heaks kiidetud ega sponsoreeritud; märke näidatakse ainult valitud API tuvastamiseks."
+  },
+  "optSections": {
+    "message": "Jaotised"
+  },
+  "optNavSetup": {
+    "message": "Tõlketeenus"
+  },
+  "optNavStart": {
+    "message": "Alustamine"
+  },
+  "optNavAbout": {
+    "message": "Teave"
+  },
+  "startIntro": {
+    "message": "Kolm asja. Kasutamiseks ei pea midagi seadistama."
+  },
+  "startS1Title": {
+    "message": "Ava video — see ongi kõik"
+  },
+  "startS1Body": {
+    "message": "Iga YouTube video, millel on subtiitrid: kaks rida ilmuvad iseenesest."
+  },
+  "startS2Title": {
+    "message": "Paiguta need kuhu soovid"
+  },
+  "startS2Body": {
+    "message": "Hoia subtiitrikasti ülemisest vasakust käepidemest ja lohista kuhu tahes. Topeltklõps käepidemel paneb selle tagasi."
+  },
+  "startS2Alt": {
+    "message": "Pleieri skeem: kuue punktiga käepide subtiitrikasti ülemises vasakus nurgas, lohistatakse teise asukohta"
+  },
+  "startS3Title": {
+    "message": "Tahad paremaid tõlkeid"
+  },
+  "startS3Body": {
+    "message": "Lisa oma API võti: terviklause tõlge ja kogu video SRT eksport."
+  },
+  "startGoSetup": {
+    "message": "Seadista tõlketeenus"
+  },
+  "aboutIntro": {
+    "message": "Mis see on ja kuhu sinu tekst läheb."
+  },
+  "aboutVersion": {
+    "message": "Versioon"
+  },
+  "aboutBlurb": {
+    "message": "Teine subtiitririda YouTube’ile: originaal ühel real, tõlge teisel; font, värv ja asukoht on sinu valida. Avatud lähtekood, tasuta, reklaamideta."
+  },
+  "aboutPrivacy": {
+    "message": "Meil pole serverit ja me ei kogu statistikat. Subtiitrite tekst läheb ainult valitud tõlketeenusele; oma võtme puhul hoitakse võtit ainult selles arvutis."
+  },
+  "aboutChangelog": {
+    "message": "Muudatuste logi"
+  },
+  "aboutRoadmap": {
+    "message": "Teekaart"
+  },
+  "optFeedbackLink": {
+    "message": "Teata probleemist"
+  },
+  "popupByoConfigure": {
+    "message": "Seadista…"
+  },
+  "popupByoNotSet": {
+    "message": "seadistamata"
+  },
+  "popupByoPick": {
+    "message": "Tõlkepakkuja"
+  },
+  "popupByoUntested": {
+    "message": "testimata"
+  },
+  "exportUsesYouTube": {
+    "message": "Allalaadimine kasutab YouTube’i enda kogu raja tõlget — tasuta ega kuluta sinu API võtit."
+  },
+  "exportUseByo": {
+    "message": "Tõlgi oma võtmega (täpsem, kulutab kvooti)"
+  },
+  "exportByoNote": {
+    "message": "Kogu raja tõlgib sinu teenusepakkuja sinu võtmega. Enne saatmist näed hinnangut."
+  },
+  "exportConfirm": {
+    "message": "Tõlgi $N$ subtiitririda teenusega $NAME$ — umbes $REQ$ päringut sinu kvoodi arvelt. Kogu rada lahkub brauserist sellele teenusepakkujale; taasesituse ajal saadetakse ainult need osad, mida tegelikult vaatad.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Tõlgi ja laadi alla"
+  },
+  "exportConfirmBack": {
+    "message": "Tühista"
+  },
+  "exportStop": {
+    "message": "Peata"
+  },
+  "exportStopping": {
+    "message": "Peatamine…"
+  },
+  "exportProgress": {
+    "message": "Tõlkimine… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ tükk(i) langes YouTube’i tõlkele",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Allalaadimine tühistatud."
+  },
+  "ftSite": {
+    "message": "Veebileht"
+  },
+  "ftSiteLabel": {
+    "message": "Sait"
+  },
+  "ftFeedbackLabel": {
+    "message": "Tagasiside"
+  },
+  "ftReviewLabel": {
+    "message": "Hinda"
+  },
+  "ftGithub": {
+    "message": "Lähtekood GitHubis"
+  },
+  "ftFeedback": {
+    "message": "Saada tagasisidet või teata veast"
+  },
+  "ftReview": {
+    "message": "Hinda Chrome Web Store’is"
+  },
+  "optNeedKey": {
+    "message": "Võtit veel pole — seda teenusepakkujat ei saa enne võtme lisamist kasutada."
+  },
+  "optBaseHint": {
+    "message": "Sobib nii baas-URL kui ka täielik lõpp-punkt, nt https://example.com/v1 või https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Pleieri skeem: originaalrida ja tõlkerida pildi allosas"
+  },
+  "startS3Alt": {
+    "message": "Võrdlus: tasuta mootor tõlgib ühe lause tükkidena, oma võti mõistab tervikuna ja jaotab tagasi"
+  },
+  "startPicFree": {
+    "message": "Tasuta mootor"
+  },
+  "startPicFreeNote": {
+    "message": "üks lause, tükeldatud"
+  },
+  "startPicByo": {
+    "message": "Oma võti"
+  },
+  "startPicByoNote": {
+    "message": "tervikuna mõistetud, tagasi jaotatud"
+  },
+  "startNoSubsQ": {
+    "message": "Subtiitreid ei kuvata?"
+  },
+  "startNoSubs": {
+    "message": "Klõpsa pleieri all paremal CC-nupul või proovi teist videot — otseülekannetel ja muusikavideotel sageli polegi subtiitreid."
+  },
+  "langManage": {
+    "message": "Halda keeli…"
+  },
+  "optNavLangs": {
+    "message": "Subtiitrite keeled"
+  },
+  "langsIntro": {
+    "message": "Millistesse keeltesse hüpikaken tõlkimist pakub."
+  },
+  "langsKept": {
+    "message": "Kuvatakse hüpikaknas"
+  },
+  "langsKeptHint": {
+    "message": "Need kuvatakse hüpikakna sihtkeele menüüs. Jäta alles vähemalt üks."
+  },
+  "langsMore": {
+    "message": "Muud keeled"
+  },
+  "langsMoreHint": {
+    "message": "Vajuta +, et lisada. Kõik loetletud keeled töötavad tasuta mootoritega ja DeepL-iga."
+  },
+  "langsReset": {
+    "message": "Taasta vaikeväärtused"
+  },
+  "langsResetDone": {
+    "message": "Vaikeloend on taastatud."
+  },
+  "langsAddAria": {
+    "message": "Lisa"
+  },
+  "langsRemoveAria": {
+    "message": "Eemalda"
+  },
+  "langsLastOne": {
+    "message": "Jäta alles vähemalt üks"
+  },
+  "langsAllAdded": {
+    "message": "Kõik keeled on juba loendis."
+  },
+  "langsAdded": {
+    "message": "Lisatud $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "See oli kasutusel, seega on sihtkeel nüüd $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Hiina seriif"
+  },
+  "fontCjkRound": {
+    "message": "Hiina ümar"
+  },
+  "uiLocaleLabel": {
+    "message": "Liidese keel"
+  },
+  "uiLocaleAuto": {
+    "message": "Automaatne — järgi brauserit"
+  },
+  "uiLocaleHint": {
+    "message": "Ainult selle laienduse enda juhtnuppude keel. Millisesse keelde subtiitrid tõlgitakse, valitakse hüpikaknas ja jaotises „Subtiitrite keeled“ — mitte siin."
+  },
+  "startTargetLabel": {
+    "message": "Tõlkekeel"
+  },
+  "startTargetHint": {
+    "message": "Arvati brauseri keele-eelistuste põhjal laienduse installimisel. Kui arvamine on vale, muuda seda siin — hüpikaknas saab seda igal ajal muuta."
+  },
+  "diagCopy": {
+    "message": "Kopeeri diagnostikainfo"
+  },
+  "diagCopied": {
+    "message": "Kopeeritud — kleebi e-kirja või probleemi"
+  },
+  "diagCopyFail": {
+    "message": "Kopeerimine ebaõnnestus — tee hoopis ekraanipilt"
+  },
+  "optNavReadaloud": {
+    "message": "Loe ette"
+  },
+  "ttsIntro": {
+    "message": "Loe tõlgitud rida ette oma võtmega. Seadista teenusepakkuja ja testi siin."
+  },
+  "ttsVoiceLabel": {
+    "message": "Hääl"
+  },
+  "ttsTestOk": {
+    "message": "Ühendatud: testheli $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Ettelugemine kasutab sinu enda võtit. Etteloetav tekst läheb ainult valitud teenusepakkujale; võti jääb sellele arvutile."
+  },
+  "ttsEnableLabel": {
+    "message": "Loe tõlge videos ette"
+  },
+  "ttsVolLabel": {
+    "message": "Ettelugemise helitugevus"
+  },
+  "ttsDuckLabel": {
+    "message": "Originaalheli rääkimise ajal"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Räägib"
+  },
+  "ttsStatusOn": {
+    "message": "Ettelugemine sees"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ rida selles videos · $M$ vahele jäetud",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Kui sisse lülitatud, loetakse iga subtiitri tõlge ette selle ilmumisel; rida, mille tõlge ei jõua õigeks ajaks valmis, jäetakse vahele ega loeta hiljem järele. Video enda heli alandatakse, kuni rida kõlab, ja rida, mis on liiga pikk, et mahtuda, aeglustab videot veidi."
+  },
+  "ttsRegionLabel": {
+    "message": "Teenusepiirkond"
+  },
+  "ttsErrNoRegion": {
+    "message": "Sisesta esmalt oma Azure’i võtme teenusepiirkond (nt eastus)."
+  }
+}

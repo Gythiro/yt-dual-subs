@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "YouTube向けバイリンガル字幕 — 原文と翻訳を重ねずに1つのレイヤーで表示。"
+  },
+  "headerSub": {
+    "message": "YouTube™ 向け · バイリンガル、単一レイヤー"
+  },
+  "disclaimer": {
+    "message": "YouTube および Google とは関係ありません。"
+  },
+  "enableTitle": {
+    "message": "有効 / 無効"
+  },
+  "openOptions": {
+    "message": "設定"
+  },
+  "enableAria": {
+    "message": "拡張機能を有効にする"
+  },
+  "previewTag": {
+    "message": "プレビュー"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "すばしこい茶色のキツネ"
+  },
+  "sampleTransComma": {
+    "message": "茶色のキツネが跳び、"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio（Qwen / DeepSeek）"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao（Volcengine Ark）"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "ライブプレビュー"
+  },
+  "secTranslation": {
+    "message": "翻訳"
+  },
+  "targetLang": {
+    "message": "翻訳先の言語"
+  },
+  "backendLabel": {
+    "message": "エンジン"
+  },
+  "backendInfo": {
+    "message": "エンジン情報"
+  },
+  "backendAuto": {
+    "message": "自動（推奨）"
+  },
+  "backendTlang": {
+    "message": "全トラック（YouTube）"
+  },
+  "backendGtx": {
+    "message": "スマート文単位（Google）"
+  },
+  "backendByo": {
+    "message": "自分のキー（LLM / DeepL）"
+  },
+  "backendTipHtml": {
+    "message": "<b>自動</b>：動画が対応していればYouTubeの全トラック翻訳を使い、非対応ならスマート文単位に切り替えます。<br><b>全トラック</b>：YouTube本体の翻訳で、キューごとに揃えます。多用するとYouTubeが一時的にレート制限することがあり、拡張機能は待ってから再リクエストします。<br><b>スマート文単位</b>：断片化した字幕を文として組み立て、Googleの無料エンドポイントで翻訳します。乱れたトラックでは全トラックより自然な訳になりますが、多用するとこちらもレート制限されることがあり、拡張機能はペースを落として再試行します。<br><b>自分のキー</b>：組み立てた文を、設定したプロバイダーに送ります。"
+  },
+  "backendGtxHint": {
+    "message": "Googleの無料エンドポイントを使用します。多用すると一時的にレート制限されることがありますが、拡張機能が自動でペースを調整して再試行します。"
+  },
+  "backendStatusTlang": {
+    "message": "この動画：全トラック翻訳（YouTube）"
+  },
+  "backendStatusGtx": {
+    "message": "この動画：スマート文単位（Google）"
+  },
+  "backendStatusLimited": {
+    "message": "翻訳エンドポイントのレート制限中 — 自動でペースを落として再試行します。翻訳済みの行はそのまま表示されます。"
+  },
+  "backendStatusSame": {
+    "message": "この動画の字幕はすでに翻訳先の言語です — 翻訳は不要です。"
+  },
+  "secLayout": {
+    "message": "レイアウト"
+  },
+  "orderLabel": {
+    "message": "順序"
+  },
+  "orderTransTop": {
+    "message": "翻訳を上に"
+  },
+  "orderOrigTop": {
+    "message": "原文を上に"
+  },
+  "positionLabel": {
+    "message": "位置"
+  },
+  "posTop": {
+    "message": "上"
+  },
+  "posCenter": {
+    "message": "中央"
+  },
+  "posBottom": {
+    "message": "下"
+  },
+  "posHint": {
+    "message": "動画上で字幕ボックスをドラッグすることもできます"
+  },
+  "posTryDrag": {
+    "message": "試す"
+  },
+  "posTryNoVideo": {
+    "message": "先にYouTube動画を開いてください"
+  },
+  "resetPos": {
+    "message": "位置をリセット"
+  },
+  "rowGap": {
+    "message": "行間"
+  },
+  "tabTrans": {
+    "message": "翻訳"
+  },
+  "tabOrig": {
+    "message": "原文"
+  },
+  "lineTabsAria": {
+    "message": "字幕の行"
+  },
+  "lineShow": {
+    "message": "この行を表示"
+  },
+  "fontLabel": {
+    "message": "フォント"
+  },
+  "fontSystem": {
+    "message": "システム既定"
+  },
+  "fontMono": {
+    "message": "等幅"
+  },
+  "fontCjk": {
+    "message": "日中韓向け"
+  },
+  "sizeLabel": {
+    "message": "文字サイズ"
+  },
+  "colText": {
+    "message": "文字"
+  },
+  "colBg": {
+    "message": "背景"
+  },
+  "colStroke": {
+    "message": "縁取り"
+  },
+  "colTextAria": {
+    "message": "文字色"
+  },
+  "colBgAria": {
+    "message": "背景色"
+  },
+  "colStrokeAria": {
+    "message": "縁取り色"
+  },
+  "bgOpacity": {
+    "message": "背景の不透明度"
+  },
+  "strokeOpacity": {
+    "message": "縁取りの不透明度"
+  },
+  "resetAll": {
+    "message": "すべての設定をリセット"
+  },
+  "toggleTurnOff": {
+    "message": "バイリンガル字幕をオフ"
+  },
+  "toggleTurnOn": {
+    "message": "バイリンガル字幕をオン"
+  },
+  "handleTitle": {
+    "message": "ドラッグで移動 · ダブルクリックでリセット"
+  },
+  "handleAria": {
+    "message": "ドラッグで字幕を移動、ダブルクリックでリセット"
+  },
+  "secExport": {
+    "message": "エクスポート"
+  },
+  "exportContent": {
+    "message": "内容"
+  },
+  "exportBi": {
+    "message": "バイリンガル"
+  },
+  "exportOrig": {
+    "message": "原文"
+  },
+  "exportTrans": {
+    "message": "翻訳"
+  },
+  "exportSrt": {
+    "message": "SRTをダウンロード"
+  },
+  "exportWorking": {
+    "message": "生成中…"
+  },
+  "exportDone": {
+    "message": "字幕をダウンロードしました"
+  },
+  "exportNoTrans": {
+    "message": "この動画の翻訳はありません — 全トラックエンジンか、別の翻訳先言語をお試しください。"
+  },
+  "exportLimited": {
+    "message": "YouTubeが全トラック翻訳をレート制限しています — 1分ほど待ってもう一度試すか、「自分のキーで翻訳」をオンにしてください。"
+  },
+  "exportNoCues": {
+    "message": "ダウンロードできる字幕がありません — 数秒再生して字幕を読み込んでから、もう一度お試しください。"
+  },
+  "exportNotYoutube": {
+    "message": "エクスポートするにはYouTubeの動画ページを開いてください。"
+  },
+  "exportFailed": {
+    "message": "エクスポートに失敗しました — ページを再読み込みして、もう一度お試しください。"
+  },
+  "updateNotesLabel": {
+    "message": "更新後にリリースノートを開く"
+  },
+  "trackWarnDubOnly": {
+    "message": "注意：この動画にはAI吹き替えの自動字幕しかありません（原語音のトラックなし）。バイリンガル字幕が音声と一致しない場合があります。"
+  },
+  "whatsNewRow": {
+    "message": "v$VER$ の新機能を見る →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "この動画：自分のキー（$NAME$）",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "プロバイダー"
+  },
+  "byoBaseLabel": {
+    "message": "APIベースURL（https）"
+  },
+  "byoModelLabel": {
+    "message": "モデル"
+  },
+  "byoModelRequired": {
+    "message": "必須：モデル名"
+  },
+  "byoKeyLabel": {
+    "message": "APIキー"
+  },
+  "byoKeyClear": {
+    "message": "クリア"
+  },
+  "byoKeyCleared": {
+    "message": "この端末に保存されていたキーを削除しました。"
+  },
+  "byoKeySaved": {
+    "message": "保存済み ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "カスタム（OpenAI互換）"
+  },
+  "byoTest": {
+    "message": "保存してテスト"
+  },
+  "byoTesting": {
+    "message": "テスト中…"
+  },
+  "byoTestOk": {
+    "message": "接続できました。サンプル: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "キーを取得"
+  },
+  "byoGuide": {
+    "message": "設定の手順が必要ですか？"
+  },
+  "byoLocalHint": {
+    "message": "キーはこのブラウザ、この端末内にのみ保存され、外部へは送信しません。字幕テキストは選んだプロバイダーにだけ送られます。"
+  },
+  "byoErrNoProvider": {
+    "message": "先にプロバイダーを選んでください。"
+  },
+  "byoErrNoKey": {
+    "message": "先にAPIキーを入力してください。下のリンクからプロバイダーのキー発行ページを開けます。"
+  },
+  "byoErrNoModel": {
+    "message": "このプロバイダーではモデル名の入力が必要です。"
+  },
+  "byoErrBadBaseUrl": {
+    "message": "APIのベースURLは https:// から始まる完全なアドレスにしてください。"
+  },
+  "byoErrNoPerm": {
+    "message": "そのAPIホストへのアクセス許可がないと、拡張機能は接続できません。"
+  },
+  "byoErrAuth": {
+    "message": "キーが拒否されました（401/403）。全文がコピーされているか、有効かを確認してください。"
+  },
+  "byoErrLimited": {
+    "message": "プロバイダーがレート制限中です。自動で速度を落として再試行します。"
+  },
+  "byoErrQuota": {
+    "message": "このキーは現在の期間のクォータを使い切っています。"
+  },
+  "byoErrBadRequest": {
+    "message": "エンドポイントがリクエストを拒否しました。モデル名またはベースURLが誤っている可能性があります。"
+  },
+  "byoErrBadShape": {
+    "message": "モデルが指定どおり行ごとに返答せず、短い再試行も失敗しました。別のモデルを試してください。"
+  },
+  "byoErrReasoning": {
+    "message": "そのモデルは思考過程だけを返し、翻訳がありませんでした。非思考モデルを選んでください。"
+  },
+  "byoErrNetfail": {
+    "message": "そのエンドポイントに到達できません（ネットワークまたは地域制限）。"
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "このプロバイダーには選択した言語の翻訳先がありません。言語またはエンジンを変更してください。"
+  },
+  "byoErrFailed": {
+    "message": "接続に失敗しました。しばらくして再試行してください。"
+  },
+  "optTitle": {
+    "message": "翻訳サービスの設定"
+  },
+  "optIntro": {
+    "message": "プロバイダーを選び、自分のAPIキーを貼り付けます。キーはこの端末に保存され、字幕テキストは選んだプロバイダーにだけ送られます。"
+  },
+  "optPricingLink": {
+    "message": "料金と無料枠"
+  },
+  "optFetchModels": {
+    "message": "キーでモデル一覧を取得"
+  },
+  "optFetching": {
+    "message": "取得中…"
+  },
+  "optModelsFetched": {
+    "message": "$N$件のモデルが見つかりました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "モデル一覧を取得できませんでした。モデル名を直接入力してください。"
+  },
+  "optModelCustom": {
+    "message": "カスタム…"
+  },
+  "optNoModelsYet": {
+    "message": "モデル一覧はまだありません。キーで取得するか、名前を直接入力してください。"
+  },
+  "optShowKey": {
+    "message": "表示"
+  },
+  "optRecommended": {
+    "message": "おすすめ"
+  },
+  "optConfigured": {
+    "message": "設定済み"
+  },
+  "optInUse": {
+    "message": "使用中"
+  },
+  "optAfterSetup": {
+    "message": "ここでの設定が終わったら、拡張機能のポップアップを開き、エンジンを「自分のキー」に設定してください。"
+  },
+  "optTrademark": {
+    "message": "各プロバイダー名およびロゴは、それぞれの所有者の商標です。この拡張機能はいずれとも提携・後援・スポンサー関係にありません。マークは選択したAPIの識別のためにのみ表示しています。"
+  },
+  "optSections": {
+    "message": "セクション"
+  },
+  "optNavSetup": {
+    "message": "翻訳サービス"
+  },
+  "optNavStart": {
+    "message": "使いはじめ"
+  },
+  "optNavAbout": {
+    "message": "この拡張機能について"
+  },
+  "startIntro": {
+    "message": "ポイントは3つ。初期設定なしですぐ使えます。"
+  },
+  "startS1Title": {
+    "message": "動画を開くだけ"
+  },
+  "startS1Body": {
+    "message": "字幕のあるYouTube動画なら、2行の字幕が自動で表示されます。"
+  },
+  "startS2Title": {
+    "message": "好きな位置に置けます"
+  },
+  "startS2Body": {
+    "message": "字幕ボックス左上のグリップをつかんで好きな場所へドラッグ。ダブルクリックで元の位置に戻ります。"
+  },
+  "startS2Alt": {
+    "message": "プレーヤー図: 字幕ボックス左上の6点グリップをつかみ、別の位置へドラッグしている様子"
+  },
+  "startS3Title": {
+    "message": "より良い翻訳が欲しいとき"
+  },
+  "startS3Body": {
+    "message": "自分のAPIキーを追加すると、文全体での翻訳と、動画全体のSRT書き出しが使えます。"
+  },
+  "startGoSetup": {
+    "message": "翻訳サービスを設定"
+  },
+  "aboutIntro": {
+    "message": "この拡張機能の概要と、テキストの送信先について。"
+  },
+  "aboutVersion": {
+    "message": "バージョン"
+  },
+  "aboutBlurb": {
+    "message": "YouTube向けの2行字幕。原文と訳文を並べて表示し、フォント・色・位置は自由に変えられます。オープンソース、無料、広告なし。"
+  },
+  "aboutPrivacy": {
+    "message": "サーバーはなく、統計も収集しません。字幕テキストは選んだ翻訳サービスにだけ送られます。自分のキーを使う場合、キーはこのパソコンにのみ保存されます。"
+  },
+  "aboutChangelog": {
+    "message": "変更履歴"
+  },
+  "aboutRoadmap": {
+    "message": "ロードマップ"
+  },
+  "optFeedbackLink": {
+    "message": "問題を報告"
+  },
+  "popupByoConfigure": {
+    "message": "設定…"
+  },
+  "popupByoNotSet": {
+    "message": "未設定"
+  },
+  "popupByoPick": {
+    "message": "翻訳プロバイダー"
+  },
+  "popupByoUntested": {
+    "message": "未テスト"
+  },
+  "exportUsesYouTube": {
+    "message": "ダウンロードはYouTube本体の全トラック翻訳を使います。無料で、APIキーは消費しません。"
+  },
+  "exportUseByo": {
+    "message": "自分のキーで翻訳（より近い訳、クォータを消費）"
+  },
+  "exportByoNote": {
+    "message": "トラック全体が、あなたのキーで選んだプロバイダーにより翻訳されます。送信前に見積もりが表示されます。"
+  },
+  "exportConfirm": {
+    "message": "$NAME$ で字幕 $N$ 行を翻訳します。自分のクォータに対し約 $REQ$ リクエストです。トラック全体がそのプロバイダーへ送信されます。再生中は実際に視聴した部分だけが送られます。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "翻訳してダウンロード"
+  },
+  "exportConfirmBack": {
+    "message": "キャンセル"
+  },
+  "exportStop": {
+    "message": "停止"
+  },
+  "exportStopping": {
+    "message": "停止中…"
+  },
+  "exportProgress": {
+    "message": "翻訳中… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ チャンクはYouTubeの翻訳にフォールバックしました",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "ダウンロードをキャンセルしました。"
+  },
+  "ftSite": {
+    "message": "ウェブサイト"
+  },
+  "ftSiteLabel": {
+    "message": "サイト"
+  },
+  "ftFeedbackLabel": {
+    "message": "フィードバック"
+  },
+  "ftReviewLabel": {
+    "message": "評価"
+  },
+  "ftGithub": {
+    "message": "GitHubのソースコード"
+  },
+  "ftFeedback": {
+    "message": "フィードバック送信・不具合報告"
+  },
+  "ftReview": {
+    "message": "Chrome Web Storeで評価する"
+  },
+  "optNeedKey": {
+    "message": "キーがまだありません。追加するまでこのプロバイダーは使えません。"
+  },
+  "optBaseHint": {
+    "message": "ベースURLでもエンドポイント全体でも構いません。例: https://example.com/v1 または https://example.com/v1/chat/completions。"
+  },
+  "startS1Alt": {
+    "message": "プレーヤー図: 画面下部付近に原文と訳文の2行が並んでいる"
+  },
+  "startS3Alt": {
+    "message": "比較: 無料エンジンは1文を細切れに訳し、自分のキーは文全体を理解してから分割し直す"
+  },
+  "startPicFree": {
+    "message": "無料エンジン"
+  },
+  "startPicFreeNote": {
+    "message": "1文を細切れに"
+  },
+  "startPicByo": {
+    "message": "自分のキー"
+  },
+  "startPicByoNote": {
+    "message": "文全体を理解して分割"
+  },
+  "startNoSubsQ": {
+    "message": "字幕が出ませんか？"
+  },
+  "startNoSubs": {
+    "message": "プレーヤー右下のCCボタンをクリックするか、別の動画を試してください。ライブ配信やミュージックビデオには字幕がないことがよくあります。"
+  },
+  "langManage": {
+    "message": "言語を管理…"
+  },
+  "optNavLangs": {
+    "message": "字幕の言語"
+  },
+  "langsIntro": {
+    "message": "ポップアップで翻訳先として選べる言語です。"
+  },
+  "langsKept": {
+    "message": "ポップアップに表示"
+  },
+  "langsKeptHint": {
+    "message": "ポップアップの翻訳先メニューに表示されます。少なくとも1つは残してください。"
+  },
+  "langsMore": {
+    "message": "その他の言語"
+  },
+  "langsMoreHint": {
+    "message": "+ を押して追加します。掲載の言語はすべて無料エンジンと DeepL で使えます。"
+  },
+  "langsReset": {
+    "message": "デフォルトに戻す"
+  },
+  "langsResetDone": {
+    "message": "デフォルトのリストに戻しました。"
+  },
+  "langsAddAria": {
+    "message": "追加"
+  },
+  "langsRemoveAria": {
+    "message": "削除"
+  },
+  "langsLastOne": {
+    "message": "少なくとも1つは残してください"
+  },
+  "langsAllAdded": {
+    "message": "すべての言語がすでにリストにあります。"
+  },
+  "langsAdded": {
+    "message": "$NAME$ を追加しました",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "使用中だったため、翻訳先を $NAME$ に切り替えました",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "中国語明朝"
+  },
+  "fontCjkRound": {
+    "message": "中国語丸ゴシック"
+  },
+  "uiLocaleLabel": {
+    "message": "インターフェース言語"
+  },
+  "uiLocaleAuto": {
+    "message": "自動 — ブラウザに合わせる"
+  },
+  "uiLocaleHint": {
+    "message": "この拡張機能の操作画面の言語のみです。字幕の翻訳先は、ポップアップと「字幕の言語」で選びます — ここでは設定しません。"
+  },
+  "startTargetLabel": {
+    "message": "翻訳言語"
+  },
+  "startTargetHint": {
+    "message": "拡張機能のインストール時に、ブラウザの言語設定から推測しています。違う場合はここで変更してください。ポップアップからもいつでも変更できます。"
+  },
+  "diagCopy": {
+    "message": "診断情報をコピー"
+  },
+  "diagCopied": {
+    "message": "コピーしました — メールや Issue に貼り付けてください"
+  },
+  "diagCopyFail": {
+    "message": "コピー失敗 — スクリーンショットを撮ってください"
+  },
+  "optNavReadaloud": {
+    "message": "読み上げ"
+  },
+  "ttsIntro": {
+    "message": "自分のキーで翻訳文を読み上げます。プロバイダーを設定して、ここでテストできます。"
+  },
+  "ttsVoiceLabel": {
+    "message": "音声"
+  },
+  "ttsTestOk": {
+    "message": "接続済み: テスト音声 $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "読み上げは自分のキーを使います。読み上げるテキストは選んだプロバイダーにだけ送られ、キーはこの端末に残ります。"
+  },
+  "ttsEnableLabel": {
+    "message": "動画で翻訳を読み上げる"
+  },
+  "ttsVolLabel": {
+    "message": "読み上げ音量"
+  },
+  "ttsDuckLabel": {
+    "message": "読み上げ中の元音声"
+  },
+  "ttsStatusSpeaking": {
+    "message": "読み上げ中"
+  },
+  "ttsStatusOn": {
+    "message": "読み上げオン"
+  },
+  "ttsStatusCounts": {
+    "message": "この動画 $N$ 行 · $M$ 件スキップ",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "オンにすると、各字幕の翻訳が出現と同時に読み上げられます。翻訳が間に合わなかった行はスキップされ、後から追いつくことはありません。読み上げ中は動画本体の音声が小さくなり、長すぎて収まらない行では動画が少し遅くなります。"
+  },
+  "ttsRegionLabel": {
+    "message": "サービスリージョン"
+  },
+  "ttsErrNoRegion": {
+    "message": "先に Azure キーのサービスリージョンを入力してください（例: eastus）。"
+  }
+}

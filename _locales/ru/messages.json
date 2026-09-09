@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Двуязычные субтитры для YouTube — оригинал и перевод в одном слое без перекрытия."
+  },
+  "headerSub": {
+    "message": "для YouTube™ · Двуязычные, один слой"
+  },
+  "disclaimer": {
+    "message": "Не связано с YouTube или Google."
+  },
+  "enableTitle": {
+    "message": "Включить / выключить"
+  },
+  "openOptions": {
+    "message": "Настройки"
+  },
+  "enableAria": {
+    "message": "Включить расширение"
+  },
+  "previewTag": {
+    "message": "Превью"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Быстрая бурая лиса"
+  },
+  "sampleTransComma": {
+    "message": "Быстрая коричневая лиса,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Живой предпросмотр"
+  },
+  "secTranslation": {
+    "message": "Перевод"
+  },
+  "targetLang": {
+    "message": "Язык перевода"
+  },
+  "backendLabel": {
+    "message": "Движок"
+  },
+  "backendInfo": {
+    "message": "О движке"
+  },
+  "backendAuto": {
+    "message": "Авто (рекомендуется)"
+  },
+  "backendTlang": {
+    "message": "Весь трек (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Умные предложения (Google)"
+  },
+  "backendByo": {
+    "message": "Свой ключ (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Авто</b>: берёт перевод всего трека YouTube, если видео его поддерживает, иначе переключается на умные предложения.<br><b>Весь трек</b>: собственный перевод YouTube, реплика к реплике. При активном использовании YouTube может ненадолго ограничить частоту запросов — расширение подождёт и запросит снова.<br><b>Умные предложения</b>: собирает обрывки субтитров в целые предложения и переводит их через бесплатный эндпоинт Google — на рваных дорожках формулировки лучше, чем у целого трека, но и здесь возможны ограничения; расширение снижает темп и повторяет запросы.<br><b>Свой ключ</b>: отправляет собранное предложение выбранному провайдеру."
+  },
+  "backendGtxHint": {
+    "message": "Использует бесплатный эндпоинт Google — при активном использовании возможны краткие ограничения; расширение само снижает темп и повторяет запросы."
+  },
+  "backendStatusTlang": {
+    "message": "Это видео: перевод всего трека (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Это видео: умные предложения (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Эндпоинт перевода ограничил частоту запросов — снижаем темп и повторяем автоматически. Уже переведённые строки продолжают работать."
+  },
+  "backendStatusSame": {
+    "message": "Субтитры этого видео уже на языке перевода — переводить нечего."
+  },
+  "secLayout": {
+    "message": "Оформление"
+  },
+  "orderLabel": {
+    "message": "Порядок"
+  },
+  "orderTransTop": {
+    "message": "Перевод сверху"
+  },
+  "orderOrigTop": {
+    "message": "Оригинал сверху"
+  },
+  "positionLabel": {
+    "message": "Положение"
+  },
+  "posTop": {
+    "message": "Сверху"
+  },
+  "posCenter": {
+    "message": "По центру"
+  },
+  "posBottom": {
+    "message": "Снизу"
+  },
+  "posHint": {
+    "message": "Блок субтитров можно перетащить на видео"
+  },
+  "posTryDrag": {
+    "message": "попробовать"
+  },
+  "posTryNoVideo": {
+    "message": "Сначала откройте видео на YouTube"
+  },
+  "resetPos": {
+    "message": "Сбросить положение"
+  },
+  "rowGap": {
+    "message": "Интервал строк"
+  },
+  "tabTrans": {
+    "message": "Перевод"
+  },
+  "tabOrig": {
+    "message": "Оригинал"
+  },
+  "lineTabsAria": {
+    "message": "Строка субтитров"
+  },
+  "lineShow": {
+    "message": "Показывать эту строку"
+  },
+  "fontLabel": {
+    "message": "Шрифт"
+  },
+  "fontSystem": {
+    "message": "Системный"
+  },
+  "fontMono": {
+    "message": "Моноширинный"
+  },
+  "fontCjk": {
+    "message": "Для CJK"
+  },
+  "sizeLabel": {
+    "message": "Размер"
+  },
+  "colText": {
+    "message": "Текст"
+  },
+  "colBg": {
+    "message": "Фон"
+  },
+  "colStroke": {
+    "message": "Обводка"
+  },
+  "colTextAria": {
+    "message": "Цвет текста"
+  },
+  "colBgAria": {
+    "message": "Цвет фона"
+  },
+  "colStrokeAria": {
+    "message": "Цвет обводки"
+  },
+  "bgOpacity": {
+    "message": "Непрозрачность фона"
+  },
+  "strokeOpacity": {
+    "message": "Непрозрачность обводки"
+  },
+  "resetAll": {
+    "message": "Сбросить все настройки"
+  },
+  "toggleTurnOff": {
+    "message": "Выключить двойные субтитры"
+  },
+  "toggleTurnOn": {
+    "message": "Включить двойные субтитры"
+  },
+  "handleTitle": {
+    "message": "Перетащите · двойной щелчок сбрасывает"
+  },
+  "handleAria": {
+    "message": "Перетащите субтитры, двойной щелчок сбрасывает положение"
+  },
+  "secExport": {
+    "message": "Экспорт"
+  },
+  "exportContent": {
+    "message": "Содержимое"
+  },
+  "exportBi": {
+    "message": "Двуязычные"
+  },
+  "exportOrig": {
+    "message": "Оригинал"
+  },
+  "exportTrans": {
+    "message": "Перевод"
+  },
+  "exportSrt": {
+    "message": "Скачать SRT"
+  },
+  "exportWorking": {
+    "message": "Создание…"
+  },
+  "exportDone": {
+    "message": "Субтитры скачаны"
+  },
+  "exportNoTrans": {
+    "message": "Для этого видео нет перевода — попробуйте движок «Весь трек» или другой язык."
+  },
+  "exportLimited": {
+    "message": "YouTube сейчас ограничивает перевод всего трека — подождите минуту или отметьте «Переводить своим ключом»."
+  },
+  "exportNoCues": {
+    "message": "Нет субтитров для скачивания — воспроизведите несколько секунд, чтобы они загрузились, и попробуйте снова."
+  },
+  "exportNotYoutube": {
+    "message": "Откройте страницу видео YouTube, чтобы экспортировать."
+  },
+  "exportFailed": {
+    "message": "Не удалось экспортировать — обновите страницу и попробуйте снова."
+  },
+  "updateNotesLabel": {
+    "message": "Открывать заметки о выпуске после обновлений"
+  },
+  "trackWarnDubOnly": {
+    "message": "Внимание: у этого видео только автосубтитры ИИ-дубляжа (без дорожки на языке оригинала), поэтому двуязычные субтитры могут не совпадать со звуком."
+  },
+  "whatsNewRow": {
+    "message": "Что нового в v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Это видео: свой ключ ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Провайдер"
+  },
+  "byoBaseLabel": {
+    "message": "Базовый URL API (https)"
+  },
+  "byoModelLabel": {
+    "message": "Модель"
+  },
+  "byoModelRequired": {
+    "message": "Обязательно: имя модели"
+  },
+  "byoKeyLabel": {
+    "message": "Ключ API"
+  },
+  "byoKeyClear": {
+    "message": "Очистить"
+  },
+  "byoKeyCleared": {
+    "message": "Ключ, сохранённый на этом компьютере, удалён."
+  },
+  "byoKeySaved": {
+    "message": "сохранён ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Свой (совместимый с OpenAI)"
+  },
+  "byoTest": {
+    "message": "Сохранить и проверить"
+  },
+  "byoTesting": {
+    "message": "Проверка…"
+  },
+  "byoTestOk": {
+    "message": "Подключено. Пример: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Получить ключ"
+  },
+  "byoGuide": {
+    "message": "Нужна помощь с настройкой?"
+  },
+  "byoLocalHint": {
+    "message": "Ключ остаётся в этом браузере, на этом компьютере — он никуда не загружается. Текст субтитров уходит только выбранному сервису."
+  },
+  "byoErrNoProvider": {
+    "message": "Сначала выберите сервис."
+  },
+  "byoErrNoKey": {
+    "message": "Сначала введите API-ключ — ссылка ниже откроет страницу ключей сервиса."
+  },
+  "byoErrNoModel": {
+    "message": "Для этого сервиса нужно указать название модели."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "Базовый URL API должен быть полным адресом https://."
+  },
+  "byoErrNoPerm": {
+    "message": "Без разрешения на доступ к этому хосту API расширение не сможет подключиться."
+  },
+  "byoErrAuth": {
+    "message": "Ключ отклонён (401/403) — проверьте, что скопировали его целиком и что он активен."
+  },
+  "byoErrLimited": {
+    "message": "Сервис ограничивает частоту запросов — замедляемся и повторяем автоматически."
+  },
+  "byoErrQuota": {
+    "message": "У этого ключа закончилась квота на текущий период."
+  },
+  "byoErrBadRequest": {
+    "message": "Сервер отклонил запрос — возможно, неверное имя модели или базовый URL."
+  },
+  "byoErrBadShape": {
+    "message": "Модель не ответила построчно, как просили, и повторные попытки тоже не помогли — попробуйте другую модель."
+  },
+  "byoErrReasoning": {
+    "message": "Модель вернула только цепочку рассуждений без перевода — выберите модель без режима размышления."
+  },
+  "byoErrNetfail": {
+    "message": "Не удаётся достучаться до сервера (сеть или региональные ограничения)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "У этого сервиса нет варианта для выбранного языка — смените язык или движок."
+  },
+  "byoErrFailed": {
+    "message": "Не удалось подключиться. Попробуйте ещё раз чуть позже."
+  },
+  "optTitle": {
+    "message": "Настройка сервиса перевода"
+  },
+  "optIntro": {
+    "message": "Выберите сервис и вставьте свой API-ключ. Ключ остаётся на этом компьютере, а текст субтитров уходит только выбранному сервису."
+  },
+  "optPricingLink": {
+    "message": "Цены и бесплатный тариф"
+  },
+  "optFetchModels": {
+    "message": "Показать модели по ключу"
+  },
+  "optFetching": {
+    "message": "Загрузка…"
+  },
+  "optModelsFetched": {
+    "message": "Найдено $N$ моделей",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Не удалось получить список моделей — введите имя модели вручную."
+  },
+  "optModelCustom": {
+    "message": "Своя…"
+  },
+  "optNoModelsYet": {
+    "message": "Списка моделей пока нет — загрузите его по ключу или просто введите имя."
+  },
+  "optShowKey": {
+    "message": "Показать"
+  },
+  "optRecommended": {
+    "message": "рекомендуем"
+  },
+  "optConfigured": {
+    "message": "Настроено"
+  },
+  "optInUse": {
+    "message": "используется"
+  },
+  "optAfterSetup": {
+    "message": "Когда закончите, откройте всплывающее окно расширения и выберите движок «Свой ключ»."
+  },
+  "optTrademark": {
+    "message": "Все названия и логотипы сервисов — товарные знаки их владельцев. Это расширение не связано с ними, не одобрено и не спонсируется ими; знаки показаны только чтобы указать выбранный API."
+  },
+  "optSections": {
+    "message": "Разделы"
+  },
+  "optNavSetup": {
+    "message": "Сервис перевода"
+  },
+  "optNavStart": {
+    "message": "С чего начать"
+  },
+  "optNavAbout": {
+    "message": "О расширении"
+  },
+  "startIntro": {
+    "message": "Три момента. Ничего настраивать не обязательно."
+  },
+  "startS1Title": {
+    "message": "Откройте видео — и всё"
+  },
+  "startS1Body": {
+    "message": "Любое видео YouTube с субтитрами: две строки появятся сами."
+  },
+  "startS2Title": {
+    "message": "Перетащите куда угодно"
+  },
+  "startS2Body": {
+    "message": "Зажмите ручку в левом верхнем углу блока субтитров и перетащите куда хотите. Двойной щелчок по ручке вернёт блок на место."
+  },
+  "startS2Alt": {
+    "message": "Схема плеера: шеститочечная ручка в левом верхнем углу блока субтитров, перетаскивание в другое место"
+  },
+  "startS3Title": {
+    "message": "Нужен лучший перевод"
+  },
+  "startS3Body": {
+    "message": "Добавьте свой API-ключ: перевод целыми предложениями и экспорт SRT всего видео."
+  },
+  "startGoSetup": {
+    "message": "Настроить сервис перевода"
+  },
+  "aboutIntro": {
+    "message": "Что это и куда уходит ваш текст."
+  },
+  "aboutVersion": {
+    "message": "Версия"
+  },
+  "aboutBlurb": {
+    "message": "Вторая строка субтитров для YouTube: оригинал на одной, перевод на другой. Шрифт, цвет и положение — на ваш выбор. Открытый код, бесплатно, без рекламы."
+  },
+  "aboutPrivacy": {
+    "message": "У нас нет сервера и мы не собираем статистику. Текст субтитров уходит только в выбранный сервис перевода; свой ключ хранится только на этом компьютере."
+  },
+  "aboutChangelog": {
+    "message": "История изменений"
+  },
+  "aboutRoadmap": {
+    "message": "Планы"
+  },
+  "optFeedbackLink": {
+    "message": "Сообщить о проблеме"
+  },
+  "popupByoConfigure": {
+    "message": "Настроить…"
+  },
+  "popupByoNotSet": {
+    "message": "не настроено"
+  },
+  "popupByoPick": {
+    "message": "Сервис перевода"
+  },
+  "popupByoUntested": {
+    "message": "не проверено"
+  },
+  "exportUsesYouTube": {
+    "message": "Скачивание использует собственный перевод всей дорожки YouTube — бесплатно и не расходует ваш API-ключ."
+  },
+  "exportUseByo": {
+    "message": "Перевести своим ключом (точнее, расходует квоту)"
+  },
+  "exportByoNote": {
+    "message": "Всю дорожку переведёт ваш сервис вашим ключом. Перед отправкой вы увидите оценку."
+  },
+  "exportConfirm": {
+    "message": "Перевести $N$ строк субтитров через $NAME$ — примерно $REQ$ запросов из вашей квоты. Вся дорожка уйдёт из браузера к этому сервису; при просмотре отправляются только те фрагменты, которые вы реально смотрите.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Перевести и скачать"
+  },
+  "exportConfirmBack": {
+    "message": "Отмена"
+  },
+  "exportStop": {
+    "message": "Стоп"
+  },
+  "exportStopping": {
+    "message": "Остановка…"
+  },
+  "exportProgress": {
+    "message": "Перевод… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ фрагмент(ов) переведены через YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Скачивание отменено."
+  },
+  "ftSite": {
+    "message": "Сайт"
+  },
+  "ftSiteLabel": {
+    "message": "Сайт"
+  },
+  "ftFeedbackLabel": {
+    "message": "Отзыв"
+  },
+  "ftReviewLabel": {
+    "message": "Оценить"
+  },
+  "ftGithub": {
+    "message": "Исходный код на GitHub"
+  },
+  "ftFeedback": {
+    "message": "Написать отзыв или сообщить об ошибке"
+  },
+  "ftReview": {
+    "message": "Оценить в Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Ключа ещё нет — этот сервис нельзя использовать, пока его не добавите."
+  },
+  "optBaseHint": {
+    "message": "Подойдёт и базовый URL, и полный адрес, напр. https://example.com/v1 или https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Схема плеера: строка оригинала и строка перевода внизу кадра"
+  },
+  "startS3Alt": {
+    "message": "Сравнение: бесплатный движок переводит предложение кусками, свой ключ понимает его целиком и делит обратно"
+  },
+  "startPicFree": {
+    "message": "Бесплатный движок"
+  },
+  "startPicFreeNote": {
+    "message": "одно предложение, по кускам"
+  },
+  "startPicByo": {
+    "message": "Свой ключ"
+  },
+  "startPicByoNote": {
+    "message": "понято целиком, разделено"
+  },
+  "startNoSubsQ": {
+    "message": "Субтитров нет?"
+  },
+  "startNoSubs": {
+    "message": "Нажмите кнопку CC в правом нижнем углу плеера или откройте другое видео — у прямых трансляций и клипов субтитров часто нет."
+  },
+  "langManage": {
+    "message": "Управление языками…"
+  },
+  "optNavLangs": {
+    "message": "Языки субтитров"
+  },
+  "langsIntro": {
+    "message": "Какие языки попап предлагает для перевода."
+  },
+  "langsKept": {
+    "message": "В попапе"
+  },
+  "langsKeptHint": {
+    "message": "Они отображаются в меню языка перевода попапа. Оставьте хотя бы один."
+  },
+  "langsMore": {
+    "message": "Другие языки"
+  },
+  "langsMoreHint": {
+    "message": "Нажмите +, чтобы добавить. Все перечисленные языки работают с бесплатными движками и с DeepL."
+  },
+  "langsReset": {
+    "message": "Восстановить по умолчанию"
+  },
+  "langsResetDone": {
+    "message": "Вернули список по умолчанию."
+  },
+  "langsAddAria": {
+    "message": "Добавить"
+  },
+  "langsRemoveAria": {
+    "message": "Удалить"
+  },
+  "langsLastOne": {
+    "message": "Оставьте хотя бы один"
+  },
+  "langsAllAdded": {
+    "message": "Все языки уже в вашем списке."
+  },
+  "langsAdded": {
+    "message": "Добавлен $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Он был выбран, поэтому язык перевода теперь $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Китайский с засечками"
+  },
+  "fontCjkRound": {
+    "message": "Китайский округлый"
+  },
+  "uiLocaleLabel": {
+    "message": "Язык интерфейса"
+  },
+  "uiLocaleAuto": {
+    "message": "Авто — как в браузере"
+  },
+  "uiLocaleHint": {
+    "message": "Только язык элементов этого расширения. Куда переводить субтитры, выбирается во всплывающем окне и в разделе «Языки субтитров» — не здесь."
+  },
+  "startTargetLabel": {
+    "message": "Язык перевода"
+  },
+  "startTargetHint": {
+    "message": "Определён по языковым настройкам браузера при установке расширения. Если угадали неверно — смените его здесь. Во всплывающем окне язык можно менять в любой момент."
+  },
+  "diagCopy": {
+    "message": "Копировать диагностику"
+  },
+  "diagCopied": {
+    "message": "Скопировано — вставьте в письмо или обращение"
+  },
+  "diagCopyFail": {
+    "message": "Не удалось скопировать — сделайте снимок экрана"
+  },
+  "optNavReadaloud": {
+    "message": "Читать вслух"
+  },
+  "ttsIntro": {
+    "message": "Озвучивайте переведённую строку своим ключом. Настройте провайдера и проверьте здесь."
+  },
+  "ttsVoiceLabel": {
+    "message": "Голос"
+  },
+  "ttsTestOk": {
+    "message": "Подключено: тестовое аудио $KB$ КБ ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Озвучка использует ваш ключ. Текст уходит только выбранному провайдеру; ключ остаётся на этом компьютере."
+  },
+  "ttsEnableLabel": {
+    "message": "Озвучивать перевод в видео"
+  },
+  "ttsVolLabel": {
+    "message": "Громкость озвучки"
+  },
+  "ttsDuckLabel": {
+    "message": "Оригинальный звук при озвучке"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Озвучивается"
+  },
+  "ttsStatusOn": {
+    "message": "Озвучка включена"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ строк в этом видео · $M$ пропущено",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Когда включено, перевод каждой субтитровой строки озвучивается по мере появления; строка, перевод которой не готов вовремя, пропускается и не догоняется. Пока строка озвучивается, звук видео приглушается, а слишком длинная строка немного замедляет видео."
+  },
+  "ttsRegionLabel": {
+    "message": "Регион службы"
+  },
+  "ttsErrNoRegion": {
+    "message": "Сначала введите регион службы вашего ключа Azure (например, eastus)."
+  }
+}

@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Sous-titres bilingues pour YouTube — original et traduction dans une seule couche, sans chevauchement."
+  },
+  "headerSub": {
+    "message": "pour YouTube™ · Bilingue, une seule couche"
+  },
+  "disclaimer": {
+    "message": "Non affilié à YouTube ni à Google."
+  },
+  "enableTitle": {
+    "message": "Activer / désactiver"
+  },
+  "openOptions": {
+    "message": "Paramètres"
+  },
+  "enableAria": {
+    "message": "Activer l'extension"
+  },
+  "previewTag": {
+    "message": "Aperçu"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Le vif renard brun"
+  },
+  "sampleTransComma": {
+    "message": "Le renard brun saute,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Aperçu en direct"
+  },
+  "secTranslation": {
+    "message": "Traduction"
+  },
+  "targetLang": {
+    "message": "Langue cible"
+  },
+  "backendLabel": {
+    "message": "Moteur"
+  },
+  "backendInfo": {
+    "message": "Infos moteur"
+  },
+  "backendAuto": {
+    "message": "Auto (recommandé)"
+  },
+  "backendTlang": {
+    "message": "Piste complète (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Phrases intelligentes (Google)"
+  },
+  "backendByo": {
+    "message": "Votre propre clé (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b> : utilise la traduction de piste complète de YouTube dès que la vidéo le permet, et bascule vers les phrases intelligentes sinon.<br><b>Piste complète</b> : la traduction native de YouTube, alignée cue par cue. Un usage intensif peut provoquer une limitation temporaire par YouTube — l'extension attend et réessaie.<br><b>Phrases intelligentes</b> : reconstitue les sous-titres fragmentés en phrases complètes, puis les traduit via le service gratuit de Google — meilleure formulation que la piste complète sur les pistes mal découpées, mais un usage intensif peut aussi y être limité ; l'extension ralentit et réessaie.<br><b>Clé personnelle</b> : envoie la phrase reconstituée au fournisseur que vous avez configuré."
+  },
+  "backendGtxHint": {
+    "message": "Utilise le service gratuit de Google — un usage intensif peut être brièvement limité ; l'extension régule le rythme et réessaie automatiquement."
+  },
+  "backendStatusTlang": {
+    "message": "Cette vidéo : traduction piste complète (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Cette vidéo : phrases intelligentes (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Limitation de débit du service de traduction — ralentissement et nouvelles tentatives automatiques. Les lignes déjà traduites restent affichées."
+  },
+  "backendStatusSame": {
+    "message": "Les sous-titres de cette vidéo sont déjà dans votre langue cible — rien à traduire."
+  },
+  "secLayout": {
+    "message": "Disposition"
+  },
+  "orderLabel": {
+    "message": "Ordre"
+  },
+  "orderTransTop": {
+    "message": "Traduction en haut"
+  },
+  "orderOrigTop": {
+    "message": "Original en haut"
+  },
+  "positionLabel": {
+    "message": "Position"
+  },
+  "posTop": {
+    "message": "Haut"
+  },
+  "posCenter": {
+    "message": "Centre"
+  },
+  "posBottom": {
+    "message": "Bas"
+  },
+  "posHint": {
+    "message": "Vous pouvez aussi déplacer le cadre des sous-titres sur la vidéo"
+  },
+  "posTryDrag": {
+    "message": "essayer"
+  },
+  "posTryNoVideo": {
+    "message": "Ouvrez d'abord une vidéo YouTube"
+  },
+  "resetPos": {
+    "message": "Réinitialiser la position"
+  },
+  "rowGap": {
+    "message": "Interligne"
+  },
+  "tabTrans": {
+    "message": "Traduction"
+  },
+  "tabOrig": {
+    "message": "Original"
+  },
+  "lineTabsAria": {
+    "message": "Ligne de sous-titre"
+  },
+  "lineShow": {
+    "message": "Afficher cette ligne"
+  },
+  "fontLabel": {
+    "message": "Police"
+  },
+  "fontSystem": {
+    "message": "Système"
+  },
+  "fontMono": {
+    "message": "Chasse fixe"
+  },
+  "fontCjk": {
+    "message": "Adaptée CJK"
+  },
+  "sizeLabel": {
+    "message": "Taille"
+  },
+  "colText": {
+    "message": "Texte"
+  },
+  "colBg": {
+    "message": "Fond"
+  },
+  "colStroke": {
+    "message": "Contour"
+  },
+  "colTextAria": {
+    "message": "Couleur du texte"
+  },
+  "colBgAria": {
+    "message": "Couleur de fond"
+  },
+  "colStrokeAria": {
+    "message": "Couleur du contour"
+  },
+  "bgOpacity": {
+    "message": "Opacité du fond"
+  },
+  "strokeOpacity": {
+    "message": "Opacité du contour"
+  },
+  "resetAll": {
+    "message": "Réinitialiser tout"
+  },
+  "toggleTurnOff": {
+    "message": "Désactiver les sous-titres bilingues"
+  },
+  "toggleTurnOn": {
+    "message": "Activer les sous-titres bilingues"
+  },
+  "handleTitle": {
+    "message": "Glisser pour déplacer · double-clic pour réinitialiser"
+  },
+  "handleAria": {
+    "message": "Glisser pour déplacer les sous-titres, double-clic pour réinitialiser"
+  },
+  "secExport": {
+    "message": "Exporter"
+  },
+  "exportContent": {
+    "message": "Contenu"
+  },
+  "exportBi": {
+    "message": "Bilingue"
+  },
+  "exportOrig": {
+    "message": "Original"
+  },
+  "exportTrans": {
+    "message": "Traduction"
+  },
+  "exportSrt": {
+    "message": "Télécharger SRT"
+  },
+  "exportWorking": {
+    "message": "Génération…"
+  },
+  "exportDone": {
+    "message": "Sous-titres téléchargés"
+  },
+  "exportNoTrans": {
+    "message": "Aucune traduction disponible pour cette vidéo — essayez le moteur Piste complète ou une autre langue cible."
+  },
+  "exportLimited": {
+    "message": "YouTube limite actuellement la traduction piste complète — réessayez dans une minute, ou cochez « Traduire avec ma propre clé »."
+  },
+  "exportNoCues": {
+    "message": "Aucun sous-titre téléchargeable — lancez la lecture quelques secondes pour charger les sous-titres, puis réessayez."
+  },
+  "exportNotYoutube": {
+    "message": "Ouvrez une page de vidéo YouTube pour exporter."
+  },
+  "exportFailed": {
+    "message": "Échec de l'export — actualisez la page et réessayez."
+  },
+  "updateNotesLabel": {
+    "message": "Ouvrir les notes de version après les mises à jour"
+  },
+  "trackWarnDubOnly": {
+    "message": "Attention : cette vidéo n'a que des sous-titres auto issus d'un doublage IA (pas de piste en langue originale) ; les sous-titres bilingues peuvent ne pas correspondre à l'audio."
+  },
+  "whatsNewRow": {
+    "message": "Voir les nouveautés de la v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Cette vidéo : votre propre clé ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Fournisseur"
+  },
+  "byoBaseLabel": {
+    "message": "URL de base de l'API (https)"
+  },
+  "byoModelLabel": {
+    "message": "Modèle"
+  },
+  "byoModelRequired": {
+    "message": "Obligatoire : nom du modèle"
+  },
+  "byoKeyLabel": {
+    "message": "Clé API"
+  },
+  "byoKeyClear": {
+    "message": "Effacer"
+  },
+  "byoKeyCleared": {
+    "message": "La clé enregistrée sur cet appareil a été supprimée."
+  },
+  "byoKeySaved": {
+    "message": "enregistrée ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Personnalisé (compatible OpenAI)"
+  },
+  "byoTest": {
+    "message": "Enregistrer et tester"
+  },
+  "byoTesting": {
+    "message": "Test…"
+  },
+  "byoTestOk": {
+    "message": "Connecté. Exemple : $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Obtenir une clé"
+  },
+  "byoGuide": {
+    "message": "Besoin d’aide pour configurer ?"
+  },
+  "byoLocalHint": {
+    "message": "La clé reste dans ce navigateur, sur cet ordinateur — elle n’est jamais envoyée. Le texte des sous-titres va uniquement au fournisseur choisi."
+  },
+  "byoErrNoProvider": {
+    "message": "Choisissez d’abord un fournisseur."
+  },
+  "byoErrNoKey": {
+    "message": "Saisissez d’abord une clé API — le lien ci-dessous ouvre la page des clés du fournisseur."
+  },
+  "byoErrNoModel": {
+    "message": "Ce fournisseur exige un nom de modèle."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "L’URL de base de l’API doit être une adresse https:// complète."
+  },
+  "byoErrNoPerm": {
+    "message": "Sans autorisation d’atteindre cet hôte API, l’extension ne peut pas se connecter."
+  },
+  "byoErrAuth": {
+    "message": "Clé refusée (401/403) — vérifiez qu’elle a été copiée en entier et qu’elle est active."
+  },
+  "byoErrLimited": {
+    "message": "Le fournisseur limite le débit — ralentissement et nouvelle tentative automatique."
+  },
+  "byoErrQuota": {
+    "message": "Cette clé a épuisé son quota pour la période en cours."
+  },
+  "byoErrBadRequest": {
+    "message": "Le point de terminaison a refusé la requête — le nom du modèle ou l’URL de base est peut-être incorrect."
+  },
+  "byoErrBadShape": {
+    "message": "Le modèle n’a pas répondu ligne par ligne comme demandé, et les tentatives plus petites ont aussi échoué — essayez un autre modèle."
+  },
+  "byoErrReasoning": {
+    "message": "Ce modèle n’a renvoyé que son raisonnement, sans traduction — choisissez un modèle sans réflexion."
+  },
+  "byoErrNetfail": {
+    "message": "Impossible d’atteindre ce point de terminaison (réseau ou restriction régionale)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Ce fournisseur n’a pas de cible pour la langue choisie — changez de langue ou de moteur."
+  },
+  "byoErrFailed": {
+    "message": "Connexion échouée. Réessayez dans un instant."
+  },
+  "optTitle": {
+    "message": "Configuration du service de traduction"
+  },
+  "optIntro": {
+    "message": "Choisissez un fournisseur et collez votre clé API. La clé reste sur cet ordinateur, et le texte des sous-titres va uniquement au fournisseur choisi."
+  },
+  "optPricingLink": {
+    "message": "Tarifs et offre gratuite"
+  },
+  "optFetchModels": {
+    "message": "Lister les modèles avec ma clé"
+  },
+  "optFetching": {
+    "message": "Liste…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ modèles trouvés",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Impossible de lister les modèles — saisissez plutôt le nom."
+  },
+  "optModelCustom": {
+    "message": "Personnalisé…"
+  },
+  "optNoModelsYet": {
+    "message": "Pas encore de liste de modèles — récupérez-en une avec votre clé, ou saisissez le nom."
+  },
+  "optShowKey": {
+    "message": "Afficher"
+  },
+  "optRecommended": {
+    "message": "recommandé"
+  },
+  "optConfigured": {
+    "message": "Configuré"
+  },
+  "optInUse": {
+    "message": "utilisé"
+  },
+  "optAfterSetup": {
+    "message": "Une fois terminé ici, ouvrez la fenêtre de l’extension et réglez Moteur sur « Votre propre clé »."
+  },
+  "optTrademark": {
+    "message": "Tous les noms et logos de fournisseurs sont des marques de leurs propriétaires respectifs. Cette extension n’est affiliée, approuvée ni sponsorisée par aucun d’entre eux ; les marques sont affichées uniquement pour identifier l’API choisie."
+  },
+  "optSections": {
+    "message": "Sections"
+  },
+  "optNavSetup": {
+    "message": "Service de traduction"
+  },
+  "optNavStart": {
+    "message": "Premiers pas"
+  },
+  "optNavAbout": {
+    "message": "À propos"
+  },
+  "startIntro": {
+    "message": "Trois points. Aucune configuration n’est nécessaire pour l’utiliser."
+  },
+  "startS1Title": {
+    "message": "Ouvrez une vidéo — c’est tout"
+  },
+  "startS1Body": {
+    "message": "Toute vidéo YouTube avec des sous-titres : les deux lignes apparaissent toutes seules."
+  },
+  "startS2Title": {
+    "message": "Placez-les où vous voulez"
+  },
+  "startS2Body": {
+    "message": "Saisissez la poignée en haut à gauche du cadre de sous-titres et faites-le glisser. Double-cliquez sur la poignée pour le remettre en place."
+  },
+  "startS2Alt": {
+    "message": "Schéma du lecteur : une poignée à six points en haut à gauche du cadre de sous-titres, qu’on fait glisser ailleurs"
+  },
+  "startS3Title": {
+    "message": "De meilleures traductions"
+  },
+  "startS3Body": {
+    "message": "Ajoutez votre propre clé API : traduction de phrases entières, et export SRT d’une vidéo complète."
+  },
+  "startGoSetup": {
+    "message": "Configurer un service de traduction"
+  },
+  "aboutIntro": {
+    "message": "Ce que c’est, et où va votre texte."
+  },
+  "aboutVersion": {
+    "message": "Version"
+  },
+  "aboutBlurb": {
+    "message": "Une seconde ligne de sous-titres pour YouTube : l’original sur une ligne, la traduction sur l’autre, police, couleur et position au choix. Open source, gratuit, sans pub."
+  },
+  "aboutPrivacy": {
+    "message": "Nous n’avons aucun serveur et ne collectons aucune statistique. Le texte des sous-titres va uniquement au service de traduction choisi ; avec votre propre clé, celle-ci est stockée uniquement sur cet ordinateur."
+  },
+  "aboutChangelog": {
+    "message": "Journal des modifications"
+  },
+  "aboutRoadmap": {
+    "message": "Feuille de route"
+  },
+  "optFeedbackLink": {
+    "message": "Signaler un problème"
+  },
+  "popupByoConfigure": {
+    "message": "Configurer…"
+  },
+  "popupByoNotSet": {
+    "message": "non configuré"
+  },
+  "popupByoPick": {
+    "message": "Fournisseur de traduction"
+  },
+  "popupByoUntested": {
+    "message": "non testé"
+  },
+  "exportUsesYouTube": {
+    "message": "Le téléchargement utilise la traduction de piste complète de YouTube — gratuit, et cela ne consomme pas votre clé API."
+  },
+  "exportUseByo": {
+    "message": "Traduire avec ma clé (plus fidèle, consomme le quota)"
+  },
+  "exportByoNote": {
+    "message": "La piste entière sera traduite par votre fournisseur avec votre clé. Une estimation s’affichera avant tout envoi."
+  },
+  "exportConfirm": {
+    "message": "Traduire $N$ lignes de sous-titres avec $NAME$ — environ $REQ$ requêtes sur votre quota. La piste entière quitte votre navigateur vers ce fournisseur ; pendant la lecture, seules les parties réellement regardées sont envoyées.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Traduire et télécharger"
+  },
+  "exportConfirmBack": {
+    "message": "Annuler"
+  },
+  "exportStop": {
+    "message": "Arrêter"
+  },
+  "exportStopping": {
+    "message": "Arrêt…"
+  },
+  "exportProgress": {
+    "message": "Traduction… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ bloc(s) ont basculé sur la traduction YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Téléchargement annulé."
+  },
+  "ftSite": {
+    "message": "Site web"
+  },
+  "ftSiteLabel": {
+    "message": "Site"
+  },
+  "ftFeedbackLabel": {
+    "message": "Avis"
+  },
+  "ftReviewLabel": {
+    "message": "Noter"
+  },
+  "ftGithub": {
+    "message": "Code source sur GitHub"
+  },
+  "ftFeedback": {
+    "message": "Envoyer un avis ou signaler un bug"
+  },
+  "ftReview": {
+    "message": "Noter sur le Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Pas encore de clé — ce fournisseur est inutilisable tant que vous n’en ajoutez pas une."
+  },
+  "optBaseHint": {
+    "message": "Une URL de base ou un point de terminaison complet conviennent, p. ex. https://example.com/v1 ou https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Schéma du lecteur : une ligne originale et une ligne traduite en bas de l’image"
+  },
+  "startS3Alt": {
+    "message": "Comparaison : le moteur gratuit traduit une phrase en morceaux, votre propre clé la comprend entière et la redécoupe"
+  },
+  "startPicFree": {
+    "message": "Moteur gratuit"
+  },
+  "startPicFreeNote": {
+    "message": "une phrase, découpée"
+  },
+  "startPicByo": {
+    "message": "Votre propre clé"
+  },
+  "startPicByoNote": {
+    "message": "comprise entière, redécoupée"
+  },
+  "startNoSubsQ": {
+    "message": "Pas de sous-titres ?"
+  },
+  "startNoSubs": {
+    "message": "Cliquez sur le bouton CC en bas à droite du lecteur, ou essayez une autre vidéo — les directs et clips musicaux n’en ont souvent aucun."
+  },
+  "langManage": {
+    "message": "Gérer les langues…"
+  },
+  "optNavLangs": {
+    "message": "Langues des sous-titres"
+  },
+  "langsIntro": {
+    "message": "Langues proposées dans le popup pour traduire."
+  },
+  "langsKept": {
+    "message": "Affichées dans le popup"
+  },
+  "langsKeptHint": {
+    "message": "Elles apparaissent dans le menu de langue cible du popup. Conservez-en au moins une."
+  },
+  "langsMore": {
+    "message": "Autres langues"
+  },
+  "langsMoreHint": {
+    "message": "Appuyez sur + pour en ajouter une. Toutes les langues listées fonctionnent avec les moteurs gratuits et avec DeepL."
+  },
+  "langsReset": {
+    "message": "Rétablir par défaut"
+  },
+  "langsResetDone": {
+    "message": "Liste par défaut rétablie."
+  },
+  "langsAddAria": {
+    "message": "Ajouter"
+  },
+  "langsRemoveAria": {
+    "message": "Supprimer"
+  },
+  "langsLastOne": {
+    "message": "Conservez-en au moins une"
+  },
+  "langsAllAdded": {
+    "message": "Toutes les langues sont déjà dans votre liste."
+  },
+  "langsAdded": {
+    "message": "Ajout de $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Celle-ci était utilisée, la cible est désormais $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Chinois serif"
+  },
+  "fontCjkRound": {
+    "message": "Chinois arrondi"
+  },
+  "uiLocaleLabel": {
+    "message": "Langue de l’interface"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — suivre le navigateur"
+  },
+  "uiLocaleHint": {
+    "message": "Uniquement la langue des commandes de cette extension. La langue de traduction des sous-titres se choisit dans le popup et sous « Langues des sous-titres » — pas ici."
+  },
+  "startTargetLabel": {
+    "message": "Langue de traduction"
+  },
+  "startTargetHint": {
+    "message": "Devinée d’après les préférences linguistiques de votre navigateur lors de l’installation de l’extension. Modifiez-la ici si la suggestion est incorrecte — le popup peut la changer à tout moment."
+  },
+  "diagCopy": {
+    "message": "Copier les infos de diagnostic"
+  },
+  "diagCopied": {
+    "message": "Copié — collez-le dans un e-mail ou un ticket"
+  },
+  "diagCopyFail": {
+    "message": "Échec de la copie — faites plutôt une capture d’écran"
+  },
+  "optNavReadaloud": {
+    "message": "Lire à voix haute"
+  },
+  "ttsIntro": {
+    "message": "Faites lire la ligne traduite à voix haute avec votre propre clé. Configurez un fournisseur et testez-le ici."
+  },
+  "ttsVoiceLabel": {
+    "message": "Voix"
+  },
+  "ttsTestOk": {
+    "message": "Connecté : audio de test $KB$ Ko ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "La lecture à voix haute utilise votre propre clé. Le texte à prononcer n’est envoyé qu’au fournisseur que vous avez choisi ; la clé reste sur cet ordinateur."
+  },
+  "ttsEnableLabel": {
+    "message": "Lire la traduction à voix haute dans la vidéo"
+  },
+  "ttsVolLabel": {
+    "message": "Volume de lecture"
+  },
+  "ttsDuckLabel": {
+    "message": "Audio original pendant la lecture"
+  },
+  "ttsStatusSpeaking": {
+    "message": "En lecture"
+  },
+  "ttsStatusOn": {
+    "message": "Lecture activée"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ lignes cette vidéo · $M$ ignorées",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Quand l’option est activée, la traduction de chaque sous-titre est lue dès son apparition ; une ligne dont la traduction n’est pas prête à temps est ignorée, jamais rattrapée. Le son de la vidéo est baissé pendant la lecture d’une ligne, et une ligne trop longue pour tenir ralentit un peu la vidéo."
+  },
+  "ttsRegionLabel": {
+    "message": "Région du service"
+  },
+  "ttsErrNoRegion": {
+    "message": "Saisissez d'abord la région du service de votre clé Azure (ex. eastus)."
+  }
+}

@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Legendas bilíngues para o YouTube — original e tradução numa só camada, sem sobreposição."
+  },
+  "headerSub": {
+    "message": "para YouTube™ · Bilíngue, camada única"
+  },
+  "disclaimer": {
+    "message": "Não afiliado ao YouTube nem ao Google."
+  },
+  "enableTitle": {
+    "message": "Ativar / desativar"
+  },
+  "openOptions": {
+    "message": "Configurações"
+  },
+  "enableAria": {
+    "message": "Ativar extensão"
+  },
+  "previewTag": {
+    "message": "Prévia"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "A rápida raposa marrom"
+  },
+  "sampleTransComma": {
+    "message": "A raposa marrom salta,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Prévia ao vivo"
+  },
+  "secTranslation": {
+    "message": "Tradução"
+  },
+  "targetLang": {
+    "message": "Idioma de destino"
+  },
+  "backendLabel": {
+    "message": "Mecanismo"
+  },
+  "backendInfo": {
+    "message": "Info do mecanismo"
+  },
+  "backendAuto": {
+    "message": "Automático (recomendado)"
+  },
+  "backendTlang": {
+    "message": "Faixa completa (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Frases inteligentes (Google)"
+  },
+  "backendByo": {
+    "message": "Chave própria (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Automático</b>: usa a tradução de faixa completa do YouTube quando o vídeo oferece suporte e passa para frases inteligentes quando não oferece.<br><b>Faixa completa</b>: tradução do próprio YouTube, alinhada trecho a trecho. O uso intenso pode fazer o YouTube limitar temporariamente — a extensão espera e tenta de novo.<br><b>Frases inteligentes</b>: reconstrói legendas fragmentadas em frases completas e as traduz pelo endpoint gratuito do Google — redação melhor que a faixa completa em legendas bagunçadas, mas o uso intenso também pode ser limitado; a extensão reduz o ritmo e tenta de novo.<br><b>Chave própria</b>: envia a frase montada ao provedor que você configurou."
+  },
+  "backendGtxHint": {
+    "message": "Usa o endpoint gratuito do Google — o uso intenso pode ser limitado por um tempo; a extensão regula o ritmo e tenta de novo automaticamente."
+  },
+  "backendStatusTlang": {
+    "message": "Este vídeo: tradução de faixa completa (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Este vídeo: frases inteligentes (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Limitado pelo endpoint de tradução — reduzindo o ritmo e tentando de novo automaticamente. As linhas já traduzidas continuam funcionando."
+  },
+  "backendStatusSame": {
+    "message": "As legendas deste vídeo já estão no idioma de destino — nada a traduzir."
+  },
+  "secLayout": {
+    "message": "Layout"
+  },
+  "orderLabel": {
+    "message": "Ordem"
+  },
+  "orderTransTop": {
+    "message": "Tradução em cima"
+  },
+  "orderOrigTop": {
+    "message": "Original em cima"
+  },
+  "positionLabel": {
+    "message": "Posição"
+  },
+  "posTop": {
+    "message": "Topo"
+  },
+  "posCenter": {
+    "message": "Centro"
+  },
+  "posBottom": {
+    "message": "Embaixo"
+  },
+  "posHint": {
+    "message": "Você também pode arrastar a caixa de legendas no vídeo"
+  },
+  "posTryDrag": {
+    "message": "experimente"
+  },
+  "posTryNoVideo": {
+    "message": "Abra um vídeo do YouTube primeiro"
+  },
+  "resetPos": {
+    "message": "Redefinir posição"
+  },
+  "rowGap": {
+    "message": "Espaçamento"
+  },
+  "tabTrans": {
+    "message": "Tradução"
+  },
+  "tabOrig": {
+    "message": "Original"
+  },
+  "lineTabsAria": {
+    "message": "Linha da legenda"
+  },
+  "lineShow": {
+    "message": "Mostrar esta linha"
+  },
+  "fontLabel": {
+    "message": "Fonte"
+  },
+  "fontSystem": {
+    "message": "Padrão do sistema"
+  },
+  "fontMono": {
+    "message": "Monoespaçada"
+  },
+  "fontCjk": {
+    "message": "Compatível com CJK"
+  },
+  "sizeLabel": {
+    "message": "Tamanho"
+  },
+  "colText": {
+    "message": "Texto"
+  },
+  "colBg": {
+    "message": "Fundo"
+  },
+  "colStroke": {
+    "message": "Contorno"
+  },
+  "colTextAria": {
+    "message": "Cor do texto"
+  },
+  "colBgAria": {
+    "message": "Cor de fundo"
+  },
+  "colStrokeAria": {
+    "message": "Cor do contorno"
+  },
+  "bgOpacity": {
+    "message": "Opacidade do fundo"
+  },
+  "strokeOpacity": {
+    "message": "Opacidade do contorno"
+  },
+  "resetAll": {
+    "message": "Redefinir tudo"
+  },
+  "toggleTurnOff": {
+    "message": "Desativar legendas duplas"
+  },
+  "toggleTurnOn": {
+    "message": "Ativar legendas duplas"
+  },
+  "handleTitle": {
+    "message": "Arraste para mover · clique duplo para redefinir"
+  },
+  "handleAria": {
+    "message": "Arraste para mover as legendas, clique duplo para redefinir"
+  },
+  "secExport": {
+    "message": "Exportar"
+  },
+  "exportContent": {
+    "message": "Conteúdo"
+  },
+  "exportBi": {
+    "message": "Bilíngue"
+  },
+  "exportOrig": {
+    "message": "Original"
+  },
+  "exportTrans": {
+    "message": "Tradução"
+  },
+  "exportSrt": {
+    "message": "Baixar SRT"
+  },
+  "exportWorking": {
+    "message": "Gerando…"
+  },
+  "exportDone": {
+    "message": "Legendas baixadas"
+  },
+  "exportNoTrans": {
+    "message": "Nenhuma tradução disponível para este vídeo — tente o mecanismo Faixa completa ou outro idioma de destino."
+  },
+  "exportLimited": {
+    "message": "O YouTube está limitando a tradução de faixa completa agora — tente de novo em um minuto ou marque “Traduzir com minha própria chave”."
+  },
+  "exportNoCues": {
+    "message": "Nenhuma legenda para baixar — reproduza alguns segundos para as legendas carregarem e tente de novo."
+  },
+  "exportNotYoutube": {
+    "message": "Abra uma página de vídeo do YouTube para exportar."
+  },
+  "exportFailed": {
+    "message": "Falha ao exportar — atualize a página e tente de novo."
+  },
+  "updateNotesLabel": {
+    "message": "Abrir notas da versão após atualizações"
+  },
+  "trackWarnDubOnly": {
+    "message": "Atenção: este vídeo só tem legendas automáticas de dublagem por IA (sem faixa no idioma original), então as legendas bilíngues podem não corresponder ao áudio."
+  },
+  "whatsNewRow": {
+    "message": "Veja as novidades da v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Este vídeo: sua própria chave ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Provedor"
+  },
+  "byoBaseLabel": {
+    "message": "URL base da API (https)"
+  },
+  "byoModelLabel": {
+    "message": "Modelo"
+  },
+  "byoModelRequired": {
+    "message": "Obrigatório: nome do modelo"
+  },
+  "byoKeyLabel": {
+    "message": "Chave da API"
+  },
+  "byoKeyClear": {
+    "message": "Limpar"
+  },
+  "byoKeyCleared": {
+    "message": "A chave salva neste computador foi removida."
+  },
+  "byoKeySaved": {
+    "message": "salva ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Personalizado (compatível com OpenAI)"
+  },
+  "byoTest": {
+    "message": "Salvar e testar"
+  },
+  "byoTesting": {
+    "message": "Testando…"
+  },
+  "byoTestOk": {
+    "message": "Conectado. Exemplo: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Obter uma chave"
+  },
+  "byoGuide": {
+    "message": "Precisa de ajuda para configurar?"
+  },
+  "byoLocalHint": {
+    "message": "A chave fica neste navegador, neste computador — nunca é enviada. O texto das legendas vai só para o provedor que você escolheu."
+  },
+  "byoErrNoProvider": {
+    "message": "Escolha um provedor primeiro."
+  },
+  "byoErrNoKey": {
+    "message": "Insira uma chave de API primeiro — o link abaixo abre a página de chaves do provedor."
+  },
+  "byoErrNoModel": {
+    "message": "Este provedor precisa que o nome do modelo seja digitado."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "A URL base da API precisa ser um endereço https:// completo."
+  },
+  "byoErrNoPerm": {
+    "message": "Sem permissão para acessar esse host da API, a extensão não consegue conectar."
+  },
+  "byoErrAuth": {
+    "message": "A chave foi recusada (401/403) — confira se foi copiada por completo e está ativa."
+  },
+  "byoErrLimited": {
+    "message": "O provedor está limitando o ritmo — reduzindo a velocidade e tentando de novo automaticamente."
+  },
+  "byoErrQuota": {
+    "message": "Esta chave está sem cota no período atual."
+  },
+  "byoErrBadRequest": {
+    "message": "O endpoint recusou o pedido — o nome do modelo ou a URL base pode estar errado."
+  },
+  "byoErrBadShape": {
+    "message": "O modelo não respondeu linha a linha como pedido, e tentativas menores também falharam — tente outro modelo."
+  },
+  "byoErrReasoning": {
+    "message": "Esse modelo devolveu só o raciocínio e nenhuma tradução — escolha um modelo sem raciocínio."
+  },
+  "byoErrNetfail": {
+    "message": "Não foi possível acessar esse endpoint (rede ou restrição regional)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Este provedor não tem destino para o idioma escolhido — mude o idioma ou o mecanismo."
+  },
+  "byoErrFailed": {
+    "message": "Falha na conexão. Tente de novo em instantes."
+  },
+  "optTitle": {
+    "message": "Configuração do serviço de tradução"
+  },
+  "optIntro": {
+    "message": "Escolha um provedor e cole sua própria chave de API. A chave fica neste computador, e o texto das legendas vai só para o provedor que você escolher."
+  },
+  "optPricingLink": {
+    "message": "Preços e plano gratuito"
+  },
+  "optFetchModels": {
+    "message": "Listar modelos com minha chave"
+  },
+  "optFetching": {
+    "message": "Listando…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ modelos encontrados",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Não foi possível listar os modelos — digite o nome do modelo."
+  },
+  "optModelCustom": {
+    "message": "Personalizado…"
+  },
+  "optNoModelsYet": {
+    "message": "Ainda sem lista de modelos — busque uma com sua chave ou apenas digite o nome."
+  },
+  "optShowKey": {
+    "message": "Mostrar"
+  },
+  "optRecommended": {
+    "message": "recomendado"
+  },
+  "optConfigured": {
+    "message": "Configurado"
+  },
+  "optInUse": {
+    "message": "em uso"
+  },
+  "optAfterSetup": {
+    "message": "Quando terminar aqui, abra o popup da extensão e defina Mecanismo como \"Sua própria chave\"."
+  },
+  "optTrademark": {
+    "message": "Todos os nomes e logotipos dos provedores são marcas de seus respectivos donos. Esta extensão não é afiliada, endossada nem patrocinada por nenhum deles; as marcas aparecem só para identificar a API que você escolheu."
+  },
+  "optSections": {
+    "message": "Seções"
+  },
+  "optNavSetup": {
+    "message": "Serviço de tradução"
+  },
+  "optNavStart": {
+    "message": "Primeiros passos"
+  },
+  "optNavAbout": {
+    "message": "Sobre"
+  },
+  "startIntro": {
+    "message": "Três coisas. Não é preciso configurar nada para usar."
+  },
+  "startS1Title": {
+    "message": "Abra um vídeo — é só isso"
+  },
+  "startS1Body": {
+    "message": "Qualquer vídeo do YouTube com legendas: as duas linhas aparecem sozinhas."
+  },
+  "startS2Title": {
+    "message": "Coloque onde quiser"
+  },
+  "startS2Body": {
+    "message": "Segure a alça no canto superior esquerdo da caixa de legendas e arraste para qualquer lugar. Clique duas vezes na alça para voltar ao lugar."
+  },
+  "startS2Alt": {
+    "message": "Diagrama do player: uma alça de seis pontos no canto superior esquerdo da caixa de legendas, arrastando-a para outra posição"
+  },
+  "startS3Title": {
+    "message": "Quer traduções melhores"
+  },
+  "startS3Body": {
+    "message": "Adicione sua própria chave de API: tradução da frase inteira e exportação SRT do vídeo todo."
+  },
+  "startGoSetup": {
+    "message": "Configurar um serviço de tradução"
+  },
+  "aboutIntro": {
+    "message": "O que é isto e para onde vai o seu texto."
+  },
+  "aboutVersion": {
+    "message": "Versão"
+  },
+  "aboutBlurb": {
+    "message": "Uma segunda linha de legendas no YouTube: o original em uma linha, a tradução na outra, com fonte, cor e posição a seu gosto. Código aberto, gratuito, sem anúncios."
+  },
+  "aboutPrivacy": {
+    "message": "Não temos servidor e não coletamos estatísticas. O texto das legendas vai só para o serviço de tradução que você escolher; com sua própria chave, ela fica só neste computador."
+  },
+  "aboutChangelog": {
+    "message": "Novidades"
+  },
+  "aboutRoadmap": {
+    "message": "Roteiro"
+  },
+  "optFeedbackLink": {
+    "message": "Relatar um problema"
+  },
+  "popupByoConfigure": {
+    "message": "Configurar…"
+  },
+  "popupByoNotSet": {
+    "message": "não configurado"
+  },
+  "popupByoPick": {
+    "message": "Provedor de tradução"
+  },
+  "popupByoUntested": {
+    "message": "não testado"
+  },
+  "exportUsesYouTube": {
+    "message": "O download usa a tradução da faixa inteira do próprio YouTube — é grátis e não gasta sua chave de API."
+  },
+  "exportUseByo": {
+    "message": "Traduzir com minha chave (mais fiel, consome cota)"
+  },
+  "exportByoNote": {
+    "message": "A faixa inteira será traduzida pelo seu provedor com a sua chave. Você verá uma estimativa antes de qualquer envio."
+  },
+  "exportConfirm": {
+    "message": "Traduzir $N$ linhas de legenda com $NAME$ — cerca de $REQ$ solicitações na sua própria cota. A faixa inteira sai do navegador para esse provedor; na reprodução, só as partes que você de fato assiste são enviadas.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Traduzir e baixar"
+  },
+  "exportConfirmBack": {
+    "message": "Cancelar"
+  },
+  "exportStop": {
+    "message": "Parar"
+  },
+  "exportStopping": {
+    "message": "Parando…"
+  },
+  "exportProgress": {
+    "message": "Traduzindo… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ trecho(s) recorreram à tradução do YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Download cancelado."
+  },
+  "ftSite": {
+    "message": "Site"
+  },
+  "ftSiteLabel": {
+    "message": "Site"
+  },
+  "ftFeedbackLabel": {
+    "message": "Feedback"
+  },
+  "ftReviewLabel": {
+    "message": "Avaliar"
+  },
+  "ftGithub": {
+    "message": "Código-fonte no GitHub"
+  },
+  "ftFeedback": {
+    "message": "Enviar feedback ou relatar um erro"
+  },
+  "ftReview": {
+    "message": "Avalie na Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Ainda sem chave — este provedor não pode ser usado até você adicionar uma."
+  },
+  "optBaseHint": {
+    "message": "Uma URL base ou um endpoint completo funcionam, p. ex. https://example.com/v1 ou https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Diagrama do player: uma linha original e uma linha traduzida perto da parte de baixo da imagem"
+  },
+  "startS3Alt": {
+    "message": "Comparação: o mecanismo gratuito traduz uma frase em pedaços; sua própria chave entende o todo e divide de volta"
+  },
+  "startPicFree": {
+    "message": "Mecanismo gratuito"
+  },
+  "startPicFreeNote": {
+    "message": "uma frase, fatiada"
+  },
+  "startPicByo": {
+    "message": "Sua própria chave"
+  },
+  "startPicByoNote": {
+    "message": "entendida por inteiro, redividida"
+  },
+  "startNoSubsQ": {
+    "message": "As legendas não aparecem?"
+  },
+  "startNoSubs": {
+    "message": "Clique no botão CC no canto inferior direito do player ou tente outro vídeo — transmissões ao vivo e videoclipes muitas vezes não têm nenhuma."
+  },
+  "langManage": {
+    "message": "Gerenciar idiomas…"
+  },
+  "optNavLangs": {
+    "message": "Idiomas das legendas"
+  },
+  "langsIntro": {
+    "message": "Quais idiomas o popup oferece para você traduzir."
+  },
+  "langsKept": {
+    "message": "Exibidos no popup"
+  },
+  "langsKeptHint": {
+    "message": "Estes aparecem no menu de idioma de destino do popup. Mantenha pelo menos um."
+  },
+  "langsMore": {
+    "message": "Outros idiomas"
+  },
+  "langsMoreHint": {
+    "message": "Pressione + para adicionar. Todos os idiomas listados funcionam com os motores gratuitos e com o DeepL."
+  },
+  "langsReset": {
+    "message": "Restaurar padrões"
+  },
+  "langsResetDone": {
+    "message": "De volta à lista padrão."
+  },
+  "langsAddAria": {
+    "message": "Adicionar"
+  },
+  "langsRemoveAria": {
+    "message": "Remover"
+  },
+  "langsLastOne": {
+    "message": "Mantenha pelo menos um"
+  },
+  "langsAllAdded": {
+    "message": "Todos os idiomas já estão na sua lista."
+  },
+  "langsAdded": {
+    "message": "Adicionado $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Esse estava em uso, então o destino agora é $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Chinês serifado"
+  },
+  "fontCjkRound": {
+    "message": "Chinês arredondado"
+  },
+  "uiLocaleLabel": {
+    "message": "Idioma da interface"
+  },
+  "uiLocaleAuto": {
+    "message": "Automático — seguir o navegador"
+  },
+  "uiLocaleHint": {
+    "message": "Só o idioma dos controles desta extensão. O idioma para o qual as legendas são traduzidas é escolhido no pop-up e em “Idiomas das legendas” — não aqui."
+  },
+  "startTargetLabel": {
+    "message": "Idioma da tradução"
+  },
+  "startTargetHint": {
+    "message": "Inferido das preferências de idioma do navegador quando a extensão foi instalada. Altere aqui se o palpite estiver errado — o pop-up pode mudar isso a qualquer momento."
+  },
+  "diagCopy": {
+    "message": "Copiar info de diagnóstico"
+  },
+  "diagCopied": {
+    "message": "Copiado — cole em um e-mail ou issue"
+  },
+  "diagCopyFail": {
+    "message": "Falha ao copiar — tire um print em vez disso"
+  },
+  "optNavReadaloud": {
+    "message": "Ler em voz alta"
+  },
+  "ttsIntro": {
+    "message": "Ouça a linha traduzida em voz alta com sua própria chave. Configure um provedor e teste aqui."
+  },
+  "ttsVoiceLabel": {
+    "message": "Voz"
+  },
+  "ttsTestOk": {
+    "message": "Conectado: áudio de teste $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "A leitura em voz alta usa sua própria chave. O texto a ser falado vai apenas para o provedor escolhido; a chave permanece neste computador."
+  },
+  "ttsEnableLabel": {
+    "message": "Ler a tradução em voz alta no vídeo"
+  },
+  "ttsVolLabel": {
+    "message": "Volume da leitura"
+  },
+  "ttsDuckLabel": {
+    "message": "Áudio original ao falar"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Falando"
+  },
+  "ttsStatusOn": {
+    "message": "Leitura ativada"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ linhas neste vídeo · $M$ ignoradas",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Quando ativado, a tradução de cada legenda é falada assim que aparece; uma linha cuja tradução não fica pronta a tempo é pulada, nunca recuperada depois. O áudio do próprio vídeo é abaixado enquanto uma linha é falada, e uma linha longa demais para caber deixa o vídeo um pouco mais lento."
+  },
+  "ttsRegionLabel": {
+    "message": "Região do serviço"
+  },
+  "ttsErrNoRegion": {
+    "message": "Informe primeiro a região do serviço da sua chave do Azure (ex.: eastus)."
+  }
+}

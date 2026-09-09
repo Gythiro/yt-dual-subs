@@ -38,12 +38,16 @@ const cfg = {
   engine: "auto",        // "auto" | "tlang" | "gtx" | "byo"
   byoProvider: "",       // providers.js id
   byoModel: "",
-  byoBaseUrl: ""         // custom provider only
+  byoBaseUrl: "",        // custom provider only
+  ttsProvider: "",       // read-aloud: providers.js tts registry id ("" = unset)
+  ttsVoice: "",          // read-aloud voice ("" = the provider's default)
+  ttsRegion: ""          // Azure only: the region its key is bound to ("eastus")
 };
 
 const cfgReady = new Promise((resolve) => {
   chrome.storage.sync.get(
-    { engine: "auto", backend: "tlang", byoProvider: "", byoModel: "", byoBaseUrl: "" },
+    { engine: "auto", backend: "tlang", byoProvider: "", byoModel: "", byoBaseUrl: "",
+      ttsProvider: "", ttsVoice: "", ttsRegion: "" },
     (got) => {
       got = got || {};
       // Same read-side migration as content.js: a stored "gtx" backend was a
@@ -56,6 +60,9 @@ const cfgReady = new Promise((resolve) => {
       cfg.byoProvider = String(got.byoProvider || "");
       cfg.byoModel = String(got.byoModel || "");
       cfg.byoBaseUrl = String(got.byoBaseUrl || "");
+      cfg.ttsProvider = String(got.ttsProvider || "");
+      cfg.ttsVoice = String(got.ttsVoice || "");
+      cfg.ttsRegion = String(got.ttsRegion || "");
       resolve();
     }
   );
@@ -69,6 +76,13 @@ chrome.storage.onChanged.addListener((changes, area) => {
     const v = changes[k].newValue;
     cfg[k] = typeof v === "string" ? v : cfg[k];
     if (k !== "engine") byoChanged = true;
+  }
+  // Read-aloud settings ride the same listener but must NOT flush the
+  // translation lane — a voice change has nothing to do with queued subtitles.
+  for (const k of ["ttsProvider", "ttsVoice", "ttsRegion"]) {
+    if (!(k in changes)) continue;
+    const v = changes[k].newValue;
+    cfg[k] = typeof v === "string" ? v : cfg[k];
   }
   // Provider/model/endpoint changed mid-flight: queued jobs were built for the
   // old target and their answers would be attributed to the new one. Drop them;
@@ -923,6 +937,202 @@ async function throwForStatus(res, who) {
 // ---------------------------------------------------------------------------
 // connection test (popup "test" button)
 // ---------------------------------------------------------------------------
+// read-aloud (TTS) — pipeline only for now. Synthesis is requested here so the
+// key never leaves the worker and host_permissions apply; playback happens in
+// the content script (a worker has no audio output). There is deliberately no
+// lane yet: the only caller today is the options page's "save and test", and
+// the playback queue in the next step has to be shaped around cue timing, not
+// guessed at now.
+function keyForTts(providerId) {
+  return new Promise((resolve) => {
+    chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+      const keys = (got && got.ttsKeys) || {};
+      resolve(String(keys[providerId] || ""));
+    });
+  });
+}
+
+// Same honest-error discipline as resolveByo: every unfinished-setup state has
+// its own code, and the message text never contains the key.
+async function resolveTts() {
+  const p = PROVIDERS.tts.get(cfg.ttsProvider);
+  if (!p) throw tag(new Error("no tts provider selected"), { noKey: true, code: "noProvider" });
+  const key = await keyForTts(p.id);
+  if (!key) throw tag(new Error("no tts api key"), { noKey: true, code: "noKey" });
+  await ensureHostPermission(p.origin);
+  const voice = (cfg.ttsVoice || p.defaultVoice || "").trim();
+  let region = "";
+  if (p.needsRegion) {
+    // The region is spliced into the request HOST — gate it to a hostname
+    // label so a stray value cannot rewrite where the key gets sent.
+    region = String(cfg.ttsRegion || "").trim().toLowerCase();
+    if (!/^[a-z0-9]{1,42}$/.test(region)) {
+      throw tag(new Error("no azure region"), { noKey: true, code: "noRegion" });
+    }
+  }
+  return { provider: p, key, voice, model: p.defaultModel, region };
+}
+
+// Chirp 3 HD locales, per Google's published list (untested against a live
+// key — the machine-check clause of the read-aloud test drive covers this).
+// A target language that is not in the family is an honest unsupportedTarget,
+// never an English voice mangling someone else's language.
+const GOOGLE_TTS_LANG = {
+  "en": "en-US", "de": "de-DE", "es": "es-ES", "fr": "fr-FR", "it": "it-IT",
+  "ja": "ja-JP", "ko": "ko-KR", "nl": "nl-NL", "pl": "pl-PL", "pt": "pt-BR",
+  "ru": "ru-RU", "th": "th-TH", "tr": "tr-TR", "vi": "vi-VN", "id": "id-ID",
+  "hi": "hi-IN", "ar": "ar-XA", "uk": "uk-UA", "sw": "sw-KE", "bn": "bn-IN",
+  "gu": "gu-IN", "kn": "kn-IN", "ml": "ml-IN", "mr": "mr-IN", "ta": "ta-IN",
+  "te": "te-IN", "ur": "ur-IN", "zh-CN": "cmn-CN", "zh-TW": "cmn-CN"
+};
+
+const escapeXml = (s) => String(s).replace(/[<>&'"]/g, (c) => (
+  { "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" }[c]
+));
+
+// One utterance -> base64 audio (the shape both callers keep), one branch per
+// provider kind. Google answers base64 JSON natively; the binary kinds are
+// encoded here so the cache and the message envelope stay one format.
+async function ttsSynthesize(text, t, targetLang) {
+  const kind = t.provider.kind;
+  let req;
+  if (kind === "azure-speech") {
+    req = {
+      url: "https://" + t.region + ".tts.speech.microsoft.com/cognitiveservices/v1",
+      init: {
+        method: "POST",
+        headers: {
+          "Ocp-Apim-Subscription-Key": t.key,
+          "Content-Type": "application/ssml+xml",
+          "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3"
+        },
+        // xml:lang names the DOCUMENT language; the Multilingual voice family
+        // detects and follows the language of the text itself.
+        body: "<speak version='1.0' xml:lang='en-US'><voice name='" + t.voice + "'>" +
+          escapeXml(text) + "</voice></speak>"
+      }
+    };
+  } else if (kind === "google-tts") {
+    const lang = GOOGLE_TTS_LANG[targetLang || ""];
+    if (!lang) {
+      throw tag(new Error("chirp has no " + (targetLang || "?")),
+        { unsupportedTarget: true, code: "unsupportedTarget" });
+    }
+    req = {
+      url: t.provider.baseUrl + "/v1/text:synthesize",
+      init: {
+        method: "POST",
+        headers: { "X-Goog-Api-Key": t.key, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          input: { text: text },
+          voice: { languageCode: lang, name: lang + "-Chirp3-HD-" + t.voice },
+          audioConfig: { audioEncoding: "MP3" }
+        })
+      }
+    };
+  } else {
+    req = {
+      url: t.provider.baseUrl + "/audio/speech",
+      init: {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + t.key,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: t.model,
+          voice: t.voice,
+          input: text,
+          response_format: "mp3"
+        })
+      }
+    };
+  }
+  let res;
+  try {
+    res = await fetch(req.url, req.init);
+  } catch (_e) {
+    throw tag(new Error("tts fetch failed"), { netfail: true, code: "netfail" });
+  }
+  if (res.status === 401 || res.status === 403) {
+    throw tag(new Error("tts auth " + res.status), { code: "auth" });
+  }
+  if (res.status === 429 || res.status === 503) {
+    throw tag(new Error("tts rate limited " + res.status), { rateLimited: true, code: "limited" });
+  }
+  if (!res.ok) throw tag(new Error("tts http " + res.status), { code: "badRequest" });
+  if (kind === "google-tts") {
+    let data;
+    try { data = await res.json(); } catch (_e) { data = null; }
+    const b64 = data && typeof data.audioContent === "string" ? data.audioContent : "";
+    if (!b64) throw tag(new Error("tts empty audio"), { code: "badShape" });
+    return b64;
+  }
+  const buf = await res.arrayBuffer();
+  if (!buf || buf.byteLength === 0) {
+    throw tag(new Error("tts empty audio"), { code: "badRequest" });
+  }
+  return b64FromBuf(buf);
+}
+
+// User-initiated probe from the options page — the read-aloud twin of byoTest.
+// The probe speaks in the CURRENT target language: for Google that is the
+// language the voice name is built from, so testing anything else would pass
+// on a voice that then fails on the first real subtitle.
+async function ttsTest() {
+  const t = await resolveTts();
+  const targetLang = await new Promise((resolve) => {
+    chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
+      resolve((got && got.targetLang) || "zh-CN");
+    });
+  });
+  const started = Date.now();
+  const b64 = await ttsSynthesize("Hi.", t, targetLang);
+  const pad = b64.endsWith("==") ? 2 : b64.endsWith("=") ? 1 : 0;
+  const bytes = Math.floor(b64.length * 3 / 4) - pad;
+  return { bytes, ms: Date.now() - started, voice: t.voice };
+}
+
+// Speech for one subtitle line, as base64 the content script can turn into a
+// Blob — sendMessage is JSON, an ArrayBuffer would not survive the trip. Small
+// LRU so a replayed or re-entered cue does not bill the user twice; keyed by
+// provider+voice+text because a voice change must not serve the old voice.
+const TTS_CACHE = new Map();
+const TTS_CACHE_MAX = 30;
+
+function b64FromBuf(buf) {
+  const bytes = new Uint8Array(buf);
+  let bin = "";
+  const STEP = 0x8000;            // String.fromCharCode arg-count limit safety
+  for (let i = 0; i < bytes.length; i += STEP) {
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + STEP));
+  }
+  return btoa(bin);
+}
+
+async function ttsSpeak(text, targetLang) {
+  const line = String(text || "").trim();
+  if (!line) throw tag(new Error("tts empty input"), { code: "badRequest" });
+  const t = await resolveTts();
+  // The language is part of the identity: the same line synthesized under a
+  // different target is different audio (Google even bakes it into the voice).
+  const key = t.provider.id + "|" + t.voice + "|" + (targetLang || "") + "|" + line;
+  const hit = TTS_CACHE.get(key);
+  if (hit) {
+    TTS_CACHE.delete(key);        // refresh recency
+    TTS_CACHE.set(key, hit);
+    return { b64: hit, mime: "audio/mpeg", cached: true };
+  }
+  const b64 = await ttsSynthesize(line, t, targetLang);
+  TTS_CACHE.set(key, b64);
+  if (TTS_CACHE.size > TTS_CACHE_MAX) {
+    const oldest = TTS_CACHE.keys().next().value;
+    TTS_CACHE.delete(oldest);
+  }
+  return { b64, mime: "audio/mpeg", cached: false };
+}
+
+// ---------------------------------------------------------------------------
 // Runs one real request against the saved configuration and reports a code the
 // popup turns into a sentence. Bypasses the lane: it is a user-initiated probe,
 // not part of the playback stream.
@@ -1015,9 +1225,54 @@ function showUpdateBadge() {
   } catch (_e) { /* ignore */ }
 }
 
+// Map a browser language code onto one of the shipped target languages, or ""
+// when it isn't offered. zh needs script handling; a few codes have legacy or
+// sibling spellings; everything else matches on the base tag.
+function mapAcceptToTarget(code) {
+  const c = String(code || "").replace(/_/g, "-").toLowerCase();
+  if (!c) return "";
+  if (c.indexOf("zh") === 0) {
+    return /hant|-tw|-hk|-mo/.test(c) ? "zh-TW" : "zh-CN";
+  }
+  const base = c.split("-")[0];
+  const alias = { nb: "no", nn: "no", tl: "fil", he: "iw", in: "id" };
+  const cand = alias[base] || base;
+  return LANGS.get(cand) ? cand : "";
+}
+
+// First install only: guess the translation target from the browser's own
+// preferred-content languages. The UI language is the wrong signal on its own —
+// much of the measured user base reads Chinese on an English-UI browser, and
+// their accept-languages list usually still carries zh. The guess is written
+// once, only when sync holds no targetLang (a reinstall under the same account
+// keeps whatever the user had), and the start page shows it with a one-click
+// change. Existing users are never touched: the static default stays zh-CN.
+function deriveTargetLang() {
+  try {
+    chrome.storage.sync.get("targetLang", (got) => {
+      if (got && typeof got.targetLang === "string" && got.targetLang) return;
+      const uiLangCode = () => {
+        try { return (chrome.i18n && chrome.i18n.getUILanguage && chrome.i18n.getUILanguage()) || ""; }
+        catch (_e) { return ""; }
+      };
+      const finish = (codes) => {
+        let pick = "";
+        for (const c of codes) { pick = mapAcceptToTarget(c); if (pick) break; }
+        try { chrome.storage.sync.set({ targetLang: pick || "en" }); } catch (_e) { /* ignore */ }
+      };
+      try {
+        chrome.i18n.getAcceptLanguages((accepts) => {
+          finish([].concat(accepts || [], [uiLangCode()]));
+        });
+      } catch (_e) { finish([uiLangCode()]); }
+    });
+  } catch (_e) { /* ignore */ }
+}
+
 chrome.runtime.onInstalled.addListener((details) => {
   const cur = chrome.runtime.getManifest().version;
   if (details.reason === "install") {
+    deriveTargetLang();
     // Let the drag grip show itself on the first few videos. Install only:
     // an upgrade must not pester people who already know how to drag.
     try { chrome.storage.local.set({ handleHintsLeft: 3 }); } catch (_e) {}
@@ -1116,6 +1371,28 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     cfgReady
       .then(() => byoTest(msg.targetLang || "zh-CN"))
       .then((r) => sendResponse({ ok: true, sample: r.sample }))
+      .catch((err) => sendResponse({
+        ok: false,
+        code: (err && err.code) || "failed",
+        error: String(err)
+      }));
+    return true;
+  }
+  if (msg && msg.type === "ttsTest") {
+    cfgReady
+      .then(ttsTest)
+      .then((r) => sendResponse({ ok: true, bytes: r.bytes, ms: r.ms, voice: r.voice }))
+      .catch((err) => sendResponse({
+        ok: false,
+        code: (err && err.code) || "failed",
+        error: String(err)
+      }));
+    return true;
+  }
+  if (msg && msg.type === "ttsSpeak") {
+    cfgReady
+      .then(() => ttsSpeak(msg.text, msg.targetLang))
+      .then((r) => sendResponse({ ok: true, b64: r.b64, mime: r.mime, cached: r.cached }))
       .catch((err) => sendResponse({
         ok: false,
         code: (err && err.code) || "failed",

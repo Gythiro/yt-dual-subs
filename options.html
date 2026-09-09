@@ -39,6 +39,7 @@
         <button type="button" class="onav-item" data-sec="start" data-i18n="optNavStart">新手入门</button>
         <button type="button" class="onav-item on" data-sec="setup" data-i18n="optNavSetup">翻译服务</button>
         <button type="button" class="onav-item" data-sec="langs" data-i18n="optNavLangs">字幕语言</button>
+        <button type="button" class="onav-item" data-sec="readaloud" data-i18n="optNavReadaloud">朗读</button>
         <button type="button" class="onav-item" data-sec="about" data-i18n="optNavAbout">关于</button>
       </nav>
 
@@ -118,6 +119,13 @@
          Step 2 exists because two separate users reported "there are only three
          positions" for a box that has been freely draggable since 3.2. -->
     <section class="odetail ostart" id="secStart" hidden>
+      <div class="orow">
+        <label for="startTargetSel" data-i18n="startTargetLabel">译文语言</label>
+        <select id="startTargetSel"></select>
+      </div>
+      <p class="ohint" data-i18n="startTargetHint">
+        装好时按你浏览器的语言偏好猜了一个。不对就在这里换，之后也随时能在弹窗里改。
+      </p>
       <ol class="osteps">
         <li class="ostep">
           <div class="ostep-txt">
@@ -276,10 +284,80 @@
       <button type="button" class="obtn ghost" id="langReset" data-i18n="langsReset">恢复默认</button>
     </section>
     <!-- --------------------------------- about ---------------------------- -->
+    <!-- ------------------------------- read-aloud -------------------------- -->
+    <section class="odetail" id="secReadaloud" hidden>
+      <div class="orow">
+        <label for="ttsProviderSel" data-i18n="byoProviderLabel">服务商</label>
+        <select id="ttsProviderSel"></select>
+      </div>
+      <div class="orow">
+        <label for="ttsKey">
+          <span data-i18n="byoKeyLabel">API Key</span>
+          <span class="ospacer"></span>
+          <label class="ochk"><input type="checkbox" id="ttsShowKey" />
+            <span data-i18n="optShowKey">显示</span></label>
+          <button type="button" class="olink" id="ttsKeyClear" hidden data-i18n="byoKeyClear">清除</button>
+        </label>
+        <input type="password" id="ttsKey" spellcheck="false" autocomplete="off" />
+      </div>
+      <!-- Azure only: its key is bound to a region that becomes the request
+           host. Hidden for every provider that has one fixed endpoint. -->
+      <div class="orow" id="ttsRegionRow" hidden>
+        <label for="ttsRegion" data-i18n="ttsRegionLabel">服务区域</label>
+        <input type="text" id="ttsRegion" list="ttsRegionList" placeholder="eastus"
+               spellcheck="false" autocomplete="off" />
+        <datalist id="ttsRegionList">
+          <option value="eastus"></option>
+          <option value="eastus2"></option>
+          <option value="westus2"></option>
+          <option value="westeurope"></option>
+          <option value="northeurope"></option>
+          <option value="southeastasia"></option>
+          <option value="eastasia"></option>
+          <option value="japaneast"></option>
+          <option value="koreacentral"></option>
+          <option value="australiaeast"></option>
+        </datalist>
+      </div>
+      <div class="orow">
+        <label for="ttsVoiceSel" data-i18n="ttsVoiceLabel">音色</label>
+        <select id="ttsVoiceSel"></select>
+      </div>
+      <button type="button" class="obtn primary" id="ttsTestBtn" data-i18n="byoTest">保存并测通</button>
+      <p class="omsg" id="ttsMsg" role="status" aria-live="polite" hidden></p>
+      <div class="orow">
+        <label class="ochk"><input type="checkbox" id="ttsEnabled" />
+          <span data-i18n="ttsEnableLabel">在视频里朗读译文</span></label>
+      </div>
+      <p class="ohint" data-i18n="ttsEnableHint">
+        开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，不会追读。朗读期间视频音量会自动压低；句子长到读不完时，视频会稍微放慢来配合。
+      </p>
+      <div class="orow">
+        <label for="ttsVolume"><span data-i18n="ttsVolLabel">朗读音量</span>
+          <b id="ttsVolumeV">100%</b></label>
+        <input type="range" id="ttsVolume" min="10" max="100" step="5" />
+      </div>
+      <div class="orow">
+        <label for="ttsDuckPct"><span data-i18n="ttsDuckLabel">朗读时的原声音量</span>
+          <b id="ttsDuckPctV">25%</b></label>
+        <input type="range" id="ttsDuckPct" min="0" max="100" step="5" />
+      </div>
+      <p class="ohint" data-i18n="ttsPrivacyNote">
+        朗读用你自己的 Key。要朗读的文本只发给你选择的这一家服务商；Key 只存在本机。
+      </p>
+    </section>
+
     <section class="odetail" id="secAbout" hidden>
       <p class="oabout-ver">
         <span data-i18n="aboutVersion">版本</span>
         <b id="aboutVer">—</b>
+      </p>
+      <div class="orow">
+        <label for="uiLocaleSel" data-i18n="uiLocaleLabel">界面语言</label>
+        <select id="uiLocaleSel"></select>
+      </div>
+      <p class="ohint" data-i18n="uiLocaleHint">
+        只影响这个插件自己的界面。字幕翻译成什么语言，在弹窗和「字幕语言」里选，与这里无关。
       </p>
       <p data-i18n="aboutBlurb">
         给 YouTube 加一层双语字幕：原文一行、译文一行，字体、颜色、位置都能自己调。
@@ -314,6 +392,7 @@
   <script src="languages.js"></script>
   <script src="providers.js"></script>
   <script src="provider-icons.js"></script>
+  <script src="i18n-runtime.js"></script>
   <script src="options.js"></script>
 </body>
 </html>

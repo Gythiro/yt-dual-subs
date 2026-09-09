@@ -274,12 +274,75 @@
     badShape: "byoErrBadShape",
     reasoning: "byoErrReasoning",
     netfail: "byoErrNetfail",
-    unsupportedTarget: "byoErrUnsupportedTarget"
+    unsupportedTarget: "byoErrUnsupportedTarget",
+    noRegion: "ttsErrNoRegion"
   };
 
   function errorKey(code) {
     return ERROR_KEYS[code] || "byoErrFailed";
   }
+
+  // ---- read-aloud (TTS) providers ----------------------------------------
+  // A separate registry: synthesis is not translation, and the two feed
+  // different pickers with different lifecycles. The voices listed for Azure
+  // and Google are their MULTILINGUAL families on purpose: the text being
+  // spoken is the translation, which can be any of the 50 target languages,
+  // so a voice pinned to one language would be wrong the moment the user
+  // switches targets. Their two hosts ship in optional_host_permissions
+  // together with the PRIVACY paragraph and the store justification (§7.5C —
+  // the same change or nothing).
+  const TTS_PROVIDERS = [
+    {
+      id: "openai-tts", name: "OpenAI TTS", short: "OpenAI", kind: "openai-speech",
+      baseUrl: "https://api.openai.com/v1",
+      origin: "https://api.openai.com",
+      defaultModel: "gpt-4o-mini-tts",
+      // The speech voices are a fixed, documented set — no list endpoint to ask.
+      voices: ["alloy", "ash", "coral", "echo", "fable", "onyx", "nova", "sage", "shimmer"],
+      defaultVoice: "alloy",
+      keyHint: "sk-…",
+      keyUrl: "https://platform.openai.com/api-keys",
+      pricingUrl: "https://openai.com/api/pricing/",
+      tint: "#10A37F", initials: "AI"
+    },
+    {
+      id: "google-tts", name: "Google Cloud TTS", short: "Google", kind: "google-tts",
+      baseUrl: "https://texttospeech.googleapis.com",
+      origin: "https://texttospeech.googleapis.com",
+      defaultModel: "",
+      // Chirp 3 HD short names; the worker builds "<locale>-Chirp3-HD-<name>"
+      // from the CURRENT target language (see GOOGLE_TTS_LANG in background.js),
+      // so one picked voice follows the user across languages.
+      voices: ["Kore", "Puck", "Charon", "Fenrir", "Aoede", "Leda", "Orus", "Zephyr"],
+      defaultVoice: "Kore",
+      keyHint: "AIza…",
+      keyUrl: "https://console.cloud.google.com/apis/credentials",
+      pricingUrl: "https://cloud.google.com/text-to-speech/pricing",
+      tint: "#4285F4", initials: "G"
+    },
+    {
+      id: "azure-speech", name: "Azure Speech", short: "Azure", kind: "azure-speech",
+      // The real endpoint is region-scoped: https://<region>.tts.speech…;
+      // the region comes from settings (needsRegion below), baseUrl is unused.
+      baseUrl: "",
+      origin: "https://*.tts.speech.microsoft.com",
+      needsRegion: true,
+      defaultModel: "",
+      // The Multilingual neural family switches language by itself — the only
+      // kind that can follow a translation whose language the user may change.
+      voices: [
+        "en-US-AvaMultilingualNeural", "en-US-AndrewMultilingualNeural",
+        "en-US-EmmaMultilingualNeural", "en-US-BrianMultilingualNeural"
+      ],
+      defaultVoice: "en-US-AvaMultilingualNeural",
+      keyHint: "",
+      keyUrl: "https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices",
+      pricingUrl: "https://azure.microsoft.com/pricing/details/cognitive-services/speech-services/",
+      tint: "#0078D4", initials: "Az"
+    }
+  ];
+  const TTS_BY_ID = Object.create(null);
+  for (const p of TTS_PROVIDERS) TTS_BY_ID[p.id] = p;
 
   root.YTDS_PROVIDERS = {
     list: PROVIDERS,
@@ -289,6 +352,10 @@
     parseCustomBase,
     endpointFor,
     usableModels,
-    errorKey
+    errorKey,
+    tts: {
+      list: TTS_PROVIDERS,
+      get: (id) => TTS_BY_ID[id] || null
+    }
   };
 })(typeof self !== "undefined" ? self : this);

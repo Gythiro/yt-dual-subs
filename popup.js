@@ -6,6 +6,11 @@
 const DEFAULTS = {
   enabled: true,
   targetLang: "zh-CN",
+  uiLocale: "auto",            // interface language; "auto" = follow the browser
+  ttsEnabled: false,           // read the translation line aloud (own key)
+  ttsVolume: 100,              // spoken line's own loudness, 0-100 (Audio.volume)
+  ttsDuckPct: 25,              // original audio while a line speaks, as % of the
+                               // user's own volume (inject.js ducks to this)
   langShown: null,             // popup/options only: which target languages the
                                // dropdown offers. null = the shipped defaults.
   engine: "auto",              // "auto" | "tlang" | "gtx" | "byo" (source of
@@ -110,9 +115,11 @@ let exportVariant = "bi";        // SRT export content: "bi" | "orig" | "trans" 
 // ---- i18n ----------------------------------------------------------------
 // Safe wrapper: returns the localized message, or the fallback if the key is
 // missing/empty so the hardcoded markup keeps working in any environment.
+// All lookups go through YTDS_I18N so the user's interface-language override
+// (options → About) applies; on "auto" it is chrome.i18n.getMessage unchanged.
 function t(key, fallback) {
   try {
-    const m = chrome.i18n && chrome.i18n.getMessage(key);
+    const m = self.YTDS_I18N.get(key);
     if (m) return m;
   } catch (_e) { /* ignore */ }
   return fallback;
@@ -125,23 +132,23 @@ function applyI18n() {
   // Keep the document language in sync with the actual UI locale so screen
   // readers / hyphenation match the rendered text (default_locale is "en").
   try {
-    const ui = chrome.i18n && chrome.i18n.getUILanguage();
+    const ui = self.YTDS_I18N.effectiveLang();
     if (ui) document.documentElement.lang = ui;
   } catch (_e) { /* ignore */ }
   document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const m = chrome.i18n.getMessage(el.dataset.i18n);
+    const m = self.YTDS_I18N.get(el.dataset.i18n);
     if (m) el.textContent = m;
   });
   document.querySelectorAll("[data-i18n-html]").forEach((el) => {
-    const m = chrome.i18n.getMessage(el.getAttribute("data-i18n-html"));
+    const m = self.YTDS_I18N.get(el.getAttribute("data-i18n-html"));
     if (m) el.innerHTML = m;
   });
   document.querySelectorAll("[data-i18n-title]").forEach((el) => {
-    const m = chrome.i18n.getMessage(el.getAttribute("data-i18n-title"));
+    const m = self.YTDS_I18N.get(el.getAttribute("data-i18n-title"));
     if (m) el.title = m;
   });
   document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
-    const m = chrome.i18n.getMessage(el.getAttribute("data-i18n-aria"));
+    const m = self.YTDS_I18N.get(el.getAttribute("data-i18n-aria"));
     if (m) el.setAttribute("aria-label", m);
   });
 }
@@ -356,6 +363,111 @@ async function refreshEngineStatus() {
   el.hidden = false;
 }
 
+// ---- read-aloud status line --------------------------------------------------
+// One quiet line under the engine status, only while the options-page switch is
+// on: is a line sounding right now, which voice, and how this video went —
+// skipped lines are the answer to "why did some stay silent". One snapshot per
+// popup open; the counts are a hint, not a ledger.
+async function refreshTtsStatus() {
+  const el = $("ttsStatus");
+  if (!el) return;
+  el.hidden = true;
+  if (!state.ttsEnabled) return;
+  const tab = await getActiveTab();
+  if (!tab || tab.id == null) return;
+  const r = await sendToTab(tab.id, { type: "engineStatus" });
+  if (!r || !r.ok || !r.tts) return;        // not a video page, or a stale script
+  let voice = "";
+  try {
+    const got = await chrome.storage.sync.get({ ttsProvider: "", ttsVoice: "" });
+    const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts.get(got.ttsProvider);
+    voice = (got && got.ttsVoice) || (p && p.defaultVoice) || "";
+  } catch (_e) { /* no voice shown, the line still counts */ }
+  const head = r.tts.speaking
+    ? t("ttsStatusSpeaking", "朗读中")
+    : t("ttsStatusOn", "朗读已开");
+  const counts = tsub("ttsStatusCounts",
+    [String(r.tts.spoken), String(r.tts.skipped)],
+    "本视频 " + r.tts.spoken + " 句 · 跳过 " + r.tts.skipped + " 句");
+  // Half-width parens even in CJK: the voice name is a Latin token ("nova").
+  el.textContent = head + (voice ? " (" + voice + ")" : "") + " · " + counts;
+  el.hidden = false;
+}
+
+// ---- diagnostics ------------------------------------------------------------
+// One click, one plain-text bundle: exactly the facts a "translations don't
+// show up" report needs and that no user ever types by hand (store reviews
+// prove it). Field names stay English — the reader is the developer; values
+// may be anything. Nothing here needs a new permission: version and UA are
+// local, gates come from session storage, and the page names itself through
+// the content script because the popup deliberately cannot read tab.url.
+async function buildDiagnostics() {
+  const L = [];
+  let ver = "";
+  try { ver = chrome.runtime.getManifest().version; } catch (_e) { /* ignore */ }
+  L.push("Dual Subtitles for YouTube — diagnostic");
+  L.push("version: " + (ver || "?"));
+  L.push("browser: " + navigator.userAgent);
+  let ui = "";
+  try { ui = (chrome.i18n && chrome.i18n.getUILanguage()) || ""; } catch (_e) { /* ignore */ }
+  L.push("ui-language: " + (ui || "?") +
+    (state.uiLocale && state.uiLocale !== "auto" ? " (override: " + state.uiLocale + ")" : ""));
+  L.push("target-language: " + (state.targetLang || "?"));
+  L.push("engine-setting: " + (state.engine || "?") +
+    (state.engine === "byo"
+      ? " (" + (state.byoProvider || "?") + (state.byoModel ? " / " + state.byoModel : "") + ")"
+      : ""));
+  try {
+    if (chrome.storage.session) {
+      const got = await chrome.storage.session.get(["ytdsGtxGate", "ytdsByoGate", "ytdsByoStatus"]);
+      const gate = (name, g) => {
+        if (!g || !g.backoffMs) return name + ": clear";
+        const left = Math.max(0, Math.round(((g.gateUntil || 0) - Date.now()) / 1000));
+        return name + ": backoff " + Math.round(g.backoffMs / 1000) + "s" +
+          (left ? " (" + left + "s left)" : " (expired)");
+      };
+      L.push(gate("gtx-gate", got && got.ytdsGtxGate));
+      L.push(gate("byo-gate", got && got.ytdsByoGate));
+      const st = got && got.ytdsByoStatus;
+      if (st && st.code) L.push("byo-last-error: " + st.code + " (" + (st.provider || "?") + ")");
+    }
+  } catch (_e) { L.push("gates: unavailable"); }
+  try {
+    const tab = await getActiveTab();
+    const r = tab && tab.id != null ? await sendToTab(tab.id, { type: "engineStatus" }) : null;
+    if (r && r.ok) {
+      L.push("page: " + (r.href || "youtube (id unknown)"));
+      L.push("video-engine: " + (r.engine || "none yet") +
+        (r.provider ? " (" + r.provider + ")" : "") +
+        (r.same ? ", same-language" : "") +
+        (r.track && r.track !== "none" ? ", track=" + r.track : "") +
+        (r.fellBack ? ", fell-back" : ""));
+    } else {
+      L.push("page: not a YouTube video tab");
+    }
+  } catch (_e) { L.push("page: unavailable"); }
+  L.push("time: " + new Date().toISOString());
+  return L.join("\n");
+}
+
+async function onDiagCopy() {
+  const btn = $("diagCopy");
+  try {
+    const text = await buildDiagnostics();
+    await navigator.clipboard.writeText(text);
+    if (btn) {
+      btn.classList.add("ok");
+      btn.textContent = t("diagCopied", "已复制 — 直接粘贴进邮件或 issue");
+      setTimeout(() => {
+        btn.classList.remove("ok");
+        btn.textContent = t("diagCopy", "复制诊断信息");
+      }, 2200);
+    }
+  } catch (_e) {
+    if (btn) btn.textContent = t("diagCopyFail", "复制失败 — 请改用截图");
+  }
+}
+
 // ---- BYO-key engine row ---------------------------------------------------
 // Everything configurable about an own-key engine lives on the options page
 // (options.js explains why — in short, a permission prompt can dismiss a popup
@@ -364,7 +476,7 @@ async function refreshEngineStatus() {
 const P = self.YTDS_PROVIDERS;
 
 function tsub(key, subs, fb) {
-  try { return (chrome.i18n && chrome.i18n.getMessage(key, subs)) || fb; }
+  try { return self.YTDS_I18N.get(key, subs) || fb; }
   catch (_e) { return fb; }
 }
 
@@ -693,6 +805,7 @@ function bindUI() {
 // ---- wire events ---------------------------------------------------------
 function wire() {
   $("enabled").addEventListener("change", (e) => setKey("enabled", e.target.checked));
+  $("diagCopy").addEventListener("click", onDiagCopy);
   $("updateNotes").addEventListener("change", (e) => setKey("updateNotes", e.target.checked));
   $("targetLang").addEventListener("change", (e) => {
     if (e.target.value === MANAGE) {
@@ -840,6 +953,7 @@ function wire() {
     } catch (_e) { /* ignore */ }
     bindUI();
     refreshEngineStatus();
+    refreshTtsStatus();              // reset turned read-aloud off: hide its line
   });
 }
 
@@ -858,7 +972,7 @@ const SITE_URL = "https://gythiro.github.io/yt-dual-subs/";
 
 function popupLang() {
   try {
-    const ui = (chrome.i18n && chrome.i18n.getUILanguage()) || "";
+    const ui = self.YTDS_I18N.effectiveLang();
     if (ui.toLowerCase().indexOf("zh") === 0) return "zh";
   } catch (_e) { /* ignore */ }
   return "en";
@@ -887,13 +1001,9 @@ function initWhatsNew() {
       if (!ver || got.updRowSeen === ver) return;
       const el = $("whatsNew");
       if (!el) return;
-      let lang = "en";
-      try {
-        const ui = (chrome.i18n && chrome.i18n.getUILanguage()) || "";
-        if (ui.toLowerCase().indexOf("zh") === 0) lang = "zh";
-      } catch (_e) { /* ignore */ }
+      const lang = popupLang();
       let label = "";
-      try { label = chrome.i18n.getMessage("whatsNewRow", [ver]); } catch (_e) { /* ignore */ }
+      try { label = self.YTDS_I18N.get("whatsNewRow", [ver]); } catch (_e) { /* ignore */ }
       el.textContent = label || ("See what's new in v" + ver + " →");
       el.href = SITE_URL + "updated.html?ver=" + ver + "&lang=" + lang + "&src=popup";
       el.hidden = false;
@@ -906,23 +1016,28 @@ function initWhatsNew() {
 }
 
 // ---- boot ----------------------------------------------------------------
-applyI18n();                       // localize static markup before first paint
-initFooterLinks();
-initWhatsNew();
-// get(null): fetch only what is actually stored, so normalizeEngine can tell
-// "engine never set" apart from an explicit value (see content.js).
-chrome.storage.sync.get(null, (got) => {
-  got = got || {};
-  state = { ...DEFAULTS, ...got };
-  state.engine = normalizeEngine(got);
-  // migrate legacy global bgOpacity onto per-line defaults
-  if (typeof got.bgOpacity === "number") {
-    if (typeof got.origBgOpacity !== "number") state.origBgOpacity = got.bgOpacity;
-    if (typeof got.transBgOpacity !== "number") state.transBgOpacity = got.bgOpacity;
-  }
-  showVersion();
-  bindUI();
-  wire();
-  refreshEngineStatus();
-  resumeExport();
+// The i18n override has to be known before anything paints text — one storage
+// read (and, only under an override, one fetch of a packaged file).
+self.YTDS_I18N.init().then(() => {
+  applyI18n();                     // localize static markup before first paint
+  initFooterLinks();
+  initWhatsNew();
+  // get(null): fetch only what is actually stored, so normalizeEngine can tell
+  // "engine never set" apart from an explicit value (see content.js).
+  chrome.storage.sync.get(null, (got) => {
+    got = got || {};
+    state = { ...DEFAULTS, ...got };
+    state.engine = normalizeEngine(got);
+    // migrate legacy global bgOpacity onto per-line defaults
+    if (typeof got.bgOpacity === "number") {
+      if (typeof got.origBgOpacity !== "number") state.origBgOpacity = got.bgOpacity;
+      if (typeof got.transBgOpacity !== "number") state.transBgOpacity = got.bgOpacity;
+    }
+    showVersion();
+    bindUI();
+    wire();
+    refreshEngineStatus();
+    refreshTtsStatus();
+    resumeExport();
+  });
 });

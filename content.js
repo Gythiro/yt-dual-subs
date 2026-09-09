@@ -28,6 +28,14 @@
   const DEFAULTS = {
     enabled: true,
     targetLang: "zh-CN",
+    uiLocale: "auto",          // interface language (popup/options); the four
+                               // strings this file shows follow the browser
+                               // locale — accepted, see the design spec
+    ttsEnabled: false,         // read the translation line aloud (needs a
+                               // configured read-aloud provider; off by default)
+    ttsVolume: 100,            // spoken line's own loudness, 0-100 (Audio.volume)
+    ttsDuckPct: 25,            // original audio while a line speaks, as % of the
+                               // user's own volume (inject.js ducks to this)
     engine: "auto",              // "auto" | "tlang" | "gtx" | "byo" (source of
                                  // truth since 3.4; "byo" = own key, since 3.6)
     backend: "tlang",            // legacy pre-3.4 key ("tlang" | "gtx"); kept as a
@@ -310,6 +318,19 @@
     applyStateToDom();
     if (overlay) styleOverlay();   // position/fonts/colors/bg/stroke/sizes apply live
     if ("enabled" in changes) syncCaptions();   // master switch flipped from popup
+    // Read-aloud off, or a different voice/provider: what is queued or sounding
+    // belongs to the old setting — stop it rather than letting it finish wrong.
+    if (("ttsEnabled" in changes && !settings.ttsEnabled) ||
+        "ttsProvider" in changes || "ttsVoice" in changes) {
+      ttsStop();
+    }
+    // Loudness is a live control: the options slider should be audible on the
+    // line that is speaking, not on the next one. Duck depth stays per-line —
+    // it is sent with each duck message, and restore compares what was SET.
+    if ("ttsVolume" in changes && ttsAudio) {
+      try { ttsAudio.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100)); }
+      catch (_e) { /* ignore */ }
+    }
     // Same-language/dedupe paints depend on WHICH line is visible (the single
     // line migrates to whichever is shown) — re-render the active cue, and
     // re-process the scraped caption, under the new setting instead of leaving
@@ -972,6 +993,116 @@
     activeCueIdx = -1;
   }
 
+  // ---- read-aloud playback --------------------------------------------------
+  // Speaks the translation line the overlay is showing, one sentence at a time.
+  // The rules are the honest ones from the design round, in code order below:
+  // a line whose translation is not ready WHEN ITS CUE STARTS is skipped, never
+  // caught up on (a late voice is a wrong voice); leaving the video drops
+  // everything; the player's own audio is ducked through inject.js while a
+  // line is speaking, and politely restored. The worker does the synthesis and
+  // the byte cache — this side only decides WHEN, and holds one Audio at a time.
+  let ttsEpoch = 0;             // bumped on stop: any in-flight reply is stale
+  let ttsAudio = null;
+  let ttsBlobUrl = "";
+  let ttsSpokenIdx = -1;        // last cue index we started speaking
+  let ttsSpoken = 0;            // lines spoken on THIS video (popup status)
+  let ttsSkipped = 0;           // lines skipped on this video — a line whose
+                                // translation wasn't ready, or whose synthesis
+                                // failed; nav resets both
+
+  function ttsStop(navigated) {
+    ttsEpoch++;
+    ttsSpokenIdx = -1;
+    if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } ttsAudio = null; }
+    if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } ttsBlobUrl = ""; }
+    try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: false, nav: !!navigated }, "*"); }
+    catch (_e) { /* ignore */ }
+  }
+
+  // Duck rides ONE message with everything inject.js needs: the duck depth
+  // (a setting, sent along because inject has no chrome.*) and, when a line
+  // cannot fit even at 1.4× speech, `fit` — the absolute video rate at which
+  // it just would. Volume and rate then restore at the same three points:
+  // line end, next line's takeover, ttsStop.
+  function ttsDuck(on, fit) {
+    try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: !!on,
+      pct: settings.ttsDuckPct, fit: fit }, "*"); }
+    catch (_e) { /* ignore */ }
+  }
+
+  // What the user is reading right now — the only text worth speaking. "…" is
+  // the in-flight placeholder, and same-language videos have nothing to speak.
+  // null = nothing to speak, ever (not a skip); "" = not ready (a skip).
+  function ttsSpeakableText() {
+    if (cueSameLang || !transEl) return null;
+    const text = (transEl.textContent || "").trim();
+    return text === "…" ? "" : text;
+  }
+
+  function ttsOnCue(idx, cue) {
+    if (!settings.ttsEnabled || orphaned) return;
+    if (idx === ttsSpokenIdx) return;
+    const text = ttsSpeakableText();
+    if (text == null) return;
+    if (!text) { ttsSkipped++; return; }     // not ready at cue start: skip, never catch up
+    ttsSpokenIdx = idx;
+    const myEpoch = ttsEpoch;
+    extCall(() => chrome.runtime.sendMessage(
+      { type: "ttsSpeak", text, targetLang: settings.targetLang }, (resp) => {
+      if (chrome.runtime.lastError) return;
+      if (myEpoch !== ttsEpoch || idx !== activeCueIdx) return;   // stale by now
+      if (!resp || !resp.ok || !resp.b64) { ttsSkipped++; return; } // quiet skip; options page diagnoses
+      try {
+        const bin = atob(resp.b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } }
+        if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } }
+        ttsBlobUrl = URL.createObjectURL(new Blob([bytes], { type: resp.mime || "audio/mpeg" }));
+        const audio = new Audio(ttsBlobUrl);
+        audio.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
+        ttsAudio = audio;
+        audio.addEventListener("loadedmetadata", () => {
+          if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
+          // Fit the line into its cue: mild speech speed-up first — anything
+          // past 1.4× turns into chipmunk. When even 1.4× cannot fit, share
+          // the burden with the video for this one line: pass the absolute
+          // rate at which 1.4× speech just fits, and inject.js slows toward
+          // it (never below 76% of the user's own rate — the proven clamp).
+          // Still not enough? The line runs long and the next line's start
+          // wins (pause above). The blob is local, so metadata fires before
+          // play() has audio to start: duck sits here to ride one message.
+          const durMs = (audio.duration || 0) * 1000;
+          const cueMs = Math.max(300, (cue && cue.dur) || 0);
+          const v = getVideo();
+          const vRate = (v && v.playbackRate) || 1;   // wall-clock cue length is cueMs/vRate
+          const needRate = (durMs * vRate) / cueMs;   // speech rate that would just fit
+          let fit;
+          if (needRate > 1) {
+            audio.playbackRate = Math.min(1.4, needRate);
+            if (needRate > 1.4) fit = (1.4 * cueMs) / durMs;
+          }
+          ttsDuck(true, fit);
+        });
+        audio.addEventListener("ended", () => {
+          if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
+          ttsDuck(false);
+        });
+        ttsSpoken++;
+        audio.play().catch(() => { if (myEpoch === ttsEpoch) ttsDuck(false); });
+        // Warm the worker's cache for the next line so its start is not spent
+        // on the network. Fire-and-forget: the bytes are not kept here.
+        const next = cueList && cueList[idx + 1];
+        if (next && next.trans) {
+          extCall(() => chrome.runtime.sendMessage(
+            { type: "ttsSpeak", text: next.trans, targetLang: settings.targetLang }, () => {
+              if (chrome.runtime.lastError) return;
+            }));
+        }
+      } catch (_e) { ttsDuck(false); }
+    }));
+  }
+
   function cueTick() {
     if (!settings.enabled || !cueList) return;
     const video = getVideo();
@@ -999,6 +1130,7 @@
     setOriginal(cue.text);
     renderTranslationForCue(idx, cue);
     prefetchFrom(idx);                    // warm upcoming translations (gtx mode)
+    ttsOnCue(idx, cue);                   // speak what just rendered, if enabled
   }
 
   // What the translation line shows when there is nothing to translate:
@@ -1534,7 +1666,21 @@
         provider: settings.engine === "byo" ? settings.byoProvider : "",
         same: !!(cueList && cueList.length && cueSameLang),
         track: cueTrackKind || "none",
-        fellBack: gtxFellBack
+        fellBack: gtxFellBack,
+        // Read-aloud, for the popup's status line: is a line sounding right
+        // now, and how this video went so far (skips answer "why the gaps").
+        tts: settings.ttsEnabled ? {
+          speaking: !!(ttsAudio && !ttsAudio.paused && !ttsAudio.ended),
+          spoken: ttsSpoken,
+          skipped: ttsSkipped
+        } : null,
+        // For the popup's diagnostic bundle. The popup cannot read tab.url
+        // (no tabs/host permission — a deliberate non-permission, see the SRT
+        // export notes), so the page names itself. Query params beyond v are
+        // dropped: the video id is the diagnosis, playlists are not.
+        href: location.origin + location.pathname +
+          (new URLSearchParams(location.search).get("v")
+            ? "?v=" + new URLSearchParams(location.search).get("v") : "")
       });
       return;                                               // sync reply
     }
@@ -2059,6 +2205,7 @@
     nocuesFallback = false;
     transInflight.clear();
     cueEpoch++;                       // invalidate any in-flight gtx callbacks
+    ttsStop();                        // a spoken line belongs to the video it came from
   }
 
   function applyStateToDom() {
@@ -2086,6 +2233,9 @@
     currentVideoId = videoIdFromLocation();
     hintedThisVideo = false;    // a new video may spend one more first-run hint
     blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery
+    ttsStop(true);              // never carry a speaking line across videos
+    ttsSpoken = 0;              // the popup's counts describe THIS video
+    ttsSkipped = 0;
     rearmedForVideo = false;    // and one CC re-arm allowance
     armBlankWatch();            // re-arm the still-blank watchdog for this video
     transCache.clear();

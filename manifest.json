@@ -22,7 +22,9 @@
     "https://api.siliconflow.cn/*",
     "https://openrouter.ai/*",
     "https://api-free.deepl.com/*",
-    "https://api.deepl.com/*"
+    "https://api.deepl.com/*",
+    "https://texttospeech.googleapis.com/*",
+    "https://*.tts.speech.microsoft.com/*"
   ],
   "background": {
     "service_worker": "background.js"

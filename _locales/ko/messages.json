@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "YouTube용 이중 자막 — 원문과 번역을 겹치지 않는 하나의 레이어에 표시합니다."
+  },
+  "headerSub": {
+    "message": "YouTube™용 · 이중 자막, 단일 레이어"
+  },
+  "disclaimer": {
+    "message": "YouTube 또는 Google과 제휴하지 않습니다."
+  },
+  "enableTitle": {
+    "message": "켜기 / 끄기"
+  },
+  "openOptions": {
+    "message": "설정"
+  },
+  "enableAria": {
+    "message": "확장 프로그램 켜기"
+  },
+  "previewTag": {
+    "message": "미리보기"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "날쌘 갈색 여우"
+  },
+  "sampleTransComma": {
+    "message": "갈색 여우가 뛰고,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "실시간 미리보기"
+  },
+  "secTranslation": {
+    "message": "번역"
+  },
+  "targetLang": {
+    "message": "대상 언어"
+  },
+  "backendLabel": {
+    "message": "엔진"
+  },
+  "backendInfo": {
+    "message": "엔진 정보"
+  },
+  "backendAuto": {
+    "message": "자동 (권장)"
+  },
+  "backendTlang": {
+    "message": "전체 트랙 (YouTube)"
+  },
+  "backendGtx": {
+    "message": "스마트 문장 (Google)"
+  },
+  "backendByo": {
+    "message": "내 키 사용 (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>자동</b>: 동영상에서 지원하면 YouTube 전체 트랙 번역을 사용하고, 그렇지 않으면 스마트 문장으로 전환합니다.<br><b>전체 트랙</b>: YouTube 자체 번역이며, 자막 큐마다 맞춰 표시합니다. 많이 쓰면 YouTube가 잠시 속도 제한을 걸 수 있으며 — 확장 프로그램이 기다렸다가 다시 요청합니다.<br><b>스마트 문장</b>: 조각난 자막을 완전한 문장으로 모은 뒤 Google 무료 엔드포인트로 번역합니다 — 지저분한 자막에서는 전체 트랙보다 표현이 자연스럽지만, 많이 쓰면 여기도 속도 제한이 걸릴 수 있으며 확장 프로그램이 속도를 낮추고 재시도합니다.<br><b>내 키</b>: 완성한 문장을 설정한 제공업체로 보냅니다."
+  },
+  "backendGtxHint": {
+    "message": "Google 무료 엔드포인트를 사용합니다 — 많이 쓰면 잠시 속도 제한이 걸릴 수 있으며, 확장 프로그램이 스스로 속도를 조절하고 자동으로 재시도합니다."
+  },
+  "backendStatusTlang": {
+    "message": "이 동영상: 전체 트랙 번역 (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "이 동영상: 스마트 문장 (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "번역 엔드포인트에서 속도 제한 중 — 속도를 낮추고 자동으로 재시도합니다. 이미 번역된 줄은 계속 표시됩니다."
+  },
+  "backendStatusSame": {
+    "message": "이 동영상의 자막이 이미 대상 언어입니다 — 번역할 내용이 없습니다."
+  },
+  "secLayout": {
+    "message": "레이아웃"
+  },
+  "orderLabel": {
+    "message": "순서"
+  },
+  "orderTransTop": {
+    "message": "번역 위"
+  },
+  "orderOrigTop": {
+    "message": "원문 위"
+  },
+  "positionLabel": {
+    "message": "위치"
+  },
+  "posTop": {
+    "message": "상단"
+  },
+  "posCenter": {
+    "message": "중앙"
+  },
+  "posBottom": {
+    "message": "하단"
+  },
+  "posHint": {
+    "message": "동영상에서 자막 상자를 드래그할 수도 있습니다"
+  },
+  "posTryDrag": {
+    "message": "해보기"
+  },
+  "posTryNoVideo": {
+    "message": "먼저 YouTube 동영상을 여세요"
+  },
+  "resetPos": {
+    "message": "위치 초기화"
+  },
+  "rowGap": {
+    "message": "줄 간격"
+  },
+  "tabTrans": {
+    "message": "번역"
+  },
+  "tabOrig": {
+    "message": "원문"
+  },
+  "lineTabsAria": {
+    "message": "자막 줄"
+  },
+  "lineShow": {
+    "message": "이 줄 표시"
+  },
+  "fontLabel": {
+    "message": "글꼴"
+  },
+  "fontSystem": {
+    "message": "시스템 기본"
+  },
+  "fontMono": {
+    "message": "고정폭"
+  },
+  "fontCjk": {
+    "message": "CJK 친화"
+  },
+  "sizeLabel": {
+    "message": "글자 크기"
+  },
+  "colText": {
+    "message": "글자"
+  },
+  "colBg": {
+    "message": "배경"
+  },
+  "colStroke": {
+    "message": "외곽선"
+  },
+  "colTextAria": {
+    "message": "글자 색"
+  },
+  "colBgAria": {
+    "message": "배경 색"
+  },
+  "colStrokeAria": {
+    "message": "외곽선 색"
+  },
+  "bgOpacity": {
+    "message": "배경 불투명도"
+  },
+  "strokeOpacity": {
+    "message": "외곽선 불투명도"
+  },
+  "resetAll": {
+    "message": "모든 설정 초기화"
+  },
+  "toggleTurnOff": {
+    "message": "이중 자막 끄기"
+  },
+  "toggleTurnOn": {
+    "message": "이중 자막 켜기"
+  },
+  "handleTitle": {
+    "message": "드래그하여 이동 · 더블클릭으로 초기화"
+  },
+  "handleAria": {
+    "message": "자막을 드래그하여 이동, 더블클릭으로 초기화"
+  },
+  "secExport": {
+    "message": "내보내기"
+  },
+  "exportContent": {
+    "message": "내용"
+  },
+  "exportBi": {
+    "message": "이중"
+  },
+  "exportOrig": {
+    "message": "원문"
+  },
+  "exportTrans": {
+    "message": "번역"
+  },
+  "exportSrt": {
+    "message": "SRT 다운로드"
+  },
+  "exportWorking": {
+    "message": "생성 중…"
+  },
+  "exportDone": {
+    "message": "자막을 다운로드했습니다"
+  },
+  "exportNoTrans": {
+    "message": "이 동영상에는 번역이 없습니다 — 전체 트랙 엔진이나 다른 대상 언어를 사용해 보세요."
+  },
+  "exportLimited": {
+    "message": "YouTube가 지금 전체 트랙 번역에 속도 제한을 걸고 있습니다 — 잠시 후 다시 시도하거나 “내 키 사용”을 선택하세요."
+  },
+  "exportNoCues": {
+    "message": "다운로드할 자막이 없습니다 — 몇 초 재생해 자막이 불러와지게 한 뒤 다시 시도하세요."
+  },
+  "exportNotYoutube": {
+    "message": "내보내려면 YouTube 동영상 페이지를 여세요."
+  },
+  "exportFailed": {
+    "message": "내보내기에 실패했습니다 — 페이지를 새로고침한 뒤 다시 시도하세요."
+  },
+  "updateNotesLabel": {
+    "message": "업데이트 후 릴리스 노트 열기"
+  },
+  "trackWarnDubOnly": {
+    "message": "참고: 이 동영상은 AI 더빙 자동 자막만 있고(원어 트랙 없음) 이중 자막이 음성과 맞지 않을 수 있습니다."
+  },
+  "whatsNewRow": {
+    "message": "v$VER$의 새로운 기능 보기 →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "이 동영상: 내 키 ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "제공업체"
+  },
+  "byoBaseLabel": {
+    "message": "API 기본 URL (https)"
+  },
+  "byoModelLabel": {
+    "message": "모델"
+  },
+  "byoModelRequired": {
+    "message": "필수: 모델 이름"
+  },
+  "byoKeyLabel": {
+    "message": "API 키"
+  },
+  "byoKeyClear": {
+    "message": "지우기"
+  },
+  "byoKeyCleared": {
+    "message": "이 기기에 저장된 키가 삭제되었습니다."
+  },
+  "byoKeySaved": {
+    "message": "저장됨 ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "사용자 지정 (OpenAI 호환)"
+  },
+  "byoTest": {
+    "message": "저장 후 테스트"
+  },
+  "byoTesting": {
+    "message": "테스트 중…"
+  },
+  "byoTestOk": {
+    "message": "연결됨. 샘플: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "키 받기"
+  },
+  "byoGuide": {
+    "message": "설정 도움이 필요하신가요?"
+  },
+  "byoLocalHint": {
+    "message": "키는 이 브라우저, 이 기기에만 저장되며 업로드되지 않습니다. 자막 텍스트는 선택한 제공업체로만 전송됩니다."
+  },
+  "byoErrNoProvider": {
+    "message": "먼저 제공업체를 선택하세요."
+  },
+  "byoErrNoKey": {
+    "message": "먼저 API 키를 입력하세요 — 아래 링크에서 제공업체의 키 페이지가 열립니다."
+  },
+  "byoErrNoModel": {
+    "message": "이 제공업체는 모델 이름을 직접 입력해야 합니다."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API 기본 URL은 전체 https:// 주소여야 합니다."
+  },
+  "byoErrNoPerm": {
+    "message": "해당 API 호스트에 접근할 권한이 없으면 확장 프로그램이 연결할 수 없습니다."
+  },
+  "byoErrAuth": {
+    "message": "키가 거부되었습니다(401/403) — 전체가 복사되었고 활성 상태인지 확인하세요."
+  },
+  "byoErrLimited": {
+    "message": "제공업체가 요청을 제한하고 있습니다 — 속도를 낮춰 자동으로 다시 시도합니다."
+  },
+  "byoErrQuota": {
+    "message": "이 키의 현재 기간 할당량이 소진되었습니다."
+  },
+  "byoErrBadRequest": {
+    "message": "엔드포인트가 요청을 거부했습니다 — 모델 이름이나 기본 URL이 잘못되었을 수 있습니다."
+  },
+  "byoErrBadShape": {
+    "message": "모델이 요청한 대로 줄마다 답하지 않았고, 더 작게 나눠 재시도해도 실패했습니다 — 다른 모델을 사용해 보세요."
+  },
+  "byoErrReasoning": {
+    "message": "해당 모델이 사고 과정만 반환하고 번역은 하지 않았습니다 — 추론형이 아닌 모델을 선택하세요."
+  },
+  "byoErrNetfail": {
+    "message": "해당 엔드포인트에 연결할 수 없습니다(네트워크 또는 지역 제한)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "이 제공업체에 선택한 언어의 대상이 없습니다 — 언어나 엔진을 변경하세요."
+  },
+  "byoErrFailed": {
+    "message": "연결에 실패했습니다. 잠시 후 다시 시도하세요."
+  },
+  "optTitle": {
+    "message": "번역 서비스 설정"
+  },
+  "optIntro": {
+    "message": "제공업체를 선택하고 본인의 API 키를 붙여넣으세요. 키는 이 기기에만 저장되며, 자막 텍스트는 선택한 제공업체로만 전송됩니다."
+  },
+  "optPricingLink": {
+    "message": "요금 및 무료 한도"
+  },
+  "optFetchModels": {
+    "message": "키로 모델 목록 불러오기"
+  },
+  "optFetching": {
+    "message": "불러오는 중…"
+  },
+  "optModelsFetched": {
+    "message": "모델 $N$개 찾음",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "모델 목록을 불러올 수 없습니다 — 모델 이름을 직접 입력하세요."
+  },
+  "optModelCustom": {
+    "message": "사용자 지정…"
+  },
+  "optNoModelsYet": {
+    "message": "아직 모델 목록이 없습니다 — 키로 불러오거나 이름을 직접 입력하세요."
+  },
+  "optShowKey": {
+    "message": "표시"
+  },
+  "optRecommended": {
+    "message": "추천"
+  },
+  "optConfigured": {
+    "message": "설정됨"
+  },
+  "optInUse": {
+    "message": "사용 중"
+  },
+  "optAfterSetup": {
+    "message": "여기 설정이 끝나면 확장 프로그램 팝업을 열고 엔진을 \"내 키\"로 설정하세요."
+  },
+  "optTrademark": {
+    "message": "모든 제공업체 이름과 로고는 각 소유자의 상표입니다. 이 확장 프로그램은 이들과 제휴·보증·후원 관계가 없으며, 표시는 선택한 API를 식별하기 위한 것입니다."
+  },
+  "optSections": {
+    "message": "섹션"
+  },
+  "optNavSetup": {
+    "message": "번역 서비스"
+  },
+  "optNavStart": {
+    "message": "시작하기"
+  },
+  "optNavAbout": {
+    "message": "정보"
+  },
+  "startIntro": {
+    "message": "세 가지입니다. 별도 설정 없이 바로 쓸 수 있습니다."
+  },
+  "startS1Title": {
+    "message": "동영상만 열면 됩니다"
+  },
+  "startS1Body": {
+    "message": "자막이 있는 YouTube 동영상이면 두 줄이 알아서 나타납니다."
+  },
+  "startS2Title": {
+    "message": "원하는 곳으로 옮기세요"
+  },
+  "startS2Body": {
+    "message": "자막 상자 왼쪽 위의 손잡이를 잡고 원하는 곳으로 드래그하세요. 손잡이를 더블클릭하면 원래 위치로 돌아갑니다."
+  },
+  "startS2Alt": {
+    "message": "플레이어 도식: 자막 상자 왼쪽 위 모서리의 여섯 점 손잡이를 다른 위치로 드래그하는 모습"
+  },
+  "startS3Title": {
+    "message": "더 나은 번역이 필요하다면"
+  },
+  "startS3Body": {
+    "message": "직접 API 키를 추가하세요: 문장 단위 번역과 동영상 전체 SRT 내보내기가 가능합니다."
+  },
+  "startGoSetup": {
+    "message": "번역 서비스 설정하기"
+  },
+  "aboutIntro": {
+    "message": "이 확장 프로그램이 무엇이고, 텍스트가 어디로 가는지."
+  },
+  "aboutVersion": {
+    "message": "버전"
+  },
+  "aboutBlurb": {
+    "message": "YouTube용 두 번째 자막 줄: 한 줄에는 원문, 다른 줄에는 번역. 글꼴, 색, 위치는 직접 정할 수 있습니다. 오픈 소스, 무료, 광고 없음."
+  },
+  "aboutPrivacy": {
+    "message": "서버가 없고 통계도 수집하지 않습니다. 자막 텍스트는 선택한 번역 서비스로만 전송되며, 직접 키를 쓰면 키는 이 컴퓨터에만 저장됩니다."
+  },
+  "aboutChangelog": {
+    "message": "변경 사항"
+  },
+  "aboutRoadmap": {
+    "message": "로드맵"
+  },
+  "optFeedbackLink": {
+    "message": "문제 신고"
+  },
+  "popupByoConfigure": {
+    "message": "설정…"
+  },
+  "popupByoNotSet": {
+    "message": "미설정"
+  },
+  "popupByoPick": {
+    "message": "번역 제공업체"
+  },
+  "popupByoUntested": {
+    "message": "미테스트"
+  },
+  "exportUsesYouTube": {
+    "message": "다운로드는 YouTube 자체 전체 트랙 번역을 사용합니다 — 무료이며 API 키를 소모하지 않습니다."
+  },
+  "exportUseByo": {
+    "message": "내 키로 번역 (더 정확, 할당량 소모)"
+  },
+  "exportByoNote": {
+    "message": "전체 트랙이 선택한 제공업체와 내 키로 번역됩니다. 전송 전에 예상치를 보여 드립니다."
+  },
+  "exportConfirm": {
+    "message": "$NAME$로 자막 $N$줄을 번역합니다 — 내 할당량에서 약 $REQ$회 요청. 전체 트랙이 해당 제공업체로 전송되며, 재생 중에는 실제로 시청한 부분만 전송됩니다.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "번역 후 다운로드"
+  },
+  "exportConfirmBack": {
+    "message": "취소"
+  },
+  "exportStop": {
+    "message": "중지"
+  },
+  "exportStopping": {
+    "message": "중지 중…"
+  },
+  "exportProgress": {
+    "message": "번역 중… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "구간 $N$개가 YouTube 번역으로 대체됨",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "다운로드가 취소되었습니다."
+  },
+  "ftSite": {
+    "message": "웹사이트"
+  },
+  "ftSiteLabel": {
+    "message": "사이트"
+  },
+  "ftFeedbackLabel": {
+    "message": "피드백"
+  },
+  "ftReviewLabel": {
+    "message": "평가"
+  },
+  "ftGithub": {
+    "message": "GitHub에서 소스 코드 보기"
+  },
+  "ftFeedback": {
+    "message": "피드백 보내기 또는 버그 신고"
+  },
+  "ftReview": {
+    "message": "Chrome 웹 스토어에서 평가하기"
+  },
+  "optNeedKey": {
+    "message": "아직 키가 없습니다 — 키를 추가해야 이 제공업체를 사용할 수 있습니다."
+  },
+  "optBaseHint": {
+    "message": "기본 URL과 전체 엔드포인트 모두 가능합니다. 예: https://example.com/v1 또는 https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "플레이어 도식: 화면 하단 근처에 원문 줄과 번역 줄이 있습니다"
+  },
+  "startS3Alt": {
+    "message": "비교: 무료 엔진은 한 문장을 잘라 번역하고, 내 키는 전체를 이해한 뒤 다시 나눕니다"
+  },
+  "startPicFree": {
+    "message": "무료 엔진"
+  },
+  "startPicFreeNote": {
+    "message": "한 문장을 잘라서"
+  },
+  "startPicByo": {
+    "message": "내 키"
+  },
+  "startPicByoNote": {
+    "message": "전체를 이해한 뒤 다시 나눔"
+  },
+  "startNoSubsQ": {
+    "message": "자막이 안 보이나요?"
+  },
+  "startNoSubs": {
+    "message": "플레이어 오른쪽 아래의 CC 버튼을 누르거나 다른 동영상을 시도해 보세요 — 라이브 스트림과 뮤직비디오에는 자막이 없는 경우가 많습니다."
+  },
+  "langManage": {
+    "message": "언어 관리…"
+  },
+  "optNavLangs": {
+    "message": "자막 언어"
+  },
+  "langsIntro": {
+    "message": "팝업에서 번역할 대상 언어로 제공하는 언어입니다."
+  },
+  "langsKept": {
+    "message": "팝업에 표시"
+  },
+  "langsKeptHint": {
+    "message": "팝업의 대상 언어 메뉴에 표시됩니다. 하나 이상은 남겨 두세요."
+  },
+  "langsMore": {
+    "message": "기타 언어"
+  },
+  "langsMoreHint": {
+    "message": "+를 눌러 추가하세요. 목록의 모든 언어는 무료 엔진과 DeepL에서 사용할 수 있습니다."
+  },
+  "langsReset": {
+    "message": "기본값 복원"
+  },
+  "langsResetDone": {
+    "message": "기본 목록으로 되돌렸습니다."
+  },
+  "langsAddAria": {
+    "message": "추가"
+  },
+  "langsRemoveAria": {
+    "message": "제거"
+  },
+  "langsLastOne": {
+    "message": "하나 이상은 남겨 두세요"
+  },
+  "langsAllAdded": {
+    "message": "모든 언어가 이미 목록에 있습니다."
+  },
+  "langsAdded": {
+    "message": "$NAME$ 추가됨",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "사용 중이던 언어라서 대상이 이제 $NAME$입니다",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "중국어 명조"
+  },
+  "fontCjkRound": {
+    "message": "중국어 둥근체"
+  },
+  "uiLocaleLabel": {
+    "message": "인터페이스 언어"
+  },
+  "uiLocaleAuto": {
+    "message": "자동 — 브라우저 따름"
+  },
+  "uiLocaleHint": {
+    "message": "이 확장 프로그램 자체의 화면 언어만 바꿉니다. 자막을 번역할 언어는 팝업과 “자막 언어”에서 선택하세요 — 여기가 아닙니다."
+  },
+  "startTargetLabel": {
+    "message": "번역 언어"
+  },
+  "startTargetHint": {
+    "message": "설치 시 브라우저 언어 설정에서 추측했습니다. 틀렸다면 여기서 바꾸세요. 팝업에서도 언제든지 변경할 수 있습니다."
+  },
+  "diagCopy": {
+    "message": "진단 정보 복사"
+  },
+  "diagCopied": {
+    "message": "복사됨 — 이메일이나 이슈에 붙여넣으세요"
+  },
+  "diagCopyFail": {
+    "message": "복사 실패 — 대신 스크린샷을 찍으세요"
+  },
+  "optNavReadaloud": {
+    "message": "읽어주기"
+  },
+  "ttsIntro": {
+    "message": "자신의 키로 번역된 문장을 소리 내어 읽습니다. 제공자를 설정하고 여기서 테스트하세요."
+  },
+  "ttsVoiceLabel": {
+    "message": "음성"
+  },
+  "ttsTestOk": {
+    "message": "연결됨: 테스트 오디오 $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "읽어주기는 자신의 키를 사용합니다. 읽을 텍스트는 선택한 제공자에게만 전송되며, 키는 이 기기에 남습니다."
+  },
+  "ttsEnableLabel": {
+    "message": "영상에서 번역을 읽어 주기"
+  },
+  "ttsVolLabel": {
+    "message": "읽어주기 음량"
+  },
+  "ttsDuckLabel": {
+    "message": "말할 때 원본 오디오"
+  },
+  "ttsStatusSpeaking": {
+    "message": "말하는 중"
+  },
+  "ttsStatusOn": {
+    "message": "읽어주기 켜짐"
+  },
+  "ttsStatusCounts": {
+    "message": "이 동영상 $N$줄 · $M$줄 건너뜀",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "켜면 자막 번역이 나올 때마다 읽어 줍니다. 번역이 제때 준비되지 않은 줄은 건너뛰며 나중에 따라잡지 않습니다. 읽는 동안 영상 음량은 낮아지고, 너무 긴 줄은 영상을 살짝 느리게 합니다."
+  },
+  "ttsRegionLabel": {
+    "message": "서비스 지역"
+  },
+  "ttsErrNoRegion": {
+    "message": "Azure 키의 서비스 지역을 먼저 입력하세요 (예: eastus)."
+  }
+}

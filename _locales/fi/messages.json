@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Kaksikieliset tekstitykset YouTubelle — alkuperäinen ja käännös samassa kerroksessa ilman päällekkäisyyttä."
+  },
+  "headerSub": {
+    "message": "YouTubelle™ · Kaksikielinen, yksi kerros"
+  },
+  "disclaimer": {
+    "message": "Ei sidoksissa YouTubeen tai Googleen."
+  },
+  "enableTitle": {
+    "message": "Ota käyttöön / poista käytöstä"
+  },
+  "openOptions": {
+    "message": "Asetukset"
+  },
+  "enableAria": {
+    "message": "Ota laajennus käyttöön"
+  },
+  "previewTag": {
+    "message": "Esikatselu"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Nopea ruskea kettu"
+  },
+  "sampleTransComma": {
+    "message": "Ruskea kettu hyppää,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Reaaliaikainen esikatselu"
+  },
+  "secTranslation": {
+    "message": "Käännös"
+  },
+  "targetLang": {
+    "message": "Kohdekieli"
+  },
+  "backendLabel": {
+    "message": "Moottori"
+  },
+  "backendInfo": {
+    "message": "Moottorin tiedot"
+  },
+  "backendAuto": {
+    "message": "Automaattinen (suositus)"
+  },
+  "backendTlang": {
+    "message": "Koko raita (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Älykkäät lauseet (Google)"
+  },
+  "backendByo": {
+    "message": "Oma avain (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Automaattinen</b>: käyttää YouTuben koko raidan käännöstä, kun video tukee sitä, ja vaihtaa älykkäisiin lauseisiin, kun ei tue.<br><b>Koko raita</b>: YouTuben oma käännös; kohdistettu ruutu ruudulta. Runsas käyttö voi saada YouTuben rajoittamaan sitä hetkellisesti — laajennus odottaa ja pyytää uudelleen.<br><b>Älykkäät lauseet</b>: kokoaa pirstaleiset tekstitykset kokonaisiksi lauseiksi ja kääntää ne Googlen ilmaisen rajapinnan kautta — selkeämpi kieli kuin koko raidalla sekavilla raidoilla, mutta runsas käyttö voi aiheuttaa käyttörajoituksen sielläkin; laajennus hidastaa ja yrittää uudelleen.<br><b>Oma avain</b>: lähettää kootun lauseen määrittämällesi tarjoajalle."
+  },
+  "backendGtxHint": {
+    "message": "Käyttää Googlen ilmaista rajapintaa — runsas käyttö voi aiheuttaa lyhyen käyttörajoituksen; laajennus säätelee tahtiaan ja yrittää automaattisesti uudelleen."
+  },
+  "backendStatusTlang": {
+    "message": "Tämä video: koko raidan käännös (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Tämä video: älykkäät lauseet (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Käännösrajapinta on asettanut käyttörajoituksen — hidastetaan ja yritetään automaattisesti uudelleen. Jo käännetyt rivit toimivat edelleen."
+  },
+  "backendStatusSame": {
+    "message": "Tämän videon tekstitykset ovat jo kohdekielelläsi — ei käännettävää."
+  },
+  "secLayout": {
+    "message": "Asettelu"
+  },
+  "orderLabel": {
+    "message": "Järjestys"
+  },
+  "orderTransTop": {
+    "message": "Käännös ylhäällä"
+  },
+  "orderOrigTop": {
+    "message": "Alkuperäinen ylhäällä"
+  },
+  "positionLabel": {
+    "message": "Sijainti"
+  },
+  "posTop": {
+    "message": "Ylhäällä"
+  },
+  "posCenter": {
+    "message": "Keskellä"
+  },
+  "posBottom": {
+    "message": "Alhaalla"
+  },
+  "posHint": {
+    "message": "Voit myös vetää tekstityslaatikkoa videolla"
+  },
+  "posTryDrag": {
+    "message": "kokeile"
+  },
+  "posTryNoVideo": {
+    "message": "Avaa ensin YouTube-video"
+  },
+  "resetPos": {
+    "message": "Nollaa sijainti"
+  },
+  "rowGap": {
+    "message": "Riviväli"
+  },
+  "tabTrans": {
+    "message": "Käännös"
+  },
+  "tabOrig": {
+    "message": "Alkuperäinen"
+  },
+  "lineTabsAria": {
+    "message": "Tekstitysrivi"
+  },
+  "lineShow": {
+    "message": "Näytä tämä rivi"
+  },
+  "fontLabel": {
+    "message": "Fontti"
+  },
+  "fontSystem": {
+    "message": "Järjestelmän oletus"
+  },
+  "fontMono": {
+    "message": "Tasalevyinen"
+  },
+  "fontCjk": {
+    "message": "CJK-ystävällinen"
+  },
+  "sizeLabel": {
+    "message": "Fonttikoko"
+  },
+  "colText": {
+    "message": "Teksti"
+  },
+  "colBg": {
+    "message": "Tausta"
+  },
+  "colStroke": {
+    "message": "Ääriviiva"
+  },
+  "colTextAria": {
+    "message": "Tekstin väri"
+  },
+  "colBgAria": {
+    "message": "Taustan väri"
+  },
+  "colStrokeAria": {
+    "message": "Ääriviivan väri"
+  },
+  "bgOpacity": {
+    "message": "Taustan peittävyys"
+  },
+  "strokeOpacity": {
+    "message": "Ääriviivan peittävyys"
+  },
+  "resetAll": {
+    "message": "Nollaa kaikki asetukset"
+  },
+  "toggleTurnOff": {
+    "message": "Poista kaksikieliset tekstitykset"
+  },
+  "toggleTurnOn": {
+    "message": "Ota kaksikieliset tekstitykset käyttöön"
+  },
+  "handleTitle": {
+    "message": "Vedä siirtääksesi · kaksoisnapsauta nollataksesi"
+  },
+  "handleAria": {
+    "message": "Vedä tekstityksiä siirtääksesi, kaksoisnapsauta nollataksesi"
+  },
+  "secExport": {
+    "message": "Vie"
+  },
+  "exportContent": {
+    "message": "Sisältö"
+  },
+  "exportBi": {
+    "message": "Kaksikielinen"
+  },
+  "exportOrig": {
+    "message": "Alkuperäinen"
+  },
+  "exportTrans": {
+    "message": "Käännös"
+  },
+  "exportSrt": {
+    "message": "Lataa SRT"
+  },
+  "exportWorking": {
+    "message": "Luodaan…"
+  },
+  "exportDone": {
+    "message": "Tekstitykset ladattu"
+  },
+  "exportNoTrans": {
+    "message": "Tälle videolle ei ole käännöstä — kokeile koko raidan moottoria tai toista kohdekieltä."
+  },
+  "exportLimited": {
+    "message": "YouTube rajoittaa koko raidan käännöstä juuri nyt — yritä minuutin kuluttua uudelleen tai valitse ”Käännä omalla avaimella”."
+  },
+  "exportNoCues": {
+    "message": "Ei ladattavia tekstityksiä — toista muutama sekunti, jotta tekstitykset latautuvat, ja yritä sitten uudelleen."
+  },
+  "exportNotYoutube": {
+    "message": "Avaa YouTube-videon sivu viedäksesi."
+  },
+  "exportFailed": {
+    "message": "Vienti epäonnistui — päivitä sivu ja yritä uudelleen."
+  },
+  "updateNotesLabel": {
+    "message": "Avaa julkaisutiedot päivitysten jälkeen"
+  },
+  "trackWarnDubOnly": {
+    "message": "Huomio: tällä videolla on vain tekoälydubatut automaattiset tekstitykset (ei alkuperäiskielistä raitaa), joten kaksikieliset tekstitykset eivät välttämättä vastaa ääntä."
+  },
+  "whatsNewRow": {
+    "message": "Katso, mitä uutta v$VER$:ssä →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Tämä video: oma avain ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Tarjoaja"
+  },
+  "byoBaseLabel": {
+    "message": "API-perus-URL (https)"
+  },
+  "byoModelLabel": {
+    "message": "Malli"
+  },
+  "byoModelRequired": {
+    "message": "Pakollinen: mallin nimi"
+  },
+  "byoKeyLabel": {
+    "message": "API-avain"
+  },
+  "byoKeyClear": {
+    "message": "Tyhjennä"
+  },
+  "byoKeyCleared": {
+    "message": "Tälle koneelle tallennettu avain on poistettu."
+  },
+  "byoKeySaved": {
+    "message": "tallennettu ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Mukautettu (OpenAI-yhteensopiva)"
+  },
+  "byoTest": {
+    "message": "Tallenna ja testaa"
+  },
+  "byoTesting": {
+    "message": "Testataan…"
+  },
+  "byoTestOk": {
+    "message": "Yhdistetty. Näyte: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Hanki avain"
+  },
+  "byoGuide": {
+    "message": "Tarvitsetko apua asetuksissa?"
+  },
+  "byoLocalHint": {
+    "message": "Avain pysyy tässä selaimessa, tällä koneella — sitä ei koskaan lähetetä muualle. Tekstityksen teksti menee vain valitsemallesi palvelulle."
+  },
+  "byoErrNoProvider": {
+    "message": "Valitse ensin palveluntarjoaja."
+  },
+  "byoErrNoKey": {
+    "message": "Anna ensin API-avain — alla oleva linkki avaa palveluntarjoajan avainsivun."
+  },
+  "byoErrNoModel": {
+    "message": "Tälle palveluntarjoajalle on kirjoitettava mallin nimi."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API-perusosoitteen on oltava täydellinen https://-osoite."
+  },
+  "byoErrNoPerm": {
+    "message": "Ilman lupaa kyseiseen API-palvelimeen laajennus ei voi yhdistää."
+  },
+  "byoErrAuth": {
+    "message": "Avain hylättiin (401/403) — tarkista, että kopioit sen kokonaan ja että se on aktiivinen."
+  },
+  "byoErrLimited": {
+    "message": "Palveluntarjoaja rajoittaa pyyntötahtia — hidastetaan ja yritetään automaattisesti uudelleen."
+  },
+  "byoErrQuota": {
+    "message": "Tämän avaimen kiintiö on loppunut tältä jaksolta."
+  },
+  "byoErrBadRequest": {
+    "message": "Päätepiste hylkäsi pyynnön — mallin nimi tai perusosoite voi olla väärin."
+  },
+  "byoErrBadShape": {
+    "message": "Malli ei vastannut rivi riviltä kuten pyydettiin, ja pienemmät uudelleenyrityksetkin epäonnistuivat — kokeile toista mallia."
+  },
+  "byoErrReasoning": {
+    "message": "Malli palautti vain päättelyketjunsa eikä käännöstä — valitse malli ilman päättelyä."
+  },
+  "byoErrNetfail": {
+    "message": "Päätepisteeseen ei saada yhteyttä (verkko- tai alueellinen rajoitus)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Tämä palveluntarjoaja ei tue valitsemaasi kieltä — vaihda kieltä tai moottoria."
+  },
+  "byoErrFailed": {
+    "message": "Yhteys epäonnistui. Yritä hetken kuluttua uudelleen."
+  },
+  "optTitle": {
+    "message": "Käännöspalvelun asetukset"
+  },
+  "optIntro": {
+    "message": "Valitse palveluntarjoaja ja liitä oma API-avaimesi. Avain pysyy tällä koneella, ja tekstityksen teksti menee vain valitsemallesi palvelulle."
+  },
+  "optPricingLink": {
+    "message": "Hinnat ja ilmaisversio"
+  },
+  "optFetchModels": {
+    "message": "Listaa mallit avaimellani"
+  },
+  "optFetching": {
+    "message": "Listataan…"
+  },
+  "optModelsFetched": {
+    "message": "Löytyi $N$ mallia",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Malleja ei voitu listata — kirjoita mallin nimi sen sijaan."
+  },
+  "optModelCustom": {
+    "message": "Mukautettu…"
+  },
+  "optNoModelsYet": {
+    "message": "Ei mallilistaa vielä — hae lista avaimellasi tai kirjoita nimi."
+  },
+  "optShowKey": {
+    "message": "Näytä"
+  },
+  "optRecommended": {
+    "message": "suositeltu"
+  },
+  "optConfigured": {
+    "message": "Määritetty"
+  },
+  "optInUse": {
+    "message": "käytössä"
+  },
+  "optAfterSetup": {
+    "message": "Kun olet valmis, avaa laajennuksen ponnahdusikkuna ja aseta moottoriksi \"Oma avain\"."
+  },
+  "optTrademark": {
+    "message": "Kaikki palveluntarjoajien nimet ja logot ovat omistajiensa tavaramerkkejä. Tämä laajennus ei ole sidoksissa niihin, eivätkä ne tue tai sponsoroi sitä; merkit näytetään vain tunnistamaan valitsemasi API."
+  },
+  "optSections": {
+    "message": "Osiot"
+  },
+  "optNavSetup": {
+    "message": "Käännöspalvelu"
+  },
+  "optNavStart": {
+    "message": "Aloittaminen"
+  },
+  "optNavAbout": {
+    "message": "Tietoja"
+  },
+  "startIntro": {
+    "message": "Kolme asiaa. Käyttöä varten ei tarvitse säätää mitään."
+  },
+  "startS1Title": {
+    "message": "Avaa video — siinä kaikki"
+  },
+  "startS1Body": {
+    "message": "Mikä tahansa YouTube-video, jossa on tekstitys: kaksi riviä ilmestyy itsestään."
+  },
+  "startS2Title": {
+    "message": "Sijoita ne minne haluat"
+  },
+  "startS2Body": {
+    "message": "Tartu tekstityslaatikon vasemman yläkulman kahvaan ja vedä se minne tahansa. Kaksoisnapsauta kahvaa palauttaaksesi sen."
+  },
+  "startS2Alt": {
+    "message": "Soittimen kaavio: kuuden pisteen kahva tekstityslaatikon vasemmassa yläkulmassa, sitä vedetään toiseen paikkaan"
+  },
+  "startS3Title": {
+    "message": "Haluatko parempia käännöksiä"
+  },
+  "startS3Body": {
+    "message": "Lisää oma API-avaimesi: kokonaisten lauseiden käännös ja SRT-vienti koko videolle."
+  },
+  "startGoSetup": {
+    "message": "Määritä käännöspalvelu"
+  },
+  "aboutIntro": {
+    "message": "Mikä tämä on ja minne tekstisi menee."
+  },
+  "aboutVersion": {
+    "message": "Versio"
+  },
+  "aboutBlurb": {
+    "message": "Toinen tekstitysrivi YouTubelle: alkuperäinen yhdellä rivillä, käännös toisella, fontti, väri ja sijainti ovat sinun valittavissasi. Avoin lähdekoodi, ilmainen, ei mainoksia."
+  },
+  "aboutPrivacy": {
+    "message": "Meillä ei ole palvelinta emmekä kerää tilastoja. Tekstityksen teksti menee vain valitsemallesi käännöspalvelulle; omalla avaimella avain tallennetaan vain tälle tietokoneelle."
+  },
+  "aboutChangelog": {
+    "message": "Muutosloki"
+  },
+  "aboutRoadmap": {
+    "message": "Tiekartta"
+  },
+  "optFeedbackLink": {
+    "message": "Ilmoita ongelmasta"
+  },
+  "popupByoConfigure": {
+    "message": "Määritä…"
+  },
+  "popupByoNotSet": {
+    "message": "ei määritetty"
+  },
+  "popupByoPick": {
+    "message": "Käännöspalvelu"
+  },
+  "popupByoUntested": {
+    "message": "ei testattu"
+  },
+  "exportUsesYouTube": {
+    "message": "Lataus käyttää YouTuben omaa koko raidan käännöstä — ilmaista, eikä se kuluta API-avaintasi."
+  },
+  "exportUseByo": {
+    "message": "Käännä omalla avaimella (tarkempi, kuluttaa kiintiötä)"
+  },
+  "exportByoNote": {
+    "message": "Koko raita käännetään palveluntarjoajallasi avaimellasi. Näet arvion ennen kuin mitään lähetetään."
+  },
+  "exportConfirm": {
+    "message": "Käännä $N$ tekstitysriviä palvelulla $NAME$ — noin $REQ$ pyyntöä omasta kiintiöstäsi. Koko raita lähtee selaimestasi tälle palvelulle; toiston aikana lähetetään vain ne osat, joita oikeasti katsot.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Käännä ja lataa"
+  },
+  "exportConfirmBack": {
+    "message": "Peruuta"
+  },
+  "exportStop": {
+    "message": "Pysäytä"
+  },
+  "exportStopping": {
+    "message": "Pysäytetään…"
+  },
+  "exportProgress": {
+    "message": "Käännetään… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ lohkoa turvautui YouTuben käännökseen",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Lataus peruttu."
+  },
+  "ftSite": {
+    "message": "Verkkosivusto"
+  },
+  "ftSiteLabel": {
+    "message": "Sivusto"
+  },
+  "ftFeedbackLabel": {
+    "message": "Palaute"
+  },
+  "ftReviewLabel": {
+    "message": "Arvostele"
+  },
+  "ftGithub": {
+    "message": "Lähdekoodi GitHubissa"
+  },
+  "ftFeedback": {
+    "message": "Lähetä palautetta tai ilmoita virheestä"
+  },
+  "ftReview": {
+    "message": "Arvostele Chrome Web Storessa"
+  },
+  "optNeedKey": {
+    "message": "Ei avainta vielä — tätä palveluntarjoajaa ei voi käyttää ennen kuin lisäät avaimen."
+  },
+  "optBaseHint": {
+    "message": "Sekä perusosoite että täysi päätepiste kelpaavat, esim. https://example.com/v1 tai https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Soittimen kaavio: alkuperäinen rivi ja käännetty rivi kuvan alareunassa"
+  },
+  "startS3Alt": {
+    "message": "Vertailu: ilmainen moottori kääntää yhden lauseen paloissa, oma avain ymmärtää sen kokonaan ja jakaa sen takaisin"
+  },
+  "startPicFree": {
+    "message": "Ilmainen moottori"
+  },
+  "startPicFreeNote": {
+    "message": "yksi lause, paloina"
+  },
+  "startPicByo": {
+    "message": "Oma avain"
+  },
+  "startPicByoNote": {
+    "message": "ymmärretty kokonaan, jaettu takaisin"
+  },
+  "startNoSubsQ": {
+    "message": "Tekstitykset eivät näy?"
+  },
+  "startNoSubs": {
+    "message": "Napsauta CC-painiketta soittimen oikeassa alakulmassa tai kokeile toista videota — livestriimeissä ja musiikkivideoissa ei usein ole tekstitystä lainkaan."
+  },
+  "langManage": {
+    "message": "Hallitse kieliä…"
+  },
+  "optNavLangs": {
+    "message": "Tekstityskielet"
+  },
+  "langsIntro": {
+    "message": "Mitä kieliä ponnahdusikkuna tarjoaa käännöskohteeksi."
+  },
+  "langsKept": {
+    "message": "Näytetään ponnahdusikkunassa"
+  },
+  "langsKeptHint": {
+    "message": "Nämä näkyvät ponnahdusikkunan kohdekielivalikossa. Pidä vähintään yksi."
+  },
+  "langsMore": {
+    "message": "Muut kielet"
+  },
+  "langsMoreHint": {
+    "message": "Paina + lisätäksesi kielen. Kaikki luetellut kielet toimivat ilmaisten moottoreiden ja DeepL:n kanssa."
+  },
+  "langsReset": {
+    "message": "Palauta oletukset"
+  },
+  "langsResetDone": {
+    "message": "Oletuslista palautettu."
+  },
+  "langsAddAria": {
+    "message": "Lisää"
+  },
+  "langsRemoveAria": {
+    "message": "Poista"
+  },
+  "langsLastOne": {
+    "message": "Pidä vähintään yksi"
+  },
+  "langsAllAdded": {
+    "message": "Kaikki kielet ovat jo listallasi."
+  },
+  "langsAdded": {
+    "message": "Lisätty $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Se oli käytössä, joten kohdekieli on nyt $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Kiinalainen antiikva"
+  },
+  "fontCjkRound": {
+    "message": "Kiinalainen pyöristetty"
+  },
+  "uiLocaleLabel": {
+    "message": "Käyttöliittymän kieli"
+  },
+  "uiLocaleAuto": {
+    "message": "Automaattinen — seuraa selainta"
+  },
+  "uiLocaleHint": {
+    "message": "Koskee vain tämän laajennuksen omia säätimiä. Tekstitysten käännöskieli valitaan ponnahdusikkunassa ja kohdassa ”Tekstityskielet” — ei täällä."
+  },
+  "startTargetLabel": {
+    "message": "Käännöskieli"
+  },
+  "startTargetHint": {
+    "message": "Arvattu selaimen kieliasetuksista, kun laajennus asennettiin. Muuta tätä, jos arvaus on väärä — kielen voi vaihtaa ponnahdusikkunasta milloin tahansa."
+  },
+  "diagCopy": {
+    "message": "Kopioi diagnostiikkatiedot"
+  },
+  "diagCopied": {
+    "message": "Kopioitu — liitä se sähköpostiin tai vikailmoitukseen"
+  },
+  "diagCopyFail": {
+    "message": "Kopiointi epäonnistui — ota sen sijaan kuvakaappaus"
+  },
+  "optNavReadaloud": {
+    "message": "Lue ääneen"
+  },
+  "ttsIntro": {
+    "message": "Lue käännetty rivi ääneen omalla avaimellasi. Määritä palveluntarjoaja ja testaa sitä täällä."
+  },
+  "ttsVoiceLabel": {
+    "message": "Ääni"
+  },
+  "ttsTestOk": {
+    "message": "Yhdistetty: testiaudio $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Lue ääneen käyttää omaa avaintasi. Puhuttava teksti menee vain valitsemallesi palveluntarjoajalle; avain pysyy tällä koneella."
+  },
+  "ttsEnableLabel": {
+    "message": "Lue käännös ääneen videossa"
+  },
+  "ttsVolLabel": {
+    "message": "Lukuäänen voimakkuus"
+  },
+  "ttsDuckLabel": {
+    "message": "Alkuperäinen ääni puhuttaessa"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Puhuu"
+  },
+  "ttsStatusOn": {
+    "message": "Lukuääni päällä"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ riviä tässä videossa · $M$ ohitettu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä siihen palata. Videon oma ääni vaimennetaan rivin puhumisen ajaksi, ja liian pitkä rivi hidastaa videota hieman."
+  },
+  "ttsRegionLabel": {
+    "message": "Palvelualue"
+  },
+  "ttsErrNoRegion": {
+    "message": "Anna ensin Azure-avaimesi palvelualue (esim. eastus)."
+  }
+}

@@ -25,24 +25,27 @@ const SITE_URL = "https://gythiro.github.io/yt-dual-subs/";
 // "https://*/*" as an optional host permission, which is still an open call.
 const ALLOW_CUSTOM_ENDPOINT = false;
 
+// Through YTDS_I18N so the interface-language override (About section below)
+// applies here too; "auto" resolves to plain chrome.i18n.getMessage.
 const t = (k, fb) => {
-  try { return (chrome.i18n && chrome.i18n.getMessage(k)) || fb; }
+  try { return self.YTDS_I18N.get(k) || fb; }
   catch (_e) { return fb; }
 };
 const tsub = (k, subs, fb) => {
-  try { return (chrome.i18n && chrome.i18n.getMessage(k, subs)) || fb; }
+  try { return self.YTDS_I18N.get(k, subs) || fb; }
   catch (_e) { return fb; }
 };
 
 function uiLang() {
   try {
-    const ui = (chrome.i18n && chrome.i18n.getUILanguage()) || "";
+    const ui = self.YTDS_I18N.effectiveLang();
     if (ui.toLowerCase().indexOf("zh") === 0) return "zh";
   } catch (_e) { /* ignore */ }
   return "en";
 }
 
-let state = { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN" };
+let state = { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN",
+              ttsProvider: "", ttsVoice: "" };
 // Which provider's panel is on screen. Deliberately NOT state.byoProvider:
 // clicking a name in the list means "let me set this one up", and it used to
 // switch the whole extension over to it on the spot — even with no key saved,
@@ -555,6 +558,7 @@ const SECTIONS = {
   start: { el: "secStart", title: "optNavStart", intro: "startIntro" },
   setup: { el: "detail", title: "optTitle", intro: "optIntro" },
   langs: { el: "secLangs", title: "optNavLangs", intro: "langsIntro" },
+  readaloud: { el: "secReadaloud", title: "optNavReadaloud", intro: "ttsIntro" },
   about: { el: "secAbout", title: "optNavAbout", intro: "aboutIntro" }
 };
 
@@ -586,6 +590,7 @@ function initAbout() {
   let ver = "";
   try { ver = chrome.runtime.getManifest().version; } catch (_e) { /* ignore */ }
   $("aboutVer").textContent = ver || "—";
+  initUiLocale();
   const set = (id, href) => { const el = $(id); if (el) el.href = href; };
   set("aboutSite", SITE_URL + "?src=options&lang=" + lang);
   set("aboutGithub", "https://github.com/Gythiro/yt-dual-subs");
@@ -595,6 +600,228 @@ function initAbout() {
 }
 
 // ---- wiring ----------------------------------------------------------------
+// ---- read-aloud (TTS) setup -------------------------------------------------
+// The pipeline's user half: pick a provider, store a key (masked ever after),
+// pick a voice, save-and-test. Mirrors the translation setup's discipline —
+// permissions.request is the FIRST thing in the click handler (any await ahead
+// of it silently spends the user gesture), the key never rides back into the
+// DOM, and the test exercises the stored configuration, not the draft.
+const ttsStored = Object.create(null);      // providerId -> true (never the key)
+
+function ttsProvider() {
+  return P.tts.get($("ttsProviderSel").value) || null;
+}
+
+function showTtsMsg(text, kind) {
+  const el = $("ttsMsg");
+  el.textContent = text || "";
+  el.className = "omsg" + (kind ? " " + kind : "");
+  el.hidden = !text;
+}
+
+function paintTtsKeyField(p) {
+  const inp = $("ttsKey");
+  const clear = $("ttsKeyClear");
+  inp.value = "";
+  inp.type = $("ttsShowKey").checked ? "text" : "password";
+  inp.placeholder = p.keyHint != null ? p.keyHint : "sk-…";
+  clear.hidden = true;
+  // Azure's key is bound to a region that becomes the request host; only a
+  // provider that says so gets the field.
+  const regionRow = $("ttsRegionRow");
+  if (regionRow) regionRow.hidden = !p.needsRegion;
+  chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+    const key = ((got && got.ttsKeys) || {})[p.id] || "";
+    ttsStored[p.id] = !!key;
+    if (!key) return;
+    const last4 = key.slice(-4);
+    inp.placeholder = tsub("byoKeySaved", [last4], "已保存 ····" + last4);
+    clear.hidden = false;
+  });
+}
+
+function paintTtsVoices(p) {
+  const sel = $("ttsVoiceSel");
+  sel.textContent = "";
+  for (const v of p.voices || []) {
+    const o = document.createElement("option");
+    o.value = v;
+    o.textContent = v;
+    sel.appendChild(o);
+  }
+  const want = state.ttsVoice || p.defaultVoice || "";
+  if (want && (p.voices || []).includes(want)) sel.value = want;
+}
+
+function persistTts(p, typedKey) {
+  return new Promise((resolve) => {
+    state.ttsProvider = p.id;
+    state.ttsVoice = $("ttsVoiceSel").value || p.defaultVoice || "";
+    chrome.storage.sync.set({ ttsProvider: state.ttsProvider, ttsVoice: state.ttsVoice }, () => {
+      if (!typedKey) return resolve();
+      chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+        const keys = Object.assign({}, (got && got.ttsKeys) || {});
+        keys[p.id] = typedKey;
+        chrome.storage.local.set({ ttsKeys: keys }, resolve);
+      });
+    });
+  });
+}
+
+function initReadaloud() {
+  const sel = $("ttsProviderSel");
+  if (!sel) return;
+  const en = $("ttsEnabled");
+  if (en) {
+    chrome.storage.sync.get({ ttsEnabled: false }, (got) => { en.checked = !!(got && got.ttsEnabled); });
+    en.addEventListener("change", () => {
+      chrome.storage.sync.set({ ttsEnabled: en.checked });
+    });
+  }
+  // Loudness sliders. Live-written on input (the popup's sliders set the
+  // precedent): the spoken line follows ttsVolume while it sounds, and the
+  // duck depth rides the next duck message.
+  for (const [id, defV] of [["ttsVolume", 100], ["ttsDuckPct", 25]]) {
+    const r = $(id);
+    if (!r) continue;
+    const label = $(id + "V");
+    const paint = () => { if (label) label.textContent = r.value + "%"; };
+    chrome.storage.sync.get({ [id]: defV }, (got) => {
+      r.value = got && got[id] != null ? got[id] : defV;
+      paint();
+    });
+    r.addEventListener("input", () => {
+      paint();
+      chrome.storage.sync.set({ [id]: Number(r.value) });
+    });
+  }
+  // Azure region: stored normalized (it is spliced into the request host, and
+  // the worker refuses anything that is not a plain hostname label).
+  const region = $("ttsRegion");
+  if (region) {
+    chrome.storage.sync.get({ ttsRegion: "" }, (got) => {
+      region.value = (got && got.ttsRegion) || "";
+    });
+    region.addEventListener("input", () => {
+      chrome.storage.sync.set({ ttsRegion: region.value.trim().toLowerCase() });
+    });
+  }
+  sel.textContent = "";
+  for (const p of P.tts.list) {
+    const o = document.createElement("option");
+    o.value = p.id;
+    o.textContent = p.name;
+    sel.appendChild(o);
+  }
+  const cur = P.tts.get(state.ttsProvider) || P.tts.list[0];
+  sel.value = cur.id;
+  paintTtsKeyField(cur);
+  paintTtsVoices(cur);
+
+  sel.addEventListener("change", () => {
+    const p = ttsProvider();
+    if (!p) return;
+    showTtsMsg("", null);
+    paintTtsKeyField(p);
+    paintTtsVoices(p);
+  });
+  $("ttsShowKey").addEventListener("change", () => {
+    $("ttsKey").type = $("ttsShowKey").checked ? "text" : "password";
+  });
+  $("ttsKeyClear").addEventListener("click", () => {
+    const p = ttsProvider();
+    if (!p) return;
+    chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+      const keys = Object.assign({}, (got && got.ttsKeys) || {});
+      delete keys[p.id];
+      chrome.storage.local.set({ ttsKeys: keys }, () => paintTtsKeyField(p));
+    });
+  });
+  $("ttsTestBtn").addEventListener("click", () => {
+    const p = ttsProvider();
+    if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
+    const typed = $("ttsKey").value.trim();
+    if (!typed && !ttsStored[p.id]) { showTtsMsg(errText("noKey"), "err"); return; }
+    const btn = $("ttsTestBtn");
+    const label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = t("byoTesting", "正在测试…");
+    const done = () => { btn.disabled = false; btn.textContent = label; };
+    showTtsMsg("", null);
+    try {
+      // First statement inside the gesture — see the header comment.
+      chrome.permissions.request({ origins: [p.origin + "/*"] }, (granted) => {
+        if (chrome.runtime.lastError || !granted) { done(); showTtsMsg(errText("noPerm"), "err"); return; }
+        persistTts(p, typed)
+          .then(() => sendToBackground({ type: "ttsTest" }))
+          .then((resp) => {
+            if (resp && resp.ok) {
+              const kb = Math.max(1, Math.round((resp.bytes || 0) / 1024));
+              showTtsMsg(tsub("ttsTestOk", [String(kb), resp.voice || ""],
+                "连接成功：试音 " + kb + " KB（" + (resp.voice || "") + "）"), "ok");
+            } else {
+              showTtsMsg(errText(resp && resp.code), "err");
+            }
+          })
+          .catch((err) => showTtsMsg(errText((err && err.code) || "failed"), "err"))
+          .then(() => { paintTtsKeyField(p); done(); }, () => { paintTtsKeyField(p); done(); });
+      });
+    } catch (_e) {
+      done();
+      showTtsMsg(errText("noPerm"), "err");
+    }
+  });
+}
+
+// The start page's translation-target confirmation. The install hook guessed a
+// target from the browser's preferred languages; this is where the guess is
+// visible and one click from corrected. Full 50-language list — the popup's
+// trimmed dropdown would hide exactly the language a mis-guessed user needs.
+function initStartTarget() {
+  const sel = $("startTargetSel");
+  if (!sel) return;
+  sel.textContent = "";
+  for (const info of LANGS.all()) {
+    const o = document.createElement("option");
+    o.value = info.code;
+    o.textContent = localName(info);
+    sel.appendChild(o);
+  }
+  sel.value = state.targetLang || "zh-CN";
+  if (!sel.value) sel.value = "zh-CN";        // stored value no longer offered
+  sel.addEventListener("change", () => {
+    state.targetLang = sel.value;
+    chrome.storage.sync.set({ targetLang: sel.value });
+  });
+}
+
+// The interface-language picker. "auto" follows the browser; a concrete choice
+// names each language in itself (Deutsch, 日本語…) so someone stranded in the
+// wrong language can still find their own. Applying a change re-reads every
+// string on the page — a reload is the one honest way to do that everywhere.
+function initUiLocale() {
+  const sel = $("uiLocaleSel");
+  if (!sel) return;
+  chrome.storage.sync.get({ uiLocale: "auto" }, (got) => {
+    const cur = (got && got.uiLocale) || "auto";
+    sel.textContent = "";
+    const auto = document.createElement("option");
+    auto.value = "auto";
+    auto.textContent = t("uiLocaleAuto", "自动（跟随浏览器）");
+    sel.appendChild(auto);
+    for (const [id, name] of Object.entries(self.YTDS_I18N.SELF_NAMES)) {
+      const o = document.createElement("option");
+      o.value = id;
+      o.textContent = name;
+      sel.appendChild(o);
+    }
+    sel.value = self.YTDS_I18N.SELF_NAMES[cur] ? cur : "auto";
+    sel.addEventListener("change", () => {
+      chrome.storage.sync.set({ uiLocale: sel.value }, () => location.reload());
+    });
+  });
+}
+
 function wire() {
   document.querySelectorAll(".onav-item").forEach((b) =>
     b.addEventListener("click", () => showSection(b.dataset.sec)));
@@ -658,6 +885,8 @@ function wire() {
 }
 
 // ---- boot ------------------------------------------------------------------
+// i18n first: the override (if any) must be loaded before any string paints.
+self.YTDS_I18N.init().then(() => {
 applyI18n();
 $("feedbackLink").href = SITE_URL + "feedback.html?lang=" + uiLang() + "&src=options";
 initAbout();
@@ -671,7 +900,7 @@ wire();
 
 chrome.storage.sync.get(
   { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN", langShown: null,
-    byoModelBy: {} },
+    byoModelBy: {}, ttsProvider: "", ttsVoice: "" },
   (got) => {
     state = Object.assign(state, got || {});
     modelsBy = Object.assign(Object.create(null), (got && got.byoModelBy) || {});
@@ -683,6 +912,8 @@ chrome.storage.sync.get(
     langKept = (got && Array.isArray(got.langShown) && got.langShown.length)
       ? LANGS.shown(got.langShown) : null;
     renderLangs();
+    initStartTarget();
+    initReadaloud();
     // Open on whatever is in use; failing that, the first preset — an empty
     // page on first open would be worse. Either way nothing is switched.
     editing = state.byoProvider;
@@ -697,3 +928,4 @@ chrome.storage.sync.get(
     });
   }
 );
+});                                // ← self.YTDS_I18N.init() gate around boot

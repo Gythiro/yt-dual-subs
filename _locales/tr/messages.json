@@ -1,0 +1,734 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "YouTube için iki dilli altyazı — orijinal ve çeviri, çakışmayan tek katmanda."
+  },
+  "headerSub": {
+    "message": "YouTube™ için · İki dilli, tek katman"
+  },
+  "disclaimer": {
+    "message": "YouTube veya Google ile bağlantılı değildir."
+  },
+  "enableTitle": {
+    "message": "Aç / kapat"
+  },
+  "openOptions": {
+    "message": "Ayarlar"
+  },
+  "enableAria": {
+    "message": "Uzantıyı etkinleştir"
+  },
+  "previewTag": {
+    "message": "Önizleme"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Hızlı kahverengi tilki"
+  },
+  "sampleTransComma": {
+    "message": "Kahverengi tilki atlar,"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "previewAria": {
+    "message": "Canlı önizleme"
+  },
+  "secTranslation": {
+    "message": "Çeviri"
+  },
+  "targetLang": {
+    "message": "Hedef dil"
+  },
+  "backendLabel": {
+    "message": "Motor"
+  },
+  "backendInfo": {
+    "message": "Motor bilgisi"
+  },
+  "backendAuto": {
+    "message": "Otomatik (önerilen)"
+  },
+  "backendTlang": {
+    "message": "Tüm parça (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Akıllı cümleler (Google)"
+  },
+  "backendByo": {
+    "message": "Kendi anahtarınız (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Otomatik</b>: video destekliyorsa YouTube'un tüm parça çevirisini kullanır, desteklemiyorsa akıllı cümlelere geçer.<br><b>Tüm parça</b>: YouTube'un kendi çevirisi; satır satır hizalı. Yoğun kullanım YouTube'un kısa süre hız sınırı uygulamasına yol açabilir — uzantı bekler ve yeniden dener.<br><b>Akıllı cümleler</b>: parçalı altyazıları tam cümlelere birleştirir, ardından Google'ın ücretsiz hizmetiyle çevirir — dağınık parçalarda tüm parçadan daha iyi ifade, ama yoğun kullanımda orada da hız sınırı olabilir; uzantı yavaşlar ve yeniden dener.<br><b>Kendi anahtarınız</b>: birleştirilmiş cümleyi yapılandırdığınız sağlayıcıya gönderir."
+  },
+  "backendGtxHint": {
+    "message": "Google'ın ücretsiz hizmetini kullanır — yoğun kullanım kısa süre hız sınırına takılabilir; uzantı kendini yavaşlatır ve otomatik yeniden dener."
+  },
+  "backendStatusTlang": {
+    "message": "Bu video: tüm parça çevirisi (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Bu video: akıllı cümleler (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Çeviri hizmeti hız sınırı uyguluyor — yavaşlatılıp otomatik yeniden deneniyor. Çevrilmiş satırlar çalışmaya devam eder."
+  },
+  "backendStatusSame": {
+    "message": "Bu videonun altyazıları zaten hedef dilinizde — çevrilecek bir şey yok."
+  },
+  "secLayout": {
+    "message": "Düzen"
+  },
+  "orderLabel": {
+    "message": "Sıra"
+  },
+  "orderTransTop": {
+    "message": "Çeviri üstte"
+  },
+  "orderOrigTop": {
+    "message": "Orijinal üstte"
+  },
+  "positionLabel": {
+    "message": "Konum"
+  },
+  "posTop": {
+    "message": "Üst"
+  },
+  "posCenter": {
+    "message": "Orta"
+  },
+  "posBottom": {
+    "message": "Alt"
+  },
+  "posHint": {
+    "message": "Altyazı kutusunu videoda da sürükleyebilirsiniz"
+  },
+  "posTryDrag": {
+    "message": "dene"
+  },
+  "posTryNoVideo": {
+    "message": "Önce bir YouTube videosu açın"
+  },
+  "resetPos": {
+    "message": "Konumu sıfırla"
+  },
+  "rowGap": {
+    "message": "Satır aralığı"
+  },
+  "tabTrans": {
+    "message": "Çeviri"
+  },
+  "tabOrig": {
+    "message": "Orijinal"
+  },
+  "lineTabsAria": {
+    "message": "Altyazı satırı"
+  },
+  "lineShow": {
+    "message": "Bu satırı göster"
+  },
+  "fontLabel": {
+    "message": "Yazı tipi"
+  },
+  "fontSystem": {
+    "message": "Sistem varsayılanı"
+  },
+  "fontMono": {
+    "message": "Eş aralıklı"
+  },
+  "fontCjk": {
+    "message": "CJK uyumlu"
+  },
+  "sizeLabel": {
+    "message": "Yazı boyutu"
+  },
+  "colText": {
+    "message": "Metin"
+  },
+  "colBg": {
+    "message": "Arka plan"
+  },
+  "colStroke": {
+    "message": "Kontur"
+  },
+  "colTextAria": {
+    "message": "Metin rengi"
+  },
+  "colBgAria": {
+    "message": "Arka plan rengi"
+  },
+  "colStrokeAria": {
+    "message": "Kontur rengi"
+  },
+  "bgOpacity": {
+    "message": "Arka plan opaklığı"
+  },
+  "strokeOpacity": {
+    "message": "Kontur opaklığı"
+  },
+  "resetAll": {
+    "message": "Tüm ayarları sıfırla"
+  },
+  "toggleTurnOff": {
+    "message": "Çift altyazıyı kapat"
+  },
+  "toggleTurnOn": {
+    "message": "Çift altyazıyı aç"
+  },
+  "handleTitle": {
+    "message": "Sürükleyerek taşı · sıfırlamak için çift tıklayın"
+  },
+  "handleAria": {
+    "message": "Altyazıları sürükleyerek taşıyın, sıfırlamak için çift tıklayın"
+  },
+  "secExport": {
+    "message": "Dışa aktarma"
+  },
+  "exportContent": {
+    "message": "İçerik"
+  },
+  "exportBi": {
+    "message": "İki dilli"
+  },
+  "exportOrig": {
+    "message": "Orijinal"
+  },
+  "exportTrans": {
+    "message": "Çeviri"
+  },
+  "exportSrt": {
+    "message": "SRT indir"
+  },
+  "exportWorking": {
+    "message": "Oluşturuluyor…"
+  },
+  "exportDone": {
+    "message": "Altyazılar indirildi"
+  },
+  "exportNoTrans": {
+    "message": "Bu video için çeviri yok — Tüm parça motorunu veya başka bir hedef dil deneyin."
+  },
+  "exportLimited": {
+    "message": "YouTube şu anda tüm parça çevirisine hız sınırı uyguluyor — bir dakika sonra tekrar deneyin veya “Kendi anahtarımla çevir”i işaretleyin."
+  },
+  "exportNoCues": {
+    "message": "İndirilebilir altyazı yok — altyazıların yüklenmesi için birkaç saniye oynatın, sonra tekrar deneyin."
+  },
+  "exportNotYoutube": {
+    "message": "Dışa aktarmak için bir YouTube video sayfası açın."
+  },
+  "exportFailed": {
+    "message": "Dışa aktarma başarısız — sayfayı yenileyip tekrar deneyin."
+  },
+  "updateNotesLabel": {
+    "message": "Güncellemelerden sonra sürüm notlarını aç"
+  },
+  "trackWarnDubOnly": {
+    "message": "Dikkat: bu videoda yalnızca yapay zeka dublajlı otomatik altyazı var (orijinal dil parçası yok), bu yüzden iki dilli altyazılar sesle eşleşmeyebilir."
+  },
+  "whatsNewRow": {
+    "message": "v$VER$ sürümündeki yeniliklere bakın →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Bu video: kendi anahtarınız ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Sağlayıcı"
+  },
+  "byoBaseLabel": {
+    "message": "API temel URL'si (https)"
+  },
+  "byoModelLabel": {
+    "message": "Model"
+  },
+  "byoModelRequired": {
+    "message": "Zorunlu: model adı"
+  },
+  "byoKeyLabel": {
+    "message": "API anahtarı"
+  },
+  "byoKeyClear": {
+    "message": "Temizle"
+  },
+  "byoKeyCleared": {
+    "message": "Bu cihazda kayıtlı anahtar silindi."
+  },
+  "byoKeySaved": {
+    "message": "kayıtlı ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Özel (OpenAI uyumlu)"
+  },
+  "byoTest": {
+    "message": "Kaydet ve dene"
+  },
+  "byoTesting": {
+    "message": "Deneniyor…"
+  },
+  "byoTestOk": {
+    "message": "Bağlandı. Örnek: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Anahtar al"
+  },
+  "byoGuide": {
+    "message": "Kurulumda yardıma mı ihtiyacın var?"
+  },
+  "byoLocalHint": {
+    "message": "Anahtar bu tarayıcıda, bu makinede kalır — asla karşıya yüklenmez. Altyazı metni yalnızca seçtiğin sağlayıcıya gider."
+  },
+  "byoErrNoProvider": {
+    "message": "Önce bir sağlayıcı seç."
+  },
+  "byoErrNoKey": {
+    "message": "Önce bir API anahtarı gir — aşağıdaki bağlantı sağlayıcının anahtar sayfasını açar."
+  },
+  "byoErrNoModel": {
+    "message": "Bu sağlayıcı için bir model adı yazman gerekiyor."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API taban URL’si tam bir https:// adresi olmalı."
+  },
+  "byoErrNoPerm": {
+    "message": "Bu API sunucusuna erişim izni olmadan eklenti bağlanamaz."
+  },
+  "byoErrAuth": {
+    "message": "Anahtar reddedildi (401/403) — tam kopyalandığından ve etkin olduğundan emin ol."
+  },
+  "byoErrLimited": {
+    "message": "Sağlayıcı hız sınırı uyguluyor — yavaşlatılıp otomatik olarak yeniden deneniyor."
+  },
+  "byoErrQuota": {
+    "message": "Bu anahtarın mevcut dönem kotası dolmuş."
+  },
+  "byoErrBadRequest": {
+    "message": "Uç nokta isteği reddetti — model adı veya taban URL yanlış olabilir."
+  },
+  "byoErrBadShape": {
+    "message": "Model istenen gibi satır satır yanıt vermedi, daha küçük yeniden denemeler de başarısız oldu — başka bir model dene."
+  },
+  "byoErrReasoning": {
+    "message": "Bu model yalnızca düşünce zincirini döndürdü, çeviri yok — düşünmeyen bir model seç."
+  },
+  "byoErrNetfail": {
+    "message": "Bu uç noktaya ulaşılamıyor (ağ veya bölgesel kısıtlama)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Bu sağlayıcının seçtiğin dil için hedefi yok — dili veya motoru değiştir."
+  },
+  "byoErrFailed": {
+    "message": "Bağlantı başarısız. Biraz sonra tekrar dene."
+  },
+  "optTitle": {
+    "message": "Çeviri hizmeti kurulumu"
+  },
+  "optIntro": {
+    "message": "Bir sağlayıcı seç ve kendi API anahtarını yapıştır. Anahtar bu makinede kalır; altyazı metni yalnızca seçtiğin sağlayıcıya gider."
+  },
+  "optPricingLink": {
+    "message": "Fiyatlandırma ve ücretsiz katman"
+  },
+  "optFetchModels": {
+    "message": "Anahtarımla modelleri listele"
+  },
+  "optFetching": {
+    "message": "Listeleniyor…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ model bulundu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Modeller listelenemedi — bunun yerine model adını yaz."
+  },
+  "optModelCustom": {
+    "message": "Özel…"
+  },
+  "optNoModelsYet": {
+    "message": "Henüz model listesi yok — anahtarınla getir veya adı yaz."
+  },
+  "optShowKey": {
+    "message": "Göster"
+  },
+  "optRecommended": {
+    "message": "önerilen"
+  },
+  "optConfigured": {
+    "message": "Yapılandırıldı"
+  },
+  "optInUse": {
+    "message": "kullanımda"
+  },
+  "optAfterSetup": {
+    "message": "İşin bitince eklenti penceresini aç ve Motor’u \"Kendi anahtarın\" olarak ayarla."
+  },
+  "optTrademark": {
+    "message": "Tüm sağlayıcı adları ve logoları ilgili sahiplerinin ticari markalarıdır. Bu eklenti bunlardan hiçbiriyle bağlantılı değildir, onlar tarafından onaylanmamış veya desteklenmemiştir; işaretler yalnızca seçtiğin API’yi tanımlamak için gösterilir."
+  },
+  "optSections": {
+    "message": "Bölümler"
+  },
+  "optNavSetup": {
+    "message": "Çeviri hizmeti"
+  },
+  "optNavStart": {
+    "message": "Başlarken"
+  },
+  "optNavAbout": {
+    "message": "Hakkında"
+  },
+  "startIntro": {
+    "message": "Üç şey. Kullanmak için hiçbir şey kurmana gerek yok."
+  },
+  "startS1Title": {
+    "message": "Bir video aç — bu kadar"
+  },
+  "startS1Body": {
+    "message": "Altyazısı olan herhangi bir YouTube videosu: iki satır kendiliğinden görünür."
+  },
+  "startS2Title": {
+    "message": "İstediğin yere koy"
+  },
+  "startS2Body": {
+    "message": "Altyazı kutusunun sol üstündeki tutamacı tutup istediğin yere sürükle. Eski yerine koymak için tutamaca çift tıkla."
+  },
+  "startS2Alt": {
+    "message": "Oynatıcı şeması: altyazı kutusunun sol üst köşesinde altı noktalı bir tutamaç, kutuyu başka bir konuma sürüklüyor"
+  },
+  "startS3Title": {
+    "message": "Daha iyi çeviriler ister misin"
+  },
+  "startS3Body": {
+    "message": "Kendi API anahtarını ekle: tüm cümle çevirisi ve tüm video için SRT dışa aktarma."
+  },
+  "startGoSetup": {
+    "message": "Çeviri hizmeti kur"
+  },
+  "aboutIntro": {
+    "message": "Bu nedir ve metnin nereye gider."
+  },
+  "aboutVersion": {
+    "message": "Sürüm"
+  },
+  "aboutBlurb": {
+    "message": "YouTube için ikinci bir altyazı satırı: bir satırda orijinal, diğerinde çeviri; yazı tipi, renk ve konum sana kalmış. Açık kaynak, ücretsiz, reklamsız."
+  },
+  "aboutPrivacy": {
+    "message": "Sunucumuz yok, istatistik toplamıyoruz. Altyazı metni yalnızca seçtiğin çeviri hizmetine gider; kendi anahtarınla kullanırken anahtar yalnızca bu bilgisayarda saklanır."
+  },
+  "aboutChangelog": {
+    "message": "Sürüm notları"
+  },
+  "aboutRoadmap": {
+    "message": "Yol haritası"
+  },
+  "optFeedbackLink": {
+    "message": "Sorun bildir"
+  },
+  "popupByoConfigure": {
+    "message": "Yapılandır…"
+  },
+  "popupByoNotSet": {
+    "message": "kurulmadı"
+  },
+  "popupByoPick": {
+    "message": "Çeviri sağlayıcısı"
+  },
+  "popupByoUntested": {
+    "message": "denenmedi"
+  },
+  "exportUsesYouTube": {
+    "message": "İndirme, YouTube’un kendi tam parça çevirisini kullanır — ücretsizdir ve API anahtarını harcamaz."
+  },
+  "exportUseByo": {
+    "message": "Kendi anahtarımla çevir (daha yakın eşleşme, kota harcar)"
+  },
+  "exportByoNote": {
+    "message": "Tüm parça, sağlayıcın tarafından senin anahtarınla çevrilecek. Herhangi bir şey gönderilmeden önce bir tahmin göreceksin."
+  },
+  "exportConfirm": {
+    "message": "$N$ altyazı satırını $NAME$ ile çevir — kendi kotandan kabaca $REQ$ istek. Tüm parça o sağlayıcıya tarayıcından çıkar; oynatma sırasında yalnızca gerçekten izlediğin kısımlar gönderilir.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Çevir ve indir"
+  },
+  "exportConfirmBack": {
+    "message": "İptal"
+  },
+  "exportStop": {
+    "message": "Durdur"
+  },
+  "exportStopping": {
+    "message": "Durduruluyor…"
+  },
+  "exportProgress": {
+    "message": "Çevriliyor… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ parça YouTube çevirisine geri döndü",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "İndirme iptal edildi."
+  },
+  "ftSite": {
+    "message": "Web sitesi"
+  },
+  "ftSiteLabel": {
+    "message": "Site"
+  },
+  "ftFeedbackLabel": {
+    "message": "Geri bildirim"
+  },
+  "ftReviewLabel": {
+    "message": "Puanla"
+  },
+  "ftGithub": {
+    "message": "GitHub’da kaynak kodu"
+  },
+  "ftFeedback": {
+    "message": "Geri bildirim gönder veya hata bildir"
+  },
+  "ftReview": {
+    "message": "Chrome Web Store’da puanla"
+  },
+  "optNeedKey": {
+    "message": "Henüz anahtar yok — bir tane eklemeden bu sağlayıcı kullanılamaz."
+  },
+  "optBaseHint": {
+    "message": "Taban URL veya tam uç nokta, ikisi de olur; örn. https://example.com/v1 veya https://example.com/v1/chat/completions."
+  },
+  "startS1Alt": {
+    "message": "Oynatıcı şeması: orijinal satır ve çevrilmiş satır görüntünün altına yakın duruyor"
+  },
+  "startS3Alt": {
+    "message": "Karşılaştırma: ücretsiz motor bir cümleyi parçalayarak çevirir, kendi anahtarın bütün olarak anlar ve yeniden böler"
+  },
+  "startPicFree": {
+    "message": "Ücretsiz motor"
+  },
+  "startPicFreeNote": {
+    "message": "bir cümle, parçalanmış"
+  },
+  "startPicByo": {
+    "message": "Kendi anahtarın"
+  },
+  "startPicByoNote": {
+    "message": "bütün olarak anlaşıldı, yeniden bölündü"
+  },
+  "startNoSubsQ": {
+    "message": "Altyazı görünmüyor mu?"
+  },
+  "startNoSubs": {
+    "message": "Oynatıcının sağ altındaki CC düğmesine tıkla veya başka bir video dene — canlı yayınlarda ve müzik videolarında çoğu zaman hiç yoktur."
+  },
+  "langManage": {
+    "message": "Dilleri yönet…"
+  },
+  "optNavLangs": {
+    "message": "Altyazı dilleri"
+  },
+  "langsIntro": {
+    "message": "Popup'un çeviri için sunduğu diller."
+  },
+  "langsKept": {
+    "message": "Popup'ta görünenler"
+  },
+  "langsKeptHint": {
+    "message": "Bunlar popup'un hedef dil menüsünde görünür. En az birini tutun."
+  },
+  "langsMore": {
+    "message": "Diğer diller"
+  },
+  "langsMoreHint": {
+    "message": "+ ile ekleyin. Listedeki her dil ücretsiz motorlarla ve DeepL ile çalışır."
+  },
+  "langsReset": {
+    "message": "Varsayılanları geri yükle"
+  },
+  "langsResetDone": {
+    "message": "Varsayılan listeye dönüldü."
+  },
+  "langsAddAria": {
+    "message": "Ekle"
+  },
+  "langsRemoveAria": {
+    "message": "Kaldır"
+  },
+  "langsLastOne": {
+    "message": "En az birini tutun"
+  },
+  "langsAllAdded": {
+    "message": "Tüm diller zaten listenizde."
+  },
+  "langsAdded": {
+    "message": "$NAME$ eklendi",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "O dil kullanımdaydı, hedef artık $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Çince serif"
+  },
+  "fontCjkRound": {
+    "message": "Çince yuvarlak"
+  },
+  "uiLocaleLabel": {
+    "message": "Arayüz dili"
+  },
+  "uiLocaleAuto": {
+    "message": "Otomatik — tarayıcıyı takip et"
+  },
+  "uiLocaleHint": {
+    "message": "Yalnızca bu uzantının kendi kontrollerinin dili. Altyazıların çevrileceği dil, açılır pencerede ve “Altyazı dilleri” altında seçilir — burada değil."
+  },
+  "startTargetLabel": {
+    "message": "Çeviri dili"
+  },
+  "startTargetHint": {
+    "message": "Uzantı kurulduğunda tarayıcınızın dil tercihlerinden tahmin edildi. Tahmin yanlışsa buradan değiştirin — açılır pencereden istediğiniz zaman değiştirebilirsiniz."
+  },
+  "diagCopy": {
+    "message": "Tanılama bilgilerini kopyala"
+  },
+  "diagCopied": {
+    "message": "Kopyalandı — e-postaya veya bir soruna yapıştırın"
+  },
+  "diagCopyFail": {
+    "message": "Kopyalama başarısız — bunun yerine ekran görüntüsü alın"
+  },
+  "optNavReadaloud": {
+    "message": "Sesli oku"
+  },
+  "ttsIntro": {
+    "message": "Çevrilen satırı kendi anahtarınızla sesli okuyun. Bir sağlayıcı ayarlayıp buradan deneyin."
+  },
+  "ttsVoiceLabel": {
+    "message": "Ses"
+  },
+  "ttsTestOk": {
+    "message": "Bağlandı: test sesi $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Sesli okuma kendi anahtarınızı kullanır. Okunacak metin yalnızca seçtiğiniz sağlayıcıya gider; anahtar bu makinede kalır."
+  },
+  "ttsEnableLabel": {
+    "message": "Videoda çeviriyi sesli oku"
+  },
+  "ttsVolLabel": {
+    "message": "Sesli okuma sesi"
+  },
+  "ttsDuckLabel": {
+    "message": "Konuşurken orijinal ses"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Konuşuyor"
+  },
+  "ttsStatusOn": {
+    "message": "Sesli okuma açık"
+  },
+  "ttsStatusCounts": {
+    "message": "Bu videoda $N$ satır · $M$ atlandı",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsEnableHint": {
+    "message": "Açıkken her altyazının çevirisi göründüğü anda seslendirilir; çevirisi zamanında hazır olmayan satır atlanır, sonradan telafi edilmez. Satır seslendirilirken videonun kendi sesi kısılır; sığmayacak kadar uzun bir satır videoyu biraz yavaşlatır."
+  },
+  "ttsRegionLabel": {
+    "message": "Hizmet bölgesi"
+  },
+  "ttsErrNoRegion": {
+    "message": "Önce Azure anahtarınızın hizmet bölgesini girin (ör. eastus)."
+  }
+}

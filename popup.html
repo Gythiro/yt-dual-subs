@@ -95,6 +95,10 @@
         </p>
         <p class="engine-hint" id="backendGtxHint" hidden data-i18n="backendGtxHint">使用 Google 免费接口，重度使用可能被短暂限流；扩展会自动放慢并重试。</p>
         <p class="engine-msg" id="backendStatus" role="status" aria-live="polite" hidden></p>
+        <!-- Read-aloud status: only when the options-page switch is on. The
+             skip count answers "why did some lines stay silent". -->
+        <p class="engine-msg" id="ttsStatus" hidden></p>
+        <button type="button" id="diagCopy" class="diag-btn" data-i18n="diagCopy">复制诊断信息</button>
       </div>
 
       <!-- --- BYO summary (setup itself lives on the options page) --- -->
@@ -326,6 +330,7 @@
   <script src="languages.js"></script>
   <script src="providers.js"></script>
   <script src="provider-icons.js"></script>
+  <script src="i18n-runtime.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
