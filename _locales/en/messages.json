@@ -359,6 +359,10 @@
   "byoErrAuth": {
     "message": "The key was rejected (401/403) — check that it was copied in full and is active."
   },
+  "byoErrListAuth": {
+    "message": "This key isn't allowed to read the list. Give it that permission in the provider's dashboard, then fetch again.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "The provider is rate-limiting — slowing down and retrying automatically."
   },
@@ -520,6 +524,24 @@
   "popupByoUntested": {
     "message": "not tested"
   },
+  "popupModelPick": {
+    "message": "Translation model"
+  },
+  "popupModelMore": {
+    "message": "More models…"
+  },
+  "popupModelFetch": {
+    "message": "Fetch models in settings"
+  },
+  "popupModelSwitched": {
+    "message": "From here on: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "No model chosen"
+  },
   "exportUsesYouTube": {
     "message": "The download uses YouTube's own whole-track translation — free, and it does not spend your API key."
   },
@@ -605,7 +627,7 @@
     "message": "No endpoint address yet — this provider cannot be used until you enter one."
   },
   "optBaseHint": {
-    "message": "Paste a base URL or a full endpoint — e.g. https://example.com/v1 or https://example.com/v1/chat/completions. For a model server on this computer (Ollama, LM Studio) use http://localhost:11434/v1 — localhost is the only place plain http is accepted, and the key can stay empty."
+    "message": "A base URL or a full endpoint both work, e.g. https://example.com/v1 or https://example.com/v1/chat/completions. For Ollama or LM Studio on this machine, http://localhost:11434/v1 is the right shape. The key can stay empty; plain http only works for loopback addresses."
   },
   "startS1Alt": {
     "message": "Player diagram: an original line and a translated line sit near the bottom of the picture"
@@ -671,7 +693,7 @@
     "message": "Fetching…"
   },
   "ttsVoicesSwitched": {
-    "message": "All $N$ voices your key offers for this language — including the older Standard / Wavenet tiers. They work for this language only; the link above returns to the everyday voices, which follow the translation language on their own. Nothing is lost: fetching again brings this list back.",
+    "message": "These are all $N$ voices your key has for the current language, older Standard / Wavenet tiers included. They only apply to this language; click the line above to go back to the everyday voices, which follow you across languages. You can fetch this list again any time.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -800,6 +822,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ lines here · $M$ skipped ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "translation not ready in time"
+  },
+  "ttsSkipSilent": {
+    "message": "no sound came out"
+  },
   "ttsRegionLabel": {
     "message": "Service region"
   },
@@ -827,6 +859,9 @@
   "startPicWhole2": {
     "message": "la primera es…",
     "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "More voices…"
   },
   "ttsRobotVoices": {
     "message": "Robotic",
@@ -857,7 +892,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Summaries need your own translation service (own key or a local endpoint) — the free engines only translate.",
+    "message": "Summaries need a service of your own: any provider with your key in the translation pane, or a local model on this machine. The free engines only translate. They don't summarize.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,11 +900,11 @@
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
   "sumFail": {
-    "message": "The summary failed — try again later.",
+    "message": "The summary failed. Try again later.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "The whole subtitle track will be sent to $PROVIDER$ (in $PARTS$ part(s)), on your own quota.",
+    "message": "This will send the whole subtitle track to $PROVIDER$, in $PARTS$ part(s), on your own quota.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

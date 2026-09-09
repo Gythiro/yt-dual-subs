@@ -359,6 +359,10 @@
   "byoErrAuth": {
     "message": "Key 被拒絕(401/403):檢查是否複製完整、是否已開通。"
   },
+  "byoErrListAuth": {
+    "message": "這把 Key 沒有「讀取清單」的權限。去服務商後台給它加上，再拉一次。",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "服務商限流，已自動放慢重試。"
   },
@@ -520,6 +524,24 @@
   "popupByoUntested": {
     "message": "未驗證"
   },
+  "popupModelPick": {
+    "message": "翻譯模型"
+  },
+  "popupModelMore": {
+    "message": "更多模型…"
+  },
+  "popupModelFetch": {
+    "message": "到設定頁取得模型"
+  },
+  "popupModelSwitched": {
+    "message": "之後使用 $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "未選模型"
+  },
   "exportUsesYouTube": {
     "message": "匯出用的是 YouTube 內建的整軌翻譯——免費，不消耗你的 API。"
   },
@@ -605,7 +627,7 @@
     "message": "還沒填介面位址，這個服務商暫時用不了。"
   },
   "optBaseHint": {
-    "message": "填 Base URL 或完整介面位址都可以，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本機模型服務（Ollama、LM Studio）填 http://localhost:11434/v1 —— 只有本機回環位址可以用 http，Key 可留空。"
+    "message": "填 Base URL 或完整介面位址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本機的 Ollama、LM Studio 填 http://localhost:11434/v1 這種位址就行。Key 可以留空；http 只有本機回環位址能用。"
   },
   "startS1Alt": {
     "message": "播放器示意圖：畫面下方是一行原文和一行譯文"
@@ -671,7 +693,7 @@
     "message": "擷取中…"
   },
   "ttsVoicesSwitched": {
-    "message": "這是你的 Key 在目前語言下能用的全部 $N$ 個音色，包含較舊的 Standard / Wavenet 檔。它們只對目前語言有效；點上面那行字可以換回常用音色（換語言會自動跟著走）。什麼都不會遺失：想再看這份完整清單，重新拉取一次即可。",
+    "message": "這是你的 Key 在當前語言下的全部 $N$ 個音色，舊檔 Standard / Wavenet 也在。它們只對這個語言生效；點上面那行換回常用音色，換語言會自動跟著走。這份清單隨時能再拉出來。",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -800,6 +822,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "本影片 $N$ 句 · 跳過 $M$ 句（$W$）",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "譯文沒趕上"
+  },
+  "ttsSkipSilent": {
+    "message": "沒出聲"
+  },
   "ttsRegionLabel": {
     "message": "服務區域"
   },
@@ -823,6 +855,9 @@
   },
   "startPicWhole2": {
     "message": "第一個是……"
+  },
+  "popupVoiceMore": {
+    "message": "更多音色…"
   },
   "ttsRobotVoices": {
     "message": "機器音",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "總結要用你自己的翻譯服務(自帶 Key 或本地端點),免費引擎只翻譯不總結。",
+    "message": "總結需要你自己的翻譯服務（填過 Key 的任何一家，或本機跑的模型）。免費引擎只翻譯，不總結。",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "整軌字幕將發給 $PROVIDER$(分 $PARTS$ 段),用你自己的額度。",
+    "message": "會把整條字幕發給 $PROVIDER$，分 $PARTS$ 段，花的是你自己的額度。",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

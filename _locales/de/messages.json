@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Der Schlüssel wurde abgelehnt (401/403) — prüfen, ob er vollständig kopiert und aktiv ist."
   },
+  "byoErrListAuth": {
+    "message": "Dieser Schlüssel darf die Liste nicht lesen. Erteile ihm beim Anbieter die Leseberechtigung und hol sie erneut ab.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Der Anbieter drosselt die Anfragen — es wird automatisch verlangsamt und erneut versucht."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "nicht getestet"
   },
+  "popupModelPick": {
+    "message": "Übersetzungsmodell"
+  },
+  "popupModelMore": {
+    "message": "Weitere Modelle…"
+  },
+  "popupModelFetch": {
+    "message": "Modelle in den Einstellungen holen"
+  },
+  "popupModelSwitched": {
+    "message": "Ab jetzt: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Kein Modell gewählt"
+  },
   "exportUsesYouTube": {
     "message": "Der Download nutzt YouTubes eigene Übersetzung der gesamten Spur — kostenlos, und dein API-Schlüssel wird nicht verbraucht."
   },
@@ -572,7 +594,7 @@
     "message": "Noch keine Endpunktadresse — dieser Anbieter kann erst verwendet werden, wenn du eine einträgst."
   },
   "optBaseHint": {
-    "message": "Eine Basis-URL oder einen vollständigen Endpunkt einfügen — z. B. https://example.com/v1 oder https://example.com/v1/chat/completions. Für einen Modellserver auf diesem Computer (Ollama, LM Studio) http://localhost:11434/v1 verwenden — localhost ist der einzige Ort, an dem unverschlüsseltes http akzeptiert wird, und der Schlüssel kann leer bleiben."
+    "message": "Eine Base-URL oder ein vollständiger Endpunkt gehen beide, z. B. https://example.com/v1 oder https://example.com/v1/chat/completions. Für Ollama oder LM Studio auf diesem Rechner passt http://localhost:11434/v1. Der Schlüssel darf leer bleiben; einfaches http geht nur für Loopback-Adressen."
   },
   "startS1Alt": {
     "message": "Player-Diagramm: eine Originalzeile und eine übersetzte Zeile sitzen unten im Bild"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "In diesem Video $N$ Sätze · $M$ übersprungen ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "Übersetzung kam zu spät"
+  },
+  "ttsSkipSilent": {
+    "message": "keine Stimme zu hören"
+  },
   "ttsEnableHint": {
     "message": "Wenn aktiv, wird die Übersetzung jeder Untertitelzeile vorgelesen, sobald sie erscheint; eine Zeile, deren Übersetzung nicht rechtzeitig fertig ist, wird übersprungen statt nachgeholt. Während eine Zeile spricht, sinkt der Ton des Videos auf den unten festgelegten Pegel. Eine Cloud-Stimme, die länger dauert, verlangsamt das Video etwas — die Stimmen des Browsers melden keine Dauer und können das daher nicht."
   },
@@ -796,7 +828,7 @@
     "message": "Wird geladen…"
   },
   "ttsVoicesSwitched": {
-    "message": "Alle $N$ Stimmen, die dein Schlüssel für diese Sprache anbietet — einschließlich der älteren Stufen Standard / Wavenet. Sie gelten nur für diese Sprache; der Link oben führt zurück zu den üblichen Stimmen, die der Übersetzungssprache von selbst folgen. Nichts geht verloren: erneutes Abrufen bringt diese Liste zurück.",
+    "message": "Das sind alle $N$ Stimmen deines Schlüssels für die aktuelle Sprache, auch die älteren Standard-/Wavenet-Stufen. Sie gelten nur für diese Sprache; über die Zeile oben kommst du zurück zu den Alltagsstimmen, die beim Sprachwechsel mitgehen. Die Liste kannst du jederzeit neu abrufen.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Der Ton ist nicht angekommen — versuche es erneut oder wähle eine andere Stimme."
+  },
+  "popupVoiceMore": {
+    "message": "Weitere Stimmen…"
   },
   "ttsRobotVoices": {
     "message": "Robotisch",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Die Zusammenfassung braucht deinen eigenen Übersetzungsdienst (eigener Schlüssel oder lokaler Endpunkt) — die kostenlosen Dienste übersetzen nur.",
+    "message": "Zusammenfassungen brauchen deinen eigenen Dienst: einen Anbieter mit deinem Schlüssel oder ein lokales Modell auf diesem Rechner. Die kostenlosen Dienste übersetzen nur, sie fassen nicht zusammen.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Die komplette Untertitelspur geht an $PROVIDER$ (in $PARTS$ Teilen) und verbraucht dein Kontingent.",
+    "message": "Das schickt die komplette Untertitelspur an $PROVIDER$, in $PARTS$ Teilen, auf dein eigenes Kontingent.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

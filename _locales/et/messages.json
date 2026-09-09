@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Võti lükati tagasi (401/403) — kontrolli, et see on täielikult kopeeritud ja aktiivne."
   },
+  "byoErrListAuth": {
+    "message": "Sellel võtmel pole loendi lugemise õigust. Anna see teenusepakkuja juures ja tõmba uuesti.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Teenusepakkuja piirab päringute sagedust — aeglustan ja proovin automaatselt uuesti."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "testimata"
   },
+  "popupModelPick": {
+    "message": "Tõlkemudel"
+  },
+  "popupModelMore": {
+    "message": "Rohkem mudeleid…"
+  },
+  "popupModelFetch": {
+    "message": "Too mudelid seadetes"
+  },
+  "popupModelSwitched": {
+    "message": "Edaspidi: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Mudelit pole valitud"
+  },
   "exportUsesYouTube": {
     "message": "Allalaadimine kasutab YouTube’i enda kogu raja tõlget — tasuta ega kuluta sinu API võtit."
   },
@@ -572,7 +594,7 @@
     "message": "Lõpp-punkti aadressi veel pole — seda teenusepakkujat ei saa enne aadressi sisestamist kasutada."
   },
   "optBaseHint": {
-    "message": "Kleebi baas-URL või täielik lõpp-punkt — nt https://example.com/v1 või https://example.com/v1/chat/completions. Selle arvuti mudeliserveri (Ollama, LM Studio) jaoks kasuta http://localhost:11434/v1 — localhost on ainus koht, kus tavaline http on lubatud, ja võti võib jääda tühjaks."
+    "message": "Sobib nii base URL kui ka täielik lõpp-punkt, nt https://example.com/v1 või https://example.com/v1/chat/completions. Selle arvuti Ollama või LM Studio jaoks on õige kuju http://localhost:11434/v1. Võtme võib tühjaks jätta; lihtne http töötab ainult loopback-aadressidel."
   },
   "startS1Alt": {
     "message": "Pleieri skeem: originaalrida ja tõlkerida pildi allosas"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "Selles videos $N$ lauset · $M$ vahele jäetud ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "tõlge ei jõudnud kohale"
+  },
+  "ttsSkipSilent": {
+    "message": "hääl jäi tulemata"
+  },
   "ttsEnableHint": {
     "message": "Kui sisse lülitatud, loetakse iga subtiitri tõlge ette kohe ilmumisel; rida, mille tõlge pole õigeks ajaks valmis, jäetakse vahele ega loeta hiljem järele. Ettelugemise ajal langeb video enda heli allpool määratud tasemele. Pikk pilvehääl aeglustab videot ka veidi — brauseri enda hääled ei teata kestust, seega nemad seda teha ei saa."
   },
@@ -796,7 +828,7 @@
     "message": "Hangin…"
   },
   "ttsVoicesSwitched": {
-    "message": "Kõik $N$ häält, mida sinu võti selle keele jaoks pakub — sh vanemad Standard / Wavenet tasemed. Need töötavad ainult selle keele jaoks; ülalolev link viib tagasi igapäevaste häälte juurde, mis järgivad ise tõlkekeelt. Midagi ei kao: uuesti hankimine toob selle loendi tagasi.",
+    "message": "Need on kõik sinu võtme $N$ häält praeguse keele jaoks, ka vanemad Standard / Wavenet read. Need kehtivad ainult selles keeles; ülemine rida viib tagasi igapäevaste häälte juurde, mis käivad keelevahetusega kaasas. Selle loendi saad igal ajal uuesti tõmmata.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Heli ei jõudnud kohale — proovi uuesti või vali teine hääl."
+  },
+  "popupVoiceMore": {
+    "message": "Rohkem hääli…"
   },
   "ttsRobotVoices": {
     "message": "Robootiline",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Kokkuvõte vajab sinu enda tõlketeenust (oma võti või kohalik lõpp-punkt) — tasuta mootorid ainult tõlgivad.",
+    "message": "Kokkuvõte vajab sinu enda teenust: võtmega teenusepakkujat või kohalikku mudelit selles arvutis. Tasuta mootorid ainult tõlgivad, kokku ei võta.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Kogu subtiitririda saadetakse teenusele $PROVIDER$ ($PARTS$ osas) sinu kvoodi arvelt.",
+    "message": "See saadab kogu subtiitririda teenusele $PROVIDER$, $PARTS$ osas, sinu kvoodi arvelt.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

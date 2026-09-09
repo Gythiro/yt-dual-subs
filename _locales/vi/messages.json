@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Khóa bị từ chối (401/403) — kiểm tra đã sao chép đầy đủ và khóa còn hiệu lực."
   },
+  "byoErrListAuth": {
+    "message": "Khoá này không có quyền đọc danh sách. Hãy cấp quyền đó trong trang quản lý của nhà cung cấp rồi lấy lại.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Nhà cung cấp đang giới hạn tốc độ — đang chậm lại và tự động thử lại."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "chưa kiểm tra"
   },
+  "popupModelPick": {
+    "message": "Mô hình dịch"
+  },
+  "popupModelMore": {
+    "message": "Thêm mô hình…"
+  },
+  "popupModelFetch": {
+    "message": "Lấy mô hình trong cài đặt"
+  },
+  "popupModelSwitched": {
+    "message": "Từ đây dùng $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Chưa chọn mô hình"
+  },
   "exportUsesYouTube": {
     "message": "Bản tải về dùng bản dịch toàn bộ của chính YouTube — miễn phí, không tốn khóa API của bạn."
   },
@@ -572,7 +594,7 @@
     "message": "Chưa có địa chỉ endpoint — chưa dùng được nhà cung cấp này cho đến khi bạn nhập địa chỉ."
   },
   "optBaseHint": {
-    "message": "Dán URL gốc hoặc endpoint đầy đủ — ví dụ https://example.com/v1 hoặc https://example.com/v1/chat/completions. Với máy chủ mô hình trên máy này (Ollama, LM Studio) hãy dùng http://localhost:11434/v1 — localhost là nơi duy nhất chấp nhận http thuần, và khóa có thể để trống."
+    "message": "Điền base URL hay endpoint đầy đủ đều được, ví dụ https://example.com/v1 hoặc https://example.com/v1/chat/completions. Ollama hay LM Studio trên máy này thì điền http://localhost:11434/v1. Khóa để trống cũng được; http thường chỉ dùng cho địa chỉ loopback."
   },
   "startS1Alt": {
     "message": "Sơ đồ trình phát: một dòng gốc và một dòng dịch nằm gần đáy hình"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ câu trong video này · bỏ qua $M$ ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "bản dịch chưa kịp"
+  },
+  "ttsSkipSilent": {
+    "message": "không phát ra tiếng"
+  },
   "ttsEnableHint": {
     "message": "Khi bật, bản dịch mỗi phụ đề được đọc ngay khi xuất hiện; dòng chưa dịch kịp sẽ bị bỏ qua chứ không đọc bù sau. Trong lúc đọc, âm thanh video hạ xuống mức cài bên dưới. Giọng đám mây đọc lâu cũng làm chậm video một chút — giọng của trình duyệt không báo độ dài nên không thể làm vậy."
   },
@@ -796,7 +828,7 @@
     "message": "Đang tải…"
   },
   "ttsVoicesSwitched": {
-    "message": "Tất cả $N$ giọng mà khóa của bạn cung cấp cho ngôn ngữ này — gồm cả các bậc Standard / Wavenet cũ hơn. Chúng chỉ dùng cho ngôn ngữ này; liên kết phía trên đưa về các giọng thường dùng, vốn tự theo ngôn ngữ dịch. Không mất gì: tải lại sẽ hiện danh sách này.",
+    "message": "Đây là toàn bộ $N$ giọng mà khóa của bạn có cho ngôn ngữ hiện tại, gồm cả các dòng cũ Standard / Wavenet. Chúng chỉ áp dụng cho ngôn ngữ này; bấm dòng phía trên để quay lại các giọng thường dùng, vốn tự theo khi đổi ngôn ngữ. Danh sách này lấy lại lúc nào cũng được.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Không nhận được âm thanh — thử lại, hoặc chọn giọng khác."
+  },
+  "popupVoiceMore": {
+    "message": "Thêm giọng…"
   },
   "ttsRobotVoices": {
     "message": "Robot",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Tóm tắt cần dịch vụ dịch của riêng bạn (khóa riêng hoặc endpoint cục bộ) — các engine miễn phí chỉ dịch thôi.",
+    "message": "Tóm tắt cần dịch vụ của riêng bạn: một nhà cung cấp có khóa của bạn, hoặc mô hình chạy trên máy này. Engine miễn phí chỉ dịch, không tóm tắt.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Toàn bộ track phụ đề sẽ được gửi tới $PROVIDER$ (chia $PARTS$ phần), dùng hạn mức của bạn.",
+    "message": "Sẽ gửi toàn bộ track phụ đề tới $PROVIDER$, chia $PARTS$ phần, dùng hạn mức của bạn.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

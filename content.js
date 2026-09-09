@@ -201,6 +201,19 @@
   // in onCues when data.aligned == null; every consumer keys off cueToGroup.
   let sentGroups = null;        // [{startIdx,endIdx,text,start,end}] | null
   let cueToGroup = null;        // cue idx -> group idx | null (null = per-cue mode)
+  // Sentence spans for READING ALOUD ONLY, built when YouTube supplies the
+  // translation (tlang) and the track is the scrolling ASR kind. There the
+  // captions arrive as running fragments and YouTube translates each fragment
+  // on its own, so a cue's translation can be a single word — "from an"
+  // becomes "从", and the voice reads one character, alone, as a sentence.
+  // Grouping them for the VOICE fixes that without touching what is drawn:
+  // the captions still pair fragment with fragment, as they must, because
+  // that is what lines up with the original on screen.
+  //
+  // Deliberately NOT sentGroups: those also drive prefetch, export and the
+  // gtx request path, all of which must keep working per-cue under tlang.
+  let speechSpans = null;       // [{startIdx,endIdx}] | null
+  let cueToSpan = null;         // cue idx -> span idx | null
   let activeGroupIdx = -1;      // group of the active cue (-1 when none/per-cue)
   let cueTrackKind = "";        // "asr" | "manual" | "" — from inject's captured URL
   let cueSameLang = false;      // track already speaks the target language —
@@ -1158,16 +1171,21 @@
       const ch = line.match(/^@\s*\[?(\d+:\d{2}(?::\d{2})?)\]?\s*(.*)$/);
       if (ch) {
         chapters = chapters || body.appendChild(sumNode("div", "ytds-sum-chapters"));
-        const row = sumNode("div", "ytds-sum-ch");
-        const sec = sumParseStamp(ch[1]);
-        const st = sumButton(ch[1], "ytds-sum-stamp", () => sumSeek(sec));
-        row.appendChild(st);
-        row.appendChild(sumNode("span", "ytds-sum-ch-title", ch[2]));
-        chapters.appendChild(row);
+        // One grid per chapter: the stamp sits in the first column and both
+        // the title and every point that follows sit in the second. The
+        // points used to be siblings of the stamp indented by a fixed 46px,
+        // which is the width of "0:05" and nothing else — an hour-long video
+        // stamps 1:02:33 and the text under it stopped lining up with the
+        // heading it belonged to.
+        const sec = sumNode("section", "ytds-sum-sec");
+        const stamp = sumParseStamp(ch[1]);
+        sec.appendChild(sumButton(ch[1], "ytds-sum-stamp", () => sumSeek(stamp)));
+        sec.appendChild(sumNode("h3", "ytds-sum-ch-title", ch[2]));
+        chapters.appendChild(sec);
         continue;
       }
       const pt = line.match(/^[-•]\s*(.*)$/);
-      const dest = chapters && chapters.lastChild ? chapters : null;
+      const dest = chapters && chapters.lastChild ? chapters.lastChild : null;
       const li = sumNode("div", "ytds-sum-pt", pt ? pt[1] : line);
       if (dest) dest.appendChild(li); else body.appendChild(li);
     }
@@ -1188,7 +1206,7 @@
     const body = sumBody();
     if (!body) return;
     body.appendChild(sumNode("p", null,
-      ct("sumNeedKey", "总结要用你自己的翻译服务(自带 Key 或本地端点),免费引擎只翻译不总结。")));
+      ct("sumNeedKey", "总结需要你自己的翻译服务（填过 Key 的任何一家，或本机跑的模型）。免费引擎只翻译，不总结。")));
     body.appendChild(sumButton(ct("byoConfigure", "去配置"), "ytds-sum-primary",
       () => extCall(() => chrome.runtime.sendMessage({ type: "openOptions" }))));
   }
@@ -1265,7 +1283,7 @@
       if (!b2) return;
       b2.appendChild(sumNode("p", null,
         tsub("sumConfirm", [info.name, String(chunks.length)],
-          "整轨字幕将发给 $1$(分 $2$ 段),用你自己的额度。")));
+          "会把整条字幕发给 $1$，分 $2$ 段，花的是你自己的额度。")));
       b2.appendChild(sumButton(ct("sumStart", "开始总结"), "ytds-sum-primary",
         () => { if (myEpoch === sumEpoch) sumRun(chunks); }));
       b2.appendChild(sumButton(ct("exportConfirmBack", "取消"), null,
@@ -1425,6 +1443,17 @@
     const b0 = parseFloat(menuEl.style.bottom) || 0;
     const over = b0 + mh - (pr.height - 4);
     if (over > 0) menuEl.style.bottom = Math.max(4, b0 - over) + "px";
+    // …and the same care sideways, which it never had. The menu hangs to the
+    // LEFT of a right-aligned anchor, and the anchor is draggable: park the
+    // button near the left edge and the menu opened off the side of the
+    // player, most of it outside the picture. The height audit above was
+    // written after a review caught the vertical version of this; nothing had
+    // ever measured the horizontal one, because no test could open this menu
+    // in a player at all until menu-locales.js.
+    const mw = menuEl.getBoundingClientRect().width;
+    const r0 = parseFloat(menuEl.style.right) || 0;
+    const spill = mw + r0 - (pr.width - 4);
+    if (spill > 0) menuEl.style.right = Math.max(4, r0 - spill) + "px";
   }
 
   function onDocMouseDownForMenu(e) {
@@ -1777,6 +1806,9 @@
   // dense passage then alternates slow/normal and cuts tails (measured on
   // V6IItDAEtjs). Lines must be sized against the rate the user chose.
   let ttsUserRate = 0;          // 0 = unknown, fall back to the live value
+  // The last absolute video rate we asked inject for, held until the element
+  // is seen at something else — see ttsDuck and the sampler in cueTick.
+  let ttsLastFit = 0;
   // Judging playhead jumps needs both clocks from the SAME tick: background
   // tabs clamp the poll to ~1s and 2× playback doubles the honest video
   // delta, so only |videoΔ − wallΔ×rate| means anything, never videoΔ alone.
@@ -1784,6 +1816,85 @@
   let ttsTickVid = -1;          // video ms at that sample; -1 = don't judge yet
   let ttsJumpCuts = 0;          // calibration count only — shown nowhere
   let ttsOverran = 0;           // lines the NEXT line's takeover cut short — recorded, not acted on
+  // ---- bounded drift (the debt) --------------------------------------------
+  // A dense passage asks for more speech than its cues can hold: measured on
+  // V6IItDAEtjs, lines needed 2.4x to fit, while speech caps at 1.4x and the
+  // video may only be slowed to 76% of the viewer's rate — 1.84x between them.
+  // Past that the old answer was to cut the tail off, every time.
+  //
+  // The answer here is the one the offline dubbers use, made bounded: let a
+  // line START LATE and pay the lateness back out of the gaps that follow.
+  // The debt is how far behind the speech is running, in WALL-CLOCK ms — the
+  // lag an ear hears. Video ms are worth more than wall ms whenever the video
+  // is slowed (at 0.85x, 1200 video ms is 1.4s of waiting), so everything is
+  // converted at the rate in force before it is compared with the cap.
+  //
+  // The cap is what stops "never cut" from becoming "always behind": 1200ms
+  // covers one or two overrunning lines and is paid back within a couple of
+  // roomy ones. Under it a line is never cut; at it, it is.
+  const TTS_DEBT_MAX_MS = 1200;
+  // Under this the debt is settled: no repayment pressure on the speech rate.
+  const TTS_DEBT_CLEAR_MS = 150;
+  // Cruise may not UNLOCK while this much is owed. Repayment shortens every
+  // window, which deflates the need figure that cruise votes on — without this
+  // the tightest passage would read as roomy, cruise would let the video back
+  // to full speed, and the debt would run away.
+  const TTS_DEBT_HOLD_MS = 200;
+  // The last gear before a cut: past 60% of the cap, a line that still cannot
+  // fit may speak at 1.55x. Not a new ceiling — 1.4x stays the comfortable
+  // one, and this is a state, not a setting.
+  const TTS_RATE_MAX = 1.4;
+  const TTS_RATE_URGENT = 1.55;
+  // What the two existing tiers can absorb between them before anything has
+  // to be borrowed. Slowing the video is itself borrowed time — but borrowed
+  // from the picture, which moves with the speech, so nothing falls behind and
+  // nothing is owed. inject will not go below 76% of the viewer's rate
+  // (inject.js), so 1.4x speech inside a 0.76x picture fits 1.84x of speech
+  // into one cue with no debt at all. Only past THAT does drift start.
+  const TTS_VIDEO_FLOOR = 0.76;
+  const TTS_FIT_CEILING = TTS_RATE_MAX / TTS_VIDEO_FLOOR;
+  let ttsDebtMs = 0;
+  // Every line goes on air a little after its cue: the cue loop samples every
+  // 120ms and the bytes still have to decode. That offset is constant, it does
+  // not accumulate, and nobody hears it — but counted as debt it would put the
+  // speech in permanent repayment, hurrying every line of every video to pay
+  // back a lag that was never there. Only lateness past this is drift.
+  const TTS_DEBT_FLOOR_MS = 300;
+  // How late THIS line is against the cue it belongs to, in wall ms. Measured
+  // at takeover rather than accumulated: a seek, a pause or a dropped line
+  // would each need their own correction to an accumulator, and the video's
+  // own clock already answers the question without any of them.
+  function ttsLatenessMs(idx) {
+    const v = getVideo();
+    if (!v || idx == null) return 0;
+    const startMs = ttsLineStartMs(idx);
+    const rate = v.playbackRate || 1;
+    const late = (v.currentTime * 1000 - startMs) / rate;
+    return Math.max(0, late - TTS_DEBT_FLOOR_MS);
+  }
+  // ---- takeover trace ------------------------------------------------------
+  // A ring of the last few sizing and handover decisions, readable over
+  // engineStatus, so a "the line lost its last word" report from a live video
+  // can be matched to what the sizing believed at that moment. Numbers and cue
+  // indexes only — no line text rides along, so the diagnostic bundle carries
+  // no category of data it did not already carry.
+  const TTS_TRACE_MAX = 48;
+  const ttsTrace = [];
+  // Why the skipped lines were skipped, counted per reason for THIS video. The
+  // ring above forgets, and "skipped 2" without a reason is the shape of
+  // question that cost two rounds of guessing to answer — the popup can say
+  // "the translation had not arrived" instead of leaving a bare number that
+  // reads like a fault. Counted here rather than at each of the six skip
+  // sites, so a seventh cannot be added without its reason coming along.
+  let ttsSkipWhy = Object.create(null);
+  function ttsTraceAdd(ev) {
+    ev.t = Date.now();
+    if (ev.k === "skip" && ev.why) {
+      ttsSkipWhy[ev.why] = (ttsSkipWhy[ev.why] || 0) + 1;
+    }
+    ttsTrace.push(ev);
+    if (ttsTrace.length > TTS_TRACE_MAX) ttsTrace.shift();
+  }
   // ---- steady cruise -------------------------------------------------------
   // Per-line sizing in a dense stretch was the audible wobble: speech jumping
   // 1.0↔1.4 line to line, the video snapping back at every seam. After two
@@ -1794,15 +1905,25 @@
   // a set module ttsFit also parks the user-rate sampler for the stretch —
   // without that, cueTick would read our own 0.85 back as the user's choice.
   let ttsCruiseTight = 0, ttsCruiseLoose = 0, ttsCruising = false;
+  // Votes on the STRUCTURAL need — what the line would have needed inside its
+  // own cue, with no borrowing. The need that repayment produces is smaller by
+  // construction, and voting on that would unlock cruise exactly where the
+  // passage is tightest.
   function ttsCruiseNote(needRate) {
     if (!settings.ttsCruise) { ttsCruising = false; return; }
+    const was = ttsCruising;
     if (needRate >= 1.05) {
       ttsCruiseLoose = 0;
       if (++ttsCruiseTight >= 2) ttsCruising = true;
     } else if (needRate <= 0.8) {
       ttsCruiseTight = 0;
-      if (++ttsCruiseLoose >= 3) ttsCruising = false;
+      // Owing means the roomy line in hand is being spent on the last one's
+      // overrun. Letting the video back up here is what turns borrowing into
+      // a runaway: the repayment it was about to make is cancelled.
+      if (++ttsCruiseLoose >= 3 && ttsDebtMs <= TTS_DEBT_HOLD_MS)
+        ttsCruising = false;
     }
+    if (ttsCruising !== was) ttsTraceAdd({ k: "cru", on: ttsCruising });
     // in between: keep the state and both counters — flapping here would just
     // move the square wave one level up
   }
@@ -1884,11 +2005,13 @@
       try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (_e) { /* ignore */ }
     }
     ttsFit = undefined;             // it described the line that just stopped
+    ttsLastFit = 0;                 // …and so did the rate it asked for
     ttsAheadClear();
     ttsAheadOff = false;             // the provider may be a different one now
     ttsSpokenText = "";
     ttsTickVid = -1;                 // a fresh start is not a jump
     ttsCruiseTight = 0; ttsCruiseLoose = 0; ttsCruising = false;
+    ttsDebtMs = 0;                   // nothing is owed for a line nobody heard
     for (const rel of Array.from(ttsPendingRelease.values())) rel();
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: false, nav: !!navigated }, "*"); }
     catch (_e) { /* ignore */ }
@@ -1909,7 +2032,13 @@
       localUtter = null;
       try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (_e) { /* ignore */ }
     }
+    // The debt describes how far behind the line the viewer jumped away from
+    // was running. There is no such line any more, and carrying its lateness
+    // into the landing point would hurry the first line after a seek for a
+    // lag nobody ever heard.
+    ttsDebtMs = 0;
     ttsFit = undefined;
+    ttsLastFit = 0;
     ttsSpokenIdx = -1;               // a seek back must be allowed to re-read it
     ttsSpokenText = "";
     // The landing spot may be about to re-duck: releasing here and re-ducking
@@ -2002,6 +2131,18 @@
 
   function ttsDuck(on, fit) {
     if (on && ttsHoldTimer) { clearTimeout(ttsHoldTimer); ttsHoldTimer = 0; }
+    // Releasing the duck releases the rate with it. Nothing used to clear
+    // ttsFit when a line simply ENDED — only a stop or a seek did — so between
+    // one line and the next it still held the last line's value, and the
+    // sampler below, which only looks while no fit of ours is applied, was
+    // shut for the whole gap. On a stretch with no subtitles it stayed shut.
+    if (!on) ttsFit = undefined;
+    // Remember the absolute rate we asked for, so the sampler can tell our own
+    // slowdown from a rate the viewer chose. inject applies it asynchronously
+    // and lets go of it asynchronously too: for a tick or two after the fit is
+    // cleared the element still reads what WE asked for, and sampling there
+    // wrote our slowdown down as the viewer's choice.
+    if (on && fit != null) ttsLastFit = fit;
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: !!on,
       pct: settings.ttsDuckPct, fit: fit }, "*"); }
     catch (_e) { /* ignore */ }
@@ -2031,15 +2172,55 @@
   //
   // Contract, unchanged: null = nothing to speak, ever (not a skip);
   // "" = no answer yet (a skip); anything else is the line.
+  // Join one sentence's worth of YouTube's per-fragment translations. The
+  // fragments were cut mid-sentence, so they rejoin without a seam: "从" +
+  // "旁观者的角度来看" is the sentence YouTube would have given for the whole
+  // thing. A space goes in only where both sides are wordy scripts — putting
+  // one between two CJK characters would be a word break that is not there.
+  function tlangSpanText(span) {
+    let out = "";
+    for (let k = span.startIdx; k <= span.endIdx; k++) {
+      const c = cueList && cueList[k];
+      if (!c) continue;
+      let part;
+      if (cueAligned && typeof c.trans === "string" && c.trans) part = c.trans;
+      else if (tcueList && cueAligned === false) {
+        const m = nearestTcue(c.start);
+        part = m ? m.text : "";
+      }
+      part = dedupeTrans(part || "", c.text);
+      if (!part) continue;
+      // A fragment repeated verbatim by the scrolling track says nothing new.
+      if (out.endsWith(part)) continue;
+      if (!out) { out = part; continue; }
+      out += (/[A-Za-z0-9)\]]$/.test(out) && /^[A-Za-z0-9(\[]/.test(part))
+        ? " " : "";
+      out += part;
+    }
+    return out;
+  }
+
   function cueSpeechText(idx) {
     const cue = cueList && cueList[idx];
     if (!cue) return "";
     if (cueSameLang) return null;
     const origText = cue.text;
     let text;
-    if (cueAligned && typeof cue.trans === "string" && cue.trans) {
+    // Under tlang on a scrolling track the voice speaks whole sentences, not
+    // the fragments the captions are drawn in: the first cue of a sentence
+    // says all of it, and the fragments it swallowed say nothing at all —
+    // null, which this contract already defines as "never to be spoken", so
+    // they are not charged as skips either.
+    if (cueToSpan && speechSpans && cueToSpan[idx] != null) {
+      const span = speechSpans[cueToSpan[idx]];
+      if (span) {
+        if (idx !== span.startIdx) return null;
+        text = tlangSpanText(span);
+      }
+    }
+    if (text === undefined && cueAligned && typeof cue.trans === "string" && cue.trans) {
       text = dedupeTrans(cue.trans, origText);
-    } else if (tcueList && cueAligned === false) {
+    } else if (text === undefined && tcueList && cueAligned === false) {
       const m = nearestTcue(cue.start);
       if (m) text = dedupeTrans(m.text, origText);
     }
@@ -2192,6 +2373,7 @@
     if (ttsSpokenIdx < 0) return;
     if (ttsSpokenContains(tMs)) { ttsRealign(tMs); return; }
     ttsJumpCuts++;
+    ttsTraceAdd({ k: "cut", by: "jump", vt: Math.round(tMs), pi: ttsSpokenIdx });
     ttsCutResidual(tMs);
   }
 
@@ -2207,6 +2389,13 @@
   }
 
   function ttsLineStartMs(idx) {
+    // A spoken sentence begins where its FIRST fragment does, not where the
+    // fragment that happens to be on screen does.
+    if (cueToSpan && speechSpans && cueToSpan[idx] != null) {
+      const sp = speechSpans[cueToSpan[idx]];
+      const c0 = sp && cueList && cueList[sp.startIdx];
+      if (c0 && c0.start != null) return c0.start;
+    }
     if (cueToGroup && sentGroups && cueToGroup[idx] != null && !ttsPerCueInGroup(idx)) {
       const grp = sentGroups[cueToGroup[idx]];
       if (grp && grp.start != null) return grp.start;
@@ -2230,6 +2419,17 @@
   // was the claimed CUE's end, one slice again, which brought the squeeze
   // this function removes back on every video's final line.
   function ttsWindowEnd(idx) {
+    // …and it owns the room up to the NEXT sentence, not up to the next
+    // fragment of itself. Sized against a fragment, a whole spoken sentence
+    // reads as needing three times the speed it really does.
+    if (cueToSpan && speechSpans && cueToSpan[idx] != null) {
+      const sp = speechSpans[cueToSpan[idx]];
+      if (sp && sp.endIdx != null) {
+        const after = cueList && cueList[sp.endIdx + 1];
+        const own = cueList && cueList[sp.endIdx];
+        if (after || own) return after || { start: own.end };
+      }
+    }
     if (cueToGroup && sentGroups && cueToGroup[idx] != null && !ttsPerCueInGroup(idx)) {
       const grp = sentGroups[cueToGroup[idx]];
       if (grp && grp.endIdx != null) {
@@ -2267,20 +2467,65 @@
     // at ITS start, making the window honestly shorter.
     const endMs = next && next.start != null ? next.start
       : (cue && cue.end != null ? cue.end : 0);
-    const leftMs = Math.max(300, v && endMs
+    const ownMs = Math.max(300, v && endMs
       ? endMs - v.currentTime * 1000
       : (cue && cue.dur) || 0);
-    const needRate = (durMs * vRate) / leftMs;
-    ttsCruiseNote(needRate);
-    let fit;
+    // The line's OWN cue is the window, and cruise votes on the need it
+    // produces — a vote no borrowing can deflate.
+    const ownNeed = (durMs * vRate) / ownMs;
+    ttsCruiseNote(ownNeed);                           // structural need
+    let leftMs = ownMs, needRate = ownNeed;
+    // Borrowing is the LAST tier, not a default. Speech speed handles the
+    // gentle squeeze and the video slowdown handles the hard one, and neither
+    // of them falls behind — so a line that either tier can still absorb is
+    // sized against its own cue and finishes inside it, owing nothing.
+    // Reaching for the budget any earlier would relax every line in the video
+    // by a second and leave the speech permanently late, which is "always
+    // behind", not "catching up". Only a line past what both tiers together
+    // can hold reaches beyond its cue end, and only as far as the budget
+    // still allows. Video ms against video ms: the budget is wall clock, so
+    // it is scaled by the rate in force before joining a window read off the
+    // video's own clock.
+    let fit, borrowed = 0;
+    if (ownNeed > TTS_FIT_CEILING) {
+      // Spend the free tier first. The picture goes to its floor, which buys
+      // real speaking time and costs no drift, and only what is STILL missing
+      // after that is borrowed. Skipping the slowdown here and borrowing the
+      // whole shortfall would owe far more than the line actually needed.
+      fit = vRate * TTS_VIDEO_FLOOR;
+      // What the cue is worth in wall time once the picture is at that floor,
+      // against what the line needs at the comfortable ceiling.
+      const wallHave = ownMs / fit;
+      const wallWant = durMs / TTS_RATE_MAX;
+      borrowed = Math.min(Math.max(0, wallWant - wallHave),
+        Math.max(0, TTS_DEBT_MAX_MS - ttsDebtMs));
+      leftMs = (wallHave + borrowed) * fit;         // back to video ms
+      needRate = durMs / (wallHave + borrowed);
+    }
+    // Past 60% of the cap a line that still will not fit gets one gear beyond
+    // the comfortable ceiling, rather than losing its end.
+    const cap = (ttsDebtMs > TTS_DEBT_MAX_MS * 0.6 && needRate > TTS_RATE_MAX)
+      ? TTS_RATE_URGENT : TTS_RATE_MAX;
     if (needRate > 1) {
-      audio.playbackRate = Math.min(1.4, needRate);
-      if (needRate > 1.4) fit = (1.4 * leftMs) / durMs;
+      audio.playbackRate = Math.min(cap, needRate);
+      if (needRate > cap && fit == null) fit = (cap * leftMs) / durMs;
     }
     if (ttsCruising) {
       audio.playbackRate = ttsCruiseSpeech(audio.playbackRate);
       fit = ttsCruiseFit(fit, vRate);
     }
+    // Repayment is made out of speech, never out of the video: slowing the
+    // picture to catch up would make the lag both longer AND more visible.
+    // While anything is owed the speech holds at the cruise floor.
+    if (ttsDebtMs > TTS_DEBT_CLEAR_MS)
+      audio.playbackRate = ttsCruiseSpeech(audio.playbackRate);
+    ttsTraceAdd({ k: "fit", vt: v ? Math.round(v.currentTime * 1000) : -1,
+      dur: Math.round(durMs), left: Math.round(leftMs), own: Math.round(ownMs),
+      debt: Math.round(ttsDebtMs), bor: Math.round(borrowed),
+      need: Math.round(needRate * 100) / 100,
+      rate: Math.round((audio.playbackRate || 1) * 100) / 100,
+      fit: fit == null ? -1 : Math.round(fit * 100) / 100,
+      cru: ttsCruising });
     return fit;
   }
 
@@ -2450,8 +2695,31 @@
         release();                 // superseded while waiting: never played
         return;
       }
+      // How far behind this line is starting, measured off the video's own
+      // clock. Everything that made it late is already in the number: the
+      // wait for the last line's tail, a slow decode, a late reply.
+      ttsDebtMs = Math.min(TTS_DEBT_MAX_MS, ttsLatenessMs(idx));
       const prev = ttsAudio, prevUrl = ttsBlobUrl;
-      if (prev && !prev.paused && !prev.ended) ttsOverran++;   // cut by the next line: counted, not acted on
+      if (prev && !prev.paused && !prev.ended) {
+        const cutMs = isFinite(prev.duration)
+          ? Math.max(0, Math.round((prev.duration - prev.currentTime)
+              / (prev.playbackRate || 1) * 1000))
+          : -1;
+        // Under a syllable's worth left is not a cut — it is the grace timer
+        // and the `ended` event finishing in a dead heat, with the takeover
+        // first by a frame. Recording that as a cut (and counting it overrun)
+        // made the tool report a loss nobody could hear.
+        if (cutMs < 0 || cutMs >= 120) {
+          ttsOverran++;   // cut by the next line: counted, not acted on
+          // No "who was cut" index here: ttsSpokenIdx is already the NEW
+          // line's by claim time, and naming the wrong line reads as fact.
+          // The cut line is the one the previous fit row belongs to.
+          ttsTraceAdd({ k: "cut", by: "take", i: idx, cutMs: cutMs });
+        } else {
+          ttsTraceAdd({ k: "end", i: -1 });   // finished to the sample; the
+                                              // takeover just beat the event
+        }
+      }
       if (prev) { try { prev.pause(); } catch (_e) { /* ignore */ } }
       if (prevUrl) { try { URL.revokeObjectURL(prevUrl); } catch (_e) { /* ignore */ } }
       ttsAudio = audio;
@@ -2461,6 +2729,7 @@
       audio.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
       audio.addEventListener("ended", () => {
         if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
+        ttsTraceAdd({ k: "end", i: idx });
         ttsDuckOffOrHold(idx);       // a near-touching next line keeps the duck
       });
       // Kept so a mid-line duck-depth change can be re-sent WITH it: the fit is
@@ -2492,15 +2761,28 @@
       audio.play().catch(() => { if (myEpoch === ttsEpoch) ttsDuck(false); });
     };
     const arm = () => {
-      // GRACE: when the sounding line is within a breath of finishing, let
-      // it say its last word and start this one right after — a line cut
-      // mid-syllable is the louder wrong. Anything longer still yields:
-      // the next line's start wins, as designed.
+      // Let the sounding line finish, and charge the wait to the drift budget.
+      // A line cut mid-syllable is the louder wrong, and the budget is what
+      // keeps "let it finish" from drifting away for good: the wait is granted
+      // in full while the debt it would leave stays under the cap, and once
+      // the cap is reached the tail is cut — but at the cap, not at 400ms.
+      //
+      // Waiting is only half of it. The line that waits is then sized against
+      // a window that runs past its own cue end by whatever budget is left
+      // (ttsFitFor), so it hurries a little and hands the gap after it back.
+      // That is the repayment; without it this would just be a slower start.
       const prev = ttsAudio;
       const prevLeft = prev && !prev.paused && !prev.ended && isFinite(prev.duration)
         ? Math.max(0, (prev.duration - prev.currentTime) / (prev.playbackRate || 1) * 1000)
         : 0;
-      if (prevLeft > 0 && prevLeft <= 400) setTimeout(takeover, prevLeft + 30);
+      const lateNow = ttsLatenessMs(idx);
+      const canWait = Math.max(0, TTS_DEBT_MAX_MS - lateNow);
+      const wait = Math.min(prevLeft, canWait);
+      ttsTraceAdd({ k: "arm", i: idx, left: Math.round(prevLeft),
+        late: Math.round(lateNow), wait: Math.round(wait),
+        g: wait >= prevLeft && prevLeft > 0 });
+      // Under a frame's worth of budget is not a wait, it is a stutter.
+      if (wait > 30) setTimeout(takeover, wait + 30);
       else takeover();
     };
     // Audio that cannot be decoded. Two shapes, both silent until now:
@@ -2517,6 +2799,7 @@
       if (myEpoch !== ttsEpoch) return;
       if (ttsAudio === audio) ttsDuck(false);
       ttsSkipped++;
+      ttsTraceAdd({ k: "skip", i: idx, why: "dead" });
       // Latest wins. The question the status line answers is "what is going
       // wrong now", and a first-wins reason outlives the fault it named.
       ttsErr = "noAudio";
@@ -2595,7 +2878,11 @@
   }
   function ttsSpeakLocal(text, lang, voiceName, myEpoch, idx) {
     const synth = window.speechSynthesis;
-    if (!synth) { ttsSkipped++; ttsErr = "failed"; ttsFailRun++; return; }
+    if (!synth) {
+      ttsSkipped++; ttsErr = "failed"; ttsFailRun++;
+      ttsTraceAdd({ k: "skip", i: idx, why: "nosynth" });
+      return;
+    }
     // Size the line BEFORE speaking it, from the estimate the watchdog already
     // trusts. This path shipped with none of the audio path's three tiers —
     // rate never set, fit never sent, cancel() unconditional — so on the
@@ -2620,6 +2907,9 @@
     // rate chosen for a window that no longer existed — the grace ate the
     // margin its own maths had counted on, and a same-cue seek during the
     // wait had the same effect for free.
+    // Same measurement as the audio takeover, at the same moment: how late
+    // this line is going on air, off the video's own clock.
+    if (idx != null) ttsDebtMs = Math.min(TTS_DEBT_MAX_MS, ttsLatenessMs(idx));
     const nx = idx != null ? ttsWindowEnd(idx) : null;
     // Networked built-ins ("Google …", localService === false) fetch their
     // audio between speak() and `start` — seconds, measured live (D34) — and
@@ -2632,22 +2922,50 @@
     const netPenalty = chosenVoice && chosenVoice.localService === false
       ? Math.min(TTS_LOCAL_NET_PENALTY_MAX, ttsLocalNetEma || TTS_LOCAL_NET_PENALTY_MS)
       : 0;
-    const leftMs = nx && nx.start != null
+    const ownMs = nx && nx.start != null
       ? Math.max(300, nx.start - vv.currentTime * 1000 - netPenalty) : 0;
     // Same base-rate rule as ttsFitFor: never size against our own slowdown.
     const vRate = ttsUserRate || vv.playbackRate || 1;
-    const needRate = leftMs ? (est * vRate) / leftMs : 0;
-    ttsCruiseNote(needRate);
+    const ownNeed = ownMs ? (est * vRate) / ownMs : 0;
+    ttsCruiseNote(ownNeed);                             // structural need
+    let leftMs = ownMs, needRate = ownNeed;
+    // Same last-tier rule as the audio path, on half the budget: this length
+    // is an estimate, not a measurement, and the rate cannot be changed once
+    // the voice is speaking — an underestimate here becomes debt that nothing
+    // can work off. Half a budget it may be wrong about beats a whole one it
+    // cannot correct.
     rate = 1; fit = undefined;
-    if (needRate > 1) {
-      rate = Math.min(1.4, needRate);
-      if (needRate > 1.4) fit = (1.4 * leftMs) / est;
+    if (ownNeed > TTS_FIT_CEILING && ownMs) {
+      fit = vRate * TTS_VIDEO_FLOOR;                // same free tier first
+      const wallHave = ownMs / fit;
+      const wallWant = est / TTS_RATE_MAX;
+      const borrow = Math.min(Math.max(0, wallWant - wallHave),
+        Math.max(0, TTS_DEBT_MAX_MS - ttsDebtMs) * 0.5);
+      leftMs = (wallHave + borrow) * fit;
+      needRate = est / (wallHave + borrow);
     }
+    if (needRate > 1) {
+      rate = Math.min(TTS_RATE_MAX, needRate);
+      if (needRate > TTS_RATE_MAX && fit == null) fit = (TTS_RATE_MAX * leftMs) / est;
+    }
+    if (ttsDebtMs > TTS_DEBT_CLEAR_MS) rate = ttsCruiseSpeech(rate);
     if (ttsCruising) {
       rate = ttsCruiseSpeech(rate);
       fit = ttsCruiseFit(fit, vRate);
     }
     estAtRate = est / rate;
+    // The cancel below is this path's takeover: when OUR utterance is still
+    // mid-line, note how much of it the estimate says was thrown away.
+    if (localUtter && localStartedAt) {
+      const rem = localEstMs - (Date.now() - localStartedAt);
+      if (isFinite(rem) && rem > 150)
+        ttsTraceAdd({ k: "cut", by: "lcancel", i: idx, cutMs: Math.round(rem) });
+    }
+    ttsTraceAdd({ k: "lfit", i: idx, vt: Math.round(vv.currentTime * 1000),
+      est: Math.round(est), left: Math.round(leftMs), own: Math.round(ownMs),
+      pen: netPenalty, debt: Math.round(ttsDebtMs),
+      need: Math.round(needRate * 100) / 100, rate: Math.round(rate * 100) / 100,
+      fit: fit == null ? -1 : Math.round(fit * 100) / 100, cru: ttsCruising });
     try { synth.cancel(); } catch (_e) { /* ignore */ }
     // Somebody else's pause is still our silence. The flag is global — another
     // extension, a stray call, our own pause across a video change — and a
@@ -2682,6 +3000,7 @@
     const neverBegan = () => {
       if (myEpoch !== ttsEpoch || localUtter !== u) return;
       ttsSkipped++;
+      ttsTraceAdd({ k: "skip", i: idx, why: "neverBegan" });
       ttsErr = "noAudio";
       ttsFailRun++;
       try { synth.cancel(); } catch (_e) { /* nothing left to stop */ }
@@ -2751,13 +3070,24 @@
     localDeferTimer = 0;
     if (localUtter && localStartedAt) {
       const remain = localEstMs - (Date.now() - localStartedAt);
-      if (remain > 0 && remain <= TTS_LOCAL_GRACE_MS) {
+      // Same budget as the audio arm, on this path's estimate — and the same
+      // half share of it, for the same reason the sizing above takes half.
+      const lateNow = idx != null ? ttsLatenessMs(idx) : 0;
+      const graceMax = Math.max(TTS_LOCAL_GRACE_MS,
+        Math.min(900, (TTS_DEBT_MAX_MS - lateNow) * 0.5));
+      // Wait for as much of the tail as the budget covers. A tail longer than
+      // that is still cut — but the part that was waited out was said, where
+      // an all-or-nothing test threw the whole tail away over one ms.
+      const wait = Math.min(remain, graceMax);
+      if (wait > 30) {
+        ttsTraceAdd({ k: "ldefer", left: Math.round(remain),
+          wait: Math.round(wait), gm: Math.round(graceMax) });
         const myClaim = ttsSpokenIdx;
         localDeferTimer = setTimeout(() => {
           localDeferTimer = 0;
           if (ttsSpokenIdx !== myClaim) return;   // a newer line took the slot
           doSpeak();                              // …which re-checks everything else
-        }, remain + 40);
+        }, wait + 40);
         return;
       }
     }
@@ -2781,6 +3111,7 @@
     // the case the chain has to survive.
     if (!text) {
       ttsSkipped++;
+      ttsTraceAdd({ k: "skip", i: idx, why: "noText" });
       const g = cueToGroup && cueToGroup[idx] != null ? cueToGroup[idx] : -1;
       if (g >= 0) {
         if (g === ttsSkipGroup) ttsSkipCharged++;
@@ -2877,6 +3208,8 @@
           // Keep going — one bad line must not stop the run — but remember WHY,
           // so the popup can say it instead of leaving the user with silence.
           ttsSkipped++;
+          ttsTraceAdd({ k: "skip", i: idx,
+            why: (resp && resp.code) || "failed" });
           ttsErr = (resp && resp.code) || "failed";
           ttsFailRun++;
         }
@@ -2895,6 +3228,7 @@
         // reported all three since it was written; there is no reason for the
         // earlier failure to be quieter than the later one.
         ttsSkipped++;
+        ttsTraceAdd({ k: "skip", i: idx, why: "decode" });
         ttsErr = "noAudio";
         ttsFailRun++;
         ttsDuck(false);
@@ -2907,9 +3241,6 @@
     if (!settings.enabled || !cueList) return;
     const video = getVideo();
     if (!video) return;
-    // Sample the user's own rate only while none of our fits is applied —
-    // while one is, the live value is our slowdown, not their choice.
-    if (ttsFit === undefined) ttsUserRate = video.playbackRate || 1;
     ttsFollowPause(!!video.paused);
     // An advertisement is not this video. Treated exactly like a gap between
     // cues — clear the overlay, stop the line — because that is what it is:
@@ -2923,6 +3254,27 @@
       }
       ttsTickVid = -1;      // the ad runs its own clock; leaving it is not a jump
       return;
+    }
+    // Sample the viewer's own rate only while none of our fits is applied —
+    // while one is, the live value is our slowdown, not their choice.
+    //
+    // AFTER the advert check, not before it. An advert plays at its own rate,
+    // and the stop above has just cleared our fit — so every tick of every
+    // advert used to be sampled as if the viewer had chosen it. Someone
+    // watching at 1.5x had that written down as 1.0 by the first ad break,
+    // and every line after it was sized against a rate they never picked.
+    //
+    // And not while the element still reads the rate WE asked for: clearing
+    // the fit and inject letting go of the rate are two different moments,
+    // and the ticks in between look exactly like a viewer who chose 0.85.
+    if (ttsFit === undefined) {
+      const live = video.playbackRate || 1;
+      if (ttsLastFit && Math.abs(live - ttsLastFit) < 0.02) {
+        // still at our own rate: inject has not restored it yet
+      } else {
+        ttsUserRate = live;
+        ttsLastFit = 0;
+      }
     }
     const t = video.currentTime * 1000;
     // Judge the jump BEFORE the cue transition below: the residual of the old
@@ -3006,6 +3358,18 @@
     // (1) aligned tlang translation — paired by event order in inject.js and
     // carried on the cue itself, so re-sorting cueList cannot desync it.
     if (cueAligned && typeof cue.trans === "string" && cue.trans) {
+      // On a scrolling track YouTube translates each fragment alone, and the
+      // cut lands wherever the fragment ended: a line reads "…并无本质区别。在"
+      // — a whole sentence plus the first character of the next one, stranded.
+      // Show the SENTENCE instead, repainted unchanged as its fragments go by.
+      // This is what the gtx path has always done with its own sentence groups
+      // (see (2) below), so the two engines now read the same way; the original
+      // line still scrolls fragment by fragment underneath.
+      if (cueToSpan && speechSpans && cueToSpan[idx] != null) {
+        const span = speechSpans[cueToSpan[idx]];
+        const whole = span ? tlangSpanText(span) : "";
+        if (whole) { setTranslation(whole, origText); return; }
+      }
       setTranslation(dedupeTrans(cue.trans, origText), origText);
       return;
     }
@@ -3421,6 +3785,14 @@
     // track never translates at all, so it never needs groups either.
     if (cueAligned == null && !cueSameLang) buildSentenceGroups(cueList);
     else { sentGroups = null; cueToGroup = null; }
+    // The voice's own grouping, for the case above: YouTube's translation on a
+    // scrolling ASR track. Same sentence detection, different consumer — only
+    // the read-aloud path ever looks at it.
+    if (cueAligned != null && !cueSameLang && cueTrackKind === "asr") {
+      const built = computeSentenceGroups(cueList);
+      speechSpans = built.groups;
+      cueToSpan = built.cueToGroup;
+    } else { speechSpans = null; cueToSpan = null; }
     startCueLoop();
   }
 
@@ -3498,6 +3870,8 @@
     tcueList = null;
     sentGroups = null;
     cueToGroup = null;
+    speechSpans = null;
+    cueToSpan = null;
     activeGroupIdx = -1;
     cueTrackKind = "";
     cueSameLang = false;
@@ -3547,12 +3921,30 @@
           speaking: !!(ttsAudio && !ttsAudio.paused && !ttsAudio.ended) || !!localUtter,
           spoken: ttsSpoken,
           skipped: ttsSkipped,
+          // The commonest reason those lines were skipped, so the status line
+          // can say it instead of leaving a bare count to be read as a fault.
+          skipWhy: (() => {
+            let top = "", n = 0;
+            for (const k of Object.keys(ttsSkipWhy)) {
+              if (ttsSkipWhy[k] > n) { n = ttsSkipWhy[k]; top = k; }
+            }
+            return top;
+          })(),
           // Nothing spoken at all is a configuration that cannot work, and
           // that needs words at the first failure. After a line has worked,
           // one bad line is a hiccup the counts already cover — but a second
           // in a row is the provider having stopped working mid-video, and
           // staying quiet about that reads as "no error, so no problem".
-          err: (!ttsSpoken || ttsFailRun >= TTS_FAIL_RUN_LOUD) ? ttsErr : ""
+          err: (!ttsSpoken || ttsFailRun >= TTS_FAIL_RUN_LOUD) ? ttsErr : "",
+          // The takeover trace (see ttsTraceAdd): which line was cut, by how
+          // much, and what the sizing believed at the time. Cue indexes and
+          // numbers only — reading a cut-tails report off a live video.
+          cru: ttsCruising,
+          uRate: ttsUserRate,
+          debt: Math.round(ttsDebtMs),
+          over: ttsOverran,
+          jumps: ttsJumpCuts,
+          trace: ttsTrace.slice(-30)
         } : null,
         // For the popup's diagnostic bundle. The popup cannot read tab.url
         // (no tabs/host permission — a deliberate non-permission, see the SRT
@@ -4165,6 +4557,8 @@
     activeCueIdx = -1;
     sentGroups = null;
     cueToGroup = null;
+    speechSpans = null;
+    cueToSpan = null;
     activeGroupIdx = -1;
     cueTrackKind = "";
     cueSameLang = false;
@@ -4206,6 +4600,7 @@
     ttsUserRate = 0;            // the next video re-samples the user's rate
     ttsSpoken = 0;              // the popup's counts describe THIS video
     ttsSkipped = 0;
+    ttsSkipWhy = Object.create(null);   // the reasons belonged to that video
     ttsErr = "";                // and so does the reason they stayed silent
     ttsFailRun = 0;
     rearmedForVideo = false;    // and one CC re-arm allowance

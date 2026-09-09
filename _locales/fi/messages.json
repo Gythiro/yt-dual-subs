@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Avain hylättiin (401/403) — tarkista, että kopioit sen kokonaan ja että se on aktiivinen."
   },
+  "byoErrListAuth": {
+    "message": "Tällä avaimella ei ole oikeutta lukea listaa. Anna oikeus palveluntarjoajan hallinnassa ja hae uudelleen.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Palveluntarjoaja rajoittaa pyyntötahtia — hidastetaan ja yritetään automaattisesti uudelleen."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "ei testattu"
   },
+  "popupModelPick": {
+    "message": "Käännösmalli"
+  },
+  "popupModelMore": {
+    "message": "Lisää malleja…"
+  },
+  "popupModelFetch": {
+    "message": "Hae mallit asetuksissa"
+  },
+  "popupModelSwitched": {
+    "message": "Tästä eteenpäin: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Mallia ei valittu"
+  },
   "exportUsesYouTube": {
     "message": "Lataus käyttää YouTuben omaa koko raidan käännöstä — ilmaista, eikä se kuluta API-avaintasi."
   },
@@ -572,7 +594,7 @@
     "message": "Ei päätepisteen osoitetta vielä — tätä palveluntarjoajaa ei voi käyttää ennen kuin lisäät osoitteen."
   },
   "optBaseHint": {
-    "message": "Liitä perus-URL tai täydellinen päätepiste — esim. https://example.com/v1 tai https://example.com/v1/chat/completions. Tämän tietokoneen mallipalvelimelle (Ollama, LM Studio) käytä http://localhost:11434/v1 — pelkkä http hyväksytään vain localhostissa, ja avain voi jäädä tyhjäksi."
+    "message": "Base URL tai täysi päätepiste käyvät molemmat, esim. https://example.com/v1 tai https://example.com/v1/chat/completions. Tämän koneen Ollamalle tai LM Studiolle oikea muoto on http://localhost:11434/v1. Avaimen voi jättää tyhjäksi; pelkkä http toimii vain loopback-osoitteille."
   },
   "startS1Alt": {
     "message": "Soittimen kaavio: alkuperäinen rivi ja käännetty rivi kuvan alareunassa"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "Tässä videossa $N$ lausetta · $M$ ohitettu ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "käännös ei ehtinyt"
+  },
+  "ttsSkipSilent": {
+    "message": "ääntä ei kuulunut"
+  },
   "ttsEnableHint": {
     "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä sitä kurota kiinni myöhemmin. Rivin puhuessa videon oma ääni laskee alla asetettuun tasoon. Pitkään kestävä pilviääni hidastaa myös videota hieman — selaimen omat äänet eivät ilmoita kestoa, joten ne eivät voi."
   },
@@ -796,7 +828,7 @@
     "message": "Haetaan…"
   },
   "ttsVoicesSwitched": {
-    "message": "Kaikki $N$ ääntä, jotka avaimesi tarjoaa tälle kielelle — mukaan lukien vanhemmat Standard / Wavenet -tasot. Ne toimivat vain tälle kielelle; yllä oleva linkki palauttaa tavallisiin ääniin, jotka seuraavat käännöskieltä itsestään. Mitään ei katoa: hakeminen uudelleen tuo tämän listan takaisin.",
+    "message": "Nämä ovat avaimesi kaikki $N$ ääntä nykyiselle kielelle, myös vanhemmat Standard / Wavenet -sarjat. Ne toimivat vain tässä kielessä; ylärivistä pääset takaisin arkiääniin, jotka seuraavat kielenvaihtoa. Listan voi hakea uudelleen milloin vain.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Ääntä ei kuulunut — yritä uudelleen tai valitse toinen ääni."
+  },
+  "popupVoiceMore": {
+    "message": "Lisää ääniä…"
   },
   "ttsRobotVoices": {
     "message": "Robottimainen",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Tiivistelmä vaatii oman käännöspalvelusi (oma avain tai paikallinen päätepiste) — ilmaiset moottorit vain kääntävät.",
+    "message": "Tiivistelmä vaatii oman palvelusi: palveluntarjoajan, jolle annoit avaimen, tai paikallisen mallin tällä koneella. Ilmaiset moottorit vain kääntävät, eivät tiivistä.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Koko tekstitysraita lähetetään palvelulle $PROVIDER$ ($PARTS$ osassa) omalla kiintiölläsi.",
+    "message": "Tämä lähettää koko tekstitysraidan palvelulle $PROVIDER$, $PARTS$ osassa, omalla kiintiölläsi.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

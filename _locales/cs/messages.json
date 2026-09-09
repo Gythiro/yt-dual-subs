@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Klíč byl odmítnut (401/403) — zkontrolujte, že je zkopírovaný celý a je aktivní."
   },
+  "byoErrListAuth": {
+    "message": "Tenhle klíč nemá oprávnění číst seznam. Přidejte mu ho u poskytovatele a zkuste to znovu.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Poskytovatel omezuje počet požadavků — zpomalujeme a automaticky zkoušíme znovu."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "netestováno"
   },
+  "popupModelPick": {
+    "message": "Překladový model"
+  },
+  "popupModelMore": {
+    "message": "Další modely…"
+  },
+  "popupModelFetch": {
+    "message": "Načíst modely v nastavení"
+  },
+  "popupModelSwitched": {
+    "message": "Od teď: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Model nevybrán"
+  },
   "exportUsesYouTube": {
     "message": "Stahování používá vlastní překlad celé stopy od YouTube — zdarma a nespotřebuje váš API klíč."
   },
@@ -572,7 +594,7 @@
     "message": "Zatím žádná adresa endpointu — tohoto poskytovatele nelze použít, dokud ji nezadáte."
   },
   "optBaseHint": {
-    "message": "Vložte základní URL nebo celý endpoint — např. https://example.com/v1 nebo https://example.com/v1/chat/completions. Pro server s modelem na tomto počítači (Ollama, LM Studio) použijte http://localhost:11434/v1 — localhost je jediné místo, kde se přijímá prosté http, a klíč může zůstat prázdný."
+    "message": "Funguje base URL i úplný endpoint, např. https://example.com/v1 nebo https://example.com/v1/chat/completions. Pro Ollamu nebo LM Studio na tomto počítači je správný tvar http://localhost:11434/v1. Klíč může zůstat prázdný; obyčejné http funguje jen pro loopback adresy."
   },
   "startS1Alt": {
     "message": "Schéma přehrávače: původní a přeložený řádek u spodního okraje obrazu"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "V tomto videu $N$ vět · $M$ přeskočeno ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "překlad nestihl dorazit"
+  },
+  "ttsSkipSilent": {
+    "message": "hlas se neozval"
+  },
   "ttsEnableHint": {
     "message": "Po zapnutí se překlad každého titulku vysloví, jakmile se objeví; řádek, jehož překlad nestihne přijít včas, se přeskočí a později se nedohání. Zatímco se řádek vyslovuje, vlastní zvuk videa klesne na úroveň nastavenou níže. Cloudový hlas, který trvá déle, video také mírně zpomalí — vlastní hlasy prohlížeče délku nehlásí, takže to u nich nejde."
   },
@@ -796,7 +828,7 @@
     "message": "Načítání…"
   },
   "ttsVoicesSwitched": {
-    "message": "Všech $N$ hlasů, které váš klíč nabízí pro tento jazyk — včetně starších úrovní Standard / Wavenet. Fungují jen pro tento jazyk; odkaz výše vás vrátí k běžným hlasům, které se samy přizpůsobují jazyku překladu. Nic se neztratí: opětovné načtení tento seznam znovu zobrazí.",
+    "message": "Toto je všech $N$ hlasů vašeho klíče pro aktuální jazyk, včetně starších řad Standard / Wavenet. Platí jen pro tento jazyk; řádek výše vrací k běžným hlasům, které se drží změny jazyka. Seznam si můžete kdykoli stáhnout znovu.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Zvuk nedorazil — zkuste to znovu, nebo vyberte jiný hlas."
+  },
+  "popupVoiceMore": {
+    "message": "Další hlasy…"
   },
   "ttsRobotVoices": {
     "message": "Robotické",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Shrnutí potřebuje vlastní překladovou službu (vlastní klíč nebo lokální endpoint) — bezplatné služby jen překládají.",
+    "message": "Shrnutí potřebuje vaši vlastní službu: poskytovatele s vaším klíčem, nebo lokální model na tomto počítači. Bezplatné služby jen překládají, neshrnují.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Celá stopa titulků bude odeslána službě $PROVIDER$ (v $PARTS$ částech) a spotřebuje tvou kvótu.",
+    "message": "Tím se celá stopa titulků pošle službě $PROVIDER$, ve $PARTS$ částech, na váš vlastní limit.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

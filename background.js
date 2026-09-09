@@ -116,6 +116,28 @@ function keyFor(providerId) {
 // so the popup can show one honest line instead of a generic failure.
 // opts.needModel = false when the caller only needs the endpoint and key (the
 // options page listing models has no model picked yet, by definition).
+// A short, one-way fingerprint of a key, so the settings page can tell "this
+// is the same key as last time" WITHOUT ever holding the key. It deliberately
+// never sees key values (it stores only whether one exists), and a cached
+// model or voice list has to be voided when the key behind it changes — an
+// ElevenLabs or Azure key can be swapped for one with different permissions,
+// and the old list would then offer voices this key may not use.
+//
+// Eight hex characters. Not a security boundary: a fingerprint that collided
+// would show a stale list until the next fetch, which is the same outcome as
+// having no fingerprint at all.
+async function keyFingerprint(key) {
+  if (!key) return "";
+  try {
+    const buf = await crypto.subtle.digest("SHA-256",
+      new TextEncoder().encode(String(key)));
+    return [...new Uint8Array(buf)].slice(0, 4)
+      .map((b) => b.toString(16).padStart(2, "0")).join("");
+  } catch (_e) {
+    return "";        // no subtle crypto: behave as if unfingerprinted
+  }
+}
+
 async function resolveByo(opts) {
   // Which provider this is FOR. Normally the one the extension translates with,
   // but the settings page can ask about a provider the user is only looking at
@@ -1926,7 +1948,11 @@ async function byoModels(providerId) {
     throw tag(new Error("models bad json"), { badShape: true, code: "badShape" });
   }
   const ids = ((data && data.data) || []).map((m) => m && m.id);
-  return { models: PROVIDERS.usableModels(ids) };
+  // The endpoint and the key this list belongs to travel WITH it: the settings
+  // page keeps the list across reloads, and a list fetched from one server (or
+  // with one key) must not be shown for another. It never sees the key itself.
+  return { models: PROVIDERS.usableModels(ids),
+    forKey: await keyFingerprint(t.key), forBase: t.endpoint || "" };
 }
 
 // The read-aloud twin of byoModels: the voices this provider has FOR THE
@@ -1966,7 +1992,8 @@ async function ttsVoices(asked) {
     const data = await res.json().catch(() => null);
     const names = ((data && data.voices) || [])
       .map((v) => v && v.name).filter(Boolean);
-    return { voices: names, listable: true };
+    return { voices: names, listable: true,
+      forKey: await keyFingerprint(t.key), forBase: p.baseUrl || "" };
   }
   if (p.kind === "elevenlabs") {
     // 100 is the largest page the endpoint serves, and a library of cloned
@@ -2006,7 +2033,8 @@ async function ttsVoices(asked) {
       if (!next || next === token) break;
       token = next;
     }
-    return { voices: [...seen], names: names, listable: true };
+    return { voices: [...seen], names: names, listable: true,
+      forKey: await keyFingerprint(t.key), forBase: p.baseUrl || "" };
   }
   // azure-speech
   try {
@@ -2289,7 +2317,15 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg && msg.type === "ttsVoices") {
     cfgReady
       .then(() => ttsVoices({ provider: msg.provider, targetLang: msg.targetLang }))
-      .then((r) => sendResponse({ ok: true, voices: r.voices, listable: r.listable }))
+      // `names` rides along or the picker shows ids. ElevenLabs identifies a
+      // voice by an opaque token and sends the human name separately, which
+      // ttsVoices collects for exactly this reason — and this line used to
+      // drop it on the floor, turning that provider's menu into a column of
+      // tokens. Nobody saw it because it was the one provider never called
+      // for real until 2026-08-29.
+      .then((r) => sendResponse({ ok: true, voices: r.voices,
+        names: r.names || null, listable: r.listable,
+        forKey: r.forKey || "", forBase: r.forBase || "" }))
       .catch((err) => sendResponse({
         ok: false,
         code: (err && err.code) || "failed",
@@ -2300,12 +2336,36 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg && msg.type === "byoModels") {
     cfgReady
       .then(() => byoModels(msg.provider))
-      .then((r) => sendResponse({ ok: true, models: r.models }))
+      .then((r) => sendResponse({ ok: true, models: r.models,
+        forKey: r.forKey || "", forBase: r.forBase || "" }))
       .catch((err) => sendResponse({
         ok: false,
         code: (err && err.code) || "failed",
         error: String(err)
       }));
+    return true;
+  }
+  // What the settings page needs to look up a catalogue it stored earlier:
+  // which endpoint and which key are in force right now, the key given only as
+  // the same one-way fingerprint the list was tagged with. Deliberately not a
+  // way to read a key — the fingerprint cannot be turned back into one, and
+  // the settings page has never held key values.
+  if (msg && msg.type === "catalogTag") {
+    cfgReady
+      .then(async () => {
+        const kind = msg.kind === "tts" ? "tts" : "byo";
+        if (kind === "tts") {
+          const t = await resolveTts(undefined, msg.provider);
+          return { base: (t.provider && t.provider.baseUrl) || "", key: t.key };
+        }
+        const t = await resolveByo({ needModel: false, provider: msg.provider });
+        return { base: t.endpoint || "", key: t.key };
+      })
+      .then(async (r) => sendResponse({ ok: true, forBase: r.base,
+        forKey: await keyFingerprint(r.key) }))
+      // A provider with no key yet has no catalogue either; that is not an
+      // error worth a message, it just means nothing will be restored.
+      .catch(() => sendResponse({ ok: false }));
     return true;
   }
   if (msg && msg.type === "byoTest") {

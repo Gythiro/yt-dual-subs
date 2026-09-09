@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Cheia a fost respinsă (401/403) — verifică dacă a fost copiată integral și este activă."
   },
+  "byoErrListAuth": {
+    "message": "Cheia aceasta nu are dreptul să citească lista. Acordă-i permisiunea la furnizor și încearcă din nou.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Furnizorul limitează rata — încetinim și reîncercăm automat."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "netestat"
   },
+  "popupModelPick": {
+    "message": "Model de traducere"
+  },
+  "popupModelMore": {
+    "message": "Mai multe modele…"
+  },
+  "popupModelFetch": {
+    "message": "Preia modelele în setări"
+  },
+  "popupModelSwitched": {
+    "message": "De acum: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Niciun model ales"
+  },
   "exportUsesYouTube": {
     "message": "Descărcarea folosește traducerea YouTube a întregii piste — gratuită și nu consumă cheia API."
   },
@@ -572,7 +594,7 @@
     "message": "Nicio adresă de endpoint încă — acest furnizor nu poate fi folosit până nu introduci una."
   },
   "optBaseHint": {
-    "message": "Lipește un URL de bază sau un endpoint complet — de ex. https://example.com/v1 sau https://example.com/v1/chat/completions. Pentru un server de model pe acest computer (Ollama, LM Studio) folosește http://localhost:11434/v1 — localhost e singurul loc unde http simplu e acceptat, iar cheia poate rămâne goală."
+    "message": "Merge și un base URL, și un endpoint complet, de ex. https://example.com/v1 sau https://example.com/v1/chat/completions. Pentru Ollama sau LM Studio pe acest calculator, forma corectă e http://localhost:11434/v1. Cheia poate rămâne goală; http simplu merge doar pentru adrese de loopback."
   },
   "startS1Alt": {
     "message": "Diagramă player: o linie originală și una tradusă, aproape de baza imaginii"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ propoziții în acest videoclip · $M$ omise ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "traducerea nu a sosit la timp"
+  },
+  "ttsSkipSilent": {
+    "message": "nu s-a auzit niciun sunet"
+  },
   "ttsEnableHint": {
     "message": "Când e activat, traducerea fiecărui rând e rostită pe măsură ce apare; un rând a cărui traducere nu e gata la timp e omis, nu recuperat ulterior. Cât timp se rostește un rând, sunetul videoclipului scade la nivelul setat mai jos. O voce cloud prea lungă încetinește și videoclipul puțin — vocile browserului nu raportează o durată, deci nu pot."
   },
@@ -796,7 +828,7 @@
     "message": "Se încarcă…"
   },
   "ttsVoicesSwitched": {
-    "message": "Toate cele $N$ voci pe care le oferă cheia ta pentru această limbă — inclusiv nivelurile mai vechi Standard / Wavenet. Funcționează doar pentru această limbă; linkul de mai sus revine la vocile obișnuite, care urmează singure limba traducerii. Nimic nu se pierde: dacă preiei din nou, lista revine.",
+    "message": "Acestea sunt toate cele $N$ voci ale cheii tale pentru limba curentă, inclusiv gamele mai vechi Standard / Wavenet. Sunt valabile doar pentru această limbă; rândul de sus te întoarce la vocile obișnuite, care urmează schimbarea limbii. Poți aduce lista din nou oricând.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Audio-ul nu a ajuns — încearcă din nou sau alege altă voce."
+  },
+  "popupVoiceMore": {
+    "message": "Mai multe voci…"
   },
   "ttsRobotVoices": {
     "message": "Robotice",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Rezumatul are nevoie de propriul tău serviciu de traducere (cheie proprie sau endpoint local) — motoarele gratuite doar traduc.",
+    "message": "Rezumatul are nevoie de un serviciu al tău: un furnizor cu cheia ta, sau un model local pe acest calculator. Motoarele gratuite doar traduc, nu rezumă.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Întreaga pistă de subtitrări va fi trimisă către $PROVIDER$ (în $PARTS$ părți), pe cota ta.",
+    "message": "Aceasta va trimite întreaga pistă de subtitrări către $PROVIDER$, în $PARTS$ părți, pe cota ta.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "A chave foi recusada (401/403) — verifique se foi copiada na íntegra e está ativa."
   },
+  "byoErrListAuth": {
+    "message": "Esta chave não tem permissão para ler a lista. Conceda essa permissão no painel do fornecedor e procure de novo.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "O fornecedor está a limitar o ritmo — a abrandar e a tentar de novo automaticamente."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "não testado"
   },
+  "popupModelPick": {
+    "message": "Modelo de tradução"
+  },
+  "popupModelMore": {
+    "message": "Mais modelos…"
+  },
+  "popupModelFetch": {
+    "message": "Obter modelos nas definições"
+  },
+  "popupModelSwitched": {
+    "message": "A partir de agora: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Nenhum modelo escolhido"
+  },
   "exportUsesYouTube": {
     "message": "A transferência usa a tradução da faixa completa do próprio YouTube — é gratuita e não gasta a sua chave API."
   },
@@ -572,7 +594,7 @@
     "message": "Ainda sem endereço do endpoint — este fornecedor não pode ser usado até indicar um."
   },
   "optBaseHint": {
-    "message": "Cole um URL de base ou um endpoint completo — p. ex. https://example.com/v1 ou https://example.com/v1/chat/completions. Para um servidor de modelos neste computador (Ollama, LM Studio) use http://localhost:11434/v1 — o localhost é o único sítio onde o http simples é aceite, e a chave pode ficar vazia."
+    "message": "Tanto uma base URL como um endpoint completo funcionam, ex.: https://example.com/v1 ou https://example.com/v1/chat/completions. Para Ollama ou LM Studio nesta máquina, http://localhost:11434/v1 é a forma certa. A chave pode ficar vazia; http simples só funciona para endereços de loopback."
   },
   "startS1Alt": {
     "message": "Diagrama do leitor: uma linha original e uma linha traduzida junto à parte inferior da imagem"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ frases neste vídeo · $M$ ignoradas ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "a tradução não chegou a tempo"
+  },
+  "ttsSkipSilent": {
+    "message": "não saiu som"
+  },
   "ttsEnableHint": {
     "message": "Quando está ligado, a tradução de cada legenda é lida à medida que aparece; uma linha cuja tradução não esteja pronta a tempo é ignorada, em vez de ser recuperada mais tarde. Enquanto uma linha é lida, o áudio do vídeo baixa para o nível definido abaixo. Uma voz na nuvem que se prolongue também abranda um pouco o vídeo — as vozes do próprio navegador não indicam a duração, por isso não o conseguem."
   },
@@ -796,7 +828,7 @@
     "message": "A obter…"
   },
   "ttsVoicesSwitched": {
-    "message": "Todas as $N$ vozes que a sua chave oferece para este idioma — incluindo os níveis mais antigos Standard / Wavenet. Funcionam apenas neste idioma; a ligação acima regressa às vozes do dia a dia, que seguem sozinhas o idioma da tradução. Nada se perde: obter de novo traz esta lista de volta.",
+    "message": "Estas são as $N$ vozes da sua chave para o idioma atual, incluindo as gamas antigas Standard / Wavenet. Valem só para este idioma; a linha acima volta às vozes habituais, que acompanham a mudança de idioma. Pode voltar a obter esta lista quando quiser.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "O áudio não chegou — volte a tentar, ou escolha outra voz."
+  },
+  "popupVoiceMore": {
+    "message": "Mais vozes…"
   },
   "ttsRobotVoices": {
     "message": "Robótico",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "O resumo precisa do seu próprio serviço de tradução (chave própria ou endpoint local) — os motores gratuitos apenas traduzem.",
+    "message": "O resumo precisa de um serviço seu: um fornecedor com a sua chave, ou um modelo local nesta máquina. Os motores gratuitos só traduzem, não resumem.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "A faixa de legendas inteira será enviada para $PROVIDER$ (em $PARTS$ partes), usando a sua quota.",
+    "message": "Isto vai enviar a faixa de legendas inteira para $PROVIDER$, em $PARTS$ parte(s), usando a sua quota.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

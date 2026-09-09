@@ -57,6 +57,60 @@ let state = { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN"
 let editing = "";
 const storedKeys = Object.create(null);     // providerId -> true (never the value)
 const fetchedModels = Object.create(null);  // providerId -> [model ids]
+
+// ---- fetched catalogues, kept across reloads -------------------------------
+// A list pulled with the reader's own key used to live only as long as the
+// page: closing the settings page or reloading it left the field empty again,
+// with nothing to show for the round trip that had been paid for. It should
+// still be there.
+//
+// storage.LOCAL, never sync: a custom endpoint can answer with a hundred model
+// names, sync caps an item at 8KB and the whole area at 100KB, and a list is
+// in any case a property of THIS machine's key and endpoint — the model the
+// reader picked is what deserves to travel, and that already syncs.
+//
+// The cache key carries everything the list depends on: the provider, the
+// endpoint it came from (a custom server swapped for another must not show the
+// old server's models) and a fingerprint of the key (a key swapped for one with
+// different permissions must not show what the old one could reach). The
+// fingerprint is computed in the worker; this page never sees a key.
+//
+// No expiry. A model catalogue is not a price feed, and a list that vanished
+// on a timer would be the same complaint again. The fetch button is the only
+// thing that writes — which is also what stops us from spending someone's
+// quota on a page load.
+const CATALOG_STORE = "byoCatalogs";
+let catalogs = Object.create(null);
+
+// The key, the normalisation and the "which stored list belongs to the key and
+// endpoint in force" decision all live in providers.js now — the popup reads
+// these same entries to fill its model menu, and a key spelled differently on
+// the two sides is a cache the reader can see on one page and not the other.
+const catalogKey = (kind, providerId, forBase, forKey) =>
+  self.YTDS_CATALOG.key(kind, providerId, forBase, forKey);
+
+// Bring back what this provider's key and endpoint fetched last time. Asks
+// the worker which endpoint and key are in force (as a fingerprint), then
+// looks for a catalogue stored under exactly that combination — so a swapped
+// server or a swapped key restores nothing rather than something misleading.
+// Silent by design: a miss just means the fetch button is still there.
+async function catalogRestore(kind, providerId, apply) {
+  const tag = await sendToBackground({ type: "catalogTag",
+    kind: kind === "m" ? "byo" : "tts", provider: providerId }).catch(() => null);
+  if (!tag || !tag.ok) return false;
+  const hit = catalogs[catalogKey(kind, providerId, tag.forBase, tag.forKey)];
+  if (!hit || !hit.items || !hit.items.length) return false;
+  apply(hit.items, hit.names || null);
+  return true;
+}
+
+function catalogSave(kind, providerId, resp, items, names) {
+  const key = catalogKey(kind, providerId, resp && resp.forBase, resp && resp.forKey);
+  catalogs[key] = { items: items || [], names: names || null };
+  // Failure here is not worth a message: the list is on screen either way, and
+  // the only loss is having to fetch again next time.
+  try { chrome.storage.local.set({ [CATALOG_STORE]: catalogs }); } catch (_e) { /* ignore */ }
+}
 // Per-provider model, so switching between two configured providers does not
 // throw away the model chosen for either.
 let modelsBy = Object.create(null);
@@ -291,7 +345,14 @@ function renderDetail() {
   const priceLink = $("pPricingLink");
   priceLink.hidden = !p.pricingUrl;
   if (p.pricingUrl) priceLink.href = p.pricingUrl;
-  $("pGuideLink").href = SITE_URL + "guide.html?lang=" + uiLang() + "#" + p.id;
+  // The guide's sections are named after the provider, except the custom one:
+  // there is no #custom section and never was, so choosing it and pressing
+  // "see the guide" landed at the top of the page. What that reader wants is
+  // the local-model walkthrough — which is what a custom endpoint is for in
+  // nine cases out of ten, and which is where the CORS line everybody trips
+  // over is written down.
+  $("pGuideLink").href = SITE_URL + "guide.html?lang=" + uiLang() +
+    "#" + (p.custom ? "local" : p.id);
 
   $("baseRow").hidden = !p.custom;
   $("baseUrl").value = state.byoBaseUrl || "";
@@ -311,6 +372,22 @@ function showMsg(text, kind) {
 
 function errText(code) {
   return t(P.errorKey(code), t("byoErrFailed", "连接失败，稍后再试。"));
+}
+
+// The same 401 means two different things depending on when it arrives.
+// Saving a key: it is probably mistyped or not active yet — what byoErrAuth
+// says. Fetching a LIST after the key already synthesised a sample: the key
+// works, so the refusal is about what this key is allowed to read. ElevenLabs
+// keys are per-endpoint (a key can hold "Text to Speech: Access" and "Voices:
+// No Access", which is exactly the combination that produced this), OpenAI's
+// are per-scope. Telling that user to check they copied the key in full sends
+// them to re-paste a key that was never wrong.
+function listErrText(code) {
+  if (code === "auth" || code === "noPerm") {
+    return t("byoErrListAuth",
+      "这把 Key 没有「读取清单」的权限。去服务商后台给它加上，再拉一次。");
+  }
+  return errText(code);
 }
 
 // ---- plan / save / probe ---------------------------------------------------
@@ -482,12 +559,13 @@ async function runFetchModels(pl) {
     const resp = await sendToBackground({ type: "byoModels", provider: pl.provider.id });
     if (resp && resp.ok && resp.models && resp.models.length) {
       fetchedModels[pl.provider.id] = resp.models;
+      catalogSave("m", pl.provider.id, resp, resp.models, null);
       renderModelField(pl.provider);
       showModelMsg(tsub("optModelsFetched", [String(resp.models.length)],
         "拉到 " + resp.models.length + " 个模型"), "ok");
     } else {
       showModelMsg(resp && resp.code
-        ? errText(resp.code)
+        ? listErrText(resp.code)
         : t("optModelsFailed", "拉取失败——可以直接手填模型名。"), "err");
     }
   } finally {
@@ -1242,6 +1320,23 @@ function initReadaloud() {
   paintTtsModel(cur);
   paintTtsUse();
 
+  // Put back the language catalogue this key fetched last time, if it was for
+  // the language in force now. The built-in family paints first and stays if
+  // there is nothing stored — so this can only ever add, never blank a list.
+  // (The machine's own voices are excluded on purpose: they come from the OS
+  // and are asked for fresh every time, being both free to read and liable to
+  // change under us.)
+  if (!cur.localVoices) {
+    catalogRestore("v " + (state.targetLang || ""), cur.id, (items, names) => {
+      const now = P.tts.get(state.ttsProvider) || P.tts.list[0];
+      if (!now || now.id !== cur.id) return;      // moved on while we asked
+      for (const k in (names || {})) fetchedVoiceNames[k] = names[k];
+      fetchedVoices[cur.id] = items;
+      voiceCatalogue = "language";
+      paintTtsVoices(cur);
+    });
+  }
+
   // The machine's voice table is not ready when this page paints: the first
   // synchronous getVoices() returns an empty array in every Chrome, and the
   // list announces itself afterwards. Painting once left the DEFAULT engine
@@ -1390,7 +1485,7 @@ function initReadaloud() {
         if (!resp || !resp.ok) {
           // Falling back to the built-in family is the honest failure: a voice
           // list is not something a user can type in by hand.
-          showTtsVoiceMsg(errText(resp && resp.code), "err");
+          showTtsVoiceMsg(listErrText(resp && resp.code), "err");
           done();
           return;
         }
@@ -1399,17 +1494,20 @@ function initReadaloud() {
         const extra = P.tts.mergeFetched(p, resp.voices);
         for (const k in (resp.names || {})) fetchedVoiceNames[k] = resp.names[k];
         fetchedVoices[p.id] = extra;
+        // Pinned to the LANGUAGE it was fetched for, so that rides in the key
+        // too — a Chinese catalogue must not be handed back for Japanese.
+        catalogSave("v " + (state.targetLang || ""), p.id, resp, extra, resp.names);
         if (extra.length) voiceCatalogue = "language";
         paintTtsVoices(p);
         // Say what changed and what it costs, not "more". These voices work for
         // the language they were fetched for and no other.
         showTtsVoiceMsg(extra.length
           ? tsub("ttsVoicesSwitched", [String(extra.length)],
-            "已切到这个语言专属的 " + extra.length + " 个音色,它们只对当前译文语言有效。")
+            "这是你的 Key 在当前语言下的全部 " + extra.length + " 个音色,只对这个语言生效;点上面那行换回常用音色。")
           : t("ttsVoicesNone", "这家在这个语言下没有额外音色。"), extra.length ? "ok" : null);
         done();
       })
-      .catch((err) => { showTtsVoiceMsg(errText((err && err.code) || "failed"), "err"); done(); });
+      .catch((err) => { showTtsVoiceMsg(listErrText((err && err.code) || "failed"), "err"); done(); });
   });
 
   $("ttsBackToFamily").addEventListener("click", () => {
@@ -1782,7 +1880,7 @@ function wire() {
 
   $("fetchModels").addEventListener("click", () => {
     withSetup($("fetchModels"), "optFetching", "拉取中…",
-      (code) => showModelMsg(errText(code), "err"), runFetchModels, false);
+      (code) => showModelMsg(listErrText(code), "err"), runFetchModels, false);
   });
 }
 
@@ -1823,10 +1921,21 @@ chrome.storage.sync.get(
       const first = providerList()[0];
       if (first) editing = first.id;
     }
-    chrome.storage.local.get({ byoKeys: {} }, (loc) => {
+    chrome.storage.local.get({ byoKeys: {}, [CATALOG_STORE]: {} }, (loc) => {
       for (const id of Object.keys((loc && loc.byoKeys) || {})) storedKeys[id] = true;
+      catalogs = Object.assign(Object.create(null), (loc && loc[CATALOG_STORE]) || {});
       renderList();
       renderDetail();
+      // Then put back what this provider's key last fetched. After the paint,
+      // not before it: the field is on screen either way, and a list that has
+      // to wait on the worker must not hold up the page it belongs to.
+      const p0 = current();
+      if (p0) {
+        catalogRestore("m", p0.id, (items) => {
+          fetchedModels[p0.id] = items;
+          if (current() && current().id === p0.id) renderModelField(current());
+        });
+      }
     });
     // After the first paint: every control below holds a value to compare with.
     initCrossPageSync();

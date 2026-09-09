@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "キーが拒否されました（401/403）。全文がコピーされているか、有効かを確認してください。"
   },
+  "byoErrListAuth": {
+    "message": "このキーには一覧を読む権限がありません。提供元の管理画面で権限を追加してから、もう一度取得してください。",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "プロバイダーがレート制限中です。自動で速度を落として再試行します。"
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "未テスト"
   },
+  "popupModelPick": {
+    "message": "翻訳モデル"
+  },
+  "popupModelMore": {
+    "message": "他のモデル…"
+  },
+  "popupModelFetch": {
+    "message": "設定でモデルを取得"
+  },
+  "popupModelSwitched": {
+    "message": "これ以降は $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "モデル未選択"
+  },
   "exportUsesYouTube": {
     "message": "ダウンロードはYouTube本体の全トラック翻訳を使います。無料で、APIキーは消費しません。"
   },
@@ -572,7 +594,7 @@
     "message": "エンドポイントがまだ入力されていません。入力するまでこのプロバイダーは使えません。"
   },
   "optBaseHint": {
-    "message": "ベースURLまたは完全なエンドポイントを貼り付けます。例: https://example.com/v1 または https://example.com/v1/chat/completions。このパソコン上のモデルサーバー（Ollama、LM Studio）なら http://localhost:11434/v1 を使ってください。平文のhttpが使えるのはlocalhostのみで、キーは空のままで構いません。"
+    "message": "Base URL でも完全なエンドポイントでも構いません。例: https://example.com/v1 または https://example.com/v1/chat/completions。このパソコンの Ollama や LM Studio なら http://localhost:11434/v1 の形です。キーは空でも可。http が使えるのはループバックアドレスだけです。"
   },
   "startS1Alt": {
     "message": "プレーヤー図: 画面下部付近に原文と訳文の2行が並んでいる"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "この動画で $N$ 文 · $M$ 文スキップ（$W$）",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "訳が間に合わなかった"
+  },
+  "ttsSkipSilent": {
+    "message": "音声が出なかった"
+  },
   "ttsEnableHint": {
     "message": "オンにすると、各字幕の翻訳が現れたタイミングで読み上げます。間に合わなかった行は飛ばし、あとから追いつけることはしません。読み上げ中は、下で設定したレベルまで動画の音声を下げます。クラウドの音声が長い場合は動画も少し遅くします。ブラウザ内蔵の音声は長さを返さないため、この調整はできません。"
   },
@@ -796,7 +828,7 @@
     "message": "取得中…"
   },
   "ttsVoicesSwitched": {
-    "message": "キーがこの言語で提供する全 $N$ 件の音声です。以前の Standard / Wavenet 階層も含みます。この言語専用です。上のリンクでいつもの音声に戻れます。いつもの音声は翻訳言語に自動で追従します。消えることはありません。再取得すればこのリストは戻ります。",
+    "message": "これは現在の言語であなたのキーが使える全 $N$ 音色です。旧来の Standard / Wavenet も含みます。この言語でのみ有効です。上の行で普段の音色に戻れます（言語を変えると自動で追従）。このリストはいつでも再取得できます。",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "音声が届きませんでした。もう一度試すか、別の音声を選んでください。"
+  },
+  "popupVoiceMore": {
+    "message": "他の音声…"
   },
   "ttsRobotVoices": {
     "message": "ロボット風",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "要約には自分の翻訳サービス(自分のキーまたはローカルエンドポイント)が必要です。無料エンジンは翻訳のみです。",
+    "message": "要約には自分のサービスが必要です。キーを入れた翻訳プロバイダーか、このパソコンのローカルモデルです。無料エンジンは翻訳だけで、要約はしません。",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "字幕トラック全体が $PROVIDER$ に送信されます($PARTS$ 分割)。あなたの利用枠を消費します。",
+    "message": "字幕トラック全体を $PROVIDER$ に送ります（$PARTS$ 分割）。あなたの利用枠を使います。",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

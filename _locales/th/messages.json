@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "คีย์ถูกปฏิเสธ (401/403) — ตรวจว่าคัดลอกครบและยังใช้งานได้"
   },
+  "byoErrListAuth": {
+    "message": "คีย์นี้ไม่มีสิทธิ์อ่านรายการ ให้เพิ่มสิทธิ์ในหน้าจัดการของผู้ให้บริการ แล้วดึงอีกครั้ง",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "ผู้ให้บริการจำกัดอัตราการเรียก — กำลังชะลอและลองใหม่ให้อัตโนมัติ"
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "ยังไม่ทดสอบ"
   },
+  "popupModelPick": {
+    "message": "โมเดลการแปล"
+  },
+  "popupModelMore": {
+    "message": "โมเดลอื่น…"
+  },
+  "popupModelFetch": {
+    "message": "ดึงโมเดลในหน้าตั้งค่า"
+  },
+  "popupModelSwitched": {
+    "message": "ต่อจากนี้ใช้ $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "ยังไม่ได้เลือกโมเดล"
+  },
   "exportUsesYouTube": {
     "message": "การดาวน์โหลดใช้การแปลทั้งแทร็กของ YouTube เอง — ฟรี และไม่ใช้โควตา API key ของคุณ"
   },
@@ -572,7 +594,7 @@
     "message": "ยังไม่มีที่อยู่เอนด์พอยต์ — ใช้ผู้ให้บริการนี้ไม่ได้จนกว่าจะกรอกที่อยู่"
   },
   "optBaseHint": {
-    "message": "วาง URL พื้นฐานหรือเอนด์พอยต์เต็มรูปแบบ — เช่น https://example.com/v1 หรือ https://example.com/v1/chat/completions สำหรับเซิร์ฟเวอร์โมเดลบนคอมพิวเตอร์เครื่องนี้ (Ollama, LM Studio) ให้ใช้ http://localhost:11434/v1 — localhost เป็นที่เดียวที่ยอมรับ http ธรรมดาได้ และคีย์สามารถเว้นว่างได้"
+    "message": "ใส่ Base URL หรือเอนด์พอยต์เต็มก็ได้ เช่น https://example.com/v1 หรือ https://example.com/v1/chat/completions ถ้าเป็น Ollama หรือ LM Studio ในเครื่องนี้ ใช้ http://localhost:11434/v1 คีย์เว้นว่างได้ ส่วน http ใช้ได้เฉพาะที่อยู่ loopback"
   },
   "startS1Alt": {
     "message": "แผนภาพเครื่องเล่น: บรรทัดต้นฉบับและบรรทัดคำแปลอยู่ใกล้ด้านล่างของภาพ"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "วิดีโอนี้ $N$ ประโยค · ข้าม $M$ ประโยค ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "คำแปลมาไม่ทัน"
+  },
+  "ttsSkipSilent": {
+    "message": "ไม่มีเสียงออกมา"
+  },
   "ttsEnableHint": {
     "message": "เมื่อเปิด ระบบจะอ่านคำแปลของแต่ละซับไตเติลทันทีที่ปรากฏ บรรทัดที่คำแปลยังไม่พร้อมทันจะถูกข้าม ไม่ไล่ตามทีหลัง ขณะที่กำลังอ่าน เสียงวิดีโอจะลดลงตามระดับที่ตั้งด้านล่าง เสียงคลาวด์ที่ยาวเกินไปจะทำให้วิดีโอช้าลงเล็กน้อย — เสียงของเบราว์เซอร์ไม่รายงานความยาว จึงทำแบบนั้นไม่ได้"
   },
@@ -796,7 +828,7 @@
     "message": "กำลังดึง…"
   },
   "ttsVoicesSwitched": {
-    "message": "เสียงทั้ง $N$ รายการที่คีย์ของคุณมีให้สำหรับภาษานี้ — รวมระดับ Standard / Wavenet รุ่นเก่าด้วย ใช้ได้เฉพาะภาษานี้เท่านั้น ลิงก์ด้านบนจะกลับไปยังเสียงทั่วไป ซึ่งจะตามภาษาที่แปลเอง ไม่มีอะไรหายไป: ดึงอีกครั้งแล้วรายการนี้จะกลับมา",
+    "message": "นี่คือเสียงทั้งหมด $N$ เสียงของคีย์คุณสำหรับภาษาปัจจุบัน รวมรุ่นเก่า Standard / Wavenet ด้วย ใช้ได้เฉพาะภาษานี้ กดบรรทัดด้านบนเพื่อกลับไปเสียงที่ใช้ประจำ (เปลี่ยนภาษาแล้วตามให้เอง) รายการนี้ดึงใหม่ได้ทุกเมื่อ",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "ไม่ได้รับเสียง — ลองอีกครั้ง หรือเลือกเสียงอื่น"
+  },
+  "popupVoiceMore": {
+    "message": "เสียงอื่น…"
   },
   "ttsRobotVoices": {
     "message": "หุ่นยนต์",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "การสรุปต้องใช้บริการแปลของคุณเอง (คีย์ของคุณเองหรือเอนด์พอยต์ในเครื่อง) — เอนจินฟรีทำได้แค่แปล",
+    "message": "การสรุปต้องใช้บริการของคุณเอง: ผู้ให้บริการที่ใส่คีย์ไว้ หรือโมเดลในเครื่องนี้ เอนจินฟรีแปลอย่างเดียว ไม่สรุป",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "แทร็กคำบรรยายทั้งหมดจะถูกส่งไปยัง $PROVIDER$ (แบ่งเป็น $PARTS$ ส่วน) โดยใช้โควตาของคุณเอง",
+    "message": "จะส่งแทร็กคำบรรยายทั้งหมดไปยัง $PROVIDER$ แบ่งเป็น $PARTS$ ส่วน โดยใช้โควตาของคุณเอง",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

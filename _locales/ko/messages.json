@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "키가 거부되었습니다(401/403) — 전체가 복사되었고 활성 상태인지 확인하세요."
   },
+  "byoErrListAuth": {
+    "message": "이 키에는 목록을 읽을 권한이 없습니다. 제공업체 설정에서 권한을 추가한 뒤 다시 가져오세요.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "제공업체가 요청을 제한하고 있습니다 — 속도를 낮춰 자동으로 다시 시도합니다."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "미테스트"
   },
+  "popupModelPick": {
+    "message": "번역 모델"
+  },
+  "popupModelMore": {
+    "message": "다른 모델…"
+  },
+  "popupModelFetch": {
+    "message": "설정에서 모델 불러오기"
+  },
+  "popupModelSwitched": {
+    "message": "이후로는 $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "모델 미선택"
+  },
   "exportUsesYouTube": {
     "message": "다운로드는 YouTube 자체 전체 트랙 번역을 사용합니다 — 무료이며 API 키를 소모하지 않습니다."
   },
@@ -572,7 +594,7 @@
     "message": "아직 엔드포인트 주소가 없습니다 — 주소를 입력해야 이 제공업체를 사용할 수 있습니다."
   },
   "optBaseHint": {
-    "message": "기본 URL 또는 전체 엔드포인트를 붙여넣으세요 — 예: https://example.com/v1 또는 https://example.com/v1/chat/completions. 이 컴퓨터의 모델 서버(Ollama, LM Studio)는 http://localhost:11434/v1을 사용하세요 — localhost에서만 일반 http가 허용되며, 키는 비워 둬도 됩니다."
+    "message": "Base URL이든 전체 엔드포인트든 됩니다. 예: https://example.com/v1 또는 https://example.com/v1/chat/completions. 이 컴퓨터의 Ollama·LM Studio라면 http://localhost:11434/v1 형태입니다. 키는 비워도 됩니다. http는 루프백 주소에서만 됩니다."
   },
   "startS1Alt": {
     "message": "플레이어 도식: 화면 하단 근처에 원문 줄과 번역 줄이 있습니다"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "이 영상에서 $N$문장 · $M$문장 건너뜀($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "번역이 제때 오지 않음"
+  },
+  "ttsSkipSilent": {
+    "message": "소리가 나지 않음"
+  },
   "ttsEnableHint": {
     "message": "켜면 자막 번역이 나올 때마다 바로 읽어 줍니다. 제때 번역이 안 된 줄은 나중에 따라잡지 않고 건너뜁니다. 읽는 동안 영상 자체 소리는 아래 설정한 크기로 줄어듭니다. 클라우드 음성이 길면 영상도 조금 느려집니다. 브라우저 자체 음성은 길이를 알려주지 않아 그렇게 할 수 없습니다."
   },
@@ -796,7 +828,7 @@
     "message": "가져오는 중…"
   },
   "ttsVoicesSwitched": {
-    "message": "키가 이 언어에 제공하는 음성 $N$개 전부 — 이전 Standard / Wavenet 등급 포함. 이 언어에서만 동작합니다. 위 링크를 누르면 일반 음성으로 돌아가며, 일반 음성은 번역 언어를 알아서 따라갑니다. 목록은 사라지지 않습니다. 다시 가져오면 이 목록이 돌아옵니다.",
+    "message": "현재 언어에서 키로 쓸 수 있는 전체 $N$개 음색입니다. 구형 Standard / Wavenet 계열도 포함됩니다. 이 언어에서만 유효하며, 위 줄을 누르면 평소 음색으로 돌아갑니다(언어를 바꾸면 자동으로 따라감). 이 목록은 언제든 다시 불러올 수 있습니다.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "오디오가 전달되지 않았습니다 — 다시 시도하거나 다른 음성을 선택하세요."
+  },
+  "popupVoiceMore": {
+    "message": "다른 음성…"
   },
   "ttsRobotVoices": {
     "message": "로봇",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "요약에는 본인의 번역 서비스(자체 키 또는 로컬 엔드포인트)가 필요합니다. 무료 엔진은 번역만 합니다.",
+    "message": "요약에는 본인 서비스가 필요합니다. 키를 넣은 제공업체나 이 컴퓨터의 로컬 모델이면 됩니다. 무료 엔진은 번역만 하고 요약은 하지 않습니다.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "자막 트랙 전체가 $PROVIDER$(으)로 전송됩니다($PARTS$개 부분). 본인 할당량이 사용됩니다.",
+    "message": "자막 트랙 전체를 $PROVIDER$(으)로 보냅니다($PARTS$개 부분). 본인 할당량을 사용합니다.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

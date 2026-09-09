@@ -463,13 +463,36 @@
   // voices the same way. localVoiceNames stays the flat answer — ordinary
   // voices first, machine voices last — so every existing caller gets the
   // ordering for free.
+  // Language tags for the SAME language, as the various speech engines spell
+  // them. A bare prefix comparison is not enough: Chrome and macOS label
+  // Mandarin voices cmn-Hans-CN as often as zh-CN, and a reader whose target
+  // is zh then matched nothing — which fell through to "show everything" and
+  // put all hundred-and-ninety-odd voices of every language in the menu. That
+  // is the list a real profile produced. The other groups here are the same story in
+  // languages we also translate into.
+  const TTS_LANG_KIN = [
+    ["zh", "cmn", "yue", "wuu", "hak", "nan"],
+    ["no", "nb", "nn"],
+    ["he", "iw"],
+    ["id", "in"],
+    ["fil", "tl"],
+    ["pt", "pt"],
+    ["sr", "sh", "hr", "bs"]
+  ];
+
+  function ttsLangKin(base) {
+    for (const row of TTS_LANG_KIN) if (row.includes(base)) return row;
+    return [base];
+  }
+
   function ttsLocalVoiceSplit(synth, lang) {
     if (!synth) return { normal: [], machine: [] };
     let all = [];
     try { all = synth.getVoices() || []; } catch (_e) { return { normal: [], machine: [] }; }
     const base = String(lang || "").split("-")[0].toLowerCase();
+    const kin = ttsLangKin(base);
     const hit = all.filter(
-      (v) => String(v.lang || "").toLowerCase().split("-")[0] === base);
+      (v) => kin.includes(String(v.lang || "").toLowerCase().split("-")[0]));
     const names = (hit.length ? hit : all).map((v) => v.name);
     return {
       normal: names.filter((n) => !ttsLocalVoiceIsMachine(n)),
@@ -794,6 +817,51 @@
   ];
   const TTS_BY_ID = Object.create(null);
   for (const p of TTS_PROVIDERS) TTS_BY_ID[p.id] = p;
+
+  // ---- key for a catalogue fetched with the reader's own key ----------------
+  // Written by the settings page (the only thing that fetches) and read by the
+  // popup, which shows what was fetched but never fetches itself. It lives here
+  // because both surfaces must spell the key the SAME way: two spellings of one
+  // key are two caches, and the popup would come up empty for a list the
+  // settings page can plainly see.
+  //
+  // Two spellings of one server are likewise one server: a trailing slash and a
+  // capitalised host would each get their own entry, and the list would come and
+  // go depending on which was stored last.
+  function normBase(u) {
+    const s = String(u || "").trim();
+    if (!s) return "";
+    try {
+      const url = new URL(s);
+      url.hash = ""; url.search = "";
+      return (url.protocol + "//" + url.host.toLowerCase() +
+        url.pathname.replace(/\/+$/, "")).toLowerCase();
+    } catch (_e) {
+      return s.replace(/\/+$/, "").toLowerCase();
+    }
+  }
+
+  // NUL between the parts, not a space: a base URL cannot contain one, so no
+  // combination of values can spell the same key as a different combination.
+  function catalogKey(kind, providerId, forBase, forKey) {
+    return kind + "\u0000" + providerId + "\u0000" +
+      normBase(forBase) + "\u0000" + (forKey || "");
+  }
+
+  // The half of a restore that decides anything — which stored list belongs to
+  // the endpoint and key in force. A wrong answer here is the dangerous kind
+  // (one server's models shown for another, or one key's voices for a key that
+  // may not use them), so it stays a pure function both surfaces can be tested
+  // against directly.
+  root.YTDS_CATALOG = {
+    key: catalogKey,
+    normBase,
+    pick: (store, kind, providerId, tag) => {
+      if (!store || !tag || !tag.ok) return null;
+      const hit = store[catalogKey(kind, providerId, tag.forBase, tag.forKey)];
+      return hit && hit.items && hit.items.length ? hit : null;
+    }
+  };
 
   root.YTDS_PROVIDERS = {
     list: PROVIDERS,

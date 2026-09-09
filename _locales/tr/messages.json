@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Anahtar reddedildi (401/403) — tam kopyalandığından ve etkin olduğundan emin ol."
   },
+  "byoErrListAuth": {
+    "message": "Bu anahtarın listeyi okuma izni yok. Sağlayıcının panelinden izni verip yeniden çekin.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Sağlayıcı hız sınırı uyguluyor — yavaşlatılıp otomatik olarak yeniden deneniyor."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "denenmedi"
   },
+  "popupModelPick": {
+    "message": "Çeviri modeli"
+  },
+  "popupModelMore": {
+    "message": "Diğer modeller…"
+  },
+  "popupModelFetch": {
+    "message": "Modelleri ayarlarda getir"
+  },
+  "popupModelSwitched": {
+    "message": "Bundan sonra: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Model seçilmedi"
+  },
   "exportUsesYouTube": {
     "message": "İndirme, YouTube’un kendi tam parça çevirisini kullanır — ücretsizdir ve API anahtarını harcamaz."
   },
@@ -572,7 +594,7 @@
     "message": "Henüz endpoint adresi yok — bir tane girmeden bu sağlayıcı kullanılamaz."
   },
   "optBaseHint": {
-    "message": "Bir temel URL veya tam bir endpoint yapıştırın — örn. https://example.com/v1 veya https://example.com/v1/chat/completions. Bu bilgisayardaki bir model sunucusu (Ollama, LM Studio) için http://localhost:11434/v1 kullanın — düz http yalnızca localhost için kabul edilir ve anahtar boş bırakılabilir."
+    "message": "Base URL de tam endpoint de olur, örn. https://example.com/v1 veya https://example.com/v1/chat/completions. Bu bilgisayardaki Ollama ya da LM Studio için doğru biçim http://localhost:11434/v1. Anahtar boş kalabilir; düz http yalnızca loopback adreslerinde çalışır."
   },
   "startS1Alt": {
     "message": "Oynatıcı şeması: orijinal satır ve çevrilmiş satır görüntünün altına yakın duruyor"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "Bu videoda $N$ cümle · $M$ atlandı ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "çeviri zamanında gelmedi"
+  },
+  "ttsSkipSilent": {
+    "message": "ses çıkmadı"
+  },
   "ttsEnableHint": {
     "message": "Açıkken her altyazının çevirisi göründüğü anda okunur; çevirisi zamanında hazır olmayan satır atlanır, sonradan telafi edilmez. Bir satır okunurken videonun kendi sesi aşağıda ayarlanan düzeye iner. Uzun süren bir bulut sesi videoyu da biraz yavaşlatır — tarayıcının kendi sesleri süre bildirmediği için bunu yapamaz."
   },
@@ -796,7 +828,7 @@
     "message": "Getiriliyor…"
   },
   "ttsVoicesSwitched": {
-    "message": "Anahtarınızın bu dil için sunduğu tüm $N$ ses — eski Standard / Wavenet kademeleri dahil. Yalnızca bu dilde çalışırlar; yukarıdaki bağlantı, çeviri dilini kendiliğinden izleyen günlük seslere döner. Hiçbir şey kaybolmaz: yeniden getirmek bu listeyi geri getirir.",
+    "message": "Bunlar, anahtarının şu anki dil için sunduğu $N$ sesin tamamı; eski Standard / Wavenet serileri de dahil. Yalnızca bu dil için geçerlidir; üstteki satır seni her zamanki seslere döndürür, onlar dil değişince birlikte gelir. Bu listeyi istediğin zaman yeniden çekebilirsin.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Ses gelmedi — tekrar deneyin veya farklı bir ses seçin."
+  },
+  "popupVoiceMore": {
+    "message": "Diğer sesler…"
   },
   "ttsRobotVoices": {
     "message": "Robotik",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Özet için kendi çeviri hizmetin gerekir (kendi anahtarın veya yerel endpoint) — ücretsiz motorlar yalnızca çevirir.",
+    "message": "Özet için kendi hizmetin gerekir: anahtarını girdiğin bir sağlayıcı ya da bu bilgisayardaki yerel bir model. Ücretsiz motorlar yalnızca çevirir, özetlemez.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Tüm altyazı parçası $PROVIDER$ hizmetine gönderilecek ($PARTS$ parça hâlinde), kendi kotandan.",
+    "message": "Bu, altyazı parçasının tamamını $PROVIDER$ hizmetine gönderir ($PARTS$ parça), kendi kotandan.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

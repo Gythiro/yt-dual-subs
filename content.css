@@ -195,12 +195,16 @@ html.ytds-active .caption-window {
 .ytds-sum {
   box-sizing: border-box;
   position: absolute; z-index: 69; top: 12px; right: 12px;
-  width: min(340px, 46%); max-height: calc(100% - 24px);
+  width: min(380px, 44%); max-height: calc(100% - 24px);
   display: flex; flex-direction: column;
   background: #1f2124; border: 1px solid #33363a; border-radius: 12px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, .55);
   pointer-events: auto; color: #f1f1f1;
-  font: 400 13px/1.5 Roboto, Arial, sans-serif;
+  font: 400 13px/1.6 Roboto, Arial, sans-serif;
+  /* CJK has no spaces to break on, so a long clause is chopped wherever the
+     box ends — "三分之一" split across two lines. Keep whole words together
+     and let the browser hyphenate the scripts that can be hyphenated. */
+  word-break: normal; overflow-wrap: anywhere; line-break: strict;
 }
 .ytds-sum-head {
   display: flex; align-items: center; justify-content: space-between;
@@ -215,17 +219,52 @@ html.ytds-active .caption-window {
 .ytds-sum-close:hover { background: #27292c; color: #fff; }
 .ytds-sum-close:focus-visible, .ytds-sum-btn:focus-visible,
 .ytds-sum-stamp:focus-visible { outline: 2px solid #3ea6ff; outline-offset: -2px; }
-.ytds-sum-body { padding: 10px 14px 12px; overflow-y: auto; }
-.ytds-sum-tldr { margin: 0 0 10px; font-weight: 500; }
-.ytds-sum-ch { margin-top: 10px; display: flex; align-items: baseline; gap: 8px; }
-.ytds-sum-ch-title { font-weight: 500; }
+.ytds-sum-body { padding: 12px 14px 14px; overflow-y: auto; }
+/* The scrollbar is part of the panel: the platform default is a light slab
+   on a dark card. */
+.ytds-sum-body { scrollbar-width: thin; scrollbar-color: #3a3d41 transparent; }
+.ytds-sum-body::-webkit-scrollbar { width: 8px; }
+.ytds-sum-body::-webkit-scrollbar-thumb {
+  background: #3a3d41; border-radius: 4px;
+}
+.ytds-sum-body::-webkit-scrollbar-thumb:hover { background: #4a4e53; }
+.ytds-sum-body::-webkit-scrollbar-track { background: transparent; }
+
+/* The one-sentence summary is the thing most readers came for, so it reads as
+   a lead rather than as the first of many equal lines: slightly larger, and
+   marked down the side so the eye finds it without a heading to announce it. */
+.ytds-sum-tldr {
+  margin: 0 0 4px; font-size: 14px; line-height: 1.55; color: #f1f1f1;
+  border-left: 2px solid #3ea6ff; padding: 1px 0 1px 10px;
+}
+/* Chapters: one grid per chapter, stamp in the first column, everything that
+   belongs to it in the second — so a 1:02:33 stamp moves the text with it
+   instead of leaving it under a 46px guess. */
+.ytds-sum-sec {
+  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 10px; row-gap: 2px;
+  margin-top: 14px; padding-top: 12px; border-top: 1px solid #2a2c30;
+}
+.ytds-sum-chapters > .ytds-sum-sec:first-child { border-top: 0; }
+.ytds-sum-ch-title {
+  margin: 0; font: 500 14px/1.45 inherit; color: #f1f1f1; align-self: center;
+}
 .ytds-sum-stamp {
   border: 0; background: #27292c; color: #3ea6ff;
-  font: 500 12px/1 Roboto, Arial, sans-serif;
-  padding: 3px 7px; border-radius: 6px; cursor: pointer;
+  font: 500 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 4px 8px; border-radius: 6px; cursor: pointer;
+  align-self: center; font-variant-numeric: tabular-nums;
 }
-.ytds-sum-stamp:hover { background: #2f3235; }
-.ytds-sum-pt { margin: 4px 0 0 46px; color: #b6b9be; }
+.ytds-sum-stamp:hover { background: #33363a; color: #6ec0ff; }
+/* Points live in the second column, under the title they belong to. */
+.ytds-sum-pt {
+  grid-column: 2; margin: 0; color: #b6b9be;
+  padding-left: 12px; position: relative;
+}
+.ytds-sum-pt::before {
+  content: ""; position: absolute; left: 1px; top: .72em;
+  width: 4px; height: 4px; border-radius: 50%; background: #4a4e53;
+}
 .ytds-sum-warn { margin: 10px 0 0; color: #ffd88a; }
 .ytds-sum-busy { margin: 0 0 8px; color: #b6b9be; }
 .ytds-sum-btn {

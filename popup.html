@@ -116,9 +116,22 @@
           <span class="byo-sum-text" id="byoSummary"></span>
           <select class="byo-pick" id="byoPick" hidden
                   data-i18n-aria="popupByoPick" aria-label="翻译服务商"></select>
+          <!-- The model opens a menu in place rather than a second dropdown:
+               two dropdowns on one 360px line read as twins, and the model is
+               the part that changes. The door to the settings page rides the
+               menu's last row, which is why no second button sits here. -->
+          <button type="button" class="byo-model" id="byoModelBtn" hidden
+                  aria-haspopup="true" aria-expanded="false"
+                  data-i18n-aria="popupModelPick" aria-label="翻译模型"></button>
           <button type="button" class="link" id="byoConfigure"
                   data-i18n="popupByoConfigure">配置…</button>
         </div>
+        <!-- An inline panel, not a floating layer: a popup is 360px wide and
+             360px is not where an overlay wants to live (设计规范 §2 — the
+             export confirmation took the same shape for the same reason). -->
+        <div class="pmenu" id="byoModelMenu" hidden role="menu"
+             data-i18n-aria="popupModelPick" aria-label="翻译模型"></div>
+        <p class="byo-msg" id="byoModelMsg" role="status" aria-live="polite" hidden></p>
       </div>
     </section>
 

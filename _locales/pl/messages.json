@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Klucz odrzucony (401/403) — sprawdź, czy skopiowano go w całości i czy jest aktywny."
   },
+  "byoErrListAuth": {
+    "message": "Ten klucz nie ma uprawnienia do odczytu listy. Nadaj je w panelu dostawcy i pobierz ponownie.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Dostawca ogranicza tempo żądań — zwalniam i ponawiam automatycznie."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "nie testowano"
   },
+  "popupModelPick": {
+    "message": "Model tłumaczenia"
+  },
+  "popupModelMore": {
+    "message": "Więcej modeli…"
+  },
+  "popupModelFetch": {
+    "message": "Pobierz modele w ustawieniach"
+  },
+  "popupModelSwitched": {
+    "message": "Od teraz: $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Nie wybrano modelu"
+  },
   "exportUsesYouTube": {
     "message": "Pobieranie korzysta z tłumaczenia całej ścieżki YouTube — za darmo i bez zużycia klucza API."
   },
@@ -572,7 +594,7 @@
     "message": "Brak adresu endpointu — tego dostawcy nie użyjesz, dopóki go nie podasz."
   },
   "optBaseHint": {
-    "message": "Wklej bazowy URL lub pełny endpoint — np. https://example.com/v1 lub https://example.com/v1/chat/completions. Dla serwera modelu na tym komputerze (Ollama, LM Studio) użyj http://localhost:11434/v1 — localhost to jedyne miejsce, gdzie akceptowany jest zwykły http, a klucz może pozostać pusty."
+    "message": "Zadziała i base URL, i pełny endpoint, np. https://example.com/v1 lub https://example.com/v1/chat/completions. Dla Ollamy lub LM Studio na tym komputerze właściwa forma to http://localhost:11434/v1. Klucz może zostać pusty; zwykłe http działa tylko dla adresów loopback."
   },
   "startS1Alt": {
     "message": "Schemat odtwarzacza: linia oryginału i linia tłumaczenia u dołu obrazu"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "W tym filmie $N$ zdań · pominięto $M$ ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "tłumaczenie nie zdążyło"
+  },
+  "ttsSkipSilent": {
+    "message": "głos się nie odezwał"
+  },
   "ttsEnableHint": {
     "message": "Po włączeniu tłumaczenie każdej linijki jest odczytywane, gdy się pojawia; linijka, której tłumaczenie nie zdąży, jest pomijana, a nie nadrabiana później. Podczas odczytu dźwięk filmu ścisza się do poziomu ustawionego poniżej. Długi głos chmurowy dodatkowo trochę spowalnia film — głosy przeglądarki nie zgłaszają długości, więc tego nie robią."
   },
@@ -796,7 +828,7 @@
     "message": "Pobieranie…"
   },
   "ttsVoicesSwitched": {
-    "message": "Wszystkie $N$ głosów, które Twój klucz oferuje dla tego języka — w tym starsze poziomy Standard / Wavenet. Działają tylko dla tego języka; link powyżej wraca do codziennych głosów, które same podążają za językiem tłumaczenia. Nic nie ginie: ponowne pobranie przywraca tę listę.",
+    "message": "To wszystkie $N$ głosów Twojego klucza dla bieżącego języka, łącznie ze starszymi seriami Standard / Wavenet. Działają tylko w tym języku; wiersz powyżej wraca do głosów codziennych, które podążają za zmianą języka. Tę listę możesz pobrać ponownie w każdej chwili.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Dźwięk nie doszedł — spróbuj ponownie lub wybierz inny głos."
+  },
+  "popupVoiceMore": {
+    "message": "Więcej głosów…"
   },
   "ttsRobotVoices": {
     "message": "Robotyczne",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Podsumowanie wymaga własnej usługi tłumaczenia (własny klucz lub lokalny endpoint) — darmowe silniki tylko tłumaczą.",
+    "message": "Podsumowanie wymaga własnej usługi: dostawcy z Twoim kluczem albo lokalnego modelu na tym komputerze. Darmowe silniki tylko tłumaczą, nie podsumowują.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Cała ścieżka napisów zostanie wysłana do $PROVIDER$ (w $PARTS$ częściach) na Twój własny limit.",
+    "message": "To wyśle całą ścieżkę napisów do $PROVIDER$, w $PARTS$ częściach, na Twój własny limit.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },

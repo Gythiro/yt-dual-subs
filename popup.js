@@ -482,9 +482,18 @@ async function refreshTtsStatus() {
     const stored = state.ttsVoice || "";
     voice = ttsVoiceUsableHere(p, stored) ? stored : (p ? (p.defaultVoice || "") : stored);
   } catch (_e) { /* no voice shown, the line still counts */ }
-  const counts = tsub("ttsStatusCounts",
-    [String(r.tts.spoken), String(r.tts.skipped)],
-    "本视频 " + r.tts.spoken + " 句 · 跳过 " + r.tts.skipped + " 句");
+  // A bare "skipped 2" reads as a fault. Most of the time it is not one — the
+  // translation simply had not arrived for those lines yet, which is the
+  // engine catching up, not failing. Say which it was; the reason took two
+  // rounds of guessing to establish when the number stood alone.
+  const why = skipWhyText(r.tts.skipWhy);
+  const counts = (r.tts.skipped && why)
+    ? tsub("ttsStatusCountsWhy",
+        [String(r.tts.spoken), String(r.tts.skipped), why],
+        "本视频 " + r.tts.spoken + " 句 · 跳过 " + r.tts.skipped + " 句（" + why + "）")
+    : tsub("ttsStatusCounts",
+        [String(r.tts.spoken), String(r.tts.skipped)],
+        "本视频 " + r.tts.spoken + " 句 · 跳过 " + r.tts.skipped + " 句");
   // The engine said why: lead with the reason. A stored key is not a working
   // one (it is saved before the test runs), and since the popup can switch
   // provider by picking a voice, the settings page is no longer guaranteed to
@@ -536,6 +545,20 @@ function ttsVoiceUsableHere(p, name) {
 // aria-label WINS over the text inside — so a screen reader announced the
 // destination and never the status itself. Fold both together: what it says,
 // then where it goes.
+// Why lines were skipped, in words. Only two answers are worth a viewer's
+// attention: the words were not translated yet (normal, it catches up), or
+// the voice never made a sound (a fault, and the error line above already
+// names it when the provider said why). Anything the engine reports that is
+// neither leaves the count to stand on its own.
+function skipWhyText(code) {
+  if (code === "noText") return t("ttsSkipLate", "译文没赶上");
+  if (code === "dead" || code === "decode" ||
+      code === "neverBegan" || code === "nosynth") {
+    return t("ttsSkipSilent", "没出声");
+  }
+  return "";
+}
+
 function ttsStatusA11y(el) {
   const dest = t("ttsOpenSettings", "朗读设置");
   el.setAttribute("aria-label", el.textContent + (dest ? " · " + dest : ""));
@@ -624,7 +647,13 @@ async function paintTtsCard() {
         current = usable.find((p) => p.keyless) || null;
       }
       ready = !!current;
-      if (ready) paintTtsVoicePick(usable, current, (got && got.ttsVoice) || "");
+      if (ready) {
+        // Read before painting: the picker is built in one pass and the recent
+        // list is part of what it offers.
+        const recents = await recentsRead(RECENT_VOICES);
+        if (gen !== ttsPaintGen) return;
+        paintTtsVoicePick(usable, current, (got && got.ttsVoice) || "", recents);
+      }
     }
   } catch (_e) { /* unconfigured is the safe face */ }
   if (gen !== ttsPaintGen) return;
@@ -660,10 +689,20 @@ function ttsVoiceLabel(v) {
   } catch (_e) { return v; }
 }
 
-function paintTtsVoicePick(usable, current, storedVoice) {
+function paintTtsVoicePick(usable, current, storedVoice, recents) {
   const sel = $("ttsVoicePick");
   if (!sel) return;
   sel.textContent = "";
+  // What a cloud family may show HERE: the voice in use and the ones picked
+  // recently — not its catalogue. Thirteen names is a choice; sixty is a wall,
+  // and the wall is what this control had become for anyone with a key
+  // (three-question review 题 C). The full catalogue lives on the settings page, where it can
+  // be searched, fetched and heard.
+  const RECENT_VOICES_SHOWN = 4;
+  const recentFor = (p) => (recents || [])
+    .filter((r) => r.p === p.id && r.id !== storedVoice && ttsVoiceUsableHere(p, r.id))
+    .map((r) => r.id)
+    .slice(0, RECENT_VOICES_SHOWN);
   const addVoice = (parent, p, v) => {
     const o = document.createElement("option");
     o.value = p.id + "|" + v;
@@ -679,7 +718,21 @@ function paintTtsVoicePick(usable, current, storedVoice) {
   // heal itself below instead of trusting one poll at open time.
   let localCameBackEmpty = false;
   const voicesOf = (p) => {
-    if (!p.localVoices) return p.voices || [];
+    if (!p.localVoices) {
+      // The machine's own voices are not a catalogue anybody publishes — they
+      // are whatever is installed here, already narrowed to the language being
+      // read, and typically a handful. A cloud family is a catalogue, and its
+      // place is the settings page.
+      const mine = [];
+      if (current && p.id === current.id && storedVoice &&
+          ttsVoiceUsableHere(p, storedVoice)) mine.push(storedVoice);
+      for (const v of recentFor(p)) if (mine.indexOf(v) < 0) mine.push(v);
+      if (!mine.length) {
+        const fallback = p.defaultVoice || (p.voices || [])[0];
+        if (fallback) mine.push(fallback);
+      }
+      return mine;
+    }
     const got = self.YTDS_PROVIDERS.tts.localVoiceNames(
       window.speechSynthesis, state.targetLang);
     if (!got.length) localCameBackEmpty = true;
@@ -749,6 +802,12 @@ function paintTtsVoicePick(usable, current, storedVoice) {
   const voice = storedVoice && choices.includes(storedVoice)
     ? storedVoice : (current.defaultVoice || choices[0] || "");
   sel.value = current.id + "|" + voice;
+  // Last, and never selectable as a voice: where the rest of them are. Without
+  // it the shortened list would look like the voices had gone missing.
+  const more = document.createElement("option");
+  more.value = VOICE_MORE;
+  more.textContent = t("popupVoiceMore", "更多音色…");
+  sel.appendChild(more);
   // The first version of this lived in initTtsWatch as a poll at open time —
   // seven tries over about three and a half seconds — and D67 refuted that
   // shape on the settings page: a machine that finishes later, or a provider
@@ -983,15 +1042,15 @@ function paintByoPanel() {
     const isSetUp = (x) => !!keys[x.id] || (x.custom && !!state.byoBaseUrl);
     const configured = (P ? P.list : []).filter(isSetUp);
     const model = state.byoModel || p.defaultModel || "";
+    // The model used to be half of this line's text. It is now the row's own
+    // control, because it is the part that changes — and the part a reader
+    // compares against a bill or a doc.
+    paintModelBtn(isSetUp(p) ? model : null);
 
     if (!pick || configured.length < 2) {
       if (pick) pick.hidden = true;
       sum.hidden = false;
-      sum.textContent = isSetUp(p)
-        ? label + (model ? " · " + model : "")
-        : label + " — " + notSet;
-      // The model id is the part users compare against a bill or a doc, and in
-      // long-label locales the row ellipsizes it — hover keeps the full text.
+      sum.textContent = isSetUp(p) ? label : label + " — " + notSet;
       sum.title = sum.textContent;
       return;
     }
@@ -1026,6 +1085,239 @@ function onPickProvider() {
     chrome.storage.sync.set({ byoProvider: id, byoModel: state.byoModel });
     paintByoPanel();
   });
+}
+
+// The model gets its own control on that row. Before anything is set up there
+// is no model to name, and the panel says so instead.
+function paintModelBtn(model) {
+  const btn = $("byoModelBtn");
+  const cfg = $("byoConfigure");
+  const sum = $("byoSummary");
+  const row = sum ? sum.parentElement : null;
+  const shown = model !== null;
+  if (btn) {
+    btn.hidden = !shown;
+    if (shown) {
+      const name = model || t("popupModelNone", "未选模型");
+      btn.textContent = "";
+      const b = document.createElement("b");
+      b.textContent = name;
+      btn.appendChild(b);
+      // Long ids — deepseek-v4-flash, an Ollama tag — ellipsize on a 360px row.
+      btn.title = name;
+    }
+  }
+  // Until something is set up, "配置…" is the only way in and stays. After, the
+  // way to the settings page rides the menu's last row: three hit areas on this
+  // line would be two too many (方案 §二, grok's ruling).
+  if (cfg) cfg.hidden = shown;
+  if (row) row.classList.toggle("has-model", shown);
+  if (!shown) closeModelMenu();
+}
+
+// ---- recent picks ----------------------------------------------------------
+// Newest first, at most five, in storage.LOCAL — never sync. A recent entry
+// names a provider whose key lives on THIS machine, so a synced list would
+// offer the other machine models it has no key for. What deserves to travel is
+// the choice in force, and that already rides sync.
+const RECENT_MODELS = "byoModelRecents";
+const RECENT_VOICES = "ttsVoiceRecents";
+const RECENT_MAX = 5;
+// Not a provider id, and not a voice name: the value of the row that leads to
+// the settings page.
+const VOICE_MORE = "__more__";
+
+function recentsRead(store) {
+  return new Promise((resolve) => {
+    try {
+      chrome.storage.local.get({ [store]: [] }, (got) => {
+        const list = (got && got[store]) || [];
+        resolve(Array.isArray(list)
+          ? list.filter((x) => x && typeof x.p === "string" && typeof x.id === "string")
+          : []);
+      });
+    } catch (_e) { resolve([]); }
+  });
+}
+
+function recentsPush(store, providerId, id) {
+  return recentsRead(store).then((was) => new Promise((resolve) => {
+    const next = [{ p: providerId, id }]
+      .concat(was.filter((x) => !(x.p === providerId && x.id === id)))
+      .slice(0, RECENT_MAX);
+    try { chrome.storage.local.set({ [store]: next }, () => resolve()); }
+    catch (_e) { resolve(); }
+  }));
+}
+
+// ---- the model menu --------------------------------------------------------
+// Read-only by design. Everything it offers is already on this machine: the
+// short list we ship, whatever the settings page fetched with this key, and
+// what was picked recently. The popup never fetches — a request from a window
+// that dies the moment focus leaves it reads as a broken extension, and a
+// catalogue call on a paid key is not something to spend on a glance.
+const MENU_MAX = 8;
+
+function askWorker(msg) {
+  return new Promise((resolve) => {
+    try {
+      chrome.runtime.sendMessage(msg, (r) =>
+        resolve(chrome.runtime.lastError ? null : r));
+    } catch (_e) { resolve(null); }
+  });
+}
+
+// Which stored catalogue belongs to the endpoint and key in force. The worker
+// answers with the endpoint and a one-way fingerprint of the key — this window,
+// like the settings page, never holds a key value.
+async function cachedCatalog(kind, providerId) {
+  const tag = await askWorker({ type: "catalogTag",
+    kind: kind === "m" ? "byo" : "tts", provider: providerId });
+  const got = await new Promise((resolve) => {
+    try { chrome.storage.local.get({ byoCatalogs: {} }, resolve); }
+    catch (_e) { resolve(null); }
+  });
+  try {
+    return self.YTDS_CATALOG.pick((got && got.byoCatalogs) || {},
+      kind, providerId, tag);
+  } catch (_e) { return null; }
+}
+
+async function modelMenuItems(p) {
+  const current = state.byoModel || p.defaultModel || "";
+  const out = [];
+  const seen = new Set();
+  const add = (id) => { if (id && !seen.has(id)) { seen.add(id); out.push(id); } };
+  // The one in use goes first and is never left out. It may have been typed on
+  // the settings page, fetched by a key this machine no longer has, or chosen
+  // on another machine — the choice syncs, the catalogue does not — and a menu
+  // that dropped it would read as the model having been unset.
+  add(current);
+  for (const r of await recentsRead(RECENT_MODELS)) if (r.p === p.id) add(r.id);
+  (p.models || []).forEach(add);
+  const hit = await cachedCatalog("m", p.id);
+  if (hit) hit.items.forEach(add);
+  return { items: out.slice(0, MENU_MAX), current, cached: !!hit };
+}
+
+let modelMenuGen = 0;
+
+function modelMenuIsOpen() {
+  const menu = $("byoModelMenu");
+  return !!(menu && !menu.hidden);
+}
+
+function closeModelMenu() {
+  const menu = $("byoModelMenu");
+  const btn = $("byoModelBtn");
+  if (menu) { menu.hidden = true; menu.textContent = ""; }
+  if (btn) btn.setAttribute("aria-expanded", "false");
+  modelMenuGen++;          // a build still in flight must not paint over this
+}
+
+async function openModelMenu() {
+  const p = activeProvider();
+  const menu = $("byoModelMenu");
+  const btn = $("byoModelBtn");
+  if (!p || !menu || !btn) return;
+  const gen = ++modelMenuGen;
+  const { items, current, cached } = await modelMenuItems(p);
+  if (gen !== modelMenuGen) return;   // a newer open, or a close, got here first
+  menu.textContent = "";
+  for (const id of items) {
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "pmenu-item" + (id === current ? " on" : "");
+    row.setAttribute("role", "menuitem");
+    if (id === current) row.setAttribute("aria-current", "true");
+    const label = document.createElement("span");
+    label.textContent = id;
+    row.appendChild(label);
+    row.title = id;
+    row.addEventListener("click", () => onPickModel(id));
+    menu.appendChild(row);
+  }
+  const sep = document.createElement("div");
+  sep.className = "pmenu-sep";
+  menu.appendChild(sep);
+  const more = document.createElement("button");
+  more.type = "button";
+  more.className = "pmenu-item pmenu-more";
+  more.setAttribute("role", "menuitem");
+  const moreLabel = document.createElement("span");
+  // Nothing here but the model in use, and nothing fetched with this key: the
+  // last row says what to do about that rather than reporting an empty list.
+  moreLabel.textContent = (!cached && items.length < 2)
+    ? t("popupModelFetch", "到设置页拉取模型")
+    : t("popupModelMore", "更多模型…");
+  more.appendChild(moreLabel);
+  more.addEventListener("click", () => openOptionsAt("#setup"));
+  menu.appendChild(more);
+  menu.hidden = false;
+  btn.setAttribute("aria-expanded", "true");
+  const first = menu.querySelector(".pmenu-item.on") || menu.querySelector(".pmenu-item");
+  if (first) first.focus();
+}
+
+// Storage first, screen after: a click that lands outside an extension popup
+// can close the whole window with it, and a switch that only reached the screen
+// is a switch that did not happen. Both keys in one write — byoModel is what
+// the worker reads next, byoModelBy is what brings this model back after a hop
+// to another provider and back.
+async function onPickModel(id) {
+  const p = activeProvider();
+  closeModelMenu();
+  if (!p || !id) return;
+  if (id === (state.byoModel || p.defaultModel || "")) return;
+  const got = await new Promise((resolve) => {
+    try { chrome.storage.sync.get({ byoModelBy: {} }, resolve); }
+    catch (_e) { resolve(null); }
+  });
+  const byProvider = Object.assign({}, (got && got.byoModelBy) || {});
+  byProvider[p.id] = id;
+  await new Promise((resolve) => {
+    try {
+      chrome.storage.sync.set({ byoModel: id, byoModelBy: byProvider }, () => resolve());
+    } catch (_e) { resolve(); }
+  });
+  await recentsPush(RECENT_MODELS, p.id, id);
+  state.byoModel = id;
+  paintByoPanel();
+  // Lines already on screen keep the translation they were given: switching
+  // model means "the part coming up is hard", not "buy the last twenty minutes
+  // again". The next line out is the first one the new model sees.
+  showModelMsg(tsub("popupModelSwitched", [id], "此后使用 " + id));
+}
+
+let modelMsgTimer = 0;
+
+function showModelMsg(text) {
+  const el = $("byoModelMsg");
+  if (!el) return;
+  el.textContent = text || "";
+  el.hidden = !text;
+  clearTimeout(modelMsgTimer);
+  if (text) {
+    modelMsgTimer = setTimeout(() => {
+      el.hidden = true;
+      el.textContent = "";
+    }, 2600);
+  }
+}
+
+// Opening the settings page is a module-level job: the model menu's last row
+// leads there too, and that row is built long after the init closure has run.
+// openOptionsPage() cannot carry a hash, so a request for one section opens the
+// page by URL instead.
+function openOptionsAt(hash) {
+  try {
+    if (typeof hash === "string" && hash) {
+      chrome.tabs.create({ url: chrome.runtime.getURL("options.html") + hash });
+    } else {
+      chrome.runtime.openOptionsPage();
+    }
+  } catch (_e) { /* ignore */ }
+  window.close();          // hand over to the tab instead of stacking UI
 }
 
 function showExportMsg(text, kind) {
@@ -1366,24 +1658,53 @@ function wire() {
   // Two ways in, and the header gear is the one that always exists: the BYO row
   // only appears once the own-key engine is chosen, which used to leave Getting
   // started and About unreachable for everyone on the default engine.
-  // openOptionsPage() cannot carry a hash, so a request for one section opens
-  // the page by URL instead.
-  const toOptions = (hash) => {
-    try {
-      if (typeof hash === "string" && hash) {
-        chrome.tabs.create({ url: chrome.runtime.getURL("options.html") + hash });
-      } else {
-        chrome.runtime.openOptionsPage();
-      }
-    } catch (_e) { /* ignore */ }
-    window.close();          // hand over to the tab instead of stacking UI
-  };
+  // The opener itself lives at module level (openOptionsAt) because the model
+  // menu's last row needs it too.
+  const toOptions = openOptionsAt;
   // Bare handlers: a click event as the first argument must not be mistaken
   // for a hash.
   $("openOptions").addEventListener("click", () => toOptions());
   $("byoConfigure").addEventListener("click", () => toOptions());
   const pick = $("byoPick");
   if (pick) pick.addEventListener("change", onPickProvider);
+
+  // ---- the model menu ----
+  // The row is the entry (设计规范 §5-3: status is the door). One hit area,
+  // one menu, and the settings page on its last row.
+  const modelBtn = $("byoModelBtn");
+  if (modelBtn) {
+    modelBtn.addEventListener("click", () => {
+      if (modelMenuIsOpen()) { closeModelMenu(); modelBtn.focus(); }
+      else openModelMenu();
+    });
+  }
+  document.addEventListener("keydown", (e) => {
+    if (!modelMenuIsOpen()) return;
+    if (e.key === "Escape") {
+      closeModelMenu();
+      if (modelBtn) modelBtn.focus();
+      return;
+    }
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    const rows = Array.prototype.slice.call(
+      $("byoModelMenu").querySelectorAll(".pmenu-item"));
+    if (!rows.length) return;
+    e.preventDefault();
+    const at = rows.indexOf(document.activeElement);
+    const step = e.key === "ArrowDown" ? 1 : -1;
+    const next = at < 0 ? (step > 0 ? 0 : rows.length - 1)
+      : (at + step + rows.length) % rows.length;
+    rows[next].focus();
+  });
+  // Anywhere else closes it: this is a layer over one row, not a mode. The
+  // click that opened it is excluded by the two contains() checks.
+  document.addEventListener("click", (e) => {
+    if (!modelMenuIsOpen()) return;
+    const menu = $("byoModelMenu");
+    if (menu && menu.contains(e.target)) return;
+    if (modelBtn && modelBtn.contains(e.target)) return;
+    closeModelMenu();
+  });
 
   // ---- read-aloud card ---
   // Both doors land on the read-aloud pane: the empty state to set it up, the
@@ -1406,6 +1727,14 @@ function wire() {
   // One change, both keys, one write: the engine reads them together and the
   // options page follows through its storage listener.
   $("ttsVoicePick").addEventListener("change", (e) => {
+    // The last row is a door, not a voice. Put the control back on the voice
+    // in use first: leaving it on "more…" would be a menu naming something
+    // nobody is hearing.
+    if (e.target.value === VOICE_MORE) {
+      e.target.value = state.ttsProvider + "|" + state.ttsVoice;
+      openOptionsAt("#readaloud");
+      return;
+    }
     const cut = e.target.value.indexOf("|");
     if (cut < 1) return;
     const provider = e.target.value.slice(0, cut);
@@ -1413,6 +1742,9 @@ function wire() {
     state.ttsProvider = provider;
     state.ttsVoice = voice;
     chrome.storage.sync.set({ ttsProvider: provider, ttsVoice: voice });
+    // Remembered the same way models are, in the same local area and for the
+    // same reason: a voice belongs to a provider whose key is on THIS machine.
+    recentsPush(RECENT_VOICES, provider, voice);
     refreshTtsStatus();                     // the "(voice)" in the status line
   });
 

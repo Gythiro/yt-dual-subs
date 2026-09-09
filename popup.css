@@ -353,6 +353,83 @@ select:focus { border-color: var(--accent); }
 }
 .byo-pick:hover { border-color: rgba(255, 255, 255, .3); }
 .byo-pick option { background: #1b1b22; color: #fff; }
+/* The model opens a menu from the row it is already on. Deliberately NOT the
+   twin of .byo-pick beside it — quiet text and a chevron rather than a filled
+   field — because "which provider" and "which model" are two questions, and a
+   pair of matching dropdowns invites the wrong one to be answered. */
+.byo-model {
+  flex: 1 1 auto; min-width: 0; margin: 0; padding: 3px 2px;
+  border: 0; background: none; color: var(--muted);
+  font: inherit; font-size: 13px; line-height: 1.45; text-align: left;
+  cursor: pointer; display: flex; align-items: center; gap: 5px;
+  transition: color .12s;
+}
+.byo-model[hidden] { display: none; }
+.byo-model b {
+  font-weight: 600; color: var(--txt); min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.byo-model::after {
+  content: "›";
+  color: var(--muted); font-size: 15px; line-height: 1; flex: none;
+  transition: color .12s, transform .12s;
+}
+.byo-model:hover { color: var(--txt); }
+.byo-model:hover::after { color: var(--accent); }
+.byo-model[aria-expanded="true"]::after { transform: rotate(90deg); color: var(--accent); }
+/* With the model on the row, the provider's own name stops being the part that
+   grows: the model id is what the reader compares against a bill or a doc. */
+/* …and it may not take more than half the line. Left to shrink freely it took
+   all of it in German ("Benutzerdefiniert (OpenAI-kompatibel)"), leaving the
+   model — the thing this row exists to show — zero width: a name and a chevron
+   with nothing in between. The cap is on the NAME rather than a floor under the
+   model, because a floor would squeeze the provider PICKER when both are on the
+   line, and clip a name the picker has no ellipsis for. */
+.byo-sum.has-model .byo-sum-text { flex: 0 1 auto; min-width: 0; max-width: 52%; }
+/* The picker sizes to what it is showing, but never past half the line: a
+   native select has no ellipsis (it just clips), so it should ask for what it
+   needs — and the model, which is the part that changes and the reason this row
+   has a control at all, keeps the rest. In the long-name locales the picker
+   ends up clipped by a letter or two; the icon beside it still says which
+   provider it is, and the model stays readable. */
+.byo-sum.has-model .byo-pick { flex: 0 1 auto; max-width: 50%; }
+
+/* The menu: what is in use, what was used recently, what this key already
+   fetched — and, last, the way to the full list on the settings page. An
+   inline panel rather than a floating layer (设计规范 §2). */
+.pmenu {
+  margin: 8px 0 0; padding: 4px;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--surface);
+  max-height: 178px; overflow-y: auto;
+}
+.pmenu[hidden] { display: none; }
+.pmenu-item {
+  display: flex; align-items: center; gap: 7px; width: 100%;
+  margin: 0; padding: 6px 8px;
+  border: 0; border-radius: 6px; background: none;
+  color: var(--txt); font: inherit; font-size: 13px; text-align: left;
+  cursor: pointer;
+}
+.pmenu-item:hover { background: var(--surface-2); }
+.pmenu-item span {
+  flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* The dot marks the one in use, and keeps its column on every row so the names
+   stay in one line down the menu. */
+.pmenu-item::before {
+  content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%;
+  background: transparent;
+}
+.pmenu-item.on::before { background: var(--accent); }
+.pmenu-item.on span { color: var(--accent); font-weight: 600; }
+.pmenu-item.pmenu-more span { color: var(--muted); }
+.pmenu-sep { height: 1px; margin: 4px 6px; background: var(--line); }
+/* Says what changed, then goes. A confirmation box would be a second click for
+   something the line itself already reports. */
+.byo-msg { margin: 7px 0 0; font-size: 12.5px; color: var(--muted); }
+.byo-msg[hidden] { display: none; }
 /* provider tile, same shape as the options list */
 .pico {
   flex: none; width: 20px; height: 20px; border-radius: 6px;
@@ -368,9 +445,16 @@ select:focus { border-color: var(--accent); }
 
 /* position footer */
 .pos-foot {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 8px; margin-top: 2px;
+  display: flex; gap: 8px; margin-top: 2px;
+  /* Top, not centre. The hint on the left wraps to two lines in any language
+     with longer words than Chinese — German and Russian both do — and centring
+     then parks "reset position" halfway down the left column's second line,
+     reading as a stray link rather than as this row's other half. */
+  align-items: flex-start; justify-content: space-between;
 }
+/* …and the button keeps its own words together: wrapping "Sбросить положение"
+   in the middle would put a second ragged column beside a ragged first one. */
+.pos-foot > .link { flex: 0 0 auto; white-space: nowrap; }
 .pos-hint { font-size: 13px; color: var(--muted); flex: 1; }
 /* the only clickable part of the hint — accent-coloured like every other
    control, so it is visibly the thing you press */

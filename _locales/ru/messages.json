@@ -341,6 +341,10 @@
   "byoErrAuth": {
     "message": "Ключ отклонён (401/403) — проверьте, что скопировали его целиком и что он активен."
   },
+  "byoErrListAuth": {
+    "message": "У этого ключа нет права читать список. Выдайте его в панели провайдера и попробуйте снова.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
   "byoErrLimited": {
     "message": "Сервис ограничивает частоту запросов — замедляемся и повторяем автоматически."
   },
@@ -487,6 +491,24 @@
   "popupByoUntested": {
     "message": "не проверено"
   },
+  "popupModelPick": {
+    "message": "Модель перевода"
+  },
+  "popupModelMore": {
+    "message": "Другие модели…"
+  },
+  "popupModelFetch": {
+    "message": "Загрузить модели в настройках"
+  },
+  "popupModelSwitched": {
+    "message": "Дальше — $MODEL$",
+    "placeholders": {
+      "model": { "content": "$1" }
+    }
+  },
+  "popupModelNone": {
+    "message": "Модель не выбрана"
+  },
   "exportUsesYouTube": {
     "message": "Скачивание использует собственный перевод всей дорожки YouTube — бесплатно и не расходует ваш API-ключ."
   },
@@ -572,7 +594,7 @@
     "message": "Адреса эндпоинта ещё нет — этот сервис нельзя использовать, пока его не укажете."
   },
   "optBaseHint": {
-    "message": "Вставьте базовый URL или полный эндпоинт — например, https://example.com/v1 или https://example.com/v1/chat/completions. Для сервера модели на этом компьютере (Ollama, LM Studio) укажите http://localhost:11434/v1 — localhost — единственное место, где допускается обычный http, и ключ можно оставить пустым."
+    "message": "Подойдёт и базовый URL, и полный эндпоинт, напр. https://example.com/v1 или https://example.com/v1/chat/completions. Для Ollama или LM Studio на этом компьютере — http://localhost:11434/v1. Ключ можно оставить пустым; простой http работает только для loopback-адресов."
   },
   "startS1Alt": {
     "message": "Схема плеера: строка оригинала и строка перевода внизу кадра"
@@ -726,6 +748,16 @@
       }
     }
   },
+  "ttsStatusCountsWhy": {
+    "message": "В этом видео $N$ фраз · $M$ пропущено ($W$)",
+    "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
+  },
+  "ttsSkipLate": {
+    "message": "перевод не успел"
+  },
+  "ttsSkipSilent": {
+    "message": "звук не прозвучал"
+  },
   "ttsEnableHint": {
     "message": "Когда включено, перевод каждой субтитры озвучивается по мере появления; строка, перевод которой не готов вовремя, пропускается, а не озвучивается позже. Пока строка звучит, звук самого видео снижается до уровня, заданного ниже. Длинный облачный голос также немного замедляет видео — голоса браузера длительность не сообщают, поэтому не могут."
   },
@@ -796,7 +828,7 @@
     "message": "Загрузка…"
   },
   "ttsVoicesSwitched": {
-    "message": "Все $N$ голосов, доступных по вашему ключу для этого языка — включая более старые уровни Standard / Wavenet. Они работают только для этого языка; ссылка выше возвращает к обычным голосам, которые сами следуют языку перевода. Ничего не теряется: повторная загрузка вернёт этот список.",
+    "message": "Это все $N$ голосов вашего ключа для текущего языка, включая старые линейки Standard / Wavenet. Они действуют только для этого языка; строка выше возвращает к повседневным голосам, которые следуют за сменой языка. Список можно получить снова в любой момент.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -823,6 +855,9 @@
   },
   "ttsErrNoAudio": {
     "message": "Звук не пришёл — попробуйте ещё раз или выберите другой голос."
+  },
+  "popupVoiceMore": {
+    "message": "Другие голоса…"
   },
   "ttsRobotVoices": {
     "message": "Робот",
@@ -853,7 +888,7 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Для суммаризации нужен ваш собственный сервис перевода (свой ключ или локальный эндпоинт) — бесплатные движки только переводят.",
+    "message": "Для суммаризации нужен ваш собственный сервис: провайдер с вашим ключом или локальная модель на этом компьютере. Бесплатные движки только переводят, но не суммируют.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
@@ -865,7 +900,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Вся дорожка субтитров будет отправлена в $PROVIDER$ ($PARTS$ част.) за счёт вашей квоты.",
+    "message": "Вся дорожка субтитров уйдёт в $PROVIDER$, в $PARTS$ част., за счёт вашей квоты.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
