@@ -6,7 +6,7 @@
     "message": "YouTube için iki dilli altyazı — orijinal ve çeviri, çakışmayan tek katmanda."
   },
   "headerSub": {
-    "message": "YouTube™ için · İki dilli, tek katman"
+    "message": "YouTube™ için · iki dilli, tek katman"
   },
   "disclaimer": {
     "message": "YouTube veya Google ile bağlantılı değildir."
@@ -200,7 +200,7 @@
     "message": "Tüm ayarları sıfırla"
   },
   "resetConfirmText": {
-    "message": "Bu işlem tüm ayarları, bu bilgisayarda kayıtlı API anahtarlarını ve her sağlayıcı için hatırlanan model ile sesi siler ve ilk kullanım ipuçlarını yeniden açar. Daha önce izin verdiğiniz sağlayıcı alan adları izinli kalır.",
+    "message": "Bu işlem tüm ayarları, bu bilgisayarda kayıtlı API anahtarlarını ve her sağlayıcı için hatırlanan model ile sesi siler ve ilk çalıştırma ipuçlarını yeniden açar. Daha önce izin verdiğiniz sağlayıcı alan adları izinli kalır; içe aktardığınız yazı tipi dosyaları da öyle.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Önce bir sağlayıcı seçin."
   },
   "byoErrNoKey": {
-    "message": "Önce bir API anahtarı girin, ardından Kaydet ve dene'ye basın."
+    "message": "Önce bir API anahtarı girin, ardından “Kaydet ve dene” düğmesine basın."
   },
   "byoErrNoModel": {
     "message": "Önce bir model seçin — listeden birini seçin veya “Anahtarımla modelleri listele”ye basın."
@@ -422,7 +422,7 @@
     "message": "Çeviri hizmeti kurulumu"
   },
   "optIntro": {
-    "message": "Bir sağlayıcı seçin ve kendi API anahtarınızı yapıştırın. Anahtar bu makinede kalır; altyazı metni yalnızca seçtiğiniz sağlayıcıya gider."
+    "message": "Bir sağlayıcı seçin ve kendi API anahtarınızı yapıştırın."
   },
   "optPricingLink": {
     "message": "Fiyatlandırma ve ücretsiz katman"
@@ -680,7 +680,7 @@
     "message": "Oynatıcıda küçük bir menü var"
   },
   "startS4Body": {
-    "message": "Altyazı düğmesinin yanındaki küçük ok bir menü açar: sesli okuma, metin seçimi, video özeti ve ayarlar — oynatıcıdan çıkmadan."
+    "message": "Altyazı düğmesinin yanındaki küçük ok bir menü açar: altyazılar, sesli okuma, metin seçme, video özeti ve ayarlar — oynatıcıdan çıkmadan."
   },
   "startS4Alt": {
     "message": "Oynatıcı çizimi: sağ altta altyazı düğmesinin yanındaki küçük ok küçük bir menü açar"
@@ -1088,10 +1088,10 @@
     "message": "Altyazı parçası gelmedi — otomatik olarak yeniden deneniyor. Aceleniz mi var? Hemen denemek için sayfayı yenileyin."
   },
   "ttsCompleteLabel": {
-    "message": "Her satırı sonuna kadar oku, asla kesme (yoğun bölümlerde görüntü yavaşlar)"
+    "message": "Her satırı bitir (yoğun yerlerde görüntü yavaşlar)"
   },
   "ttsCompleteHint": {
-    "message": "Yüksek hızlarda uzun satırların sonu çoğu kez bir sonrakine kaptırılır. Bu açıkken görüntü satırın gerektirdiği kadar yavaşlar — seçtiğin hızın dörtte birinin altına inmez — ve boşluklarda arayı kapatır."
+    "message": "Yüksek hızlarda uzun satırların sonu çoğu zaman bir sonrakine kayar. Bu açıkken görüntü, satırın ihtiyaç duyduğu kadar yavaşlar — seçtiğiniz hızın dörtte birinin altına inmeden — ve boşluklarda hızı toparlar. Görüntü o kadar yavaşlarken videonun kendi sesi, aşağıda ayarlanan seviyenin de altına iner, sessizliğe kadar."
   },
   "ttsCompleteHintText": {
     "message": "Bu hızda epey satır yarıda kesiliyor — “Her satırı sonuna kadar oku” açıkken görüntü gerektiği kadar yavaşlar ve her satır sonuna dek okunur."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "İçe aktarılan yazı tipi",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adresin içinde bir anahtar var. Anahtarı adresten çıkarıp API anahtarı alanına yapıştırın — adres tarayıcı hesabınıza senkronize edilir, anahtar alanı edilmez."
+  },
+  "backendStatusNoTrack": {
+    "message": "Bu video için altyazı izi bulunamadı, gösterilecek bir şey yok.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

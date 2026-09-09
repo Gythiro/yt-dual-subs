@@ -6,7 +6,7 @@
     "message": "Kakskeelsed subtiitrid YouTube'ile — originaal ja tõlge ühes kattumiseta kihis."
   },
   "headerSub": {
-    "message": "YouTube™ jaoks · Kakskeelne, üks kiht"
+    "message": "YouTube™ jaoks · kakskeelne, üks kiht"
   },
   "disclaimer": {
     "message": "Ei ole seotud YouTube'i ega Google'iga."
@@ -200,7 +200,7 @@
     "message": "Lähtesta kõik seaded"
   },
   "resetConfirmText": {
-    "message": "See tühjendab kõik seaded, sellele arvutile salvestatud API-võtmed ning iga teenusepakkuja jaoks meelde jäetud mudeli ja hääle ning lülitab esmakäivituse vihjed uuesti sisse. Teenusepakkuja domeenid, millele oled juba loa andnud, jäävad kehtima.",
+    "message": "See tühjendab kõik seaded, selles arvutis salvestatud API võtmed ning iga teenusepakkuja jaoks meelde jäetud mudeli ja hääle ning lülitab esmakäivituse vihjed uuesti sisse. Teenusepakkujate domeenid, millele oled juba loa andnud, jäävad kehtima, nagu ka imporditud fondifailid.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Vali esmalt teenusepakkuja."
   },
   "byoErrNoKey": {
-    "message": "Sisesta esmalt API-võti, seejärel vajuta Salvesta ja testi."
+    "message": "Sisesta esmalt API võti, seejärel vajuta Salvesta ja testi."
   },
   "byoErrNoModel": {
     "message": "Vali esmalt mudel — vali üks loendist või vajuta „Loetle mudelid minu võtmega“."
@@ -422,7 +422,7 @@
     "message": "Tõlketeenuse seadistus"
   },
   "optIntro": {
-    "message": "Vali teenusepakkuja ja kleebi oma API võti. Võti jääb sellele arvutile ning subtiitrite tekst läheb ainult valitud teenusepakkujale."
+    "message": "Vali teenusepakkuja ja kleebi oma API võti."
   },
   "optPricingLink": {
     "message": "Hinnad ja tasuta tase"
@@ -680,7 +680,7 @@
     "message": "Pleieris on väike menüü"
   },
   "startS4Body": {
-    "message": "Väike nool subtiitrinupu kõrval avab menüü: ettelugemine, teksti valimine, video kokkuvõte ja seaded — pleierist lahkumata."
+    "message": "Väike nool subtiitrite nupu kõrval avab menüü: subtiitrid, ettelugemine, teksti valimine, video kokkuvõte ja seaded — mängijast lahkumata."
   },
   "startS4Alt": {
     "message": "Pleieri illustratsioon: väike nool subtiitrinupu kõrval all paremal avab väikese menüü"
@@ -1088,10 +1088,10 @@
     "message": "Subtiitririba ei saabunud — proovitakse automaatselt uuesti. Kiire? Värskenda lehte, et kohe uuesti proovida."
   },
   "ttsCompleteLabel": {
-    "message": "Loe iga rida lõpuni, ära katkesta (tihedates kohtades muutub pilt aeglasemaks)"
+    "message": "Iga rida lõpuni (pilt aeglustub tihedates osades)"
   },
   "ttsCompleteHint": {
-    "message": "Suurel kiirusel kaotavad pikad read tihti lõpu. Kui see on sees, aeglustub pilt täpselt nii palju, kui rida vajab — mitte alla veerandi valitud kiirusest — ja jõuab vahedes järele."
+    "message": "Suurematel kiirustel kaotavad pikad read sageli oma lõpu järgmisele reale. Kui see on sees, aeglustub pilt nii palju, kui rida vajab — mitte kunagi alla veerandi valitud kiirusest — ja jõuab lünkades järele. Kui pilt on nii tugevalt aeglustatud, langeb video enda heli allpool määratud tasemest veelgi, kuni vaikuseni."
   },
   "ttsCompleteHintText": {
     "message": "Sellel kiirusel jääb päris mitu rida pooleli — kui „Loe iga rida lõpuni“ on sees, aeglustub pilt vajadust mööda ja iga rida loetakse lõpuni."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Imporditud font",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Aadressis on võti. Eemalda see aadressist ja kleebi API võtme väljale — aadress sünkroonitakse sinu brauserikontoga, võtmeväli mitte."
+  },
+  "backendStatusNoTrack": {
+    "message": "Selle video jaoks ei leitud subtiitrirada, seega pole midagi näidata.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

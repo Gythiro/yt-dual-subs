@@ -218,6 +218,13 @@ function setKey(key, val) {
 }
 
 // ---- live preview (mirrors content.js styleOverlay) ----------------------
+// The sample translation is in the interface language — except in English,
+// whose sample is Spanish, since the original line is English. With English
+// as the target the dropdown and the preview then disagreed, so the translation
+// line shows the original's words instead: same language, which is exactly
+// what the overlay shows on such a track. (Named here, above paintPreview,
+// because `t` is an element inside it.)
+const previewSample = () => ({ orig: t("sampleOrig", "The quick brown fox"), trans: t("sampleTrans", "敏捷的棕色狐狸") });
 function paintPreview() {
   const ov = $("prevOverlay"), o = $("prevOrig"), t = $("prevTrans");
   if (!ov || !o || !t) return;
@@ -236,6 +243,9 @@ function paintPreview() {
   // Japanese kanji must not be drawn with simplified-Chinese glyphs here either.
   o.lang = (typeof tabLang === "string" && tabLang) || "";
   t.lang = String(state.targetLang || "");
+  const tl = t.lang.toLowerCase();
+  const sample = previewSample();
+  t.textContent = (tl === "en" || tl.indexOf("en-") === 0) ? sample.orig : sample.trans;
 
   t.style.fontFamily = fontStack(state.transFont);
   t.style.fontSize = Math.max(9, Math.round(state.transSize / 2)) + "px";
@@ -371,6 +381,13 @@ async function refreshEngineStatus() {
   try { await paintEngineStatus(); } finally { paintDiagBtn(); }
 }
 
+// Codes that mean "not set up yet". The byo panel already says so ("not
+// configured · Configure…"), and the sentence the settings page uses for them
+// names a key field and a Save-and-test button the popup does not have — so
+// the status line stays out of it rather than pointing at controls that are
+// not here.
+const BYO_SETUP_CODES = new Set(["noKey", "noProvider"]);
+
 async function paintEngineStatus() {
   const el = $("backendStatus");
   if (!el) return;
@@ -401,7 +418,7 @@ async function paintEngineStatus() {
 
   // A failing BYO engine has to say so: unlike gtx it has no free fallback, so
   // staying quiet would just look like "the extension stopped translating".
-  if (byoCode) {
+  if (byoCode && !BYO_SETUP_CODES.has(byoCode)) {
     el.textContent = byoErrText(byoCode, activeProvider());
     el.classList.add("warn");
     el.hidden = false;
@@ -459,6 +476,21 @@ async function paintEngineStatus() {
     return;
   }
   if (state.engine !== "auto") return;      // manual choice: stay quiet
+  // The page waited for a track, re-pressed CC, and found no caption text on
+  // screen either: say so, with a door to the About pane's "Something wrong"
+  // card. Not a warning — the diagnostics button is for faults, and a video
+  // without captions is not one.
+  if (!r.engine && r.noTrack && !r.trackWait) {
+    el.textContent = t("backendStatusNoTrack", "这个视频没有找到字幕轨，所以什么都显示不了。") + " ";
+    const go = document.createElement("button");
+    go.type = "button";
+    go.className = "link";
+    go.textContent = t("troubleTitle", "遇到问题");
+    go.addEventListener("click", () => toOptions("#about"));
+    el.appendChild(go);
+    el.hidden = false;
+    return;
+  }
   if (!r.engine) return;                    // no cues yet
   el.textContent = r.engine === "gtx"
     ? t("backendStatusGtx", "本视频：智能整句（Google）")
@@ -628,7 +660,7 @@ function ttsVoiceUsableHere(p, name) {
 function skipWhyText(code) {
   if (code === "noText") return t("ttsSkipLate", "译文没赶上");
   if (code === "dead" || code === "decode" ||
-      code === "neverBegan" || code === "nosynth") {
+      code === "neverBegan" || code === "nosynth" || code === "worker") {
     return t("ttsSkipSilent", "没出声");
   }
   // …and these never reached a provider at all: the extension stopped at its
@@ -706,6 +738,7 @@ async function paintTtsCard() {
   let ready = false;
   let current = null;                // the provider actually in use
   let speaks = true;                 // …and whether it can sound, right now
+  let muteWhy = "";                  // "noRegion" when a stored key only lacks its region
   let usable = [];                   // every provider that could speak right now
   const gen = ++ttsPaintGen;
   try {
@@ -757,6 +790,10 @@ async function paintTtsCard() {
       // fix — one hop, no page change, and the switch keeps meaning "I want
       // to hear this" rather than "this is available".
       speaks = !!current && usable.includes(current);
+      // Azure with a key saved but no region is one field away from working;
+      // "switch provider" would send that reader the wrong way.
+      muteWhy = current && !speaks && current.needsRegion && keys[current.id] &&
+        !TTS_REGION_OK.test(String((got && got.ttsRegion) || "").trim().toLowerCase()) ? "noRegion" : "";
       ready = !!current;
       if (ready) {
         // Read before painting: the picker is built in one pass and the recent
@@ -791,11 +828,22 @@ async function paintTtsCard() {
   const broken = $("ttsBroken");
   if (broken) {
     const say = live && !speaks && current;
-    broken.textContent = say
-      ? tsub("ttsProviderMute", [(current.shortKey && t(current.shortKey, current.short)) ||
-          current.short || current.name],
-        "$1$ 现在读不出声。在上面那一行换一家——浏览器自带的音色也在里面。")
-      : "";
+    broken.textContent = !say ? ""
+      : muteWhy === "noRegion"
+        ? t("ttsErrNoRegion", "先填你 Azure Key 所在的服务区域（如 eastus）再测通。") + " "
+        : tsub("ttsProviderMute", [(current.shortKey && t(current.shortKey, current.short)) ||
+            current.short || current.name],
+          "$1$ 现在读不出声。在上面那一行换一家——浏览器自带的音色也在里面。");
+    if (say && muteWhy === "noRegion") {
+      // The field is on the settings page: hang the same door on it that the
+      // status line carries, rather than telling the reader to go find it.
+      const go = document.createElement("button");
+      go.type = "button";
+      go.className = "link";
+      go.textContent = t("ttsOpenSettings", "朗读设置");
+      go.addEventListener("click", () => toOptions("#readaloud"));
+      broken.appendChild(go);
+    }
     broken.hidden = !say;
   }
   // Readiness just changed: the status line was drawn under the old answer.
@@ -1051,7 +1099,9 @@ async function probeFontsNow() {
     // this line, cannot be picked" has to hold for it too.
     const got = await Promise.all(need.filter((id) => F.isImport(id)).map((id) => F.ensureImported(document, id).then((ok) => [id, ok])));
     for (const [id, ok] of got) if (!ok) fontGone.add(id); else fontGone.delete(id);
-    const r = await F.probe(need, langs);
+    // The yield every dozen fonts is only taken when a progress callback is
+    // given; without one the popup froze for the whole first-time probe.
+    const r = await F.probe(need, langs, document, () => {});
     for (const id of need) for (const l of langs) if (!(l in cov[id])) cov[id][l] = r[id] ? r[id][l] : null;
     try {
       const out = Object.assign(Object.create(null), (cached && cached.cov) || {});
@@ -2170,6 +2220,16 @@ function wire() {
     tip.hidden = !open;
     $("backendInfo").setAttribute("aria-expanded", String(open));
   });
+  // Escape closes it too, the way it closes the two inline menus, and gives
+  // the button its focus back so the keyboard is not left in a closed box.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const tip = $("backendTip");
+    if (!tip || tip.hidden) return;
+    tip.hidden = true;
+    $("backendInfo").setAttribute("aria-expanded", "false");
+    $("backendInfo").focus();
+  });
 
   // engine select: write the v3.4 key AND mirror the legacy one, in a single
   // set() so content.js sees one change event (one re-cue, not two).
@@ -2460,7 +2520,12 @@ function wire() {
       // cut-tail hint, a preference and not a secret, and a reset that keeps
       // it leaves a door shut that the reset claims to reopen.
       chrome.storage.local.remove(["byoKeys", "ttsKeys", "byoOk", "ytdsCompleteHintOff",
-        "byoCatalogs"]);                 // fetched model lists are a cache, not a setting
+        "byoCatalogs",                   // fetched model lists are a cache, not a setting
+        "fontKept", "fontCov",           // the popup's font list goes back to this computer's
+      // defaults and the which-font-draws-which-language cache is rebuilt on demand. fontImports
+      // stays: those are files the reader put in, not settings, and the dialog says they stay.
+        "fontLangsSeen",                 // the last five videos' original languages: what was watched
+        "uiLineOpen"]);                  // the line-style card's open/closed memory
       // "Back to how it was when first installed" — so the first-run hints come
       // back too: the drag grip's and the corner arrow's budgets are re-seeded
       // exactly as background.js seeds them on install.

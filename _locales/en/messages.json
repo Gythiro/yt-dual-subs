@@ -6,7 +6,7 @@
     "message": "Bilingual subtitles for YouTube — original and translation in one non-overlapping layer."
   },
   "headerSub": {
-    "message": "for YouTube™ · Bilingual, single layer"
+    "message": "for YouTube™ · bilingual, single layer"
   },
   "disclaimer": {
     "message": "Not affiliated with YouTube or Google."
@@ -118,6 +118,10 @@
   "backendStatusSame": {
     "message": "This video's subtitles are already in your translation language — nothing to translate."
   },
+  "backendStatusNoTrack": {
+    "message": "No caption track was found for this video, so there is nothing to show.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
   "secLayout": {
     "message": "Layout"
   },
@@ -218,16 +222,16 @@
     "message": "Reset all settings"
   },
   "resetConfirmText": {
-    "message": "This clears every setting, the API keys saved on this computer, and the model and voice remembered for each provider, and turns the first-run hints back on. Provider domains you have already granted stay granted.",
+    "message": "This clears every setting, the API keys saved on this computer, and the model and voice remembered for each provider, and turns the first-run hints back on. Provider domains you have already granted stay granted, and so do the font files you imported.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
     "message": "Keep my settings",
-    "description": "Popup: the safe button on the reset panel \u2014 closes it, changes nothing."
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
   },
   "resetConfirmGo": {
     "message": "Reset everything",
-    "description": "Popup: the destructive button on the reset panel \u2014 performs the reset."
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Turn off dual subtitles"
@@ -398,6 +402,9 @@
   "byoErrBadBaseUrl": {
     "message": "The API base URL must be a full https:// address."
   },
+  "byoErrUrlHasKey": {
+    "message": "The address has a key in it. Take it out of the address and paste it into the API key field — the address is synced to your browser account, the key field is not."
+  },
   "byoErrNoPerm": {
     "message": "Without permission to reach that API host the extension cannot connect. Press “Save and test” again and allow it."
   },
@@ -448,7 +455,7 @@
     "message": "Translation service setup"
   },
   "optIntro": {
-    "message": "Pick a provider and paste your own API key. The key stays on this machine, and subtitle text goes only to the provider you choose."
+    "message": "Pick a provider and paste your own API key."
   },
   "optPricingLink": {
     "message": "Pricing & free tier"
@@ -472,7 +479,11 @@
   },
   "optModelRetired": {
     "message": "“$MODEL$” is no longer on this provider's list — pick another one above.",
-    "placeholders": { "model": { "content": "$1" } }
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
   },
   "optModelsFailed": {
     "message": "Could not list models — type the model name instead."
@@ -738,7 +749,7 @@
     "message": "There's a little menu in the player"
   },
   "startS4Body": {
-    "message": "The small arrow next to the subtitle button opens a menu: read aloud, select text, video summary and settings — without leaving the player."
+    "message": "The small arrow next to the subtitle button opens a menu: subtitles, read aloud, select text, video summary and settings — without leaving the player."
   },
   "startS4Alt": {
     "message": "Player illustration: a small arrow next to the subtitle button, bottom right, opens a small menu"
@@ -807,7 +818,11 @@
   },
   "ttsVoicesSuggested": {
     "message": "Fetched $N$ voices — they are suggestions under the field above.",
-    "placeholders": { "n": { "content": "$1" } }
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "Female"
@@ -1111,10 +1126,10 @@
     "message": "The subtitle track hasn't arrived — retrying automatically. In a hurry? Refresh the page to try again now."
   },
   "ttsCompleteLabel": {
-    "message": "Finish every line, never cut it short (the picture slows in dense parts)"
+    "message": "Finish every line (the picture slows in dense parts)"
   },
   "ttsCompleteHint": {
-    "message": "At higher speeds long lines often lose their tail to the next one. With this on, the picture slows as much as the line needs — never below a quarter of your chosen speed — and catches back up in the gaps."
+    "message": "At higher speeds long lines often lose their tail to the next one. With this on, the picture slows as much as the line needs — never below a quarter of your chosen speed — and catches back up in the gaps. While the picture is slowed that deep, the video's own audio drops further than the level set below, down to silence."
   },
   "ttsCompleteHintText": {
     "message": "Quite a few lines are being cut short at this speed — with “Finish every line” on, the picture slows as needed and every line gets read out."

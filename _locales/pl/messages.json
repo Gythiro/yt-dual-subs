@@ -6,7 +6,7 @@
     "message": "Dwujęzyczne napisy do YouTube — oryginał i tłumaczenie w jednej, nienakładającej się warstwie."
   },
   "headerSub": {
-    "message": "do YouTube™ · Dwujęzyczne, jedna warstwa"
+    "message": "do YouTube™ · dwujęzyczne, jedna warstwa"
   },
   "disclaimer": {
     "message": "Niepowiązane z YouTube ani Google."
@@ -200,7 +200,7 @@
     "message": "Resetuj wszystkie ustawienia"
   },
   "resetConfirmText": {
-    "message": "Wyczyści to wszystkie ustawienia, klucze API zapisane na tym komputerze oraz zapamiętany model i głos każdego dostawcy, a także ponownie włączy wskazówki z pierwszego uruchomienia. Przyznane uprawnienia do domen dostawców pozostają.",
+    "message": "To czyści wszystkie ustawienia, klucze API zapisane na tym komputerze oraz zapamiętany model i głos każdego dostawcy, i ponownie włącza wskazówki z pierwszego uruchomienia. Domeny dostawców, którym już udzielono uprawnień, pozostają przyznane — tak samo jak zaimportowane pliki czcionek.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Najpierw wybierz dostawcę."
   },
   "byoErrNoKey": {
-    "message": "Najpierw wpisz klucz API, potem naciśnij Zapisz i testuj."
+    "message": "Najpierw wpisz klucz API, potem naciśnij „Zapisz i przetestuj”."
   },
   "byoErrNoModel": {
     "message": "Najpierw wybierz model — wskaż jeden z listy albo naciśnij „Lista modeli z moim kluczem”."
@@ -422,7 +422,7 @@
     "message": "Konfiguracja usługi tłumaczeń"
   },
   "optIntro": {
-    "message": "Wybierz dostawcę i wklej własny klucz API. Klucz zostaje na tym komputerze, a tekst napisów trafia wyłącznie do wybranego dostawcy."
+    "message": "Wybierz dostawcę i wklej własny klucz API."
   },
   "optPricingLink": {
     "message": "Cennik i darmowy plan"
@@ -680,7 +680,7 @@
     "message": "W odtwarzaczu kryje się małe menu"
   },
   "startS4Body": {
-    "message": "Mała strzałka obok przycisku napisów otwiera menu: czytanie na głos, zaznaczanie tekstu, podsumowanie filmu i ustawienia — bez wychodzenia z odtwarzacza."
+    "message": "Mała strzałka obok przycisku napisów otwiera menu: napisy, czytanie na głos, zaznaczanie tekstu, podsumowanie filmu i ustawienia — bez opuszczania odtwarzacza."
   },
   "startS4Alt": {
     "message": "Ilustracja odtwarzacza: mała strzałka obok przycisku napisów w prawym dolnym rogu otwiera małe menu"
@@ -927,7 +927,7 @@
     "message": "Odtwarzanie…"
   },
   "ttsPreviewFail": {
-    "message": "Nie udało się odtworzyć — sprawdź klucz i spróbuj Zapisz i testuj"
+    "message": "Nie udało się odtworzyć — sprawdź klucz i spróbuj „Zapisz i przetestuj”"
   },
   "ttsFetchVoices": {
     "message": "Pobierz pełną listę tego języka swoim kluczem"
@@ -1088,10 +1088,10 @@
     "message": "Ścieżka napisów nie dotarła — ponawiam automatycznie. W pośpiechu? Odśwież stronę, aby spróbować od razu."
   },
   "ttsCompleteLabel": {
-    "message": "Doczytuj każdą linię do końca, bez ucinania (w gęstych fragmentach obraz zwalnia)"
+    "message": "Dokańczaj każdą linijkę (obraz zwalnia w gęstych partiach)"
   },
   "ttsCompleteHint": {
-    "message": "Przy większych prędkościach długie linie często tracą końcówkę. Po włączeniu obraz zwalnia tyle, ile linia potrzebuje — nigdy poniżej jednej czwartej wybranej prędkości — i nadrabia w przerwach."
+    "message": "Przy wyższych prędkościach długie linijki często tracą końcówkę na rzecz następnej. Gdy ta opcja jest włączona, obraz zwalnia tyle, ile linijka potrzebuje — nigdy poniżej jednej czwartej wybranej prędkości — i nadrabia w przerwach. Gdy obraz jest tak mocno spowolniony, dźwięk samego filmu ścisza się bardziej niż poziom ustawiony poniżej, aż do ciszy."
   },
   "ttsCompleteHintText": {
     "message": "Przy tej prędkości sporo linii jest ucinanych — z włączonym „Doczytuj każdą linię do końca” obraz zwalnia w razie potrzeby i każda linia jest doczytywana."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Zaimportowana czcionka",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adres zawiera klucz. Usuń go z adresu i wklej w pole klucza API — adres jest synchronizowany z kontem przeglądarki, pole klucza nie."
+  },
+  "backendStatusNoTrack": {
+    "message": "Nie znaleziono ścieżki napisów dla tego filmu, więc nie ma nic do wyświetlenia.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

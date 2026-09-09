@@ -200,7 +200,7 @@
     "message": "모든 설정 초기화"
   },
   "resetConfirmText": {
-    "message": "모든 설정, 이 컴퓨터에 저장된 API 키, 제공업체별로 기억된 모델과 음성이 지워지고, 첫 실행 안내가 다시 켜집니다. 이미 허용한 제공업체 도메인 권한은 그대로 유지됩니다.",
+    "message": "모든 설정, 이 컴퓨터에 저장된 API 키, 제공자별로 기억된 모델과 음성이 지워지고 처음 실행 안내가 다시 켜집니다. 이미 허용한 제공자 도메인과 가져온 글꼴 파일은 그대로 유지됩니다.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "먼저 제공업체를 선택하세요."
   },
   "byoErrNoKey": {
-    "message": "먼저 API 키를 입력한 다음 저장하고 테스트를 누르세요."
+    "message": "먼저 API 키를 입력한 다음 “저장 후 테스트”를 누르세요."
   },
   "byoErrNoModel": {
     "message": "먼저 모델을 선택하세요 — 목록에서 고르거나 “내 키로 모델 목록 불러오기”를 누르세요."
@@ -422,7 +422,7 @@
     "message": "번역 서비스 설정"
   },
   "optIntro": {
-    "message": "제공업체를 선택하고 본인의 API 키를 붙여넣으세요. 키는 이 기기에만 저장되며, 자막 텍스트는 선택한 제공업체로만 전송됩니다."
+    "message": "제공자를 고르고 본인 API 키를 붙여넣으세요."
   },
   "optPricingLink": {
     "message": "요금 및 무료 한도"
@@ -680,7 +680,7 @@
     "message": "플레이어 안에 작은 메뉴가 있습니다"
   },
   "startS4Body": {
-    "message": "자막 버튼 옆의 작은 화살표를 누르면 메뉴가 열립니다. 읽어주기, 텍스트 선택, 동영상 요약, 설정을 플레이어를 벗어나지 않고 쓸 수 있습니다."
+    "message": "자막 버튼 옆의 작은 화살표를 누르면 메뉴가 열립니다. 자막, 소리 내어 읽기, 텍스트 선택, 영상 요약, 설정 — 플레이어를 떠나지 않고 사용할 수 있습니다."
   },
   "startS4Alt": {
     "message": "플레이어 그림: 오른쪽 아래 자막 버튼 옆의 작은 화살표를 누르면 작은 메뉴가 열립니다"
@@ -1088,10 +1088,10 @@
     "message": "자막 트랙을 받지 못했습니다. 자동으로 다시 시도하는 중입니다. 급하면 페이지를 새로고침해 바로 다시 시도하세요."
   },
   "ttsCompleteLabel": {
-    "message": "모든 줄을 끝까지 읽고 자르지 않기 (대사가 몰리면 화면이 느려집니다)"
+    "message": "모든 줄 끝까지 읽기 (밀집 구간은 화면이 느려짐)"
   },
   "ttsCompleteHint": {
-    "message": "배속에서는 긴 줄의 끝이 다음 줄에 잘리기 쉽습니다. 켜면 그 줄에 필요한 만큼 화면이 느려지고(선택한 배속의 4분의 1 아래로는 내려가지 않음) 틈에서 다시 따라잡습니다."
+    "message": "배속을 높이면 긴 줄의 끝부분이 다음 줄에 잘리는 경우가 많습니다. 이 옵션을 켜면 화면이 해당 줄이 필요한 만큼 느려집니다 — 선택한 배속의 1/4 미만으로는 내려가지 않으며 — 빈 구간에서 다시 따라잡습니다. 화면이 그만큼 느려진 동안 영상의 자체 오디오는 아래 설정값보다 더 낮아지며, 무음까지 내려갑니다."
   },
   "ttsCompleteHintText": {
     "message": "이 배속에서는 많은 줄이 잘리고 있습니다. ‘모든 줄을 끝까지 읽고 자르지 않기’를 켜면 필요한 만큼 화면이 느려지고 모든 줄을 끝까지 읽습니다."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "가져온 글꼴",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "주소에 키가 들어 있습니다. 주소에서 키를 빼고 API 키 필드에 붙여넣으세요. 주소는 브라우저 계정과 동기화되지만 키 필드는 동기화되지 않습니다."
+  },
+  "backendStatusNoTrack": {
+    "message": "이 영상에 캡션 트랙이 없어 표시할 내용이 없습니다.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

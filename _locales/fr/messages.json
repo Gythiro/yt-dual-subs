@@ -6,7 +6,7 @@
     "message": "Sous-titres bilingues pour YouTube — original et traduction dans une seule couche, sans chevauchement."
   },
   "headerSub": {
-    "message": "pour YouTube™ · Bilingue, une seule couche"
+    "message": "pour YouTube™ · bilingue, une seule couche"
   },
   "disclaimer": {
     "message": "Non affilié à YouTube ni à Google."
@@ -200,7 +200,7 @@
     "message": "Réinitialiser tout"
   },
   "resetConfirmText": {
-    "message": "Cela efface tous les paramètres, les clés API enregistrées sur cet ordinateur, ainsi que le modèle et la voix mémorisés pour chaque fournisseur, et réactive les astuces du premier lancement. Les domaines des fournisseurs déjà autorisés restent autorisés.",
+    "message": "Cela efface tous les réglages, les clés API enregistrées sur cet ordinateur, ainsi que le modèle et la voix mémorisés pour chaque fournisseur, et réactive les astuces du premier lancement. Les domaines de fournisseurs déjà autorisés le restent, tout comme les fichiers de polices importés.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Choisissez d’abord un fournisseur."
   },
   "byoErrNoKey": {
-    "message": "Saisissez d’abord une clé API, puis cliquez sur Enregistrer et tester."
+    "message": "Saisissez d’abord une clé API, puis appuyez sur Enregistrer et tester."
   },
   "byoErrNoModel": {
     "message": "Choisissez d’abord un modèle — sélectionnez-en un dans la liste, ou cliquez sur « Lister les modèles avec ma clé »."
@@ -422,7 +422,7 @@
     "message": "Configuration du service de traduction"
   },
   "optIntro": {
-    "message": "Choisissez un fournisseur et collez votre clé API. La clé reste sur cet ordinateur, et le texte des sous-titres va uniquement au fournisseur choisi."
+    "message": "Choisissez un fournisseur et collez votre clé API."
   },
   "optPricingLink": {
     "message": "Tarifs et offre gratuite"
@@ -680,7 +680,7 @@
     "message": "Un petit menu se cache dans le lecteur"
   },
   "startS4Body": {
-    "message": "La petite flèche à côté du bouton de sous-titres ouvre un menu : lire à voix haute, sélection du texte, résumé de la vidéo et paramètres — sans quitter le lecteur."
+    "message": "La petite flèche à côté du bouton de sous-titres ouvre un menu : sous-titres, lecture à voix haute, sélection de texte, résumé vidéo et paramètres — sans quitter le lecteur."
   },
   "startS4Alt": {
     "message": "Illustration du lecteur : une petite flèche à côté du bouton de sous-titres, en bas à droite, ouvre un petit menu"
@@ -1088,10 +1088,10 @@
     "message": "La piste de sous-titres n’est pas arrivée — nouvel essai automatique. Pressé ? Actualisez la page pour réessayer tout de suite."
   },
   "ttsCompleteLabel": {
-    "message": "Lire chaque ligne jusqu’au bout, sans la couper (l’image ralentit dans les passages denses)"
+    "message": "Terminer chaque ligne (l’image ralentit dans les passages denses)"
   },
   "ttsCompleteHint": {
-    "message": "À vitesse élevée, les longues lignes perdent souvent leur fin au profit de la suivante. Une fois activé, l’image ralentit autant que la ligne l’exige — jamais sous le quart de la vitesse choisie — et rattrape dans les creux."
+    "message": "À plus haute vitesse, la fin des longues lignes est souvent coupée par la suivante. Avec cette option, l’image ralentit autant que la ligne l’exige — jamais en dessous d’un quart de la vitesse choisie — puis rattrape dans les silences. Tant que l’image est autant ralentie, le son original de la vidéo descend plus bas que le niveau défini ci-dessous, jusqu’au silence."
   },
   "ttsCompleteHintText": {
     "message": "À cette vitesse, pas mal de lignes sont coupées — avec « Lire chaque ligne jusqu’au bout », l’image ralentit au besoin et chaque ligne est lue en entier."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Police importée",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "L’adresse contient une clé. Retirez-la de l’adresse et collez-la dans le champ de clé API — l’adresse est synchronisée avec votre compte de navigateur, le champ de clé ne l’est pas."
+  },
+  "backendStatusNoTrack": {
+    "message": "Aucune piste de sous-titres n’a été trouvée pour cette vidéo, il n’y a donc rien à afficher.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

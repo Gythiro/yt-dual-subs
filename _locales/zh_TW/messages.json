@@ -118,6 +118,10 @@
   "backendStatusSame": {
     "message": "本影片字幕已是譯文語言，無需翻譯。"
   },
+  "backendStatusNoTrack": {
+    "message": "這支影片沒有找到字幕軌，所以什麼都顯示不了。",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
   "secLayout": {
     "message": "版面配置"
   },
@@ -218,7 +222,7 @@
     "message": "重設所有設定"
   },
   "resetConfirmText": {
-    "message": "會清掉所有設定、這台電腦上儲存的 API Key，以及每家服務商記住的模型和音色，首次使用的提示會重新出現。已經授權過的服務商網域保持授權。",
+    "message": "會清掉所有設定、這台電腦上儲存的 API Key，以及每家服務商記住的模型和音色，首次使用的提示會重新出現。已經授權過的服務商網域保持授權，你匯入的字型檔案也會保留。",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -398,6 +402,9 @@
   "byoErrBadBaseUrl": {
     "message": "介面網址必須是 https:// 開頭的完整網址。"
   },
+  "byoErrUrlHasKey": {
+    "message": "網址裡帶著 Key。把它從網址裡去掉，填進下面的 API Key 欄——網址會隨瀏覽器帳號同步，Key 欄不會。"
+  },
   "byoErrNoPerm": {
     "message": "沒有授權存取這個介面網域，無法連線。再點一次「儲存並測試」，在彈出的視窗裡允許。"
   },
@@ -448,7 +455,7 @@
     "message": "翻譯服務設定"
   },
   "optIntro": {
-    "message": "選一個服務商，填上你自己的 API Key。Key 只儲存在這台電腦上，字幕文字只傳往你選的服務商。"
+    "message": "選一個服務商，填上你自己的 API Key。"
   },
   "optPricingLink": {
     "message": "費用與免費額度"
@@ -738,7 +745,7 @@
     "message": "播放器裡還有個小選單"
   },
   "startS4Body": {
-    "message": "字幕開關旁的小箭頭會展開選單：朗讀、選取複製、影片總結和設定，不用離開播放器。"
+    "message": "字幕開關旁的小箭頭展開選單：字幕、朗讀、選取複製、總結和設定，不用離開播放器。"
   },
   "startS4Alt": {
     "message": "播放器示意圖：右下角字幕開關旁有一個小箭頭，點開是一個小選單"
@@ -1107,10 +1114,10 @@
     "message": "字幕軌沒拿到，正在自動重試；急的話重新整理頁面立即重來。"
   },
   "ttsCompleteLabel": {
-    "message": "每句讀完不截斷（密集處畫面會更慢）"
+    "message": "盡量每句讀完（密集處畫面會更慢）"
   },
   "ttsCompleteHint": {
-    "message": "開倍速時長句常被下一句頂掉結尾。打開後畫面會按需要放慢到讀完為止（最低不低於你所選倍速的四分之一），空隙處再追回來。"
+    "message": "開倍速時長句常被下一句頂掉結尾。打開後畫面會按需要放慢到讀完為止（最低不低於你所選倍速的四分之一），空隙處再追回來。畫面放得很慢時，原聲會壓得比下面設的更低，直到靜音。"
   },
   "ttsCompleteHintText": {
     "message": "此倍速下不少句子被截斷——開啟「每句讀完」後畫面會按需放慢，句句讀完。"

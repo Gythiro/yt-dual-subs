@@ -365,6 +365,10 @@
     try { document.removeEventListener("selectionchange", flushHeldLines); } catch (_e) { /* ignore */ }
     try { window.removeEventListener("mouseup", onAnyMouseUp, true); } catch (_e) { /* ignore */ }
     try { window.removeEventListener("click", onStrayClick, true); } catch (_e) { /* ignore */ }
+    try { if (localVoicesTake && window.speechSynthesis) window.speechSynthesis.removeEventListener("voiceschanged", localVoicesTake); } catch (_e) { /* ignore */ }
+    // inject.js keeps producing cues for a config it still holds; tell it the
+    // listener is gone (plain postMessage: chrome.* is dead by now).
+    try { window.postMessage({ source: "ytds-content", type: "bye" }, "*"); } catch (_e) { /* ignore */ }
     // A connected observer is not idle: it runs its callback on every mutation
     // YouTube makes to the bar, and holds this whole dead scope alive doing it.
     // Timers were being cleared here; this was not.
@@ -430,7 +434,9 @@
     for (const k of Object.keys(changes)) {
       if (k in settings) {
         const oldV = settings[k];
-        settings[k] = changes[k].newValue;
+        // A removed key (the popup's reset removes a few) arrives with no
+        // newValue at all; mirroring that as undefined is not "back to default".
+        settings[k] = ("newValue" in changes[k]) ? changes[k].newValue : DEFAULTS[k];
         if (k === "engine") settings.engine = normalizeEngine(settings);
         if (RECUE_KEYS.has(k) && oldV !== settings[k]) {
           needRecue = true;
@@ -567,13 +573,26 @@
   // A shorts page keeps a hidden #movie_player around (preloaded watch player,
   // complete with its own CC button), so query order must follow the page type
   // or the overlay/CC clicks land on the invisible player.
+  // Only on a page that IS a video: the home page's hover preview and the
+  // channel page's trailer are .html5-video-player too, and mounting there
+  // put the button in a preview and had ensureCaptionsOn press its CC (D156).
+  function isVideoPage() {
+    try { return /^\/(watch|shorts\/|embed\/|live\/)/.test(location.pathname); }
+    catch (_e) { return false; }
+  }
   function getPlayer() {
+    // The player's id is the identity: #movie_player on watch / embed / live,
+    // #shorts-player on Shorts. The bare-class fallback is only for a page
+    // that has lost the id mid-navigation — and on the home, search and
+    // channel pages the only .html5-video-player is the hover preview, which
+    // used to get our toggle button and overlay. So the fallback is allowed
+    // on video URLs only; the id lookup needs no such gate.
     if (isShorts()) {
       return document.getElementById("shorts-player") ||
-             document.querySelector(".html5-video-player");
+             (isVideoPage() ? document.querySelector(".html5-video-player") : null);
     }
     return document.querySelector("#movie_player") ||
-           document.querySelector(".html5-video-player");
+           (isVideoPage() ? document.querySelector(".html5-video-player") : null);
   }
 
   // YouTube plays its advertisements through the SAME media element, so while
@@ -1627,7 +1646,7 @@
     if (!menuEl) return;
     for (const el of menuEl.querySelectorAll(".ytds-mi[data-key]")) {
       const k = el.getAttribute("data-key");
-      if (k === "openOptions") continue;
+      if (k === "openOptions" || k === "summary") continue;   // action rows, not switches
       el.setAttribute("aria-pressed", settings[k] ? "true" : "false");
     }
   }
@@ -1699,7 +1718,7 @@
             const vv2 = getVideo();
             const cue2 = cueList[activeCueIdx];
             ttsOnCue(activeCueIdx, cue2,
-              vv2 ? Math.max(0, vv2.currentTime * 1000 - (cue2.start || 0)) : 0);
+              vv2 ? Math.max(0, vv2.currentTime * 1000 - ttsLineStartMs(activeCueIdx)) : 0);
           }
         }
         extCall(() => chrome.storage.sync.set({ [row.key]: next }));
@@ -1970,6 +1989,38 @@
   // catches the long ones, and holding the video quiet a moment too long is a
   // smaller fault than talking over the voice.
   const TTS_LOCAL_PER_CHAR_MS = 240;
+  // …but that ceiling is the wrong RULER for sizing. 240ms/char is a
+  // Chinese/Japanese pace; a Latin, Cyrillic, Greek or Arabic line is read
+  // about three times as fast, and sizing it against 240 called nearly every
+  // English line "does not fit" — the picture sat at 0.85× of the viewer's
+  // speed for the whole video (D156). The ruler is seeded per script and then
+  // learned from this machine's own finished lines (start→end, whole
+  // utterances only), biased long: a cut tail costs more than a late release.
+  const TTS_LOCAL_PER_CHAR_MS_LATIN = 80;
+  const ttsLocalCharEma = { cjk: 0, other: 0 };
+  const ttsScriptClass = (text) =>
+    /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af\u0e00-\u0e7f]/.test(String(text || "")) ? "cjk" : "other";
+  function ttsLocalCharMs(text) {
+    const cls = ttsScriptClass(text);
+    const seed = cls === "cjk" ? TTS_LOCAL_PER_CHAR_MS : TTS_LOCAL_PER_CHAR_MS_LATIN;
+    const ema = ttsLocalCharEma[cls];
+    return ema ? Math.max(seed * 0.5, Math.min(seed * 2, ema * 1.15)) : seed;
+  }
+  function ttsLocalCharLearn(text, realMs, rate) {
+    const len = String(text || "").length;
+    if (len < 6 || !(realMs > 0)) return;          // too short to say anything about the voice
+    const cls = ttsScriptClass(text);
+    const seed = cls === "cjk" ? TTS_LOCAL_PER_CHAR_MS : TTS_LOCAL_PER_CHAR_MS_LATIN;
+    const per = realMs * (rate > 0 ? rate : 1) / len;
+    // A real voice lands within a band around the seed (CJK 120–600 ms a
+    // character, Latin 40–200). A sample outside it — an `end` that fired
+    // early, a line cut off, a synthetic voice in a test rig — teaches
+    // nothing, and the first honest sample only nudges the seed: one line is
+    // not a measurement of the voice.
+    if (per < seed * 0.5 || per > seed * 2.5) return;
+    const cur = ttsLocalCharEma[cls] || seed;
+    ttsLocalCharEma[cls] = cur * 0.7 + per * 0.3;
+  }
   // How long a finishing line may hold the next one back. The audio path has
   // had this from the start (400ms, measured remaining); here the remaining
   // is an ESTIMATE, so the window is slightly wider to absorb its error.
@@ -2328,6 +2379,7 @@
   function ttsStop(navigated) {
     ttsEpoch++;
     ttsSpokenIdx = -1;
+    ttsPausedWith = false;         // resampled on the next tick; never carried across videos
     if (ttsHoldTimer) { clearTimeout(ttsHoldTimer); ttsHoldTimer = 0; }
     if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } ttsAudio = null; }
     if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } ttsBlobUrl = ""; }
@@ -2721,12 +2773,15 @@
   function ttsRealign(tMs) {
     const a = ttsAudio;
     if (!a || a.paused || a.ended) return;
+    const vv = getVideo();
+    const vRateNow = (vv && vv.playbackRate) || 1;
     const nx = ttsWindowEnd(ttsSpokenIdx);
     const cue = cueList && cueList[ttsSpokenIdx];
     const winEnd = nx && nx.start != null ? nx.start
       : (cue && cue.end != null ? cue.end : 0);
     if (!winEnd) return;
-    const leftS = Math.max(0, (winEnd - tMs) / 1000);
+    // What is left to WATCH is video time; the audio runs on the wall clock.
+    const leftS = Math.max(0, (winEnd - tMs) / 1000) / vRateNow;
     const dur = a.duration || 0;
     if (!isFinite(dur) || dur <= 0.3) return;
     const target = Math.max(0, Math.min(dur - 0.05, dur - leftS * (a.playbackRate || 1)));
@@ -3081,6 +3136,15 @@
         release();                 // superseded while waiting: never played
         return;
       }
+      // The same door the built-in path has: a paused video (scrubbing the
+      // bar while paused still ticks the cue loop) or an advert is not a
+      // moment to start talking, duck, or set a fit (D156).
+      const vv0 = getVideo();
+      if (!vv0 || vv0.paused || isAdShowing()) {
+        ttsTraceAdd({ k: "skip", i: idx, why: vv0 && vv0.paused ? "paused" : "ad" });
+        release();
+        return;
+      }
       // How far behind this line is starting, measured off the video's own
       // clock. Everything that made it late is already in the number: the
       // wait for the last line's tail, a slow decode, a late reply.
@@ -3134,7 +3198,8 @@
         const nx = ttsWindowEnd(idx);
         const winEnd = nx && nx.start != null ? nx.start
           : (cue && cue.end != null ? cue.end : 0);
-        const leftS = vv && winEnd ? Math.max(0, (winEnd - vv.currentTime * 1000) / 1000) : 0;
+        const leftS = vv && winEnd
+          ? Math.max(0, (winEnd - vv.currentTime * 1000) / 1000) / (vv.playbackRate || 1) : 0;
         const dur = audio.duration || 0;
         const skip = dur - leftS * (audio.playbackRate || 1);
         if (isFinite(skip) && skip > 0.2 && dur > 0.3) {
@@ -3143,8 +3208,11 @@
         }
       }
       ttsDuck(true, ttsFit);
-      ttsSpoken++;
-      ttsFailRun = 0;
+      // Counted when it is heard, like the built-in path's `start`: a play()
+      // the browser refuses must not read as a line spoken.
+      audio.addEventListener("playing", () => {
+        if (myEpoch === ttsEpoch) { ttsSpoken++; ttsFailRun = 0; }
+      }, { once: true });
       audio.play().catch(() => { if (myEpoch === ttsEpoch) ttsDuck(false); });
     };
     const arm = () => {
@@ -3252,6 +3320,7 @@
   // cue arriving during the gap finds nothing, and the line is spoken by the
   // default voice while the menus name the one that was picked.
   let localVoices = [];
+  let localVoicesTake = null;    // the voiceschanged listener, so goOrphan can drop it
   (function primeLocalVoices() {
     try {
       const synth = typeof window !== "undefined" && window.speechSynthesis;
@@ -3261,6 +3330,7 @@
         try { localVoices = synth.getVoices() || []; } catch (_e) { /* keep the last good list */ }
       };
       take();
+      localVoicesTake = take;
       synth.addEventListener("voiceschanged", take);
     } catch (_e) { /* no local engine here: the API path is unaffected */ }
   })();
@@ -3276,14 +3346,19 @@
     let v = voiceName ? pool.find((x) => x && x.name === voiceName) : null;
     if (!v && pool.length) {
       const base = String(lang || "").split("-")[0].toLowerCase();
-      v = pool.find((x) => x && String(x.lang || "").toLowerCase().split("-")[0] === base);
+      const speaks = (x) => x && String(x.lang || "").toLowerCase().split("-")[0] === base;
+      // A voice that stays on this machine first. The stored voice can vanish
+      // (a system update, another computer); the fallback must not quietly
+      // turn "nothing leaves this machine" into a networked voice — the
+      // privacy page says the text goes only where the user chose.
+      v = pool.find((x) => speaks(x) && x.localService) || pool.find(speaks);
     }
     return v || null;
   }
   function ttsSpeakLocal(text, lang, voiceName, myEpoch, idx) {
     const synth = window.speechSynthesis;
     if (!synth) {
-      ttsSkipped++; ttsErr = "failed"; ttsFailRun++;
+      ttsSkipped++; ttsErr = "noSynth"; ttsFailRun++;
       ttsTraceAdd({ k: "skip", i: idx, why: "nosynth" });
       return;
     }
@@ -3293,11 +3368,15 @@
     // engine every fresh install starts with, a dense line lost its last words
     // to the next one, every time. The estimate is rough; the tiers only need
     // it to be the right order of magnitude.
-    const est = Math.max(300, String(text || "").length * TTS_LOCAL_PER_CHAR_MS);
+    const est = Math.max(300, String(text || "").length * ttsLocalCharMs(text));
+    // The watchdog keeps the generous ceiling: it guards against a voice that
+    // never fires `end`, and releasing the duck early is the worse fault there.
+    const estGuard = Math.max(est, String(text || "").length * TTS_LOCAL_PER_CHAR_MS);
     let rate = 1, fit, estAtRate = est;
     const doSpeak = () => {
     // The full set of guards, not just the epoch. The QA round found every
-    // one of these missing here while the audio takeover had them all: a
+    // one of these missing here (the audio takeover got the same pause/ad
+    // door in D156's review, not before): a
     // grace timer that expired during a pause spoke over the frozen frame
     // (doSpeak's resume() even pulled the engine back up to do it), an ad or
     // the switch going off mid-defer changed neither epoch nor claim, and a
@@ -3421,7 +3500,14 @@
       try { synth.cancel(); } catch (_e) { /* nothing left to stop */ }
       done();
     };
-    u.addEventListener("end", done);
+    u.addEventListener("end", () => {
+      if (myEpoch === ttsEpoch && localUtter === u && localStartedAt) {
+        const real = Date.now() - localStartedAt;
+        ttsLocalCharLearn(text, real, rate);
+        ttsTraceAdd({ k: "lend", i: idx, est: Math.round(estAtRate), real: Math.round(real) });
+      }
+      done();
+    });
     u.addEventListener("error", done);
     // Chrome does not always fire `end` for a local utterance — a long known
     // quirk of speechSynthesis, and there is no `ended` element to fall back
@@ -3449,7 +3535,7 @@
       ttsSpoken++;
       ttsFailRun = 0;
       localStartedAt = Date.now();
-      localEstMs = estAtRate;
+      localEstMs = Math.max(estAtRate, estGuard / rate);
       // Feed the start-latency budget with what actually happened — only for
       // networked voices; a machine voice's ~0 would drag the average under
       // what the "Google …" voices really cost.
@@ -3600,7 +3686,15 @@
         // reply was for; it is always a real index.
         ttsFillAhead(activeCueIdx >= 0 ? activeCueIdx : idx);
       };
-      if (chrome.runtime.lastError) { fillNow(); return; }
+      if (chrome.runtime.lastError) {
+        // The worker went away between the ask and this reply: nothing was
+        // said, and the card must not read as if it had been.
+        if (myEpoch === ttsEpoch && ttsClaimStillCurrent(idx)) {
+          ttsSkipped++; ttsErr = "failed"; ttsFailRun++;
+          ttsTraceAdd({ k: "skip", i: idx, why: "worker" });
+        }
+        fillNow(); return;
+      }
       if (myEpoch !== ttsEpoch || !ttsClaimStillCurrent(idx)) { fillNow(); return; }
       // The switch can go off between the ask and this reply — the menu made
       // that a one-press window. The fill already checked it; the speaking
@@ -3669,7 +3763,9 @@
     // cues — clear the overlay, stop the line — because that is what it is:
     // a stretch of time this track has nothing to say about.
     if (isAdShowing()) {
-      if (activeCueIdx !== -1) {
+      // Also in a gap between cues: a finishing line or a duck hold window
+      // would otherwise talk over the advert until it ended by itself.
+      if (activeCueIdx !== -1 || ttsSpokenIdx >= 0 || ttsHoldTimer) {
         activeCueIdx = -1;
         activeGroupIdx = -1;
         forceBlankLines();
@@ -4217,7 +4313,7 @@
     // are dropped by the cueEpoch bump in startCueLoop below — this whole
     // function is synchronous, so none can interleave before that.
     if (data.trackId && data.trackId !== cueTrackId) {
-      if (cueTrackId) { transCache.clear(); transInflight.clear(); }
+      if (cueTrackId) { transCache.clear(); transInflight.clear(); ttsStop(); }
       // The summary panel's source text goes with the track. Only HERE, on a
       // real track change: a page load delivers the same track more than
       // once, and a hand-rolled videoId compare closed the confirm between
@@ -4374,6 +4470,11 @@
         provider: settings.engine === "byo" ? settings.byoProvider : "",
         same: !!(cueList && cueList.length && cueSameLang),
         track: cueTrackKind || "none",
+        // inject.js gave up waiting for a track (6 s, nothing captured, and
+        // re-pressing CC did not help) and the on-screen fallback has found
+        // no caption text either: the commonest support question, "no
+        // subtitles at all", answered on the status line instead of by silence.
+        noTrack: !!nocuesFallback && !lastSource && !(cueList && cueList.length),
         // The language of the original line, as the caption track declares it
         // (the same value the overlay's lang attribute carries). The popup's
         // font picker uses it to say which fonts cannot draw this line.
@@ -5030,7 +5131,10 @@
       // in a dense stretch, where the old element-sampling was shut for the
       // whole passage because every line carried a fit.
       const base = Number(d.base) || 0;
-      if (base > 0) ttsUserBase = base;
+      // …unless an advert is playing: its own rate (usually 1.0) is not the
+      // reader's chosen speed, and the first line after the ad would be paced
+      // from it. cueTick's sampler already skips adverts; this path did not.
+      if (base > 0 && !isAdShowing()) ttsUserBase = base;
       ttsHeld = Number(d.applied) || 0;
       return;
     }

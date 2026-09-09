@@ -40,10 +40,10 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 /* Option C: the browser-default surfaces come from OUR palette, not the UA's
    (selection, scrollbar, control accents, link underlines). */
 ::selection { background: var(--accent-dim); color: var(--txt); }
-body::-webkit-scrollbar { width: 10px; }
-body::-webkit-scrollbar-thumb { background: #3a3d41; border-radius: 8px; }
-body::-webkit-scrollbar-thumb:hover { background: #4a4e53; }
-body::-webkit-scrollbar-track { background: transparent; }
+body::-webkit-scrollbar, .olang-list::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-thumb, .olang-list::-webkit-scrollbar-thumb { background: #3a3d41; border-radius: 8px; }
+body::-webkit-scrollbar-thumb:hover, .olang-list::-webkit-scrollbar-thumb:hover { background: #4a4e53; }
+body::-webkit-scrollbar-track, .olang-list::-webkit-scrollbar-track { background: transparent; }
 input[type="range"], input[type="checkbox"] { accent-color: var(--accent); }
 a { text-underline-offset: 3px; }
 
@@ -213,7 +213,8 @@ a { text-underline-offset: 3px; }
 .olang-col .olabel { margin-bottom: 4px; }
 .olang-col .ohint { margin: 0 0 12px; max-width: 42ch; }
 /* a rare, destructive-ish action must not stretch into a full-width primary */
-#langReset { align-self: flex-start; }
+/* …and it resets BOTH lists, so it sits under both, not under the left one */
+#langReset { align-self: center; }
 .olang-list {
   list-style: none; margin: 0; padding: 5px;
   background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius);
@@ -283,7 +284,10 @@ a { text-underline-offset: 3px; }
 /* Keyboard-only: a link before each long list that jumps past it, visible
    only while focused (WCAG bypass blocks; the lists have hundreds of stops). */
 .oskip { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.oskip:focus { position: static; width: auto; height: auto; clip: auto; display: inline-block; margin: 0 0 8px; color: var(--accent); }
+/* Inside the fonts pane the column is a grid, and an inline-block child is
+   blockified and stretched to the column's full height — a 284×204 empty blue
+   box over the list. Pin it to its own row at its own size. */
+.oskip:focus { position: static; width: max-content; height: auto; clip: auto; display: inline-block; margin: 0 0 8px; color: var(--accent); grid-column: 1 / -1; justify-self: start; align-self: start; }
 /* Each column's heading row: the heading and its one tool (the import link
    on the left, the search box on the right), one height on both sides so
    the two lists start on the same line. */
@@ -294,7 +298,10 @@ a { text-underline-offset: 3px; }
 #secFonts .olang-col { display: grid; grid-template-rows: subgrid; grid-row: span 2; align-content: start; }
 .ofont-hd .olabel { margin: 0; flex: none; }
 .ofont-hd input[type="search"] {
-  flex: 1; min-width: 120px; box-sizing: border-box;
+  /* Wide enough for its placeholder ("Search font names"); narrower, the
+     placeholder was cut mid-word. The row wraps, so on a narrow column the
+     box drops under the heading instead of squeezing. */
+  flex: 1; min-width: 200px; box-sizing: border-box;
   font: inherit; color: var(--txt);
   background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
   padding: 7px 10px;
@@ -337,10 +344,16 @@ a { text-underline-offset: 3px; }
 #fontReset { align-self: flex-start; }
 
 /* -------------------------------- about --------------------------------- */
-.oabout-ver { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; }
+.oabout-ver { margin: 0; color: var(--muted); font-size: 12.5px; }
 .oabout-ver b { color: var(--txt); font-weight: 600; }
-#secAbout p { max-width: 62ch; font-size: 13.5px; }
+/* Body size for the two paragraphs that ARE body (the blurb, the privacy
+   statement). The hints under the two controls keep .ohint's size: this rule
+   used to catch them too, which is how a footnote came to weigh as much as
+   the privacy statement (D153). */
+#secAbout p:not(.ohint) { max-width: 62ch; font-size: 13.5px; }
 .oabout-privacy { color: var(--muted); }
+/* the hint sits right under its control, not a full card-gap away */
+#secAbout .orow + .ohint { margin-top: -8px; }
 
 /* ---------------------------- provider list ----------------------------- */
 .plist {
@@ -348,7 +361,7 @@ a { text-underline-offset: 3px; }
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
 }
 .pitem {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   width: 100%; padding: 8px 9px; border: 0; border-radius: 7px;
   background: transparent; color: var(--txt); text-align: left;
   font-size: 13px; cursor: pointer;
@@ -359,10 +372,15 @@ a { text-underline-offset: 3px; }
    "Eigene Brow…" told a reader nothing they could act on, and the badge beside
    them made it worse by taking the width first. A provider's name is the one
    thing this list exists to say. */
-.pitem-name { flex: 1; min-width: 0; overflow-wrap: anywhere; white-space: normal;
+/* flex-basis max-content: a name that does not fit beside the chip takes the
+   line for itself and the chip wraps under it (the factory default, "Your
+   browser's own voices (free)", lost its bracket in five locales when the
+   chip took its width first). Short names still share the line. */
+.pitem-name { flex: 1 1 max-content; min-width: 0; overflow-wrap: anywhere; white-space: normal;
   line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   overflow: hidden; }
-.pitem-ok { flex: none; font-size: 11px; color: #5fd38a; }
+.pitem-ok { flex: none; display: inline-flex; color: #5fd38a; }
+.pitem-ok svg { width: 13px; height: 13px; display: block; }
 .pitem.on .pitem-ok { color: inherit; }
 /* Which provider the extension actually translates with. The highlight means
    "this is the panel you are looking at" and nothing more, so being in use
@@ -376,6 +394,7 @@ a { text-underline-offset: 3px; }
   background: rgba(95, 211, 138, 0.16);
   color: #5fd38a;
   white-space: nowrap;
+  margin-left: auto;          /* on a wrapped line, still at the right edge */
 }
 /* On the selected row the chip cannot inherit the accent: accent-on-a-white-
    wash composites to 2.99:1 (layout-audit caught what six screenshot rounds
@@ -504,8 +523,9 @@ input[hidden] { display: none; }
 /* ranges (read-aloud loudness) — same look as the popup's sliders */
 .orow input[type="range"] {
   flex: 1; height: 4px; appearance: none; -webkit-appearance: none;
-  background: var(--line); border-radius: 999px; outline: none; cursor: pointer;
+  background: var(--line); border-radius: 999px; cursor: pointer;
 }
+.orow input[type="range"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .orow input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
   width: 15px; height: 15px; border-radius: 50%;

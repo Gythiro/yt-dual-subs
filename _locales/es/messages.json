@@ -6,7 +6,7 @@
     "message": "Subtítulos bilingües para YouTube: original y traducción en una sola capa, sin solaparse."
   },
   "headerSub": {
-    "message": "para YouTube™ · Bilingüe, una sola capa"
+    "message": "para YouTube™ · bilingüe, una sola capa"
   },
   "disclaimer": {
     "message": "No está afiliado a YouTube ni a Google."
@@ -200,7 +200,7 @@
     "message": "Restablecer todos los ajustes"
   },
   "resetConfirmText": {
-    "message": "Esto borra todos los ajustes, las claves API guardadas en este ordenador y el modelo y la voz recordados de cada proveedor, y vuelve a activar las sugerencias de primer uso. Los dominios de proveedores que ya hayas autorizado siguen autorizados.",
+    "message": "Esto borra todos los ajustes, las claves API guardadas en este ordenador y el modelo y la voz recordados para cada proveedor, y vuelve a activar las sugerencias del primer uso. Los dominios de proveedores que ya hayas autorizado siguen autorizados, igual que los archivos de fuentes que hayas importado.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Elige primero un proveedor."
   },
   "byoErrNoKey": {
-    "message": "Introduce primero una clave API y pulsa Guardar y probar."
+    "message": "Introduce primero una clave API y luego pulsa Guardar y probar."
   },
   "byoErrNoModel": {
     "message": "Elige primero un modelo: selecciona uno de la lista o pulsa “Listar modelos con mi clave”."
@@ -422,7 +422,7 @@
     "message": "Configuración del servicio de traducción"
   },
   "optIntro": {
-    "message": "Elige un proveedor y pega tu propia clave API. La clave se queda en este equipo y el texto de los subtítulos solo va al proveedor que elijas."
+    "message": "Elige un proveedor y pega tu propia clave API."
   },
   "optPricingLink": {
     "message": "Precios y plan gratuito"
@@ -680,7 +680,7 @@
     "message": "Hay un pequeño menú en el reproductor"
   },
   "startS4Body": {
-    "message": "La flechita junto al botón de subtítulos abre un menú: leer en voz alta, selección de texto, resumen del vídeo y ajustes, sin salir del reproductor."
+    "message": "La flecha pequeña junto al botón de subtítulos abre un menú: subtítulos, lectura en voz alta, seleccionar texto, resumen del vídeo y ajustes — sin salir del reproductor."
   },
   "startS4Alt": {
     "message": "Ilustración del reproductor: una flechita junto al botón de subtítulos, abajo a la derecha, abre un pequeño menú"
@@ -1088,10 +1088,10 @@
     "message": "La pista de subtítulos no ha llegado; se reintenta automáticamente. ¿Prisa? Recarga la página para intentarlo ya."
   },
   "ttsCompleteLabel": {
-    "message": "Leer cada línea completa, sin cortarla (la imagen se ralentiza en partes densas)"
+    "message": "Terminar cada línea (la imagen se ralentiza en partes densas)"
   },
   "ttsCompleteHint": {
-    "message": "A más velocidad, las líneas largas suelen perder el final. Con esto activado, la imagen se ralentiza lo que haga falta —nunca por debajo de un cuarto de tu velocidad elegida— y recupera en los huecos."
+    "message": "A velocidades altas, las líneas largas suelen perder el final en la siguiente. Con esto activado, la imagen se ralentiza lo que necesite la línea — nunca por debajo de un cuarto de la velocidad elegida — y recupera el ritmo en los huecos. Mientras la imagen va tan lenta, el audio propio del vídeo baja más que el nivel indicado abajo, hasta el silencio."
   },
   "ttsCompleteHintText": {
     "message": "A esta velocidad se cortan bastantes líneas: con «Leer cada línea completa», la imagen se ralentiza según haga falta y cada línea se lee entera."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Fuente importada",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "La dirección incluye una clave. Sácala de la dirección y pégala en el campo de clave API — la dirección se sincroniza con tu cuenta del navegador, el campo de la clave no."
+  },
+  "backendStatusNoTrack": {
+    "message": "No se ha encontrado ninguna pista de subtítulos para este vídeo, así que no hay nada que mostrar.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

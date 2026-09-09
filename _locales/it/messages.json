@@ -6,7 +6,7 @@
     "message": "Sottotitoli bilingue per YouTube — originale e traduzione in un unico livello, senza sovrapposizioni."
   },
   "headerSub": {
-    "message": "per YouTube™ · Bilingue, un solo livello"
+    "message": "per YouTube™ · bilingue, un solo livello"
   },
   "disclaimer": {
     "message": "Non affiliato a YouTube o Google."
@@ -200,7 +200,7 @@
     "message": "Reimposta tutte le impostazioni"
   },
   "resetConfirmText": {
-    "message": "Questo cancella tutte le impostazioni, le chiavi API salvate su questo computer e il modello e la voce memorizzati per ciascun provider, e riattiva i suggerimenti del primo avvio. I domini dei provider già autorizzati restano autorizzati.",
+    "message": "Questo cancella tutte le impostazioni, le chiavi API salvate su questo computer e il modello e la voce memorizzati per ogni provider, e riattiva i suggerimenti del primo avvio. I domini dei provider già autorizzati restano autorizzati, così come i file di font importati.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Scegli prima un provider."
   },
   "byoErrNoKey": {
-    "message": "Inserisci prima una chiave API, poi premi Salva e testa."
+    "message": "Inserisci prima una chiave API, poi premi «Salva e prova»."
   },
   "byoErrNoModel": {
     "message": "Scegli prima un modello — selezionane uno dall'elenco oppure premi “Elenca i modelli con la mia chiave”."
@@ -422,7 +422,7 @@
     "message": "Configurazione del servizio di traduzione"
   },
   "optIntro": {
-    "message": "Scegli un provider e incolla la tua chiave API. La chiave resta su questo computer e il testo dei sottotitoli va solo al provider scelto."
+    "message": "Scegli un provider e incolla la tua chiave API."
   },
   "optPricingLink": {
     "message": "Prezzi e piano gratuito"
@@ -680,7 +680,7 @@
     "message": "Nel player c'è un piccolo menu"
   },
   "startS4Body": {
-    "message": "La freccetta accanto al pulsante dei sottotitoli apre un menu: leggi ad alta voce, selezione testo, riassunto del video e impostazioni, senza uscire dal player."
+    "message": "La piccola freccia accanto al pulsante dei sottotitoli apre un menu: sottotitoli, lettura ad alta voce, selezione testo, riassunto video e impostazioni — senza uscire dal player."
   },
   "startS4Alt": {
     "message": "Illustrazione del player: una freccetta accanto al pulsante dei sottotitoli, in basso a destra, apre un piccolo menu"
@@ -927,7 +927,7 @@
     "message": "In riproduzione…"
   },
   "ttsPreviewFail": {
-    "message": "Impossibile riprodurre — verifica la chiave e prova Salva e testa"
+    "message": "Impossibile riprodurre — verifica la chiave e prova «Salva e prova»"
   },
   "ttsFetchVoices": {
     "message": "Recupera con la tua chiave l'elenco completo di questa lingua"
@@ -1088,10 +1088,10 @@
     "message": "La traccia dei sottotitoli non è arrivata: nuovo tentativo automatico. Di fretta? Ricarica la pagina per riprovare subito."
   },
   "ttsCompleteLabel": {
-    "message": "Leggere ogni riga fino in fondo, senza tagli (nei passaggi densi il video rallenta)"
+    "message": "Completa ogni riga (l'immagine rallenta nelle parti dense)"
   },
   "ttsCompleteHint": {
-    "message": "Alle velocità alte le righe lunghe perdono spesso la coda. Attivandolo, il video rallenta quanto serve — mai sotto un quarto della velocità scelta — e recupera nelle pause."
+    "message": "Alle velocità più alte le righe lunghe perdono spesso la coda a favore della successiva. Con questa opzione, l'immagine rallenta quanto serve alla riga — mai sotto un quarto della velocità scelta — e recupera negli spazi vuoti. Mentre l'immagine è così rallentata, l'audio del video scende oltre il livello impostato sotto, fino al silenzio."
   },
   "ttsCompleteHintText": {
     "message": "A questa velocità parecchie righe vengono tagliate: con «Leggere ogni riga fino in fondo» il video rallenta quanto serve e ogni riga viene letta per intero."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Font importato",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "L'indirizzo contiene una chiave. Toglila dall'indirizzo e incollala nel campo della chiave API — l'indirizzo è sincronizzato con l'account del browser, il campo della chiave no."
+  },
+  "backendStatusNoTrack": {
+    "message": "Nessuna traccia di sottotitoli trovata per questo video, quindi non c'è nulla da mostrare.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

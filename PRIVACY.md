@@ -53,7 +53,7 @@ The extension can read translated subtitle lines aloud (text-to-speech). This fe
 
 ### 4. Your own API key (optional)
 
-If you choose to use your own translation or speech provider, the key you enter is stored with `chrome.storage.local` **on that machine only**. It is deliberately **not** put in `chrome.storage.sync`, so it is never uploaded to your browser account or copied to your other devices. It is used for one thing: the authorization header of requests to the endpoint you selected. It is never sent to the developer — there is no server to send it to — and it is never shared with any other provider. Deleting it in the settings page removes it from the machine.
+If you choose to use your own translation or speech provider, the key you enter is stored with `chrome.storage.local` **on that machine only**. It is deliberately **not** put in `chrome.storage.sync`, so it is never uploaded to your browser account or copied to your other devices. It is used for one thing: the authorization header of requests to the endpoint you selected — the translation or speech requests themselves, and the request that lists that provider's models or voices for the settings page (which carries no subtitle text). It is never sent to the developer — there is no server to send it to — and it is never shared with any other provider. Deleting it in the settings page removes it from the machine.
 
 ---
 

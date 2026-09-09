@@ -6,7 +6,7 @@
     "message": "Kaksikieliset tekstitykset YouTubelle — alkuperäinen ja käännös samassa kerroksessa ilman päällekkäisyyttä."
   },
   "headerSub": {
-    "message": "YouTubelle™ · Kaksikielinen, yksi kerros"
+    "message": "YouTubelle™ · kaksikielinen, yksi kerros"
   },
   "disclaimer": {
     "message": "Ei sidoksissa YouTubeen tai Googleen."
@@ -200,7 +200,7 @@
     "message": "Nollaa kaikki asetukset"
   },
   "resetConfirmText": {
-    "message": "Tämä tyhjentää kaikki asetukset, tälle tietokoneelle tallennetut API-avaimet sekä kunkin palveluntarjoajan muistetun mallin ja äänen, ja ottaa ensikäytön vinkit uudelleen käyttöön. Palveluntarjoajien verkkotunnukset, joille olet jo myöntänyt luvan, pysyvät voimassa.",
+    "message": "Tämä tyhjentää kaikki asetukset, tälle tietokoneelle tallennetut API-avaimet sekä kunkin palveluntarjoajan muistetun mallin ja äänen, ja ottaa ensimmäisen käyttökerran vinkit uudelleen käyttöön. Palveluntarjoajien verkkotunnukset, joille olet jo myöntänyt luvan, pysyvät myönnettyinä, samoin tuomasi fonttitiedostot.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Valitse ensin palveluntarjoaja."
   },
   "byoErrNoKey": {
-    "message": "Syötä ensin API-avain ja paina sitten Tallenna ja testaa."
+    "message": "Syötä ensin API-avain, paina sitten Tallenna ja testaa."
   },
   "byoErrNoModel": {
     "message": "Valitse ensin malli — valitse listasta tai paina ”Listaa mallit avaimellani”."
@@ -422,7 +422,7 @@
     "message": "Käännöspalvelun asetukset"
   },
   "optIntro": {
-    "message": "Valitse palveluntarjoaja ja liitä oma API-avaimesi. Avain pysyy tällä koneella, ja tekstityksen teksti menee vain valitsemallesi palvelulle."
+    "message": "Valitse palveluntarjoaja ja liitä oma API-avaimesi."
   },
   "optPricingLink": {
     "message": "Hinnat ja ilmaisversio"
@@ -680,7 +680,7 @@
     "message": "Soittimessa on pieni valikko"
   },
   "startS4Body": {
-    "message": "Tekstityspainikkeen vieressä oleva pieni nuoli avaa valikon: lue ääneen, tekstin valinta, videon tiivistelmä ja asetukset — poistumatta soittimesta."
+    "message": "Pieni nuoli tekstityspainikkeen vieressä avaa valikon: tekstitykset, ääneenlukeminen, tekstin valinta, videon yhteenveto ja asetukset — poistumatta soittimesta."
   },
   "startS4Alt": {
     "message": "Soittimen kuva: pieni nuoli tekstityspainikkeen vieressä oikealla alhaalla avaa pienen valikon"
@@ -1088,10 +1088,10 @@
     "message": "Tekstitysraita ei saapunut — yritetään automaattisesti uudelleen. Kiire? Päivitä sivu ja yritä heti."
   },
   "ttsCompleteLabel": {
-    "message": "Lue jokainen rivi loppuun asti, älä katkaise (tiheissä kohdissa kuva hidastuu)"
+    "message": "Puhu jokainen rivi loppuun (kuva hidastuu tiheissä kohdissa)"
   },
   "ttsCompleteHint": {
-    "message": "Suurilla nopeuksilla pitkät rivit menettävät usein loppunsa. Kun tämä on päällä, kuva hidastuu juuri sen verran kuin rivi vaatii — ei koskaan alle neljäsosaan valitsemastasi nopeudesta — ja kirii kiinni tauoissa."
+    "message": "Suuremmilla nopeuksilla pitkät rivit jäävät usein kesken, kun seuraava alkaa. Kun tämä on päällä, kuva hidastuu niin paljon kuin rivi tarvitsee — ei kuitenkaan alle neljännekseen valitsemastasi nopeudesta — ja kiri kiinni tauoissa. Kun kuva on hidastunut näin syvälle, videon oma ääni vaimenee alemmas kuin alla asetettu taso, aina hiljaisuuteen asti."
   },
   "ttsCompleteHintText": {
     "message": "Tällä nopeudella moni rivi katkeaa kesken — kun ”Lue jokainen rivi loppuun asti” on päällä, kuva hidastuu tarpeen mukaan ja jokainen rivi luetaan loppuun."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Tuotu fontti",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Osoitteessa on avain. Poista se osoitteesta ja liitä se API-avainkenttään — osoite synkronoidaan selaintiliisi, avainkenttää ei."
+  },
+  "backendStatusNoTrack": {
+    "message": "Tälle videolle ei löytynyt tekstitysraitaa, joten näytettävää ei ole.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

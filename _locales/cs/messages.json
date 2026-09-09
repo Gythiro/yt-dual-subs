@@ -6,7 +6,7 @@
     "message": "Dvojjazyčné titulky pro YouTube — originál a překlad v jedné vrstvě, bez překrývání."
   },
   "headerSub": {
-    "message": "pro YouTube™ · Dvojjazyčné, jedna vrstva"
+    "message": "pro YouTube™ · dvojjazyčné, jedna vrstva"
   },
   "disclaimer": {
     "message": "Není přidruženo k YouTube ani Google."
@@ -200,7 +200,7 @@
     "message": "Obnovit všechna nastavení"
   },
   "resetConfirmText": {
-    "message": "Tím se vymažou všechna nastavení, klíče API uložené v tomto počítači a zapamatovaný model i hlas u každého poskytovatele a znovu se zapnou nápovědy při prvním spuštění. Domény poskytovatelů, ke kterým jste již udělili přístup, zůstanou povolené.",
+    "message": "Tím se vymažou všechna nastavení, API klíče uložené v tomto počítači i zapamatovaný model a hlas u každého poskytovatele a znovu se zapnou nápovědy při prvním spuštění. Domény poskytovatelů, které jste už povolili, zůstanou povolené, stejně jako importované soubory písma.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Nejprve vyberte poskytovatele."
   },
   "byoErrNoKey": {
-    "message": "Nejprve zadejte API klíč a pak stiskněte Uložit a otestovat."
+    "message": "Nejdřív zadejte API klíč, pak stiskněte „Uložit a otestovat“."
   },
   "byoErrNoModel": {
     "message": "Nejprve vyberte model — zvolte jeden ze seznamu, nebo stiskněte „Vypsat modely mým klíčem“."
@@ -422,7 +422,7 @@
     "message": "Nastavení překladové služby"
   },
   "optIntro": {
-    "message": "Vyberte poskytovatele a vložte vlastní API klíč. Klíč zůstane na tomto počítači a text titulků jde jen k poskytovateli, kterého zvolíte."
+    "message": "Vyberte poskytovatele a vložte vlastní API klíč."
   },
   "optPricingLink": {
     "message": "Ceník a bezplatný plán"
@@ -680,7 +680,7 @@
     "message": "V přehrávači je malé menu"
   },
   "startS4Body": {
-    "message": "Malá šipka vedle tlačítka titulků otevře menu: čtení nahlas, výběr textu, shrnutí videa a nastavení — bez opuštění přehrávače."
+    "message": "Malá šipka vedle tlačítka titulků otevře nabídku: titulky, čtení nahlas, výběr textu, shrnutí videa a nastavení — bez opuštění přehrávače."
   },
   "startS4Alt": {
     "message": "Ilustrace přehrávače: malá šipka vedle tlačítka titulků vpravo dole otevře malé menu"
@@ -1088,10 +1088,10 @@
     "message": "Stopa titulků nedorazila — zkouší se to automaticky znovu. Spěcháte? Obnovte stránku a zkuste to hned."
   },
   "ttsCompleteLabel": {
-    "message": "Dočíst každý řádek do konce, nikdy neuseknout (v hustých pasážích se obraz zpomalí)"
+    "message": "Dokončit každý řádek (obraz v hustých částech zpomalí)"
   },
   "ttsCompleteHint": {
-    "message": "Při vyšší rychlosti dlouhé řádky často přijdou o konec. Se zapnutou volbou se obraz zpomalí přesně o tolik, kolik řádek potřebuje — nikdy pod čtvrtinu zvolené rychlosti — a v mezerách to dožene."
+    "message": "Při vyšších rychlostech dlouhé řádky často přijdou o konec ve prospěch následujícího. Když je to zapnuto, obraz zpomalí, jak řádek potřebuje — nikdy pod čtvrtinu zvolené rychlosti — a v mezerách se zase dožene. Zatímco je obraz takto silně zpomalený, vlastní zvuk videa klesne níž než úroveň nastavená níže, až k tichu."
   },
   "ttsCompleteHintText": {
     "message": "Při této rychlosti se dost řádků usekává — se zapnutým „Dočíst každý řádek do konce“ se obraz podle potřeby zpomalí a každý řádek se dočte."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Importované písmo",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adresa obsahuje klíč. Odstraňte ho z adresy a vložte do pole API klíče — adresa se synchronizuje s vaším účtem prohlížeče, pole klíče nikoli."
+  },
+  "backendStatusNoTrack": {
+    "message": "U tohoto videa se nenašla žádná titulková stopa, takže není co zobrazit.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

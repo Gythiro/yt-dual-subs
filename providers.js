@@ -733,6 +733,9 @@
     noModelEmpty: "byoErrNoModelEmpty",
     notApi: "byoErrNotApi",
     badBaseUrl: "byoErrBadBaseUrl",
+    // A key pasted into the address itself: the address is synced, the key
+    // field is not, so this is the one way a key could leave the machine.
+    urlHasKey: "byoErrUrlHasKey",
     noPerm: "byoErrNoPerm",
     auth: "byoErrAuth",
     forbidden: "byoErrForbidden",
@@ -747,6 +750,8 @@
     // Read-aloud's own "the provider said no": byoErrBadRequest names a model
     // name and a base URL, and the read-aloud card has neither field.
     refused: "ttsErrRefused",
+    // This computer has no voices at all: not a connection problem.
+    noSynth: "ttsNoSynth",
     // …and its own "nothing came back to play": badShape asks for a
     // non-thinking model, which is a sentence about translation.
     noAudio: "ttsErrNoAudio"
@@ -771,6 +776,16 @@
   function isLoopback(origin) {
     const h = String(origin || "").replace(/^https?:\/\//, "").split(/[:/]/)[0].toLowerCase();
     return h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h === "::1";
+  }
+
+  // Does a typed address carry a credential in its query string? Addresses
+  // (custom endpoints, both translation and read-aloud) live in
+  // chrome.storage.sync; keys live in local. A key smuggled into the address
+  // would ride sync to the browser account — the one thing the privacy page
+  // promises never happens — so the address is refused before it is saved.
+  const SECRET_PARAM = /[?&#](api[_-]?key|apikey|key|token|access[_-]?token|secret|password|passwd|sig|signature|credential)=/i;
+  function urlCarriesSecret(raw) {
+    return SECRET_PARAM.test(String(raw || ""));
   }
 
   function errorKey(code, provider, origin) {
@@ -1069,6 +1084,7 @@
     usableModels,
     errorKey,
     isLoopback,
+    urlCarriesSecret,
     tts: {
       list: TTS_PROVIDERS,
       get: (id) => TTS_BY_ID[id] || null,

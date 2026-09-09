@@ -54,7 +54,7 @@ English | [简体中文](README.zh-CN.md)
 - **Or bring your own API key** — twelve providers, including DeepSeek, Gemini, DeepL and Alibaba Cloud Model Studio. Each sentence is understood as a whole and then split back across the cues, so the translation line turns over with the original instead of standing still. The key is stored on your own machine and is sent to nobody but the provider you picked.
 - **50 translation languages**, and you choose which of them appear in the menu.
 - **Read the translation aloud** — each line is spoken as it appears, with the video's own audio ducked underneath and slowed a touch when a line is too long to fit. Your browser's own voices work with no key at all; five cloud providers are there if you want better ones, including Chinese regional voices and your own cloned ones. Preview a voice before you commit to it.
-- **Speaks your language, not just ours** — the interface itself comes in 20 languages, picked automatically and switchable by hand.
+- **Speaks your language, not just ours** — the interface itself comes in 20 languages, picked automatically and switchable by hand (Settings → About → Interface language).
 
 </td>
 <td valign="top">
@@ -62,6 +62,7 @@ English | [简体中文](README.zh-CN.md)
 - **Fully customizable** — per‑line font (the fonts really installed on this computer, or a file you import), size, text colour, background colour + opacity and outline; the spacing between the lines and which one sits on top. Live preview in the popup.
 - **Summarize a video into chapters** — one line of TL;DR plus timestamped chapters, in the language you read, through your own key or a local model; from the small menu behind the arrow on the player's subtitle button.
 - **Three keyboard shortcuts** — subtitles on/off, read-aloud on/off, translation line on/off; unbound until you bind them in Chrome's shortcut settings.
+- **Select and copy the subtitle text** — off by default (selecting would get in the way of click-to-pause); switch it on in the small menu behind the arrow on the player's subtitle button.
 - **Draggable** — drop the subtitle box anywhere on the video; it persists, double‑click to reset. Works in fullscreen.
 - **Works on Shorts** — bilingual subtitles on the vertical player too, keeping up as you swipe.
 - **One‑click toggle** — a button right in the player's control bar turns everything on/off (and YouTube's CC with it).
@@ -100,7 +101,7 @@ Works on **Chrome, Edge, and other Chromium browsers**, version 111+ (required f
 ## ⚙️ Usage
 
 - **Toolbar icon** → settings popup: translation language, translation engine, line order, position, spacing, and per‑line styling — all with a live preview.
-- **Gear icon** (top-right of the popup) → the settings page: getting started, translation-service setup for your own key, and which languages appear in the menu.
+- **Gear icon** (top-right of the popup) → the settings page, six panes: Getting started; Translation service (your own key, or a local model); Translation languages (which ones appear in the menu); Subtitle fonts (this computer's fonts, or a file you import); Read aloud (voices and keys); About (interface language, keyboard shortcuts, and Something wrong → Copy diagnostic info).
 - **Control‑bar button** (the caption icon next to the gear): one‑click on/off. Blue = on, grey = off.
 - **Drag** the subtitle box by its handle (appears top‑left when you hover the player); **double‑click** the handle to reset its position.
 - **Export** (popup → *Export*): download the subtitles as an `.srt` file — choose original, translation, or bilingual.
@@ -146,6 +147,7 @@ The Smart‑sentences engine uses Google's free public endpoint. Under heavy use
 - Needs a real caption track. **Burned‑in** subtitles (baked into the video pixels) can't be hidden — use the control‑bar toggle to switch the overlay off for those videos.
 - The Smart‑sentences engine uses an unofficial Google endpoint with no SLA; heavy use may be briefly rate‑limited (the extension backs off and recovers on its own).
 - Depends on YouTube's current behaviour; a major YouTube change may require a selector update.
+- Runs only on www.youtube.com itself (watch pages and Shorts). YouTube Music, m.youtube.com and players embedded in other sites don't get the overlay.
 
 </details>
 

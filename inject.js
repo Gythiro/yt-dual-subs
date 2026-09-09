@@ -624,6 +624,12 @@
     try {
       if (!isTimedtext(url)) return;
       if (selfUrls.has(url)) return;         // this exact request is ours
+      // Only this page's video. A preview player hovered on the home page, or
+      // another player on the page, fetches its own track through the same
+      // hook; letting it replace the source made exports fail and language
+      // changes fall into the scrape path for the rest of the video (D156).
+      const vidHere = videoIdFromLocation();
+      if (vidHere && vidOfUrl(url) !== vidHere) return;
       if (hasTlang(url)) {
         // The player's selected track can be one of YouTube's OWN
         // auto-translate tracks ("Russian (auto-generated) >> English"):
@@ -1139,6 +1145,14 @@
       const d = evt.data;
       if (!d || d.source !== "ytds-content") return;
 
+      if (d.type === "bye") {
+        // The content script's extension was reloaded or removed. Without this
+        // the config stayed and every later navigation still fetched and
+        // parsed both tracks for a listener that was gone (D156).
+        cfg = null;
+        try { clearTlangRetry(); } catch (_e) { /* not armed */ }
+        return;
+      }
       if (d.type === "config") {
         // Treat the config message as the authoritative nav signal: reset any
         // stale capture synchronously if the location video changed, rather

@@ -6,7 +6,7 @@
     "message": "Subtitrări bilingve pentru YouTube — originalul și traducerea într-un singur strat, fără suprapunere."
   },
   "headerSub": {
-    "message": "pentru YouTube™ · Bilingv, un singur strat"
+    "message": "pentru YouTube™ · bilingv, un singur strat"
   },
   "disclaimer": {
     "message": "Nu este afiliat cu YouTube sau Google."
@@ -200,7 +200,7 @@
     "message": "Resetează toate setările"
   },
   "resetConfirmText": {
-    "message": "Se șterg toate setările, cheile API salvate pe acest computer și modelul și vocea reținute pentru fiecare furnizor, și se reactivează indiciile de la prima rulare. Domeniile furnizorilor pe care le-ați autorizat deja rămân autorizate.",
+    "message": "Se șterg toate setările, cheile API salvate pe acest computer, precum și modelul și vocea reținute pentru fiecare furnizor, și se reactivează indiciile de la prima utilizare. Domeniile furnizorilor pe care le-ați autorizat rămân autorizate, la fel și fișierele de fonturi importate.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -422,7 +422,7 @@
     "message": "Configurare serviciu de traducere"
   },
   "optIntro": {
-    "message": "Alege un furnizor și lipește cheia API. Cheia rămâne pe acest computer, iar textul subtitrărilor ajunge doar la furnizorul ales."
+    "message": "Alegeți un furnizor și lipiți propria cheie API."
   },
   "optPricingLink": {
     "message": "Prețuri și nivel gratuit"
@@ -680,7 +680,7 @@
     "message": "Playerul ascunde un mic meniu"
   },
   "startS4Body": {
-    "message": "Săgeata mică de lângă butonul de subtitrări deschide un meniu: citire cu voce, selectare text, rezumatul videoclipului și setări — fără a părăsi playerul."
+    "message": "Săgeata mică de lângă butonul de subtitrări deschide un meniu: subtitrări, citire cu voce, selectare text, rezumat video și setări — fără a părăsi playerul."
   },
   "startS4Alt": {
     "message": "Ilustrația playerului: o săgeată mică lângă butonul de subtitrări, dreapta jos, deschide un mic meniu"
@@ -927,7 +927,7 @@
     "message": "Se redă…"
   },
   "ttsPreviewFail": {
-    "message": "Nu s-a putut reda — verifică cheia, apoi salvează și testează"
+    "message": "Nu s-a putut reda — verifică cheia, apoi apasă „Salvează și testează”"
   },
   "ttsFetchVoices": {
     "message": "Preia lista completă a acestei limbi cu cheia ta"
@@ -1088,10 +1088,10 @@
     "message": "Pista de subtitrări nu a sosit — se reîncearcă automat. Grăbit? Reîncarcă pagina ca să încerci imediat."
   },
   "ttsCompleteLabel": {
-    "message": "Citește fiecare rând până la capăt, fără tăieri (în pasajele dense imaginea încetinește)"
+    "message": "Termină fiecare linie (imaginea încetinește în pasajele dense)"
   },
   "ttsCompleteHint": {
-    "message": "La viteze mari, rândurile lungi își pierd adesea finalul. Cu opțiunea pornită, imaginea încetinește atât cât are nevoie rândul — niciodată sub un sfert din viteza aleasă — și recuperează în pauze."
+    "message": "La viteze mai mari, liniile lungi își pierd adesea finalul în următoarea. Cu această opțiune, imaginea încetinește cât are nevoie linia — niciodată sub un sfert din viteza aleasă — și recuperează în goluri. Cât timp imaginea e încetinită atât de mult, sunetul original al videoclipului scade și mai jos decât nivelul setat mai jos, până la tăcere."
   },
   "ttsCompleteHintText": {
     "message": "La această viteză destule rânduri sunt tăiate — cu „Citește fiecare rând până la capăt” pornit, imaginea încetinește cât e nevoie și fiecare rând e citit întreg."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Font importat",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adresa conține o cheie. Scoate-o din adresă și lipește-o în câmpul cheii API — adresa se sincronizează cu contul tău de browser, câmpul cheii nu."
+  },
+  "backendStatusNoTrack": {
+    "message": "Nu s-a găsit nicio pistă de subtitrare pentru acest videoclip, deci nu este nimic de afișat.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

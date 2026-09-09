@@ -26,7 +26,7 @@
            the setup wording so the page is never blank before boot. -->
       <h1 id="pageTitle" data-i18n="optTitle">翻译服务设置</h1>
       <p class="ohd-sub" id="pageIntro" data-i18n="optIntro">
-        选一个服务商，填上你自己的 API Key。Key 只保存在这台电脑上，字幕文本只发往你选的服务商。
+        选一个服务商，填上你自己的 API Key。
       </p>
     </div>
   </header>
@@ -294,7 +294,7 @@
           <div class="ostep-txt">
             <span class="ostep-n" aria-hidden="true">4</span>
             <h2 data-i18n="startS4Title">播放器里还有个小菜单</h2>
-            <p data-i18n="startS4Body">字幕开关旁的小箭头会展开菜单：朗读、选中复制、视频总结和设置，不用离开播放器。</p>
+            <p data-i18n="startS4Body">字幕开关旁的小箭头展开菜单：字幕、朗读、选中复制、总结和设置，不用离开播放器。</p>
           </div>
           <div class="ostep-art">
             <!-- The arrow is the whole lesson, so it is the one accent-colored
@@ -584,21 +584,26 @@
              physics at 2x (设计定案 D114). Off = today's behaviour exactly. -->
         <div class="orow">
           <label class="ochk"><input type="checkbox" id="ttsComplete" />
-            <span data-i18n="ttsCompleteLabel">每句读完不截断（密集处画面会更慢）</span></label>
+            <span data-i18n="ttsCompleteLabel">尽量每句读完（密集处画面会更慢）</span></label>
         </div>
-        <p class="ohint" data-i18n="ttsCompleteHint">开倍速时长句常被下一句顶掉结尾。打开后画面会按需要放慢到读完为止（最低不低于你所选倍速的四分之一），空隙处再追回来。</p>
+        <p class="ohint" data-i18n="ttsCompleteHint">开倍速时长句常被下一句顶掉结尾。打开后画面会按需要放慢到读完为止（最低不低于你所选倍速的四分之一），空隙处再追回来。画面放得很慢时，原声会压得比下面设的更低，直到静音。</p>
       </div>
       <p class="ohint" data-i18n="ttsPrivacyNote">浏览器自带的音色，多数装在你这台电脑上，由它自己念。也有几个不是：Chrome 还提供联网音色——名字以「Google」开头的那几个——用它们时，浏览器会把这句话发给它的制造商。用云服务商时，要朗读的文本只发给你选择的那一家，Key 只存在本机。</p>
     </section>
 
-    <!-- Two cards side by side in one view (the same move the Getting-started
-         steps make), not a card inside a card. -->
+    <!-- Three cards in one view (the same move the Getting-started steps
+         make), not a card inside a card. The first is what you SET here
+         (interface language, the shortcuts door), the second what you READ
+         (version, what this is, where the subtitles go, links), the third
+         what you DO when something is wrong. Until 2026-09-09 the first two
+         were one card, and the two hints under the controls had been raised
+         to body size by the pane's own rule, so four paragraphs sat at one
+         weight and nobody could tell a setting's footnote from the privacy
+         statement. The card titles reuse the keys the nav and the popup
+         already carry, so no locale changes hands. -->
     <section class="oplain" id="secAbout" hidden>
       <div class="odetail">
-      <p class="oabout-ver">
-        <span data-i18n="aboutVersion">版本</span>
-        <b id="aboutVer">—</b>
-      </p>
+      <h2 class="olabel" data-i18n="openOptions">设置</h2>
       <div class="orow">
         <label for="uiLocaleSel" data-i18n="uiLocaleLabel">界面语言</label>
         <select id="uiLocaleSel"></select>
@@ -615,6 +620,14 @@
       </div>
       <p class="ohint" data-i18n="optShortcutsHint">快捷键由 Chrome 管，不在这个扩展里。默认一个都没绑；能绑的有三件：开关字幕、开关朗读、开关译文行。</p>
       <p class="ohint warn" id="optShortcutsFail" hidden data-i18n="optShortcutsFallback">这一页从这里打不开。把 chrome://extensions/shortcuts 粘到地址栏。</p>
+      </div>
+
+      <div class="odetail">
+      <h2 class="olabel" data-i18n="optNavAbout">关于</h2>
+      <p class="oabout-ver">
+        <span data-i18n="aboutVersion">版本</span>
+        <b id="aboutVer">—</b>
+      </p>
       <p data-i18n="aboutBlurb">
         给 YouTube 加一层双语字幕：原文一行、译文一行，字体、颜色、位置都能自己调。开源、免费、无广告。
       </p>

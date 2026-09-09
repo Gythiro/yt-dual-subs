@@ -6,7 +6,7 @@
     "message": "Zweisprachige Untertitel für YouTube — Original und Übersetzung in einer Ebene ohne Überlappung."
   },
   "headerSub": {
-    "message": "für YouTube™ · Zweisprachig, eine Ebene"
+    "message": "für YouTube™ · zweisprachig, eine Ebene"
   },
   "disclaimer": {
     "message": "Nicht mit YouTube oder Google verbunden."
@@ -200,7 +200,7 @@
     "message": "Alle Einstellungen zurücksetzen"
   },
   "resetConfirmText": {
-    "message": "Damit werden alle Einstellungen, die auf diesem Computer gespeicherten API-Schlüssel sowie das gespeicherte Modell und die Stimme jedes Anbieters gelöscht. Die Hinweise beim ersten Start werden wieder eingeschaltet. Bereits erteilte Berechtigungen für Anbieter-Domains bleiben bestehen.",
+    "message": "Damit werden alle Einstellungen gelöscht, die auf diesem Computer gespeicherten API-Schlüssel sowie das für jeden Anbieter gemerkte Modell und die Stimme, und die Hinweise beim ersten Start werden wieder eingeschaltet. Bereits erteilte Anbieter-Domains bleiben erteilt, ebenso die importierten Schriftdateien.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -422,7 +422,7 @@
     "message": "Übersetzungsdienst einrichten"
   },
   "optIntro": {
-    "message": "Wähle einen Anbieter und füge deinen eigenen API-Schlüssel ein. Der Schlüssel bleibt auf diesem Rechner, und Untertiteltext geht nur an den von dir gewählten Anbieter."
+    "message": "Wähle einen Anbieter und füge deinen eigenen API-Schlüssel ein."
   },
   "optPricingLink": {
     "message": "Preise & kostenloses Kontingent"
@@ -445,7 +445,7 @@
     }
   },
   "optModelRetired": {
-    "message": "„$MODEL$“ steht nicht mehr in der Liste dieses Anbieters — wählen Sie oben ein anderes.",
+    "message": "„$MODEL$“ steht nicht mehr in der Liste dieses Anbieters — wähl oben ein anderes.",
     "placeholders": {
       "model": {
         "content": "$1"
@@ -528,7 +528,7 @@
     "message": "Eine zweite Untertitelzeile für YouTube: das Original in einer Zeile, die Übersetzung in der anderen, Schrift, Farbe und Position nach Wunsch. Open Source, kostenlos, ohne Werbung."
   },
   "aboutPrivacy": {
-    "message": "Die Erweiterung hat keinen eigenen Server und erfasst keine Statistiken. Untertiteltext wird nur an Dienste gesendet, die Sie gewählt haben: den Übersetzungsdienst Ihrer Wahl und, falls aktiviert, den Sprachdienst für Vorlesen sowie den für Zusammenfassungen eingerichteten Dienst. Ein eigener Schlüssel wird nur auf diesem Computer gespeichert."
+    "message": "Die Erweiterung hat keinen eigenen Server und erfasst keine Statistiken. Untertiteltext wird nur an Dienste gesendet, die du gewählt hast: den Übersetzungsdienst deiner Wahl und, falls aktiviert, den Sprachdienst fürs Vorlesen sowie den für Zusammenfassungen eingerichteten Dienst. Ein eigener Schlüssel wird nur auf diesem Computer gespeichert."
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll"
@@ -680,7 +680,7 @@
     "message": "Im Player steckt ein kleines Menü"
   },
   "startS4Body": {
-    "message": "Der kleine Pfeil neben dem Untertitel-Button öffnet ein Menü: Vorlesen, Textauswahl, Video-Zusammenfassung und Einstellungen – ohne den Player zu verlassen."
+    "message": "Der kleine Pfeil neben der Untertitel-Schaltfläche öffnet ein Menü: Untertitel, Vorlesen, Text auswählen, Videozusammenfassung und Einstellungen — ohne den Player zu verlassen."
   },
   "startS4Alt": {
     "message": "Player-Illustration: Ein kleiner Pfeil neben dem Untertitel-Button unten rechts öffnet ein kleines Menü"
@@ -815,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Die meisten Stimmen Ihres Browsers sind auf diesem Computer installiert und sprechen den Text hier vor. Einige nicht: Chrome bietet auch Online-Stimmen an — jene, deren Namen mit \"Google\" beginnen — und für diese sendet der Browser den Text an den Hersteller. Bei einem Cloud-Anbieter geht der vorzulesende Text nur an den Anbieter Ihrer Wahl, und der Schlüssel bleibt auf diesem Gerät."
+    "message": "Die meisten Stimmen deines Browsers sind auf diesem Computer installiert und sprechen den Text hier vor. Einige nicht: Chrome bietet auch Online-Stimmen an — jene, deren Namen mit \"Google\" beginnen — und für diese sendet der Browser den Text an den Hersteller. Bei einem Cloud-Anbieter geht der vorzulesende Text nur an den Anbieter deiner Wahl, und der Schlüssel bleibt auf diesem Gerät."
   },
   "ttsEnableLabel": {
     "message": "Übersetzung im Video vorlesen"
@@ -1088,10 +1088,10 @@
     "message": "Die Untertitelspur ist nicht angekommen — es wird automatisch erneut versucht. Eilig? Seite neu laden, dann sofort noch einmal."
   },
   "ttsCompleteLabel": {
-    "message": "Jede Zeile zu Ende lesen, nie abschneiden (bei dichten Stellen wird das Bild langsamer)"
+    "message": "Jede Zeile zu Ende (Bild langsamer in dichten Stellen)"
   },
   "ttsCompleteHint": {
-    "message": "Bei höherem Tempo verliert eine lange Zeile ihr Ende oft an die nächste. Ist dies an, wird das Bild so weit verlangsamt, wie die Zeile braucht — nie unter ein Viertel deines gewählten Tempos — und holt in den Pausen wieder auf."
+    "message": "Bei höherer Geschwindigkeit verlieren lange Zeilen oft ihr Ende an die nächste. Ist dies aktiv, wird das Bild so stark verlangsamt, wie die Zeile braucht — nie unter ein Viertel der gewählten Geschwindigkeit — und holt in den Lücken wieder auf. Solange das Bild so stark verlangsamt ist, sinkt der eigene Ton des Videos weiter als der unten festgelegte Pegel, bis zur Stille."
   },
   "ttsCompleteHintText": {
     "message": "Bei diesem Tempo werden etliche Zeilen abgeschnitten — mit „Jede Zeile zu Ende lesen“ wird das Bild nach Bedarf langsamer und jede Zeile zu Ende gelesen."
@@ -1117,7 +1117,7 @@
     "message": "auf diesem Computer nicht eingerichtet"
   },
   "ttsNoVoiceForLang": {
-    "message": "Dieser Computer hat keine Stimme, die $NAME$ vorliest. Die Liste unten zeigt Stimmen anderer Sprachen — wählen Sie eine aus, dann wird die Zeile mit dem Akzent dieser Sprache vorgelesen.",
+    "message": "Dieser Computer hat keine Stimme, die $NAME$ vorliest. Die Liste unten zeigt Stimmen anderer Sprachen — wähl eine aus, dann wird die Zeile mit dem Akzent dieser Sprache vorgelesen.",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Importierte Schriftart",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Die Adresse enthält einen Schlüssel. Nimm ihn aus der Adresse und füge ihn ins API-Schlüssel-Feld ein — die Adresse wird mit deinem Browserkonto synchronisiert, das Schlüsselfeld nicht."
+  },
+  "backendStatusNoTrack": {
+    "message": "Für dieses Video wurde keine Untertitelspur gefunden, daher gibt es nichts anzuzeigen.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

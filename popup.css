@@ -74,6 +74,8 @@ a:focus-visible,
 .hd-text { flex: 1; min-width: 0; }
 .hd h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .2px; }
 .hd-sub { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); text-wrap: balance; }
+/* Katakana loanwords must not be split mid-word ("バイリ / ンガル"). */
+:lang(ja) .hd-sub, :lang(ko) .hd-sub { word-break: keep-all; }
 
 /* switch */
 /* Sits left of the master switch: always present, whatever the engine is. */
@@ -470,7 +472,11 @@ select:focus { border-color: var(--accent); }
   /* Top, not centre. The hint on the left wraps to two lines in any language
      with longer words than Chinese — German and Russian both do — and centring
      then parks "reset position" halfway down the left column's second line,
-     reading as a stray link rather than as this row's other half. */
+     reading as a stray link rather than as this row's other half. (Bottom
+     alignment was tried for the keyboard — "try it" then "reset" would walk
+     left to right — but a split row whose halves start on different lines
+     fails the layout floor in 18 locales; the Tab order only differs from the
+     eye when the hint wraps, and both stops are one Tab apart.) */
   align-items: flex-start; justify-content: space-between;
 }
 /* …and the button keeps its own words together: wrapping "Sбросить положение"
@@ -489,8 +495,12 @@ select:focus { border-color: var(--accent); }
 /* ranges */
 input[type="range"] {
   width: 100%; height: 4px; appearance: none; -webkit-appearance: none;
-  background: var(--line); border-radius: 999px; outline: none; cursor: pointer;
+  background: var(--line); border-radius: 999px; cursor: pointer;
 }
+/* The generic input ring hugs a 4px track; give the slider a little air. The
+   `outline: none` that used to sit above won the specificity fight against
+   the focus-visible rule, so Tab landed on six sliders with no sign of it. */
+input[type="range"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
   width: 15px; height: 15px; border-radius: 50%;

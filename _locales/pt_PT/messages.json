@@ -6,7 +6,7 @@
     "message": "Legendas bilingues para YouTube — original e tradução numa única camada sem sobreposição."
   },
   "headerSub": {
-    "message": "para YouTube™ · Bilingue, camada única"
+    "message": "para YouTube™ · bilingue, camada única"
   },
   "disclaimer": {
     "message": "Não afiliado ao YouTube nem à Google."
@@ -200,7 +200,7 @@
     "message": "Repor todas as definições"
   },
   "resetConfirmText": {
-    "message": "Isto apaga todas as definições, as chaves de API guardadas neste computador, e o modelo e a voz memorizados para cada fornecedor, e volta a ativar as dicas da primeira utilização. Os domínios de fornecedores que já autorizou permanecem autorizados.",
+    "message": "Isto apaga todas as definições, as chaves de API guardadas neste computador e o modelo e a voz memorizados para cada fornecedor, e volta a ativar as dicas da primeira utilização. Os domínios de fornecedores que já autorizou continuam autorizados, tal como os ficheiros de tipo de letra que importou.",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "Escolha primeiro um fornecedor."
   },
   "byoErrNoKey": {
-    "message": "Introduza primeiro uma chave API e depois prima Guardar e testar."
+    "message": "Introduza primeiro uma chave de API e, depois, prima Guardar e testar."
   },
   "byoErrNoModel": {
     "message": "Escolha primeiro um modelo — selecione um da lista ou clique em “Listar modelos com a minha chave”."
@@ -422,7 +422,7 @@
     "message": "Configuração do serviço de tradução"
   },
   "optIntro": {
-    "message": "Escolha um fornecedor e cole a sua chave API. A chave fica neste computador e o texto das legendas vai apenas para o fornecedor que escolher."
+    "message": "Escolha um fornecedor e cole a sua chave de API."
   },
   "optPricingLink": {
     "message": "Preços e plano gratuito"
@@ -680,7 +680,7 @@
     "message": "Há um pequeno menu no leitor"
   },
   "startS4Body": {
-    "message": "A pequena seta junto ao botão de legendas abre um menu: ler em voz alta, seleção de texto, resumo do vídeo e definições — sem sair do leitor."
+    "message": "A pequena seta junto ao botão de legendas abre um menu: legendas, ler em voz alta, selecionar texto, resumo do vídeo e definições — sem sair do leitor."
   },
   "startS4Alt": {
     "message": "Ilustração do leitor: uma pequena seta junto ao botão de legendas, em baixo à direita, abre um pequeno menu"
@@ -1088,10 +1088,10 @@
     "message": "A faixa de legendas não chegou — a tentar novamente de forma automática. Com pressa? Recarregue a página para tentar já."
   },
   "ttsCompleteLabel": {
-    "message": "Ler cada linha até ao fim, sem cortar (a imagem abranda nas partes densas)"
+    "message": "Terminar cada linha (a imagem abranda nas partes densas)"
   },
   "ttsCompleteHint": {
-    "message": "A velocidades altas, as linhas longas perdem muitas vezes o final. Com isto ativo, a imagem abranda o que a linha precisar — nunca abaixo de um quarto da velocidade escolhida — e recupera nas pausas."
+    "message": "A velocidades mais altas, as linhas longas perdem frequentemente o final para a seguinte. Com isto ligado, a imagem abranda o quanto a linha precisar — nunca abaixo de um quarto da velocidade escolhida — e recupera nos intervalos. Enquanto a imagem está tão abrandada, o áudio original do vídeo desce mais do que o nível definido abaixo, até ao silêncio."
   },
   "ttsCompleteHintText": {
     "message": "A esta velocidade várias linhas estão a ser cortadas — com “Ler cada linha até ao fim”, a imagem abranda conforme necessário e cada linha é lida por inteiro."
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "Fonte importada",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "O endereço contém uma chave. Retire-a do endereço e cole-a no campo da chave API — o endereço é sincronizado com a sua conta do navegador, o campo da chave não."
+  },
+  "backendStatusNoTrack": {
+    "message": "Não foi encontrada nenhuma faixa de legendas neste vídeo, por isso não há nada para mostrar.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

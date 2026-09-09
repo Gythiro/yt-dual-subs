@@ -200,7 +200,7 @@
     "message": "すべての設定をリセット"
   },
   "resetConfirmText": {
-    "message": "すべての設定、このパソコンに保存したAPIキー、各プロバイダーで記憶したモデルと音声を消去し、初回ヒントを再表示します。すでに許可したプロバイダーのドメインはそのまま残ります。",
+    "message": "すべての設定、このパソコンに保存した API キー、各プロバイダーで記憶しているモデルと音声を消去し、初回ヒントを再表示します。すでに許可したプロバイダーのドメインと、インポートしたフォントファイルはそのまま残ります。",
     "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
   },
   "resetConfirmBack": {
@@ -358,7 +358,7 @@
     "message": "先にプロバイダーを選んでください。"
   },
   "byoErrNoKey": {
-    "message": "先にAPIキーを入力してから、「保存してテスト」を押してください。"
+    "message": "先に API キーを入力してから、保存してテストしてください。"
   },
   "byoErrNoModel": {
     "message": "先にモデルを選んでください。一覧から選ぶか、「このキーでモデルを一覧表示」を押してください。"
@@ -422,7 +422,7 @@
     "message": "翻訳サービスの設定"
   },
   "optIntro": {
-    "message": "プロバイダーを選び、自分のAPIキーを貼り付けます。キーはこの端末に保存され、字幕テキストは選んだプロバイダーにだけ送られます。"
+    "message": "プロバイダーを選び、ご自身の API キーを貼り付けてください。"
   },
   "optPricingLink": {
     "message": "料金と無料枠"
@@ -680,7 +680,7 @@
     "message": "プレーヤーの中に小さなメニュー"
   },
   "startS4Body": {
-    "message": "字幕ボタンの隣にある小さな矢印でメニューが開きます。読み上げ、テキスト選択、動画の要約、設定——プレーヤーを離れずに使えます。"
+    "message": "字幕ボタン横の小さな矢印からメニューが開きます。字幕、読み上げ、テキスト選択、動画要約、設定を、プレーヤーを離れずに使えます。"
   },
   "startS4Alt": {
     "message": "プレーヤーの図：右下の字幕ボタンの隣に小さな矢印があり、押すと小さなメニューが開きます"
@@ -1088,10 +1088,10 @@
     "message": "字幕トラックを取得できていません。自動で再試行中です。急ぐ場合はページを再読み込みするとすぐやり直せます。"
   },
   "ttsCompleteLabel": {
-    "message": "各行を最後まで読み上げて途切れさせない（密集部分では映像が遅くなります）"
+    "message": "すべての行を読み切る（密集部は映像を減速）"
   },
   "ttsCompleteHint": {
-    "message": "倍速では長い行の最後が次の行に消されがちです。オンにすると、その行に必要なだけ映像が遅くなり（選んだ速度の 4 分の 1 を下回りません）、隙間で追いつきます。"
+    "message": "速度を上げると、長い行の末尾が次の行に食われることがあります。オンにすると、行に必要な分だけ映像が減速します（設定速度の4分の1未満にはなりません）。隙間で追いつきます。映像が大きく減速している間、動画本来の音声は下で設定したレベルよりさらに下がり、無音まで落ちます。"
   },
   "ttsCompleteHintText": {
     "message": "この速度では多くの行が途中で切れています。「各行を最後まで読み上げて途切れさせない」をオンにすると、必要なぶんだけ映像が遅くなり、各行を最後まで読み上げます。"
@@ -1263,5 +1263,12 @@
   "fontImported": {
     "message": "インポート済みフォント",
     "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "byoErrUrlHasKey": {
+    "message": "アドレスにキーが含まれています。アドレスから外して API キー欄に貼り付けてください。アドレスはブラウザアカウントに同期されますが、キー欄は同期されません。"
+  },
+  "backendStatusNoTrack": {
+    "message": "この動画のキャプショントラックが見つからないため、表示するものがありません。",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   }
 }

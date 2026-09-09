@@ -270,7 +270,11 @@ function renderList() {
     } else if (mode.stored[p.id] || (p.noKey && verifiedOk[p.id])) {
       const ok = document.createElement("span");
       ok.className = "pitem-ok";
-      ok.textContent = "✓";
+      // The same stroke family as the other icons, and a real accessible
+      // name: a title on a span is a tooltip, not something a reader hears.
+      ok.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+      ok.setAttribute("role", "img");
+      ok.setAttribute("aria-label", t("optConfigured", "已配置"));
       ok.title = t("optConfigured", "已配置");
       btn.appendChild(ok);
     }
@@ -658,6 +662,7 @@ function plan() {
   let baseUrl = "";
   let origins;
   if (p.custom) {
+    if (P.urlCarriesSecret($("baseUrl").value)) return { error: "urlHasKey" };
     const parsed = P.parseCustomBase($("baseUrl").value);
     if (!parsed) return { error: "badBaseUrl" };
     baseUrl = parsed.baseUrl;
@@ -1439,7 +1444,7 @@ function paintFontCount(done, total) {
   if (fontProbing === checkLang() && fontProbingAll) {
     if (total) fontProbeStep = [done, total];
     const st = fontProbeStep;
-    el.textContent = t("fontsCounting", "正在看…") + (st ? " " + st[0] + "/" + st[1] : "");
+    el.textContent = t("fontsCounting", "检查中…") + (st ? " " + st[0] + "/" + st[1] : "");
     return;
   }
   el.textContent = "(" + fontMoreShown + ")";
@@ -2809,6 +2814,7 @@ function initReadaloud() {
     // reached inside the click gesture, so nothing may await before it.
     let customBase = null;
     if (p.custom) {
+      if (P.urlCarriesSecret($("ttsBaseUrl").value)) { showTtsMsg(errText("urlHasKey"), "err"); return; }
       customBase = P.parseCustomBase($("ttsBaseUrl").value);
       if (!customBase) { showTtsMsg(errText("badBaseUrl"), "err"); return; }
     }
@@ -3125,6 +3131,14 @@ function wire() {
   });
 
   $("baseUrl").addEventListener("change", (e) => {
+    // Refused before it reaches sync: an address with a key in it would be
+    // copied to the browser account, which the key field never is.
+    if (P.urlCarriesSecret(e.target.value)) {
+      e.target.setAttribute("aria-invalid", "true");
+      showMsg(errText("urlHasKey", current()), "err");
+      return;
+    }
+    e.target.removeAttribute("aria-invalid");
     state.byoBaseUrl = e.target.value.trim();
     chrome.storage.sync.set({ byoBaseUrl: state.byoBaseUrl });
     const p = current();
