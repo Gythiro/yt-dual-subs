@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ no puede hablar ahora. Elige otro en la fila de arriba: las voces de tu propio navegador están en esa lista.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Fuentes de subtítulos"
+  },
+  "fontsIntro": {
+    "message": "Fuentes para las dos líneas de subtítulos. La ventana emergente muestra las que guardes aquí, y todas las de la lista están instaladas en este ordenador."
+  },
+  "fontsKept": {
+    "message": "Mostradas en la ventana emergente"
+  },
+  "fontsKeptHint": {
+    "message": "Aparecen en la lista de fuentes de la ventana emergente, después de Predeterminado del sistema."
+  },
+  "fontsMore": {
+    "message": "Otras fuentes de este ordenador"
+  },
+  "fontsMoreHint": {
+    "message": "Pulsa + para añadir una. La lista se lee de este ordenador; pulsa el nombre de una fuente para previsualizarla."
+  },
+  "fontsOnly": {
+    "message": "Solo fuentes que pueden mostrar $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ fuentes en este ordenador; $M$ de ellas pueden mostrar $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Comprobando qué fuentes pueden mostrar $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Buscar fuentes"
+  },
+  "fontsNoMatch": {
+    "message": "Ninguna fuente coincide."
+  },
+  "fontsAllAdded": {
+    "message": "Todas las fuentes ya están en la lista."
+  },
+  "fontsReset": {
+    "message": "Restaurar predeterminados"
+  },
+  "fontsResetDone": {
+    "message": "Lista predeterminada restaurada."
+  },
+  "fontsAdded": {
+    "message": "Se ha añadido $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Vista previa: $NAME$ — pulsa cualquier nombre de fuente para probarla",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Vista previa"
+  },
+  "fontsUnavailable": {
+    "message": "Este navegador no permite que la extensión lea las fuentes instaladas, así que solo se puede elegir Predeterminado del sistema."
+  },
+  "fontNoGlyphs": {
+    "message": "no puede mostrar esta línea"
+  },
+  "fontNotHere": {
+    "message": "no está en este ordenador"
+  },
+  "fontsImport": {
+    "message": "Importar archivo de fuente…"
+  },
+  "fontsImportHint": {
+    "message": "Admite .ttf / .otf / .woff / .woff2. El archivo se copia en el navegador, así que el original se puede mover después; al eliminar la entrada aquí se elimina esa copia."
+  },
+  "fontsImported": {
+    "message": "Importado $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Ese no es un archivo de fuente que este navegador pueda usar."
+  },
+  "fontsImportTooBig": {
+    "message": "El archivo es demasiado grande (límite $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "importada"
+  },
+  "fontsImportDelete": {
+    "message": "Eliminar la fuente importada"
   }
 }

@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ พูดไม่ได้ตอนนี้ เลือกอันอื่นในแถวด้านบน — เสียงของเบราว์เซอร์เองอยู่ในรายการนั้น",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "ฟอนต์คำบรรยาย"
+  },
+  "fontsIntro": {
+    "message": "ฟอนต์สำหรับคำบรรยายสองบรรทัด ป๊อปอัปจะแสดงรายการที่คุณเก็บไว้ที่นี่ และทุกฟอนต์ในรายการติดตั้งอยู่ในเครื่องนี้แล้ว"
+  },
+  "fontsKept": {
+    "message": "แสดงในป๊อปอัป"
+  },
+  "fontsKeptHint": {
+    "message": "รายการนี้จะปรากฏในรายการฟอนต์ของป๊อปอัป ถัดจากค่าเริ่มต้นของระบบ"
+  },
+  "fontsMore": {
+    "message": "ฟอนต์อื่นในเครื่องนี้"
+  },
+  "fontsMoreHint": {
+    "message": "กด + เพื่อเพิ่ม รายการอ่านจากเครื่องนี้ กดชื่อฟอนต์เพื่อดูตัวอย่าง"
+  },
+  "fontsOnly": {
+    "message": "เฉพาะฟอนต์ที่แสดง $LANG$ ได้",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "มี $N$ ฟอนต์ในเครื่องนี้ $M$ ฟอนต์แสดง $LANG$ ได้",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "กำลังตรวจว่าฟอนต์ใดแสดง $LANG$ ได้…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "ค้นหาชื่อฟอนต์"
+  },
+  "fontsNoMatch": {
+    "message": "ไม่พบฟอนต์ที่ตรงกัน"
+  },
+  "fontsAllAdded": {
+    "message": "ฟอนต์ทั้งหมดอยู่ในรายการแล้ว"
+  },
+  "fontsReset": {
+    "message": "คืนค่าเริ่มต้น"
+  },
+  "fontsResetDone": {
+    "message": "คืนรายการเริ่มต้นแล้ว"
+  },
+  "fontsAdded": {
+    "message": "เพิ่ม $NAME$ แล้ว",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "ตัวอย่าง: $NAME$ — กดชื่อฟอนต์ใดก็ได้เพื่อลอง",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "ตัวอย่าง"
+  },
+  "fontsUnavailable": {
+    "message": "เบราว์เซอร์นี้ไม่อนุญาตให้ส่วนขยายอ่านฟอนต์ที่ติดตั้ง จึงเลือกได้เฉพาะค่าเริ่มต้นของระบบ"
+  },
+  "fontNoGlyphs": {
+    "message": "แสดงบรรทัดนี้ไม่ได้"
+  },
+  "fontNotHere": {
+    "message": "ไม่มีในเครื่องนี้"
+  },
+  "fontsImport": {
+    "message": "นำเข้าไฟล์ฟอนต์…"
+  },
+  "fontsImportHint": {
+    "message": "รองรับ .ttf / .otf / .woff / .woff2 ไฟล์จะถูกคัดลอกเข้าเบราว์เซอร์ จึงย้ายต้นฉบับได้ภายหลัง การลบรายการที่นี่จะลบสำเนานั้นด้วย"
+  },
+  "fontsImported": {
+    "message": "นำเข้า $NAME$ แล้ว",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "ไฟล์นี้ไม่ใช่ไฟล์ฟอนต์ที่เบราว์เซอร์นี้ใช้ได้"
+  },
+  "fontsImportTooBig": {
+    "message": "ไฟล์ใหญ่เกินไป (จำกัด $MB$ MB)",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "นำเข้าแล้ว"
+  },
+  "fontsImportDelete": {
+    "message": "ลบฟอนต์ที่นำเข้า"
   }
 }

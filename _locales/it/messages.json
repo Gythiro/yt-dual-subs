@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ non può parlare adesso. Scegline un altro nella riga sopra — le voci del browser sono in quell'elenco.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Font dei sottotitoli"
+  },
+  "fontsIntro": {
+    "message": "Font per le due righe di sottotitoli. Il popup propone quelli che tieni qui e ogni font in elenco è installato su questo computer."
+  },
+  "fontsKept": {
+    "message": "Mostrati nel popup"
+  },
+  "fontsKeptHint": {
+    "message": "Compaiono nell'elenco font del popup, dopo Predefinito di sistema."
+  },
+  "fontsMore": {
+    "message": "Altri font su questo computer"
+  },
+  "fontsMoreHint": {
+    "message": "Premi + per aggiungerne uno. L'elenco è letto da questo computer; premi il nome di un font per vederne l'anteprima."
+  },
+  "fontsOnly": {
+    "message": "Solo i font che possono mostrare $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ font su questo computer; $M$ di questi possono mostrare $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Verifica dei font che possono mostrare $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Cerca nomi dei font"
+  },
+  "fontsNoMatch": {
+    "message": "Nessun font corrispondente."
+  },
+  "fontsAllAdded": {
+    "message": "Tutti i font sono già in elenco."
+  },
+  "fontsReset": {
+    "message": "Ripristina predefiniti"
+  },
+  "fontsResetDone": {
+    "message": "Elenco predefinito ripristinato."
+  },
+  "fontsAdded": {
+    "message": "Aggiunto $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Anteprima: $NAME$ — premi il nome di un font per provarlo",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Anteprima"
+  },
+  "fontsUnavailable": {
+    "message": "Questo browser non consente all'estensione di leggere i font installati, quindi si può scegliere solo Predefinito di sistema."
+  },
+  "fontNoGlyphs": {
+    "message": "non può mostrare questa riga"
+  },
+  "fontNotHere": {
+    "message": "non su questo computer"
+  },
+  "fontsImport": {
+    "message": "Importa file di font…"
+  },
+  "fontsImportHint": {
+    "message": "Supporta .ttf / .otf / .woff / .woff2. Il file viene copiato nel browser, quindi l'originale può essere spostato in seguito; eliminando la voce qui si elimina quella copia."
+  },
+  "fontsImported": {
+    "message": "Importato $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Questo file di font non è utilizzabile dal browser."
+  },
+  "fontsImportTooBig": {
+    "message": "Il file è troppo grande (limite $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "importato"
+  },
+  "fontsImportDelete": {
+    "message": "Elimina il font importato"
   }
 }

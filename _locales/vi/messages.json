@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ hiện không thể nói. Chọn nhà cung cấp khác ở hàng trên — danh sách có cả giọng của trình duyệt.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Phông chữ phụ đề"
+  },
+  "fontsIntro": {
+    "message": "Phông chữ cho hai dòng phụ đề. Cửa sổ bật lên hiện những phông bạn giữ ở đây, và mọi phông trong danh sách đều đã cài trên máy này."
+  },
+  "fontsKept": {
+    "message": "Hiện trong cửa sổ bật lên"
+  },
+  "fontsKeptHint": {
+    "message": "Chúng xuất hiện trong danh sách phông của cửa sổ bật lên, sau Mặc định hệ thống."
+  },
+  "fontsMore": {
+    "message": "Phông khác trên máy này"
+  },
+  "fontsMoreHint": {
+    "message": "Nhấn + để thêm. Danh sách lấy từ máy này; nhấn tên phông để xem trước."
+  },
+  "fontsOnly": {
+    "message": "Chỉ phông hiển thị được $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ phông trên máy này; $M$ trong số đó hiển thị được $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Đang kiểm tra phông nào hiển thị được $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Tìm tên phông"
+  },
+  "fontsNoMatch": {
+    "message": "Không có phông khớp."
+  },
+  "fontsAllAdded": {
+    "message": "Mọi phông đã có trong danh sách."
+  },
+  "fontsReset": {
+    "message": "Khôi phục mặc định"
+  },
+  "fontsResetDone": {
+    "message": "Đã khôi phục danh sách mặc định."
+  },
+  "fontsAdded": {
+    "message": "Đã thêm $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Xem trước: $NAME$ — nhấn tên phông bất kỳ để thử",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Xem trước"
+  },
+  "fontsUnavailable": {
+    "message": "Trình duyệt này không cho tiện ích đọc phông đã cài, nên chỉ chọn được Mặc định hệ thống."
+  },
+  "fontNoGlyphs": {
+    "message": "không hiển thị được dòng này"
+  },
+  "fontNotHere": {
+    "message": "không có trên máy này"
+  },
+  "fontsImport": {
+    "message": "Nhập tệp phông chữ…"
+  },
+  "fontsImportHint": {
+    "message": "Hỗ trợ .ttf / .otf / .woff / .woff2. Tệp được sao chép vào trình duyệt, nên tệp gốc có thể chuyển đi sau đó; xóa mục ở đây sẽ xóa bản sao đó."
+  },
+  "fontsImported": {
+    "message": "Đã nhập $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Đây không phải tệp phông chữ trình duyệt này có thể dùng."
+  },
+  "fontsImportTooBig": {
+    "message": "Tệp quá lớn (giới hạn $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "đã nhập"
+  },
+  "fontsImportDelete": {
+    "message": "Xóa phông chữ đã nhập"
   }
 }

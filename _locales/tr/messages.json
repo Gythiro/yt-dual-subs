@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ şu anda konuşamıyor. Yukarıdaki satırdan başka birini seçin — tarayıcınızın kendi sesleri o listede.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Altyazı yazı tipleri"
+  },
+  "fontsIntro": {
+    "message": "İki altyazı satırı için yazı tipleri. Açılır pencerede burada tuttuğunuz yazı tipleri sunulur; listedeki her yazı tipi bu bilgisayarda yüklüdür."
+  },
+  "fontsKept": {
+    "message": "Açılır pencerede gösterilenler"
+  },
+  "fontsKeptHint": {
+    "message": "Bunlar, açılır pencerenin yazı tipi listesinde Sistem varsayılanından sonra görünür."
+  },
+  "fontsMore": {
+    "message": "Bu bilgisayardaki diğer yazı tipleri"
+  },
+  "fontsMoreHint": {
+    "message": "+ ile ekleyin. Liste bu bilgisayardan okunur; önizlemek için yazı tipi adına basın."
+  },
+  "fontsOnly": {
+    "message": "Yalnızca $LANG$ yazabilen yazı tipleri",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "Bu bilgisayarda $N$ yazı tipi var; $M$ tanesi $LANG$ yazabiliyor.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "$LANG$ yazabilen yazı tipleri kontrol ediliyor…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Yazı tipi adı ara"
+  },
+  "fontsNoMatch": {
+    "message": "Eşleşen yazı tipi yok."
+  },
+  "fontsAllAdded": {
+    "message": "Tüm yazı tipleri zaten listede."
+  },
+  "fontsReset": {
+    "message": "Varsayılanları geri yükle"
+  },
+  "fontsResetDone": {
+    "message": "Varsayılan liste geri yüklendi."
+  },
+  "fontsAdded": {
+    "message": "$NAME$ eklendi",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Önizleme: $NAME$ — denemek için herhangi bir yazı tipi adına basın",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Önizleme"
+  },
+  "fontsUnavailable": {
+    "message": "Bu tarayıcı, uzantının yüklü yazı tiplerini okumasına izin vermiyor; bu yüzden yalnızca Sistem varsayılanı seçilebilir."
+  },
+  "fontNoGlyphs": {
+    "message": "bu satırı yazamıyor"
+  },
+  "fontNotHere": {
+    "message": "bu bilgisayarda yok"
+  },
+  "fontsImport": {
+    "message": "Yazı tipi dosyası içe aktar…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2 desteklenir. Dosya tarayıcıya kopyalanır, bu yüzden orijinali sonradan taşınabilir; buradaki kaydı silmek o kopyayı siler."
+  },
+  "fontsImported": {
+    "message": "$NAME$ içe aktarıldı",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Bu tarayıcının kullanabileceği bir yazı tipi dosyası değil."
+  },
+  "fontsImportTooBig": {
+    "message": "Dosya çok büyük (üst sınır $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "içe aktarıldı"
+  },
+  "fontsImportDelete": {
+    "message": "İçe aktarılan yazı tipini sil"
   }
 }

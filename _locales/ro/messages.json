@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ nu poate vorbi acum. Alege altul din rândul de deasupra — vocile browserului tău sunt în acea listă.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Fonturi de subtitrare"
+  },
+  "fontsIntro": {
+    "message": "Fonturi pentru cele două linii de subtitrare. Pop-up-ul oferă fonturile pe care le păstrați aici, iar fiecare font din listă este instalat pe acest computer."
+  },
+  "fontsKept": {
+    "message": "Afișate în pop-up"
+  },
+  "fontsKeptHint": {
+    "message": "Acestea apar în lista de fonturi din pop-up, după Implicit sistem."
+  },
+  "fontsMore": {
+    "message": "Alte fonturi pe acest computer"
+  },
+  "fontsMoreHint": {
+    "message": "Apăsați + pentru a adăuga unul. Lista este citită de pe acest computer; apăsați numele unui font pentru a-l previzualiza."
+  },
+  "fontsOnly": {
+    "message": "Doar fonturile care pot afișa $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ fonturi pe acest computer; $M$ dintre ele pot afișa $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Se verifică ce fonturi pot afișa $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Căutați nume de fonturi"
+  },
+  "fontsNoMatch": {
+    "message": "Niciun font nu corespunde."
+  },
+  "fontsAllAdded": {
+    "message": "Toate fonturile sunt deja în listă."
+  },
+  "fontsReset": {
+    "message": "Restabiliți implicitele"
+  },
+  "fontsResetDone": {
+    "message": "Lista implicită a fost restabilită."
+  },
+  "fontsAdded": {
+    "message": "S-a adăugat $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Previzualizare: $NAME$ — apăsați orice nume de font pentru a-l încerca",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Previzualizare"
+  },
+  "fontsUnavailable": {
+    "message": "Acest browser nu permite extensiei să citească fonturile instalate, deci se poate alege doar Implicit sistem."
+  },
+  "fontNoGlyphs": {
+    "message": "nu poate afișa această linie"
+  },
+  "fontNotHere": {
+    "message": "nu este pe acest computer"
+  },
+  "fontsImport": {
+    "message": "Importă fișier font…"
+  },
+  "fontsImportHint": {
+    "message": "Acceptă .ttf / .otf / .woff / .woff2. Fișierul este copiat în browser, deci originalul poate fi mutat ulterior; ștergerea elementului de aici șterge acea copie."
+  },
+  "fontsImported": {
+    "message": "Importat $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Acesta nu este un fișier de font pe care acest browser îl poate folosi."
+  },
+  "fontsImportTooBig": {
+    "message": "Fișierul este prea mare (limita $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "importat"
+  },
+  "fontsImportDelete": {
+    "message": "Șterge fontul importat"
   }
 }

@@ -15,7 +15,7 @@
 // ahead of prefetch. No internal retries for transport errors: a failed request
 // is simply re-issued by content.js when its cue is next active.
 
-importScripts("providers.js", "languages.js");
+importScripts("providers.js", "languages.js", "fonts.js");
 const PROVIDERS = self.YTDS_PROVIDERS;
 const LANGS = self.YTDS_LANGS;
 
@@ -2588,6 +2588,23 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     // The popup's reset, asking for the install-time guess again. One
     // implementation of "which language does this reader want", not two.
     deriveTargetLang(true, (code) => sendResponse({ ok: !!code, targetLang: code }));
+    return true;                                            // async reply
+  }
+  if (msg && msg.type === "fontBytes") {
+    // A font the reader imported on the settings page, wanted by the subtitle
+    // layer. The copy lives in this extension's IndexedDB, which a content
+    // script cannot open — so the bytes make one hop, as text. Only ids of
+    // our own minting are looked up; anything else is answered with nothing.
+    const F = self.YTDS_FONTS;
+    const id = msg.id;
+    // `why` tells the two refusals apart — a test cannot otherwise see whether
+    // the id check exists, since a worker without the store says no to
+    // everything.
+    if (!F || !F.isImport(id)) { sendResponse({ ok: false, why: "notImport" }); return false; }
+    F.importGet(id).then((rec) => {
+      if (rec && rec.bytes) sendResponse({ ok: true, b64: F.b64(new Uint8Array(rec.bytes)), name: rec.name || "" });
+      else sendResponse({ ok: false, why: "missing" });
+    }).catch(() => sendResponse({ ok: false, why: "store" }));
     return true;                                            // async reply
   }
   if (msg && msg.type === "openOptions") {

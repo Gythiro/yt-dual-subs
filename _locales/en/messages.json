@@ -1099,6 +1099,14 @@
   "ttsSkipNotSet": {
     "message": "not set up on this computer"
   },
+  "ttsProviderMute": {
+    "message": "$NAME$ can't speak right now. Pick another in the row above — your browser's own voices are in that list.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "statusTrackRetry": {
     "message": "The subtitle track hasn't arrived — retrying automatically. In a hurry? Refresh the page to try again now."
   },
@@ -1119,5 +1127,127 @@
   },
   "provLocalSpeechShort": {
     "message": "Browser"
+  },
+  "optNavFonts": {
+    "message": "Subtitle fonts"
+  },
+  "fontsIntro": {
+    "message": "Fonts for the two subtitle lines. The popup offers the ones you keep here, and every font listed is installed on this computer."
+  },
+  "fontsKept": {
+    "message": "Shown in the popup"
+  },
+  "fontsKeptHint": {
+    "message": "These appear in the popup's font list, after System default."
+  },
+  "fontsMore": {
+    "message": "Other fonts on this computer"
+  },
+  "fontsMoreHint": {
+    "message": "Press + to add one. The list is read from this computer; press a font's name to preview it."
+  },
+  "fontsOnly": {
+    "message": "Only fonts that can draw $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ fonts on this computer; $M$ of them can draw $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Checking which fonts can draw $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Search font names"
+  },
+  "fontsNoMatch": {
+    "message": "No font matches."
+  },
+  "fontsAllAdded": {
+    "message": "Every font is already in the list."
+  },
+  "fontsReset": {
+    "message": "Restore defaults"
+  },
+  "fontsResetDone": {
+    "message": "Default list restored."
+  },
+  "fontsAdded": {
+    "message": "Added $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Preview: $NAME$ — press any font name to try it",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Preview"
+  },
+  "fontsUnavailable": {
+    "message": "This browser does not let the extension read the installed fonts, so only System default can be picked."
+  },
+  "fontNoGlyphs": {
+    "message": "cannot draw this line"
+  },
+  "fontNotHere": {
+    "message": "not on this computer"
+  },
+  "fontsImport": {
+    "message": "Import font file…"
+  },
+  "fontsImportHint": {
+    "message": "Supports .ttf / .otf / .woff / .woff2. The file is copied into the browser, so the original can move afterwards; deleting the entry here deletes that copy."
+  },
+  "fontsImported": {
+    "message": "Imported $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "That is not a font file this browser can use."
+  },
+  "fontsImportTooBig": {
+    "message": "The file is too large (limit $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "imported"
+  },
+  "fontsImportDelete": {
+    "message": "Delete the imported font"
   }
 }

@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ kann gerade nicht sprechen. Wähle oben in der Reihe einen anderen Anbieter — die Stimmen deines Browsers stehen in der Liste.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Untertitelschriften"
+  },
+  "fontsIntro": {
+    "message": "Schriftarten für die beiden Untertitelzeilen. Im Popup erscheinen die hier behaltenen, und jede gelistete Schriftart ist auf diesem Computer installiert."
+  },
+  "fontsKept": {
+    "message": "Im Popup angezeigt"
+  },
+  "fontsKeptHint": {
+    "message": "Diese erscheinen in der Schriftartenliste des Popups, nach Systemstandard."
+  },
+  "fontsMore": {
+    "message": "Weitere Schriftarten auf diesem Computer"
+  },
+  "fontsMoreHint": {
+    "message": "Mit + hinzufügen. Die Liste wird von diesem Computer gelesen; zum Vorschauen auf einen Schriftnamen klicken."
+  },
+  "fontsOnly": {
+    "message": "Nur Schriftarten, die $LANG$ darstellen können",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ Schriftarten auf diesem Computer; $M$ davon können $LANG$ darstellen.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Prüfen, welche Schriftarten $LANG$ darstellen können…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Schriftnamen suchen"
+  },
+  "fontsNoMatch": {
+    "message": "Keine passende Schriftart."
+  },
+  "fontsAllAdded": {
+    "message": "Alle Schriftarten sind bereits in der Liste."
+  },
+  "fontsReset": {
+    "message": "Standard wiederherstellen"
+  },
+  "fontsResetDone": {
+    "message": "Standardliste wiederhergestellt."
+  },
+  "fontsAdded": {
+    "message": "$NAME$ hinzugefügt",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Vorschau: $NAME$ — zum Testen auf einen Schriftnamen klicken",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Vorschau"
+  },
+  "fontsUnavailable": {
+    "message": "Dieser Browser erlaubt der Erweiterung nicht, die installierten Schriftarten zu lesen, daher kann nur Systemstandard gewählt werden."
+  },
+  "fontNoGlyphs": {
+    "message": "kann diese Zeile nicht darstellen"
+  },
+  "fontNotHere": {
+    "message": "nicht auf diesem Computer"
+  },
+  "fontsImport": {
+    "message": "Schriftdatei importieren…"
+  },
+  "fontsImportHint": {
+    "message": "Unterstützt .ttf / .otf / .woff / .woff2. Die Datei wird in den Browser kopiert, das Original kann danach verschoben werden; das Löschen des Eintrags hier löscht diese Kopie."
+  },
+  "fontsImported": {
+    "message": "$NAME$ importiert",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Das ist keine Schriftdatei, die dieser Browser verwenden kann."
+  },
+  "fontsImportTooBig": {
+    "message": "Die Datei ist zu groß (max. $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "importiert"
+  },
+  "fontsImportDelete": {
+    "message": "Importierte Schriftart löschen"
   }
 }

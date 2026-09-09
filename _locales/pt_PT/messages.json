@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ não consegue falar agora. Escolha outro na linha acima — as vozes do próprio navegador estão nessa lista.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Tipos de letra das legendas"
+  },
+  "fontsIntro": {
+    "message": "Tipos de letra para as duas linhas de legendas. O pop-up mostra os que guardar aqui e todos os listados estão instalados neste computador."
+  },
+  "fontsKept": {
+    "message": "Mostrados no pop-up"
+  },
+  "fontsKeptHint": {
+    "message": "Estes aparecem na lista de tipos de letra do pop-up, a seguir a Predefinição do sistema."
+  },
+  "fontsMore": {
+    "message": "Outros tipos de letra neste computador"
+  },
+  "fontsMoreHint": {
+    "message": "Prima + para adicionar um. A lista é lida deste computador; prima o nome de um tipo de letra para o pré-visualizar."
+  },
+  "fontsOnly": {
+    "message": "Apenas tipos de letra que suportam $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ tipos de letra neste computador; $M$ deles suportam $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "A verificar quais os tipos de letra que suportam $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Pesquisar nomes de tipos de letra"
+  },
+  "fontsNoMatch": {
+    "message": "Nenhum tipo de letra corresponde."
+  },
+  "fontsAllAdded": {
+    "message": "Todos os tipos de letra já estão na lista."
+  },
+  "fontsReset": {
+    "message": "Repor predefinições"
+  },
+  "fontsResetDone": {
+    "message": "Lista predefinida reposta."
+  },
+  "fontsAdded": {
+    "message": "Adicionado $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Pré-visualização: $NAME$ — prima qualquer nome para experimentar",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Pré-visualizar"
+  },
+  "fontsUnavailable": {
+    "message": "Este navegador não permite que a extensão leia os tipos de letra instalados, por isso só é possível escolher Predefinição do sistema."
+  },
+  "fontNoGlyphs": {
+    "message": "não consegue mostrar esta linha"
+  },
+  "fontNotHere": {
+    "message": "não está neste computador"
+  },
+  "fontsImport": {
+    "message": "Importar tipo de letra…"
+  },
+  "fontsImportHint": {
+    "message": "Suporta .ttf / .otf / .woff / .woff2. O ficheiro é copiado para o navegador, pelo que o original pode ser movido depois; eliminar a entrada aqui elimina essa cópia."
+  },
+  "fontsImported": {
+    "message": "$NAME$ importado",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Esse não é um ficheiro de tipo de letra que este navegador consiga usar."
+  },
+  "fontsImportTooBig": {
+    "message": "O ficheiro é demasiado grande (limite $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "importado"
+  },
+  "fontsImportDelete": {
+    "message": "Eliminar o tipo de letra importado"
   }
 }

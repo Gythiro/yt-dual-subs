@@ -6,7 +6,8 @@
   "description": "__MSG_extDesc__",
   "minimum_chrome_version": "111",
   "permissions": [
-    "storage"
+    "storage",
+    "fontSettings"
   ],
   "host_permissions": [
     "https://translate.googleapis.com/*"
@@ -60,6 +61,7 @@
         "https://www.youtube.com/*"
       ],
       "js": [
+        "fonts.js",
         "content.js"
       ],
       "css": [

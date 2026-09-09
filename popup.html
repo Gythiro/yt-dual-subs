@@ -189,6 +189,13 @@
       <div class="pmenu" id="ttsVoiceMenu" hidden role="menu"
            data-i18n-aria="ttsVoiceLabel" aria-label="音色"></div>
 
+      <!-- Why nothing is being spoken, said while the card is drawn rather
+           than after the engine has failed a line. It names the provider the
+           ENGINE will use, which is the one stored — this card used to paint
+           a keyless substitute in its place and promise a voice nothing would
+           ever reach for. -->
+      <p class="engine-msg err" id="ttsBroken" role="status" aria-live="polite" hidden></p>
+
       <!-- Status doubles as the door to the low-frequency settings (region,
            test, adding a provider): a button, not a dead line. Text is
            assembled by refreshTtsStatus(); the chevron is CSS. -->
@@ -285,22 +292,13 @@
 
         <div class="row">
           <label for="lineFont" data-i18n="fontLabel">字体</label>
+          <!-- Filled by paintFontOptions: "System default", then the fonts
+               kept on the settings page (each one installed on this computer,
+               read through fonts.js), then the stored value if it is neither.
+               Only the first option is static so the label is localised
+               before the first paint. -->
           <select id="lineFont">
             <option value="system" data-i18n="fontSystem">系统默认</option>
-            <option value="roboto">Roboto</option>
-            <option value="noto">Noto Sans</option>
-            <option value="arial">Arial</option>
-            <option value="georgia">Georgia</option>
-            <option value="times">Times New Roman</option>
-            <option value="mono" data-i18n="fontMono">等宽 Mono</option>
-            <option value="cjk" data-i18n="fontCjk">适合中文</option>
-            <option value="cjkserif" data-i18n="fontCjkSerif">中文宋体</option>
-            <option value="cjkround" data-i18n="fontCjkRound">中文圆体</option>
-            <option value="inter">Inter</option>
-            <option value="verdana">Verdana</option>
-            <option value="tahoma">Tahoma</option>
-            <option value="trebuchet">Trebuchet MS</option>
-            <option value="garamond">Garamond</option>
           </select>
         </div>
 
@@ -453,6 +451,7 @@
   </footer>
 
   <script src="languages.js"></script>
+  <script src="fonts.js"></script>
   <script src="providers.js"></script>
   <script src="provider-icons.js"></script>
   <script src="i18n-runtime.js"></script>

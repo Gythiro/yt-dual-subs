@@ -39,6 +39,7 @@
         <button type="button" class="onav-item" data-sec="start" data-i18n="optNavStart">新手入门</button>
         <button type="button" class="onav-item on" data-sec="setup" data-i18n="optNavSetup">翻译服务</button>
         <button type="button" class="onav-item" data-sec="langs" data-i18n="optNavLangs">译文语言列表</button>
+        <button type="button" class="onav-item" data-sec="fonts" data-i18n="optNavFonts">字幕字体</button>
         <button type="button" class="onav-item" data-sec="readaloud" data-i18n="optNavReadaloud">朗读</button>
         <button type="button" class="onav-item" data-sec="about" data-i18n="optNavAbout">关于</button>
       </nav>
@@ -357,6 +358,53 @@
       <p class="omsg" id="langMsg" role="status" aria-live="polite" hidden></p>
       <button type="button" class="obtn ghost" id="langReset" data-i18n="langsReset">恢复默认</button>
     </section>
+    <!-- --------------------------------- fonts ---------------------------- -->
+    <!-- Same shape as the language list above (kept / the rest, + and ×), on
+         purpose: one list to learn. Every name here is read from this
+         computer (chrome.fontSettings via fonts.js); the popup offers the kept
+         ones. The strip on top previews a font on both subtitle lines. -->
+    <section class="odetail" id="secFonts" hidden>
+      <div class="ofont-preview">
+        <div class="ofont-frame" id="fontFrame">
+          <div class="ytds-prev-line ytds-prev-orig" id="fontPrevOrig" lang="en" data-i18n="sampleOrig">The quick brown fox</div>
+          <div class="ytds-prev-line ytds-prev-trans" id="fontPrevTrans" data-i18n="sampleTrans">敏捷的棕色狐狸</div>
+        </div>
+        <p class="ohint ofont-prevname" id="fontPrevName" aria-live="polite"></p>
+      </div>
+      <div class="ofont-tools">
+        <input type="search" id="fontSearch" spellcheck="false" autocomplete="off"
+               placeholder="搜字体名" data-i18n-ph="fontsSearch" data-i18n-aria="fontsSearch" />
+        <!-- Filled by paintFontOnlyLabel with the translation language's name
+             (fontsOnly carries $LANG$); data-i18n-keep sanctions the static
+             fallback for the leak scanner, as ttsNeedKey does below. -->
+        <label class="ochk"><input type="checkbox" id="fontOnly" />
+          <span id="fontOnlyLabel" data-i18n-keep>只看能显示「中文（简体）」的</span></label>
+      </div>
+      <p class="ohint" id="fontCount" role="status" aria-live="polite"></p>
+      <p class="omsg warn" id="fontUnavailable" data-i18n="fontsUnavailable" hidden>这个浏览器不让扩展读取已安装的字体，只能用「系统默认」。</p>
+      <div class="olangs">
+        <div class="olang-col">
+          <h2 class="olabel" data-i18n="fontsKept">弹窗里显示的</h2>
+          <p class="ohint" data-i18n="fontsKeptHint">这些会出现在弹窗的「字体」下拉里，排在「系统默认」后面。</p>
+          <ul class="olang-list" id="fontKept"></ul>
+        </div>
+        <div class="olang-col">
+          <h2 class="olabel" data-i18n="fontsMore">这台电脑上的其他字体</h2>
+          <p class="ohint" data-i18n="fontsMoreHint">点 + 加进上面的列表。名单读自这台电脑；点字体名可以预览。</p>
+          <ul class="olang-list" id="fontMore"></ul>
+        </div>
+      </div>
+      <p class="omsg" id="fontMsg" role="status" aria-live="polite" hidden></p>
+      <div class="ofont-actions">
+        <button type="button" class="obtn ghost" id="fontReset" data-i18n="fontsReset">恢复默认</button>
+        <!-- A font file of the reader's own: copied into the extension's own
+             storage on this machine (fonts.js importFile), never pointed at.
+             The input is the real control; the button is its face. -->
+        <button type="button" class="obtn ghost" id="fontImportBtn" data-i18n="fontsImport">导入字体文件…</button>
+        <input type="file" id="fontImportFile" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden />
+      </div>
+      <p class="ohint" data-i18n="fontsImportHint">支持 .ttf / .otf / .woff / .woff2。文件会拷一份存进浏览器，之后不再依赖原文件；删掉这里的导入项就清掉了那份拷贝。</p>
+    </section>
     <!-- --------------------------------- about ---------------------------- -->
     <!-- ------------------------------- read-aloud -------------------------- -->
     <section class="odetail" id="secReadaloud" hidden>
@@ -620,6 +668,7 @@
   </footer>
 
   <script src="languages.js"></script>
+  <script src="fonts.js"></script>
   <script src="providers.js"></script>
   <script src="provider-icons.js"></script>
   <script src="i18n-runtime.js"></script>

@@ -69,25 +69,14 @@ const DEFAULTS = {
   transStrokeOpacity: 0
 };
 
-// Font key -> font-family stack (shared with content.js render).
-const FONT_STACKS = {
-  system:  'system-ui, -apple-system, "Segoe UI", sans-serif',
-  roboto:  'Roboto, "YouTube Noto", sans-serif',
-  noto:    '"Noto Sans", "YouTube Noto", sans-serif',
-  arial:   'Arial, Helvetica, sans-serif',
-  georgia: 'Georgia, "Times New Roman", serif',
-  times:   '"Times New Roman", Times, serif',
-  mono:    '"Courier New", ui-monospace, monospace',
-  cjk:     '"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
-    inter:   'Inter, "Segoe UI Variable", system-ui, sans-serif',
-    verdana: 'Verdana, Geneva, sans-serif',
-    tahoma:  'Tahoma, Geneva, Verdana, sans-serif',
-    trebuchet: '"Trebuchet MS", Tahoma, sans-serif',
-    garamond: 'Garamond, "Palatino Linotype", "Book Antiqua", serif',
-    cjkserif: '"Songti SC", SimSun, "Noto Serif CJK SC", serif',
-    cjkround: '"Yuanti SC", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif'
-};
-function fontStack(key) { return FONT_STACKS[key] || FONT_STACKS.system; }
+// The stored font value -> font-family, through the one builder in fonts.js
+// (same call content.js makes, so the preview here and the overlay there
+// cannot disagree). It quotes and escapes the name: a font name is an outside
+// string, and font-family is the only place one goes into CSS.
+function fontStack(key) {
+  const F = self.YTDS_FONTS;
+  return F ? F.css(key) : 'system-ui, -apple-system, "Segoe UI", sans-serif';
+}
 
 // ---- color helpers (tolerant of #rgb / #rrggbb) --------------------------
 function hexToRgb(hex) {
@@ -418,6 +407,7 @@ async function paintEngineStatus() {
   const tab = await getActiveTab();
   if (!tab || tab.id == null) return;
   const r = await sendToTab(tab.id, { type: "engineStatus" });
+  if (r && r.ok) noteTabLang(r.lang);
   if (!r || !r.ok) return;                  // not a YouTube video page
 
   // The caption track itself is missing and the recovery loop is on it. This
@@ -522,16 +512,34 @@ async function refreshTtsStatus() {
   // one (it is saved before the test runs), and since the popup can switch
   // provider by picking a voice, the settings page is no longer guaranteed to
   // have shown the user the failure.
-  el.classList.toggle("err", !!r.tts.err);
-  if (r.tts.err) {
+  el.classList.toggle("err", !!r.tts.err && ttsCardSpeaks);
+  if (r.tts.err && ttsCardSpeaks) {
     // …but keep the counts once anything has been read. The reason used to
     // appear only when NOTHING had ever spoken, so it could stand alone;
     // now it also covers a provider that worked and then stopped, and on that
     // video the lines that did play are still true — and one may be sounding
     // while the message is on screen. Dropping the counts there leaves a card
     // that says only "refused" over audio the reader can hear.
-    el.textContent = r.tts.spoken ? byoErrText(r.tts.err) + " · " + counts
-      : byoErrText(r.tts.err);
+    // …and say where. The sentence names a button ("press Save and test")
+    // that lives on the settings page; in this popup a reader looks around for
+    // it and does not find it. The line has always BEEN the door — its title
+    // and its chevron said so — but only to someone who already knew.
+    const door = t("ttsOpenSettings", "朗读设置");
+    el.textContent = (r.tts.spoken ? byoErrText(r.tts.err) + " · " + counts
+      : byoErrText(r.tts.err)) + (door ? " · " + door : "");
+    ttsStatusA11y(el);
+    el.hidden = false;
+    return;
+  }
+  // A provider that cannot sound is not "read-aloud on", and the voice it
+  // would have used is the one belonging to the key that was just deleted:
+  // the card said "Google cannot speak" at the top and "reading with Kore" at
+  // the bottom, of the same provider, at the same moment. Only the counts are
+  // still true there — and they are worth keeping, because they carry the
+  // reason (see skipWhyText).
+  if (!ttsCardSpeaks) {
+    if (!r.tts.spoken && !r.tts.skipped) return;   // nothing true left to say
+    el.textContent = counts;
     ttsStatusA11y(el);
     el.hidden = false;
     return;
@@ -679,6 +687,12 @@ let ttsPaintGen = 0;
 // that is offering "configure…" contradicts itself, and the card is the one
 // holding the evidence (key, region, registry).
 let ttsCardReady = false;
+// …and whether the STORED provider can sound. The card's own line already
+// explains a provider that cannot (see #ttsBroken); the engine's reply would
+// otherwise add a second, differently worded explanation of the same thing —
+// and byoErrNoKey's is "enter an API key first, then press Save and test",
+// naming a button that lives on the settings page, not here.
+let ttsCardSpeaks = true;
 // Retry state for the local voice list, module-level so a repaint triggered by
 // the retry itself does not start a second chain.
 let localVoiceRetry = 0;
@@ -687,6 +701,7 @@ let localVoiceTimer = 0;
 async function paintTtsCard() {
   let ready = false;
   let current = null;                // the provider actually in use
+  let speaks = true;                 // …and whether it can sound, right now
   let usable = [];                   // every provider that could speak right now
   const gen = ++ttsPaintGen;
   try {
@@ -723,25 +738,36 @@ async function paintTtsCard() {
       usable = withHost.filter(Boolean);
       current = reg.get(got && got.ttsProvider);
       // The stored provider may have stopped being usable — a key cleared on
-      // the settings page, an Azure region never filled in. Something keyless
-      // is still there, so fall back to it rather than telling the user the
-      // feature needs setting up: it does not.
-      if (!current || !usable.includes(current)) {
-        current = usable.find((p) => p.keyless) || null;
-      }
+      // the settings page, an Azure region never filled in, or a machine that
+      // simply never had the key (they live in storage.local; the provider
+      // lives in sync, so a second computer arrives in exactly this state
+      // without anyone having deleted anything).
+      //
+      // This card used to paint a keyless substitute in its place. Nothing
+      // else agreed: resolveTts asks for the STORED provider and throws
+      // noKey, the settings page locks its playback half, and the engine's
+      // own reply reached this same card as "enter an API key first" — under
+      // a line naming the browser's voices. Three faces, one of them a
+      // promise nothing would keep. So the card names the provider the engine
+      // will actually use, says it cannot speak, and offers the picker as the
+      // fix — one hop, no page change, and the switch keeps meaning "I want
+      // to hear this" rather than "this is available".
+      speaks = !!current && usable.includes(current);
       ready = !!current;
       if (ready) {
         // Read before painting: the picker is built in one pass and the recent
         // list is part of what it offers.
         const recents = await recentsRead(RECENT_VOICES);
         if (gen !== ttsPaintGen) return;
-        paintTtsVoicePick(usable, current, (got && got.ttsVoice) || "", recents);
+        paintTtsVoicePick(usable, current, (got && got.ttsVoice) || "", recents, speaks);
       }
     }
   } catch (_e) { /* unconfigured is the safe face */ }
   if (gen !== ttsPaintGen) return;
   const was = ttsCardReady;
+  const wasSpeaks = ttsCardSpeaks;
   ttsCardReady = ready;
+  ttsCardSpeaks = speaks;
   $("ttsSetupRow").hidden = ready;
   $("ttsSwitchRow").hidden = !ready;
   $("ttsEnabledChk").checked = !!state.ttsEnabled;
@@ -755,8 +781,26 @@ async function paintTtsCard() {
   $("ttsDuck").value = state.ttsDuckPct;
   $("ttsDuckV").textContent = state.ttsDuckPct + "%";
   $("ttsVoiceRow").hidden = !live;
+  // Only while the switch is on: a reader who has not asked to hear anything
+  // is not owed an explanation of why they cannot, and a line that shows up
+  // uninvited on every open is nagging rather than answering.
+  const broken = $("ttsBroken");
+  if (broken) {
+    const say = live && !speaks && current;
+    broken.textContent = say
+      ? tsub("ttsProviderMute", [(current.shortKey && t(current.shortKey, current.short)) ||
+          current.short || current.name],
+        "$1$ 现在读不出声。在上面那一行换一家——浏览器自带的音色也在里面。")
+      : "";
+    broken.hidden = !say;
+  }
   // Readiness just changed: the status line was drawn under the old answer.
-  if (was !== ready) refreshTtsStatus();
+  // …and so did "can the stored provider actually sound", which that line now
+  // reads too: watching only `ready` left it saying "read-aloud on (Kore)"
+  // under a card that had just started saying Google cannot speak. It also
+  // starts out true, so a status refresh that lands before this paint finishes
+  // would print that same sentence on the first open.
+  if (was !== ready || wasSpeaks !== speaks) refreshTtsStatus();
 }
 
 // One dropdown, both dimensions: every voice of every provider that has its
@@ -818,7 +862,7 @@ function localVoiceLate() {
 // which meant every configured family's voices in one list and no way to
 // browse ONE family without going to the settings page. Picking a voice still
 // writes both keys; the provider simply has a control of its own now.
-function paintTtsVoicePick(usable, current, storedVoice, recents) {
+function paintTtsVoicePick(usable, current, storedVoice, recents, speaks) {
   const sel = $("ttsProviderPick");
   const btn = $("ttsVoiceBtn");
   const nameEl = $("ttsProviderName");
@@ -837,7 +881,10 @@ function paintTtsVoicePick(usable, current, storedVoice, recents) {
   const label = (p) => (p.shortKey && t(p.shortKey, p.short)) || p.short || p.name;
   // One family that can speak is not a choice to offer — the translation row
   // hides its picker the same way and says the name instead.
-  const many = (usable || []).length > 1;
+  // …but a provider that CANNOT speak needs the picker whatever the count:
+  // it is the fix, and hiding it behind "there is only one other" leaves the
+  // reader a static name and no way out of the state the card is describing.
+  const many = (usable || []).length > 1 || speaks === false;
   sel.hidden = !many;
   if (nameEl) {
     nameEl.hidden = many;
@@ -848,9 +895,19 @@ function paintTtsVoicePick(usable, current, storedVoice, recents) {
   // the list as an option nobody can hear.
   sel.textContent = "";
   {
-    for (const p of usable || []) {
+    // The dead one is listed too, and selected: `sel.value = current.id`
+    // below has to find it, and a picker that silently shows someone else's
+    // name is how this card got into trouble in the first place.
+    const offer = (usable || []).slice();
+    const dead = current && !offer.includes(current) ? current : null;
+    if (dead) offer.unshift(dead);
+    for (const p of offer) {
       const o = document.createElement("option");
       o.value = p.id;
+      // Listed so the row can show what is SET, disabled so it is not
+      // something being offered: the card names the provider the engine will
+      // use, and every entry you can actually reach is one that can sound.
+      if (p === dead) o.disabled = true;
       // Name only. The "best for Chinese" tag rides along on the settings
       // page and in the voice list, where there is room for it; in a picker
       // capped at half a 360px row it is what gets clipped — measured, and it
@@ -909,6 +966,130 @@ function initTtsWatch() {
     // already built when we asked. That half is handled where the list is
     // actually drawn (see the self-healing retry at the end of paintTtsVoices).
   } catch (_e) { /* an engine without the event simply paints once */ }
+}
+
+// ---- font picker -----------------------------------------------------------
+// What the font dropdown offers: "System default", then the fonts the reader
+// keeps (settings page, storage.local — per machine, because two computers
+// share almost no fonts: the reference Mac and Windows had 22 in common), and
+// the stored value itself when it is neither. Every offered font is installed
+// on THIS computer (chrome.fontSettings, read through fonts.js), and one that
+// cannot draw the line it is being picked for is listed but disabled — the
+// reader's rule: what can be picked must really draw this line. The
+// original line's language comes from the tab (engineStatus.lang), the
+// translation line's from the target language.
+let fontsInstalled = null;   // [{id, name}] or null while unread / unavailable
+let fontKept = null;         // ids kept on the settings page; null = defaults
+let fontCov = null;          // {id: {lang: true|false|null}} from the probe
+let tabLang = "";            // language of the current video's original line
+
+function fontLangFor(line) {
+  return line === "orig" ? tabLang : String(state.targetLang || "");
+}
+
+function keptFontIds() {
+  const F = self.YTDS_FONTS;
+  if (!F || !fontsInstalled) return [];
+  const have = new Set(fontsInstalled.map((f) => f.id));
+  if (Array.isArray(fontKept)) return fontKept.filter((id) => have.has(id));
+  let ui = "";
+  try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
+  return F.defaults(fontsInstalled, [state.targetLang, ui, "en"]);
+}
+
+async function probeFonts() {
+  const F = self.YTDS_FONTS;
+  if (!F || !fontsInstalled) return;
+  const ids = keptFontIds();
+  for (const v of [state.origFont, state.transFont]) {
+    if (F.isFont(v) && ids.indexOf(F.idOf(v)) < 0) ids.push(F.idOf(v));
+  }
+  const langs = [tabLang, String(state.targetLang || "")].filter(Boolean);
+  fontCov = await F.probe(ids.filter((id) => !F.isImport(id)), langs);
+  // null = the rulers were not ready, not an answer. One more try, a beat
+  // later; until then nothing is disabled (an unknown is offered, not hidden).
+  const unknown = ids.some((id) => langs.some((l) => fontCov[id] && fontCov[id][l] === null));
+  if (unknown && !probeFonts.retried) {
+    probeFonts.retried = true;
+    setTimeout(() => probeFonts().then(paintFontOptions), 600);
+  }
+}
+
+function paintFontOptions() {
+  const sel = $("lineFont");
+  const F = self.YTDS_FONTS;
+  if (!sel || !F) return;
+  const cur = String(state[LINE[activeLine].font] || "system");
+  const lang = fontLangFor(activeLine);
+  sel.textContent = "";
+  const add = (value, text, disabled) => {
+    const o = document.createElement("option");
+    o.value = value;
+    o.textContent = text;
+    if (disabled) o.disabled = true;
+    sel.appendChild(o);
+  };
+  add("system", t("fontSystem", "系统默认"), false);
+  const ids = keptFontIds();
+  for (const id of ids) {
+    const can = lang && fontCov && fontCov[id] ? fontCov[id][lang] : null;
+    const name = F.label(F.valueOf(id), fontsInstalled, t);
+    // Disabled, and it says why: a bare greyed name reads as a bug.
+    add(F.valueOf(id),
+      can === false ? name + " · " + t("fontNoGlyphs", "显示不了这一行的文字") : name,
+      can === false);
+  }
+  if (cur !== "system" && !(F.isFont(cur) && ids.indexOf(F.idOf(cur)) >= 0)) {
+    // The stored value is not on offer — one of the keys that shipped through
+    // 3.6, or a font synced from a computer that has it. It stays selected
+    // and labelled as itself, so the dropdown shows what is really in force.
+    let text = F.label(cur, fontsInstalled, t);
+    if (F.isFont(cur) && fontsInstalled && !fontsInstalled.some((f) => f.id === F.idOf(cur))) {
+      text += " · " + t("fontNotHere", "这台电脑上没有");
+    }
+    add(cur, text, false);
+  }
+  sel.value = cur;
+}
+
+async function loadFonts() {
+  const F = self.YTDS_FONTS;
+  if (!F) return;
+  const [installed, loc] = await Promise.all([
+    F.list(),
+    new Promise((res) => {
+      try { chrome.storage.local.get({ fontKept: null, fontImports: [] }, (got) => res(got || {})); }
+      catch (_e) { res({}); }
+    })
+  ]);
+  // Imported fonts join the list as themselves; the probe leaves them alone
+  // here (registering one means reading its bytes, which the popup should
+  // not pay for on every open), so they are offered, never disabled.
+  const imports = Array.isArray(loc.fontImports) ? loc.fontImports : [];
+  fontsInstalled = installed ? installed.concat(imports.map((f) => ({ id: f.id, name: f.name }))) : null;
+  fontKept = Array.isArray(loc.fontKept) ? loc.fontKept : null;
+  await probeFonts();
+  paintFontOptions();
+}
+
+// The tab told us which language the original line is in (engineStatus).
+function noteTabLang(lang) {
+  const v = String(lang || "");
+  if (v === tabLang) return;
+  tabLang = v;
+  probeFonts().then(paintFontOptions);
+}
+
+function initFontWatch() {
+  try {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area === "local" && (changes.fontKept || changes.fontImports)) {
+        if (changes.fontKept) fontKept = Array.isArray(changes.fontKept.newValue) ? changes.fontKept.newValue : null;
+        if (changes.fontImports) { loadFonts(); return; }
+        probeFonts().then(paintFontOptions);
+      }
+    });
+  } catch (_e) { /* the picker is then as static as the page load left it */ }
 }
 
 // ---- line-style card fold ----------------------------------------------------
@@ -1762,7 +1943,7 @@ function bindLineControls() {
   $("lineShowLabel").textContent =
     t("lineShow", activeLine === "trans" ? "显示译文" : "显示原文");
   $("lineShow").checked = !!state[m.show];
-  $("lineFont").value = state[m.font];
+  paintFontOptions();
   $("lineSize").value = state[m.size];
   $("lineSizeV").textContent = state[m.size] + "px";
   $("lineColor").value = state[m.color];
@@ -2226,6 +2407,8 @@ self.YTDS_I18N.init().then(() => {
     wire();
     initLineFold();
     initTtsWatch();
+    initFontWatch();
+    loadFonts();
     refreshEngineStatus();
     refreshTtsStatus();
     paintTtsCard();

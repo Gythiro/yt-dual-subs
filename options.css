@@ -245,6 +245,63 @@ a { text-underline-offset: 3px; }
   .olang-list { max-height: 300px; }
 }
 
+/* -------------------------------- fonts --------------------------------- */
+/* The preview strip is the popup's preview at player scale: same ground, same
+   two lines, real subtitle sizes, so a font is judged where it will be used. */
+.ofont-preview { margin: 0 0 16px; }
+.ofont-frame {
+  position: relative; height: 128px;
+  border-radius: var(--radius);
+  background: radial-gradient(130% 150% at 50% 0%, #26282c 0%, #0a0b0d 72%);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  gap: 4px; padding: 0 12px 12px;
+}
+.ytds-prev-line {
+  max-width: 96%;
+  padding: 1px 8px; border-radius: 3px;
+  background: rgba(8, 8, 8, .6);
+  font-weight: 600; line-height: 1.25;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ytds-prev-orig  { color: #ffffff; font-size: 22px; }
+.ytds-prev-trans { color: #ffe98a; font-size: 24px; }
+.ofont-prevname { margin: 8px 1px 0; }
+.ofont-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 0 0 8px; }
+.ofont-tools input[type="search"] {
+  flex: 1 1 220px; min-width: 0; max-width: 360px;
+  font: inherit; color: var(--txt);
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+  padding: 7px 10px;
+}
+.ofont-tools input[type="search"]:hover { border-color: #454545; }
+.ofont-tools input[type="search"]:focus { border-color: var(--accent); outline: none; }
+#fontCount { margin: 0 0 14px; }
+.ofont-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.ofont-actions + .ohint { margin: 10px 1px 0; }
+.ofont-tag {
+  flex: none; margin-left: 8px; padding: 1px 6px; border-radius: 5px;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 600;
+  color: var(--accent); background: rgba(58, 160, 255, .12); vertical-align: middle;
+}
+.olang-btn.drop:hover { color: #ff8a8a; border-color: #ff8a8a; }
+/* A font's row shows its name in that font: the list previews itself. The
+   name is a button (preview on click / Enter), unstyled so the row reads as
+   the language rows above do. */
+.ofont-try {
+  flex: 1; min-width: 0; text-align: left;
+  background: none; border: 0; padding: 0; margin: 0;
+  color: var(--txt); font-size: 15px; line-height: 1.3; cursor: pointer;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ofont-try:hover { color: var(--accent); }
+.ofont-try:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.ofont-try .olang-en { font-family: inherit; }
+.ofont-id { color: var(--muted); font-size: 12px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin-left: 8px; }
+.olang.on .ofont-try { color: var(--accent); }
+
 /* -------------------------------- about --------------------------------- */
 .oabout-ver { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; }
 .oabout-ver b { color: var(--txt); font-weight: 600; }

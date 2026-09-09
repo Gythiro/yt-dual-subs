@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ ne peut pas parler pour le moment. Choisissez-en un autre dans la rangée du dessus — les voix de votre navigateur y figurent.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Polices des sous-titres"
+  },
+  "fontsIntro": {
+    "message": "Polices des deux lignes de sous-titres. La popup propose celles que vous gardez ici, et chaque police listée est installée sur cet ordinateur."
+  },
+  "fontsKept": {
+    "message": "Affichées dans la popup"
+  },
+  "fontsKeptHint": {
+    "message": "Elles apparaissent dans la liste de polices de la popup, après Police système."
+  },
+  "fontsMore": {
+    "message": "Autres polices de cet ordinateur"
+  },
+  "fontsMoreHint": {
+    "message": "Appuyez sur + pour en ajouter une. La liste est lue depuis cet ordinateur ; appuyez sur le nom d’une police pour la prévisualiser."
+  },
+  "fontsOnly": {
+    "message": "Uniquement les polices pouvant afficher $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ polices sur cet ordinateur ; $M$ d’entre elles peuvent afficher $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Vérification des polices pouvant afficher $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Rechercher un nom de police"
+  },
+  "fontsNoMatch": {
+    "message": "Aucune police correspondante."
+  },
+  "fontsAllAdded": {
+    "message": "Toutes les polices sont déjà dans la liste."
+  },
+  "fontsReset": {
+    "message": "Restaurer par défaut"
+  },
+  "fontsResetDone": {
+    "message": "Liste par défaut restaurée."
+  },
+  "fontsAdded": {
+    "message": "$NAME$ ajoutée",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Aperçu : $NAME$ — appuyez sur un nom de police pour l’essayer",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Aperçu"
+  },
+  "fontsUnavailable": {
+    "message": "Ce navigateur n’autorise pas l’extension à lire les polices installées, seule la police système peut être choisie."
+  },
+  "fontNoGlyphs": {
+    "message": "ne peut pas afficher cette ligne"
+  },
+  "fontNotHere": {
+    "message": "pas sur cet ordinateur"
+  },
+  "fontsImport": {
+    "message": "Importer un fichier de police…"
+  },
+  "fontsImportHint": {
+    "message": "Prend en charge .ttf / .otf / .woff / .woff2. Le fichier est copié dans le navigateur, l’original peut donc être déplacé ensuite ; supprimer l’entrée ici supprime cette copie."
+  },
+  "fontsImported": {
+    "message": "Importé $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Ce n’est pas un fichier de police utilisable par ce navigateur."
+  },
+  "fontsImportTooBig": {
+    "message": "Le fichier est trop volumineux (limite $MB$ Mo).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "importé"
+  },
+  "fontsImportDelete": {
+    "message": "Supprimer la police importée"
   }
 }

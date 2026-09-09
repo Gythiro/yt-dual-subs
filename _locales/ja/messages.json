@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ は現在読み上げできません。上の行で別の提供元を選んでください。ブラウザ内蔵の音声もそのリストにあります。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "字幕フォント"
+  },
+  "fontsIntro": {
+    "message": "2行の字幕に使うフォントです。ここに残したフォントがポップアップに表示されます。一覧のフォントはすべてこのパソコンに入っています。"
+  },
+  "fontsKept": {
+    "message": "ポップアップに表示"
+  },
+  "fontsKeptHint": {
+    "message": "ポップアップのフォント一覧で、「システムのデフォルト」の後に表示されます。"
+  },
+  "fontsMore": {
+    "message": "このパソコンの他のフォント"
+  },
+  "fontsMoreHint": {
+    "message": "+ を押して追加します。一覧はこのパソコンから読み込まれます。フォント名を押すとプレビューできます。"
+  },
+  "fontsOnly": {
+    "message": "$LANG$ を表示できるフォントのみ",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "このパソコンには $N$ 個のフォントがあり、うち $M$ 個が $LANG$ を表示できます。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "$LANG$ を表示できるフォントを確認しています…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "フォント名を検索"
+  },
+  "fontsNoMatch": {
+    "message": "一致するフォントがありません。"
+  },
+  "fontsAllAdded": {
+    "message": "すべてのフォントがすでにリストにあります。"
+  },
+  "fontsReset": {
+    "message": "デフォルトに戻す"
+  },
+  "fontsResetDone": {
+    "message": "デフォルトのリストに戻しました。"
+  },
+  "fontsAdded": {
+    "message": "$NAME$ を追加しました",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "プレビュー: $NAME$ — フォント名を押して試せます",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "プレビュー"
+  },
+  "fontsUnavailable": {
+    "message": "このブラウザでは拡張機能がインストール済みフォントを読み取れないため、「システムのデフォルト」のみ選べます。"
+  },
+  "fontNoGlyphs": {
+    "message": "この行を表示できません"
+  },
+  "fontNotHere": {
+    "message": "このパソコンにありません"
+  },
+  "fontsImport": {
+    "message": "フォントファイルをインポート…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2 に対応。ファイルはブラウザ内にコピーされるため、元のファイルは後から移動しても問題ありません。ここから削除すると、そのコピーも削除されます。"
+  },
+  "fontsImported": {
+    "message": "$NAME$ をインポートしました",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "このブラウザで使えるフォントファイルではありません。"
+  },
+  "fontsImportTooBig": {
+    "message": "ファイルが大きすぎます（上限 $MB$ MB）。",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "インポート済み"
+  },
+  "fontsImportDelete": {
+    "message": "インポートしたフォントを削除"
   }
 }

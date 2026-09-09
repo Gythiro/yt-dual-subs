@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ ei voi puhua juuri nyt. Valitse toinen yllä olevasta rivistä — selaimesi omat äänet ovat siinä listassa.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Tekstitysfontit"
+  },
+  "fontsIntro": {
+    "message": "Fontit kahdelle tekstitysriville. Ponnahdusikkuna näyttää täällä säilyttämäsi fontit, ja kaikki luettelossa olevat on asennettu tälle tietokoneelle."
+  },
+  "fontsKept": {
+    "message": "Näkyvät ponnahdusikkunassa"
+  },
+  "fontsKeptHint": {
+    "message": "Nämä näkyvät ponnahdusikkunan fonttiluettelossa Järjestelmän oletuksen jälkeen."
+  },
+  "fontsMore": {
+    "message": "Muut fontit tällä tietokoneella"
+  },
+  "fontsMoreHint": {
+    "message": "Lisää painamalla +. Luettelo luetaan tältä tietokoneelta; esikatsele painamalla fontin nimeä."
+  },
+  "fontsOnly": {
+    "message": "Vain fontit, jotka voivat piirtää $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ fonttia tällä tietokoneella; $M$ niistä voi piirtää $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Tarkistetaan, mitkä fontit voivat piirtää $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Hae fonttien nimiä"
+  },
+  "fontsNoMatch": {
+    "message": "Ei vastaavia fontteja."
+  },
+  "fontsAllAdded": {
+    "message": "Kaikki fontit ovat jo luettelossa."
+  },
+  "fontsReset": {
+    "message": "Palauta oletukset"
+  },
+  "fontsResetDone": {
+    "message": "Oletusluettelo palautettu."
+  },
+  "fontsAdded": {
+    "message": "Lisätty $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Esikatselu: $NAME$ — kokeile painamalla mitä tahansa fontin nimeä",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Esikatselu"
+  },
+  "fontsUnavailable": {
+    "message": "Tämä selain ei salli laajennuksen lukea asennettuja fontteja, joten vain Järjestelmän oletus on valittavissa."
+  },
+  "fontNoGlyphs": {
+    "message": "ei voi piirtää tätä riviä"
+  },
+  "fontNotHere": {
+    "message": "ei tällä tietokoneella"
+  },
+  "fontsImport": {
+    "message": "Tuo fonttitiedosto…"
+  },
+  "fontsImportHint": {
+    "message": "Tukee tiedostoja .ttf / .otf / .woff / .woff2. Tiedosto kopioidaan selaimeen, joten alkuperäisen voi siirtää myöhemmin; merkinnän poistaminen täältä poistaa kopion."
+  },
+  "fontsImported": {
+    "message": "Tuotu $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Tämä ei ole fonttitiedosto, jota selain voi käyttää."
+  },
+  "fontsImportTooBig": {
+    "message": "Tiedosto on liian suuri (raja $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "tuotu"
+  },
+  "fontsImportDelete": {
+    "message": "Poista tuotu fontti"
   }
 }

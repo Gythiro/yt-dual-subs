@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ não consegue falar agora. Escolha outro na linha acima — as vozes do próprio navegador estão nessa lista.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Fontes das legendas"
+  },
+  "fontsIntro": {
+    "message": "Fontes das duas linhas de legendas. O pop-up oferece as que você mantém aqui, e todas as fontes listadas estão instaladas neste computador."
+  },
+  "fontsKept": {
+    "message": "Exibidas no pop-up"
+  },
+  "fontsKeptHint": {
+    "message": "Estas aparecem na lista de fontes do pop-up, depois de Padrão do sistema."
+  },
+  "fontsMore": {
+    "message": "Outras fontes neste computador"
+  },
+  "fontsMoreHint": {
+    "message": "Clique em + para adicionar. A lista é lida deste computador; clique no nome de uma fonte para visualizá-la."
+  },
+  "fontsOnly": {
+    "message": "Só fontes que conseguem exibir $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ fontes neste computador; $M$ delas conseguem exibir $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Verificando quais fontes conseguem exibir $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Buscar nomes de fontes"
+  },
+  "fontsNoMatch": {
+    "message": "Nenhuma fonte encontrada."
+  },
+  "fontsAllAdded": {
+    "message": "Todas as fontes já estão na lista."
+  },
+  "fontsReset": {
+    "message": "Restaurar padrões"
+  },
+  "fontsResetDone": {
+    "message": "Lista padrão restaurada."
+  },
+  "fontsAdded": {
+    "message": "Adicionada $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Prévia: $NAME$ — clique em qualquer nome de fonte para testar",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Prévia"
+  },
+  "fontsUnavailable": {
+    "message": "Este navegador não permite que a extensão leia as fontes instaladas, então só Padrão do sistema pode ser escolhido."
+  },
+  "fontNoGlyphs": {
+    "message": "não consegue exibir esta linha"
+  },
+  "fontNotHere": {
+    "message": "não está neste computador"
+  },
+  "fontsImport": {
+    "message": "Importar arquivo de fonte…"
+  },
+  "fontsImportHint": {
+    "message": "Suporta .ttf / .otf / .woff / .woff2. O arquivo é copiado para o navegador, então o original pode ser movido depois; excluir o item aqui exclui essa cópia."
+  },
+  "fontsImported": {
+    "message": "Importada $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Este não é um arquivo de fonte que o navegador possa usar."
+  },
+  "fontsImportTooBig": {
+    "message": "O arquivo é grande demais (limite de $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "importada"
+  },
+  "fontsImportDelete": {
+    "message": "Excluir a fonte importada"
   }
 }

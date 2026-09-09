@@ -123,26 +123,36 @@
     transStrokeOpacity: 0
   };
 
-  // Font key -> font-family stack (shared with popup preview).
-  const FONT_STACKS = {
-    system:  'system-ui, -apple-system, "Segoe UI", sans-serif',
-    roboto:  'Roboto, "YouTube Noto", sans-serif',
-    noto:    '"Noto Sans", "YouTube Noto", sans-serif',
-    arial:   'Arial, Helvetica, sans-serif',
-    georgia: 'Georgia, "Times New Roman", serif',
-    times:   '"Times New Roman", Times, serif',
-    mono:    '"Courier New", ui-monospace, monospace',
-    cjk:     '"PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
-      inter:   'Inter, "Segoe UI Variable", system-ui, sans-serif',
-      verdana: 'Verdana, Geneva, sans-serif',
-      tahoma:  'Tahoma, Geneva, Verdana, sans-serif',
-      trebuchet: '"Trebuchet MS", Tahoma, sans-serif',
-      garamond: 'Garamond, "Palatino Linotype", "Book Antiqua", serif',
-      cjkserif: '"Songti SC", SimSun, "Noto Serif CJK SC", serif',
-      cjkround: '"Yuanti SC", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif'
-  };
+  // The stored font value -> font-family, through the one builder in fonts.js
+  // (loaded before this file by the manifest). A "f:<id>" value is a font from
+  // the reader's computer; the fifteen keys that shipped through 3.6 still map
+  // to the stacks they always had. The builder quotes and escapes the name —
+  // it is the only outside string this script ever writes into CSS.
   function fontStack(key) {
-    return FONT_STACKS[key] || FONT_STACKS.system;
+    const F = self.YTDS_FONTS;
+    return F ? F.css(key) : 'system-ui, -apple-system, "Segoe UI", sans-serif';
+  }
+
+  // A font the reader imported is not on this computer as far as YouTube's
+  // page knows: it exists only as a copy in the extension's storage, which
+  // this script cannot open. Ask the worker for the bytes once and register
+  // the face on this document; the lines that name it re-resolve on their
+  // own. Until it arrives (or if it never does) the family falls through to
+  // the system stack that "System default" uses.
+  const importFontsAsked = new Set();
+  function ensureImportFont(value) {
+    const F = self.YTDS_FONTS;
+    if (!F || !F.isFont(value)) return;
+    const id = F.idOf(value);
+    if (!F.isImport(id) || importFontsAsked.has(id)) return;
+    importFontsAsked.add(id);
+    extCall(() => chrome.runtime.sendMessage({ type: "fontBytes", id }, (r) => {
+      if (chrome.runtime.lastError || !r || !r.ok || !r.b64) { importFontsAsked.delete(id); return; }
+      try {
+        const face = new FontFace(id, F.unb64(r.b64));
+        face.load().then(() => document.fonts.add(face)).catch(() => importFontsAsked.delete(id));
+      } catch (_e) { importFontsAsked.delete(id); }
+    }));
   }
 
   // ---- color helpers (tolerant of #rgb / #rrggbb) --------------------------
@@ -996,6 +1006,56 @@
     }
   }
 
+  // Which language each line is in, so the browser picks that language's
+  // glyphs. Han characters are drawn differently in Chinese, Japanese and
+  // Taiwanese typography — 直 角 骨 社 are not the same shape — and a browser
+  // told nothing falls back to whatever its own default is. Measured with
+  // Chrome's own CSS.getPlatformFontsForNode, 2026-09-03, on a stock macOS:
+  //   no lang        -> PingFang SC / Songti SC   (Simplified Chinese forms)
+  //   lang="ja"      -> Hiragino Kaku Gothic ProN (Japanese forms)
+  //   lang="zh-Hant" -> PingFang TC               (Traditional forms)
+  // So every Japanese line this extension has ever drawn was drawn in
+  // Simplified Chinese shapes, whatever font the reader had picked.
+  //
+  // The track's own language comes out of the id we already hold: normKey
+  // keeps the lang parameter, dropping only fmt/tlang/pot. No new message,
+  // no new permission.
+  function langTag(raw) {
+    // inject's trackLangOf hands back whatever the URL said, uncleaned, and
+    // YouTube does emit legacy and odd values. A malformed tag and "und"
+    // both behave EXACTLY like setting nothing (measured across 17 shapes),
+    // so an unchecked value would silently buy nothing — the worst way for
+    // this to fail, because the overlay looks fine and is still wrong.
+    const v = String(raw || "").trim();
+    if (!v || v.toLowerCase() === "und") return "";
+    try { new Intl.Locale(v); } catch (_e) { return ""; }
+    return v;
+  }
+
+  function trackLang() {
+    try {
+      return langTag(new URL(cueTrackId, location.href).searchParams.get("lang"));
+    } catch (_e) { return ""; }
+  }
+
+  function paintLineLangs() {
+    if (!origEl || !transEl) return;
+    // Only write when it changes: this runs on every settings change and on
+    // every track switch, and an attribute write invalidates style.
+    const o = trackLang();
+    if (origEl.getAttribute("lang") !== o) {
+      if (o) origEl.setAttribute("lang", o); else origEl.removeAttribute("lang");
+    }
+    // The translation line is in the language the reader chose. When the track
+    // is already in that language the overlay shows one line carrying the
+    // original text — and that line is still in the target language, which is
+    // what makes it the same-language case, so there is nothing special here.
+    const t = langTag(settings.targetLang);
+    if (transEl.getAttribute("lang") !== t) {
+      if (t) transEl.setAttribute("lang", t); else transEl.removeAttribute("lang");
+    }
+  }
+
   function styleOverlay() {
     if (!overlay) return;
     applySelectText();
@@ -1009,6 +1069,8 @@
     }
 
     // original line
+    ensureImportFont(settings.origFont);
+    ensureImportFont(settings.transFont);
     origEl.style.fontFamily = fontStack(settings.origFont);
     origEl.style.fontSize = settings.origSize + "px";
     origEl.style.color = settings.origColor;
@@ -1021,6 +1083,8 @@
     transEl.style.color = settings.transColor;
     transEl.style.background = rgba(settings.transBg, settings.transBgOpacity);
     transEl.style.textShadow = outlineShadow(settings.transStroke, settings.transStrokeOpacity);
+
+    paintLineLangs();
 
     // per-line visibility
     origEl.style.display = settings.showOriginal ? "" : "none";
@@ -4124,6 +4188,7 @@
       // exactly what "redundant on purpose" looks like.
       if (cueTrackId) sumForget();
       cueTrackId = data.trackId;
+      paintLineLangs();          // a new track can be a new language
     }
     // Track-level echo detection: an aligned "translation" that repeats the
     // original on every cue means the track already speaks the target language
@@ -4267,6 +4332,10 @@
         provider: settings.engine === "byo" ? settings.byoProvider : "",
         same: !!(cueList && cueList.length && cueSameLang),
         track: cueTrackKind || "none",
+        // The language of the original line, as the caption track declares it
+        // (the same value the overlay's lang attribute carries). The popup's
+        // font picker uses it to say which fonts cannot draw this line.
+        lang: trackLang(),
         fellBack: gtxFellBack,
         // "gtx because YouTube's own translation is rate-limited" — either
         // this track's own 429, or the cross-video gate steering new videos

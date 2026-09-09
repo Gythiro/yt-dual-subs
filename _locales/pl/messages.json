@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ nie może teraz mówić. Wybierz inny w rzędzie powyżej — głosy Twojej przeglądarki są na tej liście.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Czcionki napisów"
+  },
+  "fontsIntro": {
+    "message": "Czcionki dla dwóch wierszy napisów. W oknie pojawią się te, które tu zachowasz, a każda wymieniona czcionka jest zainstalowana na tym komputerze."
+  },
+  "fontsKept": {
+    "message": "Widoczne w oknie"
+  },
+  "fontsKeptHint": {
+    "message": "Pojawiają się na liście czcionek w oknie, po Domyślnej systemowej."
+  },
+  "fontsMore": {
+    "message": "Inne czcionki na tym komputerze"
+  },
+  "fontsMoreHint": {
+    "message": "Naciśnij +, aby dodać. Lista pochodzi z tego komputera; naciśnij nazwę czcionki, aby zobaczyć podgląd."
+  },
+  "fontsOnly": {
+    "message": "Tylko czcionki, które potrafią wyświetlić $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ czcionek na tym komputerze; $M$ z nich potrafi wyświetlić $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Sprawdzanie, które czcionki potrafią wyświetlić $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Szukaj nazw czcionek"
+  },
+  "fontsNoMatch": {
+    "message": "Brak pasujących czcionek."
+  },
+  "fontsAllAdded": {
+    "message": "Wszystkie czcionki są już na liście."
+  },
+  "fontsReset": {
+    "message": "Przywróć domyślne"
+  },
+  "fontsResetDone": {
+    "message": "Przywrócono listę domyślną."
+  },
+  "fontsAdded": {
+    "message": "Dodano $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Podgląd: $NAME$ — naciśnij dowolną nazwę czcionki, aby ją wypróbować",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Podgląd"
+  },
+  "fontsUnavailable": {
+    "message": "Ta przeglądarka nie pozwala rozszerzeniu odczytać zainstalowanych czcionek, więc można wybrać tylko Domyślną systemową."
+  },
+  "fontNoGlyphs": {
+    "message": "nie wyświetli tego wiersza"
+  },
+  "fontNotHere": {
+    "message": "brak na tym komputerze"
+  },
+  "fontsImport": {
+    "message": "Importuj plik czcionki…"
+  },
+  "fontsImportHint": {
+    "message": "Obsługuje .ttf / .otf / .woff / .woff2. Plik jest kopiowany do przeglądarki, więc oryginał można później przenieść; usunięcie wpisu tutaj usuwa tę kopię."
+  },
+  "fontsImported": {
+    "message": "Zaimportowano $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "To nie jest plik czcionki, którego ta przeglądarka może użyć."
+  },
+  "fontsImportTooBig": {
+    "message": "Plik jest za duży (limit $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "zaimportowana"
+  },
+  "fontsImportDelete": {
+    "message": "Usuń zaimportowaną czcionkę"
   }
 }

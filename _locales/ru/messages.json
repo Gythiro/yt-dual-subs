@@ -1123,5 +1123,135 @@
         "content": "$1"
       }
     }
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ сейчас не может говорить. Выберите другой в строке выше — голоса браузера есть в этом списке.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "optNavFonts": {
+    "message": "Шрифты субтитров"
+  },
+  "fontsIntro": {
+    "message": "Шрифты для двух строк субтитров. Во всплывающем окне предлагаются те, что вы оставляете здесь, и каждый указанный шрифт установлен на этом компьютере."
+  },
+  "fontsKept": {
+    "message": "Во всплывающем окне"
+  },
+  "fontsKeptHint": {
+    "message": "Они появляются в списке шрифтов всплывающего окна после «Системный по умолчанию»."
+  },
+  "fontsMore": {
+    "message": "Другие шрифты на этом компьютере"
+  },
+  "fontsMoreHint": {
+    "message": "Нажмите +, чтобы добавить. Список считывается с этого компьютера; нажмите имя шрифта, чтобы посмотреть его."
+  },
+  "fontsOnly": {
+    "message": "Только шрифты, которые отображают $LANG$",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsCount": {
+    "message": "$N$ шрифтов на этом компьютере; $M$ из них могут отобразить $LANG$.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "lang": {
+        "content": "$3"
+      }
+    }
+  },
+  "fontsCounting": {
+    "message": "Проверяем, какие шрифты могут отобразить $LANG$…",
+    "placeholders": {
+      "lang": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsSearch": {
+    "message": "Поиск шрифтов"
+  },
+  "fontsNoMatch": {
+    "message": "Нет совпадений."
+  },
+  "fontsAllAdded": {
+    "message": "Все шрифты уже в списке."
+  },
+  "fontsReset": {
+    "message": "Восстановить по умолчанию"
+  },
+  "fontsResetDone": {
+    "message": "Список по умолчанию восстановлен."
+  },
+  "fontsAdded": {
+    "message": "Добавлен $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Предпросмотр: $NAME$ — нажмите любое имя шрифта, чтобы попробовать",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Предпросмотр"
+  },
+  "fontsUnavailable": {
+    "message": "Этот браузер не позволяет расширению читать установленные шрифты, поэтому можно выбрать только «Системный по умолчанию»."
+  },
+  "fontNoGlyphs": {
+    "message": "не отображает эту строку"
+  },
+  "fontNotHere": {
+    "message": "нет на этом компьютере"
+  },
+  "fontsImport": {
+    "message": "Импортировать файл шрифта…"
+  },
+  "fontsImportHint": {
+    "message": "Поддерживаются .ttf / .otf / .woff / .woff2. Файл копируется в браузер, поэтому оригинал можно потом переместить; удаление записи здесь удаляет эту копию."
+  },
+  "fontsImported": {
+    "message": "Импортирован $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportBad": {
+    "message": "Этот файл браузер не может использовать как шрифт."
+  },
+  "fontsImportTooBig": {
+    "message": "Файл слишком большой (лимит $MB$ МБ).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportedTag": {
+    "message": "импорт"
+  },
+  "fontsImportDelete": {
+    "message": "Удалить импортированный шрифт"
   }
 }

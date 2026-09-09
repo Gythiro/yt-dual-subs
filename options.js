@@ -139,6 +139,10 @@ function applyI18n() {
     const s = t(el.dataset.i18nAria, "");
     if (s) el.setAttribute("aria-label", s);
   });
+  document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
+    const s = t(el.dataset.i18nPh, "");
+    if (s) el.setAttribute("placeholder", s);
+  });
   const title = t("optTitle", "翻译服务设置");
   if (title) document.title = title + " — " + t("extName", "Dual Subtitles for YouTube™");
 }
@@ -1039,6 +1043,7 @@ const SECTIONS = {
   start: { el: "secStart", title: "optNavStart", intro: "startIntro" },
   setup: { el: "detail", title: "optTitle", intro: "optIntro" },
   langs: { el: "secLangs", title: "optNavLangs", intro: "langsIntro" },
+  fonts: { el: "secFonts", title: "optNavFonts", intro: "fontsIntro" },
   readaloud: { el: "secReadaloud", title: "optNavReadaloud", intro: "ttsIntro" },
   about: { el: "secAbout", title: "optNavAbout", intro: "aboutIntro" }
 };
@@ -1055,6 +1060,9 @@ function showSection(name) {
   $("plistWrap").hidden = sec !== "setup" && sec !== "readaloud";
   if (!$("plistWrap").hidden) renderList();
   if (sec === "readaloud") ttsKeysRefresh();
+  // The font list is read (and probed) only once someone opens this pane —
+  // the probe measures every installed font, which is not free.
+  if (sec === "fonts") wantFonts();
   document.querySelectorAll(".onav-item").forEach((b) => {
     const on = b.dataset.sec === sec;
     b.classList.toggle("on", on);
@@ -1077,6 +1085,372 @@ function showSection(name) {
     history.replaceState(null, "", "#" + sec);
   }
 }
+
+// ---- subtitle fonts ---------------------------------------------------------
+// Same shape as the language list: what the popup shows (kept) and the rest,
+// with + and ×. The names come from this computer (chrome.fontSettings through
+// fonts.js) and the kept list lives in storage.local — per machine, because
+// two computers share almost no fonts (the reference Mac and Windows had 22
+// in common), so a synced list would be mostly grey on the other one.
+// A row shows its name in its own font, and pressing the name previews it on
+// the strip above at real subtitle size. The probe (fonts.js) says which of
+// the fonts can draw the translation language; that drives the count line,
+// the "only fonts that can draw…" switch, and the order of the rest (able
+// first). Nothing here decides for a line — the popup does that per line.
+let fontsInstalled = null;   // [{id, name}] or null while unread / unavailable
+let fontImports = [];        // [{id, name, size, kind}] the reader imported (fonts.js)
+let fontKept = null;         // ids; null = this computer's defaults
+let fontCov = Object.create(null);  // lang -> {id: true|false|null}
+let fontPreviewId = "";      // "" = system default
+let fontsInit = 0;           // 0 not yet, 1 waiting for state, 2 running/done
+let fontsWanted = false;
+
+function fontTargetLang() { return String(state.targetLang || "zh-CN"); }
+function fontLangName() {
+  const info = LANGS && LANGS.get(fontTargetLang());
+  return info ? info.native : fontTargetLang();
+}
+
+// Installed fonts, then the imported ones (tagged), in one list — the
+// pickers do not care where a font came from, only that it is here.
+function allFonts() {
+  if (!fontsInstalled) return null;
+  return fontsInstalled.concat(fontImports.map((f) => ({ id: f.id, name: f.name, imported: true })));
+}
+
+function keptFontIds() {
+  const F = self.YTDS_FONTS;
+  const fonts = allFonts();
+  if (!F || !fonts) return [];
+  const have = new Set(fonts.map((f) => f.id));
+  if (Array.isArray(fontKept)) return fontKept.filter((id) => have.has(id));
+  let ui = "";
+  try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
+  return F.defaults(fontsInstalled, [fontTargetLang(), ui, "en"]);
+}
+
+function persistFonts() {
+  try { chrome.storage.local.set({ fontKept }); } catch (_e) { /* ignore */ }
+}
+
+function showFontMsg(text, kind) {
+  const el = $("fontMsg");
+  if (!el) return;
+  el.textContent = text || "";
+  el.classList.remove("ok", "err");
+  if (kind) el.classList.add(kind);
+  el.hidden = !text;
+}
+
+// Which installed fonts can draw `lang`. Measured once per list per
+// language and kept in storage.local under the list's signature, so the
+// second visit costs nothing; a run the rulers could not serve (null) is
+// not cached, so it is measured again next time instead of sticking.
+async function probeFontsFor(lang) {
+  const F = self.YTDS_FONTS;
+  const fonts = allFonts();
+  if (!F || !fonts || fontCov[lang]) return;
+  // An imported font has to be registered on this page before it can be
+  // measured like the others.
+  await Promise.all(fontImports.map((f) => F.ensureImported(document, f.id)));
+  const ids = fonts.map((f) => f.id);
+  const sig = ids.join("\n");
+  const cached = await new Promise((res) => {
+    try { chrome.storage.local.get({ fontCov: null }, (g) => res(g && g.fontCov)); }
+    catch (_e) { res(null); }
+  });
+  if (cached && cached.sig === sig && cached.cov && cached.cov[lang]) {
+    fontCov[lang] = cached.cov[lang];
+    return;
+  }
+  paintFontCount(true);
+  const r = await F.probe(ids, [lang]);
+  const map = Object.create(null);
+  let unknown = false;
+  for (const id of ids) {
+    map[id] = r[id] ? r[id][lang] : null;
+    if (map[id] === null) unknown = true;
+  }
+  if (unknown) {
+    // The rulers were not there for this run (fonts.js says so with null):
+    // not "0 fonts can draw it", just not measured yet. Leave the count on
+    // "checking…" and try again shortly, a few times, before giving up.
+    fontProbeTries[lang] = (fontProbeTries[lang] || 0) + 1;
+    if (fontProbeTries[lang] <= 4) setTimeout(() => probeFontsFor(lang).then(renderFonts), 600);
+    return;
+  }
+  fontCov[lang] = map;
+  const cov = (cached && cached.sig === sig && cached.cov) || {};
+  cov[lang] = map;
+  try { chrome.storage.local.set({ fontCov: { sig, cov } }); } catch (_e) { /* ignore */ }
+}
+const fontProbeTries = Object.create(null);
+
+function fontMatches(f, q) {
+  q = String(q || "").trim().toLowerCase();
+  return !q || f.name.toLowerCase().indexOf(q) >= 0 || f.id.toLowerCase().indexOf(q) >= 0;
+}
+
+function fontRow(f, kept) {
+  const F = self.YTDS_FONTS;
+  const li = document.createElement("li");
+  li.className = "olang ofont";
+  li.dataset.id = f.id;
+  if (f.id === fontPreviewId) li.classList.add("on");
+
+  // The name, in the font itself: the row is its own preview. The CSS name is
+  // the id; the label is the display name (they differ on a Chinese Windows).
+  const name = document.createElement("button");
+  name.type = "button";
+  name.className = "ofont-try";
+  name.style.fontFamily = F.css(F.valueOf(f.id));
+  name.textContent = f.name;
+  if (f.imported) {
+    const tag = document.createElement("span");
+    tag.className = "ofont-tag";
+    tag.textContent = t("fontsImportedTag", "已导入");
+    name.appendChild(tag);
+  } else if (f.name !== f.id) {
+    const id = document.createElement("span");
+    id.className = "ofont-id";
+    id.textContent = f.id;
+    name.appendChild(id);
+  }
+  const tryLabel = t("fontsTryAria", "预览");
+  name.setAttribute("aria-label", tryLabel + " " + f.name);
+  name.title = tryLabel;
+  name.addEventListener("click", () => previewFont(f.id));
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "olang-btn" + (kept ? " remove" : " add");
+  btn.textContent = kept ? "×" : "+";
+  const label = kept ? t("langsRemoveAria", "移除") : t("langsAddAria", "添加");
+  btn.setAttribute("aria-label", label + " " + f.name);
+  btn.title = label;
+  btn.addEventListener("click", () => (kept ? removeFont(f.id) : addFont(f.id)));
+
+  li.appendChild(name);
+  li.appendChild(btn);
+  if (f.imported) {
+    // Deleting the import removes the copy; the font is then simply not here.
+    const drop = document.createElement("button");
+    drop.type = "button";
+    drop.className = "olang-btn drop";
+    drop.textContent = "🗑";
+    const dl = t("fontsImportDelete", "删除导入的字体");
+    drop.setAttribute("aria-label", dl + " " + f.name);
+    drop.title = dl;
+    drop.addEventListener("click", () => dropImport(f.id));
+    li.appendChild(drop);
+  }
+  return li;
+}
+
+function renderFonts() {
+  const keptEl = $("fontKept"), moreEl = $("fontMore");
+  if (!keptEl || !moreEl) return;
+  const unavailable = !fontsInstalled;
+  const un = $("fontUnavailable");
+  if (un) un.hidden = !unavailable;
+  keptEl.textContent = "";
+  moreEl.textContent = "";
+  paintFontCount(false);
+  if (unavailable) return;
+  const lang = fontTargetLang();
+  const cov = fontCov[lang] || null;
+  const onlyBox = $("fontOnly");
+  const only = !!(onlyBox && onlyBox.checked && cov);
+  const q = $("fontSearch") ? $("fontSearch").value : "";
+  const fonts = allFonts();
+  const byId = new Map(fonts.map((f) => [f.id, f]));
+  const kept = keptFontIds();
+  for (const id of kept) {
+    const f = byId.get(id);
+    if (!f || !fontMatches(f, q)) continue;
+    if (only && cov[id] === false) continue;
+    keptEl.appendChild(fontRow(f, true));
+  }
+  const keptSet = new Set(kept);
+  let rest = fonts.filter((f) => !keptSet.has(f.id) && fontMatches(f, q));
+  if (only) rest = rest.filter((f) => cov[f.id] !== false);
+  else if (cov) {
+    // Able first, then the rest, each alphabetical — so the switch is a
+    // convenience, not the only way to find a font that can draw the text.
+    rest = rest.slice().sort((a, b) =>
+      ((cov[b.id] === true) - (cov[a.id] === true)) || a.name.localeCompare(b.name));
+  }
+  if (!rest.length) {
+    const li = document.createElement("li");
+    li.className = "olang-empty";
+    li.textContent = q ? t("fontsNoMatch", "没有匹配的字体。") : t("fontsAllAdded", "全部字体都已加入。");
+    moreEl.appendChild(li);
+  }
+  for (const f of rest) moreEl.appendChild(fontRow(f, false));
+}
+
+function paintFontCount(checking) {
+  const el = $("fontCount");
+  if (!el) return;
+  if (!fontsInstalled) { el.textContent = ""; return; }
+  const lang = fontTargetLang();
+  const cov = fontCov[lang];
+  const name = fontLangName();
+  if (checking || !cov) {
+    el.textContent = tsub("fontsCounting", [name], "正在看哪些字体能显示「" + name + "」…");
+    return;
+  }
+  const fonts = allFonts();
+  const n = fonts.length;
+  const m = fonts.filter((f) => cov[f.id] === true).length;
+  el.textContent = tsub("fontsCount", [String(n), String(m), name],
+    "这台电脑上有 " + n + " 个字体，能显示「" + name + "」的有 " + m + " 个。");
+}
+
+function paintFontOnlyLabel() {
+  const el = $("fontOnlyLabel");
+  if (!el) return;
+  const name = fontLangName();
+  el.textContent = tsub("fontsOnly", [name], "只看能显示「" + name + "」的");
+}
+
+function previewFont(id) {
+  const F = self.YTDS_FONTS;
+  if (!F) return;
+  fontPreviewId = id || "";
+  const css = F.css(id ? F.valueOf(id) : "system");
+  const o = $("fontPrevOrig"), tr = $("fontPrevTrans");
+  if (o) o.style.fontFamily = css;
+  if (tr) { tr.style.fontFamily = css; tr.setAttribute("lang", fontTargetLang()); }
+  if (F.isImport(id)) F.ensureImported(document, id);
+  const name = id ? F.label(F.valueOf(id), allFonts(), t) : t("fontSystem", "系统默认");
+  const nm = $("fontPrevName");
+  if (nm) nm.textContent = tsub("fontsPreview", [name], "预览：" + name + " · 点任意字体名试试");
+  document.querySelectorAll("#secFonts .olang[data-id]").forEach((li) => {
+    li.classList.toggle("on", li.dataset.id === fontPreviewId);
+  });
+}
+
+// The translation line of the preview should be IN the translation language:
+// a Latin sample under a Chinese font shows nothing about the font. The
+// sample sentence comes from that language's own packaged locale when there
+// is one; otherwise the language's own name, which is at least its script.
+const SAMPLE_DIR = { "zh-CN": "zh_CN", "zh-TW": "zh_TW", pt: "pt_BR" };
+async function paintFontSample() {
+  const tr = $("fontPrevTrans");
+  if (!tr) return;
+  const lang = fontTargetLang();
+  let ui = "";
+  try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
+  tr.setAttribute("lang", lang);
+  if (ui.split("-")[0] === lang.split("-")[0]) return;   // applyI18n already put the right sample there
+  let text = "";
+  try {
+    const r = await fetch(chrome.runtime.getURL("_locales/" + (SAMPLE_DIR[lang] || lang) + "/messages.json"));
+    if (r.ok) { const j = await r.json(); text = (j.sampleTrans && j.sampleTrans.message) || ""; }
+  } catch (_e) { /* not packaged for this language */ }
+  tr.textContent = text || fontLangName();
+}
+
+function addFont(id) {
+  const kept = keptFontIds().slice();
+  if (kept.indexOf(id) >= 0) return;
+  kept.push(id);
+  fontKept = kept;
+  persistFonts();
+  renderFonts();
+  const F = self.YTDS_FONTS;
+  const name = F ? F.label(F.valueOf(id), allFonts(), t) : id;
+  showFontMsg(tsub("fontsAdded", [name], "已加入「" + name + "」"), "ok");
+}
+
+// ---- importing a font file ----
+async function importFontFile(file) {
+  const F = self.YTDS_FONTS;
+  if (!F || !file) return;
+  const r = await F.importFile(file);
+  if (!r.ok) {
+    const mb = String(Math.round(F.IMPORT_MAX / 1048576));
+    showFontMsg(r.why === "size"
+      ? tsub("fontsImportTooBig", [mb], "文件太大（上限 " + mb + " MB）。")
+      : t("fontsImportBad", "这不是能用的字体文件。"), "err");
+    return;
+  }
+  fontImports = await F.imports();
+  // Measure it with the rest: the cached coverage is keyed by the list, and
+  // the list just changed.
+  fontCov = Object.create(null);
+  renderFonts();
+  showFontMsg(tsub("fontsImported", [r.name], "已导入「" + r.name + "」"), "ok");
+  await probeFontsFor(fontTargetLang());
+  renderFonts();
+  previewFont(r.id);
+}
+
+async function dropImport(id) {
+  const F = self.YTDS_FONTS;
+  if (!F) return;
+  await F.importRemove(id);
+  fontImports = await F.imports();
+  if (Array.isArray(fontKept) && fontKept.indexOf(id) >= 0) {
+    fontKept = fontKept.filter((c) => c !== id);
+    persistFonts();
+  }
+  fontCov = Object.create(null);
+  if (fontPreviewId === id) previewFont("");
+  renderFonts();
+  showFontMsg("", null);
+  await probeFontsFor(fontTargetLang());
+  renderFonts();
+}
+
+function removeFont(id) {
+  // The list may be empty: "System default" is always there, so the popup's
+  // dropdown never runs dry. A font in use stays in force and the popup keeps
+  // naming it — removing it here only stops offering it.
+  fontKept = keptFontIds().filter((c) => c !== id);
+  persistFonts();
+  renderFonts();
+  showFontMsg("", null);
+}
+
+function wantFonts() {
+  fontsWanted = true;
+  if (fontsInit === 0 && stateLoaded) initFonts();
+}
+
+async function initFonts() {
+  if (fontsInit) return;
+  fontsInit = 2;
+  const F = self.YTDS_FONTS;
+  if (!F) return;
+  fontsInstalled = await F.list();
+  fontImports = await F.imports();
+  const loc = await new Promise((res) => {
+    try { chrome.storage.local.get({ fontKept: null }, (g) => res(g || {})); }
+    catch (_e) { res({}); }
+  });
+  fontKept = Array.isArray(loc.fontKept) ? loc.fontKept : null;
+  paintFontOnlyLabel();
+  renderFonts();
+  previewFont("");
+  paintFontSample();
+  await probeFontsFor(fontTargetLang());
+  renderFonts();
+}
+
+// The translation language changed (here or in the popup): the count, the
+// switch's label, the order and the sample all follow it.
+function fontsTargetChanged() {
+  if (fontsInit !== 2) return;
+  paintFontOnlyLabel();
+  paintFontSample();
+  previewFont(fontPreviewId);
+  probeFontsFor(fontTargetLang()).then(renderFonts);
+  renderFonts();
+}
+
+let stateLoaded = false;
 
 // ---- diagnostics ---------------------------------------------------------
 // The builder lives in diag.js and is shared with the popup; this page passes
@@ -2327,6 +2701,7 @@ function initCrossPageSync() {
         // language, so this page went on offering — and saving — a voice the
         // engine had already stopped using.
         if (v) state.targetLang = v;
+        fontsTargetChanged();
         // The fetched catalogue is pinned to the language it was fetched FOR
         // — the message under the menu says so. Keeping it on screen across a
         // language change made the menu lie: long ids the engine would now
@@ -2434,6 +2809,20 @@ function wire() {
   document.querySelectorAll(".onav-item").forEach((b) =>
     b.addEventListener("click", () => showSection(b.dataset.sec)));
   $("startToSetup").addEventListener("click", () => showSection("setup"));
+  $("fontSearch").addEventListener("input", () => renderFonts());
+  $("fontOnly").addEventListener("change", () => renderFonts());
+  $("fontReset").addEventListener("click", () => {
+    fontKept = null;
+    persistFonts();
+    renderFonts();
+    showFontMsg(t("fontsResetDone", "已恢复默认列表。"), "ok");
+  });
+  $("fontImportBtn").addEventListener("click", () => $("fontImportFile").click());
+  $("fontImportFile").addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";                 // the same file again must re-trigger
+    if (file) importFontFile(file);
+  });
   $("langReset").addEventListener("click", () => {
     langKept = null;
     persistLangs();
@@ -2581,6 +2970,8 @@ chrome.storage.sync.get(
     langKept = (got && Array.isArray(got.langShown) && got.langShown.length)
       ? LANGS.shown(got.langShown) : null;
     renderLangs();
+    stateLoaded = true;
+    if (fontsWanted) initFonts();
     initStartTarget();
     initReadaloud();
     // Open on whatever is in use; failing that, the first preset — an empty
