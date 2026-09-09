@@ -60,6 +60,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (local)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Live preview"
   },
@@ -212,6 +216,18 @@
   },
   "resetAll": {
     "message": "Reset all settings"
+  },
+  "resetConfirmText": {
+    "message": "This clears every setting, the API keys saved on this computer, and the model and voice remembered for each provider, and turns the first-run hints back on. Provider domains you have already granted stay granted.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Keep my settings",
+    "description": "Popup: the safe button on the reset panel \u2014 closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Reset everything",
+    "description": "Popup: the destructive button on the reset panel \u2014 performs the reset."
   },
   "toggleTurnOff": {
     "message": "Turn off dual subtitles"
@@ -522,7 +538,7 @@
     "message": "A second subtitle line for YouTube: the original on one line, the translation on the other, with the font, colour and position up to you. Open source, free, no ads."
   },
   "aboutPrivacy": {
-    "message": "The extension has no server of ours and collects no statistics. Subtitle text goes only to the translation service you pick; with your own key, the key is stored on this computer only."
+    "message": "The extension has no server of ours and collects no statistics. Subtitle text goes only to services you chose: the translation service you pick and, if you turn them on, the speech provider for read-aloud and the provider you set up for summaries. With your own key, the key is stored on this computer only."
   },
   "aboutChangelog": {
     "message": "Changelog"
@@ -765,7 +781,7 @@
     "message": "Read the translation aloud in the video"
   },
   "ttsEnableHint": {
-    "message": "When on, each subtitle's translation is spoken as it appears; a line whose translation isn't ready in time is skipped rather than caught up on later. While a line speaks, the video's own audio drops to the level set below. A cloud voice that runs long also slows the video a little — your browser's own voices do not report a length, so they cannot."
+    "message": "When on, each subtitle's translation is spoken as it appears; a line whose translation isn't ready in time is skipped rather than caught up on later. While a line speaks, the video's own audio drops to the level set below. A line that runs long slows the picture a little and borrows the gap after it — with cloud voices and with the browser's own; the switch below keeps slowing until every line finishes."
   },
   "langsIntro": {
     "message": "Which translation languages the popup offers."
@@ -945,6 +961,10 @@
   "sumNeedKey": {
     "message": "Summaries need a service of your own: any provider with your key in the translation pane, or a local model on this machine. The free engines only translate. They don't summarize.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Set up a translation service",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Summarize",

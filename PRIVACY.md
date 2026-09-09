@@ -70,13 +70,13 @@ The extension requests the narrowest permissions needed for these features and n
 
 ## Data sharing
 
-No user data is sold or shared with third parties. The only outbound data is caption text — sent to the translation service **you** have chosen (YouTube's own translation or Google Translate by default, or your own provider if you configured one) **exclusively to produce the translation you asked for**, and, only if you turned read-aloud on, the translated line sent to the speech provider you picked, exclusively to synthesize its audio. Your API key travels with those requests as their authorization header and nowhere else.
+No user data is sold or shared with third parties. The only outbound data is the caption text of the video you are watching and, for a feature you turned on, what is made from it — sent to the translation service **you** have chosen (YouTube's own translation or Google Translate by default, or your own provider if you configured one) **exclusively to produce the translation you asked for**; only if you turned read-aloud on, the translated line sent to the speech provider you picked, exclusively to synthesize its audio; and only when you press the summary button, the caption track sent to the provider you configured for it, exclusively to produce the summary shown back to you. Your API key travels with those requests as their authorization header and nowhere else.
 
 ---
 
 ## Limited Use
 
-The use of information received through this extension adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), including the **Limited Use** requirements. Caption text is used only to provide the extension's single, user-facing purpose — displaying bilingual subtitles — and is never used for any other purpose, transferred to the developer, or sold.
+The use of information received through this extension adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), including the **Limited Use** requirements. Caption text is used only for the extension's single, user-facing purpose — presenting the captions of the video you are watching in your language: shown on screen as bilingual subtitles and, at your request, read aloud or condensed into a summary — and is never used for any other purpose, transferred to the developer, or sold.
 
 ---
 

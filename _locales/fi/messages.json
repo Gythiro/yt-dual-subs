@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (paikallinen)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Reaaliaikainen esikatselu"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Nollaa kaikki asetukset"
+  },
+  "resetConfirmText": {
+    "message": "Tämä tyhjentää kaikki asetukset, tälle tietokoneelle tallennetut API-avaimet sekä kunkin palveluntarjoajan muistetun mallin ja äänen, ja ottaa ensikäytön vinkit uudelleen käyttöön. Palveluntarjoajien verkkotunnukset, joille olet jo myöntänyt luvan, pysyvät voimassa.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Säilytä asetukset",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Nollaa kaikki",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Poista kaksikieliset tekstitykset"
@@ -471,7 +487,7 @@
     "message": "Toinen tekstitysrivi YouTubelle: alkuperäinen yhdellä rivillä, käännös toisella, fontti, väri ja sijainti ovat sinun valittavissasi. Avoin lähdekoodi, ilmainen, ei mainoksia."
   },
   "aboutPrivacy": {
-    "message": "Laajennuksella ei ole omaa palvelinta, eikä se kerää tilastoja. Tekstitysteksti menee vain valitsemaasi käännöspalveluun; oma avain tallennetaan vain tälle tietokoneelle."
+    "message": "Laajennuksella ei ole omaa palvelinta, eikä se kerää tilastoja. Tekstitysteksti lähetetään vain valitsemiisi palveluihin: valitsemaasi käännöspalveluun ja, jos otat ne käyttöön, ääneenlukemisen puhepalveluun sekä yhteenvetoja varten asettamaasi palveluun. Omalla avaimella avain tallennetaan vain tälle tietokoneelle."
   },
   "aboutChangelog": {
     "message": "Muutosloki"
@@ -804,7 +820,7 @@
     "message": "ääntä ei kuulunut"
   },
   "ttsEnableHint": {
-    "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä sitä kurota kiinni myöhemmin. Rivin puhuessa videon oma ääni laskee alla asetettuun tasoon. Pitkään kestävä pilviääni hidastaa myös videota hieman — selaimen omat äänet eivät ilmoita kestoa, joten ne eivät voi."
+    "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä sitä kurota myöhemmin. Riviä luettaessa videon oma ääni laskee alla asetettuun tasoon. Pitkä rivi hidastaa kuvaa hieman ja lainaa sen jälkeisen tauon — sekä pilviäänillä että selaimen omalla; alla oleva kytkin jatkaa hidastusta, kunnes kaikki rivit on luettu."
   },
   "ttsRegionLabel": {
     "message": "Palvelualue"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Tiivistelmä vaatii oman palvelusi: palveluntarjoajan, jolle annoit avaimen, tai paikallisen mallin tällä koneella. Ilmaiset moottorit vain kääntävät, eivät tiivistä.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Määritä käännöspalvelu",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Tee tiivistelmä",

@@ -1224,7 +1224,14 @@ async function sumLlm(messages) {
     messages,
     unpack: (raw) => [String(raw == null ? "" : raw).trim()]
   });
-  return (out && out[0]) || "";
+  const text = (out && out[0]) || "";
+  // An empty answer is not a summary. It came back as one — the unpacker
+  // returns an array, and an array is truthy — so the panel rendered nothing,
+  // said nothing, and cached the nothing against the track.
+  if (!text.trim()) {
+    throw tag(new Error("summary came back empty"), { badShape: true, code: "empty" });
+  }
+  return text;
 }
 function summarizeJob(messages, label) {
   return cfgReady.then(() => new Promise((resolve, reject) => enqueue(byoLane, {
@@ -1246,10 +1253,16 @@ function summarizeJob(messages, label) {
 // TLDR over a Chinese chapter). For a target written in a script Latin text
 // cannot fake, that wrongness is measurable; for Latin targets it is not, and
 // the check stays out of the way.
+// Serbian is deliberately NOT here, though its Cyrillic is as distinctive as
+// Russian's: it is digraphic, Latin is equally official and is what most models
+// answer in. Requiring Cyrillic made every Serbian chunk fail the check, pay
+// for a retry, come back in Latin again and fall back to the first answer \u2014
+// twice the bill, same output, no way for the user to see why. The rule above
+// is "a script Latin text cannot fake", and Serbian Latin is not a fake.
 const SUM_SCRIPTS = {
   zh: /[\u3400-\u4DBF\u4E00-\u9FFF]/, ja: /[\u3040-\u30FF\u4E00-\u9FFF]/,
   ko: /[\u1100-\u11FF\uAC00-\uD7AF]/, ru: /[\u0400-\u04FF]/,
-  uk: /[\u0400-\u04FF]/, bg: /[\u0400-\u04FF]/, sr: /[\u0400-\u04FF]/,
+  uk: /[\u0400-\u04FF]/, bg: /[\u0400-\u04FF]/,
   el: /[\u0370-\u03FF]/, th: /[\u0E00-\u0E7F]/, ar: /[\u0600-\u06FF]/,
   fa: /[\u0600-\u06FF]/, ur: /[\u0600-\u06FF]/, he: /[\u0590-\u05FF]/,
   iw: /[\u0590-\u05FF]/, hi: /[\u0900-\u097F]/, mr: /[\u0900-\u097F]/,
@@ -1287,7 +1300,18 @@ async function sumJobChecked(messages, targetLang, label) {
   const first = await summarizeJob(messages, label);
   const text = String(Array.isArray(first) ? (first[0] || "") : (first || ""));
   if (sumLangHolds(text, targetLang)) return text;
-  const again = await summarizeJob(sumStrict(messages, targetLang), label + " retry");
+  // The retry is a bonus attempt on top of an answer already paid for, so it
+  // must not be able to take that answer down with it. Without this catch a
+  // 429 on the retry — the likeliest outcome, since summarising fires several
+  // calls back to back — rejected all the way out to the message handler and
+  // the panel said "summary failed" for a summary that was sitting right here.
+  // That was worse than before the language check existed.
+  let again;
+  try {
+    again = await summarizeJob(sumStrict(messages, targetLang), label + " retry");
+  } catch (_e) {
+    return text;
+  }
   const t2 = String(Array.isArray(again) ? (again[0] || "") : (again || ""));
   // A retry that still fails the check does not beat the original — keep the
   // first answer rather than pay for a third attempt.
@@ -2290,11 +2314,17 @@ chrome.runtime.onInstalled.addListener((details) => {
     if (got.updShownFor === cur) return;           // already announced this version
     chrome.storage.local.set({ updShownFor: cur, updWhatsNew: cur });
     if (!isFeatureBump(prev, cur)) { showUpdateBadge(); return; }
-    chrome.storage.sync.get({ updateNotes: true }, (s) => {
+    chrome.storage.sync.get({ updateNotes: true, uiLocale: "auto" }, (s) => {
       if (s && s.updateNotes) {
+        // The popup and the settings page honour the interface-language
+        // override for this same link; this was the one caller still asking
+        // the browser, so a reader who had chosen Chinese on an English
+        // Chrome was sent to the English notes.
+        const loc = s.uiLocale && s.uiLocale !== "auto" ? String(s.uiLocale) : "";
+        const lang = loc ? (loc.toLowerCase().indexOf("zh") === 0 ? "zh" : "en") : uiLang();
         try {
           chrome.tabs.create({
-            url: SITE_URL + "updated.html?ver=" + cur + "&lang=" + uiLang() + "&src=ext"
+            url: SITE_URL + "updated.html?ver=" + cur + "&lang=" + lang + "&src=ext"
           });
           return;
         } catch (_e) { /* fall through to the badge */ }
@@ -2333,7 +2363,29 @@ if (chrome.commands && chrome.commands.onCommand) {
   });
 }
 
+// The content script paints its strings through chrome.i18n, which answers in
+// the BROWSER's language. Everything else honours the interface-language
+// override (i18n-runtime.js fetches the chosen _locales table); the player
+// side cannot fetch that file itself — a content script's fetch of an
+// extension resource needs web_accessible_resources — so it asks here.
+let uiTableCache = { loc: "", table: null };
+async function uiTableFor() {
+  const got = await new Promise((res) => chrome.storage.sync.get({ uiLocale: "auto" }, res));
+  const loc = got && got.uiLocale;
+  if (!loc || loc === "auto" || !/^[A-Za-z]{2,3}(_[A-Za-z]{2,4})?$/.test(String(loc))) return null;
+  if (uiTableCache.loc === loc && uiTableCache.table) return uiTableCache.table;
+  const r = await fetch(chrome.runtime.getURL("_locales/" + loc + "/messages.json"));
+  if (!r.ok) return null;
+  const table = await r.json();
+  uiTableCache = { loc: String(loc), table };
+  return table;
+}
+
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  if (msg && msg.type === "uiTable") {
+    uiTableFor().then((t) => sendResponse(t || null)).catch(() => sendResponse(null));
+    return true;                                            // async reply
+  }
   if (msg && msg.type === "openOptions") {
     // The in-player menu's settings row. A content script cannot call
     // openOptionsPage itself; this is the whole errand.

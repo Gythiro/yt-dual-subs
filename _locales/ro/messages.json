@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (local)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Previzualizare live"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Resetează toate setările"
+  },
+  "resetConfirmText": {
+    "message": "Se șterg toate setările, cheile API salvate pe acest computer și modelul și vocea reținute pentru fiecare furnizor, și se reactivează indiciile de la prima rulare. Domeniile furnizorilor pe care le-ați autorizat deja rămân autorizate.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Păstrează setările",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Resetează tot",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Dezactivează subtitrările bilingve"
@@ -471,7 +487,7 @@
     "message": "O a doua linie de subtitrare pe YouTube: originalul pe una, traducerea pe cealaltă, cu font, culoare și poziție la alegerea ta. Open source, gratuit, fără reclame."
   },
   "aboutPrivacy": {
-    "message": "Extensia nu are un server al nostru și nu colectează statistici. Textul subtitrărilor ajunge doar la serviciul de traducere ales de tine; cu cheia ta, aceasta e stocată doar pe acest computer."
+    "message": "Extensia nu are un server al nostru și nu colectează statistici. Textul subtitrărilor ajunge doar la serviciile pe care le-ați ales: serviciul de traducere pe care îl selectați și, dacă le activați, furnizorul de vorbire pentru citirea cu voce tare și furnizorul configurat pentru rezumate. Cu propria cheie, cheia este stocată doar pe acest computer."
   },
   "aboutChangelog": {
     "message": "Istoric modificări"
@@ -804,7 +820,7 @@
     "message": "nu s-a auzit niciun sunet"
   },
   "ttsEnableHint": {
-    "message": "Când e activat, traducerea fiecărui rând e rostită pe măsură ce apare; un rând a cărui traducere nu e gata la timp e omis, nu recuperat ulterior. Cât timp se rostește un rând, sunetul videoclipului scade la nivelul setat mai jos. O voce cloud prea lungă încetinește și videoclipul puțin — vocile browserului nu raportează o durată, deci nu pot."
+    "message": "Când e activat, traducerea fiecărei linii e rostită pe măsură ce apare; o linie a cărei traducere nu e gata la timp e omisă, nu recuperată mai târziu. Cât timp se citește o linie, sunetul videoclipului scade la nivelul setat mai jos. O linie prea lungă încetinește puțin imaginea și împrumută pauza de după — atât cu vocile din cloud, cât și cu cea a browserului; comutatorul de mai jos menține încetinirea până se termină fiecare linie."
   },
   "ttsRegionLabel": {
     "message": "Regiune serviciu"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Rezumatul are nevoie de un serviciu al tău: un furnizor cu cheia ta, sau un model local pe acest calculator. Motoarele gratuite doar traduc, nu rezumă.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Configurează un serviciu de traducere",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Rezumă",

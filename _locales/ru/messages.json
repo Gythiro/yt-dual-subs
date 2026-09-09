@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (локально)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Живой предпросмотр"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Сбросить все настройки"
+  },
+  "resetConfirmText": {
+    "message": "Это сбросит все настройки, ключи API на этом компьютере, а также модель и голос, запомненные для каждого провайдера, и снова включит подсказки при первом запуске. Домены провайдеров, которым вы уже дали доступ, останутся разрешёнными.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Оставить настройки",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Сбросить всё",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Выключить двойные субтитры"
@@ -471,7 +487,7 @@
     "message": "Вторая строка субтитров для YouTube: оригинал на одной, перевод на другой. Шрифт, цвет и положение — на ваш выбор. Открытый код, бесплатно, без рекламы."
   },
   "aboutPrivacy": {
-    "message": "У расширения нет нашего сервера, статистика не собирается. Текст субтитров уходит только в выбранный сервис перевода; свой ключ хранится только на этом компьютере."
+    "message": "У расширения нет нашего сервера, статистика не собирается. Текст субтитров уходит только в выбранные вами сервисы: службу перевода и, если вы их включите, провайдер озвучки и провайдер сводок. Свой ключ хранится только на этом компьютере."
   },
   "aboutChangelog": {
     "message": "История изменений"
@@ -804,7 +820,7 @@
     "message": "звук не прозвучал"
   },
   "ttsEnableHint": {
-    "message": "Когда включено, перевод каждой субтитры озвучивается по мере появления; строка, перевод которой не готов вовремя, пропускается, а не озвучивается позже. Пока строка звучит, звук самого видео снижается до уровня, заданного ниже. Длинный облачный голос также немного замедляет видео — голоса браузера длительность не сообщают, поэтому не могут."
+    "message": "Когда включено, перевод каждой строки субтитров озвучивается по мере появления; строка, чей перевод не готов вовремя, пропускается, а не догоняется позже. Пока строка звучит, собственный звук видео снижается до уровня, заданного ниже. Длинная строка немного замедляет картинку и занимает паузу после себя — и с облачными голосами, и с голосом браузера; переключатель ниже продолжает замедление, пока не закончится каждая строка."
   },
   "ttsRegionLabel": {
     "message": "Регион службы"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Для краткого содержания нужен ваш собственный сервис: провайдер с вашим ключом или локальная модель на этом компьютере. Бесплатные движки только переводят и краткого содержания не составляют.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Настроить сервис перевода",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Кратко изложить",

@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (yerel)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Canlı önizleme"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Tüm ayarları sıfırla"
+  },
+  "resetConfirmText": {
+    "message": "Bu işlem tüm ayarları, bu bilgisayarda kayıtlı API anahtarlarını ve her sağlayıcı için hatırlanan model ile sesi siler ve ilk kullanım ipuçlarını yeniden açar. Daha önce izin verdiğiniz sağlayıcı alan adları izinli kalır.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Ayarlarımı koru",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Her şeyi sıfırla",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Çift altyazıyı kapat"
@@ -471,7 +487,7 @@
     "message": "YouTube için ikinci bir altyazı satırı: bir satırda orijinal, diğerinde çeviri; yazı tipi, renk ve konum sana kalmış. Açık kaynak, ücretsiz, reklamsız."
   },
   "aboutPrivacy": {
-    "message": "Eklentinin bize ait bir sunucusu yoktur ve istatistik toplamaz. Altyazı metni yalnızca seçtiğiniz çeviri hizmetine gider; kendi anahtarınızla anahtar yalnızca bu bilgisayarda saklanır."
+    "message": "Uzantının bize ait bir sunucusu yoktur ve istatistik toplamaz. Altyazı metni yalnızca seçtiğiniz hizmetlere gider: seçtiğiniz çeviri hizmetine ve, bunları açarsanız, sesli okuma için konuşma sağlayıcısına ve özetler için ayarladığınız sağlayıcıya. Kendi anahtarınız kullanıldığında anahtar yalnızca bu bilgisayarda saklanır."
   },
   "aboutChangelog": {
     "message": "Sürüm notları"
@@ -804,7 +820,7 @@
     "message": "ses çıkmadı"
   },
   "ttsEnableHint": {
-    "message": "Açıkken her altyazının çevirisi göründüğü anda okunur; çevirisi zamanında hazır olmayan satır atlanır, sonradan telafi edilmez. Bir satır okunurken videonun kendi sesi aşağıda ayarlanan düzeye iner. Uzun süren bir bulut sesi videoyu da biraz yavaşlatır — tarayıcının kendi sesleri süre bildirmediği için bunu yapamaz."
+    "message": "Açıkken her altyazının çevirisi göründüğü anda seslendirilir; çevirisi zamanında hazır olmayan satır sonradan telafi edilmek yerine atlanır. Bir satır seslendirilirken videonun kendi sesi aşağıda ayarlanan seviyeye düşer. Uzayan bir satır görüntüyü biraz yavaşlatır ve sonraki boşluktan ödünç alır — hem bulut sesleriyle hem tarayıcının kendi sesiyle; aşağıdaki anahtar her satır bitene kadar yavaşlatmayı sürdürür."
   },
   "ttsRegionLabel": {
     "message": "Hizmet bölgesi"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Özet için kendi hizmetiniz gerekir: anahtarını girdiğiniz bir sağlayıcı ya da bu bilgisayardaki yerel bir model. Ücretsiz motorlar yalnızca çevirir, özetlemez.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Çeviri hizmeti kur",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Özetle",

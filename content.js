@@ -22,9 +22,40 @@
   // Safe wrapper around chrome.i18n.getMessage: returns the localized string,
   // or the supplied fallback if i18n is unavailable / the key is missing, so
   // nothing breaks if a message is absent.
-  const t = (k, fb) => (chrome.i18n && chrome.i18n.getMessage(k)) || fb;
+  // The interface-language override. chrome.i18n answers in the browser's
+  // language; a reader who chose German on an English Chrome had German
+  // menus in the popup and English ones in the player (twenty-three
+  // strings: the corner menu, the whole summary panel, the handle and
+  // toggle titles, the dub toast). The chosen table comes from the worker —
+  // a content script cannot fetch its own extension's files — and until it
+  // arrives, or on "auto", lookups fall through to chrome.i18n as before.
+  let uiTable = null;
+  function uiSubst(entry, subs) {
+    let msg = String(entry.message || "");
+    const ph = entry.placeholders || {};
+    for (const name of Object.keys(ph)) {
+      const idx = parseInt(String(ph[name].content || "").slice(1), 10);
+      const val = subs && subs[idx - 1] != null ? String(subs[idx - 1]) : "";
+      msg = msg.replace(new RegExp("\\$" + name + "\\$", "gi"), val);
+    }
+    return msg;
+  }
+  function loadUiTable() {
+    try {
+      chrome.runtime.sendMessage({ type: "uiTable" }, (table) => {
+        void chrome.runtime.lastError;
+        uiTable = (table && typeof table === "object") ? table : null;
+      });
+    } catch (_e) { /* orphaned or not yet ready: keep chrome.i18n */ }
+  }
+  const t = (k, fb) => {
+    if (uiTable && uiTable[k] && uiTable[k].message) return uiSubst(uiTable[k]);
+    return (chrome.i18n && chrome.i18n.getMessage(k)) || fb;
+  };
 
-  // ---- shared settings model (MUST match popup.js DEFAULTS) ----------------
+  // ---- shared settings model -----------------------------------------------
+  // Agrees with popup.js DEFAULTS on every key both hold; the two are not the
+  // same list (see the note there). ttsComplete lives here and not there.
   const DEFAULTS = {
     enabled: true,
     targetLang: "zh-CN",
@@ -335,6 +366,12 @@
       chrome.storage.sync.get(null, (got) => {
         got = got || {};
         settings = { ...DEFAULTS, ...got };
+        // The interface-language table is asked of the worker only when an
+        // override is set. On "auto" — every fresh install — nothing is
+        // asked: a plain video must be able to play without one worker call
+        // (the no-traffic scenarios pin that), and chrome.i18n already
+        // answers in the right language then.
+        if (got.uiLocale && got.uiLocale !== "auto") loadUiTable();
         settings.engine = normalizeEngine(got);
         // migrate legacy global bgOpacity -> per-line bg opacities if present
         // and the per-line keys were never set.
@@ -357,6 +394,10 @@
   ]);
 
   chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "sync" && changes.uiLocale) {
+      const v = changes.uiLocale.newValue;
+      if (v && v !== "auto") loadUiTable(); else uiTable = null;
+    }
     if (area !== "sync") return;
     let needRecue = false;
     for (const k of Object.keys(changes)) {
@@ -1293,7 +1334,7 @@
     if (!body) return;
     body.appendChild(sumNode("p", null,
       ct("sumNeedKey", "总结需要你自己的翻译服务（填过 Key 的任何一家，或本机跑的模型）。免费引擎只翻译，不总结。")));
-    body.appendChild(sumButton(ct("byoConfigure", "去配置"), "ytds-sum-primary",
+    body.appendChild(sumButton(ct("sumConfigure", "去配置翻译服务"), "ytds-sum-primary",
       () => extCall(() => chrome.runtime.sendMessage({ type: "openOptions" }))));
   }
   function sumProgress(done, total, myEpoch) {
@@ -1416,12 +1457,14 @@
   let moreEl = null;
 
   function ct(key, fb) {
+    if (uiTable && uiTable[key] && uiTable[key].message) return uiSubst(uiTable[key]);
     try { return chrome.i18n.getMessage(key) || fb; } catch (_e) { return fb; }
   }
   // ct with $1$-style substitutions; the fallback substitutes too, or the rig
   // (whose getMessage answers nothing) would show literal "$1$" to a reader.
   function tsub(key, subs, fb) {
     try {
+      if (uiTable && uiTable[key] && uiTable[key].message) return uiSubst(uiTable[key], subs);
       const v = chrome.i18n.getMessage(key, subs);
       if (v) return v;
     } catch (_e) { /* fall through to the inline fallback */ }
@@ -4941,6 +4984,18 @@
     ttsSkipWhy = Object.create(null);   // the reasons belonged to that video
     ttsErr = "";                // and so does the reason they stayed silent
     ttsFailRun = 0;
+    // These two belong to the video as much as the counts above do, and were
+    // the only ones left running for the life of the tab. The popup's prompt
+    // divides over by spoken and calls the answer "this video at this speed":
+    // with spoken reset here and over carried across, one dense 2x video could
+    // open the prompt on the next healthy video a dozen lines in — and the
+    // "don't show again" it offers is permanent.
+    ttsOverran = 0;
+    ttsJumpCuts = 0;
+    // …and the takeover trace with them. It only ever pushed and shifted, so
+    // the diagnostic bundle's "last five cuts" could be five cuts from the
+    // previous video under a "cut-short 0" for this one.
+    ttsTrace.length = 0;
     rearmedForVideo = false;    // and one CC re-arm allowance
     armBlankWatch();            // re-arm the still-blank watchdog for this video
     transCache.clear();

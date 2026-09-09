@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (local)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Aperçu en direct"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Réinitialiser tout"
+  },
+  "resetConfirmText": {
+    "message": "Cela efface tous les paramètres, les clés API enregistrées sur cet ordinateur, ainsi que le modèle et la voix mémorisés pour chaque fournisseur, et réactive les astuces du premier lancement. Les domaines des fournisseurs déjà autorisés restent autorisés.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Garder mes paramètres",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Tout réinitialiser",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Désactiver les sous-titres bilingues"
@@ -471,7 +487,7 @@
     "message": "Une seconde ligne de sous-titres pour YouTube : l’original sur une ligne, la traduction sur l’autre, police, couleur et position au choix. Open source, gratuit, sans pub."
   },
   "aboutPrivacy": {
-    "message": "L’extension n’a aucun serveur de notre côté et ne collecte aucune statistique. Le texte des sous-titres n’est envoyé qu’au service de traduction que vous choisissez ; avec votre propre clé, celle-ci est stockée uniquement sur cet ordinateur."
+    "message": "L’extension n’a aucun serveur de notre part et ne collecte aucune statistique. Le texte des sous-titres n’est envoyé qu’aux services que vous avez choisis : le service de traduction que vous sélectionnez et, si vous les activez, le fournisseur de synthèse vocale pour la lecture à voix haute et le fournisseur configuré pour les résumés. Avec votre propre clé, celle-ci n’est stockée que sur cet ordinateur."
   },
   "aboutChangelog": {
     "message": "Journal des modifications"
@@ -804,7 +820,7 @@
     "message": "aucun son n’est sorti"
   },
   "ttsEnableHint": {
-    "message": "Une fois activé, la traduction de chaque sous-titre est lue dès qu’elle apparaît ; une ligne dont la traduction n’est pas prête à temps est ignorée plutôt que rattrapée plus tard. Pendant la lecture, le son de la vidéo baisse au niveau défini ci-dessous. Une voix cloud trop longue ralentit aussi un peu la vidéo — les voix de votre navigateur n’indiquent pas leur durée, elles ne le peuvent donc pas."
+    "message": "Lorsque cette option est activée, la traduction de chaque sous-titre est lue dès qu’elle apparaît ; une ligne dont la traduction n’est pas prête à temps est ignorée plutôt que rattrapée plus tard. Pendant la lecture d’une ligne, le son de la vidéo baisse au niveau défini ci-dessous. Une ligne trop longue ralentit un peu l’image et emprunte le silence qui suit — avec les voix cloud comme avec celle du navigateur ; le commutateur ci-dessous maintient le ralentissement jusqu’à ce que chaque ligne soit terminée."
   },
   "ttsRegionLabel": {
     "message": "Région du service"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Le résumé demande un service à vous : un fournisseur avec votre clé, ou un modèle local sur cette machine. Les moteurs gratuits traduisent, ils ne résument pas.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Configurer un service de traduction",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Résumer",

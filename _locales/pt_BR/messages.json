@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (local)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Prévia ao vivo"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Redefinir tudo"
+  },
+  "resetConfirmText": {
+    "message": "Isso apaga todas as configurações, as chaves de API salvas neste computador e o modelo e a voz lembrados de cada provedor, e reativa as dicas do primeiro uso. Os domínios de provedores que você já autorizou continuam autorizados.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Manter minhas configurações",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Redefinir tudo",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Desativar legendas duplas"
@@ -471,7 +487,7 @@
     "message": "Uma segunda linha de legendas no YouTube: o original em uma linha, a tradução na outra, com fonte, cor e posição a seu gosto. Código aberto, gratuito, sem anúncios."
   },
   "aboutPrivacy": {
-    "message": "A extensão não tem servidor nosso e não coleta estatísticas. O texto das legendas vai só para o serviço de tradução que você escolher; com sua própria chave, ela fica armazenada só neste computador."
+    "message": "A extensão não tem servidor nosso e não coleta estatísticas. O texto das legendas vai apenas para os serviços que você escolheu: o serviço de tradução selecionado e, se você ativá-los, o provedor de fala para leitura em voz alta e o provedor configurado para resumos. Com sua própria chave, ela fica armazenada apenas neste computador."
   },
   "aboutChangelog": {
     "message": "Novidades"
@@ -804,7 +820,7 @@
     "message": "nenhum som saiu"
   },
   "ttsEnableHint": {
-    "message": "Quando ativo, a tradução de cada legenda é falada conforme aparece; uma linha cuja tradução não fica pronta a tempo é pulada, sem ser recuperada depois. Enquanto uma linha é falada, o áudio do vídeo cai para o nível definido abaixo. Uma voz na nuvem que se estende também deixa o vídeo um pouco mais lento — as vozes do próprio navegador não informam a duração, então não conseguem."
+    "message": "Quando ativado, a tradução de cada legenda é falada conforme aparece; uma linha cuja tradução não fica pronta a tempo é pulada, em vez de ser recuperada depois. Enquanto uma linha é falada, o áudio do próprio vídeo cai para o nível definido abaixo. Uma linha que se alonga desacelera um pouco a imagem e aproveita o intervalo seguinte — com vozes na nuvem e com as do próprio navegador; o interruptor abaixo mantém a desaceleração até que todas as linhas terminem."
   },
   "ttsRegionLabel": {
     "message": "Região do serviço"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "O resumo precisa de um serviço seu: um provedor com a sua chave, ou um modelo local nesta máquina. Os mecanismos gratuitos só traduzem, não resumem.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Configurar um serviço de tradução",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Resumir",

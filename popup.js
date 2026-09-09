@@ -2,7 +2,14 @@
 // Loads/saves settings to chrome.storage.sync; content.js applies them live.
 // The live preview uses the SAME font map + rgba/outline logic as content.js.
 
-// ---- shared settings model (MUST match content.js DEFAULTS) --------------
+// ---- shared settings model ------------------------------------------------
+// Every key here must agree with content.js DEFAULTS where both carry it. The
+// two lists are NOT identical and the comment used to claim they were: this one
+// also holds the popup-only picker state (ttsProvider / ttsVoice / ttsRegion /
+// ttsBaseUrl / langShown), and content.js holds ttsComplete, which only the
+// player side reads. Anything outside the overlap is written straight to sync
+// by whoever owns it — so a reset here has to name those keys explicitly rather
+// than trust set(DEFAULTS) to cover them.
 const DEFAULTS = {
   enabled: true,
   targetLang: "zh-CN",
@@ -919,57 +926,11 @@ function initLineFold() {
 // may be anything. Nothing here needs a new permission: version and UA are
 // local, gates come from session storage, and the page names itself through
 // the content script because the popup deliberately cannot read tab.url.
+// The bundle itself is built in diag.js, shared with the settings page. This
+// file used to carry its own older copy — the one behind the button that only
+// shows up when something is already wrong.
 async function buildDiagnostics() {
-  const L = [];
-  let ver = "";
-  try { ver = chrome.runtime.getManifest().version; } catch (_e) { /* ignore */ }
-  L.push("Dual Subtitles for YouTube — diagnostic");
-  L.push("version: " + (ver || "?"));
-  L.push("browser: " + navigator.userAgent);
-  let ui = "";
-  try { ui = (chrome.i18n && chrome.i18n.getUILanguage()) || ""; } catch (_e) { /* ignore */ }
-  L.push("ui-language: " + (ui || "?") +
-    (state.uiLocale && state.uiLocale !== "auto" ? " (override: " + state.uiLocale + ")" : ""));
-  L.push("target-language: " + (state.targetLang || "?"));
-  L.push("engine-setting: " + (state.engine || "?") +
-    (state.engine === "byo"
-      ? " (" + (state.byoProvider || "?") + (state.byoModel ? " / " + state.byoModel : "") + ")"
-      : ""));
-  try {
-    if (chrome.storage.session) {
-      const got = await chrome.storage.session.get(["ytdsGtxGate", "ytdsByoGate", "ytdsByoStatus"]);
-      const gate = (name, g) => {
-        if (!g || !g.backoffMs) return name + ": clear";
-        const left = Math.max(0, Math.round(((g.gateUntil || 0) - Date.now()) / 1000));
-        return name + ": backoff " + Math.round(g.backoffMs / 1000) + "s" +
-          (left ? " (" + left + "s left)" : " (expired)");
-      };
-      L.push(gate("gtx-gate", got && got.ytdsGtxGate));
-      L.push(gate("byo-gate", got && got.ytdsByoGate));
-      const st = got && got.ytdsByoStatus;
-      if (st && st.code) L.push("byo-last-error: " + st.code + " (" + (st.provider || "?") + ")");
-    }
-  } catch (_e) { L.push("gates: unavailable"); }
-  try {
-    const tab = await getActiveTab();
-    // Bounded here and nowhere else: the two status-line callers can afford to
-    // wait forever because all they do is not paint a line, while this one is
-    // holding a disabled button.
-    const r = tab && tab.id != null
-      ? await sendToTab(tab.id, { type: "engineStatus" }, 800) : null;
-    if (r && r.ok) {
-      L.push("page: " + (r.href || "youtube (id unknown)"));
-      L.push("video-engine: " + (r.engine || "none yet") +
-        (r.provider ? " (" + r.provider + ")" : "") +
-        (r.same ? ", same-language" : "") +
-        (r.track && r.track !== "none" ? ", track=" + r.track : "") +
-        (r.fellBack ? ", fell-back" : ""));
-    } else {
-      L.push("page: not a YouTube video tab");
-    }
-  } catch (_e) { L.push("page: unavailable"); }
-  L.push("time: " + new Date().toISOString());
-  return L.join("\n");
+  return self.YTDS_DIAG.build(state);
 }
 
 // Collecting takes up to the tab-query deadline, and the answer — success or
@@ -1596,6 +1557,17 @@ function showConfirm(text) {
 // used. Moving them off it mid-thought is the opposite of what putting focus
 // back is for. The export path is not a dismissal either — it focuses the
 // button it is about to disable, which drops focus to the body.
+// Same contract as hideConfirm: dismissed = the reader backed out, so focus
+// returns to the button that opened it.
+function hideResetConfirm(dismissed) {
+  const panel = $("resetConfirm");
+  if (!panel || panel.hidden) return;
+  panel.hidden = true;
+  if (!dismissed) return;
+  const btn = $("reset");
+  if (btn) { try { btn.focus(); } catch (_e) { /* ignore */ } }
+}
+
 function hideConfirm(dismissed) {
   const panel = $("exportConfirm");
   if (!panel || panel.hidden) return;
@@ -1702,6 +1674,7 @@ async function runExport(useByo) {
 }
 
 async function onExportClick() {
+  hideResetConfirm(false);                         // one question at a time (the reset panel closes ours)
   hideConfirm();
   if (!byoExportOffered() || !exportByo) return runExport(false);
 
@@ -2077,15 +2050,34 @@ function wire() {
   // Cancel button — which is also the only place the estimate is announced.
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
-    const panel = $("exportConfirm");
+    // Whichever panel holds the focus closes first; with neither focused, the
+    // reset panel (the later one) goes first.
+    const reset = $("resetConfirm"), panel = $("exportConfirm");
+    const inExport = panel && !panel.hidden && panel.contains(document.activeElement);
+    if (inExport) { e.preventDefault(); hideConfirm(true); return; }
+    if (reset && !reset.hidden) { e.preventDefault(); hideResetConfirm(true); return; }
     if (!panel || panel.hidden) return;
     e.preventDefault();
     hideConfirm(true);
   });
   $("exportStop").addEventListener("click", onExportStop);
 
-  // reset all
+  // reset all — behind an inline confirm. A native confirm() closes the popup
+  // (设计规范 §二; the export card's panel is the precedent), and the text says
+  // what goes: every setting, the keys on this machine, and the per-provider
+  // model/voice memory, which used to vanish without a word. Focus lands on
+  // the SAFE button: Enter must not be the destructive path.
   $("reset").addEventListener("click", () => {
+    hideConfirm(false);                              // the export panel, if open
+    const panel = $("resetConfirm");
+    if (!panel) return;
+    panel.hidden = false;
+    const back = $("resetBack");
+    if (back) { try { back.focus(); } catch (_e) { /* ignore */ } }
+  });
+  $("resetBack").addEventListener("click", () => hideResetConfirm(true));
+  $("resetGo").addEventListener("click", () => {
+    hideResetConfirm(true);                          // focus back on the button, not on body
     state = { ...DEFAULTS };
     chrome.storage.sync.set(DEFAULTS);   // engine:"auto" + backend:"tlang" mirror included
     // Reset means reset: don't leave orphan API keys on the machine. Both
@@ -2098,8 +2090,22 @@ function wire() {
       // answering a request; kept after the keys are gone, the next key typed
       // into that provider inherits a tick it never earned and the panel calls
       // it verified without anything having been tested.
-      chrome.storage.local.remove(["byoKeys", "ttsKeys", "byoOk"]);
-      chrome.storage.sync.remove(["ttsProvider", "ttsVoice", "ttsRegion"]);
+      // ytdsCompleteHintOff goes too: it is the "don't show again" on the
+      // cut-tail hint, a preference and not a secret, and a reset that keeps
+      // it leaves a door shut that the reset claims to reopen.
+      chrome.storage.local.remove(["byoKeys", "ttsKeys", "byoOk", "ytdsCompleteHintOff",
+        "byoCatalogs"]);                 // fetched model lists are a cache, not a setting
+      // "Back to how it was when first installed" — so the first-run hints come
+      // back too: the drag grip's and the corner arrow's budgets are re-seeded
+      // exactly as background.js seeds them on install.
+      chrome.storage.local.set({ handleHintsLeft: 3, menuHintsLeft: 3 });
+      // ttsComplete and the two per-provider memories are written straight to
+      // sync by other surfaces and are not in this file's DEFAULTS, so
+      // set(DEFAULTS) above cannot reach them. They survived a reset that says
+      // it resets everything: "finish every line" stayed on, and each provider
+      // still remembered the model and voice last used with it.
+      chrome.storage.sync.remove(["ttsProvider", "ttsVoice", "ttsRegion",
+        "ttsComplete", "byoModelBy", "ttsModelBy"]);
       paintByoPanel();               // the summary must stop claiming a key
       paintTtsCard();                // …and so must the read-aloud card
     } catch (_e) { /* ignore */ }

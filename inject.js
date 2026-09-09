@@ -234,6 +234,14 @@
   // thing left to notice). Ours always carry fmt=json3, so they cannot
   // collide with the player's own request for the same track.
   const selfUrls = new Map();
+  // How long a URL stays "ours" after its fetch settles. The PerformanceObserver
+  // reports a request only once its body has finished — later than the
+  // `finally` below — so a map cleared there had already forgotten the URL by
+  // the time the observer echoed it back, and the echo read as the player
+  // fetching a fresh pot. On the tlang branch that fired the deferred retry at
+  // once instead of a few seconds later: one extra produce and a duplicate
+  // cues post per translation hiccup.
+  const SELF_URL_LINGER_MS = 5000;
 
   // page-context fetch — same-origin youtube.com so pot/signature stay valid.
   async function fetchJson3(url) {
@@ -250,8 +258,10 @@
         method: "GET", credentials: "include", signal: AbortSignal.timeout(TT_FETCH_TIMEOUT_MS)
       });
     } finally {
-      const n = (selfUrls.get(url) || 1) - 1;
-      if (n > 0) selfUrls.set(url, n); else selfUrls.delete(url);
+      setTimeout(() => {
+        const n = (selfUrls.get(url) || 1) - 1;
+        if (n > 0) selfUrls.set(url, n); else selfUrls.delete(url);
+      }, SELF_URL_LINGER_MS);
     }
     if (!res.ok) {
       const err = new Error("timedtext http " + res.status);
@@ -625,10 +635,16 @@
         // URL minus its tlang IS the source-track URL: lang= still names the
         // source language, and the pot holds for both legs — produceCues has
         // always fetched original AND translation off one captured URL.
-        // Only a NEW track takes this path; pot refreshes keep riding the
-        // tlang-free branch below, so this cannot re-trigger a produce loop.
+        // This branch used to return early on a same-track capture BEFORE
+        // refreshing sourceUrl, on the theory that "pot refreshes keep riding
+        // the tlang-free branch below". They do not: the whole reason this
+        // branch exists is that with such a track selected EVERY player request
+        // carries tlang, so every rotated pot landed here and was dropped, and
+        // sourceUrl stayed pinned to the first one for the life of the video —
+        // a later language change or SRT export then fetched with a stale
+        // token. Mirror the plain branch instead: always keep the freshest
+        // URL, and let only a track identity change re-produce.
         const key = normKey(url);
-        if (key === sourceKey) return;
         let stripped = "";
         try {
           const u = new URL(url, location.href);
@@ -637,8 +653,18 @@
         } catch (_e) { return; }
         sourceUrl = stripped;
         sourceVid = vidOfUrl(url);
-        sourceKey = key;
-        onSourceCaptured();
+        if (key !== sourceKey) {
+          sourceKey = key;
+          onSourceCaptured();
+        } else if (tlangRetryTimer && key === tlangRetriedFor) {
+          // Same track, fresh pot, a translation retry still pending — the
+          // rescue the plain branch has always had, which this one never did.
+          clearTlangRetry();
+          if (cfg && cfg.mode !== "gtx") {      // gtx is what was asked for
+            producedForUrl = "";
+            produceCues(true);
+          }
+        }
         return;
       }
       // The player's original-track fetch — the plainest pot to reuse.
@@ -656,8 +682,10 @@
         // timer's: whatever went wrong, it is now being asked again with the
         // token the player itself just used.
         clearTlangRetry();
-        producedForUrl = "";
-        produceCues(true);
+        if (cfg && cfg.mode !== "gtx") {        // gtx is what was asked for
+          producedForUrl = "";
+          produceCues(true);
+        }
       }
     } catch (_e) { /* never throw */ }
   }
@@ -934,14 +962,24 @@
       // 80→20→15→5→0 in four boundaries on a real 2x run (2026-09-01), and
       // the zero stuck until the page reloaded. The user's volume is the
       // ramp's TARGET; adopt it and let this duck start from there.
+      // …but adopt POLITELY, like every other path here. The ramp stops itself
+      // when the user grabs the slider, and it used to leave duckRestoreTo
+      // standing — so the next line adopted a value the user had already
+      // overruled and pushed the audio back down to a share of it. Their
+      // reading is the preference the moment it stops being ours.
       if (duckSavedVol < 0 && duckRestoreTo >= 0) {
         duckRampClear();
-        duckSavedVol = duckRestoreTo;
-        duckRestoreTo = -1;
-        duckSetVol = Math.round(duckSavedVol * share / 100);
-        duckLastWrote = duckSetVol;
-        p.setVolume(duckSetVol);
-        return;
+        let cur = -1;
+        try { cur = p.getVolume(); } catch (_e) { cur = -1; }
+        if (duckLastWrote >= 0 && cur === duckLastWrote) {
+          duckSavedVol = duckRestoreTo;
+          duckRestoreTo = -1;
+          duckSetVol = Math.round(duckSavedVol * share / 100);
+          duckLastWrote = duckSetVol;
+          p.setVolume(duckSetVol);
+          return;
+        }
+        duckRestoreTo = -1;      // not ours any more: drop it and read them
       }
       if (duckSavedVol >= 0) {
         // Already ducked, and the depth moved under us: the popup's two volume
@@ -1081,14 +1119,16 @@
         // "already ducked to the right place" and set nothing at all, so the
         // line speaks over full-volume audio with no sign of why.
         duckRampClear();
-        duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1;
+        // duckRestoreTo with them: a ramp destination that outlives its player
+        // is a volume from the previous video waiting to be adopted on this one.
+        duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1; duckRestoreTo = -1;
         rateSavedBase = -1; rateSet = -1;
       }
       if (nav) { rateMoved = false; rateSaid = ""; }  // new video, fresh slate
       if (p) rateReport(p);
     } catch (_e) {
       duckRampClear();
-      duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1;
+      duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1; duckRestoreTo = -1;
       rateSavedBase = -1; rateSet = -1;
     }
   }
@@ -1115,6 +1155,9 @@
         // Adopt the content-supplied nonce so our posts correlate to THIS
         // sendConfig(); content.js drops any reply with an older nonce.
         if (typeof d.nonce === "number") reqNonce = d.nonce;
+        // A new config re-produces on its own terms; a deferred translation
+        // retry armed under the old one would only produce a second time.
+        clearTlangRetry();
         producedForUrl = "";            // force re-produce under new config
         if (sourceUrl && sourceVid === currentVideoId) {
           produceCues(true);            // already captured for this video

@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (lokal)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Live-Vorschau"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Alle Einstellungen zurücksetzen"
+  },
+  "resetConfirmText": {
+    "message": "Damit werden alle Einstellungen, die auf diesem Computer gespeicherten API-Schlüssel sowie das gespeicherte Modell und die Stimme jedes Anbieters gelöscht. Die Hinweise beim ersten Start werden wieder eingeschaltet. Bereits erteilte Berechtigungen für Anbieter-Domains bleiben bestehen.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Einstellungen behalten",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Alles zurücksetzen",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Zweisprachige Untertitel aus"
@@ -471,7 +487,7 @@
     "message": "Eine zweite Untertitelzeile für YouTube: das Original in einer Zeile, die Übersetzung in der anderen, Schrift, Farbe und Position nach Wunsch. Open Source, kostenlos, ohne Werbung."
   },
   "aboutPrivacy": {
-    "message": "Die Erweiterung hat keinen Server von uns und sammelt keine Statistiken. Untertiteltext geht nur an den gewählten Übersetzungsdienst; mit eigenem Schlüssel bleibt der Schlüssel nur auf diesem Computer."
+    "message": "Die Erweiterung hat keinen eigenen Server und erfasst keine Statistiken. Untertiteltext wird nur an Dienste gesendet, die Sie gewählt haben: den Übersetzungsdienst Ihrer Wahl und, falls aktiviert, den Sprachdienst für Vorlesen sowie den für Zusammenfassungen eingerichteten Dienst. Ein eigener Schlüssel wird nur auf diesem Computer gespeichert."
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll"
@@ -804,7 +820,7 @@
     "message": "keine Stimme zu hören"
   },
   "ttsEnableHint": {
-    "message": "Wenn aktiv, wird die Übersetzung jeder Untertitelzeile vorgelesen, sobald sie erscheint; eine Zeile, deren Übersetzung nicht rechtzeitig fertig ist, wird übersprungen statt nachgeholt. Während eine Zeile spricht, sinkt der Ton des Videos auf den unten festgelegten Pegel. Eine Cloud-Stimme, die länger dauert, verlangsamt das Video etwas — die Stimmen des Browsers melden keine Dauer und können das daher nicht."
+    "message": "Wenn aktiv, wird die Übersetzung jeder Untertitelzeile gesprochen, sobald sie erscheint; eine Zeile, deren Übersetzung nicht rechtzeitig bereit ist, wird übersprungen statt nachgeholt. Während eine Zeile gesprochen wird, sinkt der eigene Ton des Videos auf den unten festgelegten Pegel. Eine zu lange Zeile verlangsamt das Bild etwas und leiht sich die Pause danach — bei Cloud-Stimmen und bei der des Browsers; der Schalter darunter hält die Verlangsamung, bis jede Zeile fertig ist."
   },
   "ttsRegionLabel": {
     "message": "Serviceregion"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Zusammenfassungen brauchen deinen eigenen Dienst: einen Anbieter mit deinem Schlüssel oder ein lokales Modell auf diesem Rechner. Die kostenlosen Engines übersetzen nur, sie fassen nicht zusammen.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Übersetzungsdienst einrichten",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Zusammenfassen",

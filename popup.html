@@ -433,6 +433,18 @@
       <button id="reset" type="button" class="reset" data-i18n="resetAll">重置全部设置</button>
       <p class="ver">v<span id="version"></span></p>
     </div>
+    <!-- Reset asks first. A native confirm() closes the popup (设计规范 §二),
+         so this is the export card's inline panel again; the text names what
+         goes — the keys and the per-provider model/voice memory used to vanish
+         without a word. -->
+    <div class="confirm" id="resetConfirm" hidden role="alertdialog"
+         aria-labelledby="resetConfirmText">
+      <p class="confirm-txt" id="resetConfirmText" data-i18n="resetConfirmText">会清掉所有设置、这台电脑上保存的 API Key，以及每家服务商记住的模型和音色，首次使用的提示会重新出现。已经授权过的服务商域名保持授权。</p>
+      <div class="confirm-row">
+        <button id="resetBack" type="button" class="confirm-no" data-i18n="resetConfirmBack">保留我的设置</button>
+        <button id="resetGo" type="button" class="confirm-go" data-i18n="resetConfirmGo">确定重置</button>
+      </div>
+    </div>
     <label class="chk ft-chk">
       <input type="checkbox" id="updateNotes" />
       <span data-i18n="updateNotesLabel">更新后打开新功能介绍页</span>
@@ -444,6 +456,7 @@
   <script src="providers.js"></script>
   <script src="provider-icons.js"></script>
   <script src="i18n-runtime.js"></script>
+  <script src="diag.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

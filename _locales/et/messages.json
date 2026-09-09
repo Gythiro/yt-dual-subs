@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (kohalik)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Reaalajas eelvaade"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Lähtesta kõik seaded"
+  },
+  "resetConfirmText": {
+    "message": "See tühjendab kõik seaded, sellele arvutile salvestatud API-võtmed ning iga teenusepakkuja jaoks meelde jäetud mudeli ja hääle ning lülitab esmakäivituse vihjed uuesti sisse. Teenusepakkuja domeenid, millele oled juba loa andnud, jäävad kehtima.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Säilita seaded",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Lähtesta kõik",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Lülita kakskeelsed subtiitrid välja"
@@ -471,7 +487,7 @@
     "message": "Teine subtiitririda YouTube'ile: originaal ühel real, tõlge teisel; font, värv ja asukoht on sinu valida. Avatud lähtekood, tasuta, reklaamideta."
   },
   "aboutPrivacy": {
-    "message": "Laiendusel pole meie serverit ja see ei kogu statistikat. Subtiitritekst läheb ainult valitud tõlketeenusele; oma võtme korral hoitakse võtit ainult selles arvutis."
+    "message": "Laiendil ei ole meie serverit ja see ei kogu statistikat. Subtiitrite tekst saadetakse ainult sinu valitud teenustele: valitud tõlketeenusele ning, kui need sisse lülitad, ettelugemise kõneteenusepakkujale ja kokkuvõtete jaoks seadistatud teenusepakkujale. Oma võtme kasutamisel salvestatakse võti ainult sellele arvutile."
   },
   "aboutChangelog": {
     "message": "Muudatuste logi"
@@ -804,7 +820,7 @@
     "message": "hääl jäi tulemata"
   },
   "ttsEnableHint": {
-    "message": "Kui sisse lülitatud, loetakse iga subtiitri tõlge ette kohe ilmumisel; rida, mille tõlge pole õigeks ajaks valmis, jäetakse vahele ega loeta hiljem järele. Ettelugemise ajal langeb video enda heli allpool määratud tasemele. Pikk pilvehääl aeglustab videot ka veidi — brauseri enda hääled ei teata kestust, seega nemad seda teha ei saa."
+    "message": "Sisselülitatuna loetakse iga subtiitri tõlge ette selle ilmumisel; rida, mille tõlge pole õigel ajal valmis, jäetakse vahele ega loeta hiljem järele. Rea ettelugemise ajal langeb video enda heli allpool määratud tasemele. Pikk rida aeglustab pilti veidi ja laenab sellele järgneva vahe — nii pilvehäälte kui ka brauseri enda häälega; allpool olev lüliti jätkab aeglustamist, kuni iga rida on lõppenud."
   },
   "ttsRegionLabel": {
     "message": "Teenusepiirkond"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Kokkuvõte vajab sinu enda teenust: võtmega teenusepakkujat või kohalikku mudelit selles arvutis. Tasuta mootorid ainult tõlgivad, kokku ei võta.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Seadista tõlketeenus",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Tee kokkuvõte",

@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (lokalny)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Podgląd na żywo"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Resetuj wszystkie ustawienia"
+  },
+  "resetConfirmText": {
+    "message": "Wyczyści to wszystkie ustawienia, klucze API zapisane na tym komputerze oraz zapamiętany model i głos każdego dostawcy, a także ponownie włączy wskazówki z pierwszego uruchomienia. Przyznane uprawnienia do domen dostawców pozostają.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Zachowaj ustawienia",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Resetuj wszystko",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Wyłącz podwójne napisy"
@@ -471,7 +487,7 @@
     "message": "Druga linia napisów na YouTube: oryginał w jednej, tłumaczenie w drugiej — czcionka, kolor i pozycja zależą od Ciebie. Otwarty kod, darmowe, bez reklam."
   },
   "aboutPrivacy": {
-    "message": "Rozszerzenie nie ma naszego serwera i nie zbiera statystyk. Tekst napisów trafia wyłącznie do wybranej usługi tłumaczenia; własny klucz jest przechowywany tylko na tym komputerze."
+    "message": "Rozszerzenie nie ma naszego serwera i nie zbiera statystyk. Tekst napisów trafia wyłącznie do usług, które wybierzesz: usługi tłumaczenia oraz, jeśli je włączysz, dostawcy syntezy mowy do odczytu na głos i dostawcy podsumowań. Własny klucz jest przechowywany wyłącznie na tym komputerze."
   },
   "aboutChangelog": {
     "message": "Dziennik zmian"
@@ -804,7 +820,7 @@
     "message": "głos się nie odezwał"
   },
   "ttsEnableHint": {
-    "message": "Po włączeniu tłumaczenie każdej linijki jest odczytywane, gdy się pojawia; linijka, której tłumaczenie nie zdąży, jest pomijana, a nie nadrabiana później. Podczas odczytu dźwięk filmu ścisza się do poziomu ustawionego poniżej. Długi głos chmurowy dodatkowo trochę spowalnia film — głosy przeglądarki nie zgłaszają długości, więc tego nie robią."
+    "message": "Po włączeniu tłumaczenie każdego napisu jest odczytywane w chwili jego pojawienia się; linia, której tłumaczenie nie jest gotowe na czas, zostaje pominięta, a nie nadrabiana później. Gdy linia jest odczytywana, dźwięk filmu ścisza się do poziomu ustawionego poniżej. Zbyt długa linia nieco spowalnia obraz i korzysta z przerwy po niej — zarówno przy głosach w chmurze, jak i przy głosie przeglądarki; przełącznik poniżej utrzymuje spowolnienie, aż skończy się każda linia."
   },
   "ttsRegionLabel": {
     "message": "Region usługi"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Podsumowanie wymaga własnej usługi: dostawcy z Twoim kluczem albo lokalnego modelu na tym komputerze. Darmowe silniki tylko tłumaczą, nie podsumowują.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Skonfiguruj usługę tłumaczeń",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Podsumuj",

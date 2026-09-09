@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (místní)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Živý náhled"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Obnovit všechna nastavení"
+  },
+  "resetConfirmText": {
+    "message": "Tím se vymažou všechna nastavení, klíče API uložené v tomto počítači a zapamatovaný model i hlas u každého poskytovatele a znovu se zapnou nápovědy při prvním spuštění. Domény poskytovatelů, ke kterým jste již udělili přístup, zůstanou povolené.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Ponechat nastavení",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Resetovat vše",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Vypnout dvojjazyčné titulky"
@@ -471,7 +487,7 @@
     "message": "Druhý řádek titulků na YouTube: originál na jednom, překlad na druhém, písmo, barva i pozice podle vás. Open source, zdarma, bez reklam."
   },
   "aboutPrivacy": {
-    "message": "Rozšíření nepoužívá žádný náš server a neshromažďuje statistiky. Text titulků jde jen k překladatelské službě, kterou zvolíte; s vlastním klíčem se klíč ukládá jen na tomto počítači."
+    "message": "Rozšíření nemá žádný náš server a neshromažďuje statistiky. Text titulků se odesílá jen službám, které jste zvolili: překladové službě, kterou vyberete, a pokud je zapnete, poskytovateli hlasu pro čtení nahlas a poskytovateli, kterého nastavíte pro shrnutí. Vlastní klíč se ukládá jen v tomto počítači."
   },
   "aboutChangelog": {
     "message": "Seznam změn"
@@ -804,7 +820,7 @@
     "message": "hlas se neozval"
   },
   "ttsEnableHint": {
-    "message": "Po zapnutí se překlad každého titulku vysloví, jakmile se objeví; řádek, jehož překlad nestihne přijít včas, se přeskočí a později se nedohání. Zatímco se řádek vyslovuje, vlastní zvuk videa klesne na úroveň nastavenou níže. Cloudový hlas, který trvá déle, video také mírně zpomalí — vlastní hlasy prohlížeče délku nehlásí, takže to u nich nejde."
+    "message": "Když je zapnuto, překlad každého titulku se vysloví, jakmile se objeví; řádek, jehož překlad není včas připraven, se přeskočí a později se nedožene. Zatímco se řádek vyslovuje, vlastní zvuk videa klesne na úroveň nastavenou níže. Řádek, který trvá déle, trochu zpomalí obraz a využije mezeru za ním — u cloudových hlasů i u hlasu prohlížeče; přepínač níže zpomaluje, dokud neskončí každý řádek."
   },
   "ttsRegionLabel": {
     "message": "Oblast služby"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Shrnutí potřebuje vaši vlastní službu: poskytovatele s vaším klíčem, nebo lokální model na tomto počítači. Bezplatné služby jen překládají, neshrnují.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Nastavit překladovou službu",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Shrnout",

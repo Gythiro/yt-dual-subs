@@ -60,6 +60,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow 矽基流動"
   },
+  "provOllama": {
+    "message": "Ollama（本機）",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "即時預覽"
   },
@@ -212,6 +216,18 @@
   },
   "resetAll": {
     "message": "重設所有設定"
+  },
+  "resetConfirmText": {
+    "message": "會清掉所有設定、這台電腦上儲存的 API Key，以及每家服務商記住的模型和音色，首次使用的提示會重新出現。已經授權過的服務商網域保持授權。",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "保留我的設定",
+    "description": "Popup: the safe button on the reset panel \u2014 closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "確定重設",
+    "description": "Popup: the destructive button on the reset panel \u2014 performs the reset."
   },
   "toggleTurnOff": {
     "message": "關閉雙語字幕"
@@ -522,7 +538,7 @@
     "message": "為 YouTube 加上一層雙語字幕：原文一行、譯文一行，字型、顏色、位置都能自己調。開源、免費、無廣告。"
   },
   "aboutPrivacy": {
-    "message": "擴充功能沒有我們的伺服器，也不做任何統計。字幕文字只會送往你選擇的翻譯服務；使用自備 Key 時，Key 只會保存在這台電腦上。"
+    "message": "擴充功能沒有我們的伺服器，也不做任何統計。字幕文字只傳給你選的服務：你選的翻譯服務，以及在你開啟時，朗讀用的語音服務商和你為摘要設定的那一家。用自帶 Key 時，Key 只儲存在這台電腦上。"
   },
   "aboutChangelog": {
     "message": "更新日誌"
@@ -765,7 +781,7 @@
     "message": "在影片裡朗讀譯文"
   },
   "ttsEnableHint": {
-    "message": "開著時，每句字幕出現就朗讀它的譯文；來不及翻譯的句子會被跳過，之後也不會補讀。朗讀期間，影片音量會降到下面設定的檔位。用雲端音色時，句子長到讀不完還會讓影片稍微放慢——瀏覽器自帶的音色報不出長度，所以做不到這一點。"
+    "message": "開著時，每句字幕出現就朗讀它的譯文；來不及翻譯的句子會被跳過，之後也不會補讀。朗讀期間，影片音量會降到下面設定的檔位。句子長到讀不完時，畫面會稍微放慢、借用後面的空隙——雲端音色和瀏覽器自帶的音色都這樣；要句句讀完，開下面的「每句讀完不截斷」。"
   },
   "langsIntro": {
     "message": "彈出視窗裡可以選哪些譯文語言。"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "總結需要你自己的翻譯服務（填過 Key 的任何一家，或本機跑的模型）。免費引擎只翻譯，不總結。",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "去設定翻譯服務",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "開始總結",

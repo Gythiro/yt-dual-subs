@@ -685,16 +685,25 @@ function showLangMsg(text, kind) {
 // Intl.DisplayNames has been in Chrome since 81 and the manifest floor is 111,
 // but a Chromium fork could still lack it — fall back to the English name
 // rather than dropping the label.
-let displayNames = null;
-try {
-  const ui = (chrome.i18n && chrome.i18n.getUILanguage()) || "en";
-  displayNames = new Intl.DisplayNames([ui], { type: "language" });
-} catch (_e) { /* fall back below */ }
+// Built on first use, not at load: the interface-language override is only
+// known once YTDS_I18N.init() has run, and this used to ask the browser at
+// load time — so a German reader on an English Chrome got "Deutsch  German"
+// down the whole list, the one column on the page that ignored their choice.
+let displayNames;      // undefined = not tried; null = unavailable
+function getDisplayNames() {
+  if (displayNames !== undefined) return displayNames;
+  try {
+    const ui = (self.YTDS_I18N && self.YTDS_I18N.effectiveLang()) || "en";
+    displayNames = new Intl.DisplayNames([ui], { type: "language" });
+  } catch (_e) { displayNames = null; }
+  return displayNames;
+}
 
 function localName(info) {
-  if (displayNames) {
+  const dn = getDisplayNames();
+  if (dn) {
     try {
-      const n = displayNames.of(info.code);
+      const n = dn.of(info.code);
       // A locale with no name for the code echoes the code straight back.
       if (n && n !== info.code) return n;
     } catch (_e) { /* fall through */ }
@@ -845,122 +854,11 @@ function showSection(name) {
   }
 }
 
-// ---- diagnostics (the permanent entry; the popup has a warning-only twin) ----
-// This page is not the YouTube tab, so it cannot ask "the active tab" what it
-// is rendering. It asks EVERY tab instead: only tabs carrying our content
-// script answer, which is exactly the set we want. No new permission — the
-// reply comes from a script we already inject, and tabs.query without the
-// "tabs" permission still returns ids. Several YouTube tabs open is not a
-// problem to disambiguate but a thing to report: all of them go in the bundle.
-function askYouTubeTabs() {
-  return new Promise((resolve) => {
-    let done = false;
-    // Declared here, above the timer, on purpose: the timeout used to hand over
-    // an empty list because this was scoped inside the query callback and there
-    // was nothing else it could name. Every tab in every window is asked, and
-    // one that is mid-load — or that Chrome has frozen in the background —
-    // simply never calls back, so a single quiet tab threw away every answer
-    // that had arrived and the bundle reported "no YouTube tab open". That
-    // bundle is the only source of truth support gets.
-    const out = [];
-    const finish = (v) => { if (!done) { done = true; resolve(v); } };
-    // A copy: replies still in flight keep pushing after the deadline, and the
-    // caller should not be handed an array that grows under it.
-    setTimeout(() => finish(out.slice()), 800);
-    try {
-      chrome.tabs.query({}, (tabs) => {
-        const ids = (tabs || []).map((t) => t.id).filter((id) => id != null);
-        if (!ids.length) return finish([]);
-        let left = ids.length;
-        for (const id of ids) {
-          try {
-            chrome.tabs.sendMessage(id, { type: "engineStatus" }, (r) => {
-              void chrome.runtime.lastError;   // most tabs have no listener
-              if (r && r.ok) out.push(r);
-              if (--left === 0) finish(out);
-            });
-          } catch (_e) {
-            if (--left === 0) finish(out);
-          }
-        }
-      });
-    } catch (_e) { finish([]); }
-  });
-}
-
-// A YouTube URL reduced to the part a bug report can use. Anything that is not
-// recognisably a YouTube video address is dropped rather than guessed at.
-function diagPageRef(href) {
-  if (!href) return "youtube (id unknown)";
-  let u;
-  try { u = new URL(String(href)); } catch (_e) { return "youtube (unreadable address)"; }
-  const shorts = /^\/shorts\/([A-Za-z0-9_-]{6,})/.exec(u.pathname);
-  const id = shorts ? shorts[1] : u.searchParams.get("v");
-  if (id) return (shorts ? "shorts " : "watch ") + id;
-  return "youtube" + (u.pathname && u.pathname !== "/" ? " " + u.pathname : "");
-}
-
+// ---- diagnostics ---------------------------------------------------------
+// The builder lives in diag.js and is shared with the popup; this page passes
+// its own state (target language, provider, model, voice) and gets the text.
 async function buildDiagnostics() {
-  const L = [];
-  let ver = "";
-  try { ver = chrome.runtime.getManifest().version; } catch (_e) { /* ignore */ }
-  L.push("Dual Subtitles for YouTube — diagnostic");
-  L.push("version: " + (ver || "?"));
-  L.push("browser: " + navigator.userAgent);
-  let ui = "";
-  try { ui = (chrome.i18n && chrome.i18n.getUILanguage()) || ""; } catch (_e) { /* ignore */ }
-  let uiLocale = "auto";
-  try {
-    const got = await new Promise((res) => chrome.storage.sync.get({ uiLocale: "auto" }, res));
-    uiLocale = (got && got.uiLocale) || "auto";
-  } catch (_e) { /* ignore */ }
-  L.push("ui-language: " + (ui || "?") +
-    (uiLocale && uiLocale !== "auto" ? " (override: " + uiLocale + ")" : ""));
-  L.push("target-language: " + (state.targetLang || "?"));
-  L.push("engine-setting: " + (state.byoProvider
-    ? "byo (" + state.byoProvider + (state.byoModel ? " / " + state.byoModel : "") + ")"
-    : "see popup"));
-  L.push("read-aloud: " + (state.ttsProvider || "off") +
-    (state.ttsVoice ? " / " + state.ttsVoice : ""));
-  try {
-    if (chrome.storage.session) {
-      const got = await chrome.storage.session.get(["ytdsGtxGate", "ytdsByoGate", "ytdsByoStatus"]);
-      const gate = (name, g) => {
-        if (!g || !g.backoffMs) return name + ": clear";
-        const left = Math.max(0, Math.round(((g.gateUntil || 0) - Date.now()) / 1000));
-        return name + ": backoff " + Math.round(g.backoffMs / 1000) + "s" +
-          (left ? " (" + left + "s left)" : " (expired)");
-      };
-      L.push(gate("gtx-gate", got && got.ytdsGtxGate));
-      L.push(gate("byo-gate", got && got.ytdsByoGate));
-      const st = got && got.ytdsByoStatus;
-      if (st && st.code) L.push("byo-last-error: " + st.code + " (" + (st.provider || "?") + ")");
-    }
-  } catch (_e) { L.push("gates: unavailable"); }
-  const pages = await askYouTubeTabs();
-  if (!pages.length) {
-    L.push("page: no YouTube tab open");
-  } else {
-    pages.forEach((r, i) => {
-      const n = pages.length > 1 ? " #" + (i + 1) : "";
-      // The video, not the visit. A full watch URL carries the timestamp the
-      // reader was at, the playlist they came through, and whatever tracking
-      // parameters the link they followed had on it — and the hint under this
-      // button tells people to paste the result into an email or an issue,
-      // where issues are public. The id is what a report needs to reproduce
-      // anything; the rest is a record of somebody's afternoon.
-      L.push("page" + n + ": " + diagPageRef(r.href));
-      L.push("video-engine" + n + ": " + (r.engine || "none yet") +
-        (r.provider ? " (" + r.provider + ")" : "") +
-        (r.same ? ", same-language" : "") +
-        (r.track && r.track !== "none" ? ", track=" + r.track : "") +
-        (r.fellBack ? ", fell-back" : "") +
-        (r.tts ? ", tts spoken=" + r.tts.spoken + " skipped=" + r.tts.skipped +
-          (r.tts.err ? " err=" + r.tts.err : "") : ""));
-    });
-  }
-  L.push("time: " + new Date().toISOString());
-  return L.join("\n");
+  return self.YTDS_DIAG.build(state);
 }
 
 // Collecting takes up to the tab-query deadline, and the answer — success or
@@ -1983,6 +1881,13 @@ function initCrossPageSync() {
       }
       if (area !== "sync") return;
       const c = changes;
+      // The per-provider model memory is read once at boot and written back on
+      // every save. A reset from the popup removes the key; without this the
+      // next save here restored every remembered model from a stale copy.
+      if (c.byoModelBy) {
+        const v = c.byoModelBy.newValue;
+        modelsBy = Object.assign(Object.create(null), (v && typeof v === "object") ? v : {});
+      }
       if (c.engine) {
         state.engine = String(c.engine.newValue || "");
         paintAfterSetupNote(state.engine);

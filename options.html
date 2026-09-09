@@ -470,7 +470,7 @@
              twenty languages. What it did wrong was spacing — see options.css,
              where it is pulled up against the switch it explains so the switch
              and the two sliders still read as one group. -->
-        <p class="ohint" data-i18n="ttsEnableHint">开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，之后也不会补读。朗读期间，视频音量会降到下面设定的档位。用云端音色时，句子长到读不完还会让视频稍微放慢——浏览器自带的音色报不出时长，所以做不到这一点。</p>
+        <p class="ohint" data-i18n="ttsEnableHint">开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，之后也不会补读。朗读期间，视频音量会降到下面设定的档位。句子长到读不完时，画面会稍微放慢、借用后面的空隙——云端音色和浏览器自带的音色都这样；要句句读完，开下面的「每句读完不截断」。</p>
         <div class="orow">
           <label for="ttsVolume"><span data-i18n="ttsVolLabel">朗读音量</span>
             <b id="ttsVolumeV">100%</b></label>
@@ -519,7 +519,7 @@
       <p data-i18n="aboutBlurb">
         给 YouTube 加一层双语字幕：原文一行、译文一行，字体、颜色、位置都能自己调。开源、免费、无广告。
       </p>
-      <p class="oabout-privacy" data-i18n="aboutPrivacy">扩展没有我们的服务器，也不做任何统计。字幕文本只发往你选择的翻译服务；用自带 Key 时，Key 只保存在这台电脑上。</p>
+      <p class="oabout-privacy" data-i18n="aboutPrivacy">扩展没有我们的服务器，也不做任何统计。字幕文本只发往你选的服务：你选的翻译服务，以及在你开启时，朗读用的语音服务商和你为总结配置的那一家。用自带 Key 时，Key 只保存在这台电脑上。</p>
       <p class="olinks">
         <a id="aboutSite" target="_blank" rel="noopener" data-i18n="ftSiteLabel">官网</a>
         <a id="aboutGithub" target="_blank" rel="noopener">GitHub</a>
@@ -577,6 +577,7 @@
   <script src="providers.js"></script>
   <script src="provider-icons.js"></script>
   <script src="i18n-runtime.js"></script>
+  <script src="diag.js"></script>
   <script src="options.js"></script>
 </body>
 </html>

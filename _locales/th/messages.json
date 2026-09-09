@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (ในเครื่อง)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "ตัวอย่างสด"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "รีเซ็ตการตั้งค่าทั้งหมด"
+  },
+  "resetConfirmText": {
+    "message": "การดำเนินการนี้จะล้างการตั้งค่าทั้งหมด คีย์ API ที่บันทึกในคอมพิวเตอร์เครื่องนี้ และโมเดลกับเสียงที่จำไว้สำหรับแต่ละผู้ให้บริการ รวมทั้งเปิดคำแนะนำตอนเริ่มต้นใช้อีกครั้ง โดเมนของผู้ให้บริการที่คุณอนุญาตไว้แล้วจะยังคงได้รับอนุญาต",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "เก็บการตั้งค่าไว้",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "รีเซ็ตทั้งหมด",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "ปิดคำบรรยายคู่"
@@ -471,7 +487,7 @@
     "message": "บรรทัดคำบรรยายที่สองสำหรับ YouTube: ต้นฉบับบรรทัดหนึ่ง คำแปลอีกบรรทัด ปรับแบบอักษร สี และตำแหน่งได้ตามต้องการ โอเพนซอร์ส ฟรี ไม่มีโฆษณา"
   },
   "aboutPrivacy": {
-    "message": "ส่วนขยายนี้ไม่มีเซิร์ฟเวอร์ของเราและไม่เก็บสถิติ ข้อความซับไตเติลไปเฉพาะบริการแปลที่คุณเลือก เมื่อใช้คีย์ของคุณเอง คีย์จะถูกเก็บไว้บนคอมพิวเตอร์เครื่องนี้เท่านั้น"
+    "message": "ส่วนขยายนี้ไม่มีเซิร์ฟเวอร์ของเรา และไม่เก็บสถิติใดๆ ข้อความคำบรรยายจะถูกส่งไปเฉพาะบริการที่คุณเลือก ได้แก่ บริการแปลที่คุณเลือก และหากเปิดใช้งาน ผู้ให้บริการเสียงสำหรับอ่านออกเสียง และผู้ให้บริการที่ตั้งไว้สำหรับสรุป หากใช้คีย์ของคุณเอง คีย์จะถูกเก็บไว้ในคอมพิวเตอร์เครื่องนี้เท่านั้น"
   },
   "aboutChangelog": {
     "message": "บันทึกการเปลี่ยนแปลง"
@@ -804,7 +820,7 @@
     "message": "ไม่มีเสียงออกมา"
   },
   "ttsEnableHint": {
-    "message": "เมื่อเปิด ระบบจะอ่านคำแปลของแต่ละซับไตเติลทันทีที่ปรากฏ บรรทัดที่คำแปลยังไม่พร้อมทันจะถูกข้าม ไม่ไล่ตามทีหลัง ขณะที่กำลังอ่าน เสียงวิดีโอจะลดลงตามระดับที่ตั้งด้านล่าง เสียงคลาวด์ที่ยาวเกินไปจะทำให้วิดีโอช้าลงเล็กน้อย — เสียงของเบราว์เซอร์ไม่รายงานความยาว จึงทำแบบนั้นไม่ได้"
+    "message": "เมื่อเปิด คำแปลของแต่ละบรรทัดคำบรรยายจะถูกอ่านออกเสียงทันทีที่ปรากฏ หากคำแปลยังไม่พร้อมทันเวลา บรรทัดนั้นจะถูกข้ามไป ไม่ไล่ตามทีหลัง ขณะที่กำลังอ่าน เสียงของวิดีโอจะลดลงตามระดับที่ตั้งไว้ด้านล่าง หากบรรทัดยาวเกินไป ภาพจะช้าลงเล็กน้อยและยืมช่องว่างหลังบรรทัดนั้น — ทั้งเสียงคลาวด์และเสียงของเบราว์เซอร์เอง สวิตช์ด้านล่างจะชะลอต่อไปจนกว่าทุกบรรทัดจะอ่านจบ"
   },
   "ttsRegionLabel": {
     "message": "ภูมิภาคบริการ"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "การสรุปต้องใช้บริการของคุณเอง: ผู้ให้บริการที่ใส่คีย์ไว้ หรือโมเดลในเครื่องนี้ เอ็นจินฟรีแปลอย่างเดียว ไม่สรุป",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "ตั้งค่าบริการแปล",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "สรุปเลย",

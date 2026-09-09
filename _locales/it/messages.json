@@ -57,6 +57,10 @@
   "provSiliconflow": {
     "message": "SiliconFlow"
   },
+  "provOllama": {
+    "message": "Ollama (locale)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
   "previewAria": {
     "message": "Anteprima in tempo reale"
   },
@@ -194,6 +198,18 @@
   },
   "resetAll": {
     "message": "Reimposta tutte le impostazioni"
+  },
+  "resetConfirmText": {
+    "message": "Questo cancella tutte le impostazioni, le chiavi API salvate su questo computer e il modello e la voce memorizzati per ciascun provider, e riattiva i suggerimenti del primo avvio. I domini dei provider già autorizzati restano autorizzati.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Mantieni le impostazioni",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Reimposta tutto",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "Disattiva i sottotitoli bilingue"
@@ -471,7 +487,7 @@
     "message": "Una seconda riga di sottotitoli per YouTube: l'originale su una riga, la traduzione sull'altra, con carattere, colore e posizione a tua scelta. Open source, gratuito, senza pubblicità."
   },
   "aboutPrivacy": {
-    "message": "L'estensione non ha un nostro server e non raccoglie statistiche. Il testo dei sottotitoli va solo al servizio di traduzione scelto; con una chiave tua, la chiave è salvata solo su questo computer."
+    "message": "L'estensione non ha un nostro server e non raccoglie statistiche. Il testo dei sottotitoli va solo ai servizi che hai scelto: il servizio di traduzione selezionato e, se li attivi, il provider vocale per la lettura ad alta voce e il provider configurato per i riassunti. Con una chiave tua, la chiave è salvata solo su questo computer."
   },
   "aboutChangelog": {
     "message": "Novità"
@@ -804,7 +820,7 @@
     "message": "nessun suono emesso"
   },
   "ttsEnableHint": {
-    "message": "Se attivo, la traduzione di ogni sottotitolo viene pronunciata appena compare; una riga la cui traduzione non è pronta in tempo viene saltata, non recuperata dopo. Mentre una riga viene letta, l'audio del video scende al livello impostato sotto. Una voce cloud troppo lunga rallenta anche un po' il video — le voci del browser non comunicano la durata, quindi non possono farlo."
+    "message": "Se attivo, la traduzione di ogni sottotitolo viene letta man mano che compare; una riga la cui traduzione non è pronta in tempo viene saltata, senza essere recuperata in seguito. Mentre una riga viene letta, l'audio del video scende al livello impostato sotto. Una riga troppo lunga rallenta un po' l'immagine e prende in prestito la pausa successiva — sia con le voci cloud sia con quella del browser; l'interruttore sotto continua a rallentare finché ogni riga non è terminata."
   },
   "ttsRegionLabel": {
     "message": "Area del servizio"
@@ -941,6 +957,10 @@
   "sumNeedKey": {
     "message": "Il riassunto richiede un servizio tuo: un provider con la tua chiave, o un modello locale su questo computer. I motori gratuiti traducono soltanto, non riassumono.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Configura un servizio di traduzione",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
     "message": "Riassumi",

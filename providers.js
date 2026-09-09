@@ -181,7 +181,7 @@
       // extension, so a second editable endpoint would fight the custom one
       // for it. Ollama on another port is what Custom is still there for —
       // the guide says so.
-      id: "ollama", name: "Ollama (local)", short: "Ollama", kind: "llm",
+      id: "ollama", name: "Ollama（本机）", nameKey: "provOllama", short: "Ollama", kind: "llm",
       // The guide has one local-model walkthrough, and it is Ollama's: the
       // address, the OLLAMA_ORIGINS line everybody trips over, which models
       // are worth running. A second section under its own name would be the
