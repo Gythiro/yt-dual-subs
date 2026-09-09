@@ -828,5 +828,9 @@
   "menuSubtitles": {
     "message": "Legendas",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "A tradução do próprio YouTube está limitada neste momento; as frases inteligentes (Google) estão a preencher. Volta a tentar automaticamente mais tarde.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }

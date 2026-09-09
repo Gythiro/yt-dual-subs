@@ -405,6 +405,7 @@ async function paintEngineStatus() {
   if (!tab || tab.id == null) return;
   const r = await sendToTab(tab.id, { type: "engineStatus" });
   if (!r || !r.ok) return;                  // not a YouTube video page
+
   if (r.same) {
     // The track already speaks the target language, so the overlay renders a
     // single line. Shown in EVERY engine mode (it answers "why is there only
@@ -413,6 +414,22 @@ async function paintEngineStatus() {
     el.hidden = false;
     return;
   }
+  // "Smart sentences (Google)" with no explanation reads as a bug when the
+  // user had YouTube's own translation yesterday — reported live in exactly
+  // those words. When the reason is the rate limit on YouTube's endpoint, say
+  // so. AFTER the same-language check: a video that needs no translation has
+  // nothing "filled in", whatever the gate says. And not only for auto — the
+  // user who explicitly chose YouTube's translation and is silently getting
+  // Google instead is the one who most deserves the explanation.
+  if (r.tlangLimited && r.engine === "gtx" &&
+      (state.engine === "auto" || state.engine === "tlang")) {
+    el.textContent = t("tlangLimitedNote",
+      "YouTube 翻译暂时被限流，已用智能整句（Google）顶上；稍后会自动再试。");
+    el.classList.add("warn");
+    el.hidden = false;
+    return;
+  }
+
   // Own-key mode names the provider that is answering — the whole point of
   // choosing it is knowing it is in use.
   if (r.engine === "byo") {

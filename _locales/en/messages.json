@@ -832,5 +832,9 @@
   "menuSubtitles": {
     "message": "Subtitles",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube's own translation is rate-limited right now; smart sentences (Google) is filling in. It retries by itself later.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }

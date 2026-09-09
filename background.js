@@ -317,13 +317,62 @@ function persistGate(lane) {
 
 // Rehydrate the rate-limit gates after a service-worker restart, so a backoff
 // in progress survives MV3's aggressive worker teardown.
+// YouTube's own whole-track translation endpoint rate-limits by machine, not
+// by video (measured live 2026-08-26: 429 + a "Sorry..." page, still 429
+// twenty-one seconds later on an earlier occasion). inject.js reports the 429;
+// what has to be REMEMBERED across videos, tabs and worker restarts lives
+// here, shaped like the lanes' gates but with no pump — nothing queues for
+// tlang, content.js simply steers new videos to gtx while the gate holds, and
+// lets the first video after expiry knock once. Success clears it; another
+// 429 doubles it, up to the cap. The floor is minutes because the measured
+// window is minutes: seconds-scale backoff just knocks on a shut door.
+const tlangGate = {
+  persistKey: "ytdsTlangGate",
+  gateUntil: 0,
+  backoffMs: 0,
+  baseMs: 120000,
+  maxMs: 30 * 60 * 1000
+};
+function persistTlangGate() {
+  if (!sessionStore) return;
+  try {
+    sessionStore.set({ [tlangGate.persistKey]: {
+      gateUntil: tlangGate.gateUntil, backoffMs: tlangGate.backoffMs, ts: Date.now() } });
+  } catch (_e) { /* session store gone: the gate still works for this worker */ }
+}
+function tlangLimited() {
+  const now = Date.now();
+  // Two tabs probing at once report the same refusal twice; the second report
+  // must not double the window again (the lanes learned this as backoff eras).
+  if (now < tlangGate.gateUntil) return tlangGate.gateUntil;
+  tlangGate.backoffMs = Math.min(tlangGate.maxMs,
+    tlangGate.backoffMs ? tlangGate.backoffMs * 2 : tlangGate.baseMs);
+  // 0–25% jitter, so every tab of a browserful does not knock in unison.
+  const jitter = 1 + Math.random() * 0.25;
+  tlangGate.gateUntil = now + Math.round(tlangGate.backoffMs * jitter);
+  persistTlangGate();
+  return tlangGate.gateUntil;
+}
+function tlangCleared() {
+  if (!tlangGate.gateUntil && !tlangGate.backoffMs) return;
+  tlangGate.gateUntil = 0;
+  tlangGate.backoffMs = 0;
+  persistTlangGate();
+}
+
 const hydrated = sessionStore
-  ? sessionStore.get({ ytdsGtxGate: null, ytdsByoGate: null, ytdsTtsGate: null }).then((got) => {
+  ? sessionStore.get({ ytdsGtxGate: null, ytdsByoGate: null, ytdsTtsGate: null,
+      ytdsTlangGate: null }).then((got) => {
       for (const lane of [gtxLane, byoLane, ttsLane]) {
         const g = got && got[lane.persistKey];
         if (!g) continue;
         lane.gateUntil = Number(g.gateUntil) || 0;
         lane.backoffMs = Number(g.backoffMs) || 0;
+      }
+      const tg = got && got.ytdsTlangGate;
+      if (tg) {
+        tlangGate.gateUntil = Number(tg.gateUntil) || 0;
+        tlangGate.backoffMs = Number(tg.backoffMs) || 0;
       }
     }).catch(() => {})
   : Promise.resolve();
@@ -2025,6 +2074,42 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     try { chrome.runtime.openOptionsPage(); } catch (_e) { /* ignore */ }
     sendResponse({ ok: true });
     return false;
+  }
+  // The tlang rate-limit gate: content.js reports what inject saw, and asks
+  // on every new video whether to even try. Every handler waits for hydration
+  // first — a worker is killed after thirty seconds idle and the gate outlasts
+  // that, so "cold worker, first message is about the gate" is the ordinary
+  // case. The first cut answered from the unhydrated zeros: doubling restarted
+  // from the base on every worker rebirth, and a clear against apparent zeros
+  // was silently swallowed and then overwritten by hydration. Each chain
+  // carries a catch: an answer of ok:false beats a channel that never closes.
+  if (msg && msg.type === "tlangLimited") {
+    cfgReady.then(() => hydrated).then(() => {
+      sendResponse({ ok: true, gateUntil: tlangLimited() });
+    }).catch(() => sendResponse({ ok: false }));
+    return true;
+  }
+  if (msg && msg.type === "tlangCleared") {
+    cfgReady.then(() => hydrated).then(() => {
+      tlangCleared();
+      sendResponse({ ok: true });
+    }).catch(() => sendResponse({ ok: false }));
+    return true;
+  }
+  if (msg && msg.type === "tlangGate") {
+    cfgReady.then(() => hydrated).then(() => {
+      const gated = Date.now() < tlangGate.gateUntil;
+      // An expired gate answered about is a gate that can be put down: in auto
+      // mode the steering itself keeps aligned tracks from ever arriving, so
+      // the "success clears it" path is unreachable there and the backoff
+      // would only ever grow across the whole browser session. Expiry is the
+      // honest reset point — the next refusal starts again from the base,
+      // which also restores the probing cadence instead of freezing it at the
+      // cap. (A refusal DURING the window still doubles, as before.)
+      if (!gated) tlangCleared();
+      sendResponse({ ok: true, gated, gateUntil: tlangGate.gateUntil });
+    }).catch(() => sendResponse({ ok: false }));
+    return true;
   }
   if (msg && msg.type === "videoLeft") {
     dropPlaybackJobs(gtxLane, "left the video");

@@ -456,6 +456,13 @@
 
       post("cues", {
         cues, tcues, aligned, trackKind: kind, sameLang,
+        // Why the translation leg is missing, when it is: 0 = it isn't (or was
+        // never asked), 429 = YouTube is rate-limiting it, anything else = that
+        // HTTP status. content.js turns 429 into the cross-video gate and the
+        // status line's honest "translation unavailable (rate limited)" — the
+        // export leg has carried transStatus for the same reason since it was
+        // built.
+        tlangStatus: tlangFailed ? tlangStatus : 0,
         // stable track identity (normKey strips pot/fmt/tlang): lets content.js
         // drop cached translations when the TRACK changes on the same video
         // (CC language switch / auto-dub mismatch fix) — same cache keys,
@@ -465,7 +472,14 @@
       });
       // Rendering gtx right now is correct — but come back for the translation
       // once, instead of leaving the whole video on it.
-      if (tlangFailed) scheduleTlangReproduce(normKey(src), tlangStatus);
+      // 429 is deliberately NOT rescheduled here any more: the same-video
+      // 25s force was measured to just meet the same 429 again (the window is
+      // minutes, not seconds), and each poke deepens the limit. The cross-
+      // video gate in the worker owns rate-limit recovery now; this retry is
+      // for hiccups — the blip that a few seconds genuinely fixes.
+      if (tlangFailed && tlangStatus !== 429) {
+        scheduleTlangReproduce(normKey(src), tlangStatus);
+      }
       checkTrackMismatch(vid, src);
     } catch (_e) {
       // could not fetch/parse — let content.js fall back to scraping, but only
@@ -635,7 +649,6 @@
   // still shut. Rate limiting gets its own, longer wait; everything else stays
   // quick, because most other failures are a blip.
   const TLANG_RETRY_MS = 4000;
-  const TLANG_RETRY_RATELIMIT_MS = 25000;
   let tlangRetriedFor = "";
   let tlangRetryTimer = null;
 
@@ -644,11 +657,12 @@
   }
 
   function scheduleTlangReproduce(trackKey, status) {
+    if (status === 429) return;          // rate limits are the gate's job, not a timer's
     if (!trackKey || tlangRetriedFor === trackKey) return;   // one shot per track
     tlangRetriedFor = trackKey;
     clearTlangRetry();
     const vid = currentVideoId;
-    const wait = status === 429 ? TLANG_RETRY_RATELIMIT_MS : TLANG_RETRY_MS;
+    const wait = TLANG_RETRY_MS;   // 429 never reaches here: the early-return above
     tlangRetryTimer = setTimeout(() => {
       tlangRetryTimer = null;
       if (!cfg || cfg.mode === "gtx") return;              // gtx is what was asked for

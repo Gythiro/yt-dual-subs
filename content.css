@@ -133,15 +133,30 @@ html.ytds-active .caption-window {
 /* The toggle button's pull-out corner and its menu. Extension palette
    (设计规范 §一): surfaces #1f2124/#27292c, text #f1f1f1, accent #3ea6ff. */
 .ytds-toggle { position: relative; }
+/* The menu zone. Two designs failed before this one: a 17px hover-only corner
+   square (small, cornered, invisible — "小三角太难按了"), then a full-height
+   seam-and-chevron bar whose hairline floated outside the icon's capsule and
+   looked broken at rest (seen on real screenshots — geometry assertions alone
+   missed it, which is exactly what the design rules' "look at the render"
+   step exists for). Now: the HIT AREA stays the full right flank of the
+   button — invisible, finger-sized — and the only resting visual is a small
+   chevron tucked by the icon. Hovering the zone lights a rounded pill inset
+   inside the button, so what highlights is clearly part of the same control,
+   not a stray line beside it. */
 .ytds-toggle-more {
-  position: absolute; right: 1px; bottom: 1px;
-  width: 17px; height: 17px; line-height: 17px;
-  font-size: 9px; text-align: center; color: #fff;
-  border-radius: 3px; opacity: 0; pointer-events: auto;
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: #fff;
+  opacity: .7; pointer-events: auto;
+  border-radius: 6px;
 }
 .ytds-toggle:hover .ytds-toggle-more,
-.ytds-toggle:focus-visible .ytds-toggle-more { opacity: .9; }
-.ytds-toggle-more:hover { background: rgba(255, 255, 255, .18); }
+.ytds-toggle:focus-visible .ytds-toggle-more { opacity: 1; }
+.ytds-toggle-more:hover {
+  background: rgba(255, 255, 255, .16);
+  top: 7px; bottom: 7px;               /* the pill sits inside the capsule */
+}
 .ytds-menu {
   position: absolute; z-index: 70;
   display: flex; flex-direction: column; gap: 2px;
@@ -237,7 +252,11 @@ html.ytds-active .caption-window {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  /* Nudged 3px left of true centre: the icon spans x12-36 when centred, and
+     the menu flank starts at 32 — dead centre would let the icon's right edge
+     open the menu. Off-centre-plus-chevron also reads as what this button now
+     is: a control with a dropdown, not an icon with a stray line. */
+  transform: translate(calc(-50% - 3px), -50%);
   width: 24px;
   height: 24px;
   transition: color .12s ease;

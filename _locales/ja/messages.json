@@ -828,5 +828,9 @@
   "menuSubtitles": {
     "message": "字幕",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube本体の翻訳は現在レート制限中です。スマート文（Google）で補完しています。あとで自動的に再試行します。",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }

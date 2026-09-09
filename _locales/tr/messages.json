@@ -828,5 +828,9 @@
   "menuSubtitles": {
     "message": "Altyazılar",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube'un kendi çevirisi şu anda hız sınırına takıldı; akıllı cümleler (Google) yerini dolduruyor. Daha sonra kendiliğinden yeniden dener.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }

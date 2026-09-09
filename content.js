@@ -202,6 +202,11 @@
                                 // for — a switch invalidates them
   let gtxNetFails = 0;          // consecutive network-dead gtx failures (group mode)
   let gtxFellBack = false;      // this video: auto engine fell back to tlang
+  let tlangGated = false;       // worker says YouTube's translation endpoint is
+                                // rate-limited: new videos go straight to gtx,
+                                // no tlang request is even attempted
+  let cueTlangStatus = 0;       // why THIS track has no whole-track translation
+                                // (0 = it does / never asked, 429 = rate limit)
   let pendingTimer = null;      // delayed "…" placeholder for the active group
   const PAUSE_BREAK_MS = 600;   // word-level silence that ends a sentence
   const MAX_GROUP_WORDS = 32;   // sentence cap (space-separated word count)
@@ -2696,6 +2701,7 @@
   // a second line. Once per video; a genuine 429/503 never lands here (those
   // are temporary and handled by the background's backoff).
   function maybeFallBackToTlang() {
+    if (tlangGated) return;      // the gate outranks this fallback (see injectMode)
     if (gtxFellBack || settings.engine !== "auto") return;
     if (gtxNetFails < GTX_FALLBACK_FAILS) return;
     gtxFellBack = true;
@@ -2815,6 +2821,26 @@
     if (typeof data.nonce === "number" && data.nonce !== configNonce) return; // stale (nonce)
     nocuesFallback = false;
     stopFallback();                 // cue mode wins; stop scraping
+    // Why the translation leg is missing, when it is. A 429 feeds the worker's
+    // cross-video gate; a track that DID bring its translation clears it.
+    cueTlangStatus = Number(data.tlangStatus) || 0;
+    if (cueTlangStatus === 429) {
+      tlangGated = true;
+      tlangGateEra++;
+      extCall(() => chrome.runtime.sendMessage({ type: "tlangLimited" }, () => {
+        if (chrome.runtime.lastError) { /* worker asleep: the flag still holds here */ }
+      }));
+    } else if (data.aligned === true && tlangGated) {
+      // Lazy on this side too: a healthy aligned track normally has nothing to
+      // clear, and reporting anyway would break the zero-worker-calls run the
+      // aligned path is pinned to. The one aligned track that arrives while
+      // this tab believes the gate holds IS the expiry probe succeeding — that
+      // is the moment the worker must hear about.
+      tlangGated = false;
+      extCall(() => chrome.runtime.sendMessage({ type: "tlangCleared" }, () => {
+        if (chrome.runtime.lastError) { /* ignore */ }
+      }));
+    }
 
     // cues arrive in json3 EVENT ORDER, with the aligned translation already
     // paired onto each cue as cue.trans (done in inject.js BEFORE any sort).
@@ -2981,6 +3007,10 @@
         same: !!(cueList && cueList.length && cueSameLang),
         track: cueTrackKind || "none",
         fellBack: gtxFellBack,
+        // "gtx because YouTube's own translation is rate-limited" — either
+        // this track's own 429, or the cross-video gate steering new videos
+        // clear. The popup says so instead of a bare "smart sentences".
+        tlangLimited: cueTlangStatus === 429 || tlangGated,
         // Read-aloud, for the popup's status line: is a line sounding right
         // now, and how this video went so far (skips answer "why the gaps").
         tts: settings.ttsEnabled ? {
@@ -3371,6 +3401,17 @@
   async function exportCues() {
     const data = await requestExportData(settings.targetLang);
     exportTransLimited = !!(data && data.transStatus === 429);
+    // The export leg is allowed through the gate (someone is waiting for a
+    // file), but what it LEARNS belongs to the gate like every other 429:
+    // dropping this report was pure information loss — the next videos would
+    // knock on a door the export had just found shut.
+    if (exportTransLimited) {
+      tlangGated = true;
+      tlangGateEra++;
+      extCall(() => chrome.runtime.sendMessage({ type: "tlangLimited" }, () => {
+        if (chrome.runtime.lastError) { /* worker asleep: the flag still holds */ }
+      }));
+    }
     if (data && data.ok && Array.isArray(data.cues) && data.cues.length) {
       const cues = data.cues.slice().sort((a, b) => a.start - b.start);
       computeCueEnds(cues);
@@ -3482,8 +3523,38 @@
   // Fold our engine setting into the 3-value protocol inject.js speaks.
   function injectMode() {
     if (settings.engine === "byo") return "gtx";        // "give me the original"
+    // The rate-limit gate outranks the gtx->tlang fallback: three dead gtx
+    // calls used to kick auto back onto tlang, straight into the very 429 the
+    // gate exists to stop repeating. Explicit "tlang" chosen by hand is NOT
+    // gated — the user named it, it knocks once per video, and a refusal
+    // inside the window does not double it.
+    if (settings.engine === "auto" && tlangGated) return "gtx";
     if (settings.engine === "auto" && gtxFellBack) return "tlang";
     return settings.engine;
+  }
+
+  // Ask the worker whether the gate still holds — LAZILY. A tab that has
+  // never seen a 429 does not ask: the aligned-track path can play a whole
+  // video without one worker call, and that silence is a pinned invariant
+  // (the "silent" reload scenarios). The cost is one knock per fresh tab
+  // while a gate holds elsewhere — which is exactly the probe the gate's
+  // own expiry schedule allows, and the worker refuses to double inside the
+  // window however many tabs knock. Expiry never flips the CURRENT video
+  // back (the same no-mid-video rule as everywhere else): the answer only
+  // steers the next sendConfig.
+  let tlangGateEra = 0;          // a fresh 429 outranks any answer already in flight
+  function refreshTlangGate() {
+    if (!settings.enabled) return;
+    if (!tlangGated) return;               // never limited here: nothing to refresh
+    const era = tlangGateEra;
+    extCall(() => chrome.runtime.sendMessage({ type: "tlangGate" }, (resp) => {
+      if (chrome.runtime.lastError) return;
+      // A slow answer from a cold worker can arrive AFTER this tab just met a
+      // brand-new 429; "the window had expired" is then stale news and must
+      // not un-gate what the refusal re-gated.
+      if (era !== tlangGateEra) return;
+      if (resp && resp.ok) tlangGated = !!resp.gated;
+    }));
   }
 
   function sendConfig() {
@@ -3573,6 +3644,8 @@
     exportPlan = null;
     gtxNetFails = 0;
     gtxFellBack = false;        // the fallback is per-video
+    cueTlangStatus = 0;         // the status describes the departed track
+    refreshTlangGate();         // has the rate-limit window expired? ask, don't knock
     weEnabledCC = false;        // fresh video — re-evaluate caption state
     teardownAll();
     ensureToggleButton(10);     // control-bar toggle persists across videos
@@ -3639,7 +3712,14 @@
     if (orphaned) return;
     if (!settings.enabled) return;
     if (!videoIdFromLocation()) return;               // not a video page
-    if (cueList && cueList.length) return;            // already working
+    // "Already working" used to be just "cueList has entries" — and a tab
+    // restored from the back/forward cache carries the OLD video's cue list
+    // back in its frozen heap, so the guard called a blank screen healthy and
+    // every recovery trigger fell through. Cues only count as working when
+    // something is actually painted: an empty overlay on a video page with
+    // "cues" in hand is exactly the restored-tab disease.
+    if (cueList && cueList.length &&
+        !(overlay && overlay.classList.contains("ytds-empty"))) return;
     if (dragging) return;                             // don't fight a gesture
     if (blankRecoveries >= MAX_BLANK_RECOVERIES) return;
     blankRecoveries++;
@@ -3666,8 +3746,18 @@
   }
 
   window.addEventListener("pageshow", (e) => {
-    if (e && e.persisted) { blankRecoveries = 0; onNav(); }   // back/forward cache
-    else armBlankWatch();
+    if (e && e.persisted) {
+      // Back/forward cache. The heap comes back frozen-as-left: overlay blank,
+      // CC reading "pressed", and the player never re-requests the caption
+      // track on its own — measured live, with a manual CC off-then-on as the
+      // instant cure. onNav() alone left the cure to the 20s watchdog (and the
+      // stale-cue guard above used to block even that). Fire it now, and once
+      // more after YouTube has had a moment to repaint on its own.
+      blankRecoveries = 0;
+      onNav();
+      recoverIfBlank("bfcache");
+      setTimeout(() => recoverIfBlank("bfcache-late"), 1200);
+    } else armBlankWatch();
   });
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") recoverIfBlank("visible");

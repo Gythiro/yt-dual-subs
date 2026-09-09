@@ -828,5 +828,9 @@
   "menuSubtitles": {
     "message": "字幕",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube 翻译暂时被限流，已用智能整句（Google）顶上；稍后会自动再试。",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }

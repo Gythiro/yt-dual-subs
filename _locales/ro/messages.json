@@ -828,5 +828,9 @@
   "menuSubtitles": {
     "message": "Subtitrări",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Traducerea YouTube e limitată momentan; propozițiile inteligente (Google) preiau. Reîncearcă automat mai târziu.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }

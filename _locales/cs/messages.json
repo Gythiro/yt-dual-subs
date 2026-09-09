@@ -828,5 +828,9 @@
   "menuSubtitles": {
     "message": "Titulky",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Vlastní překlad YouTube je teď omezený limitem; chytré věty (Google) to doplňují. Později se to zkusí znovu samo.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }

@@ -828,5 +828,9 @@
   "menuSubtitles": {
     "message": "Sous-titres",
     "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "La traduction native de YouTube est limitée pour le moment ; les phrases intelligentes (Google) prennent le relais. Nouvelle tentative automatique plus tard.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   }
 }
