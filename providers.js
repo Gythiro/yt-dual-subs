@@ -398,7 +398,14 @@
     // that could rewrite a request gets through.
     if (p.kind === "azure-speech") return /^[a-z]{2,3}-[A-Z]{2}-[A-Za-z0-9]+Neural$/.test(voice);
     if (p.kind === "google-tts") {
-      return /^[a-z]{2,3}-[A-Z]{2}-(Chirp3-HD|Neural2|Wavenet|Standard|Studio|Polyglot)-/.test(voice);
+      // The family segment is not enumerated. Google has shipped Journey, News,
+      // Casual and Chirp-HD since this line was written, and a list of family
+      // names refuses a voice the user has just FETCHED FROM GOOGLE — the one
+      // kind of name that is certainly real — so the family default spoke
+      // instead. Unlike Azure and ElevenLabs, this value goes into a JSON field
+      // rather than a URL, so what has to be excluded is a separator, not an
+      // unfamiliar word: locale prefix, then hyphen-joined alphanumerics only.
+      return /^[a-z]{2,3}-[A-Z]{2}-[A-Za-z0-9]+(-[A-Za-z0-9]+)+$/.test(voice);
     }
     // ElevenLabs ids are opaque 20-character tokens; anything else did not come
     // from its list and must not be pasted into a URL path.
@@ -475,6 +482,15 @@
   // same lie as naming a voice from another provider.
   function ttsVoiceAppliesTo(p, voice, targetLang) {
     if (!p || !voice) return false;
+    // The family this extension SHIPS is cross-language by construction — that
+    // is the whole reason those twelve Azure entries are the Multilingual ones.
+    // Their ids carry a locale because that is where the accent comes from, not
+    // where the voice may be used, and reading the prefix as a restriction
+    // threw the family out: measured 10 of 12 refused while reading Chinese and
+    // 12 of 12 reading Taiwanese Chinese, the default among them. Only a voice
+    // from OUTSIDE this list — one the user fetched for a particular language —
+    // is pinned to it.
+    if ((p.voices || []).indexOf(voice) >= 0) return true;
     const carried = /^([a-z]{2,3}-[A-Z]{2})-/.exec(voice);
     if (!carried) return true;
     const want = p.kind === "google-tts" ? GOOGLE_TTS_LANG[targetLang || ""]
@@ -496,7 +512,13 @@
     reasoning: "byoErrReasoning",
     netfail: "byoErrNetfail",
     unsupportedTarget: "byoErrUnsupportedTarget",
-    noRegion: "ttsErrNoRegion"
+    noRegion: "ttsErrNoRegion",
+    // Read-aloud's own "the provider said no": byoErrBadRequest names a model
+    // name and a base URL, and the read-aloud card has neither field.
+    refused: "ttsErrRefused",
+    // …and its own "nothing came back to play": badShape asks for a
+    // non-thinking model, which is a sentence about translation.
+    noAudio: "ttsErrNoAudio"
   };
 
   function errorKey(code) {

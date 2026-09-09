@@ -339,7 +339,13 @@ a { text-underline-offset: 3px; }
 
 .ofield { display: flex; flex-direction: column; gap: 7px; }
 .ofield[hidden] { display: none; }
-.ofield > label {
+/* The row above a field. It used to BE the <label>, with the show-tick and the
+   clear button sitting inside it — so the field's accessible name came out as
+   "API Key Show Clear", and a <label> containing another <label> is not valid
+   markup either. The row is a plain container now and the name is the label;
+   everything about the geometry is unchanged, which is why both selectors are
+   spelled here rather than one being replaced. */
+.ofield > label, .ofield > .ofield-head {
   display: flex; align-items: center; gap: 10px;
   font-size: 11px; color: var(--muted); letter-spacing: .3px;
 }

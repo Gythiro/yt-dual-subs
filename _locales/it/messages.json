@@ -231,7 +231,7 @@
     "message": "Nessuna traduzione disponibile per questo video — prova il motore Traccia intera o un'altra lingua di destinazione."
   },
   "exportLimited": {
-    "message": "YouTube sta limitando la traduzione della traccia intera in questo momento — riprova tra un minuto, oppure spunta “Traduci con la mia chiave”."
+    "message": "YouTube sta limitando in questo momento la traduzione dell’intera traccia — riprova tra un minuto. Con una chiave tua, la scheda di esportazione offre una spunta per aggirarlo."
   },
   "exportNoCues": {
     "message": "Nessun sottotitolo da scaricare — riproduci qualche secondo per caricare i sottotitoli, poi riprova."
@@ -323,7 +323,7 @@
     "message": "Scegli prima un provider."
   },
   "byoErrNoKey": {
-    "message": "Inserisci prima una chiave API — il link sotto apre la pagina delle chiavi del provider."
+    "message": "Inserisci prima una chiave API, poi premi Salva e testa."
   },
   "byoErrNoModel": {
     "message": "Questo provider richiede il nome di un modello."
@@ -406,7 +406,7 @@
     "message": "in uso"
   },
   "optAfterSetup": {
-    "message": "Quando hai finito, apri il popup dell'estensione e imposta Motore su \"La tua chiave\"."
+    "message": "Quando hai finito, apri il popup dell'estensione e imposta Motore su \"Chiave personale (LLM / DeepL)\"."
   },
   "optTrademark": {
     "message": "Tutti i nomi e i loghi dei provider sono marchi dei rispettivi titolari. Questa estensione non è affiliata, approvata né sponsorizzata da nessuno di loro; i marchi servono solo a identificare l'API scelta."
@@ -445,7 +445,7 @@
     "message": "Vuoi traduzioni migliori"
   },
   "startS3Body": {
-    "message": "Aggiungi la tua chiave API: traduzione di frasi intere ed esportazione SRT di tutto il video."
+    "message": "Aggiungi la tua chiave API: traduzione di frasi intere e traduzione dell'intero video quando esporti."
   },
   "startGoSetup": {
     "message": "Configura un servizio di traduzione"
@@ -460,7 +460,7 @@
     "message": "Una seconda riga di sottotitoli per YouTube: l'originale su una riga, la traduzione sull'altra, con carattere, colore e posizione a tua scelta. Open source, gratuito, senza pubblicità."
   },
   "aboutPrivacy": {
-    "message": "Non abbiamo un server e non raccogliamo statistiche. Il testo dei sottotitoli va solo al servizio di traduzione scelto; con la tua chiave, la chiave è salvata solo su questo computer."
+    "message": "L’estensione non ha un nostro server e non raccoglie statistiche. Il testo dei sottotitoli va solo al servizio di traduzione scelto; con una chiave tua, la chiave è salvata solo su questo computer."
   },
   "aboutChangelog": {
     "message": "Novità"
@@ -604,7 +604,7 @@
     "message": "Altre lingue"
   },
   "langsMoreHint": {
-    "message": "Premi + per aggiungerne una. Ogni lingua elencata funziona con i motori gratuiti e con DeepL."
+    "message": "Premi + per aggiungerne una. Ogni lingua elencata è accettata come destinazione dai motori gratuiti e da DeepL."
   },
   "langsReset": {
     "message": "Ripristina predefinite"
@@ -653,7 +653,7 @@
     "message": "Auto — segui il browser"
   },
   "uiLocaleHint": {
-    "message": "Solo la lingua dei controlli di questa estensione. La lingua in cui vengono tradotti i sottotitoli si sceglie nel popup e in “Lingue dei sottotitoli” — non qui."
+    "message": "La lingua dei menu e delle impostazioni dell’estensione. Alcune etichette sul video seguono ancora la lingua del browser. La lingua in cui tradurre i sottotitoli si sceglie nel popup e in “Lingue dei sottotitoli” — non qui."
   },
   "startTargetLabel": {
     "message": "Lingua di traduzione"
@@ -674,7 +674,7 @@
     "message": "Leggi ad alta voce"
   },
   "ttsIntro": {
-    "message": "Leggi ad alta voce la riga tradotta con la tua chiave. Configura un provider e provalo qui."
+    "message": "Leggi ad alta voce la riga tradotta. Le voci del browser non richiedono alcuna chiave; i provider cloud si configurano e si testano qui."
   },
   "ttsVoiceLabel": {
     "message": "Voce"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "La lettura ad alta voce usa la tua chiave. Il testo da pronunciare va solo al provider che hai scelto; la chiave resta su questo computer."
+    "message": "Con le voci del browser non viene inviato nulla — è il computer a pronunciare la riga. Con un provider cloud, il testo da pronunciare va solo al provider scelto e la chiave resta su questo computer."
   },
   "ttsEnableLabel": {
     "message": "Leggi la traduzione ad alta voce nel video"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Se attiva, la traduzione di ogni sottotitolo viene letta non appena compare; se la traduzione non è pronta in tempo, la riga viene saltata e non recuperata. L’audio del video si abbassa durante la lettura e una riga troppo lunga rallenta un po’ il video."
+    "message": "Se attivo, la traduzione di ogni sottotitolo viene pronunciata appena compare; una riga la cui traduzione non è pronta in tempo viene saltata, non recuperata dopo. Mentre una riga viene letta, l’audio del video scende al livello impostato sotto. Una voce cloud troppo lunga rallenta anche un po’ il video — le voci del browser non comunicano la durata, quindi non possono farlo."
   },
   "ttsRegionLabel": {
     "message": "Area del servizio"
@@ -783,13 +783,13 @@
     "message": "Impossibile riprodurre — verifica la chiave e prova Salva e testa"
   },
   "ttsFetchVoices": {
-    "message": "Ottieni altre voci per questa lingua"
+    "message": "Recupera altre voci con la tua chiave"
   },
   "ttsFetching": {
     "message": "Caricamento…"
   },
   "ttsVoicesSwitched": {
-    "message": "Ora vedi le $N$ voci di questa lingua. Funzionano solo con questa lingua di destinazione.",
+    "message": "Ora vengono mostrate le $N$ voci che la tua chiave può usare. Una voce il cui nome indica una lingua funziona solo per quella.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Voci del tuo browser (gratis)"
+  },
+  "ttsErrRefused": {
+    "message": "Il provider ha rifiutato questa richiesta — prova un'altra voce."
+  },
+  "ttsErrNoAudio": {
+    "message": "L'audio non è arrivato — riprova o scegli un'altra voce."
   }
 }

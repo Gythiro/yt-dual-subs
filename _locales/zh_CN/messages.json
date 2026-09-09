@@ -249,7 +249,7 @@
     "message": "这个视频拿不到译文，试试「整轨翻译」或换个目标语言。"
   },
   "exportLimited": {
-    "message": "YouTube 暂时限制了整轨翻译，过一会儿再试；或者勾选「用自带 Key 翻译」。"
+    "message": "YouTube 暂时限制了整轨翻译，过一会儿再试。配好自己的 Key 之后，导出卡片上会多一个勾选，可以绕开它。"
   },
   "exportNoCues": {
     "message": "没有可下载的字幕，先播放几秒让字幕加载，再试一次。"
@@ -341,7 +341,7 @@
     "message": "先选一个服务商。"
   },
   "byoErrNoKey": {
-    "message": "先填 API Key，下面的链接可以去申请。"
+    "message": "先填 API Key，再点「保存并测试」。"
   },
   "byoErrNoModel": {
     "message": "这家需要手动填模型名。"
@@ -463,7 +463,7 @@
     "message": "想要更好的译文"
   },
   "startS3Body": {
-    "message": "填上你自己的 API Key：整句翻译，还能导出整片 SRT。"
+    "message": "填上你自己的 API Key：整句翻译，导出时还能整片翻译。"
   },
   "startGoSetup": {
     "message": "去配置翻译服务"
@@ -481,7 +481,7 @@
     "message": "自动（跟随浏览器）"
   },
   "uiLocaleHint": {
-    "message": "只影响这个插件自己的界面。字幕翻译成什么语言，在弹窗和「字幕语言」里选，与这里无关。"
+    "message": "只影响这个插件自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。字幕翻译成什么语言，在弹窗和「字幕语言」里选，与这里无关。"
   },
   "startTargetLabel": {
     "message": "译文语言"
@@ -493,7 +493,7 @@
     "message": "给 YouTube 加一层双语字幕：原文一行、译文一行，字体、颜色、位置都能自己调。开源、免费、无广告。"
   },
   "aboutPrivacy": {
-    "message": "我们没有服务器，也不做任何统计。字幕文本只发往你选择的翻译服务；用自带 Key 时，Key 只保存在这台电脑上。"
+    "message": "扩展没有我们的服务器，也不做任何统计。字幕文本只发往你选择的翻译服务；用自带 Key 时，Key 只保存在这台电脑上。"
   },
   "aboutChangelog": {
     "message": "更新日志"
@@ -643,7 +643,7 @@
     "message": "朗读"
   },
   "ttsIntro": {
-    "message": "用你自己的 Key 朗读译文。先在这里配好服务商、测通。"
+    "message": "把译文念出来。用浏览器自带的音色不需要任何 Key；下面的云服务商在这里配置和测试。"
   },
   "ttsVoiceLabel": {
     "message": "音色"
@@ -658,13 +658,13 @@
     "message": "播不出来——检查 Key，或先「保存并测通」"
   },
   "ttsFetchVoices": {
-    "message": "拉取这个语言的更多音色"
+    "message": "用你的 Key 拉取更多音色"
   },
   "ttsFetching": {
     "message": "拉取中…"
   },
   "ttsVoicesSwitched": {
-    "message": "已切到这个语言专属的 $N$ 个音色，它们只对当前译文语言有效。",
+    "message": "已切到你的 Key 能用的 $N$ 个音色。名字里带语言的音色，只对那一种语言有效。",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -695,13 +695,13 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "朗读用你自己的 Key。要朗读的文本只发给你选择的这一家服务商；Key 只存在本机。"
+    "message": "用浏览器自带的音色时，什么都不会发出去——是你这台电脑自己在念。用云服务商时，要朗读的文本只发给你选择的那一家，Key 只存在本机。"
   },
   "ttsEnableLabel": {
     "message": "在视频里朗读译文"
   },
   "ttsEnableHint": {
-    "message": "开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，不会追读。朗读期间视频音量会自动压低；句子长到读不完时，视频会稍微放慢来配合。"
+    "message": "开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，之后也不会补读。朗读期间，视频音量会降到下面设定的档位。用云端音色时，句子长到读不完还会让视频稍微放慢——浏览器自带的音色报不出时长，所以做不到这一点。"
   },
   "langsIntro": {
     "message": "弹窗里可以选哪些目标语言。"
@@ -716,7 +716,7 @@
     "message": "其他语言"
   },
   "langsMoreHint": {
-    "message": "点 + 加进上面的列表。列出的语言，免费引擎和 DeepL 都支持。"
+    "message": "点 + 加进上面的列表。列出的语言，都是免费引擎和 DeepL 认的目标语言。"
   },
   "langsReset": {
     "message": "恢复默认"
@@ -798,6 +798,12 @@
   },
   "ttsErrNoRegion": {
     "message": "先填你 Azure Key 所在的服务区域（如 eastus）再测通。"
+  },
+  "ttsErrRefused": {
+    "message": "服务商拒绝了这次请求——换一个音色试试。"
+  },
+  "ttsErrNoAudio": {
+    "message": "没有取到声音——再试一次，或者换一个音色。"
   },
   "startPicChop1": {
     "message": "有两个大的"

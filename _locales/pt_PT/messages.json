@@ -231,7 +231,7 @@
     "message": "Não há tradução disponível para este vídeo — experimente o motor Faixa completa ou outro idioma de destino."
   },
   "exportLimited": {
-    "message": "O YouTube está a limitar a tradução da faixa completa neste momento — tente novamente daqui a um minuto ou assinale “Traduzir com a minha chave”."
+    "message": "O YouTube está a limitar a tradução da faixa completa neste momento — tente novamente daqui a um minuto. Com a sua própria chave configurada, o cartão de exportação oferece um visto que a contorna."
   },
   "exportNoCues": {
     "message": "Não há legendas para descarregar — reproduza alguns segundos para as legendas carregarem e tente novamente."
@@ -323,7 +323,7 @@
     "message": "Escolha primeiro um fornecedor."
   },
   "byoErrNoKey": {
-    "message": "Introduza primeiro uma chave API — a ligação abaixo abre a página de chaves do fornecedor."
+    "message": "Introduza primeiro uma chave API e depois prima Guardar e testar."
   },
   "byoErrNoModel": {
     "message": "Este fornecedor precisa que indique o nome do modelo."
@@ -445,7 +445,7 @@
     "message": "Quer traduções melhores"
   },
   "startS3Body": {
-    "message": "Adicione a sua chave API: tradução da frase completa e exportação SRT de um vídeo inteiro."
+    "message": "Adicione a sua própria chave de API: tradução de frases completas e tradução de vídeos inteiros ao exportar."
   },
   "startGoSetup": {
     "message": "Configurar um serviço de tradução"
@@ -460,7 +460,7 @@
     "message": "Uma segunda linha de legendas no YouTube: o original numa linha, a tradução na outra, com o tipo de letra, a cor e a posição à sua escolha. Código aberto, gratuito, sem anúncios."
   },
   "aboutPrivacy": {
-    "message": "Não temos servidor e não recolhemos estatísticas. O texto das legendas vai apenas para o serviço de tradução que escolher; com a sua chave, esta fica guardada apenas neste computador."
+    "message": "A extensão não tem nenhum servidor nosso e não recolhe estatísticas. O texto das legendas vai apenas para o serviço de tradução que escolher; com a sua própria chave, esta fica guardada apenas neste computador."
   },
   "aboutChangelog": {
     "message": "Registo de alterações"
@@ -604,7 +604,7 @@
     "message": "Outras línguas"
   },
   "langsMoreHint": {
-    "message": "Prime + para adicionar. Todas as línguas da lista funcionam com os motores gratuitos e com o DeepL."
+    "message": "Prima + para adicionar. Todos os idiomas listados são aceites como destino pelos motores gratuitos e pelo DeepL."
   },
   "langsReset": {
     "message": "Repor predefinições"
@@ -653,7 +653,7 @@
     "message": "Automático — seguir o navegador"
   },
   "uiLocaleHint": {
-    "message": "Só o idioma dos controlos desta extensão. O idioma para o qual as legendas são traduzidas escolhe-se no pop-up e em “Idiomas das legendas” — não aqui."
+    "message": "O idioma dos menus e definições da própria extensão. Algumas etiquetas desenhadas sobre o próprio vídeo continuam a seguir o idioma do navegador. O idioma para o qual as legendas são traduzidas escolhe-se no popup e em “Idiomas das legendas” — não aqui."
   },
   "startTargetLabel": {
     "message": "Idioma da tradução"
@@ -674,7 +674,7 @@
     "message": "Ler em voz alta"
   },
   "ttsIntro": {
-    "message": "Leia a linha traduzida em voz alta com a sua própria chave. Configure um fornecedor e teste-o aqui."
+    "message": "Ler a linha traduzida em voz alta. As vozes do próprio navegador não precisam de chave nenhuma; os fornecedores na nuvem configuram-se e testam-se aqui."
   },
   "ttsVoiceLabel": {
     "message": "Voz"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "A leitura em voz alta usa a sua própria chave. O texto a ser pronunciado é enviado apenas para o fornecedor que escolheu; a chave permanece neste computador."
+    "message": "Com as vozes do próprio navegador, nada é enviado para lado nenhum — o próprio computador lê a linha. Com um fornecedor na nuvem, o texto a ser lido vai apenas para o fornecedor que escolheu, e a chave fica nesta máquina."
   },
   "ttsEnableLabel": {
     "message": "Ler a tradução em voz alta no vídeo"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Quando ativo, a tradução de cada legenda é lida à medida que aparece; uma linha cuja tradução não esteja pronta a tempo é ignorada, nunca recuperada depois. O áudio do próprio vídeo é baixado enquanto uma linha está a ser lida, e uma linha demasiado longa para caber abranda um pouco o vídeo."
+    "message": "Quando está ligado, a tradução de cada legenda é lida à medida que aparece; uma linha cuja tradução não esteja pronta a tempo é ignorada, em vez de ser recuperada mais tarde. Enquanto uma linha é lida, o áudio do vídeo baixa para o nível definido abaixo. Uma voz na nuvem que se prolongue também abranda um pouco o vídeo — as vozes do próprio navegador não indicam a duração, por isso não o conseguem."
   },
   "ttsRegionLabel": {
     "message": "Região do serviço"
@@ -783,13 +783,13 @@
     "message": "Não foi possível reproduzir — verifique a chave e tente Guardar e testar"
   },
   "ttsFetchVoices": {
-    "message": "Obter mais vozes para este idioma"
+    "message": "Obter mais vozes com a sua chave"
   },
   "ttsFetching": {
     "message": "A obter…"
   },
   "ttsVoicesSwitched": {
-    "message": "Agora aparecem as $N$ vozes deste idioma. Só funcionam neste idioma de destino.",
+    "message": "A mostrar as $N$ vozes que a sua chave pode usar. Uma voz cujo nome inclui um idioma funciona apenas para esse idioma.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "As vozes do próprio browser (grátis)"
+  },
+  "ttsErrRefused": {
+    "message": "O fornecedor recusou este pedido — tente outra voz."
+  },
+  "ttsErrNoAudio": {
+    "message": "O áudio não chegou — volte a tentar, ou escolha outra voz."
   }
 }

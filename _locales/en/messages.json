@@ -27,7 +27,7 @@
     "message": "The quick brown fox"
   },
   "sampleTrans": {
-    "message": "El zorro marrón salta"
+    "message": "El veloz zorro marrón"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -249,7 +249,7 @@
     "message": "No translation available for this video — try the Whole-track engine or another target language."
   },
   "exportLimited": {
-    "message": "YouTube is rate-limiting whole-track translation right now — try again in a minute, or tick “Translate with my own key”."
+    "message": "YouTube is rate-limiting whole-track translation right now — try again in a minute. With your own key set up, the export card offers a tick that goes around it."
   },
   "exportNoCues": {
     "message": "No downloadable subtitles — play a few seconds so captions load, then try again."
@@ -341,7 +341,7 @@
     "message": "Pick a provider first."
   },
   "byoErrNoKey": {
-    "message": "Enter an API key first — the link below opens the provider's key page."
+    "message": "Enter an API key first, then press Save and test."
   },
   "byoErrNoModel": {
     "message": "This provider needs a model name typed in."
@@ -463,7 +463,7 @@
     "message": "Want better translations"
   },
   "startS3Body": {
-    "message": "Add your own API key: whole-sentence translation, and SRT export for a whole video."
+    "message": "Add your own API key: whole-sentence translation, and whole-video translation when you export."
   },
   "startGoSetup": {
     "message": "Set up a translation service"
@@ -481,7 +481,7 @@
     "message": "Auto — follow the browser"
   },
   "uiLocaleHint": {
-    "message": "Only the language of this extension's own controls. What subtitles get translated into is chosen in the popup and under “Subtitle languages” — not here."
+    "message": "The language of this extension's own menus and settings. A few labels drawn on the video itself still follow the browser's language. What subtitles get translated into is chosen in the popup and under “Subtitle languages” — not here."
   },
   "startTargetLabel": {
     "message": "Translation language"
@@ -493,7 +493,7 @@
     "message": "A second subtitle line for YouTube: the original on one line, the translation on the other, with the font, colour and position up to you. Open source, free, no ads."
   },
   "aboutPrivacy": {
-    "message": "We have no server and collect no statistics. Subtitle text goes only to the translation service you pick; with your own key, the key is stored on this computer only."
+    "message": "The extension has no server of ours and collects no statistics. Subtitle text goes only to the translation service you pick; with your own key, the key is stored on this computer only."
   },
   "aboutChangelog": {
     "message": "Changelog"
@@ -643,7 +643,7 @@
     "message": "Read aloud"
   },
   "ttsIntro": {
-    "message": "Read the translated line out loud with your own key. Set a provider up and test it here."
+    "message": "Read the translated line out loud. Your browser's own voices need no key at all; the cloud providers are set up and tested here."
   },
   "ttsVoiceLabel": {
     "message": "Voice"
@@ -658,13 +658,13 @@
     "message": "Could not play — check the key and try Save and test"
   },
   "ttsFetchVoices": {
-    "message": "Fetch more voices for this language"
+    "message": "Fetch more voices with your key"
   },
   "ttsFetching": {
     "message": "Fetching…"
   },
   "ttsVoicesSwitched": {
-    "message": "Now showing this language's $N$ voices. They work for this target language only.",
+    "message": "Now showing the $N$ voices your key can use. A voice whose name carries a language works only for that one.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -695,13 +695,13 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Read-aloud uses your own key. The text to be spoken goes only to the provider you chose; the key stays on this machine."
+    "message": "With your browser's own voices, nothing is sent anywhere — your computer speaks the line itself. With a cloud provider, the text to be spoken goes only to the provider you chose, and the key stays on this machine."
   },
   "ttsEnableLabel": {
     "message": "Read the translation aloud in the video"
   },
   "ttsEnableHint": {
-    "message": "When on, each subtitle's translation is spoken as it appears; a line whose translation isn't ready in time is skipped, never caught up on. The video's own audio is lowered while a line is speaking, and a line too long to fit slows the video a little."
+    "message": "When on, each subtitle's translation is spoken as it appears; a line whose translation isn't ready in time is skipped rather than caught up on later. While a line speaks, the video's own audio drops to the level set below. A cloud voice that runs long also slows the video a little — your browser's own voices do not report a length, so they cannot."
   },
   "langsIntro": {
     "message": "Which languages the popup offers you to translate into."
@@ -716,7 +716,7 @@
     "message": "Other languages"
   },
   "langsMoreHint": {
-    "message": "Press + to add one. Every language listed works with the free engines and with DeepL."
+    "message": "Press + to add one. Every language listed is one the free engines and DeepL accept as a target."
   },
   "langsReset": {
     "message": "Restore defaults"
@@ -798,6 +798,12 @@
   },
   "ttsErrNoRegion": {
     "message": "Enter the service region of your Azure key first (e.g. eastus)."
+  },
+  "ttsErrRefused": {
+    "message": "The provider refused this request — try a different voice."
+  },
+  "ttsErrNoAudio": {
+    "message": "The audio did not come through — try again, or pick a different voice."
   },
   "startPicChop1": {
     "message": "hay dos grandes",

@@ -231,7 +231,7 @@
     "message": "Pro toto video není překlad k dispozici — zkuste překladač Celá stopa nebo jiný cílový jazyk."
   },
   "exportLimited": {
-    "message": "YouTube teď omezuje překlad celé stopy — zkuste to za minutu znovu, nebo zaškrtněte „Přeložit vlastním klíčem“."
+    "message": "YouTube teď omezuje překlad celé stopy — zkuste to za minutu znovu. S nastaveným vlastním klíčem nabízí karta exportu zaškrtnutí, které to obejde."
   },
   "exportNoCues": {
     "message": "Žádné titulky ke stažení — přehrajte pár sekund, ať se titulky načtou, a zkuste to znovu."
@@ -323,7 +323,7 @@
     "message": "Nejprve vyberte poskytovatele."
   },
   "byoErrNoKey": {
-    "message": "Nejprve zadejte API klíč — odkaz níže otevře stránku s klíči u poskytovatele."
+    "message": "Nejprve zadejte API klíč a pak stiskněte Uložit a otestovat."
   },
   "byoErrNoModel": {
     "message": "Tento poskytovatel vyžaduje zadaný název modelu."
@@ -445,7 +445,7 @@
     "message": "Chcete lepší překlady"
   },
   "startS3Body": {
-    "message": "Přidejte vlastní API klíč: překlad celých vět a export SRT pro celé video."
+    "message": "Přidejte vlastní API klíč: překlad celých vět a překlad celého videa při exportu."
   },
   "startGoSetup": {
     "message": "Nastavit překladovou službu"
@@ -460,7 +460,7 @@
     "message": "Druhý řádek titulků na YouTube: originál na jednom, překlad na druhém, písmo, barva i pozice podle vás. Open source, zdarma, bez reklam."
   },
   "aboutPrivacy": {
-    "message": "Nemáme žádný server a nesbíráme statistiky. Text titulků jde jen k překladové službě, kterou zvolíte; s vlastním klíčem se klíč ukládá jen na tomto počítači."
+    "message": "Rozšíření nepoužívá žádný náš server a neshromažďuje statistiky. Text titulků jde jen k překladatelské službě, kterou zvolíte; s vlastním klíčem se klíč ukládá jen na tomto počítači."
   },
   "aboutChangelog": {
     "message": "Seznam změn"
@@ -604,7 +604,7 @@
     "message": "Další jazyky"
   },
   "langsMoreHint": {
-    "message": "Stiskněte + pro přidání. Každý uvedený jazyk funguje s bezplatnými překladači i s DeepL."
+    "message": "Stiskněte + pro přidání. Každý uvedený jazyk přijímají bezplatné překladače i DeepL jako cílový."
   },
   "langsReset": {
     "message": "Obnovit výchozí"
@@ -653,7 +653,7 @@
     "message": "Automaticky — podle prohlížeče"
   },
   "uiLocaleHint": {
-    "message": "Jen jazyk ovládacích prvků tohoto rozšíření. Kam se titulky překládají, se volí v okně rozšíření a v části „Jazyky titulků“ — ne zde."
+    "message": "Jazyk nabídek a nastavení tohoto rozšíření. Některé popisky přímo na videu se stále řídí jazykem prohlížeče. Do jakého jazyka se titulky překládají, se volí ve vyskakovacím okně a v části „Jazyky titulků“ — ne tady."
   },
   "startTargetLabel": {
     "message": "Jazyk překladu"
@@ -674,7 +674,7 @@
     "message": "Číst nahlas"
   },
   "ttsIntro": {
-    "message": "Přečtěte přeložený řádek nahlas vlastním klíčem. Nastavte poskytovatele a otestujte ho zde."
+    "message": "Přečte přeložený řádek nahlas. Vlastní hlasy prohlížeče nepotřebují žádný klíč; cloudové služby se nastavují a testují zde."
   },
   "ttsVoiceLabel": {
     "message": "Hlas"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Čtení nahlas používá váš vlastní klíč. Text k vyslovení jde pouze poskytovateli, kterého jste zvolili; klíč zůstává na tomto počítači."
+    "message": "S vlastními hlasy prohlížeče se nic nikam neodesílá — počítač řádek vysloví sám. U cloudové služby jde text k vyslovení jen k poskytovateli, kterého jste zvolili, a klíč zůstává na tomto počítači."
   },
   "ttsEnableLabel": {
     "message": "Číst překlad nahlas ve videu"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Po zapnutí se překlad každého titulku vysloví hned, jak se objeví; řádek, jehož překlad není včas připraven, se přeskočí a nikdy se nedohání. Vlastní zvuk videa se během mluvení ztlumí a příliš dlouhý řádek video trochu zpomalí."
+    "message": "Po zapnutí se překlad každého titulku vysloví, jakmile se objeví; řádek, jehož překlad nestihne přijít včas, se přeskočí a později se nedohání. Zatímco se řádek vyslovuje, vlastní zvuk videa klesne na úroveň nastavenou níže. Cloudový hlas, který trvá déle, video také mírně zpomalí — vlastní hlasy prohlížeče délku nehlásí, takže to u nich nejde."
   },
   "ttsRegionLabel": {
     "message": "Oblast služby"
@@ -783,13 +783,13 @@
     "message": "Nelze přehrát — zkontrolujte klíč a zkuste Uložit a otestovat"
   },
   "ttsFetchVoices": {
-    "message": "Načíst další hlasy pro tento jazyk"
+    "message": "Načíst další hlasy pomocí klíče"
   },
   "ttsFetching": {
     "message": "Načítání…"
   },
   "ttsVoicesSwitched": {
-    "message": "Nyní vidíš $N$ hlasů pro tento jazyk. Fungují jen s tímto cílovým jazykem.",
+    "message": "Zobrazuje se $N$ hlasů, které váš klíč umí použít. Hlas, v jehož názvu je jazyk, funguje jen pro ten jeden.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Vlastní hlasy prohlížeče (zdarma)"
+  },
+  "ttsErrRefused": {
+    "message": "Poskytovatel tento požadavek odmítl — zkuste jiný hlas."
+  },
+  "ttsErrNoAudio": {
+    "message": "Zvuk nedorazil — zkuste to znovu, nebo vyberte jiný hlas."
   }
 }

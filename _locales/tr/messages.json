@@ -231,7 +231,7 @@
     "message": "Bu video için çeviri yok — Tüm parça motorunu veya başka bir hedef dil deneyin."
   },
   "exportLimited": {
-    "message": "YouTube şu anda tüm parça çevirisine hız sınırı uyguluyor — bir dakika sonra tekrar deneyin veya “Kendi anahtarımla çevir”i işaretleyin."
+    "message": "YouTube şu anda tüm parça çevirisini hız sınırına takıyor — bir dakika sonra tekrar deneyin. Kendi anahtarınız kuruluysa dışa aktarma kartı bunu atlatan bir işaret kutusu sunar."
   },
   "exportNoCues": {
     "message": "İndirilebilir altyazı yok — altyazıların yüklenmesi için birkaç saniye oynatın, sonra tekrar deneyin."
@@ -323,7 +323,7 @@
     "message": "Önce bir sağlayıcı seç."
   },
   "byoErrNoKey": {
-    "message": "Önce bir API anahtarı gir — aşağıdaki bağlantı sağlayıcının anahtar sayfasını açar."
+    "message": "Önce bir API anahtarı girin, ardından Kaydet ve test et’e basın."
   },
   "byoErrNoModel": {
     "message": "Bu sağlayıcı için bir model adı yazman gerekiyor."
@@ -406,7 +406,7 @@
     "message": "kullanımda"
   },
   "optAfterSetup": {
-    "message": "İşin bitince eklenti penceresini aç ve Motor’u \"Kendi anahtarın\" olarak ayarla."
+    "message": "İşin bitince eklenti penceresini aç ve Motor’u \"Kendi anahtarınız (LLM / DeepL)\" olarak ayarla."
   },
   "optTrademark": {
     "message": "Tüm sağlayıcı adları ve logoları ilgili sahiplerinin ticari markalarıdır. Bu eklenti bunlardan hiçbiriyle bağlantılı değildir, onlar tarafından onaylanmamış veya desteklenmemiştir; işaretler yalnızca seçtiğin API’yi tanımlamak için gösterilir."
@@ -445,7 +445,7 @@
     "message": "Daha iyi çeviriler ister misin"
   },
   "startS3Body": {
-    "message": "Kendi API anahtarını ekle: tüm cümle çevirisi ve tüm video için SRT dışa aktarma."
+    "message": "Kendi API anahtarını ekle: tam cümle çevirisi ve dışa aktarırken tüm video çevirisi."
   },
   "startGoSetup": {
     "message": "Çeviri hizmeti kur"
@@ -460,7 +460,7 @@
     "message": "YouTube için ikinci bir altyazı satırı: bir satırda orijinal, diğerinde çeviri; yazı tipi, renk ve konum sana kalmış. Açık kaynak, ücretsiz, reklamsız."
   },
   "aboutPrivacy": {
-    "message": "Sunucumuz yok, istatistik toplamıyoruz. Altyazı metni yalnızca seçtiğin çeviri hizmetine gider; kendi anahtarınla kullanırken anahtar yalnızca bu bilgisayarda saklanır."
+    "message": "Eklentinin bize ait bir sunucusu yoktur ve istatistik toplamaz. Altyazı metni yalnızca seçtiğiniz çeviri hizmetine gider; kendi anahtarınızla anahtar yalnızca bu bilgisayarda saklanır."
   },
   "aboutChangelog": {
     "message": "Sürüm notları"
@@ -604,7 +604,7 @@
     "message": "Diğer diller"
   },
   "langsMoreHint": {
-    "message": "+ ile ekleyin. Listedeki her dil ücretsiz motorlarla ve DeepL ile çalışır."
+    "message": "Eklemek için + tuşuna basın. Listedeki her dil, ücretsiz motorların ve DeepL’in hedef olarak kabul ettiği bir dildir."
   },
   "langsReset": {
     "message": "Varsayılanları geri yükle"
@@ -653,7 +653,7 @@
     "message": "Otomatik — tarayıcıyı takip et"
   },
   "uiLocaleHint": {
-    "message": "Yalnızca bu uzantının kendi kontrollerinin dili. Altyazıların çevrileceği dil, açılır pencerede ve “Altyazı dilleri” altında seçilir — burada değil."
+    "message": "Bu eklentinin kendi menülerinin ve ayarlarının dili. Videonun üzerine çizilen birkaç etiket yine tarayıcının dilini izler. Altyazıların hangi dile çevrileceği açılır pencerede ve “Altyazı dilleri” altında seçilir — burada değil."
   },
   "startTargetLabel": {
     "message": "Çeviri dili"
@@ -674,7 +674,7 @@
     "message": "Sesli oku"
   },
   "ttsIntro": {
-    "message": "Çevrilen satırı kendi anahtarınızla sesli okuyun. Bir sağlayıcı ayarlayıp buradan deneyin."
+    "message": "Çevrilen satırı sesli okuyun. Tarayıcının kendi sesleri için hiç anahtar gerekmez; bulut sağlayıcıları burada kurulur ve test edilir."
   },
   "ttsVoiceLabel": {
     "message": "Ses"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Sesli okuma kendi anahtarınızı kullanır. Okunacak metin yalnızca seçtiğiniz sağlayıcıya gider; anahtar bu makinede kalır."
+    "message": "Tarayıcının kendi sesleriyle hiçbir şey hiçbir yere gönderilmez — satırı bilgisayarınızın kendisi okur. Bir bulut sağlayıcıda okunacak metin yalnızca seçtiğiniz sağlayıcıya gider; anahtar bu makinede kalır."
   },
   "ttsEnableLabel": {
     "message": "Videoda çeviriyi sesli oku"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Açıkken her altyazının çevirisi göründüğü anda seslendirilir; çevirisi zamanında hazır olmayan satır atlanır, sonradan telafi edilmez. Satır seslendirilirken videonun kendi sesi kısılır; sığmayacak kadar uzun bir satır videoyu biraz yavaşlatır."
+    "message": "Açıkken her altyazının çevirisi göründüğü anda okunur; çevirisi zamanında hazır olmayan satır atlanır, sonradan telafi edilmez. Bir satır okunurken videonun kendi sesi aşağıda ayarlanan düzeye iner. Uzun süren bir bulut sesi videoyu da biraz yavaşlatır — tarayıcının kendi sesleri süre bildirmediği için bunu yapamaz."
   },
   "ttsRegionLabel": {
     "message": "Hizmet bölgesi"
@@ -783,13 +783,13 @@
     "message": "Oynatılamadı — anahtarı kontrol edip Kaydet ve dene'yi deneyin"
   },
   "ttsFetchVoices": {
-    "message": "Bu dil için daha fazla ses getir"
+    "message": "Anahtarınızla daha fazla ses getirin"
   },
   "ttsFetching": {
     "message": "Getiriliyor…"
   },
   "ttsVoicesSwitched": {
-    "message": "Artık bu dile ait $N$ ses gösteriliyor. Yalnızca bu hedef dilde çalışır.",
+    "message": "Anahtarınızın kullanabileceği $N$ ses gösteriliyor. Adında dil geçen bir ses yalnızca o dil için çalışır.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Tarayıcınızın kendi sesleri (ücretsiz)"
+  },
+  "ttsErrRefused": {
+    "message": "Sağlayıcı bu isteği reddetti — farklı bir ses deneyin."
+  },
+  "ttsErrNoAudio": {
+    "message": "Ses gelmedi — tekrar deneyin veya farklı bir ses seçin."
   }
 }

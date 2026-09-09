@@ -160,16 +160,25 @@
     },
     defaults: () => DEFAULT_SHOWN.slice(),
     // name -> LLM prompt ("Translate ... into Simplified Chinese")
+    // Object.create(null), not {}: the caller looks this up BY THE TARGET
+    // LANGUAGE CODE, and a plain object answers "constructor" and "toString"
+    // with a function. That function's source would then be interpolated into
+    // the system prompt. Only our own pages write the target today, so this is
+    // a lock rather than a fix — but a lookup table keyed by data has no
+    // business inheriting anything.
     englishNames: () => {
-      const out = {};
+      const out = Object.create(null);
       for (const l of LANGS) out[l.code] = l.en;
       return out;
     },
     // A line to speak when previewing a voice, in the language being read.
     sample: (code) => TTS_SAMPLE[code] || TTS_SAMPLE.en,
     // DeepL's own codes; absent means DeepL cannot do it and must say so
+    // Same reason, and here the failure is quieter: an inherited function
+    // lands in `tl`, JSON.stringify drops it, and the request goes out with no
+    // target at all.
     deeplTargets: () => {
-      const out = {};
+      const out = Object.create(null);
       for (const l of LANGS) if (l.deepl) out[l.code] = l.deepl;
       return out;
     }

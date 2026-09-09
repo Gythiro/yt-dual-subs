@@ -231,7 +231,7 @@
     "message": "Tälle videolle ei ole käännöstä — kokeile koko raidan moottoria tai toista kohdekieltä."
   },
   "exportLimited": {
-    "message": "YouTube rajoittaa koko raidan käännöstä juuri nyt — yritä minuutin kuluttua uudelleen tai valitse ”Käännä omalla avaimella”."
+    "message": "YouTube rajoittaa koko raidan käännöstä juuri nyt — yritä uudelleen minuutin kuluttua. Kun oma avain on asetettu, vientikortti tarjoaa rastin, jolla rajoituksen voi kiertää."
   },
   "exportNoCues": {
     "message": "Ei ladattavia tekstityksiä — toista muutama sekunti, jotta tekstitykset latautuvat, ja yritä sitten uudelleen."
@@ -323,7 +323,7 @@
     "message": "Valitse ensin palveluntarjoaja."
   },
   "byoErrNoKey": {
-    "message": "Anna ensin API-avain — alla oleva linkki avaa palveluntarjoajan avainsivun."
+    "message": "Syötä ensin API-avain ja paina sitten Tallenna ja testaa."
   },
   "byoErrNoModel": {
     "message": "Tälle palveluntarjoajalle on kirjoitettava mallin nimi."
@@ -445,7 +445,7 @@
     "message": "Haluatko parempia käännöksiä"
   },
   "startS3Body": {
-    "message": "Lisää oma API-avaimesi: kokonaisten lauseiden käännös ja SRT-vienti koko videolle."
+    "message": "Lisää oma API-avain: käännös kokonaisina lauseina ja koko videon käännös, kun viet."
   },
   "startGoSetup": {
     "message": "Määritä käännöspalvelu"
@@ -460,7 +460,7 @@
     "message": "Toinen tekstitysrivi YouTubelle: alkuperäinen yhdellä rivillä, käännös toisella, fontti, väri ja sijainti ovat sinun valittavissasi. Avoin lähdekoodi, ilmainen, ei mainoksia."
   },
   "aboutPrivacy": {
-    "message": "Meillä ei ole palvelinta emmekä kerää tilastoja. Tekstityksen teksti menee vain valitsemallesi käännöspalvelulle; omalla avaimella avain tallennetaan vain tälle tietokoneelle."
+    "message": "Laajennuksella ei ole omaa palvelinta, eikä se kerää tilastoja. Tekstitysteksti menee vain valitsemaasi käännöspalveluun; oma avain tallennetaan vain tälle tietokoneelle."
   },
   "aboutChangelog": {
     "message": "Muutosloki"
@@ -604,7 +604,7 @@
     "message": "Muut kielet"
   },
   "langsMoreHint": {
-    "message": "Paina + lisätäksesi kielen. Kaikki luetellut kielet toimivat ilmaisten moottoreiden ja DeepL:n kanssa."
+    "message": "Paina + lisätäksesi kielen. Jokainen listattu kieli on sellainen, jonka ilmaiset moottorit ja DeepL hyväksyvät kohteeksi."
   },
   "langsReset": {
     "message": "Palauta oletukset"
@@ -653,7 +653,7 @@
     "message": "Automaattinen — seuraa selainta"
   },
   "uiLocaleHint": {
-    "message": "Koskee vain tämän laajennuksen omia säätimiä. Tekstitysten käännöskieli valitaan ponnahdusikkunassa ja kohdassa ”Tekstityskielet” — ei täällä."
+    "message": "Tämän laajennuksen omien valikoiden ja asetusten kieli. Muutama videolle piirretty teksti seuraa yhä selaimen kieltä. Mihin kieleen tekstitykset käännetään, valitaan ponnahdusikkunassa ja kohdassa “Tekstityskielet” — ei täällä."
   },
   "startTargetLabel": {
     "message": "Käännöskieli"
@@ -674,7 +674,7 @@
     "message": "Lue ääneen"
   },
   "ttsIntro": {
-    "message": "Lue käännetty rivi ääneen omalla avaimellasi. Määritä palveluntarjoaja ja testaa sitä täällä."
+    "message": "Lue käännetty rivi ääneen. Selaimen omat äänet eivät tarvitse avainta lainkaan; pilvipalvelut asetetaan ja testataan täällä."
   },
   "ttsVoiceLabel": {
     "message": "Ääni"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Lue ääneen käyttää omaa avaintasi. Puhuttava teksti menee vain valitsemallesi palveluntarjoajalle; avain pysyy tällä koneella."
+    "message": "Selaimen omilla äänillä mitään ei lähetetä minnekään — tietokoneesi puhuu rivin itse. Pilvipalvelussa puhuttava teksti menee vain valitsemallesi palvelulle, ja avain pysyy tällä koneella."
   },
   "ttsEnableLabel": {
     "message": "Lue käännös ääneen videossa"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä siihen palata. Videon oma ääni vaimennetaan rivin puhumisen ajaksi, ja liian pitkä rivi hidastaa videota hieman."
+    "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä sitä kurota kiinni myöhemmin. Rivin puhuessa videon oma ääni laskee alla asetettuun tasoon. Pitkään kestävä pilviääni hidastaa myös videota hieman — selaimen omat äänet eivät ilmoita kestoa, joten ne eivät voi."
   },
   "ttsRegionLabel": {
     "message": "Palvelualue"
@@ -783,13 +783,13 @@
     "message": "Toisto epäonnistui — tarkista avain ja kokeile Tallenna ja testaa"
   },
   "ttsFetchVoices": {
-    "message": "Hae lisää ääniä tälle kielelle"
+    "message": "Hae lisää ääniä avaimellasi"
   },
   "ttsFetching": {
     "message": "Haetaan…"
   },
   "ttsVoicesSwitched": {
-    "message": "Näkyvissä on tämän kielen $N$ ääntä. Ne toimivat vain tällä kohdekielellä.",
+    "message": "Näytetään nyt $N$ ääntä, joita avaimesi voi käyttää. Ääni, jonka nimessä on kieli, toimii vain kyseiselle kielelle.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Selaimesi omat äänet (ilmainen)"
+  },
+  "ttsErrRefused": {
+    "message": "Palveluntarjoaja hylkäsi tämän pyynnön — kokeile toista ääntä."
+  },
+  "ttsErrNoAudio": {
+    "message": "Ääntä ei kuulunut — yritä uudelleen tai valitse toinen ääni."
   }
 }

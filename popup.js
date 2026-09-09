@@ -176,10 +176,40 @@ const LINE = {
 };
 
 // ---- persistence ---------------------------------------------------------
+// One drag is one setting change. Writing on every `input` event turned a
+// single slider pull into tens of chrome.storage.sync writes, and Chrome
+// refuses them past 120 a minute — silently, since nothing read lastError.
+// storage.onChanged then never fired either, so the preview here kept moving
+// while the subtitles on the video stopped: the worst shape a failure can take.
+// The value reaches `state` and the preview immediately; only the write waits.
+const pendingWrite = Object.create(null);
+let writeTimer = null;
+
+function flushWrites(retriesLeft) {
+  if (writeTimer) { clearTimeout(writeTimer); writeTimer = null; }
+  const batch = {};
+  let any = false;
+  for (const k of Object.keys(pendingWrite)) { batch[k] = pendingWrite[k]; delete pendingWrite[k]; any = true; }
+  if (!any) return;
+  try {
+    chrome.storage.sync.set(batch, () => {
+      // A refused write used to vanish. Put the values back and try once more,
+      // far enough out that the per-minute window has moved on.
+      if (chrome.runtime.lastError && (retriesLeft || 0) > 0) {
+        for (const k of Object.keys(batch)) {
+          if (!(k in pendingWrite)) pendingWrite[k] = batch[k];
+        }
+        writeTimer = setTimeout(() => flushWrites((retriesLeft || 0) - 1), 5000);
+      }
+    });
+  } catch (_e) { /* the popup is going away; the change event already flushed */ }
+}
+
 function setKey(key, val) {
   state[key] = val;
-  const o = {}; o[key] = val;
-  chrome.storage.sync.set(o);
+  pendingWrite[key] = val;
+  if (writeTimer) clearTimeout(writeTimer);
+  writeTimer = setTimeout(() => flushWrites(1), 180);
   paintPreview();
 }
 
@@ -252,10 +282,14 @@ function paintLangs() {
   sel.textContent = "";
   for (const code of codes) {
     const info = L.get(code);
-    if (!info) continue;
     const o = document.createElement("option");
     o.value = code;
-    o.textContent = info.native;
+    // Only one entry can be missing from the table — the stored target, kept
+    // above precisely so it stays selectable. Skipping it made the dropdown go
+    // blank instead: the reader could not see what they were translating into,
+    // and the setting underneath was unchanged. A code this build does not
+    // know is labelled with itself, which is at least true.
+    o.textContent = info ? info.native : code;
     sel.appendChild(o);
   }
   const manage = document.createElement("option");
@@ -287,14 +321,22 @@ function getActiveTab() {
   });
 }
 
-function sendToTab(tabId, msg) {
+// `waitMs` bounds the wait. A content script that is alive but busy never calls
+// back and never sets lastError, so without a deadline this promise can simply
+// never settle — which is survivable while the caller only paints a line, and
+// is not once a caller disables a button until it resolves. The settings page
+// has always bounded its equivalent at 800ms; this is the same number.
+function sendToTab(tabId, msg, waitMs) {
   return new Promise((resolve) => {
+    let done = false;
+    const finish = (v) => { if (!done) { done = true; resolve(v); } };
+    if (waitMs) setTimeout(() => finish(null), waitMs);
     try {
       chrome.tabs.sendMessage(tabId, msg, (resp) => {
-        if (chrome.runtime.lastError) { resolve(null); return; }   // no content script
-        resolve(resp);
+        if (chrome.runtime.lastError) { finish(null); return; }   // no content script
+        finish(resp);
       });
-    } catch (_e) { resolve(null); }
+    } catch (_e) { finish(null); }
   });
 }
 
@@ -408,20 +450,31 @@ async function refreshTtsStatus() {
   try {
     const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts.get(state.ttsProvider);
     // The engine falls back when a stored voice is not this provider's, so the
-    // line must name the voice that will actually speak.
+    // line must name the voice that will actually speak. When we cannot say
+    // which that is, it names none: the family default is a guess, and for the
+    // browser's own voices there is not even one to guess with — the engine
+    // hands the line to whatever the system has picked, and no name here is
+    // truer than the wrong name.
     const stored = state.ttsVoice || "";
-    const P2 = self.YTDS_PROVIDERS;
-    voice = (p && P2.tts.voiceOwned(p, stored) &&
-             P2.tts.voiceAppliesTo(p, stored, state.targetLang))
-      ? stored : ((p && p.defaultVoice) || stored || "");
+    voice = ttsVoiceUsableHere(p, stored) ? stored : (p ? (p.defaultVoice || "") : stored);
   } catch (_e) { /* no voice shown, the line still counts */ }
-  // Nothing has spoken and the engine said why: lead with the reason. A stored
-  // key is not a working one (it is saved before the test runs), and since the
-  // popup can switch provider by picking a voice, the settings page is no
-  // longer guaranteed to have shown the user the failure.
+  const counts = tsub("ttsStatusCounts",
+    [String(r.tts.spoken), String(r.tts.skipped)],
+    "本视频 " + r.tts.spoken + " 句 · 跳过 " + r.tts.skipped + " 句");
+  // The engine said why: lead with the reason. A stored key is not a working
+  // one (it is saved before the test runs), and since the popup can switch
+  // provider by picking a voice, the settings page is no longer guaranteed to
+  // have shown the user the failure.
   el.classList.toggle("err", !!r.tts.err);
   if (r.tts.err) {
-    el.textContent = byoErrText(r.tts.err);
+    // …but keep the counts once anything has been read. The reason used to
+    // appear only when NOTHING had ever spoken, so it could stand alone;
+    // now it also covers a provider that worked and then stopped, and on that
+    // video the lines that did play are still true — and one may be sounding
+    // while the message is on screen. Dropping the counts there leaves a card
+    // that says only "refused" over audio the reader can hear.
+    el.textContent = r.tts.spoken ? byoErrText(r.tts.err) + " · " + counts
+      : byoErrText(r.tts.err);
     ttsStatusA11y(el);
     el.hidden = false;
     return;
@@ -429,13 +482,30 @@ async function refreshTtsStatus() {
   const head = r.tts.speaking
     ? t("ttsStatusSpeaking", "朗读中")
     : t("ttsStatusOn", "朗读已开");
-  const counts = tsub("ttsStatusCounts",
-    [String(r.tts.spoken), String(r.tts.skipped)],
-    "本视频 " + r.tts.spoken + " 句 · 跳过 " + r.tts.skipped + " 句");
   // Half-width parens even in CJK: the voice name is a Latin token ("nova").
   el.textContent = head + (voice ? " (" + ttsVoiceLabel(voice) + ")" : "") + " · " + counts;
   ttsStatusA11y(el);
   el.hidden = false;
+}
+
+// Will the engine actually find this voice on THIS machine? For every provider
+// but one that is a question about the name's shape and the language it
+// carries. For the browser's own voices it is a question about the machine:
+// ttsVoiceOwned says yes to any of them (providers.js explains why — the worker
+// has no voice table), while ttsVoice rides storage.sync between machines, so
+// the name may be one that only the other machine has. content.js looks it up
+// for real and falls back to the system default when it is not there.
+function ttsVoiceUsableHere(p, name) {
+  const P2 = self.YTDS_PROVIDERS;
+  if (!p || !name || !P2) return false;
+  if (p.localVoices) {
+    try {
+      return P2.tts.localVoiceNames(window.speechSynthesis, state.targetLang)
+        .indexOf(name) >= 0;
+    } catch (_e) { return false; }
+  }
+  return P2.tts.voiceOwned(p, name) &&
+    P2.tts.voiceAppliesTo(p, name, state.targetLang);
 }
 
 // The button carries a static aria-label ("read-aloud settings"), and an
@@ -493,7 +563,29 @@ async function paintTtsCard() {
     const keys = (loc && loc.ttsKeys) || {};
     const reg = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts;
     if (reg) {
-      usable = reg.list.filter((p) => ttsUsable(p, keys, got && got.ttsRegion));
+      // A stored key is not a provider that can be reached. The host is an
+      // OPTIONAL permission, and the reader can take it back from Chrome's own
+      // settings at any moment — after which every line fails with a
+      // permission error this card never saw coming, while the menu goes on
+      // offering the provider as if it were ready. Keyless providers ask for
+      // no host, so there is nothing to have lost.
+      const askHost = (p) => new Promise((res) => {
+        let done = false;
+        const fin = (ok) => { if (!done) { done = true; res(ok ? p : null); } };
+        if (!ttsUsable(p, keys, got && got.ttsRegion)) return fin(false);
+        if (p.keyless || !p.origin) return fin(true);
+        try {
+          // Chrome answers by callback or by promise depending on how it was
+          // called; take whichever comes, and if neither can be had, keep the
+          // provider — hiding a working one is the worse mistake.
+          const r = chrome.permissions.contains({ origins: [p.origin + "/*"] },
+            (ok) => fin(!chrome.runtime.lastError && !!ok));
+          if (r && typeof r.then === "function") r.then((ok) => fin(!!ok), () => fin(true));
+        } catch (_e) { fin(true); }
+      });
+      const withHost = await Promise.all(reg.list.map(askHost));
+      if (gen !== ttsPaintGen) return;  // the extra round trip is a newer paint's chance
+      usable = withHost.filter(Boolean);
       current = reg.get(got && got.ttsProvider);
       // The stored provider may have stopped being usable — a key cleared on
       // the settings page, an Azure region never filled in. Something keyless
@@ -563,7 +655,10 @@ function paintTtsVoicePick(usable, current, storedVoice) {
       // not answered yet — but it stays listed: "the free engine is always
       // there" is a promise this card makes, and voiceschanged fills it in.
       const g = document.createElement("optgroup");
-      g.label = p.name;
+      // Not p.name: that literal is the Chinese one for the providers that are
+      // known by a Chinese name abroad, and an English reader with one key
+      // configured was shown a group headed 浏览器内置（免费）.
+      g.label = p.nameKey ? t(p.nameKey, p.name) : p.name;
       for (const v of voicesOf(p)) addVoice(g, p, v);
       sel.appendChild(g);
     }
@@ -575,12 +670,26 @@ function paintTtsVoicePick(usable, current, storedVoice) {
   // not in the family we ship. Leaving it out of the menu did not stop it from
   // speaking — it only stopped the menu from admitting which voice that was.
   const P = self.YTDS_PROVIDERS;
-  if (storedVoice && !choices.includes(storedVoice) &&
+  // Not for the browser's own voices. Their names are whatever THIS machine
+  // has installed, ttsVoice rides storage.sync between machines, and
+  // ttsVoiceOwned cannot check them (providers.js says as much: the worker has
+  // no voice table) — so it says yes to a name from the other machine, this
+  // branch would list and select it, and the engine, which looks the name up
+  // for real, would fall back to the system default. The control would be
+  // naming a voice nobody is hearing. Here the machine's own list is the
+  // authority, and voiceschanged repaints when it arrives.
+  if (storedVoice && !current.localVoices && !choices.includes(storedVoice) &&
       P.tts.voiceOwned(current, storedVoice) &&
       P.tts.voiceAppliesTo(current, storedVoice, state.targetLang)) {
+    // Looked up by the SAME expression that wrote it. Three providers carry a
+    // nameKey, so p.name and the label on screen are different strings in
+    // every locale — matching on p.name found nothing, and the rescued voice
+    // landed outside its group at the bottom of the list. Nothing reaches both
+    // lines today, which is exactly why it would have gone unnoticed.
+    const curLabel = current.nameKey ? t(current.nameKey, current.name) : current.name;
     const parent = usable.length > 1
       ? Array.prototype.find.call(sel.children,
-        (g) => g.tagName === "OPTGROUP" && g.label === current.name) || sel
+        (g) => g.tagName === "OPTGROUP" && g.label === curLabel) || sel
       : sel;
     addVoice(parent, current, storedVoice);
     choices.push(storedVoice);
@@ -683,7 +792,11 @@ async function buildDiagnostics() {
   } catch (_e) { L.push("gates: unavailable"); }
   try {
     const tab = await getActiveTab();
-    const r = tab && tab.id != null ? await sendToTab(tab.id, { type: "engineStatus" }) : null;
+    // Bounded here and nowhere else: the two status-line callers can afford to
+    // wait forever because all they do is not paint a line, while this one is
+    // holding a disabled button.
+    const r = tab && tab.id != null
+      ? await sendToTab(tab.id, { type: "engineStatus" }, 800) : null;
     if (r && r.ok) {
       L.push("page: " + (r.href || "youtube (id unknown)"));
       L.push("video-engine: " + (r.engine || "none yet") +
@@ -699,21 +812,45 @@ async function buildDiagnostics() {
   return L.join("\n");
 }
 
+// Collecting takes up to the tab-query deadline, and the answer — success or
+// failure — is a label swap. Three things were missing around that:
+// the button stayed live while collecting, so a second press started a second
+// collection and the two restore timers then fought over the label; the
+// restore text was read off the button rather than from its key; and the
+// failure branch set a label and scheduled nothing, so a refused clipboard
+// left "copy failed" on a settings page that stays open for hours.
+let diagBusy = false;
+let diagRestore = 0;
+
 async function onDiagCopy() {
   const btn = $("diagCopy");
+  if (diagBusy) return;
+  diagBusy = true;
+  clearTimeout(diagRestore);
+  if (btn) btn.disabled = true;
+  const restoreIn = (ms) => {
+    diagRestore = setTimeout(() => {
+      if (!btn) return;
+      btn.classList.remove("ok");
+      btn.textContent = t("diagCopy", "复制诊断信息");
+    }, ms);
+  };
   try {
     const text = await buildDiagnostics();
     await navigator.clipboard.writeText(text);
     if (btn) {
       btn.classList.add("ok");
       btn.textContent = t("diagCopied", "已复制 — 直接粘贴进邮件或 issue");
-      setTimeout(() => {
-        btn.classList.remove("ok");
-        btn.textContent = t("diagCopy", "复制诊断信息");
-      }, 2200);
+      restoreIn(2200);
     }
   } catch (_e) {
-    if (btn) btn.textContent = t("diagCopyFail", "复制失败 — 请改用截图");
+    if (btn) {
+      btn.textContent = t("diagCopyFail", "复制失败 — 请改用截图");
+      restoreIn(2200);
+    }
+  } finally {
+    diagBusy = false;
+    if (btn) btn.disabled = false;
   }
 }
 
@@ -856,11 +993,44 @@ function paintExportEngine() {
   note.classList.toggle("warn", exportByo);
 }
 
+// The one panel whose whole job is to tell you what something will cost before
+// you agree to it. It used to appear with no role, no name and no focus move:
+// a keyboard user pressed Download, focus stayed on the button, and the
+// estimate was announced to nobody. Escape now cancels it too — there was no
+// keydown handler anywhere in this popup.
+// The two opacity sliders run 0..1 and their badges read as a percentage, so
+// a screen reader announced "0.6" beside a label that says 60%. One helper
+// writes both, and the value a reader hears is the value on screen.
+function setPct(id, v) {
+  const pct = Math.round(v * 100) + "%";
+  const badge = $(id + "V");
+  if (badge) badge.textContent = pct;
+  const input = $(id);
+  if (input) input.setAttribute("aria-valuetext", pct);
+}
+
 function showConfirm(text) {
   $("exportConfirmText").textContent = text;
   $("exportConfirm").hidden = false;
+  const go = $("exportGo");
+  if (go) { try { go.focus(); } catch (_e) { /* ignore */ } }
 }
-function hideConfirm() { $("exportConfirm").hidden = true; }
+// dismissed: the READER closed this — Escape, or the back link. Then focus
+// belongs on the control that opened it, rather than falling to the top of the
+// document. Most callers are not that: they close the panel because the
+// estimate on it went stale (the engine changed, the variant changed, the
+// own-key box was ticked), and the reader is still on the control they just
+// used. Moving them off it mid-thought is the opposite of what putting focus
+// back is for. The export path is not a dismissal either — it focuses the
+// button it is about to disable, which drops focus to the body.
+function hideConfirm(dismissed) {
+  const panel = $("exportConfirm");
+  if (!panel || panel.hidden) return;
+  panel.hidden = true;
+  if (!dismissed) return;
+  const back = $("exportBtn");
+  if (back && !back.disabled) { try { back.focus(); } catch (_e) { /* ignore */ } }
+}
 
 // Busy state covers both buttons: the export button says what is happening and
 // the stop button appears only while there is something to stop.
@@ -1019,9 +1189,9 @@ function bindLineControls() {
   $("lineBg").value = state[m.bg];
   $("lineStroke").value = state[m.stroke];
   $("lineBgOpacity").value = state[m.bgOpacity];
-  $("lineBgOpacityV").textContent = Math.round(state[m.bgOpacity] * 100) + "%";
+  setPct("lineBgOpacity", state[m.bgOpacity]);
   $("lineStrokeOpacity").value = state[m.strokeOpacity];
-  $("lineStrokeOpacityV").textContent = Math.round(state[m.strokeOpacity] * 100) + "%";
+  setPct("lineStrokeOpacity", state[m.strokeOpacity]);
 
   let activeTabId = "";
   document.querySelectorAll("#lineTabs .tab").forEach((b) => {
@@ -1055,6 +1225,8 @@ function bindUI() {
 }
 
 // ---- wire events ---------------------------------------------------------
+let posHintTimer = 0;
+
 function wire() {
   $("enabled").addEventListener("change", (e) => setKey("enabled", e.target.checked));
   $("diagCopy").addEventListener("click", onDiagCopy);
@@ -1087,6 +1259,17 @@ function wire() {
     chrome.storage.sync.set({ engine: state.engine, backend: state.backend });
     $("backendGtxHint").hidden = v !== "gtx";
     paintByoPanel();
+    // The export card is derived from the engine too, and it was drawn once at
+    // boot. Switching engines inside the popup therefore left it describing the
+    // engine that used to be selected: the own-key download unreachable after
+    // switching to it, and — worse — a warning about spending your own quota
+    // standing over a download that had just become free. A note about money
+    // and about where the whole track gets sent is the last thing that may go
+    // stale while the user is looking at it.
+    paintExportEngine();
+    // An estimate on screen was calculated for the old engine. It is not an
+    // answer to the question the card now asks.
+    hideConfirm();
     refreshEngineStatus();
   });
 
@@ -1177,10 +1360,24 @@ function wire() {
     // Report in the explanation slot, not on the button: the button is three
     // characters wide and a sentence there would break the row.
     const hint = $("posHintText");
-    const was = hint.textContent;
+    // Restore from the key, not from whatever is on screen. Read back inside
+    // the 2.6s window, "what was there" is the previous ANSWER, so a second
+    // press — which is exactly what someone does when they miss a reply this
+    // quiet — wrote the answer back permanently and the line never returned to
+    // being an explanation. Clearing the pending timer stops the two from
+    // racing as well.
+    clearTimeout(posHintTimer);
     hint.textContent = t("posTryNoVideo", "请先打开 YouTube 视频页");
-    setTimeout(() => { hint.textContent = was; }, 2600);
+    posHintTimer = setTimeout(() => {
+      hint.textContent = t("posHint", "也可直接在视频上拖动字幕框");
+    }, 2600);
   });
+
+  // A popup can be dismissed the moment a drag ends, taking any pending timer
+  // with it. `change` fires on release for range and colour inputs, so the last
+  // value of a gesture is always written even if the debounce never fires.
+  document.querySelectorAll('input[type="range"], input[type="color"]').forEach((el) =>
+    el.addEventListener("change", () => flushWrites(1)));
 
   // row gap
   $("rowGap").addEventListener("input", (e) => {
@@ -1203,11 +1400,11 @@ function wire() {
   $("lineBg").addEventListener("input", (e) => setKey(LINE[activeLine].bg, e.target.value));
   $("lineStroke").addEventListener("input", (e) => setKey(LINE[activeLine].stroke, e.target.value));
   $("lineBgOpacity").addEventListener("input", (e) => {
-    $("lineBgOpacityV").textContent = Math.round(+e.target.value * 100) + "%";
+    setPct("lineBgOpacity", +e.target.value);
     setKey(LINE[activeLine].bgOpacity, +e.target.value);
   });
   $("lineStrokeOpacity").addEventListener("input", (e) => {
-    $("lineStrokeOpacityV").textContent = Math.round(+e.target.value * 100) + "%";
+    setPct("lineStrokeOpacity", +e.target.value);
     setKey(LINE[activeLine].strokeOpacity, +e.target.value);
   });
 
@@ -1226,7 +1423,17 @@ function wire() {
   });
   $("exportBtn").addEventListener("click", onExportClick);
   $("exportGo").addEventListener("click", () => runExport(true));
-  $("exportBack").addEventListener("click", () => hideConfirm());
+  $("exportBack").addEventListener("click", () => hideConfirm(true));
+  // Escape cancels the spend confirmation. There was no keydown handler in
+  // this popup at all, so the only way out of that panel was to find the
+  // Cancel button — which is also the only place the estimate is announced.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const panel = $("exportConfirm");
+    if (!panel || panel.hidden) return;
+    e.preventDefault();
+    hideConfirm(true);
+  });
   $("exportStop").addEventListener("click", onExportStop);
 
   // reset all
@@ -1239,7 +1446,11 @@ function wire() {
     // silently resumed spending an account the user thought they had cleared.
     // The panels also have their own "clear" buttons for doing this alone.
     try {
-      chrome.storage.local.remove(["byoKeys", "ttsKeys"]);
+      // byoOk goes with them. It records which providers have PROVEN a key by
+      // answering a request; kept after the keys are gone, the next key typed
+      // into that provider inherits a tick it never earned and the panel calls
+      // it verified without anything having been tested.
+      chrome.storage.local.remove(["byoKeys", "ttsKeys", "byoOk"]);
       chrome.storage.sync.remove(["ttsProvider", "ttsVoice", "ttsRegion"]);
       paintByoPanel();               // the summary must stop claiming a key
       paintTtsCard();                // …and so must the read-aloud card

@@ -231,7 +231,7 @@
     "message": "Brak tłumaczenia dla tego filmu — spróbuj silnika Cała ścieżka albo innego języka docelowego."
   },
   "exportLimited": {
-    "message": "YouTube właśnie ogranicza tłumaczenie całej ścieżki — spróbuj za minutę albo zaznacz „Tłumacz własnym kluczem”."
+    "message": "YouTube właśnie ogranicza tłumaczenie całej ścieżki — spróbuj za minutę. Z własnym kluczem karta eksportu oferuje zaznaczenie, które to omija."
   },
   "exportNoCues": {
     "message": "Brak napisów do pobrania — odtwórz kilka sekund, żeby się wczytały, i spróbuj ponownie."
@@ -323,7 +323,7 @@
     "message": "Najpierw wybierz dostawcę."
   },
   "byoErrNoKey": {
-    "message": "Najpierw wpisz klucz API — link poniżej otwiera stronę kluczy dostawcy."
+    "message": "Najpierw wpisz klucz API, potem naciśnij Zapisz i testuj."
   },
   "byoErrNoModel": {
     "message": "Ten dostawca wymaga wpisania nazwy modelu."
@@ -445,7 +445,7 @@
     "message": "Chcesz lepszych tłumaczeń"
   },
   "startS3Body": {
-    "message": "Dodaj własny klucz API: tłumaczenie całych zdań i eksport SRT całego filmu."
+    "message": "Dodaj własny klucz API: tłumaczenie całych zdań i całego filmu przy eksporcie."
   },
   "startGoSetup": {
     "message": "Skonfiguruj usługę tłumaczeń"
@@ -460,7 +460,7 @@
     "message": "Druga linia napisów na YouTube: oryginał w jednej, tłumaczenie w drugiej — czcionka, kolor i pozycja zależą od Ciebie. Otwarty kod, darmowe, bez reklam."
   },
   "aboutPrivacy": {
-    "message": "Nie mamy serwera i nie zbieramy statystyk. Tekst napisów trafia wyłącznie do wybranej usługi tłumaczeń; przy własnym kluczu jest on przechowywany tylko na tym komputerze."
+    "message": "Rozszerzenie nie ma naszego serwera i nie zbiera statystyk. Tekst napisów trafia wyłącznie do wybranej usługi tłumaczenia; własny klucz jest przechowywany tylko na tym komputerze."
   },
   "aboutChangelog": {
     "message": "Dziennik zmian"
@@ -604,7 +604,7 @@
     "message": "Inne języki"
   },
   "langsMoreHint": {
-    "message": "Naciśnij +, aby dodać. Każdy język z listy działa z darmowymi silnikami i z DeepL."
+    "message": "Naciśnij +, aby dodać. Każdy język na liście jest akceptowany jako docelowy przez darmowe silniki i DeepL."
   },
   "langsReset": {
     "message": "Przywróć domyślne"
@@ -653,7 +653,7 @@
     "message": "Auto — jak w przeglądarce"
   },
   "uiLocaleHint": {
-    "message": "Tylko język elementów sterujących tego rozszerzenia. Na jaki język tłumaczone są napisy, wybierasz w popupie i w „Języki napisów” — nie tutaj."
+    "message": "Język menu i ustawień samego rozszerzenia. Kilka etykiet na filmie nadal podąża za językiem przeglądarki. Na jaki język tłumaczyć napisy, wybierasz w oknie podręcznym i w „Języki napisów” — nie tutaj."
   },
   "startTargetLabel": {
     "message": "Język tłumaczenia"
@@ -674,7 +674,7 @@
     "message": "Czytaj na głos"
   },
   "ttsIntro": {
-    "message": "Odczytaj przetłumaczoną linijkę na głos własnym kluczem. Skonfiguruj dostawcę i przetestuj go tutaj."
+    "message": "Odczytaj przetłumaczoną linijkę na głos. Głosy przeglądarki nie wymagają klucza; dostawców chmurowych konfigurujesz i testujesz tutaj."
   },
   "ttsVoiceLabel": {
     "message": "Głos"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Czytanie na głos korzysta z Twojego klucza. Tekst do odczytania trafia wyłącznie do wybranego dostawcy; klucz pozostaje na tym komputerze."
+    "message": "Przy głosach przeglądarki nic nie jest nigdzie wysyłane — komputer sam wypowiada linijkę. Przy dostawcy chmurowym tekst do odczytu trafia wyłącznie do wybranego dostawcy, a klucz zostaje na tym komputerze."
   },
   "ttsEnableLabel": {
     "message": "Czytaj tłumaczenie na głos w filmie"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Gdy włączone, tłumaczenie każdego napisu jest odczytywane w momencie jego pojawienia; napis, którego tłumaczenie nie jest gotowe na czas, jest pomijany i nigdy nie nadrabiany. Dźwięk filmu jest ściszany podczas odczytu, a zbyt długi napis nieco spowalnia film."
+    "message": "Po włączeniu tłumaczenie każdej linijki jest odczytywane, gdy się pojawia; linijka, której tłumaczenie nie zdąży, jest pomijana, a nie nadrabiana później. Podczas odczytu dźwięk filmu ścisza się do poziomu ustawionego poniżej. Długi głos chmurowy dodatkowo trochę spowalnia film — głosy przeglądarki nie zgłaszają długości, więc tego nie robią."
   },
   "ttsRegionLabel": {
     "message": "Region usługi"
@@ -783,13 +783,13 @@
     "message": "Nie udało się odtworzyć — sprawdź klucz i spróbuj Zapisz i testuj"
   },
   "ttsFetchVoices": {
-    "message": "Pobierz więcej głosów dla tego języka"
+    "message": "Pobierz więcej głosów swoim kluczem"
   },
   "ttsFetching": {
     "message": "Pobieranie…"
   },
   "ttsVoicesSwitched": {
-    "message": "Widzisz teraz $N$ głosów dla tego języka. Działają tylko z tym językiem docelowym.",
+    "message": "Wyświetlam $N$ głosów dostępnych z Twoim kluczem. Głos z językiem w nazwie działa tylko dla tego języka.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Głosy Twojej przeglądarki (darmowe)"
+  },
+  "ttsErrRefused": {
+    "message": "Dostawca odrzucił to żądanie — spróbuj innego głosu."
+  },
+  "ttsErrNoAudio": {
+    "message": "Dźwięk nie doszedł — spróbuj ponownie lub wybierz inny głos."
   }
 }

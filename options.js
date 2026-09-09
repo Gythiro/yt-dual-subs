@@ -77,7 +77,7 @@ function applyI18n() {
     if (s) el.setAttribute("aria-label", s);
   });
   const title = t("optTitle", "");
-  if (title) document.title = title + " — Dual Subtitles for YouTube";
+  if (title) document.title = title + " — " + t("extName", "Dual Subtitles for YouTube");
 }
 
 // ---- provider helpers ------------------------------------------------------
@@ -107,13 +107,26 @@ function providerLabel(p) {
 function renderList() {
   const ul = $("plist");
   ul.textContent = "";
+  let openTabId = "";
   for (const p of providerList()) {
     const li = document.createElement("li");
+    // The <ul> is the tablist; a tablist owns tabs. Leaving the wrappers as
+    // listitems puts a role that is not "tab" between the two, so the tabs
+    // stop being owned and the "3 of 12" a reader announces comes from
+    // nowhere. popup's #lineTabs has no wrappers at all; here the bullets are
+    // load-bearing for layout, so they say they are scaffolding instead.
+    li.setAttribute("role", "presentation");
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "pitem" + (p.id === editing ? " on" : "");
     btn.setAttribute("role", "tab");
     btn.setAttribute("aria-selected", String(p.id === editing));
+    // Same three-part pattern popup uses for #lineTabs: the tab has an id, it
+    // names the panel it opens, and the panel names it back (below). Provider
+    // ids are the ASCII slugs in providers.js, so they make legal id values.
+    btn.id = "ptab-" + p.id;
+    btn.setAttribute("aria-controls", "detail");
+    if (p.id === editing) openTabId = btn.id;
     btn.appendChild(ICONS.iconFor(p));
 
     const name = document.createElement("span");
@@ -146,6 +159,15 @@ function renderList() {
     });
     li.appendChild(btn);
     ul.appendChild(li);
+  }
+  // renderList() rebuilds the whole list on every switch, so the panel's name
+  // is not something to write once at load — it has to be re-pointed here.
+  // Drop it rather than let it go stale if nothing is open: an unnamed panel
+  // is merely unhelpful, one named after a tab that is gone is a lie.
+  const panel = $("detail");
+  if (panel) {
+    if (openTabId) panel.setAttribute("aria-labelledby", openTabId);
+    else panel.removeAttribute("aria-labelledby");
   }
 }
 
@@ -303,6 +325,21 @@ function plan() {
 // Saving a key IS the moment to switch to that provider: the user typed it and
 // pressed the button. Clicking around the list is not, which is why this is the
 // only place byoProvider moves from inside the settings page.
+// Saving what belongs to the provider being set up: its key, and the model
+// chosen for it. Neither of these is a decision about which provider the
+// extension translates with.
+function persistForProvider(pl) {
+  modelsBy[pl.provider.id] = pl.model;
+  chrome.storage.sync.set({ byoModelBy: Object.assign({}, modelsBy) });
+  return pl.typedKey ? saveKey(pl.provider.id, pl.typedKey) : Promise.resolve();
+}
+
+// …and the decision itself. Kept separate because it used to be inseparable:
+// "fetch this provider's models" ran the whole of this, so opening a provider
+// you were curious about and asking what it offers switched the extension over
+// to it — a different account's quota, and a host permission prompt, for a
+// question. The invariant at the top of this file said nothing switches until a
+// key goes through; this is what made that true again.
 function persist(pl) {
   state.byoProvider = pl.provider.id;
   state.byoModel = pl.model;
@@ -359,7 +396,9 @@ function sendToBackground(msg) {
 // always changes something on screen. Without that, a permission prompt the user
 // dismisses (its callback never fires) looks exactly like a dead button — which
 // is what happened on the real machine.
-function withSetup(btn, busyKey, busyFallback, onError, run) {
+// `adopt` says whether finishing this makes the provider the one in use. Saving
+// and testing a key does; asking a provider what models it has does not.
+function withSetup(btn, busyKey, busyFallback, onError, run, adopt) {
   const pl = plan();
   if (pl.error) { onError(pl.error); return; }
   if (!pl.typedKey && !storedKeys[pl.provider.id]) { onError("noKey"); return; }
@@ -372,7 +411,7 @@ function withSetup(btn, busyKey, busyFallback, onError, run) {
   try {
     chrome.permissions.request({ origins: pl.origins }, (granted) => {
       if (chrome.runtime.lastError || !granted) { done(); onError("noPerm"); return; }
-      persist(pl)
+      (adopt === false ? persistForProvider(pl) : persist(pl))
         .then(() => run(pl))
         // A rejection here would otherwise be swallowed and read as a no-op.
         .catch((err) => onError((err && err.code) || "failed"))
@@ -406,7 +445,10 @@ async function runTest(pl) {
 async function runFetchModels(pl) {
   showModelMsg("", null);
   try {
-    const resp = await sendToBackground({ type: "byoModels" });
+    // Name the provider being asked about. Without it the worker answers for
+    // whichever one the extension is translating with, which is why this used
+    // to switch over first.
+    const resp = await sendToBackground({ type: "byoModels", provider: pl.provider.id });
     if (resp && resp.ok && resp.models && resp.models.length) {
       fetchedModels[pl.provider.id] = resp.models;
       renderModelField(pl.provider);
@@ -584,6 +626,11 @@ function showSection(name) {
   const def = SECTIONS[sec];
   $("pageTitle").textContent = t(def.title, $("pageTitle").textContent);
   $("pageIntro").textContent = t(def.intro, $("pageIntro").textContent);
+  // …and the tab strip, which was built once at boot and then said
+  // "Translation service setup" whichever pane you were on. The heading and
+  // the title come from the same key, so they cannot disagree.
+  const heading = $("pageTitle").textContent;
+  if (heading) document.title = heading + " — " + t("extName", "Dual Subtitles for YouTube");
   // The footer's privacy/trademark lines show per pane (options.css keys off
   // this attribute); the feedback link stays on every pane.
   const oft = $("oft");
@@ -604,13 +651,22 @@ function showSection(name) {
 function askYouTubeTabs() {
   return new Promise((resolve) => {
     let done = false;
+    // Declared here, above the timer, on purpose: the timeout used to hand over
+    // an empty list because this was scoped inside the query callback and there
+    // was nothing else it could name. Every tab in every window is asked, and
+    // one that is mid-load — or that Chrome has frozen in the background —
+    // simply never calls back, so a single quiet tab threw away every answer
+    // that had arrived and the bundle reported "no YouTube tab open". That
+    // bundle is the only source of truth support gets.
+    const out = [];
     const finish = (v) => { if (!done) { done = true; resolve(v); } };
-    setTimeout(() => finish([]), 800);       // a page mid-load must not hang this
+    // A copy: replies still in flight keep pushing after the deadline, and the
+    // caller should not be handed an array that grows under it.
+    setTimeout(() => finish(out.slice()), 800);
     try {
       chrome.tabs.query({}, (tabs) => {
         const ids = (tabs || []).map((t) => t.id).filter((id) => id != null);
         if (!ids.length) return finish([]);
-        const out = [];
         let left = ids.length;
         for (const id of ids) {
           try {
@@ -626,6 +682,18 @@ function askYouTubeTabs() {
       });
     } catch (_e) { finish([]); }
   });
+}
+
+// A YouTube URL reduced to the part a bug report can use. Anything that is not
+// recognisably a YouTube video address is dropped rather than guessed at.
+function diagPageRef(href) {
+  if (!href) return "youtube (id unknown)";
+  let u;
+  try { u = new URL(String(href)); } catch (_e) { return "youtube (unreadable address)"; }
+  const shorts = /^\/shorts\/([A-Za-z0-9_-]{6,})/.exec(u.pathname);
+  const id = shorts ? shorts[1] : u.searchParams.get("v");
+  if (id) return (shorts ? "shorts " : "watch ") + id;
+  return "youtube" + (u.pathname && u.pathname !== "/" ? " " + u.pathname : "");
 }
 
 async function buildDiagnostics() {
@@ -671,7 +739,13 @@ async function buildDiagnostics() {
   } else {
     pages.forEach((r, i) => {
       const n = pages.length > 1 ? " #" + (i + 1) : "";
-      L.push("page" + n + ": " + (r.href || "youtube (id unknown)"));
+      // The video, not the visit. A full watch URL carries the timestamp the
+      // reader was at, the playlist they came through, and whatever tracking
+      // parameters the link they followed had on it — and the hint under this
+      // button tells people to paste the result into an email or an issue,
+      // where issues are public. The id is what a report needs to reproduce
+      // anything; the rest is a record of somebody's afternoon.
+      L.push("page" + n + ": " + diagPageRef(r.href));
       L.push("video-engine" + n + ": " + (r.engine || "none yet") +
         (r.provider ? " (" + r.provider + ")" : "") +
         (r.same ? ", same-language" : "") +
@@ -685,21 +759,45 @@ async function buildDiagnostics() {
   return L.join("\n");
 }
 
+// Collecting takes up to the tab-query deadline, and the answer — success or
+// failure — is a label swap. Three things were missing around that:
+// the button stayed live while collecting, so a second press started a second
+// collection and the two restore timers then fought over the label; the
+// restore text was read off the button rather than from its key; and the
+// failure branch set a label and scheduled nothing, so a refused clipboard
+// left "copy failed" on a settings page that stays open for hours.
+let diagBusy = false;
+let diagRestore = 0;
+
 async function onDiagCopy() {
   const btn = $("aboutDiag");
+  if (diagBusy) return;
+  diagBusy = true;
+  clearTimeout(diagRestore);
+  if (btn) btn.disabled = true;
+  const restoreIn = (ms) => {
+    diagRestore = setTimeout(() => {
+      if (!btn) return;
+      btn.classList.remove("ok");
+      btn.textContent = t("diagCopy", "复制诊断信息");
+    }, ms);
+  };
   try {
     const text = await buildDiagnostics();
     await navigator.clipboard.writeText(text);
     if (btn) {
       btn.classList.add("ok");
       btn.textContent = t("diagCopied", "已复制 — 直接粘贴进邮件或 issue");
-      setTimeout(() => {
-        btn.classList.remove("ok");
-        btn.textContent = t("diagCopy", "复制诊断信息");
-      }, 2200);
+      restoreIn(2200);
     }
   } catch (_e) {
-    if (btn) btn.textContent = t("diagCopyFail", "复制失败 — 请改用截图");
+    if (btn) {
+      btn.textContent = t("diagCopyFail", "复制失败 — 请改用截图");
+      restoreIn(2200);
+    }
+  } finally {
+    diagBusy = false;
+    if (btn) btn.disabled = false;
   }
 }
 
@@ -839,6 +937,26 @@ function paintTtsVoices(p) {
     choices.forEach((v) => add(sel, v));
   }
   const want = state.ttsVoice || p.defaultVoice || "";
+  // A voice fetched on an earlier visit is one the engine honours but that is
+  // not in the family we ship, and the fetched catalogue does not outlive this
+  // page. Leaving it out of the menu never stopped it from speaking — it only
+  // stopped the menu from admitting which voice that was, and then the next
+  // save wrote the family's first entry down in its place. Same branch the
+  // popup grew for the same reason.
+  // Not for the browser's own voices: their names are whatever THIS machine
+  // has installed, ttsVoice rides storage.sync between machines, and
+  // voiceOwned cannot check them (providers.js says so) — so a voice picked on
+  // another machine would be listed and selected here without existing, and
+  // the engine would quietly speak in the default voice instead.
+  // Only into the family menu. The fetched catalogue is PINNED to the language
+  // it was fetched for, so a name from outside it — the family default among
+  // them — does not belong in that list.
+  if (want && !inLanguage && !p.localVoices && !choices.includes(want) &&
+      P.tts.voiceOwned(p, want) &&
+      P.tts.voiceAppliesTo(p, want, state.targetLang)) {
+    add(sel, want);
+    choices.push(want);
+  }
   if (want && choices.includes(want)) sel.value = want;
   const row = $("ttsFetchRow");
   if (row) row.hidden = !p.listVoices;
@@ -861,7 +979,7 @@ function paintTtsVoices(p) {
 function persistTts(p, typedKey) {
   return new Promise((resolve) => {
     state.ttsProvider = p.id;
-    state.ttsVoice = $("ttsVoiceSel").value || p.defaultVoice || "";
+    state.ttsVoice = voiceToSave(p);
     chrome.storage.sync.set({ ttsProvider: state.ttsProvider, ttsVoice: state.ttsVoice }, () => {
       if (!typedKey) return resolve();
       chrome.storage.local.get({ ttsKeys: {} }, (got) => {
@@ -871,6 +989,34 @@ function persistTts(p, typedKey) {
       });
     });
   });
+}
+
+// What "save" should write down for the voice. Not simply what the dropdown
+// shows: the dropdown cannot always show the stored voice. Fetching a
+// language's voices REPLACES the menu with a list pinned to that language, and
+// a name from outside it — the family default, or a voice fetched for another
+// language — has no place in that list. The menu then shows its first entry
+// while the engine goes on using the stored one, and writing down what the
+// menu shows loses a voice the reader never touched.
+//
+// So: if the menu is offering the stored voice, the menu is the answer — the
+// reader may have just changed it. If it is not, and the stored voice is still
+// one this provider will honour, it stays. Only a stored voice this provider
+// would not accept is replaced.
+function voiceToSave(p) {
+  const sel = $("ttsVoiceSel");
+  const stored = state.ttsVoice || "";
+  const offered = Array.prototype.some.call(sel.options, (o) => o.value === stored);
+  // The same two questions the menu above asked. Asking only the first — does
+  // this provider own the name — kept a voice that no longer applies to the
+  // language being read: the menu correctly refused to list it, and save wrote
+  // it back anyway, so the page disagreed with itself and the engine replaced
+  // the voice on every line.
+  if (!offered && stored && P.tts.voiceOwned(p, stored) &&
+      P.tts.voiceAppliesTo(p, stored, state.targetLang)) {
+    return stored;
+  }
+  return sel.value || p.defaultVoice || "";
 }
 
 // The playback half only unlocks once the STORED provider can actually sound
@@ -1125,6 +1271,37 @@ function initReadaloud() {
     paintTtsVoices(p);
   });
 
+  // Picking a voice IS the decision — there is nothing else to confirm. It used
+  // to be written down only by "save and test", which this page hides for a
+  // keyless provider: the browser's own engine is keyless and is the one every
+  // reader starts on, so its voice could not be chosen from this page at all.
+  // A reader picked one, pressed Preview, heard it, and nothing was stored.
+  $("ttsVoiceSel").addEventListener("change", () => {
+    const p = ttsProvider();
+    if (!p) return;
+    const inUse = p.id === state.ttsProvider;
+    // The dropdown on this page means "the one I am setting up" — a draft the
+    // reader browses with (initCrossPageSync says so, and refuses to drag it).
+    // So a voice picked while looking at ANOTHER provider is part of setting
+    // that one up, not a decision about the one in use — and writing ttsVoice
+    // alone would file it under the id of the provider in use, whose engine
+    // does not recognise it, silently replacing a voice nobody touched.
+    // Save-and-test is what commits that pair, together.
+    //
+    // Unless there is no save-and-test: a keyless provider has nothing to
+    // test, this page hides the button for it, and picking a voice is the
+    // entire setup. Then the pick has to carry the engine with it, or the free
+    // engine can never be chosen from this page at all.
+    if (!inUse && !p.keyless) return;
+    state.ttsVoice = $("ttsVoiceSel").value || "";
+    const write = { ttsVoice: state.ttsVoice };
+    if (!inUse) {
+      state.ttsProvider = p.id;
+      write.ttsProvider = p.id;
+    }
+    chrome.storage.sync.set(write);
+  });
+
   $("ttsPreview").addEventListener("click", () => {
     const p = ttsProvider();
     if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
@@ -1251,6 +1428,15 @@ function initCrossPageSync() {
         const sel = $("startTargetSel");
         const v = String(c.targetLang.newValue || "");
         if (sel && sel.value !== v) sel.value = v;
+        // …and the voice menu with it. Which voices apply depends on the
+        // language: one fetched for Chinese stops applying the moment the
+        // reader moves to Japanese, and the popup can move it while this page
+        // is open. Updating only the dropdown left `state` on the old
+        // language, so this page went on offering — and saving — a voice the
+        // engine had already stopped using.
+        if (v) state.targetLang = v;
+        const shownTts = ttsProvider();
+        if (shownTts) paintTtsVoices(shownTts);
       }
       if (c.byoProvider) {
         state.byoProvider = String(c.byoProvider.newValue || "");
@@ -1284,8 +1470,24 @@ function initStartTarget() {
     o.textContent = info.native || localName(info);
     sel.appendChild(o);
   }
-  sel.value = state.targetLang || "zh-CN";
-  if (!sel.value) sel.value = "zh-CN";        // stored value no longer offered
+  // A stored target this build has never heard of — a newer copy on another
+  // machine picked one and sync brought the code over — is not in the list
+  // above, and assigning it to a select that lacks it leaves the value empty.
+  // Falling back to zh-CN there made this block state, in a sentence about what
+  // the reader is going to get, a language that is not the one configured. It
+  // did not change the setting, which is worse rather than better: someone who
+  // reads "Chinese" and agrees walks away with something else in force.
+  // Same answer as the popup's own list: label it with itself and let it be
+  // chosen away deliberately.
+  const want = state.targetLang || "zh-CN";
+  sel.value = want;
+  if (!sel.value) {
+    const o = document.createElement("option");
+    o.value = want;
+    o.textContent = want;
+    sel.appendChild(o);
+    sel.value = want;
+  }
   sel.addEventListener("change", () => {
     state.targetLang = sel.value;
     chrome.storage.sync.set({ targetLang: sel.value });
@@ -1377,7 +1579,7 @@ function wire() {
 
   $("fetchModels").addEventListener("click", () => {
     withSetup($("fetchModels"), "optFetching", "拉取中…",
-      (code) => showModelMsg(errText(code), "err"), runFetchModels);
+      (code) => showModelMsg(errText(code), "err"), runFetchModels, false);
   });
 }
 

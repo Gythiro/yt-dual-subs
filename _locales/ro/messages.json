@@ -27,7 +27,7 @@
     "message": "The quick brown fox"
   },
   "sampleTrans": {
-    "message": "Vulpea brună iute"
+    "message": "Vulpea brună cea iute"
   },
   "provQwen": {
     "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
@@ -231,7 +231,7 @@
     "message": "Nu există traducere pentru acest videoclip — încearcă motorul Pistă întreagă sau altă limbă țintă."
   },
   "exportLimited": {
-    "message": "YouTube limitează acum traducerea pe pistă întreagă — reîncearcă într-un minut sau bifează „Traduce cu cheia mea”."
+    "message": "YouTube limitează momentan traducerea întregii piste — încearcă din nou peste un minut. Cu cheia ta configurată, cardul de export oferă o bifă care ocolește limita."
   },
   "exportNoCues": {
     "message": "Nu există subtitrări de descărcat — redă câteva secunde ca să se încarce, apoi reîncearcă."
@@ -323,7 +323,7 @@
     "message": "Alege mai întâi un furnizor."
   },
   "byoErrNoKey": {
-    "message": "Introdu mai întâi o cheie API — linkul de mai jos deschide pagina de chei a furnizorului."
+    "message": "Introdu mai întâi o cheie API, apoi apasă Salvează și testează."
   },
   "byoErrNoModel": {
     "message": "Acest furnizor necesită un nume de model."
@@ -445,7 +445,7 @@
     "message": "Vrei traduceri mai bune"
   },
   "startS3Body": {
-    "message": "Adaugă propria cheie API: traducere pe propoziții întregi și export SRT pentru tot videoul."
+    "message": "Adaugă propria cheie API: traducere de propoziții complete și traducere a întregului video la export."
   },
   "startGoSetup": {
     "message": "Configurează un serviciu de traducere"
@@ -460,7 +460,7 @@
     "message": "O a doua linie de subtitrare pe YouTube: originalul pe una, traducerea pe cealaltă, cu font, culoare și poziție la alegerea ta. Open source, gratuit, fără reclame."
   },
   "aboutPrivacy": {
-    "message": "Nu avem server și nu colectăm statistici. Textul subtitrărilor ajunge doar la serviciul de traducere ales; cu cheia ta, cheia este stocată doar pe acest computer."
+    "message": "Extensia nu are un server al nostru și nu colectează statistici. Textul subtitrărilor ajunge doar la serviciul de traducere ales de tine; cu cheia ta, aceasta e stocată doar pe acest computer."
   },
   "aboutChangelog": {
     "message": "Istoric modificări"
@@ -604,7 +604,7 @@
     "message": "Alte limbi"
   },
   "langsMoreHint": {
-    "message": "Apasă + ca să adaugi una. Fiecare limbă din listă funcționează cu motoarele gratuite și cu DeepL."
+    "message": "Apasă + ca să adaugi una. Fiecare limbă din listă e acceptată ca țintă de motoarele gratuite și de DeepL."
   },
   "langsReset": {
     "message": "Restabilește implicitele"
@@ -653,7 +653,7 @@
     "message": "Automat — urmează browserul"
   },
   "uiLocaleHint": {
-    "message": "Doar limba controalelor acestei extensii. Limba în care se traduc subtitrările se alege din popup și din „Limbi subtitrări” — nu de aici."
+    "message": "Limba meniurilor și setărilor acestei extensii. Câteva etichete de pe videoclip urmează tot limba browserului. Limba în care se traduc subtitrările se alege din popup și la „Limbi de subtitrare” — nu aici."
   },
   "startTargetLabel": {
     "message": "Limba de traducere"
@@ -674,7 +674,7 @@
     "message": "Citire cu voce"
   },
   "ttsIntro": {
-    "message": "Citește linia tradusă cu voce tare, cu cheia ta. Configurează un furnizor și testează-l aici."
+    "message": "Citește linia tradusă cu voce tare. Vocile browserului nu au nevoie de nicio cheie; furnizorii cloud se configurează și se testează aici."
   },
   "ttsVoiceLabel": {
     "message": "Voce"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Citirea cu voce tare folosește cheia ta. Textul de citit ajunge doar la furnizorul ales; cheia rămâne pe acest computer."
+    "message": "Cu vocile browserului, nu se trimite nimic nicăieri — computerul tău rostește linia. Cu un furnizor cloud, textul de rostit ajunge doar la furnizorul ales de tine, iar cheia rămâne pe acest computer."
   },
   "ttsEnableLabel": {
     "message": "Citește traducerea cu voce tare în video"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Când e activat, traducerea fiecărei subtitrări e rostită pe măsură ce apare; o linie a cărei traducere nu e gata la timp e omisă, fără să fie recuperată. Audio-ul videoclipului e redus cât timp se vorbește o linie, iar o linie prea lungă încetinește puțin videoclipul."
+    "message": "Când e activat, traducerea fiecărui rând e rostită pe măsură ce apare; un rând a cărui traducere nu e gata la timp e omis, nu recuperat ulterior. Cât timp se rostește un rând, sunetul videoclipului scade la nivelul setat mai jos. O voce cloud prea lungă încetinește și videoclipul puțin — vocile browserului nu raportează o durată, deci nu pot."
   },
   "ttsRegionLabel": {
     "message": "Regiune serviciu"
@@ -783,13 +783,13 @@
     "message": "Nu s-a putut reda — verifică cheia, apoi salvează și testează"
   },
   "ttsFetchVoices": {
-    "message": "Încarcă mai multe voci pentru această limbă"
+    "message": "Preia mai multe voci cu cheia ta"
   },
   "ttsFetching": {
     "message": "Se încarcă…"
   },
   "ttsVoicesSwitched": {
-    "message": "Acum sunt afișate cele $N$ voci ale acestei limbi. Funcționează doar cu limba țintă curentă.",
+    "message": "Se afișează acum cele $N$ voci pe care le poate folosi cheia ta. O voce al cărei nume include o limbă funcționează doar pentru acea limbă.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Vocile proprii ale browserului (gratuit)"
+  },
+  "ttsErrRefused": {
+    "message": "Furnizorul a refuzat cererea — încearcă o altă voce."
+  },
+  "ttsErrNoAudio": {
+    "message": "Audio-ul nu a ajuns — încearcă din nou sau alege altă voce."
   }
 }

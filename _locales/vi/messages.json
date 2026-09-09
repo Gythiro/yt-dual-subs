@@ -231,7 +231,7 @@
     "message": "Không có bản dịch cho video này — thử công cụ Toàn phụ đề hoặc ngôn ngữ đích khác."
   },
   "exportLimited": {
-    "message": "YouTube đang giới hạn dịch toàn phụ đề — thử lại sau một phút, hoặc chọn “Dịch bằng khóa của tôi”."
+    "message": "YouTube đang giới hạn tốc độ dịch toàn bộ phụ đề — thử lại sau một phút. Khi đã thiết lập khóa riêng, thẻ xuất có ô chọn để vượt qua giới hạn này."
   },
   "exportNoCues": {
     "message": "Không có phụ đề để tải — phát vài giây để phụ đề tải xong, rồi thử lại."
@@ -323,7 +323,7 @@
     "message": "Hãy chọn nhà cung cấp trước."
   },
   "byoErrNoKey": {
-    "message": "Hãy nhập khóa API trước — liên kết bên dưới mở trang khóa của nhà cung cấp."
+    "message": "Nhập khóa API trước, rồi nhấn Lưu và kiểm tra."
   },
   "byoErrNoModel": {
     "message": "Nhà cung cấp này cần bạn nhập tên mô hình."
@@ -445,7 +445,7 @@
     "message": "Muốn dịch tốt hơn"
   },
   "startS3Body": {
-    "message": "Thêm khóa API của bạn: dịch cả câu, và xuất SRT cho cả video."
+    "message": "Thêm khóa API của bạn: dịch cả câu, và dịch cả video khi xuất."
   },
   "startGoSetup": {
     "message": "Thiết lập dịch vụ dịch"
@@ -460,7 +460,7 @@
     "message": "Một dòng phụ đề thứ hai cho YouTube: bản gốc một dòng, bản dịch dòng kia, phông chữ, màu và vị trí do bạn chọn. Mã nguồn mở, miễn phí, không quảng cáo."
   },
   "aboutPrivacy": {
-    "message": "Chúng tôi không có máy chủ và không thu thập thống kê. Văn bản phụ đề chỉ gửi đến dịch vụ dịch bạn chọn; với khóa của bạn, khóa chỉ được lưu trên máy tính này."
+    "message": "Tiện ích không có máy chủ của chúng tôi và không thu thập thống kê. Văn bản phụ đề chỉ gửi đến dịch vụ dịch bạn chọn; với khóa riêng, khóa chỉ được lưu trên máy tính này."
   },
   "aboutChangelog": {
     "message": "Nhật ký thay đổi"
@@ -604,7 +604,7 @@
     "message": "Ngôn ngữ khác"
   },
   "langsMoreHint": {
-    "message": "Nhấn + để thêm. Mọi ngôn ngữ đều dùng được với công cụ miễn phí và với DeepL."
+    "message": "Nhấn + để thêm. Mọi ngôn ngữ trong danh sách đều được các công cụ miễn phí và DeepL chấp nhận làm đích."
   },
   "langsReset": {
     "message": "Khôi phục mặc định"
@@ -653,7 +653,7 @@
     "message": "Tự động — theo trình duyệt"
   },
   "uiLocaleHint": {
-    "message": "Chỉ là ngôn ngữ các điều khiển của chính tiện ích này. Phụ đề dịch sang ngôn ngữ nào thì chọn trong cửa sổ bật lên và mục “Ngôn ngữ phụ đề” — không phải ở đây."
+    "message": "Ngôn ngữ menu và cài đặt của tiện ích này. Một số nhãn hiện trên video vẫn theo ngôn ngữ trình duyệt. Phụ đề được dịch sang ngôn ngữ nào thì chọn trong cửa sổ pop-up và mục “Ngôn ngữ phụ đề” — không phải ở đây."
   },
   "startTargetLabel": {
     "message": "Ngôn ngữ dịch"
@@ -674,7 +674,7 @@
     "message": "Đọc to"
   },
   "ttsIntro": {
-    "message": "Đọc to dòng đã dịch bằng khóa của bạn. Thiết lập nhà cung cấp rồi thử tại đây."
+    "message": "Đọc to dòng đã dịch. Giọng của trình duyệt không cần khóa; các nhà cung cấp đám mây được thiết lập và kiểm tra tại đây."
   },
   "ttsVoiceLabel": {
     "message": "Giọng nói"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Đọc to dùng khóa của bạn. Văn bản cần đọc chỉ gửi đến nhà cung cấp bạn chọn; khóa vẫn lưu trên máy này."
+    "message": "Với giọng của trình duyệt, không gửi gì đi đâu — máy tính tự đọc dòng đó. Với nhà cung cấp đám mây, văn bản cần đọc chỉ gửi đến nhà cung cấp bạn đã chọn, và khóa vẫn ở trên máy này."
   },
   "ttsEnableLabel": {
     "message": "Đọc to bản dịch trong video"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Khi bật, bản dịch mỗi phụ đề được đọc ngay khi xuất hiện; dòng chưa dịch kịp sẽ bị bỏ qua, không đọc bù. Âm thanh gốc của video được giảm khi đang đọc, và dòng quá dài sẽ làm chậm video một chút."
+    "message": "Khi bật, bản dịch mỗi phụ đề được đọc ngay khi xuất hiện; dòng chưa dịch kịp sẽ bị bỏ qua chứ không đọc bù sau. Trong lúc đọc, âm thanh video hạ xuống mức cài bên dưới. Giọng đám mây đọc lâu cũng làm chậm video một chút — giọng của trình duyệt không báo độ dài nên không thể làm vậy."
   },
   "ttsRegionLabel": {
     "message": "Khu vực dịch vụ"
@@ -783,13 +783,13 @@
     "message": "Không phát được — kiểm tra khóa rồi thử Lưu và kiểm tra"
   },
   "ttsFetchVoices": {
-    "message": "Tải thêm giọng cho ngôn ngữ này"
+    "message": "Tải thêm giọng bằng khóa của bạn"
   },
   "ttsFetching": {
     "message": "Đang tải…"
   },
   "ttsVoicesSwitched": {
-    "message": "Đang hiển thị $N$ giọng dành riêng cho ngôn ngữ này. Chúng chỉ dùng được cho ngôn ngữ đích hiện tại.",
+    "message": "Đang hiện $N$ giọng mà khóa của bạn dùng được. Giọng có tên kèm ngôn ngữ chỉ dùng cho ngôn ngữ đó.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Giọng nói có sẵn trên trình duyệt (miễn phí)"
+  },
+  "ttsErrRefused": {
+    "message": "Nhà cung cấp từ chối yêu cầu này — hãy thử giọng khác."
+  },
+  "ttsErrNoAudio": {
+    "message": "Không nhận được âm thanh — thử lại, hoặc chọn giọng khác."
   }
 }

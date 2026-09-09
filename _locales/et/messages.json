@@ -231,7 +231,7 @@
     "message": "Selle video jaoks pole tõlget — proovi kogu raja mootorit või teist sihtkeelt."
   },
   "exportLimited": {
-    "message": "YouTube piirab praegu kogu raja tõlget — proovi minuti pärast uuesti või märgi „Tõlgi oma võtmega“."
+    "message": "YouTube piirab hetkel kogu raja tõlkimist — proovi minuti pärast uuesti. Oma võtme seadistamisel pakub ekspordikaart linnukest, mis sellest mööda läheb."
   },
   "exportNoCues": {
     "message": "Allalaaditavaid subtiitreid pole — lase videol paar sekundit mängida, et subtiitrid laaditaks, ja proovi uuesti."
@@ -323,7 +323,7 @@
     "message": "Vali esmalt teenusepakkuja."
   },
   "byoErrNoKey": {
-    "message": "Sisesta esmalt API võti — allolev link avab teenusepakkuja võtmelehe."
+    "message": "Sisesta esmalt API-võti, seejärel vajuta Salvesta ja testi."
   },
   "byoErrNoModel": {
     "message": "See teenusepakkuja vajab sisestatud mudeli nime."
@@ -445,7 +445,7 @@
     "message": "Tahad paremaid tõlkeid"
   },
   "startS3Body": {
-    "message": "Lisa oma API võti: terviklause tõlge ja kogu video SRT eksport."
+    "message": "Lisa oma API-võti: terve lause tõlge ja terve video tõlge eksportimisel."
   },
   "startGoSetup": {
     "message": "Seadista tõlketeenus"
@@ -460,7 +460,7 @@
     "message": "Teine subtiitririda YouTube’ile: originaal ühel real, tõlge teisel; font, värv ja asukoht on sinu valida. Avatud lähtekood, tasuta, reklaamideta."
   },
   "aboutPrivacy": {
-    "message": "Meil pole serverit ja me ei kogu statistikat. Subtiitrite tekst läheb ainult valitud tõlketeenusele; oma võtme puhul hoitakse võtit ainult selles arvutis."
+    "message": "Laiendusel pole meie serverit ja see ei kogu statistikat. Subtiitritekst läheb ainult valitud tõlketeenusele; oma võtme korral hoitakse võtit ainult selles arvutis."
   },
   "aboutChangelog": {
     "message": "Muudatuste logi"
@@ -604,7 +604,7 @@
     "message": "Muud keeled"
   },
   "langsMoreHint": {
-    "message": "Vajuta +, et lisada. Kõik loetletud keeled töötavad tasuta mootoritega ja DeepL-iga."
+    "message": "Vajuta + lisamiseks. Iga loetletud keel on selline, mida tasuta mootorid ja DeepL sihtkeelena aktsepteerivad."
   },
   "langsReset": {
     "message": "Taasta vaikeväärtused"
@@ -653,7 +653,7 @@
     "message": "Automaatne — järgi brauserit"
   },
   "uiLocaleHint": {
-    "message": "Ainult selle laienduse enda juhtnuppude keel. Millisesse keelde subtiitrid tõlgitakse, valitakse hüpikaknas ja jaotises „Subtiitrite keeled“ — mitte siin."
+    "message": "Selle laienduse enda menüüde ja seadete keel. Mõned videole joonistatud sildid järgivad endiselt brauseri keelt. Millisesse keelde subtiitrid tõlgitakse, valitakse hüpikaknas ja jaotises „Subtiitrite keeled“ — mitte siin."
   },
   "startTargetLabel": {
     "message": "Tõlkekeel"
@@ -674,7 +674,7 @@
     "message": "Loe ette"
   },
   "ttsIntro": {
-    "message": "Loe tõlgitud rida ette oma võtmega. Seadista teenusepakkuja ja testi siin."
+    "message": "Loe tõlgitud rida valjusti ette. Brauseri enda hääled ei vaja üldse võtit; pilveteenuse pakkujad seadistad ja testid siin."
   },
   "ttsVoiceLabel": {
     "message": "Hääl"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Ettelugemine kasutab sinu enda võtit. Etteloetav tekst läheb ainult valitud teenusepakkujale; võti jääb sellele arvutile."
+    "message": "Brauseri enda häältega ei saadeta midagi kuhugi — arvuti loeb rea ise ette. Pilveteenuse puhul läheb etteloetav tekst ainult valitud pakkujale ja võti jääb sellele masinale."
   },
   "ttsEnableLabel": {
     "message": "Loe tõlge videos ette"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Kui sisse lülitatud, loetakse iga subtiitri tõlge ette selle ilmumisel; rida, mille tõlge ei jõua õigeks ajaks valmis, jäetakse vahele ega loeta hiljem järele. Video enda heli alandatakse, kuni rida kõlab, ja rida, mis on liiga pikk, et mahtuda, aeglustab videot veidi."
+    "message": "Kui sisse lülitatud, loetakse iga subtiitri tõlge ette kohe ilmumisel; rida, mille tõlge pole õigeks ajaks valmis, jäetakse vahele ega loeta hiljem järele. Ettelugemise ajal langeb video enda heli allpool määratud tasemele. Pikk pilvehääl aeglustab videot ka veidi — brauseri enda hääled ei teata kestust, seega nemad seda teha ei saa."
   },
   "ttsRegionLabel": {
     "message": "Teenusepiirkond"
@@ -783,13 +783,13 @@
     "message": "Ei õnnestunud esitada — kontrolli võtit ja proovi Salvesta ja testi"
   },
   "ttsFetchVoices": {
-    "message": "Hangi selle keele jaoks rohkem hääli"
+    "message": "Hangi võtmega rohkem hääli"
   },
   "ttsFetching": {
     "message": "Hangin…"
   },
   "ttsVoicesSwitched": {
-    "message": "Kuvatakse selle keele $N$ häält. Need töötavad ainult praeguse sihtkeelega.",
+    "message": "Kuvatakse $N$ häält, mida sinu võti kasutada saab. Hääl, mille nimes on keel, töötab ainult selles keeles.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Brauseri enda hääled (tasuta)"
+  },
+  "ttsErrRefused": {
+    "message": "Teenusepakkuja keeldus sellest päringust — proovi teist häält."
+  },
+  "ttsErrNoAudio": {
+    "message": "Heli ei jõudnud kohale — proovi uuesti või vali teine hääl."
   }
 }

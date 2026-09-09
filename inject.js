@@ -14,7 +14,6 @@
   const TIMEDTEXT_MARK = "/api/timedtext";
 
   // Most recently seen timedtext URL of any kind.
-  let lastTimedtextUrl = "";
   // The player's ORIGINAL-track fetch: a timedtext URL WITHOUT a "tlang" param.
   // This is the only URL whose "pot" we may reuse.
   let sourceUrl = "";
@@ -41,8 +40,19 @@
   function videoIdFromLocation() {
     try {
       const u = new URL(location.href);
-      // Shorts URLs carry the id in the path, not in ?v=.
-      const m = u.pathname.match(/^\/shorts\/([A-Za-z0-9_-]{6,})/);
+      // Shorts URLs carry the id in the path, not in ?v=. So does /embed/,
+      // which the manifest matches and therefore injects into when it is
+      // opened as a top-level page. That one used to fall through to ?v=,
+      // return "", and leave sourceVid !== currentVideoId true forever —
+      // produceCues returned at its second line every time and the extension
+      // did nothing at all, without a word.
+      // …but not /embed/videoseries (the documented playlist embed) or
+      // /embed/live_stream: both are eleven legal id characters, so without
+      // the exclusion they parse as a video id that never changes, every post
+      // carries a made-up videoId, and produceCues returns forever on exactly
+      // the shape this arm was added to cover.
+      const m = u.pathname.match(
+        /^\/(?:shorts|embed)\/(?!videoseries\b|live_stream\b)([A-Za-z0-9_-]{6,})/);
       if (m) return m[1];
       return u.searchParams.get("v") || "";
     } catch (_e) {
@@ -213,16 +223,33 @@
   // so without this they look like "the player just asked again" — which now
   // means something (it triggers the translation's second chance) and would
   // spend an extra request on our own footsteps.
-  let selfFetching = 0;
+  // The exact URLs we ourselves have on the wire, counted. This used to be a
+  // bare counter, which answers "is one of ours in flight" rather than "is
+  // THIS one ours" — so any track the PLAYER asked for while we were fetching
+  // was discarded along with it, and that track was then never captured at
+  // all. On a fast swipe to the next short, that is the difference between
+  // subtitles and twenty seconds of nothing (the blank watchdog is the only
+  // thing left to notice). Ours always carry fmt=json3, so they cannot
+  // collide with the player's own request for the same track.
+  const selfUrls = new Map();
 
   // page-context fetch — same-origin youtube.com so pot/signature stay valid.
   async function fetchJson3(url) {
-    selfFetching++;
+    selfUrls.set(url, (selfUrls.get(url) || 0) + 1);
     let res;
     try {
-      res = await fetch(url, { method: "GET", credentials: "include" });
+      // An upper bound, for the same reason the worker's synthesis fetch has
+      // one: a request that opens and then goes quiet leaves the `finally`
+      // below unreached, so `producing` stays true and this tab never produces
+      // cues again — not for this video and not for the next one. Chrome
+      // usually fails it eventually; "usually" was the only thing standing
+      // between here and a page that has silently stopped working.
+      res = await fetch(url, {
+        method: "GET", credentials: "include", signal: AbortSignal.timeout(TT_FETCH_TIMEOUT_MS)
+      });
     } finally {
-      selfFetching--;
+      const n = (selfUrls.get(url) || 1) - 1;
+      if (n > 0) selfUrls.set(url, n); else selfUrls.delete(url);
     }
     if (!res.ok) {
       const err = new Error("timedtext http " + res.status);
@@ -243,7 +270,23 @@
   // 5xx, a rotated pot, the empty body YouTube serves when it is unhappy, or a
   // truncated response. A 4xx that is not 429 is an answer, not a hiccup —
   // spending two more requests on it would only delay the fallback.
+  const TT_FETCH_TIMEOUT_MS = 20000;
   const RETRY_DELAYS_MS = [300, 800];
+
+  // A 429 from timedtext is the ENDPOINT saying no, not this video. The retries
+  // above are per-request and remember nothing, so a run of twenty shorts spent
+  // its own three attempts each on an endpoint that had already refused —
+  // which is what keeps it refusing. The worker has had a lane with persisted
+  // backoff for this since 3.4; this side had nothing at all.
+  //
+  // What is deliberately NOT done: making a video WAIT. Whatever backoff we
+  // guessed would be a guess, and stranding a video for a minute on a guess is
+  // worse than one refused request. While the endpoint is known to be
+  // rate-limiting, each track gets one attempt instead of three, and the first
+  // success clears the mark.
+  const TT_LIMIT_MEMORY_MS = 25000;
+  let ttLimitedUntil = 0;
+  const ttLimited = () => Date.now() < ttLimitedUntil;
 
   function isHiccup(err, retry429) {
     const s = err && err.status;
@@ -259,11 +302,25 @@
   // another second before conceding to the sentence path anyway. That one gets
   // the deferred second chance instead.
   async function fetchJson3Retry(url, wantVid, retry429) {
+    // One attempt while the endpoint is known to be refusing; the full three
+    // otherwise.
+    const tries = ttLimited() ? 0 : RETRY_DELAYS_MS.length;
     for (let i = 0; ; i++) {
       try {
-        return await fetchJson3(url);
+        const out = await fetchJson3(url);
+        ttLimitedUntil = 0;            // it answered — stop holding back
+        return out;
       } catch (err) {
-        if (i >= RETRY_DELAYS_MS.length || !isHiccup(err, retry429)) throw err;
+        // Only from the leg that treats a 429 as worth retrying — the
+        // ORIGINAL track. The translation leg's 429s are routine and
+        // sticky by this file's own measurement, and are already handled
+        // by the deferred second chance; letting them arm this would
+        // disarm the orig leg's retries, which is the leg where being
+        // refused means no subtitles at all.
+        if (retry429 && err && err.status === 429) {
+          ttLimitedUntil = Date.now() + TT_LIMIT_MEMORY_MS;
+        }
+        if (i >= tries || !isHiccup(err, retry429)) throw err;
         await new Promise((r) => setTimeout(r, RETRY_DELAYS_MS[i]));
         // Navigated away mid-retry: the caller discards the result anyway, and
         // the next video's own produce is already on its way.
@@ -286,8 +343,47 @@
     if (nocuesTimer) { clearTimeout(nocuesTimer); nocuesTimer = null; }
   }
 
-  // Produce cues (+ optional aligned translation) from the captured source URL.
+  // One produce at a time. Three separate paths force a re-produce — a config
+  // message arriving, the tlang retry timer, and a fresh pot token on the same
+  // track — and producedForUrl only ever guarded the NON-forced call. So two
+  // of them could run on top of each other: each captured its own nonce, both
+  // posted cues, content.js accepted both, and the cue loop restarted twice in
+  // the same breath. That is the startup flicker, and the second timedtext
+  // fetch is traffic nobody asked for.
+  let producing = false;
+  let produceAgain = false;
+  let produceAgainForce = false;
   async function produceCues(force) {
+    if (producing) {
+      // Queued, not dropped — and that has to include the NON-forced call.
+      // onSourceCaptured() is the only path that turns a freshly sniffed
+      // timedtext URL into cues, and it does not force. Dropping it means a
+      // viewer who swipes to the next short while the previous video's
+      // produce is still in flight gets no cues for the new one until the 20s
+      // blank watchdog notices — nothing cheaper can recover, because the
+      // nocues timer sees sourceUrl set (it is the NEW video's) and returns.
+      // A redundant non-forced replay is free: produceCuesOnce's own
+      // `producedForUrl === sourceUrl` guard makes it a no-op.
+      produceAgain = true;
+      if (force) produceAgainForce = true;
+      return;
+    }
+    producing = true;
+    try {
+      await produceCuesOnce(force);
+    } finally {
+      producing = false;
+      if (produceAgain) {
+        produceAgain = false;
+        const again = produceAgainForce;
+        produceAgainForce = false;
+        produceCues(again);
+      }
+    }
+  }
+
+  // Produce cues (+ optional aligned translation) from the captured source URL.
+  async function produceCuesOnce(force) {
     if (!cfg || !sourceUrl) return;
     // The captured source URL must belong to the CURRENT video. Without this,
     // a config round-trip on SPA nav could refetch the previous video's URL and
@@ -457,10 +553,18 @@
   function checkTrackMismatch(vid, srcUrl) {
     try {
       if (mismatchFor === vid) return;
-      mismatchFor = vid;
+      // Ask for the data BEFORE spending the one check this video gets. After a
+      // navigation the player's response can still belong to the video being
+      // left, or the element can be mid-swap; both answer null for a moment.
+      // Marking the video as checked first meant that moment used up its only
+      // chance, and every later call — including the ones that would have found
+      // the answer — returned at the door. A video that hit it played to the
+      // end with captions in a language its audio was never in, and the
+      // function whose whole job is to say so said nothing.
       const pr = playerResponseFor(vid);
       const r = pr && pr.captions && pr.captions.playerCaptionsTracklistRenderer;
       if (!r || !Array.isArray(r.captionTracks) || !r.captionTracks.length) return;
+      mismatchFor = vid;
       const audio = Array.isArray(r.audioTracks) ? r.audioTracks : [];
       const defIdx = typeof r.defaultAudioTrackIndex === "number" ? r.defaultAudioTrackIndex : -1;
       const a = defIdx >= 0 ? audio[defIdx] : null;
@@ -493,8 +597,7 @@
   function noteTimedtext(url) {
     try {
       if (!isTimedtext(url)) return;
-      if (selfFetching) return;              // our own request, not the player's
-      lastTimedtextUrl = url;
+      if (selfUrls.has(url)) return;         // this exact request is ours
       if (!hasTlang(url)) {
         // The player's original-track fetch — the only pot we may reuse.
         // Always keep the freshest exact URL (pot can rotate), but only treat
@@ -564,7 +667,6 @@
       const v = videoIdFromLocation();
       if (v && v !== currentVideoId) {
         currentVideoId = v;
-        lastTimedtextUrl = "";
         sourceUrl = "";
         sourceVid = "";
         sourceKey = "";
@@ -824,6 +926,15 @@
       if (p) {
         duckVolume(p, on, pct);
         shareRate(p, on, fit);
+      } else if (!on) {
+        // Nothing to hand the capture back to — and this is the ordinary shape
+        // of leaving a video, not an edge case: content stops read-aloud, and
+        // by the time the message lands YouTube has already replaced the
+        // player. Dropping the capture is not merely tidy. Carried forward, the
+        // stale saved volume makes the next video's first duck decide it is
+        // "already ducked to the right place" and set nothing at all, so the
+        // line speaks over full-volume audio with no sign of why.
+        duckSavedVol = -1; duckSetVol = -1; rateSavedBase = -1; rateSet = -1;
       }
       if (nav) rateUserTouched = false;         // new video, fresh benefit
     } catch (_e) {

@@ -231,7 +231,7 @@
     "message": "Aucune traduction disponible pour cette vidéo — essayez le moteur Piste complète ou une autre langue cible."
   },
   "exportLimited": {
-    "message": "YouTube limite actuellement la traduction piste complète — réessayez dans une minute, ou cochez « Traduire avec ma propre clé »."
+    "message": "YouTube limite actuellement la traduction de pistes entières — réessayez dans une minute. Avec votre propre clé, la carte d'export propose une case pour contourner cette limite."
   },
   "exportNoCues": {
     "message": "Aucun sous-titre téléchargeable — lancez la lecture quelques secondes pour charger les sous-titres, puis réessayez."
@@ -323,7 +323,7 @@
     "message": "Choisissez d’abord un fournisseur."
   },
   "byoErrNoKey": {
-    "message": "Saisissez d’abord une clé API — le lien ci-dessous ouvre la page des clés du fournisseur."
+    "message": "Saisissez d'abord une clé API, puis cliquez sur Enregistrer et tester."
   },
   "byoErrNoModel": {
     "message": "Ce fournisseur exige un nom de modèle."
@@ -445,7 +445,7 @@
     "message": "De meilleures traductions"
   },
   "startS3Body": {
-    "message": "Ajoutez votre propre clé API : traduction de phrases entières, et export SRT d’une vidéo complète."
+    "message": "Ajoutez votre propre clé API : traduction de phrases entières, et de la vidéo entière à l’export."
   },
   "startGoSetup": {
     "message": "Configurer un service de traduction"
@@ -460,7 +460,7 @@
     "message": "Une seconde ligne de sous-titres pour YouTube : l’original sur une ligne, la traduction sur l’autre, police, couleur et position au choix. Open source, gratuit, sans pub."
   },
   "aboutPrivacy": {
-    "message": "Nous n’avons aucun serveur et ne collectons aucune statistique. Le texte des sous-titres va uniquement au service de traduction choisi ; avec votre propre clé, celle-ci est stockée uniquement sur cet ordinateur."
+    "message": "L'extension n'a aucun serveur de notre côté et ne collecte aucune statistique. Le texte des sous-titres n'est envoyé qu'au service de traduction que vous choisissez ; avec votre propre clé, celle-ci est stockée uniquement sur cet ordinateur."
   },
   "aboutChangelog": {
     "message": "Journal des modifications"
@@ -604,7 +604,7 @@
     "message": "Autres langues"
   },
   "langsMoreHint": {
-    "message": "Appuyez sur + pour en ajouter une. Toutes les langues listées fonctionnent avec les moteurs gratuits et avec DeepL."
+    "message": "Appuyez sur + pour en ajouter une. Chaque langue listée est acceptée comme cible par les moteurs gratuits et DeepL."
   },
   "langsReset": {
     "message": "Rétablir par défaut"
@@ -653,7 +653,7 @@
     "message": "Auto — suivre le navigateur"
   },
   "uiLocaleHint": {
-    "message": "Uniquement la langue des commandes de cette extension. La langue de traduction des sous-titres se choisit dans le popup et sous « Langues des sous-titres » — pas ici."
+    "message": "La langue des menus et réglages de cette extension. Quelques libellés affichés sur la vidéo suivent encore la langue du navigateur. La langue de traduction des sous-titres se choisit dans le popup et sous « Langues des sous-titres » — pas ici."
   },
   "startTargetLabel": {
     "message": "Langue de traduction"
@@ -674,7 +674,7 @@
     "message": "Lire à voix haute"
   },
   "ttsIntro": {
-    "message": "Faites lire la ligne traduite à voix haute avec votre propre clé. Configurez un fournisseur et testez-le ici."
+    "message": "Faites lire la ligne traduite à voix haute. Les voix de votre navigateur n'ont besoin d'aucune clé ; les fournisseurs cloud se configurent et se testent ici."
   },
   "ttsVoiceLabel": {
     "message": "Voix"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "La lecture à voix haute utilise votre propre clé. Le texte à prononcer n’est envoyé qu’au fournisseur que vous avez choisi ; la clé reste sur cet ordinateur."
+    "message": "Avec les voix de votre navigateur, rien n'est envoyé nulle part — c'est votre ordinateur qui lit la ligne. Avec un fournisseur cloud, le texte à lire n'est envoyé qu'au fournisseur choisi, et la clé reste sur cet appareil."
   },
   "ttsEnableLabel": {
     "message": "Lire la traduction à voix haute dans la vidéo"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Quand l’option est activée, la traduction de chaque sous-titre est lue dès son apparition ; une ligne dont la traduction n’est pas prête à temps est ignorée, jamais rattrapée. Le son de la vidéo est baissé pendant la lecture d’une ligne, et une ligne trop longue pour tenir ralentit un peu la vidéo."
+    "message": "Une fois activé, la traduction de chaque sous-titre est lue dès qu'elle apparaît ; une ligne dont la traduction n'est pas prête à temps est ignorée plutôt que rattrapée plus tard. Pendant la lecture, le son de la vidéo baisse au niveau défini ci-dessous. Une voix cloud trop longue ralentit aussi un peu la vidéo — les voix de votre navigateur n'indiquent pas leur durée, elles ne le peuvent donc pas."
   },
   "ttsRegionLabel": {
     "message": "Région du service"
@@ -783,13 +783,13 @@
     "message": "Impossible de lire — vérifiez la clé et réessayez Enregistrer et tester"
   },
   "ttsFetchVoices": {
-    "message": "Charger plus de voix pour cette langue"
+    "message": "Récupérer plus de voix avec votre clé"
   },
   "ttsFetching": {
     "message": "Chargement…"
   },
   "ttsVoicesSwitched": {
-    "message": "Voici les $N$ voix de cette langue. Elles ne fonctionnent que pour cette langue cible.",
+    "message": "Affichage des $N$ voix que votre clé peut utiliser. Une voix dont le nom indique une langue ne fonctionne que pour celle-ci.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Voix de votre navigateur (gratuit)"
+  },
+  "ttsErrRefused": {
+    "message": "Le fournisseur a refusé cette demande — essayez une autre voix."
+  },
+  "ttsErrNoAudio": {
+    "message": "L'audio n'est pas arrivé — réessayez, ou choisissez une autre voix."
   }
 }

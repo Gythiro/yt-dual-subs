@@ -110,7 +110,13 @@ function keyFor(providerId) {
 // opts.needModel = false when the caller only needs the endpoint and key (the
 // options page listing models has no model picked yet, by definition).
 async function resolveByo(opts) {
-  const p = PROVIDERS.get(cfg.byoProvider);
+  // Which provider this is FOR. Normally the one the extension translates with,
+  // but the settings page can ask about a provider the user is only looking at
+  // — reading its model list is a question about that provider, not a decision
+  // to start using it. An id that is not in the registry is ignored rather than
+  // trusted: this arrives in a message.
+  const asked = opts && opts.provider ? PROVIDERS.get(opts.provider) : null;
+  const p = asked || PROVIDERS.get(cfg.byoProvider);
   if (!p) throw tag(new Error("no provider selected"), { noKey: true, code: "noProvider" });
 
   let baseUrl = p.baseUrl;
@@ -130,7 +136,9 @@ async function resolveByo(opts) {
 
   await ensureHostPermission(origin);
 
-  const model = (cfg.byoModel || p.defaultModel || "").trim();
+  const model = (asked
+    ? ((cfg.byoModelBy || {})[p.id] || p.defaultModel || "")
+    : (cfg.byoModel || p.defaultModel || "")).trim();
   if ((!opts || opts.needModel !== false) && p.kind === "llm" && !model) {
     throw tag(new Error("no model"), { noKey: true, code: "noModel" });
   }
@@ -195,12 +203,40 @@ function makeLane(opts) {
     maxBatch: opts.maxBatch,
     maxBatchChars: opts.maxBatchChars,
     send: opts.send,                   // (texts, targetLang) -> string[]
+    // Only one thing can be "the thing happening now" on this lane, so a new
+    // urgent job supersedes any urgent job still waiting. True for read-aloud
+    // (one line is on screen); false for translation, where several visible
+    // cues are legitimately urgent at once.
+    singleUrgent: !!opts.singleUrgent,
+    // Keep one slot open for the line on screen. The pump sends one request at
+    // a time and awaits it inline, so without this a line fetched AHEAD that is
+    // already in flight holds the lane: measured at 927ms of extra wait behind
+    // a 900ms look-ahead, and the ceiling is the 15s synthesis timeout, by
+    // which point the line has been off screen for a dozen seconds. The
+    // look-ahead exists to make read-aloud prompt; it must not be what makes it
+    // late. Read-aloud only: on the translate lanes several visible cues are
+    // legitimately urgent at once and batching is the point.
+    urgentSlot: !!opts.urgentSlot,
     persistKey: opts.persistKey || "",
     gateUntil: 0,
     backoffMs: 0,
+    // Which backoff episode a request belongs to. With two pumps the lane can
+    // have two requests in flight when a provider starts refusing, and both
+    // replies are the SAME refusal: without this each one doubles the backoff
+    // the other just doubled, and read-aloud stays off twice as long as the
+    // provider asked for. A reply whose era is behind the lane's has already
+    // been accounted for. Not a timestamp: the gate is re-armed to
+    // now + minIntervalMs before every send, so a fast 429 would look like it
+    // arrived inside a window that had not started yet.
+    era: 0,
     qUrgent: [],
     qNormal: [],
-    pumping: false
+    // One flag per pump. A lane with urgentSlot runs two: they share the rate
+    // gate and the backoff, so the pair is still limited to the lane's pace —
+    // what they do not share is the wait for each other's request.
+    pumping: false,
+    pumpingUrgent: false,
+    pumpingNormal: false
   };
 }
 
@@ -234,6 +270,35 @@ const byoLane = makeLane({
   send: byoSend
 });
 
+// tts: one utterance per request — a speech API has no batch, and coalescing a
+// line that is about to be spoken is the one delay that cannot be recovered
+// from. minIntervalMs is a burst brake rather than a quota pace: what the
+// providers actually meter is characters, which the lane cannot see.
+//
+// This lane is what makes a rate limit mean something on the read-aloud side.
+// ttsSynthesize has always tagged a 429 as rateLimited; nothing consumed the
+// tag, because synthesis was the one outbound path that never went through
+// pump(). So the response to being told "too fast" was to ask again for the
+// next line, immediately, and report the silence as a skip.
+const ttsLane = makeLane({
+  id: "tts",
+  minIntervalMs: 120,
+  backoffBaseMs: 2000,
+  backoffMaxMs: 60000,
+  backoffShedMs: 8000,             // deep backoff: refuse the prefetched line
+  coalesceMs: 0,
+  maxBatch: 1,
+  maxBatchChars: Infinity,
+  persistKey: "ytdsTtsGate",
+  singleUrgent: true,
+  urgentSlot: true,
+  // Every TTS job carries its own sender: the resolved provider, key and voice
+  // are per-request state that the lane's shared (texts, targetLang) signature
+  // cannot express. pump() prefers job.send when it is there, so this exists
+  // only to fail loudly if a job ever arrives without one.
+  send: () => { throw new Error("a tts job must carry its own sender"); }
+});
+
 function laneFor() {
   return cfg.engine === "byo" ? byoLane : gtxLane;
 }
@@ -253,8 +318,8 @@ function persistGate(lane) {
 // Rehydrate the rate-limit gates after a service-worker restart, so a backoff
 // in progress survives MV3's aggressive worker teardown.
 const hydrated = sessionStore
-  ? sessionStore.get({ ytdsGtxGate: null, ytdsByoGate: null }).then((got) => {
-      for (const lane of [gtxLane, byoLane]) {
+  ? sessionStore.get({ ytdsGtxGate: null, ytdsByoGate: null, ytdsTtsGate: null }).then((got) => {
+      for (const lane of [gtxLane, byoLane, ttsLane]) {
         const g = got && got[lane.persistKey];
         if (!g) continue;
         lane.gateUntil = Number(g.gateUntil) || 0;
@@ -264,8 +329,19 @@ const hydrated = sessionStore
   : Promise.resolve();
 
 // Surface the last BYO failure for the popup (session-scoped, read-only there).
+// On transitions only, the way persistGate has always done it. This is called
+// after every batch, success included, and the byo lane spaces batches 250ms
+// apart — so a healthy run was writing session storage four times a second and
+// waking both the popup and the settings page through onChanged each time, to
+// tell them the same thing they already knew.
+let lastByoStatus = null;
 function noteByoStatus(code) {
   if (!sessionStore) return;
+  // The provider is part of the state: the same code against a different
+  // provider is different news.
+  const now = code ? code + "|" + cfg.byoProvider : "";
+  if (now === lastByoStatus) return;
+  lastByoStatus = now;
   try {
     sessionStore.set({
       ytdsByoStatus: code ? { code, provider: cfg.byoProvider, ts: Date.now() } : null
@@ -273,8 +349,14 @@ function noteByoStatus(code) {
   } catch (_e) { /* ignore */ }
 }
 
-function flushLane(lane, why) {
-  const jobs = lane.qUrgent.splice(0).concat(lane.qNormal.splice(0));
+// `only` scopes the flush to one pump's queue. A lane with two pumps has two
+// independent failures: one coming apart says nothing about the other, which is
+// still running and will drain its own queue. Rejecting its jobs too would turn
+// one pump's crash into lines the other pump was about to speak.
+function flushLane(lane, why, only) {
+  const jobs = only === "urgent" ? lane.qUrgent.splice(0)
+    : only === "normal" ? lane.qNormal.splice(0)
+    : lane.qUrgent.splice(0).concat(lane.qNormal.splice(0));
   for (const job of jobs) job.reject(tag(new Error(why || "flushed"), { stale: true }));
 }
 
@@ -295,6 +377,15 @@ function dropPlaybackJobs(lane, why) {
 }
 
 function enqueue(lane, job) {
+  // A job with no text poisons takeBatch (`head.text.length`) rather than
+  // failing here — and takeBatch runs OUTSIDE the try that catches a failed
+  // request, so the job it had already shifted out was left unsettled forever.
+  // The three callers all pass text today; this makes the fourth one's mistake
+  // an error the caller sees.
+  if (typeof job.text !== "string") {
+    job.reject(tag(new Error(lane.id + " job has no text"), { code: "badRequest" }));
+    return;
+  }
   // Deep backoff: shed prefetch instead of queueing it for a minute — content
   // simply re-requests when the sentence becomes active. The watched sentence
   // (urgent) always queues and goes out the moment the gate opens.
@@ -305,23 +396,41 @@ function enqueue(lane, job) {
     job.reject(tag(new Error(lane.id + " backoff"), { shed: true }));
     return;
   }
+  if (job.urgent && lane.singleUrgent) {
+    // The line on screen has changed, so the one that was waiting has no cue
+    // left to speak for. Without this a backoff turns every passed cue into a
+    // paid request nobody hears: pump sits out the gate while the queue grows
+    // one urgent job per cue — twenty of them across a 60s backoff — and when
+    // the gate opens they all go out, all succeed, all get billed, and every
+    // reply is dropped by content's staleness check. Before the lane existed
+    // these were 429s the provider refused.
+    for (const stale of lane.qUrgent.splice(0)) {
+      stale.reject(tag(new Error(lane.id + " superseded"), { stale: true, code: "stale" }));
+    }
+  }
   (job.urgent ? lane.qUrgent : lane.qNormal).push(job);
-  pump(lane);
+  // Each kind wakes its own pump on a lane that keeps a slot for the watched
+  // line; everywhere else one pump drains both queues, urgent first.
+  pump(lane, lane.urgentSlot ? (job.urgent ? "urgent" : "normal") : "");
 }
 
 // Take the next batch: the head job decides the target language (one request
 // carries one target), then same-target jobs join it up to the size caps.
 // Non-matching jobs stay queued and form the next batch — the head is always
 // consumed, so the pump cannot spin.
-function takeBatch(lane) {
-  const head = lane.qUrgent.shift() || lane.qNormal.shift();
+function takeBatch(lane, only) {
+  const queues = only === "urgent" ? [lane.qUrgent]
+    : only === "normal" ? [lane.qNormal]
+    : [lane.qUrgent, lane.qNormal];
+  let head = null;
+  for (const q of queues) { if ((head = q.shift())) break; }
   if (!head) return [];
   const batch = [head];
   // A solo job carries its own sender (aligned mode) — one sentence per
   // request, so nothing may ride along with it.
   if (lane.maxBatch <= 1 || head.solo) return batch;
   let chars = head.text.length;
-  for (const q of [lane.qUrgent, lane.qNormal]) {
+  for (const q of queues) {
     for (let i = 0; i < q.length && batch.length < lane.maxBatch; ) {
       const job = q[i];
       if (job.targetLang !== head.targetLang || chars + job.text.length > lane.maxBatchChars) {
@@ -336,37 +445,85 @@ function takeBatch(lane) {
   return batch;
 }
 
-async function pump(lane) {
-  if (lane.pumping) return;
-  lane.pumping = true;
+// `only` is "" on a lane with one pump, and "urgent"/"normal" on a lane that
+// keeps a slot for the watched line — see makeLane.
+async function pump(lane, only) {
+  const flag = only === "urgent" ? "pumpingUrgent"
+    : only === "normal" ? "pumpingNormal" : "pumping";
+  if (lane[flag]) return;
+  lane[flag] = true;
+  const pending = () => (only === "urgent" ? lane.qUrgent.length
+    : only === "normal" ? lane.qNormal.length
+    : lane.qUrgent.length + lane.qNormal.length);
   try {
     await hydrated;
     await cfgReady;
-    while (lane.qUrgent.length || lane.qNormal.length) {
-      const wait = lane.gateUntil - Date.now();
-      if (wait > 0) await sleep(wait);
+    while (pending()) {
+      // A loop, not an if: the other pump may have been asleep on this same
+      // deadline, woken first, and armed a new one on its way out.
+      for (let wait = lane.gateUntil - Date.now(); wait > 0;
+           wait = lane.gateUntil - Date.now()) {
+        await sleep(wait);
+      }
       // Batching lane, nothing urgent pending: wait briefly for neighbours so
       // prefetch travels in one paid request instead of eight.
       if (lane.coalesceMs && !lane.qUrgent.length && lane.qNormal.length < lane.maxBatch) {
         await sleep(lane.coalesceMs);
       }
-      const batch = takeBatch(lane);
+      const batch = takeBatch(lane, only);
       if (!batch.length) break;
       lane.gateUntil = Date.now() + lane.minIntervalMs;
+      // Which backoff episode this send belongs to: read before the request and
+      // compared after it, so a second reply carrying the SAME refusal does not
+      // double a backoff the first one already doubled. Reading a field cannot
+      // throw, so it sits out here where the catch below can still see it —
+      // and everything between taking the batch and entering the try is now
+      // two assignments, neither of which can throw past the handler that
+      // settles these jobs.
+      const era = lane.era;
       try {
+        // The namespace as it stands at the moment this batch goes out. A job's
+        // cache key was built when the request was made, and the provider and
+        // model are read again inside send(), behind two storage round trips —
+        // long enough for the settings page to change them. Whatever comes back
+        // was produced by the configuration in force somewhere across that gap,
+        // and if the gap moved, no namespace can honestly claim it: the answer
+        // is still returned to the caller, it simply is not filed. Serving one
+        // model's output under another model's name is precisely what having a
+        // namespace is for.
+        const nsBefore = cacheNs();
         const outs = batch[0].send
           ? await batch[0].send()
           : await lane.send(batch.map((j) => j.text), batch[0].targetLang);
-        if (lane.backoffMs) { lane.backoffMs = 0; persistGate(lane); }   // recovered
+        // Recovered — but only if this reply is news. A request that left
+        // before a refusal was recorded says nothing about the state the
+        // refusal put the lane in, and with two pumps the look-ahead's 200
+        // routinely lands after the watched line's 429. Clearing on it meant
+        // the next refusal started from the base instead of doubling, so while
+        // anything at all was still succeeding the backoff could never reach
+        // backoffShedMs — and shedding look-ahead is the one thing that stops
+        // a provider that has said stop from being asked six more times.
+        if (lane.backoffMs && era === lane.era) {
+          lane.backoffMs = 0;
+          persistGate(lane);
+        }
         if (lane.id === "byo") noteByoStatus("");
+        const nsHeld = cacheNs() === nsBefore;
         batch.forEach((job, i) => {
           const out = (outs && outs[i] !== undefined) ? outs[i] : "";
           // Solo jobs resolve with an object and cache on the content side.
-          if (job.cacheKey && typeof out === "string" && out) cacheSet(job.cacheKey, out);
+          if (nsHeld && job.cacheKey && typeof out === "string" && out) {
+            cacheSet(job.cacheKey, out);
+          }
           job.resolve(out);
         });
       } catch (err) {
-        if (err && err.rateLimited) {
+        // Settle first. Everything below is bookkeeping, and a throw in any of
+        // it would leave these jobs held by a promise nobody settles — from
+        // the content script's side, the worker simply stops answering.
+        for (const job of batch) job.reject(err);
+        if (err && err.rateLimited && era === lane.era) {
+          lane.era++;
           lane.backoffMs = lane.backoffMs
             ? Math.min(lane.backoffMs * 2, lane.backoffMaxMs)
             : lane.backoffBaseMs;
@@ -375,19 +532,37 @@ async function pump(lane) {
           persistGate(lane);
         }
         if (lane.id === "byo") noteByoStatus((err && err.code) || "failed");
-        for (const job of batch) job.reject(err);
       }
     }
+  } catch (err) {
+    // The loop itself came apart — not the request inside it. Everything that
+    // was already shifted out of the queue is now held by a promise nobody
+    // will ever settle, and the caller's sendResponse is never called: from
+    // content.js's side the worker simply stopped answering. Rejecting is the
+    // only outcome that is better than silence.
+    flushLane(lane, "pump failed: " + ((err && err.message) || err), only);
   } finally {
-    lane.pumping = false;
+    lane[flag] = false;
   }
 }
 
 // Awaiting cfgReady is load-bearing: a request arriving while the freshly woken
 // worker still has default settings would otherwise be routed to the gtx lane
 // and answered by Google while the user is on their own engine.
+//
+// Awaiting `hydrated` is load-bearing for the same reason, one layer down, and
+// it used to happen too late. The backoff a rate limit left behind is written
+// to session storage and read back when the worker wakes; the read is a real
+// round trip. `enqueue` decides whether to shed a prefetch by looking at that
+// backoff, and it ran first — so for the whole of that gap the lane looked
+// calm, nothing was shed, and prefetches piled into a queue that could not move
+// for another forty seconds. The gate then opened onto a burst, which is the
+// behaviour the shedding exists to prevent. A worker is killed after thirty
+// seconds idle and a deep backoff outlasts that, so this is the ordinary case
+// rather than a corner of one.
 async function translate(text, targetLang, urgent) {
   await cfgReady;
+  await hydrated;
   const lane = laneFor();
   const cacheKey = `${cacheNs()}|${targetLang}|${text}`;
   const cached = cacheGet(cacheKey);
@@ -915,6 +1090,21 @@ async function deeplTranslate(texts, targetLang, target, context) {
   return list.map((x) => String((x && x.text) || "").trim());
 }
 
+// The 200 characters of a provider's error body ride back to the page inside
+// the Error message, which is how the popup can say something better than
+// "failed". Some providers echo the request back in a 400 — headers included —
+// and the read-aloud side already has an assertion saying an error text never
+// carries a key. The translation side had the same exposure and no such rule.
+// Shapes only: nothing here decides whether a string IS a key, it decides that
+// a string shaped like one does not get repeated.
+function redactSecrets(text) {
+  return String(text || "")
+    .replace(/\b(sk|xi|AIza)[-_A-Za-z0-9]{12,}/g, "$1-REDACTED")
+    .replace(/\b(Bearer|Basic)\s+[A-Za-z0-9._~+/=-]{8,}/gi, "$1 REDACTED")
+    .replace(/\b(api[-_]?key|authorization|x-goog-api-key|xi-api-key|ocp-apim-subscription-key)\b\s*[:=]\s*"?[A-Za-z0-9._~+/=-]{8,}"?/gi,
+      "$1: REDACTED");
+}
+
 // One place to turn HTTP status into our error vocabulary. 401/403 is a key
 // problem the user must fix (never retried); 429/5xx is the lane's backoff.
 async function throwForStatus(res, who) {
@@ -931,7 +1121,8 @@ async function throwForStatus(res, who) {
     });
   }
   let detail = "";
-  try { detail = (await res.text()).slice(0, 200); } catch (_e) { /* ignore */ }
+  try { detail = redactSecrets((await res.text()).slice(0, 200)); }
+  catch (_e) { /* ignore */ }
   throw tag(new Error(who + " http " + s + " " + detail), {
     badRequest: true, code: s === 400 || s === 404 ? "badRequest" : "http"
   });
@@ -940,12 +1131,15 @@ async function throwForStatus(res, who) {
 // ---------------------------------------------------------------------------
 // connection test (popup "test" button)
 // ---------------------------------------------------------------------------
-// read-aloud (TTS) — pipeline only for now. Synthesis is requested here so the
-// key never leaves the worker and host_permissions apply; playback happens in
-// the content script (a worker has no audio output). There is deliberately no
-// lane yet: the only caller today is the options page's "save and test", and
-// the playback queue in the next step has to be shaped around cue timing, not
-// guessed at now.
+// read-aloud (TTS). Synthesis is requested here so the key never leaves the
+// worker and host_permissions apply; playback happens in the content script (a
+// worker has no audio output).
+//
+// This block used to say there was deliberately no lane, because the only
+// caller was the options page's "save and test". Both halves stopped being
+// true: ttsLane is defined with the other two, and content.js asks for a line
+// on every cue plus a window of lines ahead of it. ttsTest still bypasses the
+// lane — it is a user-initiated probe, not part of the playback stream.
 function keyForTts(providerId) {
   return new Promise((resolve) => {
     chrome.storage.local.get({ ttsKeys: {} }, (got) => {
@@ -957,6 +1151,13 @@ function keyForTts(providerId) {
 
 // Same honest-error discipline as resolveByo: every unfinished-setup state has
 // its own code, and the message text never contains the key.
+
+// The upper bound on one synthesis request. Deliberately generous: the point
+// is to stop a hung socket from owning the "Testing…" button (and, later, the
+// lane) until the worker is killed — not to give up on a slow provider.
+const TTS_TIMEOUT_MS = 15000;   // synthesis AND the three voice-list fetches:
+                                // "Fetch more voices" spins forever otherwise
+
 // Which name to put in a Google request for the language being spoken now.
 function googleVoiceName(t, lang) {
   const carried = /^([a-z]{2,3}-[A-Z]{2})-/.exec(t.voice);
@@ -966,11 +1167,17 @@ function googleVoiceName(t, lang) {
     : t.voice;
   return lang + "-Chirp3-HD-" + short;
 }
-// Kept next to the request that depends on it: the pickers answer the same
-// question through PROVIDERS.tts.voiceAppliesTo, so a menu never names a voice
-// this function is about to replace.
+// Kept next to the request that depends on it, so the menus and the request
+// cannot drift. What actually keeps them together is narrower than it used to
+// say here: the pickers list the family UNFILTERED, and the family is exempt
+// from the language question (ttsVoiceAppliesTo), so for those entries the two
+// agree by construction. A FETCHED name is the case both sides do check, and
+// they check it with the same predicate.
 
-async function resolveTts() {
+// lang: the target language the line will be READ in. Optional — the two
+// callers that have it pass it, and without it the language check below is
+// skipped rather than guessed at.
+async function resolveTts(lang) {
   const p = PROVIDERS.tts.get(cfg.ttsProvider);
   if (!p) throw tag(new Error("no tts provider selected"), { noKey: true, code: "noProvider" });
   // The browser's own voices need no key and no host: there is nothing to
@@ -996,7 +1203,18 @@ async function resolveTts() {
   // still shaped like this provider's, which is what the pattern checks.
   // The local engine's voices are whatever this machine has, so the worker
   // cannot vet them — the page that enumerated them is the only authority.
-  const known = PROVIDERS.tts.voiceOwned(p, stored);
+  // "Belongs to this provider" AND "works for the language being read". Both
+  // pickers already ask the second question — tts.voiceAppliesTo — and the
+  // engine did not, so a voice fetched for Japanese and kept after the target
+  // moved to Chinese was spliced straight into the request while both menus
+  // showed the family default. The menu said Ava and the speaker said Nanami,
+  // reading Chinese. Google was covered by googleVoiceName rebuilding the
+  // name; nothing covered Azure. (ElevenLabs is not in this story either way:
+  // its ids carry no locale, so the predicate has nothing to read.) And the
+  // family a provider SHIPS is exempt — see ttsVoiceAppliesTo for why the
+  // first cut of this took Azure's twelve multilingual voices out with it.
+  const known = PROVIDERS.tts.voiceOwned(p, stored) &&
+    (!lang || PROVIDERS.tts.voiceAppliesTo(p, stored, lang));
   const voice = known ? stored : (p.defaultVoice || (p.voices || [])[0] || "");
   let region = "";
   if (p.needsRegion) {
@@ -1058,6 +1276,122 @@ function bytesFromB64(b64) {
   return out;
 }
 
+// DashScope answers HTTP 200 and then puts the failure IN the stream: an event
+// that is valid JSON and carries code + message instead of audio. Parsing it
+// succeeds, so the read used to end with "no audio at all" — badShape, which
+// carries no rateLimited flag, so the lane never backed off and the look-ahead
+// went on firing into a provider that had already said stop. Mapped here onto
+// the same vocabulary the HTTP statuses use, so one backend fault gets one
+// answer whichever way it arrives.
+function qwenBizError(payload) {
+  const code = payload && typeof payload.code === "string" ? payload.code : "";
+  if (!code) return null;
+  let msg = "";
+  try { msg = redactSecrets(String(payload.message || "").slice(0, 200)); }
+  catch (_e) { /* the code alone is enough to classify */ }
+  const err = new Error("qwen " + code + (msg ? " " + msg : ""));
+  // The allowance being used up before the rate limit: Throttling.RateQuota is
+  // requests-per-second and clears by itself, Throttling.AllocationQuota is the
+  // free grant being gone and does not.
+  if (/Arrearage|AllocationQuota|InsufficientQuota|QuotaExhausted/i.test(code)) {
+    return tag(err, { rateLimited: true, code: "quota" });
+  }
+  if (/^Throttling|RateLimit|TooManyRequests/i.test(code)) {
+    return tag(err, { rateLimited: true, code: "limited" });
+  }
+  if (/ApiKey|Unauthorized|AccessDenied|Forbidden/i.test(code)) {
+    return tag(err, { authFailed: true, code: "auth" });
+  }
+  return tag(err, { code: "refused" });
+}
+
+// Has this provider said "you have run out", rather than "slow down" or "who
+// are you"? Both of the two that do it hide it behind a status that means
+// something else, and the wording those statuses earn points the reader at a
+// fix that does not exist. Bounded and best-effort: the body is only ever used
+// to choose between two sentences, so failing to read it costs the better one
+// and nothing more.
+async function ttsOutOfCredit(res) {
+  let body = "";
+  try { body = String(await res.text()).slice(0, 400); } catch (_e) { return false; }
+  return /insufficient_quota|quota_exceeded|exceeded your current quota|out of credits?/i
+    .test(body);
+}
+
+// One more try for a connection that failed outright, the way the translate
+// side has treated a dropped connection since withNetRetry was written — a
+// blink of the network used to cost a whole line. Deliberately narrower than
+// that one: a timeout has already spent fifteen seconds and the line it was
+// for is long past, and anything the provider actually ANSWERED — a refusal, a
+// throttle, an exhausted allowance — is not made truer by asking again, while
+// every ask costs the user money.
+async function withTtsRetry(run) {
+  try {
+    return await run();
+  } catch (err) {
+    if (!err || !err.netfail || err.timedOut) throw err;
+    await sleep(600);
+    return run();
+  }
+}
+
+// The status rule for every read-aloud request — synthesis and voice list
+// alike. It is deliberately not the shared throwForStatus: that one is the
+// translate side's and calls every 5xx a rate limit. Having two rules behind
+// two buttons of the same card meant one backend fault got two explanations,
+// depending on whether the user pressed test or fetch voices.
+async function ttsThrowForStatus(res) {
+  if (res.status === 401 || res.status === 403) {
+    // An exhausted allowance dressed as a rejected key: some ElevenLabs
+    // accounts answer 401 for it. "Check that the key was copied in full"
+    // sends the reader to look for a fault in a key that is fine.
+    const spent = await ttsOutOfCredit(res);
+    throw tag(new Error("tts auth " + res.status),
+      spent ? { rateLimited: true, code: "quota" } : { code: "auth" });
+  }
+  if (res.status === 429 || res.status >= 500) {
+    // Both mean "back off", but they do not mean the same thing to the reader.
+    // 429, and Azure's documented 503, get the rate-limit wording; a plain 500
+    // or 502 falls through to errorKey's default, "Connection failed. Try
+    // again in a moment.", which is the truth. What none of them may be is
+    // badRequest: that text sends the user off to check a model name and a
+    // base URL that are perfectly fine.
+    const throttled = res.status === 429 || res.status === 503;
+    // …and the other way round: OpenAI returns 429 when the credit is gone.
+    // The rate-limit wording promises it will pass, and this will not.
+    const spent = res.status === 429 && await ttsOutOfCredit(res);
+    throw tag(new Error("tts http " + res.status), {
+      rateLimited: true,
+      code: spent ? "quota" : (throttled ? "limited" : "server")
+    });
+  }
+  // Anything else the provider refused — 400, 404, 415, 422. NOT badRequest:
+  // that sentence names a model name and a base URL, the translate card's two
+  // fields, and the read-aloud card has neither. A retired ElevenLabs voice id
+  // (404, and the id is in the path) sent the reader off to check two controls
+  // they cannot see, past the one control that is actually wrong.
+  if (!res.ok) throw tag(new Error("tts http " + res.status), { code: "refused" });
+}
+
+// The most of a line that qwen3-tts-flash will accept, cut where a listener
+// would not notice the seam. Not a general splitter: one line, one request —
+// speaking half a sentence and then half of the next one is worse than
+// speaking one whole clause.
+const QWEN_TTS_MAX_CHARS = 600;
+function qwenFit(text) {
+  const s = String(text || "");
+  if (s.length <= QWEN_TTS_MAX_CHARS) return s;
+  const head = s.slice(0, QWEN_TTS_MAX_CHARS);
+  const at = (marks) => {
+    let best = -1;
+    for (const m of marks) best = Math.max(best, head.lastIndexOf(m));
+    return best;
+  };
+  const cut = at(["。", "！", "？", ".", "!", "?", "\n"]);
+  const soft = cut > 40 ? cut : at(["，", "；", "：", ",", ";", ":", " "]);
+  return (soft > 40 ? head.slice(0, soft + 1) : head).trim();
+}
+
 // Read a DashScope SSE body and hand back everything its data: lines carried.
 async function qwenPcmFromSse(res) {
   const reader = res.body && res.body.getReader ? res.body.getReader() : null;
@@ -1066,24 +1400,45 @@ async function qwenPcmFromSse(res) {
   const parts = [];
   let total = 0;
   let buf = "";
-  for (;;) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    buf += dec.decode(value, { stream: true });
-    let nl;
-    while ((nl = buf.indexOf("\n")) >= 0) {
-      const line = buf.slice(0, nl).trim();
-      buf = buf.slice(nl + 1);
-      if (line.slice(0, 5) !== "data:") continue;
-      let payload;
-      try { payload = JSON.parse(line.slice(5).trim()); } catch (_e) { continue; }
-      const d = payload && payload.output && payload.output.audio &&
-        payload.output.audio.data;
-      if (!d) continue;
-      const chunk = bytesFromB64(d);
-      parts.push(chunk);
-      total += chunk.length;
+  // Whatever happens below, let go of the body. A reader abandoned mid-stream
+  // holds the connection until the worker is collected, and this one is thrown
+  // out of by a business error in the middle of a stream.
+  const release = () => {
+    try { reader.cancel(); } catch (_e) { /* already done with it */ }
+  };
+  const takeLine = (line) => {
+    if (line.slice(0, 5) !== "data:") return;
+    let payload;
+    try { payload = JSON.parse(line.slice(5).trim()); } catch (_e) { return; }
+    const d = payload && payload.output && payload.output.audio &&
+      payload.output.audio.data;
+    if (!d) {
+      const err = qwenBizError(payload);
+      if (err) throw err;
+      return;
     }
+    const chunk = bytesFromB64(d);
+    parts.push(chunk);
+    total += chunk.length;
+  };
+  try {
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let nl;
+      while ((nl = buf.indexOf("\n")) >= 0) {
+        takeLine(buf.slice(0, nl).trim());
+        buf = buf.slice(nl + 1);
+      }
+    }
+    // The last event need not end in a newline, and a multi-byte character can
+    // be sitting half-decoded in the decoder. Both used to be dropped, which
+    // takes the end off the spoken line.
+    buf += dec.decode();
+    if (buf.trim()) takeLine(buf.trim());
+  } finally {
+    release();
   }
   if (!total) throw tag(new Error("qwen returned no audio"), { code: "badShape" });
   const pcm = new Uint8Array(total);
@@ -1160,6 +1515,14 @@ async function ttsSynthesize(text, t, targetLang) {
       throw tag(new Error("qwen-tts has no " + (targetLang || "?")),
         { unsupportedTarget: true, code: "unsupportedTarget" });
     }
+    // qwen3-tts-flash refuses more than 600 characters with a 400, and a 400
+    // is a refusal we would tell the reader to fix by changing voice — which
+    // would not help, because the fault is the length. A line can only get
+    // here that long if a translation more than doubled a source already
+    // capped at MAX_GROUP_CHARS, so this is a last resort and not a budget:
+    // cut at the last sentence end, then the last clause break, and only fall
+    // back to a hard cut if the line has no punctuation at all.
+    text = qwenFit(text);
     req = {
       url: t.provider.baseUrl +
         "/api/v1/services/aigc/multimodal-generation/generation",
@@ -1199,22 +1562,28 @@ async function ttsSynthesize(text, t, targetLang) {
   }
   let res;
   try {
-    res = await fetch(req.url, req.init);
-  } catch (_e) {
-    throw tag(new Error("tts fetch failed"), { netfail: true, code: "netfail" });
+    // Synthesis is the only fetch in this worker with no upper bound on it.
+    // A connection that opens and then goes quiet keeps "Testing…" on the
+    // settings page until the service worker is killed thirty seconds later,
+    // and the user is looking at a button that will never answer. An abort
+    // lands in the catch below as netfail — "cannot reach that endpoint",
+    // which is what happened. 15s is generous for one sentence.
+    res = await fetch(req.url, Object.assign({}, req.init, {
+      signal: AbortSignal.timeout(TTS_TIMEOUT_MS)
+    }));
+  } catch (e) {
+    // Which kind of "no answer" this was. A dropped connection is worth one
+    // more try; the fifteen-second timeout above is not — see withTtsRetry.
+    const timedOut = !!e && (e.name === "TimeoutError" || e.name === "AbortError");
+    throw tag(new Error("tts fetch failed"),
+      { netfail: true, timedOut: timedOut, code: "netfail" });
   }
-  if (res.status === 401 || res.status === 403) {
-    throw tag(new Error("tts auth " + res.status), { code: "auth" });
-  }
-  if (res.status === 429 || res.status === 503) {
-    throw tag(new Error("tts rate limited " + res.status), { rateLimited: true, code: "limited" });
-  }
-  if (!res.ok) throw tag(new Error("tts http " + res.status), { code: "badRequest" });
+  await ttsThrowForStatus(res);
   if (kind === "google-tts") {
     let data;
     try { data = await res.json(); } catch (_e) { data = null; }
     const b64 = data && typeof data.audioContent === "string" ? data.audioContent : "";
-    if (!b64) throw tag(new Error("tts empty audio"), { code: "badShape" });
+    if (!b64) throw tag(new Error("tts empty audio"), { code: "noAudio" });
     return b64;
   }
   if (kind === "qwen-tts") {
@@ -1222,7 +1591,7 @@ async function ttsSynthesize(text, t, targetLang) {
   }
   const buf = await res.arrayBuffer();
   if (!buf || buf.byteLength === 0) {
-    throw tag(new Error("tts empty audio"), { code: "badRequest" });
+    throw tag(new Error("tts empty audio"), { code: "noAudio" });
   }
   return b64FromBuf(buf);
 }
@@ -1232,34 +1601,40 @@ async function ttsSynthesize(text, t, targetLang) {
 // language the voice name is built from, so testing anything else would pass
 // on a voice that then fails on the first real subtitle.
 async function ttsTest(voiceOverride) {
-  const t = await resolveTts();
-  if (t.provider.kind === "local-speech") {
-    // Nothing to probe: no key, no endpoint. The settings page speaks the
-    // sample itself, which IS the test.
-    const lang = await new Promise((resolve) => {
-      chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
-        resolve((got && got.targetLang) || "zh-CN");
-      });
-    });
-    return { bytes: 0, ms: 0, voice: voiceOverride || t.voice, local: true, lang };
-  }
-  // Previewing a voice you have not saved yet is the whole point of a preview:
-  // the caller may name one, and it is honoured only if it belongs to the
-  // provider actually resolved (the same guard resolveTts applies to storage).
-  if (voiceOverride && (t.provider.voices || []).includes(voiceOverride)) {
-    t.voice = voiceOverride;
-  }
+  // The language first, and then resolve WITH it. This was the one path that
+  // resolved without it, which made it the one path that would cheerfully
+  // sample a voice the video is not going to get: the settings page said
+  // "connected — sampled with Xiaoyi", played Xiaoyi, and YouTube then read
+  // the line in the family default. A button whose whole job is to tell you
+  // whether this will work has to be asked the same question the playback is.
   const targetLang = await new Promise((resolve) => {
     chrome.storage.sync.get({ targetLang: "zh-CN" }, (got) => {
       resolve((got && got.targetLang) || "zh-CN");
     });
   });
+  const t = await resolveTts(targetLang);
+  if (t.provider.kind === "local-speech") {
+    // Nothing to probe: no key, no endpoint. The settings page speaks the
+    // sample itself, which IS the test.
+    return { bytes: 0, ms: 0, voice: voiceOverride || t.voice, local: true,
+      lang: targetLang };
+  }
+  // Previewing a voice you have not saved yet is the whole point of a preview:
+  // the caller may name one, and it is honoured only if it belongs to the
+  // provider actually resolved — the same predicate resolveTts applies to what
+  // is in storage, not a second opinion. The second opinion this replaces was
+  // the built-in table alone, which refuses every FETCHED voice: exactly the
+  // ones a preview exists for. You pressed Preview on the name you had just
+  // pulled down, heard the family default, and chose from that.
+  if (voiceOverride && PROVIDERS.tts.voiceOwned(t.provider, voiceOverride)) {
+    t.voice = voiceOverride;
+  }
   // A sentence in the language being READ, not "Hi." — the point is to hear
   // this voice speak your language, and an English probe passes on a voice
   // that then mangles the first real subtitle.
   const line = (self.YTDS_LANGS && self.YTDS_LANGS.sample(targetLang)) || "Hi.";
   const started = Date.now();
-  const b64 = await ttsSynthesize(line, t, targetLang);
+  const b64 = await withTtsRetry(() => ttsSynthesize(line, t, targetLang));
   const pad = b64.endsWith("==") ? 2 : b64.endsWith("=") ? 1 : 0;
   const bytes = Math.floor(b64.length * 3 / 4) - pad;
   // The audio rides back so the settings page can play what it just paid for.
@@ -1284,10 +1659,10 @@ function b64FromBuf(buf) {
   return btoa(bin);
 }
 
-async function ttsSpeak(text, targetLang) {
+async function ttsSpeak(text, targetLang, urgent) {
   const line = String(text || "").trim();
   if (!line) throw tag(new Error("tts empty input"), { code: "badRequest" });
-  const t = await resolveTts();
+  const t = await resolveTts(targetLang);
   // Local speech never becomes bytes: a service worker has no
   // speechSynthesis, and there would be nothing to cache anyway. The reply
   // says "say this yourself" and the page that has a speaker does it.
@@ -1303,7 +1678,23 @@ async function ttsSpeak(text, targetLang) {
     TTS_CACHE.set(key, hit);
     return { b64: hit, mime: ttsMime(t.provider), cached: true };
   }
-  const b64 = await ttsSynthesize(line, t, targetLang);
+  // Only now — a cache hit must not wait on a round trip, and it cannot be
+  // shed either. Past this point the request is going to the network, so the
+  // backoff that a rate limit left behind has to be in memory before enqueue
+  // decides whether to shed: that read is a real cross-process round trip and
+  // running it after the decision is precisely the bug d5e7063 fixed on the
+  // translation side.
+  await hydrated;
+  const b64 = await new Promise((resolve, reject) => enqueue(ttsLane, {
+    text: line,
+    targetLang: targetLang || "",
+    urgent: !!urgent,
+    // No cacheKey: TTS has its own store below. Handing one to the lane would
+    // file audio under a translation namespace.
+    send: () => withTtsRetry(() => ttsSynthesize(line, t, targetLang))
+      .then((out) => [out]),
+    resolve, reject
+  }));
   TTS_CACHE.set(key, b64);
   if (TTS_CACHE.size > TTS_CACHE_MAX) {
     const oldest = TTS_CACHE.keys().next().value;
@@ -1336,8 +1727,8 @@ async function byoTest(targetLang) {
 // Model list from the user's own key, for the options page dropdown. Asking the
 // endpoint beats shipping a curated list that quietly rots (gemini-2.0-flash was
 // already out of quota on free keys before we ever tested it).
-async function byoModels() {
-  const t = await resolveByo({ needModel: false });
+async function byoModels(providerId) {
+  const t = await resolveByo({ needModel: false, provider: providerId });
   if (t.provider.kind === "deepl") return { models: [] };
   const headers = Object.assign(
     { Authorization: "Bearer " + t.key },
@@ -1384,37 +1775,61 @@ async function ttsVoices() {
     }
     try {
       res = await fetch(p.baseUrl + "/v1/voices?languageCode=" + encodeURIComponent(lang),
-        { headers: { "X-Goog-Api-Key": t.key } });
+        { headers: { "X-Goog-Api-Key": t.key }, signal: AbortSignal.timeout(TTS_TIMEOUT_MS) });
     } catch (_e) {
       throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
     }
-    await throwForStatus(res, "tts");
+    await ttsThrowForStatus(res);
     const data = await res.json().catch(() => null);
     const names = ((data && data.voices) || [])
       .map((v) => v && v.name).filter(Boolean);
     return { voices: names, listable: true };
   }
   if (p.kind === "elevenlabs") {
-    try {
-      res = await fetch(p.baseUrl + "/v2/voices?page_size=100",
-        { headers: { "xi-api-key": t.key } });
-    } catch (_e) {
-      throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
+    // 100 is the largest page the endpoint serves, and a library of cloned
+    // voices goes past it. Without following the token the menu stopped at the
+    // first hundred and everything after it looked deleted. Bounded at five
+    // pages: a request per page against a 15s timeout each, and five hundred
+    // entries is already more than a dropdown can be read at.
+    // A Set, not an array: a page that repeats — see the token check below —
+    // must not put the same voice in the menu twice, and neither must an
+    // overlap between two pages of a library someone is editing while we walk
+    // it. Insertion order is kept, so the list is still the endpoint's order.
+    const seen = new Set();
+    let token = "";
+    for (let page = 0; page < 5; page++) {
+      try {
+        res = await fetch(p.baseUrl + "/v2/voices?page_size=100" +
+          (token ? "&next_page_token=" + encodeURIComponent(token) : ""),
+          { headers: { "xi-api-key": t.key }, signal: AbortSignal.timeout(TTS_TIMEOUT_MS) });
+      } catch (_e) {
+        throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
+      }
+      await ttsThrowForStatus(res);
+      const data = await res.json().catch(() => null);
+      for (const v of (data && data.voices) || []) {
+        if (v && v.voice_id) seen.add(v.voice_id);
+      }
+      const next = (data && data.has_more && data.next_page_token) || "";
+      // A server that does not recognise the parameter answers page one again,
+      // and hands back the same token with it. Following that asks five times
+      // for one page and lists every voice five times — worse than the
+      // truncation this loop replaced. The token has to move for us to.
+      if (!next || next === token) break;
+      token = next;
     }
-    await throwForStatus(res, "tts");
-    const data = await res.json().catch(() => null);
-    const ids = ((data && data.voices) || []).map((v) => v && v.voice_id).filter(Boolean);
-    return { voices: ids, listable: true };
+    return { voices: [...seen], listable: true };
   }
   // azure-speech
   try {
     res = await fetch("https://" + t.region + ".tts.speech.microsoft.com" +
       "/cognitiveservices/voices/list",
-      { headers: { "Ocp-Apim-Subscription-Key": t.key } });
+      { headers: { "Ocp-Apim-Subscription-Key": t.key },
+        signal: AbortSignal.timeout(TTS_TIMEOUT_MS) });
   } catch (_e) {
     throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
   }
-  await throwForStatus(res, "tts");
+  await ttsThrowForStatus(res);
   const data = await res.json().catch(() => null);
   const want = PROVIDERS.tts.localeFor.azure[targetLang || ""] || "";
   const names = ((data && Array.isArray(data)) ? data : [])
@@ -1555,6 +1970,10 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg && msg.type === "videoLeft") {
     dropPlaybackJobs(gtxLane, "left the video");
     dropPlaybackJobs(byoLane, "left the video");
+    // Read-aloud is playback too, and on a run of shorts a queue of lines for
+    // a video nobody is watching is exactly the traffic that earns the next
+    // rate limit — which the NEXT short then waits out in silence.
+    dropPlaybackJobs(ttsLane, "left the video");
     sendResponse({ ok: true });
     return false;
   }
@@ -1615,7 +2034,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "byoModels") {
     cfgReady
-      .then(byoModels)
+      .then(() => byoModels(msg.provider))
       .then((r) => sendResponse({ ok: true, models: r.models }))
       .catch((err) => sendResponse({
         ok: false,
@@ -1649,12 +2068,17 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg && msg.type === "ttsSpeak") {
     cfgReady
-      .then(() => ttsSpeak(msg.text, msg.targetLang))
+      .then(() => ttsSpeak(msg.text, msg.targetLang, msg.urgent))
       .then((r) => sendResponse({ ok: true, b64: r.b64, mime: r.mime, cached: r.cached,
         local: r.local, voice: r.voice, lang: r.lang }))
       .catch((err) => sendResponse({
         ok: false,
-        code: (err && err.code) || "failed",
+        // A shed is not a failure of this request, it is the lane still
+        // waiting out a rate limit — which is what "limited" already says,
+        // and what the extension is in fact doing. Reporting it as the
+        // generic failure would blame the provider for the pacing we chose.
+        code: (err && err.shed) ? "limited" : ((err && err.code) || "failed"),
+        shed: !!(err && err.shed),
         error: String(err)
       }));
     return true;

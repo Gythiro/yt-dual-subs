@@ -231,7 +231,7 @@
     "message": "Keine Übersetzung für dieses Video — versuche die Engine „Ganze Spur“ oder eine andere Zielsprache."
   },
   "exportLimited": {
-    "message": "YouTube drosselt gerade die Übersetzung der ganzen Spur — versuche es in einer Minute erneut oder aktiviere „Mit eigenem Schlüssel übersetzen“."
+    "message": "YouTube drosselt gerade die Übersetzung ganzer Spuren — in einer Minute erneut versuchen. Mit eigenem Schlüssel bietet die Export-Karte ein Häkchen, das das umgeht."
   },
   "exportNoCues": {
     "message": "Keine herunterladbaren Untertitel — spiele ein paar Sekunden, damit die Untertitel laden, und versuche es erneut."
@@ -323,7 +323,7 @@
     "message": "Zuerst einen Anbieter wählen."
   },
   "byoErrNoKey": {
-    "message": "Zuerst einen API-Schlüssel eingeben — der Link darunter öffnet die Schlüssel-Seite des Anbieters."
+    "message": "Zuerst einen API-Schlüssel eingeben, dann Speichern und testen."
   },
   "byoErrNoModel": {
     "message": "Bei diesem Anbieter muss ein Modellname eingegeben werden."
@@ -445,7 +445,7 @@
     "message": "Bessere Übersetzungen"
   },
   "startS3Body": {
-    "message": "Eigenen API-Schlüssel hinzufügen: Übersetzung ganzer Sätze und SRT-Export für ein ganzes Video."
+    "message": "Eigenen API-Key hinzufügen: Übersetzung ganzer Sätze und ganzer Videos beim Export."
   },
   "startGoSetup": {
     "message": "Übersetzungsdienst einrichten"
@@ -460,7 +460,7 @@
     "message": "Eine zweite Untertitelzeile für YouTube: das Original in einer Zeile, die Übersetzung in der anderen, Schrift, Farbe und Position nach Wunsch. Open Source, kostenlos, ohne Werbung."
   },
   "aboutPrivacy": {
-    "message": "Wir haben keinen Server und erheben keine Statistiken. Untertiteltext geht nur an den von dir gewählten Übersetzungsdienst; mit eigenem Schlüssel wird dieser nur auf diesem Computer gespeichert."
+    "message": "Die Erweiterung hat keinen Server von uns und sammelt keine Statistiken. Untertiteltext geht nur an den gewählten Übersetzungsdienst; mit eigenem Schlüssel bleibt der Schlüssel nur auf diesem Computer."
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll"
@@ -604,7 +604,7 @@
     "message": "Weitere Sprachen"
   },
   "langsMoreHint": {
-    "message": "Mit + eine hinzufügen. Jede aufgeführte Sprache funktioniert mit den kostenlosen Engines und mit DeepL."
+    "message": "Mit + eine hinzufügen. Jede gelistete Sprache akzeptieren die kostenlosen Engines und DeepL als Ziel."
   },
   "langsReset": {
     "message": "Standard wiederherstellen"
@@ -653,7 +653,7 @@
     "message": "Automatisch — dem Browser folgen"
   },
   "uiLocaleHint": {
-    "message": "Nur die Sprache der Steuerelemente dieser Erweiterung. In welche Sprache Untertitel übersetzt werden, wählst du im Popup und unter „Untertitelsprachen“ — nicht hier."
+    "message": "Die Sprache der Menüs und Einstellungen dieser Erweiterung. Einige direkt auf dem Video eingeblendete Beschriftungen folgen weiterhin der Browsersprache. Die Zielsprache der Untertitel wird im Popup und unter „Untertitelsprachen“ gewählt — nicht hier."
   },
   "startTargetLabel": {
     "message": "Übersetzungssprache"
@@ -674,7 +674,7 @@
     "message": "Vorlesen"
   },
   "ttsIntro": {
-    "message": "Lies die übersetzte Zeile mit deinem eigenen Schlüssel vor. Richte einen Anbieter ein und teste ihn hier."
+    "message": "Die übersetzte Zeile vorlesen. Die Stimmen des Browsers brauchen gar keinen Schlüssel; die Cloud-Anbieter werden hier eingerichtet und getestet."
   },
   "ttsVoiceLabel": {
     "message": "Stimme"
@@ -691,7 +691,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Vorlesen verwendet deinen eigenen Schlüssel. Der vorzulesende Text geht nur an den von dir gewählten Anbieter; der Schlüssel bleibt auf diesem Gerät."
+    "message": "Mit den Stimmen des Browsers wird nichts gesendet — der Computer spricht die Zeile selbst. Bei einem Cloud-Anbieter geht der vorzulesende Text nur an den gewählten Anbieter, und der Schlüssel bleibt auf diesem Gerät."
   },
   "ttsEnableLabel": {
     "message": "Übersetzung im Video vorlesen"
@@ -720,7 +720,7 @@
     }
   },
   "ttsEnableHint": {
-    "message": "Wenn aktiviert, wird die Übersetzung jeder Untertitelzeile vorgelesen, sobald sie erscheint; eine Zeile, deren Übersetzung nicht rechtzeitig bereit ist, wird übersprungen und nie nachgeholt. Der Originalton des Videos wird leiser, während eine Zeile gesprochen wird, und eine zu lange Zeile verlangsamt das Video etwas."
+    "message": "Wenn aktiv, wird die Übersetzung jeder Untertitelzeile vorgelesen, sobald sie erscheint; eine Zeile, deren Übersetzung nicht rechtzeitig fertig ist, wird übersprungen statt nachgeholt. Während eine Zeile spricht, sinkt der Ton des Videos auf den unten festgelegten Pegel. Eine Cloud-Stimme, die länger dauert, verlangsamt das Video etwas — die Stimmen des Browsers melden keine Dauer und können das daher nicht."
   },
   "ttsRegionLabel": {
     "message": "Serviceregion"
@@ -783,13 +783,13 @@
     "message": "Konnte nicht abspielen — Schlüssel prüfen und Speichern und testen versuchen"
   },
   "ttsFetchVoices": {
-    "message": "Weitere Stimmen für diese Sprache laden"
+    "message": "Weitere Stimmen mit Schlüssel laden"
   },
   "ttsFetching": {
     "message": "Wird geladen…"
   },
   "ttsVoicesSwitched": {
-    "message": "Jetzt siehst du die $N$ Stimmen dieser Sprache. Sie funktionieren nur für diese Zielsprache.",
+    "message": "Jetzt werden die $N$ Stimmen angezeigt, die der Schlüssel nutzen kann. Eine Stimme, deren Name eine Sprache enthält, funktioniert nur für diese.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -810,5 +810,11 @@
   },
   "provLocalSpeech": {
     "message": "Eigene Browser-Stimmen (kostenlos)"
+  },
+  "ttsErrRefused": {
+    "message": "Der Anbieter hat diese Anfrage abgelehnt — versuche eine andere Stimme."
+  },
+  "ttsErrNoAudio": {
+    "message": "Der Ton ist nicht angekommen — versuche es erneut oder wähle eine andere Stimme."
   }
 }

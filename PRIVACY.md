@@ -59,7 +59,7 @@ If you choose to use your own translation or speech provider, the key you enter 
 - **`storage`** — to save your subtitle preferences locally (see above), and an API key you choose to add.
 - **Host access to `www.youtube.com`** (content scripts) — to display the bilingual subtitle overlay inside the YouTube player and read the active caption track of the video you are watching.
 - **Host access to `translate.googleapis.com`** — to fetch machine translations of caption text for the Smart-sentences engine (used automatically when YouTube's own track translation is unavailable, or when selected manually).
-- **Optional host access to translation and speech providers** — the extension ships with access to none of them. Each provider's domain (including the two speech endpoints, `texttospeech.googleapis.com` and `*.tts.speech.microsoft.com`) is listed as an *optional* host permission, and Chrome asks you to grant exactly one of them at the moment you press "Save and test" for that provider. A provider you never choose is never contacted and never granted anything.
+- **Optional host access to translation and speech providers** — the extension ships with access to none of them. Each provider's domain (including the endpoints used only for speech — `texttospeech.googleapis.com`, `*.tts.speech.microsoft.com` and `api.elevenlabs.io`) is listed as an *optional* host permission, and Chrome asks you to grant exactly one of them at the moment you press "Save and test" for that provider. A provider you never choose is never contacted and never granted anything.
 
 The extension requests the narrowest permissions needed for these features and nothing more. It does not request access to your tabs, browsing history, or any other websites.
 
@@ -76,6 +76,21 @@ No user data is sold or shared with third parties. The only outbound data is cap
 The use of information received through this extension adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), including the **Limited Use** requirements. Caption text is used only to provide the extension's single, user-facing purpose — displaying bilingual subtitles — and is never used for any other purpose, transferred to the developer, or sold.
 
 ---
+
+## The project's website, which is not the extension
+
+Everything above is about the extension. The project also has a website
+(the GitHub Pages site linked from the store listing and the repository), and
+that is a separate thing with a separate answer: **the website loads Cloudflare
+Web Analytics.** The extension does not carry it. But the pages themselves are
+ordinary web pages and are counted like ordinary web pages — including the
+"what's new" page the extension opens for you after an update, which means the
+update does show up there as a visit.
+
+This is stated here because this document is what the website calls its privacy
+policy. A policy that only describes the extension, linked from a page that
+also measures its readers, would be answering a narrower question than the one
+being asked.
 
 ## Children's privacy
 
