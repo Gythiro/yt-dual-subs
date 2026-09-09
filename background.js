@@ -2579,7 +2579,7 @@ async function uiTableFor() {
   return table;
 }
 
-chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg && msg.type === "uiTable") {
     uiTableFor().then((t) => sendResponse(t || null)).catch(() => sendResponse(null));
     return true;                                            // async reply
@@ -2601,6 +2601,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     // the id check exists, since a worker without the store says no to
     // everything.
     if (!F || !F.isImport(id)) { sendResponse({ ok: false, why: "notImport" }); return false; }
+    // Only this extension's own pages and content scripts are answered.
+    if (sender && sender.id && sender.id !== chrome.runtime.id) { sendResponse({ ok: false, why: "sender" }); return false; }
     F.importGet(id).then((rec) => {
       if (rec && rec.bytes) sendResponse({ ok: true, b64: F.b64(new Uint8Array(rec.bytes)), name: rec.name || "" });
       else sendResponse({ ok: false, why: "missing" });

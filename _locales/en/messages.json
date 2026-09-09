@@ -1132,55 +1132,29 @@
     "message": "Subtitle fonts"
   },
   "fontsIntro": {
-    "message": "Fonts for the two subtitle lines. The popup offers the ones you keep here, and every font listed is installed on this computer."
+    "message": "One list serves both subtitle lines; the popup picks per line. Every font listed is installed on this computer."
   },
   "fontsKept": {
     "message": "Shown in the popup"
   },
-  "fontsKeptHint": {
-    "message": "These appear in the popup's font list, after System default."
-  },
   "fontsMore": {
-    "message": "Other fonts on this computer"
-  },
-  "fontsMoreHint": {
-    "message": "Press + to add one. The list is read from this computer; press a font's name to preview it."
+    "message": "Other fonts"
   },
   "fontsOnly": {
-    "message": "Only fonts that can draw $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ fonts on this computer; $M$ of them can draw $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Only fonts that can draw it"
   },
   "fontsCounting": {
-    "message": "Checking which fonts can draw $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Checking…"
   },
   "fontsSearch": {
     "message": "Search font names"
   },
   "fontsNoMatch": {
     "message": "No font matches."
+  },
+  "fontsKeptEmpty": {
+    "message": "Only System default is left for the popup.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
   },
   "fontsAllAdded": {
     "message": "Every font is already in the list."
@@ -1200,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Preview: $NAME$ — press any font name to try it",
+    "message": "Preview: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1223,7 +1197,7 @@
     "message": "Import font file…"
   },
   "fontsImportHint": {
-    "message": "Supports .ttf / .otf / .woff / .woff2. The file is copied into the browser, so the original can move afterwards; deleting the entry here deletes that copy."
+    "message": ".ttf / .otf / .woff / .woff2; the file is copied into the browser."
   },
   "fontsImported": {
     "message": "Imported $NAME$",
@@ -1232,6 +1206,28 @@
         "content": "$1"
       }
     }
+  },
+  "fontsImportStore": {
+    "message": "Could not save it in the browser; try again.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Removed $NAME$ from the popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Skip this list",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Imported font",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   },
   "fontsImportBad": {
     "message": "That is not a font file this browser can use."
@@ -1244,10 +1240,24 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "imported"
-  },
   "fontsImportDelete": {
     "message": "Delete the imported font"
+  },
+  "fontsLangLabel": {
+    "message": "Check for"
+  },
+  "fontsLangRecent": {
+    "message": "recently watched"
+  },
+  "fontMoreRow": {
+    "message": "Manage fonts…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ more cannot draw this line",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

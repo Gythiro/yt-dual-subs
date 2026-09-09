@@ -1136,49 +1136,19 @@
     "message": "字幕フォント"
   },
   "fontsIntro": {
-    "message": "2行の字幕に使うフォントです。ここに残したフォントがポップアップに表示されます。一覧のフォントはすべてこのパソコンに入っています。"
+    "message": "リストは字幕の両行で共通。ポップアップで行ごとに選びます。掲載フォントはすべてこのパソコンにインストール済みです。"
   },
   "fontsKept": {
     "message": "ポップアップに表示"
   },
-  "fontsKeptHint": {
-    "message": "ポップアップのフォント一覧で、「システムのデフォルト」の後に表示されます。"
-  },
   "fontsMore": {
-    "message": "このパソコンの他のフォント"
-  },
-  "fontsMoreHint": {
-    "message": "+ を押して追加します。一覧はこのパソコンから読み込まれます。フォント名を押すとプレビューできます。"
+    "message": "その他のフォント"
   },
   "fontsOnly": {
-    "message": "$LANG$ を表示できるフォントのみ",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "このパソコンには $N$ 個のフォントがあり、うち $M$ 個が $LANG$ を表示できます。",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "描画できるフォントのみ"
   },
   "fontsCounting": {
-    "message": "$LANG$ を表示できるフォントを確認しています…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "確認中…"
   },
   "fontsSearch": {
     "message": "フォント名を検索"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "プレビュー: $NAME$ — フォント名を押して試せます",
+    "message": "プレビュー: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "このブラウザでは拡張機能がインストール済みフォントを読み取れないため、「システムのデフォルト」のみ選べます。"
   },
   "fontNoGlyphs": {
-    "message": "この行を表示できません"
+    "message": "この行を描画できません"
   },
   "fontNotHere": {
     "message": "このパソコンにありません"
@@ -1227,7 +1197,7 @@
     "message": "フォントファイルをインポート…"
   },
   "fontsImportHint": {
-    "message": ".ttf / .otf / .woff / .woff2 に対応。ファイルはブラウザ内にコピーされるため、元のファイルは後から移動しても問題ありません。ここから削除すると、そのコピーも削除されます。"
+    "message": ".ttf / .otf / .woff / .woff2。ファイルはブラウザ内にコピーされます。"
   },
   "fontsImported": {
     "message": "$NAME$ をインポートしました",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "インポート済み"
-  },
   "fontsImportDelete": {
     "message": "インポートしたフォントを削除"
+  },
+  "fontsLangLabel": {
+    "message": "対象"
+  },
+  "fontsLangRecent": {
+    "message": "最近視聴"
+  },
+  "fontMoreRow": {
+    "message": "フォントを管理…"
+  },
+  "fontHiddenRow": {
+    "message": "他 $N$ 件はこの行を描画できません",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "ポップアップにはシステムのデフォルトのみ残っています。",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "ブラウザに保存できませんでした。もう一度お試しください。",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "ポップアップから $NAME$ を削除しました。",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "このリストをスキップ",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "インポート済みフォント",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

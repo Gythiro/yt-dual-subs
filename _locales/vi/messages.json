@@ -1136,49 +1136,19 @@
     "message": "Phông chữ phụ đề"
   },
   "fontsIntro": {
-    "message": "Phông chữ cho hai dòng phụ đề. Cửa sổ bật lên hiện những phông bạn giữ ở đây, và mọi phông trong danh sách đều đã cài trên máy này."
+    "message": "Một danh sách dùng cho cả hai dòng phụ đề; cửa sổ bật lên chọn theo từng dòng. Mọi phông chữ trong danh sách đều đã cài trên máy này."
   },
   "fontsKept": {
     "message": "Hiện trong cửa sổ bật lên"
   },
-  "fontsKeptHint": {
-    "message": "Chúng xuất hiện trong danh sách phông của cửa sổ bật lên, sau Mặc định hệ thống."
-  },
   "fontsMore": {
-    "message": "Phông khác trên máy này"
-  },
-  "fontsMoreHint": {
-    "message": "Nhấn + để thêm. Danh sách lấy từ máy này; nhấn tên phông để xem trước."
+    "message": "Phông chữ khác"
   },
   "fontsOnly": {
-    "message": "Chỉ phông hiển thị được $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ phông trên máy này; $M$ trong số đó hiển thị được $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Chỉ phông chữ vẽ được"
   },
   "fontsCounting": {
-    "message": "Đang kiểm tra phông nào hiển thị được $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Đang kiểm tra…"
   },
   "fontsSearch": {
     "message": "Tìm tên phông"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Xem trước: $NAME$ — nhấn tên phông bất kỳ để thử",
+    "message": "Xem trước: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Trình duyệt này không cho tiện ích đọc phông đã cài, nên chỉ chọn được Mặc định hệ thống."
   },
   "fontNoGlyphs": {
-    "message": "không hiển thị được dòng này"
+    "message": "không vẽ được dòng này"
   },
   "fontNotHere": {
     "message": "không có trên máy này"
@@ -1227,7 +1197,7 @@
     "message": "Nhập tệp phông chữ…"
   },
   "fontsImportHint": {
-    "message": "Hỗ trợ .ttf / .otf / .woff / .woff2. Tệp được sao chép vào trình duyệt, nên tệp gốc có thể chuyển đi sau đó; xóa mục ở đây sẽ xóa bản sao đó."
+    "message": ".ttf / .otf / .woff / .woff2; tệp được sao chép vào trình duyệt."
   },
   "fontsImported": {
     "message": "Đã nhập $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "đã nhập"
-  },
   "fontsImportDelete": {
     "message": "Xóa phông chữ đã nhập"
+  },
+  "fontsLangLabel": {
+    "message": "Kiểm tra"
+  },
+  "fontsLangRecent": {
+    "message": "xem gần đây"
+  },
+  "fontMoreRow": {
+    "message": "Quản lý phông chữ…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ phông chữ nữa không vẽ được dòng này",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Cửa sổ bật lên chỉ còn Mặc định hệ thống.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Không lưu được trong trình duyệt; hãy thử lại.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Đã xóa $NAME$ khỏi popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Bỏ qua danh sách này",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Font đã nhập",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

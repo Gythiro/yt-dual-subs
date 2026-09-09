@@ -1136,49 +1136,19 @@
     "message": "Untertitelschriften"
   },
   "fontsIntro": {
-    "message": "Schriftarten für die beiden Untertitelzeilen. Im Popup erscheinen die hier behaltenen, und jede gelistete Schriftart ist auf diesem Computer installiert."
+    "message": "Eine Liste gilt für beide Untertitelzeilen; das Popup wählt pro Zeile. Jede aufgeführte Schriftart ist auf diesem Computer installiert."
   },
   "fontsKept": {
     "message": "Im Popup angezeigt"
   },
-  "fontsKeptHint": {
-    "message": "Diese erscheinen in der Schriftartenliste des Popups, nach Systemstandard."
-  },
   "fontsMore": {
-    "message": "Weitere Schriftarten auf diesem Computer"
-  },
-  "fontsMoreHint": {
-    "message": "Mit + hinzufügen. Die Liste wird von diesem Computer gelesen; zum Vorschauen auf einen Schriftnamen klicken."
+    "message": "Weitere Schriftarten"
   },
   "fontsOnly": {
-    "message": "Nur Schriftarten, die $LANG$ darstellen können",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ Schriftarten auf diesem Computer; $M$ davon können $LANG$ darstellen.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Nur darstellbare Schriftarten"
   },
   "fontsCounting": {
-    "message": "Prüfen, welche Schriftarten $LANG$ darstellen können…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Prüfen…"
   },
   "fontsSearch": {
     "message": "Schriftnamen suchen"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Vorschau: $NAME$ — zum Testen auf einen Schriftnamen klicken",
+    "message": "Vorschau: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Dieser Browser erlaubt der Erweiterung nicht, die installierten Schriftarten zu lesen, daher kann nur Systemstandard gewählt werden."
   },
   "fontNoGlyphs": {
-    "message": "kann diese Zeile nicht darstellen"
+    "message": "zeigt diese Zeile nicht"
   },
   "fontNotHere": {
     "message": "nicht auf diesem Computer"
@@ -1227,7 +1197,7 @@
     "message": "Schriftdatei importieren…"
   },
   "fontsImportHint": {
-    "message": "Unterstützt .ttf / .otf / .woff / .woff2. Die Datei wird in den Browser kopiert, das Original kann danach verschoben werden; das Löschen des Eintrags hier löscht diese Kopie."
+    "message": ".ttf / .otf / .woff / .woff2; die Datei wird in den Browser kopiert."
   },
   "fontsImported": {
     "message": "$NAME$ importiert",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importiert"
-  },
   "fontsImportDelete": {
     "message": "Importierte Schriftart löschen"
+  },
+  "fontsLangLabel": {
+    "message": "Prüfen auf"
+  },
+  "fontsLangRecent": {
+    "message": "zuletzt angesehen"
+  },
+  "fontMoreRow": {
+    "message": "Schriftarten verwalten…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ weitere zeigen diese Zeile nicht",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Im Popup bleibt nur Systemstandard übrig.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Konnte nicht im Browser gespeichert werden; bitte erneut versuchen.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "$NAME$ aus dem Popup entfernt.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Diese Liste überspringen",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Importierte Schriftart",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

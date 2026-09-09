@@ -1136,49 +1136,19 @@
     "message": "Tipos de letra das legendas"
   },
   "fontsIntro": {
-    "message": "Tipos de letra para as duas linhas de legendas. O pop-up mostra os que guardar aqui e todos os listados estão instalados neste computador."
+    "message": "Uma lista serve as duas linhas de legendas; o pop-up escolhe por linha. Todos os tipos de letra listados estão instalados neste computador."
   },
   "fontsKept": {
     "message": "Mostrados no pop-up"
   },
-  "fontsKeptHint": {
-    "message": "Estes aparecem na lista de tipos de letra do pop-up, a seguir a Predefinição do sistema."
-  },
   "fontsMore": {
-    "message": "Outros tipos de letra neste computador"
-  },
-  "fontsMoreHint": {
-    "message": "Prima + para adicionar um. A lista é lida deste computador; prima o nome de um tipo de letra para o pré-visualizar."
+    "message": "Outros tipos de letra"
   },
   "fontsOnly": {
-    "message": "Apenas tipos de letra que suportam $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ tipos de letra neste computador; $M$ deles suportam $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Só os que a conseguem desenhar"
   },
   "fontsCounting": {
-    "message": "A verificar quais os tipos de letra que suportam $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "A verificar…"
   },
   "fontsSearch": {
     "message": "Pesquisar nomes de tipos de letra"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Pré-visualização: $NAME$ — prima qualquer nome para experimentar",
+    "message": "Pré-visualização: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Este navegador não permite que a extensão leia os tipos de letra instalados, por isso só é possível escolher Predefinição do sistema."
   },
   "fontNoGlyphs": {
-    "message": "não consegue mostrar esta linha"
+    "message": "não mostra esta linha"
   },
   "fontNotHere": {
     "message": "não está neste computador"
@@ -1227,7 +1197,7 @@
     "message": "Importar tipo de letra…"
   },
   "fontsImportHint": {
-    "message": "Suporta .ttf / .otf / .woff / .woff2. O ficheiro é copiado para o navegador, pelo que o original pode ser movido depois; eliminar a entrada aqui elimina essa cópia."
+    "message": ".ttf / .otf / .woff / .woff2; o ficheiro é copiado para o navegador."
   },
   "fontsImported": {
     "message": "$NAME$ importado",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importado"
-  },
   "fontsImportDelete": {
     "message": "Eliminar o tipo de letra importado"
+  },
+  "fontsLangLabel": {
+    "message": "Verificar"
+  },
+  "fontsLangRecent": {
+    "message": "vistos recentemente"
+  },
+  "fontMoreRow": {
+    "message": "Gerir tipos de letra…"
+  },
+  "fontHiddenRow": {
+    "message": "mais $N$ não mostram esta linha",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Só resta a predefinição do sistema para o pop-up.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Não foi possível guardar no navegador; tente novamente.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Removido $NAME$ do pop-up.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Saltar esta lista",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Fonte importada",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

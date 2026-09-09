@@ -1136,49 +1136,19 @@
     "message": "자막 글꼴"
   },
   "fontsIntro": {
-    "message": "두 자막 줄에 쓰는 글꼴입니다. 팝업에는 여기에 넣어 둔 글꼴이 나타나며, 목록의 글꼴은 모두 이 컴퓨터에 설치되어 있습니다."
+    "message": "자막 두 줄이 하나의 목록을 공유하고, 팝업에서 줄마다 선택합니다. 목록의 글꼴은 모두 이 컴퓨터에 설치되어 있습니다."
   },
   "fontsKept": {
     "message": "팝업에 표시"
   },
-  "fontsKeptHint": {
-    "message": "팝업 글꼴 목록에서 시스템 기본값 다음에 나타납니다."
-  },
   "fontsMore": {
-    "message": "이 컴퓨터의 다른 글꼴"
-  },
-  "fontsMoreHint": {
-    "message": "+를 눌러 추가하세요. 목록은 이 컴퓨터에서 읽어 오며, 글꼴 이름을 누르면 미리 볼 수 있습니다."
+    "message": "다른 글꼴"
   },
   "fontsOnly": {
-    "message": "$LANG$ 표시가 가능한 글꼴만",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "이 컴퓨터에 글꼴 $N$개; 그중 $M$개가 $LANG$ 표시 가능.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "이 줄을 표시할 수 있는 글꼴만"
   },
   "fontsCounting": {
-    "message": "$LANG$ 표시 가능한 글꼴 확인 중…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "확인 중…"
   },
   "fontsSearch": {
     "message": "글꼴 이름 검색"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "미리보기: $NAME$ — 글꼴 이름을 눌러 미리 보세요",
+    "message": "미리보기: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1227,7 +1197,7 @@
     "message": "폰트 파일 가져오기…"
   },
   "fontsImportHint": {
-    "message": ".ttf / .otf / .woff / .woff2를 지원합니다. 파일은 브라우저에 복사되므로 원본은 나중에 옮겨도 됩니다. 여기서 항목을 삭제하면 그 복사본도 삭제됩니다."
+    "message": ".ttf / .otf / .woff / .woff2; 파일이 브라우저에 복사됩니다."
   },
   "fontsImported": {
     "message": "$NAME$ 가져옴",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "가져옴"
-  },
   "fontsImportDelete": {
     "message": "가져온 폰트 삭제"
+  },
+  "fontsLangLabel": {
+    "message": "확인 대상"
+  },
+  "fontsLangRecent": {
+    "message": "최근 시청"
+  },
+  "fontMoreRow": {
+    "message": "글꼴 관리…"
+  },
+  "fontHiddenRow": {
+    "message": "이 줄을 표시할 수 없는 글꼴 $N$개 더",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "팝업에는 시스템 기본값만 남았습니다.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "브라우저에 저장하지 못했습니다. 다시 시도하세요.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "팝업에서 $NAME$을(를) 제거했습니다.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "이 목록 건너뛰기",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "가져온 글꼴",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

@@ -1136,49 +1136,19 @@
     "message": "Polices des sous-titres"
   },
   "fontsIntro": {
-    "message": "Polices des deux lignes de sous-titres. La popup propose celles que vous gardez ici, et chaque police listée est installée sur cet ordinateur."
+    "message": "Une seule liste sert aux deux lignes de sous-titres ; la popup choisit par ligne. Toutes les polices listées sont installées sur cet ordinateur."
   },
   "fontsKept": {
     "message": "Affichées dans la popup"
   },
-  "fontsKeptHint": {
-    "message": "Elles apparaissent dans la liste de polices de la popup, après Police système."
-  },
   "fontsMore": {
-    "message": "Autres polices de cet ordinateur"
-  },
-  "fontsMoreHint": {
-    "message": "Appuyez sur + pour en ajouter une. La liste est lue depuis cet ordinateur ; appuyez sur le nom d’une police pour la prévisualiser."
+    "message": "Autres polices"
   },
   "fontsOnly": {
-    "message": "Uniquement les polices pouvant afficher $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ polices sur cet ordinateur ; $M$ d’entre elles peuvent afficher $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Uniquement les polices qui peuvent l’afficher"
   },
   "fontsCounting": {
-    "message": "Vérification des polices pouvant afficher $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Vérification…"
   },
   "fontsSearch": {
     "message": "Rechercher un nom de police"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Aperçu : $NAME$ — appuyez sur un nom de police pour l’essayer",
+    "message": "Aperçu : $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Ce navigateur n’autorise pas l’extension à lire les polices installées, seule la police système peut être choisie."
   },
   "fontNoGlyphs": {
-    "message": "ne peut pas afficher cette ligne"
+    "message": "n’affiche pas cette ligne"
   },
   "fontNotHere": {
     "message": "pas sur cet ordinateur"
@@ -1227,7 +1197,7 @@
     "message": "Importer un fichier de police…"
   },
   "fontsImportHint": {
-    "message": "Prend en charge .ttf / .otf / .woff / .woff2. Le fichier est copié dans le navigateur, l’original peut donc être déplacé ensuite ; supprimer l’entrée ici supprime cette copie."
+    "message": ".ttf / .otf / .woff / .woff2 ; le fichier est copié dans le navigateur."
   },
   "fontsImported": {
     "message": "Importé $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importé"
-  },
   "fontsImportDelete": {
     "message": "Supprimer la police importée"
+  },
+  "fontsLangLabel": {
+    "message": "Vérifier"
+  },
+  "fontsLangRecent": {
+    "message": "vues récemment"
+  },
+  "fontMoreRow": {
+    "message": "Gérer les polices…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ autres n’affichent pas cette ligne",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Il ne reste que Système par défaut pour la popup.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Impossible de l’enregistrer dans le navigateur ; réessayez.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "$NAME$ a été retiré du popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Ignorer cette liste",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Police importée",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

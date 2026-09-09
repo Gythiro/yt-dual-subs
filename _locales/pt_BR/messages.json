@@ -1136,49 +1136,19 @@
     "message": "Fontes das legendas"
   },
   "fontsIntro": {
-    "message": "Fontes das duas linhas de legendas. O pop-up oferece as que você mantém aqui, e todas as fontes listadas estão instaladas neste computador."
+    "message": "Uma lista serve às duas linhas de legenda; o popup escolhe por linha. Todas as fontes listadas estão instaladas neste computador."
   },
   "fontsKept": {
     "message": "Exibidas no pop-up"
   },
-  "fontsKeptHint": {
-    "message": "Estas aparecem na lista de fontes do pop-up, depois de Padrão do sistema."
-  },
   "fontsMore": {
-    "message": "Outras fontes neste computador"
-  },
-  "fontsMoreHint": {
-    "message": "Clique em + para adicionar. A lista é lida deste computador; clique no nome de uma fonte para visualizá-la."
+    "message": "Outras fontes"
   },
   "fontsOnly": {
-    "message": "Só fontes que conseguem exibir $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ fontes neste computador; $M$ delas conseguem exibir $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Só fontes que desenham a linha"
   },
   "fontsCounting": {
-    "message": "Verificando quais fontes conseguem exibir $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Verificando…"
   },
   "fontsSearch": {
     "message": "Buscar nomes de fontes"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Prévia: $NAME$ — clique em qualquer nome de fonte para testar",
+    "message": "Prévia: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Este navegador não permite que a extensão leia as fontes instaladas, então só Padrão do sistema pode ser escolhido."
   },
   "fontNoGlyphs": {
-    "message": "não consegue exibir esta linha"
+    "message": "não desenha esta linha"
   },
   "fontNotHere": {
     "message": "não está neste computador"
@@ -1227,7 +1197,7 @@
     "message": "Importar arquivo de fonte…"
   },
   "fontsImportHint": {
-    "message": "Suporta .ttf / .otf / .woff / .woff2. O arquivo é copiado para o navegador, então o original pode ser movido depois; excluir o item aqui exclui essa cópia."
+    "message": ".ttf / .otf / .woff / .woff2; o arquivo é copiado para o navegador."
   },
   "fontsImported": {
     "message": "Importada $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importada"
-  },
   "fontsImportDelete": {
     "message": "Excluir a fonte importada"
+  },
+  "fontsLangLabel": {
+    "message": "Verificar"
+  },
+  "fontsLangRecent": {
+    "message": "assistidos recentemente"
+  },
+  "fontMoreRow": {
+    "message": "Gerenciar fontes…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ a mais não desenham esta linha",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Só resta Padrão do sistema no popup.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Não foi possível salvar no navegador; tente novamente.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Removido $NAME$ do popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Pular esta lista",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Fonte importada",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

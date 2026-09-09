@@ -232,6 +232,10 @@ function paintPreview() {
   o.style.background = rgba(state.origBg, state.origBgOpacity);
   o.style.textShadow = outlineShadow(state.origStroke, state.origStrokeOpacity);
   o.style.display = state.showOriginal ? "" : "none";
+  // The lines say what language they are in, as the subtitle layer's do:
+  // Japanese kanji must not be drawn with simplified-Chinese glyphs here either.
+  o.lang = (typeof tabLang === "string" && tabLang) || "";
+  t.lang = String(state.targetLang || "");
 
   t.style.fontFamily = fontStack(state.transFont);
   t.style.fontSize = Math.max(9, Math.round(state.transSize / 2)) + "px";
@@ -978,8 +982,13 @@ function initTtsWatch() {
 // reader's rule: what can be picked must really draw this line. The
 // original line's language comes from the tab (engineStatus.lang), the
 // translation line's from the target language.
+const FONT_MORE = "__more__";  // the dropdown's last row: the settings pane
+const FONT_HIDDEN = "__hidden__";  // a disabled row: how many were left out on this line
 let fontsInstalled = null;   // [{id, name}] or null while unread / unavailable
 let fontKept = null;         // ids kept on the settings page; null = defaults
+let fontListKnown = false;   // whether fontSettings gave the installed list
+const fontGone = new Set();  // imports whose copy could not be read (deleted elsewhere)
+let fontImportIds = [];      // fonts the reader imported: always on offer
 let fontCov = null;          // {id: {lang: true|false|null}} from the probe
 let tabLang = "";            // language of the current video's original line
 
@@ -991,13 +1000,29 @@ function keptFontIds() {
   const F = self.YTDS_FONTS;
   if (!F || !fontsInstalled) return [];
   const have = new Set(fontsInstalled.map((f) => f.id));
-  if (Array.isArray(fontKept)) return fontKept.filter((id) => have.has(id));
-  let ui = "";
-  try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
-  return F.defaults(fontsInstalled, [state.targetLang, ui, "en"]);
+  let ids;
+  if (Array.isArray(fontKept)) ids = fontKept.filter((id) => have.has(id));
+  else {
+    let ui = "";
+    try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
+    ids = F.defaults(fontsInstalled, [state.targetLang, ui, "en"]);
+  }
+  // An imported font is on offer for as long as it exists (settings page
+  // keeps the same rule).
+  for (const id of fontImportIds) if (ids.indexOf(id) < 0 && have.has(id)) ids.push(id);
+  return ids;
 }
 
-async function probeFonts() {
+// One measurement at a time (the tab's language, the kept list and the
+// imports can all change while one runs; the last to finish must not
+// overwrite a newer one).
+let fontProbeChain = Promise.resolve();
+function probeFonts() {
+  const run = fontProbeChain.then(() => probeFontsNow());
+  fontProbeChain = run.catch(() => {});
+  return run;
+}
+async function probeFontsNow() {
   const F = self.YTDS_FONTS;
   if (!F || !fontsInstalled) return;
   const ids = keptFontIds();
@@ -1005,14 +1030,60 @@ async function probeFonts() {
     if (F.isFont(v) && ids.indexOf(F.idOf(v)) < 0) ids.push(F.idOf(v));
   }
   const langs = [tabLang, String(state.targetLang || "")].filter(Boolean);
-  fontCov = await F.probe(ids.filter((id) => !F.isImport(id)), langs);
+  // A verdict is per font and language and does not go stale: the ones the
+  // settings page (or an earlier open) already has are reused, and only
+  // the rest are measured — seconds on a Windows machine otherwise.
+  const cached = await new Promise((res) => {
+    try { chrome.storage.local.get({ fontCov: null }, (g) => res(g && g.fontCov)); } catch (_e) { res(null); }
+  });
+  const cov = Object.create(null);
+  const need = [];
+  for (const id of ids) {
+    cov[id] = Object.create(null);
+    for (const l of langs) {
+      const old = cached && cached.cov && cached.cov[l];
+      if (old && id in old && old[id] !== null) cov[id][l] = old[id];
+      else if (need.indexOf(id) < 0) need.push(id);
+    }
+  }
+  if (need.length) {
+    // An imported font is measured like the rest — the rule "cannot draw
+    // this line, cannot be picked" has to hold for it too.
+    const got = await Promise.all(need.filter((id) => F.isImport(id)).map((id) => F.ensureImported(document, id).then((ok) => [id, ok])));
+    for (const [id, ok] of got) if (!ok) fontGone.add(id); else fontGone.delete(id);
+    const r = await F.probe(need, langs);
+    for (const id of need) for (const l of langs) if (!(l in cov[id])) cov[id][l] = r[id] ? r[id][l] : null;
+    try {
+      const out = Object.assign(Object.create(null), (cached && cached.cov) || {});
+      for (const l of langs) {
+        const m = Object.assign(Object.create(null), out[l] || {});
+        for (const id of need) if (cov[id][l] !== null) m[id] = cov[id][l];
+        out[l] = m;
+      }
+      chrome.storage.local.set({ fontCov: { sig: (cached && cached.sig) || "", cov: out } });
+    } catch (_e) { /* ignore */ }
+  }
+  fontCov = cov;
   // null = the rulers were not ready, not an answer. One more try, a beat
   // later; until then nothing is disabled (an unknown is offered, not hidden).
   const unknown = ids.some((id) => langs.some((l) => fontCov[id] && fontCov[id][l] === null));
+  if (!unknown) probeFonts.retried = false;   // a later run may need its one retry again
   if (unknown && !probeFonts.retried) {
     probeFonts.retried = true;
     setTimeout(() => probeFonts().then(paintFontOptions), 600);
   }
+}
+
+// Text is measured in the select's own font, on a canvas kept for it.
+let fontFitCanvas = null;
+function fontFitCtx(sel) {
+  try {
+    if (!fontFitCanvas) fontFitCanvas = document.createElement("canvas");
+    const ctx = fontFitCanvas.getContext("2d");
+    const cs = getComputedStyle(sel);
+    ctx.font = cs.font || (cs.fontSize + " " + cs.fontFamily);
+    return ctx;
+  } catch (_e) { return null; }
 }
 
 function paintFontOptions() {
@@ -1022,37 +1093,102 @@ function paintFontOptions() {
   const cur = String(state[LINE[activeLine].font] || "system");
   const lang = fontLangFor(activeLine);
   sel.textContent = "";
-  const add = (value, text, disabled) => {
+  // A native option is clipped by the OS however it likes; a name too long
+  // for the select's own width (an imported file's, say) is cut here, with
+  // an ellipsis and its note kept whole, so the clip is ours.
+  // The value in force is shown in the closed select beside its arrow; the
+  // other rows only in the open list, which is at least the select's width.
+  // The line-style card is folded on most opens, and a hidden select has
+  // no width: measure against the popup's known inner width then, and the
+  // list is painted again when the card unfolds (setLineFold).
+  const width = sel.clientWidth || 300;
+  const fit = (name, note, selected) => {
+    const max = Math.max(120, width - (selected ? 44 : 12));
+    const ctx = fontFitCtx(sel);
+    const w = (s) => ctx.measureText(s).width;
+    if (!ctx || w(name + note) <= max) return name + note;
+    // The name is what the reader recognises: it keeps at least eight
+    // characters or 45% of the room, whichever is more; a long note
+    // (Russian, German) is cut before the name is squeezed below that.
+    const floor = Math.min(w(name), Math.max(w(name.slice(0, 8) + "…"), max * 0.45));
+    let n = note;
+    while (n.length > 4 && floor + w(n) > max) n = n.slice(0, -2) + "…";
+    let lo = 1, hi = name.length;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (w(name.slice(0, mid) + "…" + n) <= max) lo = mid; else hi = mid - 1;
+    }
+    return name.slice(0, lo) + "…" + n;
+  };
+  const add = (value, name, note, disabled) => {
     const o = document.createElement("option");
     o.value = value;
-    o.textContent = text;
+    o.textContent = fit(name, note || "", value === cur);
     if (disabled) o.disabled = true;
     sel.appendChild(o);
   };
-  add("system", t("fontSystem", "系统默认"), false);
+  add("system", t("fontSystem", "系统默认"), "", false);
   const ids = keptFontIds();
+  // A font that cannot draw THIS line is not offered on this line — the
+  // kept list serves both lines, and the Latin faces kept for English
+  // originals are only noise on a Chinese translation. Two exceptions: the
+  // value in force stays visible (disabled, with the reason), and one
+  // closing row says how many were left out, so a font the reader just
+  // added does not seem to have vanished. The other line offers them.
+  let hidden = 0;
   for (const id of ids) {
+    const value = F.valueOf(id);
+    // An import whose copy is gone is not on this computer any more — said
+    // so, rather than "cannot draw", which would send the reader looking
+    // for another font when the file is what went missing.
+    if (fontGone.has(id)) {
+      if (value === cur) add(value, F.label(value, fontsInstalled, t), " · " + t("fontNotHere", "这台电脑上没有"), true);
+      continue;
+    }
     const can = lang && fontCov && fontCov[id] ? fontCov[id][lang] : null;
-    const name = F.label(F.valueOf(id), fontsInstalled, t);
-    // Disabled, and it says why: a bare greyed name reads as a bug.
-    add(F.valueOf(id),
-      can === false ? name + " · " + t("fontNoGlyphs", "显示不了这一行的文字") : name,
-      can === false);
+    if (can === false && value !== cur) { hidden++; continue; }
+    const name = F.label(value, fontsInstalled, t);
+    add(value, name, can === false ? " · " + t("fontNoGlyphs", "显示不了") : "", can === false);
+  }
+  if (hidden) {
+    const row = tsub("fontHiddenRow", [String(hidden)], "另有 " + hidden + " 个显示不了");
+    add(FONT_HIDDEN, row, "", true);
+    sel.setAttribute("aria-description", row);   // a disabled row is skipped by some readers
+  } else {
+    sel.removeAttribute("aria-description");
   }
   if (cur !== "system" && !(F.isFont(cur) && ids.indexOf(F.idOf(cur)) >= 0)) {
     // The stored value is not on offer — one of the keys that shipped through
     // 3.6, or a font synced from a computer that has it. It stays selected
     // and labelled as itself, so the dropdown shows what is really in force.
-    let text = F.label(cur, fontsInstalled, t);
-    if (F.isFont(cur) && fontsInstalled && !fontsInstalled.some((f) => f.id === F.idOf(cur))) {
-      text += " · " + t("fontNotHere", "这台电脑上没有");
+    // …and it is judged like the others: not on this computer, or unable
+    // to draw this line, it stays selected but cannot be picked again.
+    let note = "", off = false;
+    if (F.isFont(cur) && fontListKnown && !fontsInstalled.some((f) => f.id === F.idOf(cur))) {
+      note = " · " + t("fontNotHere", "这台电脑上没有");
+      off = true;
+    } else if (F.isFont(cur) && lang && fontCov && fontCov[F.idOf(cur)] && fontCov[F.idOf(cur)][lang] === false) {
+      note = " · " + t("fontNoGlyphs", "显示不了");
+      off = true;
     }
-    add(cur, text, false);
+    add(cur, F.label(cur, fontsInstalled, t), note, off);
   }
+  // The way to the settings pane, as the language dropdown has: a last row,
+  // not a new control.
+  add(FONT_MORE, t("fontMoreRow", "管理字体…"), "", false);
   sel.value = cur;
 }
 
-async function loadFonts() {
+// One load at a time: the settings page importing several files in a row
+// fires several fontImports changes, and two loads racing would paint
+// whichever finished last.
+let fontLoadChain = Promise.resolve();
+function loadFonts() {
+  const run = fontLoadChain.then(() => loadFontsNow());
+  fontLoadChain = run.catch(() => {});
+  return run;
+}
+async function loadFontsNow() {
   const F = self.YTDS_FONTS;
   if (!F) return;
   const [installed, loc] = await Promise.all([
@@ -1062,21 +1198,27 @@ async function loadFonts() {
       catch (_e) { res({}); }
     })
   ]);
-  // Imported fonts join the list as themselves; the probe leaves them alone
-  // here (registering one means reading its bytes, which the popup should
-  // not pay for on every open), so they are offered, never disabled.
+  // Imported fonts join the list as themselves and are measured like the
+  // rest (their bytes are read once per open when no verdict is cached).
   const imports = Array.isArray(loc.fontImports) ? loc.fontImports : [];
-  fontsInstalled = installed ? installed.concat(imports.map((f) => ({ id: f.id, name: f.name }))) : null;
+  // The installed list may be unavailable (the browser refused fontSettings);
+  // the reader's imports need no permission and are offered regardless.
+  fontListKnown = !!installed;
+  fontsInstalled = (installed || []).concat(imports.map((f) => ({ id: f.id, name: f.name })));
   fontKept = Array.isArray(loc.fontKept) ? loc.fontKept : null;
+  fontImportIds = imports.map((f) => f.id);
   await probeFonts();
   paintFontOptions();
+  paintPreview();                          // an imported face is only now registered
 }
 
 // The tab told us which language the original line is in (engineStatus).
 function noteTabLang(lang) {
-  const v = String(lang || "");
+  const F = self.YTDS_FONTS;
+  const v = F ? F.probeLang(lang) : String(lang || "");
   if (v === tabLang) return;
   tabLang = v;
+  paintPreview();                        // the original line's language just became known
   probeFonts().then(paintFontOptions);
 }
 
@@ -1096,10 +1238,26 @@ function initFontWatch() {
 // Folded by default; opening it sticks (storage.local, per machine — screen
 // habits are not preferences worth syncing). The ten controls then only occupy
 // the popup for people actually styling their lines.
+// A closed <select> changes value on every arrow key (Windows, Linux): a
+// keyboard user stepping down the list would fall off its last row — the
+// "manage…" row — straight into the settings page. While an arrow key is
+// down, that row is put back without leaving; picking it from the open
+// list (Enter) or with the mouse still goes.
+function guardArrows(sel) {
+  if (!sel) return;
+  sel.addEventListener("keydown", (e) => {
+    if (/^Arrow(Up|Down|Left|Right)$|^(Home|End|PageUp|PageDown)$/.test(e.key)) sel.dataset.arrowing = "1";
+  });
+  sel.addEventListener("keyup", () => { delete sel.dataset.arrowing; });
+  sel.addEventListener("blur", () => { delete sel.dataset.arrowing; });
+}
+function arrowing(sel) { return !!(sel && sel.dataset && sel.dataset.arrowing); }
+
 function setLineFold(open, persist) {
   $("lineCard").classList.toggle("open", !!open);
   $("lineFold").setAttribute("aria-expanded", String(!!open));
   $("lineBody").hidden = !open;
+  if (open && $("lineFont")) paintFontOptions();   // names were cut against a hidden select
   if (persist) {
     try { chrome.storage.local.set({ uiLineOpen: !!open }); } catch (_e) { /* ignore */ }
   }
@@ -1997,11 +2155,13 @@ function wire() {
   $("targetLang").addEventListener("change", (e) => {
     if (e.target.value === MANAGE) {
       e.target.value = state.targetLang;   // put it back before leaving
-      toOptions("#langs");
+      if (!arrowing(e.target)) toOptions("#langs");
       return;
     }
     setKey("targetLang", e.target.value);
+    probeFonts().then(paintFontOptions);   // the translation line's language just changed
   });
+  guardArrows($("targetLang"));
 
   // backend info tooltip
   $("backendInfo").addEventListener("click", () => {
@@ -2210,7 +2370,15 @@ function wire() {
 
   // per-line controls write to the ACTIVE line's keys
   $("lineShow").addEventListener("change", (e) => setKey(LINE[activeLine].show, e.target.checked));
-  $("lineFont").addEventListener("change", (e) => setKey(LINE[activeLine].font, e.target.value));
+  $("lineFont").addEventListener("change", (e) => {
+    if (e.target.value === FONT_MORE) {
+      e.target.value = state[LINE[activeLine].font];   // put it back before leaving
+      if (!arrowing(e.target)) toOptions("#fonts");
+      return;
+    }
+    setKey(LINE[activeLine].font, e.target.value);
+  });
+  guardArrows($("lineFont"));
   $("lineSize").addEventListener("input", (e) => {
     $("lineSizeV").textContent = e.target.value + "px";
     setKey(LINE[activeLine].size, +e.target.value);

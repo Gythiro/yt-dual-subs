@@ -1136,49 +1136,19 @@
     "message": "Altyazı yazı tipleri"
   },
   "fontsIntro": {
-    "message": "İki altyazı satırı için yazı tipleri. Açılır pencerede burada tuttuğunuz yazı tipleri sunulur; listedeki her yazı tipi bu bilgisayarda yüklüdür."
+    "message": "Tek liste her iki altyazı satırına da yeter; açılır pencere satır başına seçer. Listedeki her yazı tipi bu bilgisayarda yüklüdür."
   },
   "fontsKept": {
     "message": "Açılır pencerede gösterilenler"
   },
-  "fontsKeptHint": {
-    "message": "Bunlar, açılır pencerenin yazı tipi listesinde Sistem varsayılanından sonra görünür."
-  },
   "fontsMore": {
-    "message": "Bu bilgisayardaki diğer yazı tipleri"
-  },
-  "fontsMoreHint": {
-    "message": "+ ile ekleyin. Liste bu bilgisayardan okunur; önizlemek için yazı tipi adına basın."
+    "message": "Diğer yazı tipleri"
   },
   "fontsOnly": {
-    "message": "Yalnızca $LANG$ yazabilen yazı tipleri",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "Bu bilgisayarda $N$ yazı tipi var; $M$ tanesi $LANG$ yazabiliyor.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Yalnızca çizebilen yazı tipleri"
   },
   "fontsCounting": {
-    "message": "$LANG$ yazabilen yazı tipleri kontrol ediliyor…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Kontrol ediliyor…"
   },
   "fontsSearch": {
     "message": "Yazı tipi adı ara"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Önizleme: $NAME$ — denemek için herhangi bir yazı tipi adına basın",
+    "message": "Önizleme: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Bu tarayıcı, uzantının yüklü yazı tiplerini okumasına izin vermiyor; bu yüzden yalnızca Sistem varsayılanı seçilebilir."
   },
   "fontNoGlyphs": {
-    "message": "bu satırı yazamıyor"
+    "message": "bu satırı çizemez"
   },
   "fontNotHere": {
     "message": "bu bilgisayarda yok"
@@ -1227,7 +1197,7 @@
     "message": "Yazı tipi dosyası içe aktar…"
   },
   "fontsImportHint": {
-    "message": ".ttf / .otf / .woff / .woff2 desteklenir. Dosya tarayıcıya kopyalanır, bu yüzden orijinali sonradan taşınabilir; buradaki kaydı silmek o kopyayı siler."
+    "message": ".ttf / .otf / .woff / .woff2; dosya tarayıcıya kopyalanır."
   },
   "fontsImported": {
     "message": "$NAME$ içe aktarıldı",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "içe aktarıldı"
-  },
   "fontsImportDelete": {
     "message": "İçe aktarılan yazı tipini sil"
+  },
+  "fontsLangLabel": {
+    "message": "Kontrol et"
+  },
+  "fontsLangRecent": {
+    "message": "son izlenenler"
+  },
+  "fontMoreRow": {
+    "message": "Yazı tiplerini yönet…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ tanesi daha bu satırı çizemez",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Açılır pencerede yalnızca Sistem varsayılanı kaldı.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Tarayıcıya kaydedilemedi; tekrar deneyin.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "$NAME$ açılır pencereden kaldırıldı.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Bu listeyi atla",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "İçe aktarılan yazı tipi",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

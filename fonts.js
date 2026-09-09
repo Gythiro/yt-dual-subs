@@ -214,6 +214,11 @@
   // this computer (a value synced from another machine) falls through to the
   // same stack "System default" uses, so the line degrades to the default
   // rather than to whatever the browser feels like.
+  // css() is the only way a font name reaches CSS, and it is always assigned
+  // through the CSSOM (element.style.fontFamily). Never concatenate it into
+  // the text of a <style> element: quote() escapes quotes, backslashes and
+  // controls, which is everything a property value needs — and nothing a
+  // stylesheet's text needs ("</style>").
   function css(value) {
     if (isFont(value)) return quote(idOf(value)) + ", " + SYSTEM_STACK;
     const l = LEGACY[value];
@@ -309,7 +314,11 @@
   // true / false, or null when the rulers are not available — in which case
   // nothing may be filtered on the strength of this (an unknown is offered,
   // not hidden).
-  async function probe(ids, langs, doc) {
+  // `onProgress(done, total)`, when given, is called every few fonts and the
+  // loop hands the frame back before going on — a full list is a second on a
+  // Mac and five on Windows (each family's first touch loads it), and a page
+  // that is frozen for five seconds looks dead.
+  async function probe(ids, langs, doc, onProgress) {
     doc = doc || root.document;
     const out = Object.create(null);
     for (const id of ids) out[id] = Object.create(null);
@@ -335,7 +344,12 @@
     const ghost = "YTDS No Such Font 0";
     const gw = width(ghost, WIDE, LATIN), gn = width(ghost, NARROW, LATIN);
     const sane = Number.isFinite(gw) && Number.isFinite(gn) && Math.abs(gw - gn) > 1;
-    for (const id of ids) {
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      if (onProgress && i && i % 12 === 0) {
+        onProgress(i, ids.length);
+        await new Promise((r) => setTimeout(r, 0));
+      }
       for (const l of langs) {
         const text = PROBE[l];
         if (!text) { out[id][l] = null; continue; }
@@ -452,10 +466,13 @@
           if (tag(o) !== "name") continue;
           const off = u32(o + 4), comp = u32(o + 8), orig = u32(o + 12);
           const raw = u8.subarray(off, off + comp);
-          if (comp >= orig) { nameTable = raw; break; }
+          // stored uncompressed: origLength is the table's real length
+          if (comp >= orig) { nameTable = raw.subarray(0, orig); break; }
+          // A name table is kilobytes; a header may claim anything, and a
+          // deflate stream may inflate to anything. Both are capped.
+          if (orig > NAME_MAX) break;
           const ds = new root.DecompressionStream("deflate");
-          const out = new Response(new Blob([raw]).stream().pipeThrough(ds));
-          nameTable = new Uint8Array(await out.arrayBuffer());
+          nameTable = await readUpTo(new Blob([raw]).stream().pipeThrough(ds), NAME_MAX);
           break;
         }
       }
@@ -465,6 +482,7 @@
       let best = "", bestScore = -1;
       for (let i = 0; i < count; i++) {
         const r = 6 + i * 12;
+        if (r + 12 > nv.byteLength) break;   // a cut-off record: keep what was read
         const plat = nv.getUint16(r), enc = nv.getUint16(r + 2), lang = nv.getUint16(r + 4), nid = nv.getUint16(r + 6);
         const len = nv.getUint16(r + 8), off = nv.getUint16(r + 10);
         if (nid !== 1 && nid !== 16) continue;
@@ -500,6 +518,29 @@
     return u8;
   }
 
+  const NAME_MAX = 4 << 20;
+  async function readUpTo(stream, cap) {
+    const reader = stream.getReader();
+    const parts = [];
+    let total = 0;
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      total += value.length;
+      if (total > cap) { try { await reader.cancel(); } catch (_e) { /* ignore */ } return null; }
+      parts.push(value);
+    }
+    const out = new Uint8Array(total);
+    let o = 0;
+    for (const p of parts) { out.set(p, o); o += p.length; }
+    return out;
+  }
+
+  function mintId() {
+    try { return root.crypto.randomUUID().replace(/-/g, "").slice(0, 16); }
+    catch (_e) { return Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
+  }
+
   // Import one File. Resolves {ok:true, id, name} or {ok:false, why} with
   // why = "kind" (not a font file) | "size" (over IMPORT_MAX) | "store".
   async function importFile(file) {
@@ -509,9 +550,19 @@
     const u8 = new Uint8Array(buf);
     const kind = u8.length > 44 ? sniff(u8) : "";
     if (!kind) return { ok: false, why: "kind" };
+    // The first bytes say "font"; the browser says whether it can use it.
+    // A file with the right magic and broken tables would otherwise be
+    // stored and then fall through to the system font without a word.
+    if (typeof root.FontFace === "function") {
+      try { await new root.FontFace("YTDS-Check", buf).load(); } catch (_e) { return { ok: false, why: "kind" }; }
+    }
     const stem = String(file.name || "").replace(/\.[A-Za-z0-9]+$/, "").trim();
     const name = (await familyOf(u8, kind)) || stem || "Font";
-    const id = IMPORT_PREFIX + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    // The same file again is the same font: hand back the copy already kept
+    // rather than a twin row with the same name.
+    const twin = (await imports()).find((f) => f && f.name === name && f.size === u8.length);
+    if (twin) return { ok: true, id: twin.id, name: twin.name, again: true };
+    const id = IMPORT_PREFIX + mintId();
     try {
       await importPut({ id, name, kind, size: u8.length, added: Date.now(), bytes: buf });
     } catch (_e) { return { ok: false, why: "store" }; }
@@ -555,14 +606,75 @@
     if (isFont(value)) {
       const id = idOf(value);
       const hit = (installed || []).find((f) => f.id === id);
-      return hit ? hit.name : id;
+      if (hit) return hit.name;
+      // An import from another computer (or one deleted here): its record
+      // is not here, its minted id would mean nothing to the reader.
+      return isImport(id) ? ((tr && tr("fontImported", "Imported font")) || "Imported font") : id;
     }
     const l = LEGACY[value] || LEGACY.system;
     return (l.i18n && tr && tr(l.i18n, l.label)) || l.label;
   }
 
+  // The mirror's sample sentence ("The quick brown fox") for the languages
+  // that ship no locale of their own — one line of real text per language,
+  // so a font can be judged on words, not on the language's name alone.
+  // Written once here, not once per interface language.
+  const SAMPLE = {
+    ar: "الثعلب البني السريع",
+    hi: "तेज़ भूरी लोमड़ी",
+    id: "Rubah cokelat gesit",
+    nl: "De snelle bruine vos",
+    uk: "Швидка коричнева лисиця",
+    sv: "Den snabba bruna räven",
+    da: "Den hurtige brune ræv",
+    no: "Den kvikke brune reven",
+    el: "Η γρήγορη καφέ αλεπού",
+    hu: "A gyors barna róka",
+    bg: "Бързата кафява лисица",
+    sk: "Rýchla hnedá líška",
+    sl: "Hitra rjava lisica",
+    hr: "Brza smeđa lisica",
+    sr: "Брза смеђа лисица",
+    lt: "Greitoji rudoji lapė",
+    lv: "Ātrā brūnā lapsa",
+    iw: "השועל החום המהיר",
+    fa: "روباه قهوه‌ای سریع",
+    bn: "দ্রুত বাদামি শিয়াল",
+    ta: "விரைவான பழுப்பு நரி",
+    te: "వేగవంతమైన గోధుమ నక్క",
+    mr: "चपळ तपकिरी कोल्हा",
+    ur: "تیز بھوری لومڑی",
+    ms: "Rubah perang pantas",
+    fil: "Ang mabilis na kayumangging soro",
+    sw: "Mbweha kahawia mwepesi",
+    af: "Die vinnige bruin vos",
+    ca: "La ràpida guineu marró",
+    eu: "Azeri marroi azkarra",
+    is: "Fljóti brúni refurinn",
+  };
+
+  // A YouTube track tag ("zh-Hans", "zh-Hant", "en-US", "pt-BR", "he",
+  // "nb", "tl"…) to the key the probe strings and the language table use,
+  // or "" when there is none. An unknown language is not measured — and so
+  // not hidden — rather than measured as some other one.
+  const LANG_ALIAS = { he: "iw", nb: "no", nn: "no", tl: "fil", in: "id" };
+  function probeLang(tag) {
+    const v = String(tag || "").trim();
+    if (!v) return "";
+    let lang = "", script = "", region = "";
+    try {
+      const L = new Intl.Locale(v);
+      lang = String(L.language || "").toLowerCase();
+      script = String(L.script || "");
+      region = String(L.region || "").toUpperCase();
+    } catch (_e) { lang = v.toLowerCase().split(/[-_]/)[0]; }
+    if (lang === "zh") return (script === "Hant" || /^(TW|HK|MO)$/.test(region)) ? "zh-TW" : "zh-CN";
+    lang = LANG_ALIAS[lang] || lang;
+    return PROBE[lang] ? lang : "";
+  }
+
   root.YTDS_FONTS = {
-    PROBE, SCRIPT, DEFAULT_ORDER, LEGACY, ALIASES,
+    PROBE, SCRIPT, DEFAULT_ORDER, LEGACY, ALIASES, SAMPLE, probeLang,
     scriptOf, isFont, idOf, valueOf, quote, css, list, defaults, probe, label,
     RULERS: { wide: WIDE, narrow: NARROW },
     IMPORT_PREFIX, IMPORT_MAX, isImport, sniff, familyOf, b64, unb64,

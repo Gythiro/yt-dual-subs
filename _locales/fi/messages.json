@@ -1136,49 +1136,19 @@
     "message": "Tekstitysfontit"
   },
   "fontsIntro": {
-    "message": "Fontit kahdelle tekstitysriville. Ponnahdusikkuna näyttää täällä säilyttämäsi fontit, ja kaikki luettelossa olevat on asennettu tälle tietokoneelle."
+    "message": "Yksi lista palvelee molempia tekstitysrivejä; ponnahdusikkuna valitsee rivikohtaisesti. Jokainen listattu fontti on asennettu tälle tietokoneelle."
   },
   "fontsKept": {
     "message": "Näkyvät ponnahdusikkunassa"
   },
-  "fontsKeptHint": {
-    "message": "Nämä näkyvät ponnahdusikkunan fonttiluettelossa Järjestelmän oletuksen jälkeen."
-  },
   "fontsMore": {
-    "message": "Muut fontit tällä tietokoneella"
-  },
-  "fontsMoreHint": {
-    "message": "Lisää painamalla +. Luettelo luetaan tältä tietokoneelta; esikatsele painamalla fontin nimeä."
+    "message": "Muut fontit"
   },
   "fontsOnly": {
-    "message": "Vain fontit, jotka voivat piirtää $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ fonttia tällä tietokoneella; $M$ niistä voi piirtää $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Vain fontit, jotka voivat piirtää sen"
   },
   "fontsCounting": {
-    "message": "Tarkistetaan, mitkä fontit voivat piirtää $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Tarkistetaan…"
   },
   "fontsSearch": {
     "message": "Hae fonttien nimiä"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Esikatselu: $NAME$ — kokeile painamalla mitä tahansa fontin nimeä",
+    "message": "Esikatselu: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1227,7 +1197,7 @@
     "message": "Tuo fonttitiedosto…"
   },
   "fontsImportHint": {
-    "message": "Tukee tiedostoja .ttf / .otf / .woff / .woff2. Tiedosto kopioidaan selaimeen, joten alkuperäisen voi siirtää myöhemmin; merkinnän poistaminen täältä poistaa kopion."
+    "message": ".ttf / .otf / .woff / .woff2; tiedosto kopioidaan selaimeen."
   },
   "fontsImported": {
     "message": "Tuotu $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "tuotu"
-  },
   "fontsImportDelete": {
     "message": "Poista tuotu fontti"
+  },
+  "fontsLangLabel": {
+    "message": "Tarkista"
+  },
+  "fontsLangRecent": {
+    "message": "viimeksi katsotut"
+  },
+  "fontMoreRow": {
+    "message": "Hallitse fontteja…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ muuta ei voi piirtää tätä riviä",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Ponnahdusikkunaan jää vain järjestelmän oletus.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Ei voitu tallentaa selaimeen. Yritä uudelleen.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Poistettiin $NAME$ ponnahdusikkunasta.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Ohita tämä lista",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Tuotu fontti",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

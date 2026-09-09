@@ -1136,49 +1136,19 @@
     "message": "Subtiitrite fondid"
   },
   "fontsIntro": {
-    "message": "Fondid kahele subtiitrireale. Hüpikaken pakub siin hoitavaid fonte ja iga loendis olev font on sellele arvutile installitud."
+    "message": "Üks loend kehtib mõlema subtiitrirea kohta; hüpikaknas saab valida iga rea jaoks eraldi. Kõik loetletud fondid on selles arvutis installitud."
   },
   "fontsKept": {
     "message": "Kuvatakse hüpikaknas"
   },
-  "fontsKeptHint": {
-    "message": "Need ilmuvad hüpikakna fondiloendis pärast süsteemi vaikefonti."
-  },
   "fontsMore": {
-    "message": "Muud fondid sellel arvutil"
-  },
-  "fontsMoreHint": {
-    "message": "Lisa nupuga +. Loend loetakse sellest arvutist; eelvaateks vajuta fondi nimele."
+    "message": "Muud fondid"
   },
   "fontsOnly": {
-    "message": "Ainult fondid, mis suudavad kuvada $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "Sellel arvutil on $N$ fonti; $M$ neist suudab kuvada $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Ainult fondid, mis suudavad seda kuvada"
   },
   "fontsCounting": {
-    "message": "Kontrollin, millised fondid suudavad kuvada $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Kontrollin…"
   },
   "fontsSearch": {
     "message": "Otsi fondinimesid"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Eelvaade: $NAME$ — proovimiseks vajuta mis tahes fondi nimele",
+    "message": "Eelvaade: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "See brauser ei luba laiendusel installitud fonte lugeda, seega saab valida ainult süsteemi vaikefondi."
   },
   "fontNoGlyphs": {
-    "message": "ei suuda seda rida kuvada"
+    "message": "ei saa seda rida kuvada"
   },
   "fontNotHere": {
     "message": "pole sellel arvutil"
@@ -1227,7 +1197,7 @@
     "message": "Impordi fondifail…"
   },
   "fontsImportHint": {
-    "message": "Toetab .ttf / .otf / .woff / .woff2. Fail kopeeritakse brauserisse, seega originaali võib hiljem teisaldada; kirje kustutamine siit kustutab ka selle koopia."
+    "message": ".ttf / .otf / .woff / .woff2; fail kopeeritakse brauserisse."
   },
   "fontsImported": {
     "message": "Imporditud $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "imporditud"
-  },
   "fontsImportDelete": {
     "message": "Kustuta imporditud font"
+  },
+  "fontsLangLabel": {
+    "message": "Kontrolli"
+  },
+  "fontsLangRecent": {
+    "message": "hiljuti vaadatud"
+  },
+  "fontMoreRow": {
+    "message": "Halda fonte…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ veel ei saa seda rida kuvada",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Hüpikaknasse jääb ainult süsteemi vaikefont.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Ei õnnestunud seda brauserisse salvestada; proovi uuesti.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Eemaldatud $NAME$ hüpikaknast.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Jäta loend vahele",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Imporditud font",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

@@ -47,7 +47,7 @@ function uiLang() {
 }
 
 let state = { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN",
-              ttsProvider: "local-speech", ttsVoice: "" };
+              ttsProvider: "local-speech", ttsVoice: "", origFont: "system", transFont: "system" };
 // Which provider's panel is on screen. Deliberately NOT state.byoProvider:
 // clicking a name in the list means "let me set this one up", and it used to
 // switch the whole extension over to it on the spot — even with no key saved,
@@ -142,6 +142,10 @@ function applyI18n() {
   document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
     const s = t(el.dataset.i18nPh, "");
     if (s) el.setAttribute("placeholder", s);
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    const s = t(el.dataset.i18nTitle, "");
+    if (s) el.setAttribute("title", s);
   });
   const title = t("optTitle", "翻译服务设置");
   if (title) document.title = title + " — " + t("extName", "Dual Subtitles for YouTube™");
@@ -1104,18 +1108,37 @@ let fontCov = Object.create(null);  // lang -> {id: true|false|null}
 let fontPreviewId = "";      // "" = system default
 let fontsInit = 0;           // 0 not yet, 1 waiting for state, 2 running/done
 let fontsWanted = false;
+let fontLangsSeen = [];      // original languages of recent videos (content.js writes storage.local)
+let fontCheckLang = "";      // the language this pane is looking at; "" = the translation language
+let fontProbing = "";        // the language being measured right now
+let fontProbingAll = false;  // …for the whole list (the switch), not one tried font
+const fontProbeTries = Object.create(null);
 
 function fontTargetLang() { return String(state.targetLang || "zh-CN"); }
-function fontLangName() {
-  const info = LANGS && LANGS.get(fontTargetLang());
-  return info ? info.native : fontTargetLang();
+function fontLangName(code) {
+  const info = LANGS && LANGS.get(code);
+  return info ? info.native : String(code || "");
 }
+// The pane looks at ONE language at a time — the dropdown under the mirror.
+// It starts on the language of the videos the reader watches (the most
+// recent original language; English when none is known), and the mirror's
+// white line, the switch and the count all follow it. One control, one
+// subject (settled 2026-09-07).
+function recentLang() {
+  const target = fontTargetLang();
+  return fontLangsSeen.find((c) => c !== target && LANGS && LANGS.get(c)) || "";
+}
+function checkLang() { return fontCheckLang || recentLang() || "en"; }
+function whiteLang() { return checkLang(); }
 
 // Installed fonts, then the imported ones (tagged), in one list — the
 // pickers do not care where a font came from, only that it is here.
+// The installed list may be unavailable (the browser refused fontSettings):
+// the pane then says so and still lists the reader's imports, which need
+// no permission.
 function allFonts() {
-  if (!fontsInstalled) return null;
-  return fontsInstalled.concat(fontImports.map((f) => ({ id: f.id, name: f.name, imported: true })));
+  if (!fontsInstalled && !fontImports.length) return null;
+  return (fontsInstalled || []).concat(fontImports.map((f) => ({ id: f.id, name: f.name, imported: true, size: f.size })));
 }
 
 function keptFontIds() {
@@ -1123,10 +1146,17 @@ function keptFontIds() {
   const fonts = allFonts();
   if (!F || !fonts) return [];
   const have = new Set(fonts.map((f) => f.id));
-  if (Array.isArray(fontKept)) return fontKept.filter((id) => have.has(id));
-  let ui = "";
-  try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
-  return F.defaults(fontsInstalled, [fontTargetLang(), ui, "en"]);
+  let ids;
+  if (Array.isArray(fontKept)) ids = fontKept.filter((id) => have.has(id));
+  else {
+    let ui = "";
+    try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
+    ids = fontsInstalled ? F.defaults(fontsInstalled, [fontTargetLang(), ui, "en"]) : [];
+  }
+  // An imported font is in the popup's list for as long as it exists —
+  // whoever imported it meant to use it; taking it out is deleting it.
+  for (const f of fontImports) if (ids.indexOf(f.id) < 0) ids.push(f.id);
+  return ids;
 }
 
 function persistFonts() {
@@ -1142,214 +1172,414 @@ function showFontMsg(text, kind) {
   el.hidden = !text;
 }
 
-// Which installed fonts can draw `lang`. Measured once per list per
-// language and kept in storage.local under the list's signature, so the
-// second visit costs nothing; a run the rulers could not serve (null) is
-// not cached, so it is measured again next time instead of sticking.
-async function probeFontsFor(lang) {
+// Which fonts can draw `lang`. NOT run on entry: browsing, searching and
+// + / × need no measurement, and the full list costs about a second on a
+// Mac and five on Windows. It runs when the reader asks a question that
+// needs it — ticks "only fonts that can draw…" or picks a language — in
+// slices that hand the frame back, with the count line showing progress.
+// Cached in storage.local under the list's signature, so the second time is
+// free; a run the rulers could not serve (null) is not cached.
+// One run at a time: a language picked while another is being measured
+// waits its turn, so the progress in the heading is always the run it
+// names, and two runs never race for the rulers.
+let fontProbeChain = Promise.resolve();
+function probeFontsFor(lang, only) {
+  const run = fontProbeChain.then(() => probeFontsNow(lang, only));
+  fontProbeChain = run.catch(() => {});
+  return run;
+}
+async function probeFontsNow(lang, only) {
   const F = self.YTDS_FONTS;
   const fonts = allFonts();
-  if (!F || !fonts || fontCov[lang]) return;
-  // An imported font has to be registered on this page before it can be
-  // measured like the others.
-  await Promise.all(fontImports.map((f) => F.ensureImported(document, f.id)));
+  if (!F || !fonts || fontProbing === lang) return;
   const ids = fonts.map((f) => f.id);
   const sig = ids.join("\n");
-  const cached = await new Promise((res) => {
-    try { chrome.storage.local.get({ fontCov: null }, (g) => res(g && g.fontCov)); }
-    catch (_e) { res(null); }
-  });
-  if (cached && cached.sig === sig && cached.cov && cached.cov[lang]) {
-    fontCov[lang] = cached.cov[lang];
-    return;
+  // A font's verdict for a language does not depend on what else is
+  // installed, so verdicts are kept per id: a list that changed (an import
+  // added or removed, a font installed) costs measuring the new ids only,
+  // and the rows already judged keep their state meanwhile — no flash of
+  // the whole list while one font is measured.
+  const known = fontCov[lang] || Object.create(null);
+  if (!fontCov[lang]) {
+    const cached = await new Promise((res) => {
+      try { chrome.storage.local.get({ fontCov: null }, (g) => res(g && g.fontCov)); }
+      catch (_e) { res(null); }
+    });
+    const old = cached && cached.cov && cached.cov[lang];
+    if (old) for (const id of ids) if (id in old && old[id] !== null) known[id] = old[id];
   }
-  paintFontCount(true);
-  const r = await F.probe(ids, [lang]);
-  const map = Object.create(null);
+  const todo = (only ? ids.filter((id) => only.indexOf(id) >= 0) : ids).filter((id) => !(id in known));
+  if (!todo.length) { fontCov[lang] = known; return; }
+  // An imported font has to be registered on this page before it can be
+  // measured like the others.
+  await Promise.all(fontImports.filter((f) => todo.indexOf(f.id) >= 0).map((f) => F.ensureImported(document, f.id)));
+  fontProbing = lang;
+  fontProbingAll = !only;
+  fontProbeStep = null;
+  if (!only) {
+    paintFontCount(0, todo.length);
+    renderFonts();   // the column shows "checking…" instead of the unjudged list
+  }
+  const r = await F.probe(todo, [lang], document, (done, total) => { if (fontProbingAll) paintFontCount(done, total); });
+  fontProbing = "";
+  fontProbingAll = false;
+  fontProbeStep = null;
   let unknown = false;
-  for (const id of ids) {
-    map[id] = r[id] ? r[id][lang] : null;
-    if (map[id] === null) unknown = true;
+  for (const id of todo) {
+    const v = r[id] ? r[id][lang] : null;
+    if (v === null) unknown = true; else known[id] = v;
   }
   if (unknown) {
     // The rulers were not there for this run (fonts.js says so with null):
-    // not "0 fonts can draw it", just not measured yet. Leave the count on
-    // "checking…" and try again shortly, a few times, before giving up.
+    // not "0 fonts can draw it", just not measured yet. Try again shortly,
+    // a few times, before giving up.
     fontProbeTries[lang] = (fontProbeTries[lang] || 0) + 1;
     if (fontProbeTries[lang] <= 4) setTimeout(() => probeFontsFor(lang).then(renderFonts), 600);
+    paintFontCount();
     return;
   }
-  fontCov[lang] = map;
-  const cov = (cached && cached.sig === sig && cached.cov) || {};
-  cov[lang] = map;
-  try { chrome.storage.local.set({ fontCov: { sig, cov } }); } catch (_e) { /* ignore */ }
+  fontCov[lang] = known;
+  fontProbeTries[lang] = 0;   // the rulers are there: a later miss gets its retries again
+  // Written back merged with whatever is there (the popup keeps the same
+  // cache, other languages measured in earlier sessions too), pruned to
+  // the ids that still exist.
+  try {
+    chrome.storage.local.get({ fontCov: null }, (g) => {
+      const cov = Object.assign(Object.create(null), (g && g.fontCov && g.fontCov.cov) || {});
+      for (const l of Object.keys(fontCov)) {
+        const m = Object.create(null);
+        for (const id of ids) if (id in fontCov[l]) m[id] = fontCov[l][id];
+        cov[l] = m;
+      }
+      chrome.storage.local.set({ fontCov: { sig, cov } });
+    });
+  } catch (_e) { /* ignore */ }
 }
-const fontProbeTries = Object.create(null);
 
 function fontMatches(f, q) {
   q = String(q || "").trim().toLowerCase();
   return !q || f.name.toLowerCase().indexOf(q) >= 0 || f.id.toLowerCase().indexOf(q) >= 0;
 }
 
+function sizeText(bytes) {
+  const n = Number(bytes) || 0;
+  return n >= 1048576 ? Math.round(n / 1048576) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB";
+}
+
+// A row: the name in its own font (the list previews itself; the id is the
+// CSS name, the label the display name — they differ on a Chinese Windows,
+// and only the label is shown) and one control: + to keep, × to stop
+// keeping, or, for a font the reader imported, delete (the copy goes with
+// it). One shape for every row, as in the language list above.
 function fontRow(f, kept) {
   const F = self.YTDS_FONTS;
   const li = document.createElement("li");
-  li.className = "olang ofont";
+  li.className = "olang ofont" + (f.id === fontPreviewId ? " trying" : "");
   li.dataset.id = f.id;
-  if (f.id === fontPreviewId) li.classList.add("on");
 
-  // The name, in the font itself: the row is its own preview. The CSS name is
-  // the id; the label is the display name (they differ on a Chinese Windows).
   const name = document.createElement("button");
   name.type = "button";
   name.className = "ofont-try";
   name.style.fontFamily = F.css(F.valueOf(f.id));
   name.textContent = f.name;
-  if (f.imported) {
-    const tag = document.createElement("span");
-    tag.className = "ofont-tag";
-    tag.textContent = t("fontsImportedTag", "已导入");
-    name.appendChild(tag);
-  } else if (f.name !== f.id) {
-    const id = document.createElement("span");
-    id.className = "ofont-id";
-    id.textContent = f.id;
-    name.appendChild(id);
-  }
   const tryLabel = t("fontsTryAria", "预览");
   name.setAttribute("aria-label", tryLabel + " " + f.name);
+  name.setAttribute("aria-pressed", String(f.id === fontPreviewId));
   name.title = tryLabel;
   name.addEventListener("click", () => previewFont(f.id));
+  li.appendChild(name);
+  // Where a verdict matters and is known, it is said here in the popup's
+  // words: on a kept row once the reader has asked (the switch), and on
+  // the row being tried, whose mirror line would otherwise hide the miss
+  // behind the system font's fallback glyphs.
+  const note = document.createElement("span");
+  note.className = "ofont-note";
+  note.textContent = fontNoteFor(f.id, kept);
+  note.title = note.textContent;   // the whole note, when the row is too narrow for it
+  li.appendChild(note);
 
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "olang-btn" + (kept ? " remove" : " add");
-  btn.textContent = kept ? "×" : "+";
-  const label = kept ? t("langsRemoveAria", "移除") : t("langsAddAria", "添加");
-  btn.setAttribute("aria-label", label + " " + f.name);
-  btn.title = label;
-  btn.addEventListener("click", () => (kept ? removeFont(f.id) : addFont(f.id)));
-
-  li.appendChild(name);
-  li.appendChild(btn);
   if (f.imported) {
-    // Deleting the import removes the copy; the font is then simply not here.
-    const drop = document.createElement("button");
-    drop.type = "button";
-    drop.className = "olang-btn drop";
-    drop.textContent = "🗑";
+    // Same stroke system as the other icons (the spec bars emoji as icons).
+    btn.className = "olang-btn drop";
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
     const dl = t("fontsImportDelete", "删除导入的字体");
-    drop.setAttribute("aria-label", dl + " " + f.name);
-    drop.title = dl;
-    drop.addEventListener("click", () => dropImport(f.id));
-    li.appendChild(drop);
+    btn.setAttribute("aria-label", dl + " " + f.name);
+    btn.title = dl;
+    btn.addEventListener("click", () => dropImport(f.id));
+  } else {
+    btn.className = "olang-btn" + (kept ? " remove" : " add");
+    btn.textContent = kept ? "×" : "+";
+    const label = kept ? t("langsRemoveAria", "移除") : t("langsAddAria", "添加");
+    btn.setAttribute("aria-label", label + " " + f.name);
+    btn.title = label;
+    btn.addEventListener("click", () => (kept ? removeFont(f.id) : addFont(f.id)));
   }
+  li.appendChild(btn);
   return li;
 }
 
 function renderFonts() {
   const keptEl = $("fontKept"), moreEl = $("fontMore");
   if (!keptEl || !moreEl) return;
+  const F = self.YTDS_FONTS;
   const unavailable = !fontsInstalled;
   const un = $("fontUnavailable");
   if (un) un.hidden = !unavailable;
+  // Whoever is on a button in these lists keeps their place across the
+  // rebuild: the same column, the same row (or the last one), so a keyboard
+  // user can press + or × down a list without being thrown back to the top.
+  const focus = (() => {
+    const a = document.activeElement;
+    const li = a && a.closest && a.closest("#fontKept .olang, #fontMore .olang");
+    if (!li) return null;
+    const list = li.parentElement;
+    return { list: list.id, index: [...list.children].indexOf(li), name: a.classList.contains("ofont-try") };
+  })();
   keptEl.textContent = "";
   moreEl.textContent = "";
-  paintFontCount(false);
-  if (unavailable) return;
-  const lang = fontTargetLang();
+  if (unavailable && !fontImports.length) { paintFontCount(); return; }
+  const lang = checkLang();
   const cov = fontCov[lang] || null;
   const onlyBox = $("fontOnly");
-  const only = !!(onlyBox && onlyBox.checked && cov);
+  const only = !!(onlyBox && onlyBox.checked);
   const q = $("fontSearch") ? $("fontSearch").value : "";
   const fonts = allFonts();
+  // The switch is the question that needs the measurement. Until every
+  // font has its verdict, the ones without one stay listed.
+  // (a run that came back empty — no rulers — schedules its own retries,
+  // a few; this only asks the first time, or again after a press)
+  if (only && fonts.some((f) => !cov || !(f.id in cov)) && fontProbing !== lang && !(fontProbeTries[lang] > 0)) {
+    probeFontsFor(lang).then(renderFonts);
+  }
   const byId = new Map(fonts.map((f) => [f.id, f]));
   const kept = keptFontIds();
+  // An imported face has to be registered on this page to draw its own
+  // name in the list (once; ensureImported remembers).
+  if (F) for (const f of fontImports) F.ensureImported(document, f.id);
+  // The kept column is the popup's list, whole: the switch never thins it
+  // (a kept row that cannot draw the language looked at says so instead,
+  // in the popup's words). The search box looks here too.
   for (const id of kept) {
     const f = byId.get(id);
-    if (!f || !fontMatches(f, q)) continue;
-    if (only && cov[id] === false) continue;
-    keptEl.appendChild(fontRow(f, true));
+    if (f && fontMatches(f, q)) keptEl.appendChild(fontRow(f, true));
+  }
+  // Emptied to nothing is allowed (the popup still has System default);
+  // say so, as the language list says "all added" on its side — unless it
+  // is the search that left nothing.
+  if (!keptEl.childElementCount) {
+    const li = document.createElement("li");
+    li.className = "olang-empty";
+    li.textContent = (q && kept.length) ? t("fontsNoMatch", "没有匹配的字体。") : t("fontsKeptEmpty", "弹窗里只剩「系统默认」。");
+    keptEl.appendChild(li);
   }
   const keptSet = new Set(kept);
+  // Alphabetical, always: an order the reader cannot see the rule of reads
+  // as broken. The switch narrows; it does not reorder.
   let rest = fonts.filter((f) => !keptSet.has(f.id) && fontMatches(f, q));
-  if (only) rest = rest.filter((f) => cov[f.id] !== false);
-  else if (cov) {
-    // Able first, then the rest, each alphabetical — so the switch is a
-    // convenience, not the only way to find a font that can draw the text.
-    rest = rest.slice().sort((a, b) =>
-      ((cov[b.id] === true) - (cov[a.id] === true)) || a.name.localeCompare(b.name));
-  }
+  // While the measurement runs, the switch shows what is known to be able
+  // rather than the whole list pretending to be the answer.
+  const measuring = only && fontProbing === lang && fontProbingAll;
+  if (only) rest = rest.filter((f) => cov && (measuring ? cov[f.id] === true : cov[f.id] !== false));
   if (!rest.length) {
     const li = document.createElement("li");
     li.className = "olang-empty";
-    li.textContent = q ? t("fontsNoMatch", "没有匹配的字体。") : t("fontsAllAdded", "全部字体都已加入。");
+    // The switch is a filter like the search box: nothing left is "no
+    // match", not "all added" — and nothing yet, while measuring.
+    li.textContent = measuring ? t("fontsCounting", "检查中…")
+      : (q || only) ? t("fontsNoMatch", "没有匹配的字体。") : t("fontsAllAdded", "全部字体都已加入。");
     moreEl.appendChild(li);
   }
   for (const f of rest) moreEl.appendChild(fontRow(f, false));
-}
-
-function paintFontCount(checking) {
-  const el = $("fontCount");
-  if (!el) return;
-  if (!fontsInstalled) { el.textContent = ""; return; }
-  const lang = fontTargetLang();
-  const cov = fontCov[lang];
-  const name = fontLangName();
-  if (checking || !cov) {
-    el.textContent = tsub("fontsCounting", [name], "正在看哪些字体能显示「" + name + "」…");
-    return;
+  fontMoreShown = rest.length;
+  paintFontCount();
+  // A font being tried whose row the switch or the search just took away
+  // would leave the mirror on a font nobody can see or cancel: the try ends.
+  if (fontPreviewId && !document.querySelector('#secFonts .olang[data-id="' + CSS.escape(fontPreviewId) + '"]')) previewFont("");
+  // The row that just moved (added, removed) is brought into view.
+  if (fontFlashId) {
+    const li = document.querySelector('#secFonts .olang[data-id="' + CSS.escape(fontFlashId) + '"]');
+    if (li && li.scrollIntoView) li.scrollIntoView({ block: "nearest" });
+    fontFlashId = "";
   }
-  const fonts = allFonts();
-  const n = fonts.length;
-  const m = fonts.filter((f) => cov[f.id] === true).length;
-  el.textContent = tsub("fontsCount", [String(n), String(m), name],
-    "这台电脑上有 " + n + " 个字体，能显示「" + name + "」的有 " + m + " 个。");
+  if (focus) {
+    const list = $(focus.list);
+    const rows = list ? [...list.querySelectorAll(".olang")] : [];
+    const row = rows[Math.min(focus.index, rows.length - 1)];
+    const el = row ? row.querySelector(focus.name ? ".ofont-try" : ".olang-btn") : null;
+    if (el) el.focus();
+    else if (focus.list === "fontMore" && $("fontSearch")) $("fontSearch").focus();
+    else if ($("fontImportBtn")) $("fontImportBtn").focus();
+  }
 }
 
-function paintFontOnlyLabel() {
-  const el = $("fontOnlyLabel");
-  if (!el) return;
-  const name = fontLangName();
-  el.textContent = tsub("fontsOnly", [name], "只看能显示「" + name + "」的");
+// The one number on this pane, in the right column's heading: how many rows
+// it shows; while measuring, the progress instead.
+let fontMoreShown = 0;
+let fontFlashId = "";        // the row a press just moved; scrolled into view on the next paint
+let fontProbeStep = null;    // [done, total] of the run in progress, so a repaint keeps it
+function fontNoteFor(id, kept) {
+  const cov = fontCov[checkLang()] || null;
+  if (!cov || cov[id] !== false) return "";
+  const only = !!($("fontOnly") && $("fontOnly").checked);
+  return ((kept && only) || id === fontPreviewId) ? "· " + t("fontNoGlyphs", "显示不了") : "";
 }
-
-function previewFont(id) {
-  const F = self.YTDS_FONTS;
-  if (!F) return;
-  fontPreviewId = id || "";
-  const css = F.css(id ? F.valueOf(id) : "system");
-  const o = $("fontPrevOrig"), tr = $("fontPrevTrans");
-  if (o) o.style.fontFamily = css;
-  if (tr) { tr.style.fontFamily = css; tr.setAttribute("lang", fontTargetLang()); }
-  if (F.isImport(id)) F.ensureImported(document, id);
-  const name = id ? F.label(F.valueOf(id), allFonts(), t) : t("fontSystem", "系统默认");
-  const nm = $("fontPrevName");
-  if (nm) nm.textContent = tsub("fontsPreview", [name], "预览：" + name + " · 点任意字体名试试");
-  document.querySelectorAll("#secFonts .olang[data-id]").forEach((li) => {
-    li.classList.toggle("on", li.dataset.id === fontPreviewId);
+function paintFontNotes() {
+  document.querySelectorAll("#fontKept .olang[data-id], #fontMore .olang[data-id]").forEach((li) => {
+    const n = li.querySelector(".ofont-note");
+    if (n) { n.textContent = fontNoteFor(li.dataset.id, li.parentElement.id === "fontKept"); n.title = n.textContent; }
   });
 }
 
-// The translation line of the preview should be IN the translation language:
-// a Latin sample under a Chinese font shows nothing about the font. The
-// sample sentence comes from that language's own packaged locale when there
-// is one; otherwise the language's own name, which is at least its script.
+function paintFontCount(done, total) {
+  const el = $("fontMoreN");
+  if (!el) return;
+  if (!fontsInstalled) { el.textContent = ""; return; }
+  if (fontProbing === checkLang() && fontProbingAll) {
+    if (total) fontProbeStep = [done, total];
+    const st = fontProbeStep;
+    el.textContent = t("fontsCounting", "正在看…") + (st ? " " + st[0] + "/" + st[1] : "");
+    return;
+  }
+  el.textContent = "(" + fontMoreShown + ")";
+}
+
+function paintFontOnlyLabel() { /* the switch's label is static now */ }
+
+// The language dropdown: the translation language first, then the original
+// languages of recently watched videos, then everything else. Names come
+// from the language table — the same ones the popup shows.
+function paintFontLangSel() {
+  const sel = $("fontLang");
+  if (!sel || !LANGS) return;
+  const target = fontTargetLang();
+  const recent = fontLangsSeen.filter((c) => c !== target && LANGS.get(c));
+  sel.textContent = "";
+  const add = (code, suffix) => {
+    const o = document.createElement("option");
+    o.value = code;
+    o.textContent = fontLangName(code) + (suffix ? " · " + suffix : "");
+    sel.appendChild(o);
+  };
+  add(target, "");
+  for (const c of recent) add(c, t("fontsLangRecent", "最近看过"));
+  if (recent.length) {
+    const sep = document.createElement("option");
+    sep.disabled = true;
+    sep.textContent = "──────";
+    sel.appendChild(sep);
+  }
+  const seen = new Set([target].concat(recent));
+  for (const info of LANGS.all()) if (!seen.has(info.code)) add(info.code, "");
+  sel.value = checkLang();
+  if (!sel.value) { fontCheckLang = ""; sel.value = checkLang(); }
+}
+
+function onFontLangChange() {
+  const sel = $("fontLang");
+  if (!sel) return;
+  fontCheckLang = sel.value;
+  paintFontOnlyLabel();
+  paintFontSample();
+  renderFonts();   // measures when the switch is on (renderFonts asks for it)
+  if (fontPreviewId) probeFontsFor(checkLang(), [fontPreviewId]).then(paintFontNotes);
+}
+
+// Pressing a name tries it in the mirror — on the lines whose language is
+// the one being looked at, and only those. The white line is always that
+// language, so it always changes; the yellow line is the translation
+// language, so it changes only when that is the language picked. A
+// real-machine finding (2026-09-07): looking at Korean and pressing a
+// Korean face changed the Chinese line too, which reads as wrong. When
+// nothing is being tried, each line shows the font really in force for it
+// (origFont / transFont from the popup). Pressing the tried row again
+// puts the mirror back.
+function previewFont(id) {
+  const F = self.YTDS_FONTS;
+  if (!F) return;
+  fontPreviewId = (id && id !== fontPreviewId) ? id : "";
+  paintMirrorFonts();
+  document.querySelectorAll("#secFonts .olang[data-id]").forEach((li) => {
+    const on = li.dataset.id === fontPreviewId;
+    li.classList.toggle("trying", on);
+    const b = li.querySelector(".ofont-try");
+    if (b) b.setAttribute("aria-pressed", String(on));
+  });
+  paintFontNotes();
+  paintFontPrevName();
+  // The verdict for this one font in the language looked at, if not known
+  // yet: one measurement, not the whole list.
+  if (fontPreviewId) probeFontsFor(checkLang(), [fontPreviewId]).then(paintFontNotes);
+}
+
+function paintMirrorFonts() {
+  const F = self.YTDS_FONTS;
+  const o = $("fontPrevOrig"), tr = $("fontPrevTrans");
+  if (!F || !o || !tr) return;
+  const tried = fontPreviewId ? F.valueOf(fontPreviewId) : "";
+  const white = tried || String(state.origFont || "system");
+  const yellow = (tried && checkLang() === fontTargetLang()) ? tried : String(state.transFont || "system");
+  o.style.fontFamily = F.css(white);
+  tr.style.fontFamily = F.css(yellow);
+  for (const v of [white, yellow]) {
+    if (F.isFont(v) && F.isImport(F.idOf(v))) F.ensureImported(document, F.idOf(v));
+  }
+}
+
+function paintFontPrevName() {
+  const F = self.YTDS_FONTS;
+  const nm = $("fontPrevName");
+  if (!nm || !F) return;
+  const id = fontPreviewId;
+  if (!id) { nm.textContent = ""; return; }
+  const name = F.label(F.valueOf(id), allFonts(), t);
+  nm.textContent = tsub("fontsPreview", [name], "预览：" + name);
+}
+
+// Sample text in a language: this build's own sample for English, the
+// packaged locale's sample where there is one, the language's own name
+// otherwise (at least its script). No new sentences for fifty languages.
 const SAMPLE_DIR = { "zh-CN": "zh_CN", "zh-TW": "zh_TW", pt: "pt_BR" };
-async function paintFontSample() {
-  const tr = $("fontPrevTrans");
-  if (!tr) return;
-  const lang = fontTargetLang();
+async function sampleFor(lang) {
+  if (lang === "en") return t("sampleOrig", "The quick brown fox");
   let ui = "";
   try { ui = self.YTDS_I18N.effectiveLang().replace("_", "-"); } catch (_e) { /* ignore */ }
-  tr.setAttribute("lang", lang);
-  if (ui.split("-")[0] === lang.split("-")[0]) return;   // applyI18n already put the right sample there
-  let text = "";
+  if (ui.split("-")[0] === lang.split("-")[0] && ui !== "en") return t("sampleTrans", "敏捷的棕色狐狸");
+  // Only a packaged locale is fetched: asking for a folder that is not
+  // there is a file-not-found in the console for nothing.
+  const dir = SAMPLE_DIR[lang] || lang;
+  let packaged = false;
+  try { packaged = !!self.YTDS_I18N.SELF_NAMES[dir]; } catch (_e) { /* ignore */ }
+  if (!packaged) {
+    const F = self.YTDS_FONTS;
+    return (F && F.SAMPLE && F.SAMPLE[lang]) || fontLangName(lang);
+  }
   try {
-    const r = await fetch(chrome.runtime.getURL("_locales/" + (SAMPLE_DIR[lang] || lang) + "/messages.json"));
-    if (r.ok) { const j = await r.json(); text = (j.sampleTrans && j.sampleTrans.message) || ""; }
+    const r = await fetch(chrome.runtime.getURL("_locales/" + dir + "/messages.json"));
+    if (r.ok) {
+      const j = await r.json();
+      const text = j.sampleTrans && j.sampleTrans.message;
+      if (text) return text;
+    }
   } catch (_e) { /* not packaged for this language */ }
-  tr.textContent = text || fontLangName();
+  return fontLangName(lang);
+}
+
+// The two preview lines: white = the original language being looked at,
+// yellow = the translation language, each marked with its language so the
+// browser picks that language's glyphs, as the overlay does.
+async function paintFontSample() {
+  const o = $("fontPrevOrig"), tr = $("fontPrevTrans");
+  if (!o || !tr) return;
+  const wl = whiteLang(), tl = fontTargetLang();
+  o.setAttribute("lang", wl);
+  tr.setAttribute("lang", tl);
+  const [a, b] = await Promise.all([sampleFor(wl), sampleFor(tl)]);
+  if (whiteLang() === wl) o.textContent = a;
+  if (fontTargetLang() === tl) tr.textContent = b;
+  paintMirrorFonts();
+  paintFontPrevName();
 }
 
 function addFont(id) {
@@ -1358,6 +1588,7 @@ function addFont(id) {
   kept.push(id);
   fontKept = kept;
   persistFonts();
+  fontFlashId = id;
   renderFonts();
   const F = self.YTDS_FONTS;
   const name = F ? F.label(F.valueOf(id), allFonts(), t) : id;
@@ -1373,18 +1604,20 @@ async function importFontFile(file) {
     const mb = String(Math.round(F.IMPORT_MAX / 1048576));
     showFontMsg(r.why === "size"
       ? tsub("fontsImportTooBig", [mb], "文件太大（上限 " + mb + " MB）。")
-      : t("fontsImportBad", "这不是能用的字体文件。"), "err");
+      : r.why === "store"
+        ? t("fontsImportStore", "没能存进浏览器，请再试一次。")
+        : t("fontsImportBad", "这不是能用的字体文件。"), "err");
     return;
   }
   fontImports = await F.imports();
-  // Measure it with the rest: the cached coverage is keyed by the list, and
-  // the list just changed.
-  fontCov = Object.create(null);
+  // Whoever imports a font means to use it: it is in the popup's list for
+  // as long as it exists (keptFontIds), no second press. Only the new font
+  // is measured when next asked (verdicts are per id). The popup reads
+  // fontImports itself.
   renderFonts();
   showFontMsg(tsub("fontsImported", [r.name], "已导入「" + r.name + "」"), "ok");
-  await probeFontsFor(fontTargetLang());
-  renderFonts();
   previewFont(r.id);
+  if ($("fontOnly") && $("fontOnly").checked) probeFontsFor(checkLang()).then(renderFonts);
 }
 
 async function dropImport(id) {
@@ -1396,22 +1629,54 @@ async function dropImport(id) {
     fontKept = fontKept.filter((c) => c !== id);
     persistFonts();
   }
-  fontCov = Object.create(null);
+  for (const l of Object.keys(fontCov)) delete fontCov[l][id];
+  // A line that was set to it goes back to System default: the copy is gone.
+  try {
+    chrome.storage.sync.get({ origFont: "system", transFont: "system" }, (g) => {
+      const upd = {};
+      if (F.isFont(g.origFont) && F.idOf(g.origFont) === id) upd.origFont = "system";
+      if (F.isFont(g.transFont) && F.idOf(g.transFont) === id) upd.transFont = "system";
+      if (Object.keys(upd).length) chrome.storage.sync.set(upd);
+    });
+  } catch (_e) { /* ignore */ }
   if (fontPreviewId === id) previewFont("");
   renderFonts();
   showFontMsg("", null);
-  await probeFontsFor(fontTargetLang());
-  renderFonts();
+  if ($("fontOnly") && $("fontOnly").checked) probeFontsFor(checkLang()).then(renderFonts);
 }
 
 function removeFont(id) {
+  const F0 = self.YTDS_FONTS;
+  const removedName = F0 ? F0.label(F0.valueOf(id), allFonts(), t) : id;
   // The list may be empty: "System default" is always there, so the popup's
   // dropdown never runs dry. A font in use stays in force and the popup keeps
   // naming it — removing it here only stops offering it.
   fontKept = keptFontIds().filter((c) => c !== id);
   persistFonts();
+  fontFlashId = id;
   renderFonts();
-  showFontMsg("", null);
+  showFontMsg(tsub("fontsRemoved", [removedName], "已移出「" + removedName + "」"), "ok");
+}
+
+// Another window wrote the per-machine font state — the subtitle layer
+// noting a video's language, or this page open in a second tab — and this
+// page follows it. Its own writes come back here too and are no-ops.
+async function fontsLocalChanged(c) {
+  const F = self.YTDS_FONTS;
+  let repaint = false;
+  if (c.fontLangsSeen) {
+    const v = Array.isArray(c.fontLangsSeen.newValue) ? c.fontLangsSeen.newValue.filter((x) => typeof x === "string") : [];
+    if (JSON.stringify(v) !== JSON.stringify(fontLangsSeen)) { fontLangsSeen = v; paintFontLangSel(); }
+  }
+  if (c.fontKept) {
+    const v = Array.isArray(c.fontKept.newValue) ? c.fontKept.newValue : null;
+    if (JSON.stringify(v) !== JSON.stringify(fontKept)) { fontKept = v; repaint = true; }
+  }
+  if (c.fontImports && F) {
+    const v = await F.imports();
+    if (JSON.stringify(v) !== JSON.stringify(fontImports)) { fontImports = v; repaint = true; }
+  }
+  if (repaint) renderFonts();
 }
 
 function wantFonts() {
@@ -1427,27 +1692,27 @@ async function initFonts() {
   fontsInstalled = await F.list();
   fontImports = await F.imports();
   const loc = await new Promise((res) => {
-    try { chrome.storage.local.get({ fontKept: null }, (g) => res(g || {})); }
+    try { chrome.storage.local.get({ fontKept: null, fontLangsSeen: [] }, (g) => res(g || {})); }
     catch (_e) { res({}); }
   });
   fontKept = Array.isArray(loc.fontKept) ? loc.fontKept : null;
+  fontLangsSeen = Array.isArray(loc.fontLangsSeen) ? loc.fontLangsSeen.filter((c) => typeof c === "string") : [];
+  paintFontLangSel();
   paintFontOnlyLabel();
   renderFonts();
   previewFont("");
   paintFontSample();
-  await probeFontsFor(fontTargetLang());
-  renderFonts();
 }
 
-// The translation language changed (here or in the popup): the count, the
-// switch's label, the order and the sample all follow it.
+// The translation language changed (here or in the popup): the dropdown,
+// the switch's label, the count and the sample all follow it.
 function fontsTargetChanged() {
   if (fontsInit !== 2) return;
+  paintFontLangSel();
   paintFontOnlyLabel();
   paintFontSample();
-  previewFont(fontPreviewId);
-  probeFontsFor(fontTargetLang()).then(renderFonts);
   renderFonts();
+  if ($("fontOnly") && $("fontOnly").checked) probeFontsFor(checkLang()).then(renderFonts);
 }
 
 let stateLoaded = false;
@@ -2625,6 +2890,7 @@ function initCrossPageSync() {
           if (p && $("ttsKey") && !$("ttsKey").value) paintTtsKeyField(p);
           ttsKeysRefresh();                    // …and a tick appears or goes
         }
+        if (fontsInit === 2 && (changes.fontLangsSeen || changes.fontKept || changes.fontImports)) fontsLocalChanged(changes);
         return;
       }
       if (area !== "sync") return;
@@ -2639,6 +2905,11 @@ function initCrossPageSync() {
       if (c.engine) {
         state.engine = String(c.engine.newValue || "");
         paintAfterSetupNote(state.engine);
+      }
+      if (c.origFont || c.transFont) {
+        if (c.origFont) state.origFont = String(c.origFont.newValue || "system");
+        if (c.transFont) state.transFont = String(c.transFont.newValue || "system");
+        if (fontsInit === 2) paintMirrorFonts();
       }
       if (c.ttsEnabled) {
         const en = $("ttsEnabled");
@@ -2810,10 +3081,12 @@ function wire() {
     b.addEventListener("click", () => showSection(b.dataset.sec)));
   $("startToSetup").addEventListener("click", () => showSection("setup"));
   $("fontSearch").addEventListener("input", () => renderFonts());
-  $("fontOnly").addEventListener("change", () => renderFonts());
+  $("fontOnly").addEventListener("change", () => { fontProbeTries[checkLang()] = 0; renderFonts(); });   // a press is a fresh ask
+  $("fontLang").addEventListener("change", onFontLangChange);
   $("fontReset").addEventListener("click", () => {
     fontKept = null;
     persistFonts();
+    if ($("fontSearch")) $("fontSearch").value = "";   // "no match" right after a reset would mislead
     renderFonts();
     showFontMsg(t("fontsResetDone", "已恢复默认列表。"), "ok");
   });
@@ -2956,7 +3229,8 @@ wire();
 chrome.storage.sync.get(
   { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN", langShown: null,
     byoModelBy: {}, byoSiteBy: {},
-    ttsProvider: "local-speech", ttsVoice: "", engine: "auto" },
+    ttsProvider: "local-speech", ttsVoice: "", engine: "auto",
+    origFont: "system", transFont: "system" },
   (got) => {
     state = Object.assign(state, got || {});
     paintAfterSetupNote(state.engine);

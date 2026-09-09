@@ -1128,55 +1128,28 @@
     "message": "字幕字型"
   },
   "fontsIntro": {
-    "message": "字幕兩行用的字型。彈出視窗只列你留在這裡的；這裡列出的每一個都真的裝在這台電腦上。"
+    "message": "原文和譯文共用這份名單，彈出視窗裡按行選；這裡列出的每一個都真的裝在這台電腦上。"
   },
   "fontsKept": {
     "message": "彈出視窗裡顯示的"
   },
-  "fontsKeptHint": {
-    "message": "這些會出現在彈出視窗的「字型」下拉選單裡，排在「系統預設」後面。"
-  },
   "fontsMore": {
-    "message": "這台電腦上的其他字型"
-  },
-  "fontsMoreHint": {
-    "message": "按 + 加進上面的清單。名單讀自這台電腦；按字型名稱可以預覽。"
+    "message": "其他字型"
   },
   "fontsOnly": {
-    "message": "只看能顯示「$LANG$」的",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "這台電腦上有 $N$ 個字型，能顯示「$LANG$」的有 $M$ 個。",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "只看能顯示的"
   },
   "fontsCounting": {
-    "message": "正在看哪些字型能顯示「$LANG$」…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "檢查中…"
   },
   "fontsSearch": {
     "message": "搜字型名稱"
   },
   "fontsNoMatch": {
     "message": "沒有符合的字型。"
+  },
+  "fontsKeptEmpty": {
+    "message": "彈窗裡只剩「系統預設」。"
   },
   "fontsAllAdded": {
     "message": "全部字型都已加入。"
@@ -1196,7 +1169,7 @@
     }
   },
   "fontsPreview": {
-    "message": "預覽：$NAME$ · 按任一字型名稱試試",
+    "message": "預覽：$NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1210,7 +1183,7 @@
     "message": "這個瀏覽器不讓擴充功能讀取已安裝的字型，只能用「系統預設」。"
   },
   "fontNoGlyphs": {
-    "message": "顯示不了這一行的文字"
+    "message": "顯示不了"
   },
   "fontNotHere": {
     "message": "這台電腦上沒有"
@@ -1219,7 +1192,7 @@
     "message": "匯入字型檔案…"
   },
   "fontsImportHint": {
-    "message": "支援 .ttf / .otf / .woff / .woff2。檔案會複製一份存進瀏覽器，之後不再依賴原檔；刪掉這裡的匯入項就清掉了那份複本。"
+    "message": ".ttf / .otf / .woff / .woff2，複製一份存進瀏覽器。"
   },
   "fontsImported": {
     "message": "已匯入「$NAME$」",
@@ -1228,6 +1201,24 @@
         "content": "$1"
       }
     }
+  },
+  "fontsImportStore": {
+    "message": "沒能存進瀏覽器，請再試一次。"
+  },
+  "fontsRemoved": {
+    "message": "已移出「$NAME$」",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "跳過這份名單"
+  },
+  "fontImported": {
+    "message": "匯入的字型"
   },
   "fontsImportBad": {
     "message": "這不是能用的字型檔案。"
@@ -1240,10 +1231,24 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "已匯入"
-  },
   "fontsImportDelete": {
     "message": "刪除匯入的字型"
+  },
+  "fontsLangLabel": {
+    "message": "按語言看"
+  },
+  "fontsLangRecent": {
+    "message": "最近看過"
+  },
+  "fontMoreRow": {
+    "message": "管理字型…"
+  },
+  "fontHiddenRow": {
+    "message": "另有 $N$ 個顯示不了",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   }
 }

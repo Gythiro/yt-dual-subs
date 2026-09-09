@@ -1136,49 +1136,19 @@
     "message": "Шрифты субтитров"
   },
   "fontsIntro": {
-    "message": "Шрифты для двух строк субтитров. Во всплывающем окне предлагаются те, что вы оставляете здесь, и каждый указанный шрифт установлен на этом компьютере."
+    "message": "Один список для обеих строк субтитров; шрифт для каждой выбирается во всплывающем окне. Все шрифты в списке установлены на этом компьютере."
   },
   "fontsKept": {
     "message": "Во всплывающем окне"
   },
-  "fontsKeptHint": {
-    "message": "Они появляются в списке шрифтов всплывающего окна после «Системный по умолчанию»."
-  },
   "fontsMore": {
-    "message": "Другие шрифты на этом компьютере"
-  },
-  "fontsMoreHint": {
-    "message": "Нажмите +, чтобы добавить. Список считывается с этого компьютера; нажмите имя шрифта, чтобы посмотреть его."
+    "message": "Другие шрифты"
   },
   "fontsOnly": {
-    "message": "Только шрифты, которые отображают $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ шрифтов на этом компьютере; $M$ из них могут отобразить $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Только шрифты, которые могут это отобразить"
   },
   "fontsCounting": {
-    "message": "Проверяем, какие шрифты могут отобразить $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Проверка…"
   },
   "fontsSearch": {
     "message": "Поиск шрифтов"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Предпросмотр: $NAME$ — нажмите любое имя шрифта, чтобы попробовать",
+    "message": "Предпросмотр: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1227,7 +1197,7 @@
     "message": "Импортировать файл шрифта…"
   },
   "fontsImportHint": {
-    "message": "Поддерживаются .ttf / .otf / .woff / .woff2. Файл копируется в браузер, поэтому оригинал можно потом переместить; удаление записи здесь удаляет эту копию."
+    "message": ".ttf / .otf / .woff / .woff2; файл копируется в браузер."
   },
   "fontsImported": {
     "message": "Импортирован $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "импорт"
-  },
   "fontsImportDelete": {
     "message": "Удалить импортированный шрифт"
+  },
+  "fontsLangLabel": {
+    "message": "Проверить для"
+  },
+  "fontsLangRecent": {
+    "message": "недавно просмотренные"
+  },
+  "fontMoreRow": {
+    "message": "Управление шрифтами…"
+  },
+  "fontHiddenRow": {
+    "message": "ещё $N$ не отображают эту строку",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Для всплывающего окна остался только системный шрифт по умолчанию.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Не удалось сохранить в браузере; попробуйте ещё раз.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Удалено $NAME$ из всплывающего окна.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Пропустить этот список",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Импортированный шрифт",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

@@ -1136,49 +1136,19 @@
     "message": "ฟอนต์คำบรรยาย"
   },
   "fontsIntro": {
-    "message": "ฟอนต์สำหรับคำบรรยายสองบรรทัด ป๊อปอัปจะแสดงรายการที่คุณเก็บไว้ที่นี่ และทุกฟอนต์ในรายการติดตั้งอยู่ในเครื่องนี้แล้ว"
+    "message": "รายการเดียวใช้กับบรรทัดคำบรรยายทั้งสอง ป๊อปอัปเลือกแยกต่อบรรทัด ฟอนต์ที่แสดงติดตั้งบนคอมพิวเตอร์เครื่องนี้แล้ว"
   },
   "fontsKept": {
     "message": "แสดงในป๊อปอัป"
   },
-  "fontsKeptHint": {
-    "message": "รายการนี้จะปรากฏในรายการฟอนต์ของป๊อปอัป ถัดจากค่าเริ่มต้นของระบบ"
-  },
   "fontsMore": {
-    "message": "ฟอนต์อื่นในเครื่องนี้"
-  },
-  "fontsMoreHint": {
-    "message": "กด + เพื่อเพิ่ม รายการอ่านจากเครื่องนี้ กดชื่อฟอนต์เพื่อดูตัวอย่าง"
+    "message": "ฟอนต์อื่น"
   },
   "fontsOnly": {
-    "message": "เฉพาะฟอนต์ที่แสดง $LANG$ ได้",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "มี $N$ ฟอนต์ในเครื่องนี้ $M$ ฟอนต์แสดง $LANG$ ได้",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "เฉพาะฟอนต์ที่แสดงได้"
   },
   "fontsCounting": {
-    "message": "กำลังตรวจว่าฟอนต์ใดแสดง $LANG$ ได้…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "กำลังตรวจสอบ…"
   },
   "fontsSearch": {
     "message": "ค้นหาชื่อฟอนต์"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "ตัวอย่าง: $NAME$ — กดชื่อฟอนต์ใดก็ได้เพื่อลอง",
+    "message": "ตัวอย่าง: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1227,7 +1197,7 @@
     "message": "นำเข้าไฟล์ฟอนต์…"
   },
   "fontsImportHint": {
-    "message": "รองรับ .ttf / .otf / .woff / .woff2 ไฟล์จะถูกคัดลอกเข้าเบราว์เซอร์ จึงย้ายต้นฉบับได้ภายหลัง การลบรายการที่นี่จะลบสำเนานั้นด้วย"
+    "message": ".ttf / .otf / .woff / .woff2; ไฟล์จะถูกคัดลอกเข้าเบราว์เซอร์"
   },
   "fontsImported": {
     "message": "นำเข้า $NAME$ แล้ว",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "นำเข้าแล้ว"
-  },
   "fontsImportDelete": {
     "message": "ลบฟอนต์ที่นำเข้า"
+  },
+  "fontsLangLabel": {
+    "message": "ตรวจหา"
+  },
+  "fontsLangRecent": {
+    "message": "ที่เพิ่งดู"
+  },
+  "fontMoreRow": {
+    "message": "จัดการฟอนต์…"
+  },
+  "fontHiddenRow": {
+    "message": "อีก $N$ ฟอนต์แสดงบรรทัดนี้ไม่ได้",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "เหลือเพียงค่าเริ่มต้นของระบบในป๊อปอัป",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "บันทึกในเบราว์เซอร์ไม่ได้ ลองอีกครั้ง",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "ลบ $NAME$ ออกจากป๊อปอัปแล้ว",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "ข้ามรายการนี้",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "ฟอนต์ที่นำเข้า",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

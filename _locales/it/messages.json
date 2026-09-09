@@ -1136,49 +1136,19 @@
     "message": "Font dei sottotitoli"
   },
   "fontsIntro": {
-    "message": "Font per le due righe di sottotitoli. Il popup propone quelli che tieni qui e ogni font in elenco è installato su questo computer."
+    "message": "Un unico elenco vale per entrambe le righe dei sottotitoli; il popup sceglie per riga. Ogni font elencato è installato su questo computer."
   },
   "fontsKept": {
     "message": "Mostrati nel popup"
   },
-  "fontsKeptHint": {
-    "message": "Compaiono nell'elenco font del popup, dopo Predefinito di sistema."
-  },
   "fontsMore": {
-    "message": "Altri font su questo computer"
-  },
-  "fontsMoreHint": {
-    "message": "Premi + per aggiungerne uno. L'elenco è letto da questo computer; premi il nome di un font per vederne l'anteprima."
+    "message": "Altri font"
   },
   "fontsOnly": {
-    "message": "Solo i font che possono mostrare $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ font su questo computer; $M$ di questi possono mostrare $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Solo i font che possono visualizzarla"
   },
   "fontsCounting": {
-    "message": "Verifica dei font che possono mostrare $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Verifica…"
   },
   "fontsSearch": {
     "message": "Cerca nomi dei font"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Anteprima: $NAME$ — premi il nome di un font per provarlo",
+    "message": "Anteprima: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Questo browser non consente all'estensione di leggere i font installati, quindi si può scegliere solo Predefinito di sistema."
   },
   "fontNoGlyphs": {
-    "message": "non può mostrare questa riga"
+    "message": "non mostra questa riga"
   },
   "fontNotHere": {
     "message": "non su questo computer"
@@ -1227,7 +1197,7 @@
     "message": "Importa file di font…"
   },
   "fontsImportHint": {
-    "message": "Supporta .ttf / .otf / .woff / .woff2. Il file viene copiato nel browser, quindi l'originale può essere spostato in seguito; eliminando la voce qui si elimina quella copia."
+    "message": ".ttf / .otf / .woff / .woff2; il file viene copiato nel browser."
   },
   "fontsImported": {
     "message": "Importato $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importato"
-  },
   "fontsImportDelete": {
     "message": "Elimina il font importato"
+  },
+  "fontsLangLabel": {
+    "message": "Verifica per"
+  },
+  "fontsLangRecent": {
+    "message": "visti di recente"
+  },
+  "fontMoreRow": {
+    "message": "Gestisci i font…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ altri non mostrano questa riga",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Nel popup resta solo Predefinito di sistema.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Impossibile salvarlo nel browser; riprova.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Rimosso $NAME$ dal popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Salta questo elenco",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Font importato",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

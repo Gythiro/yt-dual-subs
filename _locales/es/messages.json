@@ -1136,49 +1136,19 @@
     "message": "Fuentes de subtítulos"
   },
   "fontsIntro": {
-    "message": "Fuentes para las dos líneas de subtítulos. La ventana emergente muestra las que guardes aquí, y todas las de la lista están instaladas en este ordenador."
+    "message": "Una sola lista sirve para las dos líneas de subtítulos; en la ventana emergente se elige por línea. Todas las fuentes de la lista están instaladas en este ordenador."
   },
   "fontsKept": {
     "message": "Mostradas en la ventana emergente"
   },
-  "fontsKeptHint": {
-    "message": "Aparecen en la lista de fuentes de la ventana emergente, después de Predeterminado del sistema."
-  },
   "fontsMore": {
-    "message": "Otras fuentes de este ordenador"
-  },
-  "fontsMoreHint": {
-    "message": "Pulsa + para añadir una. La lista se lee de este ordenador; pulsa el nombre de una fuente para previsualizarla."
+    "message": "Otras fuentes"
   },
   "fontsOnly": {
-    "message": "Solo fuentes que pueden mostrar $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ fuentes en este ordenador; $M$ de ellas pueden mostrar $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Solo las que pueden mostrarla"
   },
   "fontsCounting": {
-    "message": "Comprobando qué fuentes pueden mostrar $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Comprobando…"
   },
   "fontsSearch": {
     "message": "Buscar fuentes"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Vista previa: $NAME$ — pulsa cualquier nombre de fuente para probarla",
+    "message": "Vista previa: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Este navegador no permite que la extensión lea las fuentes instaladas, así que solo se puede elegir Predeterminado del sistema."
   },
   "fontNoGlyphs": {
-    "message": "no puede mostrar esta línea"
+    "message": "no muestra esta línea"
   },
   "fontNotHere": {
     "message": "no está en este ordenador"
@@ -1227,7 +1197,7 @@
     "message": "Importar archivo de fuente…"
   },
   "fontsImportHint": {
-    "message": "Admite .ttf / .otf / .woff / .woff2. El archivo se copia en el navegador, así que el original se puede mover después; al eliminar la entrada aquí se elimina esa copia."
+    "message": ".ttf / .otf / .woff / .woff2; el archivo se copia en el navegador."
   },
   "fontsImported": {
     "message": "Importado $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importada"
-  },
   "fontsImportDelete": {
     "message": "Eliminar la fuente importada"
+  },
+  "fontsLangLabel": {
+    "message": "Comprobar"
+  },
+  "fontsLangRecent": {
+    "message": "vistos recientemente"
+  },
+  "fontMoreRow": {
+    "message": "Administrar fuentes…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ más no muestran esta línea",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Solo queda Predeterminado del sistema en la ventana emergente.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "No se pudo guardar en el navegador; inténtalo de nuevo.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Se ha eliminado $NAME$ de la ventana emergente.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Omitir esta lista",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Fuente importada",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

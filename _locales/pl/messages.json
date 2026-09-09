@@ -1136,49 +1136,19 @@
     "message": "Czcionki napisów"
   },
   "fontsIntro": {
-    "message": "Czcionki dla dwóch wierszy napisów. W oknie pojawią się te, które tu zachowasz, a każda wymieniona czcionka jest zainstalowana na tym komputerze."
+    "message": "Jedna lista obsługuje obie linie napisów; okienko wybiera osobno dla każdej. Każda wymieniona czcionka jest zainstalowana na tym komputerze."
   },
   "fontsKept": {
     "message": "Widoczne w oknie"
   },
-  "fontsKeptHint": {
-    "message": "Pojawiają się na liście czcionek w oknie, po Domyślnej systemowej."
-  },
   "fontsMore": {
-    "message": "Inne czcionki na tym komputerze"
-  },
-  "fontsMoreHint": {
-    "message": "Naciśnij +, aby dodać. Lista pochodzi z tego komputera; naciśnij nazwę czcionki, aby zobaczyć podgląd."
+    "message": "Inne czcionki"
   },
   "fontsOnly": {
-    "message": "Tylko czcionki, które potrafią wyświetlić $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ czcionek na tym komputerze; $M$ z nich potrafi wyświetlić $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Tylko czcionki, które to wyświetlą"
   },
   "fontsCounting": {
-    "message": "Sprawdzanie, które czcionki potrafią wyświetlić $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Sprawdzanie…"
   },
   "fontsSearch": {
     "message": "Szukaj nazw czcionek"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Podgląd: $NAME$ — naciśnij dowolną nazwę czcionki, aby ją wypróbować",
+    "message": "Podgląd: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Ta przeglądarka nie pozwala rozszerzeniu odczytać zainstalowanych czcionek, więc można wybrać tylko Domyślną systemową."
   },
   "fontNoGlyphs": {
-    "message": "nie wyświetli tego wiersza"
+    "message": "nie wyświetli tej linii"
   },
   "fontNotHere": {
     "message": "brak na tym komputerze"
@@ -1227,7 +1197,7 @@
     "message": "Importuj plik czcionki…"
   },
   "fontsImportHint": {
-    "message": "Obsługuje .ttf / .otf / .woff / .woff2. Plik jest kopiowany do przeglądarki, więc oryginał można później przenieść; usunięcie wpisu tutaj usuwa tę kopię."
+    "message": ".ttf / .otf / .woff / .woff2; plik jest kopiowany do przeglądarki."
   },
   "fontsImported": {
     "message": "Zaimportowano $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "zaimportowana"
-  },
   "fontsImportDelete": {
     "message": "Usuń zaimportowaną czcionkę"
+  },
+  "fontsLangLabel": {
+    "message": "Sprawdź"
+  },
+  "fontsLangRecent": {
+    "message": "ostatnio oglądane"
+  },
+  "fontMoreRow": {
+    "message": "Zarządzaj czcionkami…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ więcej nie wyświetli tej linii",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "W okienku została tylko Domyślna systemowa.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Nie udało się zapisać w przeglądarce; spróbuj ponownie.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Usunięto $NAME$ z okna popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Pomiń tę listę",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Zaimportowana czcionka",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

@@ -130,8 +130,16 @@
   // it is the only outside string this script ever writes into CSS.
   function fontStack(key) {
     const F = self.YTDS_FONTS;
-    return F ? F.css(key) : 'system-ui, -apple-system, "Segoe UI", sans-serif';
+    if (!F) return 'system-ui, -apple-system, "Segoe UI", sans-serif';
+    let css = F.css(key);
+    // An imported face is registered on this page under a name minted per
+    // page (importAlias): the stored id is unique to this reader and would
+    // otherwise sit in the page's inline style for any script to read.
+    const id = F.isFont(key) ? F.idOf(key) : "";
+    if (id && importAlias.has(id)) css = css.replace(F.quote(id), F.quote(importAlias.get(id)));
+    return css;
   }
+  const importAlias = new Map();
 
   // A font the reader imported is not on this computer as far as YouTube's
   // page knows: it exists only as a copy in the extension's storage, which
@@ -149,8 +157,17 @@
     extCall(() => chrome.runtime.sendMessage({ type: "fontBytes", id }, (r) => {
       if (chrome.runtime.lastError || !r || !r.ok || !r.b64) { importFontsAsked.delete(id); return; }
       try {
-        const face = new FontFace(id, F.unb64(r.b64));
-        face.load().then(() => document.fonts.add(face)).catch(() => importFontsAsked.delete(id));
+        // Handed to the browser as a data: URL: it decodes the base64 off
+        // this thread, instead of a JS loop over up to 33 MB of text on the
+        // player page's main thread. The family name is minted for this
+        // page; the lines are restyled once it is in.
+        const alias = "YTDS-F-" + Math.random().toString(36).slice(2, 10);
+        const face = new FontFace(alias, "url(data:application/octet-stream;base64," + r.b64 + ")");
+        face.load().then(() => {
+          document.fonts.add(face);
+          importAlias.set(id, alias);
+          if (overlay) styleOverlay();
+        }).catch(() => importFontsAsked.delete(id));
       } catch (_e) { importFontsAsked.delete(id); }
     }));
   }
@@ -605,8 +622,10 @@
     overlay.id = "ytds-overlay";
     transEl = document.createElement("div");
     transEl.className = "ytds-line ytds-trans";
+    transEl.dir = "auto";           // Arabic, Hebrew: punctuation on the right side
     origEl = document.createElement("div");
     origEl.className = "ytds-line ytds-orig";
+    origEl.dir = "auto";
 
     overlay.appendChild(transEl);
     overlay.appendChild(origEl);
@@ -1038,6 +1057,23 @@
     } catch (_e) { return ""; }
   }
 
+  // The settings pane's font list asks "can this font draw the language of
+  // the videos you watch?" — so the original languages of recent videos are
+  // remembered, on this machine only, newest first, five at most. One write
+  // per new language, none for the same language again.
+  let langSeenLast = "";
+  function noteLangSeen(lang) {
+    if (lang === langSeenLast) return;
+    langSeenLast = lang;
+    extCall(() => chrome.storage.local.get({ fontLangsSeen: [] }, (got) => {
+      if (chrome.runtime.lastError) return;
+      const cur = Array.isArray(got && got.fontLangsSeen) ? got.fontLangsSeen : [];
+      if (cur[0] === lang) return;
+      const next = [lang].concat(cur.filter((c) => c !== lang)).slice(0, 5);
+      try { chrome.storage.local.set({ fontLangsSeen: next }); } catch (_e) { /* ignore */ }
+    }));
+  }
+
   function paintLineLangs() {
     if (!origEl || !transEl) return;
     // Only write when it changes: this runs on every settings change and on
@@ -1045,6 +1081,12 @@
     const o = trackLang();
     if (origEl.getAttribute("lang") !== o) {
       if (o) origEl.setAttribute("lang", o); else origEl.removeAttribute("lang");
+    }
+    // Remembered under the probe's key ("zh-Hans" is zh-CN there), so the
+    // settings page finds it in its language table.
+    if (o) {
+      const key = self.YTDS_FONTS ? self.YTDS_FONTS.probeLang(o) : o;
+      if (key) noteLangSeen(key);
     }
     // The translation line is in the language the reader chose. When the track
     // is already in that language the overlay shows one line carrying the

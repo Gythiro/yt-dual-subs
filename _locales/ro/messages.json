@@ -1136,49 +1136,19 @@
     "message": "Fonturi de subtitrare"
   },
   "fontsIntro": {
-    "message": "Fonturi pentru cele două linii de subtitrare. Pop-up-ul oferă fonturile pe care le păstrați aici, iar fiecare font din listă este instalat pe acest computer."
+    "message": "O listă deservește ambele linii de subtitrare; pop-up-ul alege pe fiecare linie. Fiecare font listat este instalat pe acest computer."
   },
   "fontsKept": {
     "message": "Afișate în pop-up"
   },
-  "fontsKeptHint": {
-    "message": "Acestea apar în lista de fonturi din pop-up, după Implicit sistem."
-  },
   "fontsMore": {
-    "message": "Alte fonturi pe acest computer"
-  },
-  "fontsMoreHint": {
-    "message": "Apăsați + pentru a adăuga unul. Lista este citită de pe acest computer; apăsați numele unui font pentru a-l previzualiza."
+    "message": "Alte fonturi"
   },
   "fontsOnly": {
-    "message": "Doar fonturile care pot afișa $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ fonturi pe acest computer; $M$ dintre ele pot afișa $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Doar fonturile care o pot desena"
   },
   "fontsCounting": {
-    "message": "Se verifică ce fonturi pot afișa $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Se verifică…"
   },
   "fontsSearch": {
     "message": "Căutați nume de fonturi"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Previzualizare: $NAME$ — apăsați orice nume de font pentru a-l încerca",
+    "message": "Previzualizare: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Acest browser nu permite extensiei să citească fonturile instalate, deci se poate alege doar Implicit sistem."
   },
   "fontNoGlyphs": {
-    "message": "nu poate afișa această linie"
+    "message": "nu poate desena această linie"
   },
   "fontNotHere": {
     "message": "nu este pe acest computer"
@@ -1227,7 +1197,7 @@
     "message": "Importă fișier font…"
   },
   "fontsImportHint": {
-    "message": "Acceptă .ttf / .otf / .woff / .woff2. Fișierul este copiat în browser, deci originalul poate fi mutat ulterior; ștergerea elementului de aici șterge acea copie."
+    "message": ".ttf / .otf / .woff / .woff2; fișierul este copiat în browser."
   },
   "fontsImported": {
     "message": "Importat $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importat"
-  },
   "fontsImportDelete": {
     "message": "Șterge fontul importat"
+  },
+  "fontsLangLabel": {
+    "message": "Verifică pentru"
+  },
+  "fontsLangRecent": {
+    "message": "vizionate recent"
+  },
+  "fontMoreRow": {
+    "message": "Gestionează fonturile…"
+  },
+  "fontHiddenRow": {
+    "message": "încă $N$ nu pot desena această linie",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Pentru pop-up a rămas doar implicitul de sistem.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Nu s-a putut salva în browser; încearcă din nou.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Am eliminat $NAME$ din popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Omite această listă",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Font importat",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

@@ -1136,49 +1136,19 @@
     "message": "Písma titulků"
   },
   "fontsIntro": {
-    "message": "Písma pro dva řádky titulků. Vyskakovací okno nabízí ta, která si tu ponecháte, a každé uvedené písmo je nainstalované v tomto počítači."
+    "message": "Jeden seznam slouží oběma řádkům titulků; vyskakovací okno vybírá písmo pro každý řádek zvlášť. Každé uvedené písmo je nainstalované v tomto počítači."
   },
   "fontsKept": {
     "message": "Zobrazená ve vyskakovacím okně"
   },
-  "fontsKeptHint": {
-    "message": "Objeví se v seznamu písem vyskakovacího okna, za položkou Výchozí systému."
-  },
   "fontsMore": {
-    "message": "Další písma v tomto počítači"
-  },
-  "fontsMoreHint": {
-    "message": "Stisknutím + písmo přidáte. Seznam se čte z tohoto počítače; stisknutím názvu písma ho zobrazíte v náhledu."
+    "message": "Ostatní písma"
   },
   "fontsOnly": {
-    "message": "Jen písma, která umí vykreslit $LANG$",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
-  },
-  "fontsCount": {
-    "message": "$N$ písem v tomto počítači; $M$ z nich umí vykreslit $LANG$.",
-    "placeholders": {
-      "n": {
-        "content": "$1"
-      },
-      "m": {
-        "content": "$2"
-      },
-      "lang": {
-        "content": "$3"
-      }
-    }
+    "message": "Jen písma, která to dokážou vykreslit"
   },
   "fontsCounting": {
-    "message": "Ověřuji, která písma umí vykreslit $LANG$…",
-    "placeholders": {
-      "lang": {
-        "content": "$1"
-      }
-    }
+    "message": "Kontroluji…"
   },
   "fontsSearch": {
     "message": "Hledat názvy písem"
@@ -1204,7 +1174,7 @@
     }
   },
   "fontsPreview": {
-    "message": "Náhled: $NAME$ — stiskněte název libovolného písma a vyzkoušejte ho",
+    "message": "Náhled: $NAME$",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -1218,7 +1188,7 @@
     "message": "Tento prohlížeč neumožňuje rozšíření číst nainstalovaná písma, takže lze vybrat jen Výchozí systému."
   },
   "fontNoGlyphs": {
-    "message": "neumí vykreslit tento řádek"
+    "message": "tento řádek nezobrazí"
   },
   "fontNotHere": {
     "message": "není v tomto počítači"
@@ -1227,7 +1197,7 @@
     "message": "Importovat soubor písma…"
   },
   "fontsImportHint": {
-    "message": "Podporuje .ttf / .otf / .woff / .woff2. Soubor se zkopíruje do prohlížeče, originál tedy můžete později přesunout; smazáním položky zde se smaže i tato kopie."
+    "message": ".ttf / .otf / .woff / .woff2; soubor se zkopíruje do prohlížeče."
   },
   "fontsImported": {
     "message": "Importováno $NAME$",
@@ -1248,10 +1218,50 @@
       }
     }
   },
-  "fontsImportedTag": {
-    "message": "importováno"
-  },
   "fontsImportDelete": {
     "message": "Smazat importované písmo"
+  },
+  "fontsLangLabel": {
+    "message": "Kontrolovat"
+  },
+  "fontsLangRecent": {
+    "message": "nedávno sledované"
+  },
+  "fontMoreRow": {
+    "message": "Spravovat písma…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ dalších tento řádek nezobrazí",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsKeptEmpty": {
+    "message": "Pro vyskakovací okno zbývá jen výchozí systémové.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsImportStore": {
+    "message": "Nepodařilo se to uložit v prohlížeči; zkuste to znovu.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Položka $NAME$ byla odebrána z vyskakovacího okna.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Přeskočit tento seznam",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Importované písmo",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
   }
 }

@@ -246,20 +246,20 @@ a { text-underline-offset: 3px; }
 }
 
 /* -------------------------------- fonts --------------------------------- */
-/* The preview strip is the popup's preview at player scale: same ground, same
-   two lines, real subtitle sizes, so a font is judged where it will be used. */
-.ofont-preview { margin: 0 0 16px; }
+/* The fitting mirror: the popup's preview at player scale — same ground, the
+   two lines at real subtitle sizes — so a font is judged where it will be
+   used. A strip, not a dashboard. */
 .ofont-frame {
-  position: relative; height: 128px;
+  height: 100px; margin: 0 0 10px;
   border-radius: var(--radius);
   background: radial-gradient(130% 150% at 50% 0%, #26282c 0%, #0a0b0d 72%);
   border: 1px solid var(--line);
   overflow: hidden;
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-  gap: 4px; padding: 0 12px 12px;
+  gap: 4px; padding: 0 12px 10px;
 }
 .ytds-prev-line {
-  max-width: 96%;
+  max-width: 96%; min-width: 0;
   padding: 1px 8px; border-radius: 3px;
   background: rgba(8, 8, 8, .6);
   font-weight: 600; line-height: 1.25;
@@ -268,25 +268,50 @@ a { text-underline-offset: 3px; }
 }
 .ytds-prev-orig  { color: #ffffff; font-size: 22px; }
 .ytds-prev-trans { color: #ffe98a; font-size: 24px; }
-.ofont-prevname { margin: 8px 1px 0; }
-.ofont-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 0 0 8px; }
-.ofont-tools input[type="search"] {
-  flex: 1 1 220px; min-width: 0; max-width: 360px;
+/* The mirror's one control: which language it (and the switch) is about.
+   Labelled, content-wide, never the full row — a full-width select reads as
+   a page-level setting. */
+.ofont-look { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 18px; }
+.ofont-look .ohint { margin: 0; white-space: nowrap; }
+.ofont-look select { flex: 1 1 200px; max-width: 50%; min-width: 0; padding: 6px 28px 6px 9px; }
+.ofont-look .ochk { white-space: nowrap; }
+/* Which font the mirror is trying: one muted line under it, only while a
+   font is being tried (the wash on the row alone is too faint to be the
+   only sign, and the row may be scrolled away). */
+.ofont-trying { margin: -10px 0 12px; min-height: 0; }
+.ofont-trying:empty { display: none; }
+/* Keyboard-only: a link before each long list that jumps past it, visible
+   only while focused (WCAG bypass blocks; the lists have hundreds of stops). */
+.oskip { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.oskip:focus { position: static; width: auto; height: auto; clip: auto; display: inline-block; margin: 0 0 8px; color: var(--accent); }
+/* Each column's heading row: the heading and its one tool (the import link
+   on the left, the search box on the right), one height on both sides so
+   the two lists start on the same line. */
+.ofont-hd { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 10px; min-height: 37px; }
+/* The two heading rows share one track (subgrid), so when a long heading
+   wraps on one side only, the two lists still start on the same line. */
+#secFonts .olangs { grid-template-rows: auto auto; }
+#secFonts .olang-col { display: grid; grid-template-rows: subgrid; grid-row: span 2; align-content: start; }
+.ofont-hd .olabel { margin: 0; flex: none; }
+.ofont-hd input[type="search"] {
+  flex: 1; min-width: 120px; box-sizing: border-box;
   font: inherit; color: var(--txt);
   background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
   padding: 7px 10px;
 }
-.ofont-tools input[type="search"]:hover { border-color: #454545; }
-.ofont-tools input[type="search"]:focus { border-color: var(--accent); outline: none; }
-#fontCount { margin: 0 0 14px; }
-.ofont-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.ofont-actions + .ohint { margin: 10px 1px 0; }
-.ofont-tag {
-  flex: none; margin-left: 8px; padding: 1px 6px; border-radius: 5px;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 11px; font-weight: 600;
-  color: var(--accent); background: rgba(58, 160, 255, .12); vertical-align: middle;
-}
+.ofont-hd input[type="search"]:hover { border-color: #454545; }
+.ofont-hd input[type="search"]:focus { border-color: var(--accent); outline: none; }
+.olabel-n { margin-left: .3em; color: var(--muted); font-weight: 500; letter-spacing: 0; text-transform: none; }
+/* A long name in a wide face must not push the column: the grid stays 1fr
+   1fr and the name wraps to two lines at most. */
+.olang-col { min-width: 0; }
+/* Three hundred rows, each set in its own face: laying them all out means
+   touching three hundred font families before the first paint (seconds on
+   a Windows machine). Rows scrolled out of view are not laid out until they
+   come into view. */
+.olang-list > li { content-visibility: auto; contain-intrinsic-size: auto 40px; }
 .olang-btn.drop:hover { color: #ff8a8a; border-color: #ff8a8a; }
+.olang-btn.drop svg { display: block; }
 /* A font's row shows its name in that font: the list previews itself. The
    name is a button (preview on click / Enter), unstyled so the row reads as
    the language rows above do. */
@@ -294,13 +319,22 @@ a { text-underline-offset: 3px; }
   flex: 1; min-width: 0; text-align: left;
   background: none; border: 0; padding: 0; margin: 0;
   color: var(--txt); font-size: 15px; line-height: 1.3; cursor: pointer;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; text-overflow: ellipsis; white-space: normal;
 }
-.ofont-try:hover { color: var(--accent); }
 .ofont-try:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-.ofont-try .olang-en { font-family: inherit; }
-.ofont-id { color: var(--muted); font-size: 12px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin-left: 8px; }
-.olang.on .ofont-try { color: var(--accent); }
+/* "· cannot draw" beside a name, in the popup's words; empty most of the time. */
+.ofont-note { color: var(--muted); font-size: 13px; white-space: nowrap; flex: 0 1 auto; max-width: 50%; overflow: hidden; text-overflow: ellipsis; }
+.ofont-note:empty { display: none; }
+/* The name is what the row is about: it keeps at least 40% of the row, and
+   a long note (Russian) is the one that gets cut. */
+.olang.ofont .ofont-try { min-width: 40%; }
+/* The row whose font the mirror is showing: a wash, nothing more — no
+   coloured edge (spec §2), no colour or weight on the name (it is a sample). */
+.olang.trying { background: var(--accent-dim); }
+/* A rare, destructive-ish action must not stretch into a full-width primary
+   (same rule as #langReset). */
+#fontReset { align-self: flex-start; }
 
 /* -------------------------------- about --------------------------------- */
 .oabout-ver { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; }
