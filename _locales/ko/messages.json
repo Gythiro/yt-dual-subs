@@ -336,7 +336,7 @@
     "message": "API 기본 URL은 전체 https:// 주소여야 합니다."
   },
   "byoErrNoPerm": {
-    "message": "해당 API 호스트에 접근할 권한이 없으면 확장 프로그램이 연결할 수 없습니다."
+    "message": "해당 API 호스트에 접근할 권한이 없으면 확장 프로그램이 연결할 수 없습니다. “저장 후 테스트”를 다시 눌러 허용해 주세요."
   },
   "byoErrAuth": {
     "message": "키가 거부되었습니다(401/403) — 전체가 복사되었고 활성 상태인지 확인하세요."
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "해당 엔드포인트에 연결할 수 없습니다(네트워크 또는 지역 제한)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "이 주소에 연결할 수 없습니다. 서버가 실행 중이 아니거나, 확장 프로그램의 접근을 아직 허용하지 않았습니다(Ollama는 OLLAMA_ORIGINS, LM Studio는 CORS 스위치)."
   },
   "byoErrUnsupportedTarget": {
     "message": "이 제공업체는 선택한 언어로의 번역을 지원하지 않습니다 — 언어나 엔진을 변경하세요."
@@ -633,7 +636,7 @@
     "message": "기타 언어"
   },
   "langsMoreHint": {
-    "message": "+를 눌러 추가하세요. 목록의 언어는 모두 무료 엔진과 DeepL이 대상 언어로 받는 것들입니다."
+    "message": "+를 눌러 추가하세요. 목록은 무료 엔진과 DeepL이 대상 언어로 제시하는 언어를 따릅니다."
   },
   "langsReset": {
     "message": "기본값 복원"
@@ -682,7 +685,25 @@
     "message": "자동 — 브라우저 따름"
   },
   "uiLocaleHint": {
-    "message": "이 확장 프로그램의 메뉴와 설정 언어입니다. 영상 위에 그려지는 일부 라벨은 여전히 브라우저 언어를 따릅니다. 자막을 어떤 언어로 번역할지는 팝업과 “자막 언어”에서 고르며, 여기가 아닙니다."
+    "message": "이 확장 프로그램의 메뉴와 설정 언어입니다. 영상 위에 그려지는 몇몇 라벨은 여전히 브라우저 언어를 따릅니다. 자막을 어떤 언어로 번역할지는 팝업에서 고릅니다. “자막 언어” 화면은 팝업에 어떤 언어가 나올지만 정합니다."
+  },
+  "cmdToggleSubs": {
+    "message": "자막 켜기/끄기"
+  },
+  "cmdToggleTts": {
+    "message": "읽어주기 켜기/끄기"
+  },
+  "optShortcutsLabel": {
+    "message": "키보드 단축키"
+  },
+  "optShortcutsOpen": {
+    "message": "단축키 설정"
+  },
+  "optShortcutsHint": {
+    "message": "단축키는 이 확장 프로그램이 아니라 Chrome이 관리합니다. 처음에는 아무것도 지정되어 있지 않고, 지정할 수 있는 것은 자막 켜기/끄기와 읽어주기 켜기/끄기 두 가지입니다."
+  },
+  "optShortcutsFallback": {
+    "message": "여기에서는 그 페이지를 열 수 없습니다. chrome://extensions/shortcuts 를 주소창에 붙여 넣으세요."
   },
   "startTargetLabel": {
     "message": "번역 언어"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "Azure 키의 서비스 지역을 먼저 입력하세요 (예: eastus)."
   },
+  "ttsNoSynth": {
+    "message": "이 컴퓨터에는 사용할 수 있는 음성이 없습니다."
+  },
+  "ttsVoicesLoading": {
+    "message": "이 컴퓨터의 음성을 불러오는 중…"
+  },
   "startPicChop1": {
     "message": "두 개의 큰"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "읽어주기 설정"
-  },
-  "ttsGroupSetup": {
-    "message": "제공업체 및 키"
   },
   "ttsGroupPlayback": {
     "message": "재생"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "다른 음성…"
   },
+  "popupVoiceNone": {
+    "message": "음성 미선택"
+  },
   "ttsRobotVoices": {
     "message": "로봇",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -894,6 +921,9 @@
   "sumStart": {
     "message": "요약하기",
     "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "다시 요약"
   },
   "sumFail": {
     "message": "요약에 실패했습니다. 나중에 다시 시도하세요.",

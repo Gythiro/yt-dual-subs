@@ -392,7 +392,7 @@ async function paintEngineStatus() {
   } catch (_e) { /* session storage unavailable — skip the limit line */ }
   if (limited) {
     el.textContent = t("backendStatusLimited",
-      "翻译接口暂时限流，已自动放慢重试；已翻译的句子不受影响。");
+      "翻译接口暂时限流，已自动放慢重试；已翻译的句子还在。");
     el.classList.add("warn");
     el.hidden = false;
     return;
@@ -401,7 +401,7 @@ async function paintEngineStatus() {
   // A failing BYO engine has to say so: unlike gtx it has no free fallback, so
   // staying quiet would just look like "the extension stopped translating".
   if (byoCode) {
-    el.textContent = byoErrText(byoCode);
+    el.textContent = byoErrText(byoCode, activeProvider());
     el.classList.add("warn");
     el.hidden = false;
     return;
@@ -689,139 +689,100 @@ function ttsVoiceLabel(v) {
   } catch (_e) { return v; }
 }
 
+// What the row and its menu are drawing, filled by the paint that already
+// worked out which families can speak at all.
+let ttsPick = { usable: [], current: null, voice: "", recents: [] };
+
+// The voice this family is actually speaking with. A stored voice can belong
+// to another machine (the choice syncs, the machine's voice list does not) or
+// to a provider that stopped offering it — in both cases the family's own
+// first voice is what will be heard, so it is what the row must name.
+function voiceInUse(p, storedVoice, have) {
+  if (!p) return "";
+  if (storedVoice && ttsVoiceUsableHere(p, storedVoice)) return storedVoice;
+  const list = have || familyVoices(p);
+  return p.localVoices ? (list[0] || "") : (p.defaultVoice || list[0] || "");
+}
+
+// One family's own voices: the machine's list for the browser engine, what we
+// ship for the rest. The fetched catalogue is added in the menu, which can
+// afford to wait for storage; this one is called on every paint.
+function familyVoices(p) {
+  if (!p) return [];
+  if (p.localVoices) {
+    try {
+      return self.YTDS_PROVIDERS.tts.localVoiceNames(
+        window.speechSynthesis, state.targetLang) || [];
+    } catch (_e) { return []; }
+  }
+  return (p.voices || []).filter((v) => ttsVoiceUsableHere(p, v));
+}
+
+// The machine answers late, and sometimes never announces it: getVoices() is
+// empty until Chrome has built its table, and "voiceschanged" does not fire if
+// the table was already built when we asked (D67 refuted the poll shape on the
+// settings page for the same reason). So heal the paint rather than time the
+// machine — whenever this row draws an empty local list, draw it again shortly.
+function localVoiceLate() {
+  if (localVoiceRetry >= 8) return;
+  localVoiceRetry++;
+  clearTimeout(localVoiceTimer);
+  localVoiceTimer = setTimeout(paintTtsCard, 120 * localVoiceRetry);
+}
+
+// The row: mark, provider, voice — the shape the translation row has had all
+// along. It carried both dimensions in a single dropdown until 2026-08-30,
+// which meant every configured family's voices in one list and no way to
+// browse ONE family without going to the settings page. Picking a voice still
+// writes both keys; the provider simply has a control of its own now.
 function paintTtsVoicePick(usable, current, storedVoice, recents) {
-  const sel = $("ttsVoicePick");
-  if (!sel) return;
+  const sel = $("ttsProviderPick");
+  const btn = $("ttsVoiceBtn");
+  const nameEl = $("ttsProviderName");
+  const slot = $("ttsIcon");
+  if (!sel || !btn) return;
+  const have = familyVoices(current);
+  if (current && current.localVoices) {
+    if (have.length) localVoiceRetry = 0; else localVoiceLate();
+  }
+  const voice = voiceInUse(current, storedVoice, have);
+  ttsPick = { usable: usable || [], current: current, voice: voice, recents: recents || [] };
+  if (slot) {
+    slot.textContent = "";
+    if (self.YTDS_ICONS) slot.appendChild(self.YTDS_ICONS.iconFor(current));
+  }
+  const label = (p) => (p.shortKey && t(p.shortKey, p.short)) || p.short || p.name;
+  // One family that can speak is not a choice to offer — the translation row
+  // hides its picker the same way and says the name instead.
+  const many = (usable || []).length > 1;
+  sel.hidden = !many;
+  if (nameEl) {
+    nameEl.hidden = many;
+    if (!many && current) { nameEl.textContent = label(current); nameEl.title = nameEl.textContent; }
+  }
+  // Rebuilt every paint, hidden or not: a family that stopped being usable —
+  // a key cleared, a host permission taken back — must not be left behind in
+  // the list as an option nobody can hear.
   sel.textContent = "";
-  // What a cloud family may show HERE: the voice in use and the ones picked
-  // recently — not its catalogue. Thirteen names is a choice; sixty is a wall,
-  // and the wall is what this control had become for anyone with a key
-  // (three-question review 题 C). The full catalogue lives on the settings page, where it can
-  // be searched, fetched and heard.
-  const RECENT_VOICES_SHOWN = 4;
-  const recentFor = (p) => (recents || [])
-    .filter((r) => r.p === p.id && r.id !== storedVoice && ttsVoiceUsableHere(p, r.id))
-    .map((r) => r.id)
-    .slice(0, RECENT_VOICES_SHOWN);
-  const addVoice = (parent, p, v) => {
-    const o = document.createElement("option");
-    o.value = p.id + "|" + v;
-    // Who the voice is and where its accent comes from — the raw id says
-    // neither, and thirteen raw ids are a wall rather than a choice.
-    o.textContent = ttsVoiceLabel(v);
-    parent.appendChild(o);
-  };
-  // The browser's own engine has no list of its own: its voices are whatever
-  // this machine has, narrowed to the language being read. Everything else
-  // ships its family with it.
-  // …and remember when the local family came back empty, so the painter can
-  // heal itself below instead of trusting one poll at open time.
-  let localCameBackEmpty = false;
-  const voicesOf = (p) => {
-    if (!p.localVoices) {
-      // The machine's own voices are not a catalogue anybody publishes — they
-      // are whatever is installed here, already narrowed to the language being
-      // read, and typically a handful. A cloud family is a catalogue, and its
-      // place is the settings page.
-      const mine = [];
-      if (current && p.id === current.id && storedVoice &&
-          ttsVoiceUsableHere(p, storedVoice)) mine.push(storedVoice);
-      for (const v of recentFor(p)) if (mine.indexOf(v) < 0) mine.push(v);
-      if (!mine.length) {
-        const fallback = p.defaultVoice || (p.voices || [])[0];
-        if (fallback) mine.push(fallback);
-      }
-      return mine;
+  {
+    for (const p of usable || []) {
+      const o = document.createElement("option");
+      o.value = p.id;
+      // Name only. The "best for Chinese" tag rides along on the settings
+      // page and in the voice list, where there is room for it; in a picker
+      // capped at half a 360px row it is what gets clipped — measured, and it
+      // clips mid-word ("中文推"), which reads as a bug rather than a hint.
+      o.textContent = label(p);
+      sel.appendChild(o);
     }
-    const got = self.YTDS_PROVIDERS.tts.localVoiceNames(
-      window.speechSynthesis, state.targetLang);
-    if (!got.length) localCameBackEmpty = true;
-    return got;
-  };
-  if (usable.length > 1) {
-    for (const p of usable) {
-      // The local family's group can be momentarily empty — the machine has
-      // not answered yet — but it stays listed: "the free engine is always
-      // there" is a promise this card makes, and voiceschanged fills it in.
-      const g = document.createElement("optgroup");
-      // Not p.name: that literal is the Chinese one for the providers that are
-      // known by a Chinese name abroad, and an English reader with one key
-      // configured was shown a group headed 浏览器内置（免费）.
-      g.label = (p.nameKey ? t(p.nameKey, p.name) : p.name) +
-        ((p.id === "qwen-tts" && /^zh\b/i.test(state.targetLang || ""))
-          ? " · " + t("provTtsZhReco", "中文推荐") : "");
-      // Machine voices last inside the family's group — providers.js orders
-      // the flat list that way. optgroups cannot nest, so here the heading is
-      // implicit; the single-provider path below gets the labelled group.
-      for (const v of voicesOf(p)) addVoice(g, p, v);
-      sel.appendChild(g);
-    }
-  } else if (current.localVoices) {
-    const split = self.YTDS_PROVIDERS.tts.localVoiceSplit(
-      window.speechSynthesis, state.targetLang);
-    if (!split.normal.length && !split.machine.length) localCameBackEmpty = true;
-    for (const v of split.normal) addVoice(sel, current, v);
-    if (split.machine.length) {
-      const g = document.createElement("optgroup");
-      g.label = t("ttsRobotVoices", "机器音");
-      for (const v of split.machine) addVoice(g, current, v);
-      sel.appendChild(g);
-    }
-  } else {
-    for (const v of voicesOf(current)) addVoice(sel, current, v);
+    sel.value = current ? current.id : "";
+    if (many) fitPickWidth(sel);
   }
-  const choices = voicesOf(current);
-  // A voice fetched on the settings page is one the engine will honour but is
-  // not in the family we ship. Leaving it out of the menu did not stop it from
-  // speaking — it only stopped the menu from admitting which voice that was.
-  const P = self.YTDS_PROVIDERS;
-  // Not for the browser's own voices. Their names are whatever THIS machine
-  // has installed, ttsVoice rides storage.sync between machines, and
-  // ttsVoiceOwned cannot check them (providers.js says as much: the worker has
-  // no voice table) — so it says yes to a name from the other machine, this
-  // branch would list and select it, and the engine, which looks the name up
-  // for real, would fall back to the system default. The control would be
-  // naming a voice nobody is hearing. Here the machine's own list is the
-  // authority, and voiceschanged repaints when it arrives.
-  if (storedVoice && !current.localVoices && !choices.includes(storedVoice) &&
-      P.tts.voiceOwned(current, storedVoice) &&
-      P.tts.voiceAppliesTo(current, storedVoice, state.targetLang)) {
-    // Looked up by the SAME expression that wrote it. Three providers carry a
-    // nameKey, so p.name and the label on screen are different strings in
-    // every locale — matching on p.name found nothing, and the rescued voice
-    // landed outside its group at the bottom of the list. Nothing reaches both
-    // lines today, which is exactly why it would have gone unnoticed.
-    const curLabel = current.nameKey ? t(current.nameKey, current.name) : current.name;
-    const parent = usable.length > 1
-      ? Array.prototype.find.call(sel.children,
-        (g) => g.tagName === "OPTGROUP" && g.label === curLabel) || sel
-      : sel;
-    addVoice(parent, current, storedVoice);
-    choices.push(storedVoice);
-  }
-  const voice = storedVoice && choices.includes(storedVoice)
-    ? storedVoice : (current.defaultVoice || choices[0] || "");
-  sel.value = current.id + "|" + voice;
-  // Last, and never selectable as a voice: where the rest of them are. Without
-  // it the shortened list would look like the voices had gone missing.
-  const more = document.createElement("option");
-  more.value = VOICE_MORE;
-  more.textContent = t("popupVoiceMore", "更多音色…");
-  sel.appendChild(more);
-  // The first version of this lived in initTtsWatch as a poll at open time —
-  // seven tries over about three and a half seconds — and D67 refuted that
-  // shape on the settings page: a machine that finishes later, or a provider
-  // switched to while the table is still cold, lands after the poll gave up
-  // and announces nothing, because by then the table WAS already built. Heal
-  // the paint instead of timing the machine: whenever this card draws an
-  // empty local list, draw it again shortly. Same shape as options.js.
-  if (localCameBackEmpty && localVoiceRetry < 8) {
-    localVoiceRetry++;
-    clearTimeout(localVoiceTimer);
-    localVoiceTimer = setTimeout(paintTtsCard, 120 * localVoiceRetry);
-  } else if (!localCameBackEmpty) {
-    localVoiceRetry = 0;
-  }
+  btn.textContent = "";
+  const b = document.createElement("b");
+  b.textContent = voice ? ttsVoiceLabel(voice) : t("popupVoiceNone", "未选音色");
+  btn.appendChild(b);
+  btn.title = b.textContent;
 }
 
 // The settings page can pull the ground out from under this card while it is
@@ -998,8 +959,9 @@ function activeProvider() {
   return (P && P.get(state.byoProvider)) || null;
 }
 
-function byoErrText(code) {
-  return t(P ? P.errorKey(code) : "byoErrFailed", t("byoErrFailed", "连接失败，稍后再试。"));
+function byoErrText(code, provider) {
+  return t(P ? P.errorKey(code, provider) : "byoErrFailed",
+    t("byoErrFailed", "连接失败，稍后再试。"));
 }
 
 function paintByoPanel() {
@@ -1045,7 +1007,12 @@ function paintByoPanel() {
     // The model used to be half of this line's text. It is now the row's own
     // control, because it is the part that changes — and the part a reader
     // compares against a bill or a doc.
-    paintModelBtn(isSetUp(p) ? model : null);
+    // Only an LLM has a model to name. DeepL is a translation API with one
+    // endpoint and nothing to choose, and the row offered it "未选模型" —
+    // a control for a question that provider does not have. The settings page
+    // has always guarded this (paintModelRow returns for kind !== "llm"); the
+    // popup did not.
+    paintModelBtn(isSetUp(p) && p.kind === "llm" ? model : null);
 
     if (!pick || configured.length < 2) {
       if (pick) pick.hidden = true;
@@ -1068,7 +1035,28 @@ function paintByoPanel() {
       pick.appendChild(o);
     }
     pick.value = p.id;
+    fitPickWidth(pick);
   });
+}
+
+// A native select is as wide as its WIDEST option, not the one it is showing.
+// With "SiliconFlow · 未验证" in the list, "DeepL" sat in a box twice the width
+// of the word — reported from the real machine with a screenshot. So the box
+// asks for what is on screen; the CSS cap on half the row still applies, and a
+// longer name simply hits it.
+function fitPickWidth(sel) {
+  if (!sel || sel.hidden) return;
+  const label = (sel.options[sel.selectedIndex] || {}).textContent || "";
+  let w = 0;
+  try {
+    const cs = getComputedStyle(sel);
+    const c = fitPickWidth.canvas || (fitPickWidth.canvas = document.createElement("canvas"));
+    const ctx = c.getContext("2d");
+    ctx.font = cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+    w = ctx.measureText(label).width;
+  } catch (_e) { /* no canvas in some rigs: leave the box as it was */ }
+  // padding (9 + 26) + border (2) + a hair so the text never touches the arrow
+  sel.style.width = w ? Math.ceil(w + 39) + "px" : "";
 }
 
 // Switching providers here changes only which of the set-up ones is in use;
@@ -1078,6 +1066,11 @@ function paintByoPanel() {
 function onPickProvider() {
   const id = $("byoPick").value;
   if (!id || id === state.byoProvider) return;
+  // Whatever is on screen belongs to the provider being left. The select can be
+  // changed from the keyboard, which fires no click for the outside-click
+  // handler to catch, so an open menu would otherwise stay — offering the old
+  // family's models under the new family's name.
+  closeModelMenu();
   chrome.storage.sync.get({ byoModelBy: {} }, (got) => {
     const byProvider = (got && got.byoModelBy) || {};
     state.byoProvider = id;
@@ -1123,9 +1116,6 @@ function paintModelBtn(model) {
 const RECENT_MODELS = "byoModelRecents";
 const RECENT_VOICES = "ttsVoiceRecents";
 const RECENT_MAX = 5;
-// Not a provider id, and not a voice name: the value of the row that leads to
-// the settings page.
-const VOICE_MORE = "__more__";
 
 function recentsRead(store) {
   return new Promise((resolve) => {
@@ -1223,6 +1213,7 @@ async function openModelMenu() {
   const gen = ++modelMenuGen;
   const { items, current, cached } = await modelMenuItems(p);
   if (gen !== modelMenuGen) return;   // a newer open, or a close, got here first
+  if (activeProvider() !== p) return; // …or the row changed provider meanwhile
   menu.textContent = "";
   for (const id of items) {
     const row = document.createElement("button");
@@ -1267,26 +1258,166 @@ async function openModelMenu() {
 async function onPickModel(id) {
   const p = activeProvider();
   closeModelMenu();
+  // The row that opened the menu takes the focus back. Hiding the element the
+  // focus was inside drops it on <body>, which loses a keyboard reader their
+  // place entirely.
+  const opener = $("byoModelBtn");
+  if (opener && !opener.hidden) opener.focus();
   if (!p || !id) return;
   if (id === (state.byoModel || p.defaultModel || "")) return;
   const got = await new Promise((resolve) => {
     try { chrome.storage.sync.get({ byoModelBy: {} }, resolve); }
     catch (_e) { resolve(null); }
   });
+  // The provider picker is one click away from this menu, and this read has
+  // just been to storage and back. If the reader switched providers in that
+  // window, byoModel now belongs to the other one — writing ours over it would
+  // leave the row naming a model that provider cannot use. The per-provider
+  // memory is still worth keeping, so it is written either way, below.
+  const stillOurs = state.byoProvider === p.id;
   const byProvider = Object.assign({}, (got && got.byoModelBy) || {});
   byProvider[p.id] = id;
+  const write = stillOurs
+    ? { byoModel: id, byoModelBy: byProvider }
+    : { byoModelBy: byProvider };
   await new Promise((resolve) => {
-    try {
-      chrome.storage.sync.set({ byoModel: id, byoModelBy: byProvider }, () => resolve());
-    } catch (_e) { resolve(); }
+    try { chrome.storage.sync.set(write, () => resolve()); }
+    catch (_e) { resolve(); }
   });
   await recentsPush(RECENT_MODELS, p.id, id);
+  if (!stillOurs) return;              // the row belongs to someone else now
   state.byoModel = id;
   paintByoPanel();
   // Lines already on screen keep the translation they were given: switching
   // model means "the part coming up is hard", not "buy the last twenty minutes
   // again". The next line out is the first one the new model sees.
   showModelMsg(tsub("popupModelSwitched", [id], "此后使用 " + id));
+}
+
+// ---- the voice menu -------------------------------------------------------
+// Twin of the model menu, and for the same reason: one family at a time. The
+// voice in use first, then what was picked lately, then the rest of that
+// family — and the last row is the settings page, which is the only place that
+// can fetch a language's full catalogue and play it before you commit.
+//
+// Not capped the way models are: a family's voices ARE this control's subject,
+// the menu scrolls, and "the one I want is not here, so I have to go to the
+// settings page" is exactly the complaint this row was rebuilt to answer.
+const VOICE_MENU_MAX = 60;
+let voiceMenuGen = 0;
+
+async function voiceMenuItems(p) {
+  const current = ttsPick.voice || "";
+  const out = [];
+  const seen = new Set();
+  const names = Object.create(null);
+  const add = (v) => { if (v && !seen.has(v)) { seen.add(v); out.push(v); } };
+  add(current);
+  for (const r of ttsPick.recents) {
+    if (r.p === p.id && ttsVoiceUsableHere(p, r.id)) add(r.id);
+  }
+  familyVoices(p).forEach(add);
+  // What this key fetched on the settings page. The machine's own voices are
+  // never cached — they are asked for fresh, and they belong to this machine.
+  if (!p.localVoices) {
+    const hit = await cachedCatalog("v " + (state.targetLang || ""), p.id);
+    if (hit) {
+      (hit.items || []).forEach((v) => {
+        add(v);
+        if (hit.names && hit.names[v]) names[v] = hit.names[v];
+      });
+    }
+  }
+  return { items: out.slice(0, VOICE_MENU_MAX), current, names };
+}
+
+function voiceMenuIsOpen() {
+  const menu = $("ttsVoiceMenu");
+  return !!(menu && !menu.hidden);
+}
+
+function closeVoiceMenu() {
+  const menu = $("ttsVoiceMenu");
+  const btn = $("ttsVoiceBtn");
+  if (menu) { menu.hidden = true; menu.textContent = ""; }
+  if (btn) btn.setAttribute("aria-expanded", "false");
+  voiceMenuGen++;
+}
+
+async function openVoiceMenu() {
+  const p = ttsPick.current;
+  const menu = $("ttsVoiceMenu");
+  const btn = $("ttsVoiceBtn");
+  if (!p || !menu || !btn) return;
+  const gen = ++voiceMenuGen;
+  const { items, current, names } = await voiceMenuItems(p);
+  if (gen !== voiceMenuGen) return;          // a newer open, or a close, won
+  if (ttsPick.current !== p) return;         // …or the row changed family
+  menu.textContent = "";
+  for (const v of items) {
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "pmenu-item" + (v === current ? " on" : "");
+    row.setAttribute("role", "menuitem");
+    if (v === current) row.setAttribute("aria-current", "true");
+    const label = document.createElement("span");
+    label.textContent = names[v] || ttsVoiceLabel(v);
+    row.appendChild(label);
+    row.title = label.textContent;
+    row.addEventListener("click", () => onPickVoice(v));
+    menu.appendChild(row);
+  }
+  const sep = document.createElement("div");
+  sep.className = "pmenu-sep";
+  menu.appendChild(sep);
+  const more = document.createElement("button");
+  more.type = "button";
+  more.className = "pmenu-item pmenu-more";
+  more.setAttribute("role", "menuitem");
+  const moreLabel = document.createElement("span");
+  moreLabel.textContent = t("popupVoiceMore", "更多音色…");
+  more.appendChild(moreLabel);
+  more.addEventListener("click", () => openOptionsAt("#readaloud"));
+  menu.appendChild(more);
+  menu.hidden = false;
+  btn.setAttribute("aria-expanded", "true");
+  const first = menu.querySelector(".pmenu-item.on") || menu.querySelector(".pmenu-item");
+  if (first) first.focus();
+}
+
+// Both keys in one write, the way this control has always done it: a voice
+// belongs to a family, so choosing one chooses the family too.
+function onPickVoice(v) {
+  const p = ttsPick.current;
+  closeVoiceMenu();
+  const btn = $("ttsVoiceBtn");
+  if (btn) { try { btn.focus(); } catch (_e) { /* ignore */ } }
+  if (!p || !v) return;
+  state.ttsProvider = p.id;
+  state.ttsVoice = v;
+  ttsPick.voice = v;
+  chrome.storage.sync.set({ ttsProvider: p.id, ttsVoice: v });
+  recentsPush(RECENT_VOICES, p.id, v);
+  paintTtsCard();
+  refreshTtsStatus();
+}
+
+// Switching family: the voice has to come with it, because a voice name means
+// nothing to another provider. The one this family was last heard with comes
+// back (that is what the recent list is for); failing that, its own default.
+function onPickTtsProvider() {
+  const sel = $("ttsProviderPick");
+  const p = self.YTDS_PROVIDERS && self.YTDS_PROVIDERS.tts.get(sel && sel.value);
+  if (!p || (ttsPick.current && p.id === ttsPick.current.id)) return;
+  closeVoiceMenu();
+  const last = ttsPick.recents.find((r) => r.p === p.id && ttsVoiceUsableHere(p, r.id));
+  const voice = (last && last.id) || voiceInUse(p, "");
+  state.ttsProvider = p.id;
+  state.ttsVoice = voice;
+  chrome.storage.sync.set({ ttsProvider: p.id, ttsVoice: voice });
+  if (voice) recentsPush(RECENT_VOICES, p.id, voice);
+  paintTtsCard();
+  refreshTtsStatus();
 }
 
 let modelMsgTimer = 0;
@@ -1352,8 +1483,8 @@ function paintExportEngine() {
   $("exportByo").checked = exportByo;
   note.hidden = !offered;
   note.textContent = exportByo
-    ? t("exportByoNote", "整片字幕会发给你的服务商翻译，消耗额度；点导出后会先给出预估。")
-    : t("exportUsesYouTube", "导出用的是 YouTube 自带的整轨翻译（免费、不消耗你的 API）。");
+    ? t("exportByoNote", "整片字幕会交给你的服务商、用你的 Key 翻译，消耗额度；点导出后会先给出预估。")
+    : t("exportUsesYouTube", "导出用的是 YouTube 自带的整轨翻译——免费，不消耗你的 API。");
   note.classList.toggle("warn", exportByo);
 }
 
@@ -1403,7 +1534,7 @@ function setExportBusy(on, canStop) {
   btn.disabled = on;
   btn.textContent = on
     ? t("exportWorking", "正在生成…")
-    : t("exportSrt", "下载 SRT 字幕");
+    : t("exportSrt", "下载 SRT");
   const stop = $("exportStop");
   stop.hidden = !(on && canStop);
   stop.disabled = false;
@@ -1427,7 +1558,7 @@ function startPoll(tabId) {
     if (waitUntil > Date.now()) {
       const secs = Math.max(1, Math.ceil((waitUntil - Date.now()) / 1000));
       showExportMsg(tsub("exportWaiting", [String(secs)],
-        "翻译端点正在限流，约 " + secs + " 秒后继续"), "warn");
+        "翻译接口正在限流，约 " + secs + " 秒后继续"), "warn");
       return;
     }
     if (s.total > 0) {
@@ -1439,11 +1570,11 @@ function startPoll(tabId) {
 
 function exportErrText(resp) {
   if (resp.reason === "cancelled") return t("exportCancelled", "已取消导出。");
-  if (resp.reason === "byofail") return byoErrText(resp.code || "failed");
+  if (resp.reason === "byofail") return byoErrText(resp.code || "failed", activeProvider());
   if (resp.reason === "same") return t("backendStatusSame", "本视频字幕已是目标语言，无需翻译。");
   if (resp.reason === "limited") {
     return t("exportLimited",
-      "YouTube 暂时限制了整轨翻译，过一会儿再试；或者勾选「用自带 Key 翻译」。");
+      "YouTube 暂时限制了整轨翻译，过一会儿再试。配好自己的 Key 之后，导出卡片上会多一个勾选，可以绕开它。");
   }
   if (resp.reason === "notrans") {
     return t("exportNoTrans", "这个视频拿不到译文，试试「整轨翻译」或换个目标语言。");
@@ -1678,6 +1809,34 @@ function wire() {
       else openModelMenu();
     });
   }
+  // The voice menu is the same layer over a different row, so it gets the same
+  // two rules: arrows walk it, Escape gives the button back its focus.
+  const voiceBtn = $("ttsVoiceBtn");
+  document.addEventListener("keydown", (e) => {
+    if (!voiceMenuIsOpen()) return;
+    if (e.key === "Escape") {
+      closeVoiceMenu();
+      if (voiceBtn) voiceBtn.focus();
+      return;
+    }
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    const rows = Array.prototype.slice.call(
+      $("ttsVoiceMenu").querySelectorAll(".pmenu-item"));
+    if (!rows.length) return;
+    e.preventDefault();
+    const at = rows.indexOf(document.activeElement);
+    const step = e.key === "ArrowDown" ? 1 : -1;
+    const next = at < 0 ? (step > 0 ? 0 : rows.length - 1)
+      : (at + step + rows.length) % rows.length;
+    rows[next].focus();
+  });
+  document.addEventListener("click", (e) => {
+    if (!voiceMenuIsOpen()) return;
+    const menu = $("ttsVoiceMenu");
+    if (menu && menu.contains(e.target)) return;
+    if (voiceBtn && voiceBtn.contains(e.target)) return;
+    closeVoiceMenu();
+  });
   document.addEventListener("keydown", (e) => {
     if (!modelMenuIsOpen()) return;
     if (e.key === "Escape") {
@@ -1726,26 +1885,10 @@ function wire() {
   });
   // One change, both keys, one write: the engine reads them together and the
   // options page follows through its storage listener.
-  $("ttsVoicePick").addEventListener("change", (e) => {
-    // The last row is a door, not a voice. Put the control back on the voice
-    // in use first: leaving it on "more…" would be a menu naming something
-    // nobody is hearing.
-    if (e.target.value === VOICE_MORE) {
-      e.target.value = state.ttsProvider + "|" + state.ttsVoice;
-      openOptionsAt("#readaloud");
-      return;
-    }
-    const cut = e.target.value.indexOf("|");
-    if (cut < 1) return;
-    const provider = e.target.value.slice(0, cut);
-    const voice = e.target.value.slice(cut + 1);
-    state.ttsProvider = provider;
-    state.ttsVoice = voice;
-    chrome.storage.sync.set({ ttsProvider: provider, ttsVoice: voice });
-    // Remembered the same way models are, in the same local area and for the
-    // same reason: a voice belongs to a provider whose key is on THIS machine.
-    recentsPush(RECENT_VOICES, provider, voice);
-    refreshTtsStatus();                     // the "(voice)" in the status line
+  $("ttsProviderPick").addEventListener("change", onPickTtsProvider);
+  $("ttsVoiceBtn").addEventListener("click", () => {
+    if (voiceMenuIsOpen()) { closeVoiceMenu(); return; }
+    openVoiceMenu();
   });
 
   // line-style card fold

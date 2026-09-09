@@ -171,13 +171,23 @@
         <input type="range" id="ttsDuck" min="0" max="100" step="5" />
       </div>
 
-      <!-- One dropdown carries both dimensions: voices grouped per configured
-           provider (optgroup), so picking a voice IS picking its provider —
-           the pattern byoPick set for translation. Filled by paintTtsCard(). -->
-      <div class="row" id="ttsVoiceRow" hidden>
-        <label for="ttsVoicePick" data-i18n="ttsVoiceLabel">音色</label>
-        <select id="ttsVoicePick"></select>
+      <!-- The same shape as the translation row: mark, the provider, then the
+           voice as the row's own control. It carried both dimensions in one
+           dropdown until 2026-08-30 — picking a voice still writes both keys,
+           what changed is that the provider has a control of its own, so the
+           menu offers ONE family's voices instead of four families' worth. -->
+      <div class="row byo-sum tts-pick" id="ttsVoiceRow" hidden>
+        <span id="ttsIcon"></span>
+        <span class="byo-sum-text" id="ttsProviderName" hidden></span>
+        <select class="byo-pick" id="ttsProviderPick" hidden
+                data-i18n-aria="byoProviderLabel" aria-label="服务商"></select>
+        <button type="button" class="byo-model" id="ttsVoiceBtn"
+                aria-haspopup="true" aria-expanded="false"
+                data-i18n-aria="ttsVoiceLabel" aria-label="音色"></button>
       </div>
+      <!-- Inline, like the model menu it is a twin of (设计规范 §2). -->
+      <div class="pmenu" id="ttsVoiceMenu" hidden role="menu"
+           data-i18n-aria="ttsVoiceLabel" aria-label="音色"></div>
 
       <!-- Status doubles as the door to the low-frequency settings (region,
            test, adding a provider): a button, not a dead line. Text is

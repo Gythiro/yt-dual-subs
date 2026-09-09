@@ -336,7 +336,7 @@
     "message": "URL gốc của API phải là địa chỉ https:// đầy đủ."
   },
   "byoErrNoPerm": {
-    "message": "Không có quyền truy cập máy chủ API đó thì tiện ích không thể kết nối."
+    "message": "Không có quyền truy cập máy chủ API đó thì tiện ích không thể kết nối. Nhấn “Lưu và kiểm tra” lần nữa và cho phép truy cập."
   },
   "byoErrAuth": {
     "message": "Khóa bị từ chối (401/403) — kiểm tra đã sao chép đầy đủ và khóa còn hiệu lực."
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Không thể kết nối endpoint đó (mạng hoặc hạn chế khu vực)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Không kết nối được tới địa chỉ này: hoặc máy chủ chưa chạy, hoặc nó chưa cho phép tiện ích truy cập (Ollama dùng OLLAMA_ORIGINS, LM Studio bật CORS)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Nhà cung cấp này không hỗ trợ ngôn ngữ bạn đã chọn — hãy đổi ngôn ngữ hoặc công cụ."
@@ -495,7 +498,7 @@
     "message": "Mô hình dịch"
   },
   "popupModelMore": {
-    "message": "Thêm mô hình…"
+    "message": "Mô hình khác…"
   },
   "popupModelFetch": {
     "message": "Lấy mô hình trong cài đặt"
@@ -633,7 +636,7 @@
     "message": "Ngôn ngữ khác"
   },
   "langsMoreHint": {
-    "message": "Nhấn + để thêm. Mọi ngôn ngữ trong danh sách đều được các công cụ miễn phí và DeepL chấp nhận làm đích."
+    "message": "Nhấn + để thêm. Danh sách bám theo các ngôn ngữ đích mà công cụ miễn phí và DeepL nêu ra."
   },
   "langsReset": {
     "message": "Khôi phục mặc định"
@@ -682,7 +685,25 @@
     "message": "Tự động — theo trình duyệt"
   },
   "uiLocaleHint": {
-    "message": "Ngôn ngữ menu và cài đặt của tiện ích này. Một số nhãn hiện trên video vẫn theo ngôn ngữ trình duyệt. Phụ đề được dịch sang ngôn ngữ nào thì chọn trong cửa sổ pop-up và mục “Ngôn ngữ phụ đề” — không phải ở đây."
+    "message": "Ngôn ngữ menu và cài đặt của tiện ích này. Một số nhãn hiện trên video vẫn theo ngôn ngữ trình duyệt. Phụ đề được dịch sang ngôn ngữ nào thì chọn trong cửa sổ pop-up; mục “Ngôn ngữ phụ đề” chỉ quyết định pop-up liệt kê những ngôn ngữ nào."
+  },
+  "cmdToggleSubs": {
+    "message": "Bật hoặc tắt phụ đề"
+  },
+  "cmdToggleTts": {
+    "message": "Bật hoặc tắt đọc to"
+  },
+  "optShortcutsLabel": {
+    "message": "Phím tắt"
+  },
+  "optShortcutsOpen": {
+    "message": "Đặt phím tắt"
+  },
+  "optShortcutsHint": {
+    "message": "Phím tắt do Chrome giữ, không phải tiện ích này. Ban đầu chưa gán phím nào; có hai thứ gán được: bật/tắt phụ đề và bật/tắt đọc to."
+  },
+  "optShortcutsFallback": {
+    "message": "Trang đó không mở được từ đây — dán chrome://extensions/shortcuts vào thanh địa chỉ."
   },
   "startTargetLabel": {
     "message": "Ngôn ngữ dịch"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "Trước tiên hãy nhập khu vực dịch vụ của khóa Azure (ví dụ: eastus)."
   },
+  "ttsNoSynth": {
+    "message": "Máy này không có giọng đọc nào."
+  },
+  "ttsVoicesLoading": {
+    "message": "Đang lấy danh sách giọng của máy này…"
+  },
   "startPicChop1": {
     "message": "có hai cái lớn"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Cài đặt đọc to"
-  },
-  "ttsGroupSetup": {
-    "message": "Nhà cung cấp và khóa"
   },
   "ttsGroupPlayback": {
     "message": "Phát"
@@ -857,7 +881,10 @@
     "message": "Không nhận được âm thanh — thử lại, hoặc chọn giọng khác."
   },
   "popupVoiceMore": {
-    "message": "Thêm giọng…"
+    "message": "Giọng khác…"
+  },
+  "popupVoiceNone": {
+    "message": "Chưa chọn giọng"
   },
   "ttsRobotVoices": {
     "message": "Robot",
@@ -884,23 +911,26 @@
     "description": "aria-label of the summary panel's close button."
   },
   "sumEmpty": {
-    "message": "Video này không có track phụ đề dùng được.",
+    "message": "Video này không có phụ đề nào dùng được.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Tóm tắt cần dịch vụ của riêng bạn: một nhà cung cấp có khóa của bạn, hoặc mô hình chạy trên máy này. Engine miễn phí chỉ dịch, không tóm tắt.",
+    "message": "Tóm tắt cần dịch vụ của riêng bạn: một nhà cung cấp có khóa của bạn, hoặc mô hình chạy trên máy này. Công cụ miễn phí chỉ dịch, không tóm tắt.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
     "message": "Tóm tắt ngay",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Tóm tắt lại"
+  },
   "sumFail": {
     "message": "Tóm tắt thất bại — thử lại sau.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Sẽ gửi toàn bộ track phụ đề tới $PROVIDER$, chia $PARTS$ phần, dùng hạn mức của bạn.",
+    "message": "Sẽ gửi toàn bộ phụ đề tới $PROVIDER$, chia $PARTS$ phần, dùng hạn mức của bạn.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Endpoint dịch đang giới hạn tốc độ — sẽ tiếp tục sau khoảng $SECONDS$s.",
+    "message": "Endpoint dịch đang giới hạn tốc độ — sẽ tiếp tục sau khoảng $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

@@ -161,7 +161,9 @@ async function resolveByo(opts) {
   // endpoint may not want one at all (Ollama and LM Studio ignore auth), so
   // there an empty key means "send no Authorization header", not "not set up".
   const key = (await keyFor(p.id)) || "";
-  if (!key && !p.custom) throw tag(new Error("no api key"), { noKey: true, code: "noKey" });
+  if (!key && !p.custom && !p.noKey) {
+    throw tag(new Error("no api key"), { noKey: true, code: "noKey" });
+  }
 
   const endpoint = PROVIDERS.endpointFor(p, { baseUrl, key });
   if (p.kind === "deepl") origin = new URL(endpoint).origin;   // free vs pro
@@ -2182,6 +2184,35 @@ chrome.runtime.onInstalled.addListener((details) => {
   });
 });
 
+// Keyboard shortcuts. The manifest suggests no keys at all, so nothing here
+// fires until someone binds one on Chrome's own shortcuts page: no default
+// keystroke of ours can collide with YouTube's, and a viewer who never opens
+// that page sees no change whatsoever.
+//
+// Both commands write the SAME sync key the popup switch and the in-player
+// menu write, and let storage.onChanged carry it the rest of the way. That is
+// why there is no tab query here: the setting is global (it always was), so a
+// press with no YouTube tab in front still leaves it where it was put, and
+// every surface that shows it repaints itself.
+const COMMAND_KEYS = {
+  "toggle-subtitles": ["enabled", true],
+  "toggle-read-aloud": ["ttsEnabled", false]
+};
+
+if (chrome.commands && chrome.commands.onCommand) {
+  chrome.commands.onCommand.addListener((command) => {
+    const pair = COMMAND_KEYS[command];
+    if (!pair) return;                     // a name we do not own
+    const [key, dflt] = pair;
+    // Read before flipping: the worker is killed after thirty seconds idle, so
+    // no in-memory copy of the switch can be trusted to still be there when a
+    // key is pressed an hour later.
+    chrome.storage.sync.get({ [key]: dflt }, (got) => {
+      chrome.storage.sync.set({ [key]: !(got && got[key]) });
+    });
+  });
+}
+
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg && msg.type === "openOptions") {
     // The in-player menu's settings row. A content script cannot call
@@ -2208,6 +2239,17 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     cfgReady.then(() => hydrated).then(() => {
       tlangCleared();
       sendResponse({ ok: true });
+    }).catch(() => sendResponse({ ok: false }));
+    return true;
+  }
+  // The own-key lane's gate, asked the same way and for the same reason: the
+  // download waits it out with a countdown instead of firing thirty chunks at
+  // a door the worker already knows is shut. tlangGate above answers for
+  // YouTube's whole-track lane; this one answers for the reader's own key.
+  if (msg && msg.type === "byoGate") {
+    cfgReady.then(() => hydrated).then(() => {
+      const gated = Date.now() < byoLane.gateUntil;
+      sendResponse({ ok: true, gated, gateUntil: byoLane.gateUntil });
     }).catch(() => sendResponse({ ok: false }));
     return true;
   }

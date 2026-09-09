@@ -336,13 +336,13 @@
     "message": "Базовый URL API должен быть полным адресом https://."
   },
   "byoErrNoPerm": {
-    "message": "Без разрешения на доступ к этому хосту API расширение не сможет подключиться."
+    "message": "Без разрешения на доступ к этому хосту API расширение не сможет подключиться. Нажмите «Сохранить и проверить» ещё раз и разрешите доступ."
   },
   "byoErrAuth": {
     "message": "Ключ отклонён (401/403) — проверьте, что скопировали его целиком и что он активен."
   },
   "byoErrListAuth": {
-    "message": "У этого ключа нет права читать список. Выдайте его в панели провайдера и попробуйте снова.",
+    "message": "У этого ключа нет права читать список. Выдайте это право в панели провайдера и попробуйте снова.",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Не удаётся достучаться до сервера (сеть или региональные ограничения)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Не удалось подключиться к этому адресу: сервер не запущен либо ещё не разрешает доступ расширению (OLLAMA_ORIGINS для Ollama, переключатель CORS в LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "У этого сервиса нет варианта для выбранного языка — смените язык или движок."
@@ -498,7 +501,7 @@
     "message": "Другие модели…"
   },
   "popupModelFetch": {
-    "message": "Загрузить модели в настройках"
+    "message": "Загрузить список моделей в настройках"
   },
   "popupModelSwitched": {
     "message": "Дальше — $MODEL$",
@@ -633,7 +636,7 @@
     "message": "Другие языки"
   },
   "langsMoreHint": {
-    "message": "Нажмите +, чтобы добавить. Все перечисленные языки бесплатные движки и DeepL принимают как целевые."
+    "message": "Нажмите +, чтобы добавить. Список соответствует целевым языкам, которые указывают бесплатные движки и DeepL."
   },
   "langsReset": {
     "message": "Восстановить по умолчанию"
@@ -682,7 +685,25 @@
     "message": "Авто — как в браузере"
   },
   "uiLocaleHint": {
-    "message": "Язык меню и настроек самого расширения. Некоторые подписи на видео по-прежнему следуют языку браузера. На какой язык переводить субтитры, выбирается во всплывающем окне и в разделе «Языки субтитров» — не здесь."
+    "message": "Язык меню и настроек самого расширения. Некоторые подписи на видео по-прежнему зависят от языка браузера. На какой язык переводить субтитры, выбирается во всплывающем окне; раздел «Языки субтитров» лишь решает, какие языки в нём перечислены."
+  },
+  "cmdToggleSubs": {
+    "message": "Включить или выключить субтитры"
+  },
+  "cmdToggleTts": {
+    "message": "Включить или выключить чтение вслух"
+  },
+  "optShortcutsLabel": {
+    "message": "Сочетания клавиш"
+  },
+  "optShortcutsOpen": {
+    "message": "Назначить клавиши"
+  },
+  "optShortcutsHint": {
+    "message": "Этими клавишами распоряжается Chrome, а не расширение. Сначала не назначено ни одной; назначить можно две: субтитры вкл/выкл и чтение вслух вкл/выкл."
+  },
+  "optShortcutsFallback": {
+    "message": "Отсюда эта страница не открылась — вставьте chrome://extensions/shortcuts в адресную строку."
   },
   "startTargetLabel": {
     "message": "Язык перевода"
@@ -749,7 +770,7 @@
     }
   },
   "ttsStatusCountsWhy": {
-    "message": "В этом видео $N$ фраз · $M$ пропущено ($W$)",
+    "message": "В этом видео фраз: $N$ · пропущено: $M$ ($W$)",
     "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
   },
   "ttsSkipLate": {
@@ -766,6 +787,12 @@
   },
   "ttsErrNoRegion": {
     "message": "Сначала введите регион службы вашего ключа Azure (например, eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "На этом компьютере нет голосов для чтения вслух."
+  },
+  "ttsVoicesLoading": {
+    "message": "Загружаем список голосов этого компьютера…"
   },
   "startPicChop1": {
     "message": "есть две большие"
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Настройки озвучки"
-  },
-  "ttsGroupSetup": {
-    "message": "Провайдер и ключ"
   },
   "ttsGroupPlayback": {
     "message": "Воспроизведение"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Другие голоса…"
   },
+  "popupVoiceNone": {
+    "message": "Голос не выбран"
+  },
   "ttsRobotVoices": {
     "message": "Робот",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -872,7 +899,7 @@
     "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
   },
   "menuSummary": {
-    "message": "Суммаризация",
+    "message": "Краткое содержание",
     "description": "Player-menu action row: opens the in-player video summary panel."
   },
   "sumPanelTitle": {
@@ -888,29 +915,32 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Для суммаризации нужен ваш собственный сервис: провайдер с вашим ключом или локальная модель на этом компьютере. Бесплатные движки только переводят, но не суммируют.",
+    "message": "Для краткого содержания нужен ваш собственный сервис: провайдер с вашим ключом или локальная модель на этом компьютере. Бесплатные движки только переводят и краткого содержания не составляют.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
-    "message": "Суммировать",
+    "message": "Кратко изложить",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Составить заново"
+  },
   "sumFail": {
-    "message": "Суммаризация не удалась — попробуйте позже.",
+    "message": "Не удалось составить краткое содержание — попробуйте позже.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Вся дорожка субтитров уйдёт в $PROVIDER$, в $PARTS$ част., за счёт вашей квоты.",
+    "message": "Вся дорожка субтитров уйдёт в $PROVIDER$ (частей: $PARTS$), за счёт вашей квоты.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
   "sumWorking": {
-    "message": "Суммирую… часть $DONE$/$TOTAL$",
+    "message": "Составляю… часть $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "$N$ част. не удалось суммировать; остальное выше.",
+    "message": "Пропущено частей: $N$; остальное выше.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Эндпоинт перевода ограничивает частоту запросов — продолжим примерно через $SECONDS$ с.",
+    "message": "Эндпоинт перевода ограничивает частоту запросов — продолжим примерно через $SECONDS$ с",
     "placeholders": {
       "seconds": {
         "content": "$1",

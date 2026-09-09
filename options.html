@@ -100,7 +100,7 @@
         <div class="ofield-head">
           <label for="key" data-i18n="byoKeyLabel">API Key</label>
           <span class="ospacer"></span>
-          <label class="ochk"><input type="checkbox" id="showKey" />
+          <label class="ochk" id="showKeyWrap" hidden><input type="checkbox" id="showKey" />
             <span data-i18n="optShowKey">显示</span></label>
           <button type="button" class="olink" id="keyClear" hidden data-i18n="byoKeyClear">清除</button>
         </div>
@@ -110,7 +110,7 @@
       <button type="button" class="obtn primary" id="testBtn" data-i18n="byoTest">保存并测通</button>
       <p class="omsg" id="msg" role="status" aria-live="polite" hidden></p>
 
-      <p class="onote" data-i18n="optAfterSetup">
+      <p class="onote" id="optAfterSetup" data-i18n="optAfterSetup">
         配好之后回到扩展弹窗，把「翻译引擎」切到「自带 Key」。
       </p>
     </section>
@@ -281,7 +281,7 @@
         </div>
         <div class="olang-col">
           <h2 class="olabel" data-i18n="langsMore">其他语言</h2>
-          <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。列出的语言，都是免费引擎和 DeepL 认的目标语言。</p>
+          <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。这份列表按免费引擎和 DeepL 给出的目标语言来列。</p>
           <ul class="olang-list" id="langMore"></ul>
         </div>
       </div>
@@ -295,17 +295,32 @@
            playback half people come back for. The playback half stays locked
            until the STORED provider has its key — a switch that cannot sound
            must not accept a tick (the popup enforces the same gate). -->
-      <h2 class="olabel" data-i18n="ttsGroupSetup">服务商与 Key</h2>
-      <!-- The translation pane has had this since 3.6; read-aloud shipped its
-           own keys — and Azure's region — with nowhere to look them up. -->
+      <!-- The same head the translation pane has: whose page this is, and the
+           three places that answer "where do I get a key, what does it cost,
+           how do I set it up". Read-aloud had only the guide link, and no name
+           at all — the pane told you which provider you were configuring only
+           by what was highlighted three columns away. -->
+      <div class="odetail-head">
+        <span id="ttsIcon"></span>
+        <h2 id="ttsPName">—</h2>
+      </div>
       <p class="olinks">
+        <a id="ttsKeyLink" target="_blank" rel="noopener" data-i18n="byoGetKey" hidden>去申请 Key</a>
+        <a id="ttsPricingLink" target="_blank" rel="noopener" data-i18n="optPricingLink" hidden>资费与免费额度</a>
         <a id="ttsGuideLink" target="_blank" rel="noopener" data-i18n="byoGuide">还不会配？看教程</a>
       </p>
       <!-- Same field language as the translation pane (.ofield: label line on
            top, control full-width below). The first cut used .orow with the
            setup pane's composite key label inside — the label column collapsed
            to ~100px, "清除" wrapped to a second line and nothing lined up. -->
-      <div class="ofield">
+      <!-- The provider is chosen in the list on the left, the same way the
+           translation pane does it — that list can show a key tick and say
+           which provider is in use, which a dropdown cannot. The select stays
+           as this pane's state (every painter here reads it) and as the way a
+           keyboard reader can still change provider; it is the LIST that is on
+           screen (asked for on 2026-08-30: the same choice should look the
+           same on both panes). -->
+      <div class="ofield" id="ttsProviderField" hidden>
         <label for="ttsProviderSel" data-i18n="byoProviderLabel">服务商</label>
         <select id="ttsProviderSel"></select>
       </div>
@@ -313,7 +328,7 @@
         <div class="ofield-head">
           <label for="ttsKey" data-i18n="byoKeyLabel">API Key</label>
           <span class="ospacer"></span>
-          <label class="ochk"><input type="checkbox" id="ttsShowKey" />
+          <label class="ochk" id="ttsShowKeyWrap" hidden><input type="checkbox" id="ttsShowKey" />
             <span data-i18n="optShowKey">显示</span></label>
           <button type="button" class="olink" id="ttsKeyClear" hidden data-i18n="byoKeyClear">清除</button>
         </div>
@@ -377,7 +392,11 @@
       <p class="omsg" id="ttsMsg" role="status" aria-live="polite" hidden></p>
 
       <h2 class="olabel olabel-gap" data-i18n="ttsGroupPlayback">播放</h2>
-      <p class="oneed" id="ttsNeedKey" hidden data-i18n="optNeedKey">
+      <!-- No data-i18n: paintTtsUse writes this line, because which of the
+           three reasons it is (no key / no region / this browser cannot speak)
+           is only known at paint time. The text below is the fallback the
+           first paint replaces. -->
+      <p class="oneed" id="ttsNeedKey" hidden>
         还没填 Key，这个服务商暂时用不了。
       </p>
       <div class="otts-use" id="ttsUse">
@@ -385,6 +404,11 @@
           <label class="ochk ochk-primary"><input type="checkbox" id="ttsEnabled" />
             <span data-i18n="ttsEnableLabel">在视频里朗读译文</span></label>
         </div>
+        <!-- Stays here, above the sliders: the sentence says the video "drops
+             to the level set BELOW", so its position is load-bearing in all
+             twenty languages. What it did wrong was spacing — see options.css,
+             where it is pulled up against the switch it explains so the switch
+             and the two sliders still read as one group. -->
         <p class="ohint" data-i18n="ttsEnableHint">开着时，每句字幕出现就朗读它的译文；来不及翻译的句子会被跳过，之后也不会补读。朗读期间，视频音量会降到下面设定的档位。用云端音色时，句子长到读不完还会让视频稍微放慢——浏览器自带的音色报不出时长，所以做不到这一点。</p>
         <div class="orow">
           <label for="ttsVolume"><span data-i18n="ttsVolLabel">朗读音量</span>
@@ -412,7 +436,18 @@
         <label for="uiLocaleSel" data-i18n="uiLocaleLabel">界面语言</label>
         <select id="uiLocaleSel"></select>
       </div>
-      <p class="ohint" data-i18n="uiLocaleHint">只影响这个插件自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。字幕翻译成什么语言，在弹窗和「字幕语言」里选，与这里无关。</p>
+      <p class="ohint" data-i18n="uiLocaleHint">只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文用哪种语言，在弹窗里选；「字幕语言」那一面只决定弹窗里列出哪些语言。</p>
+      <!-- Keyboard shortcuts live here and not in the popup: they are bound
+           once and never touched again (design spec §5, the two-layer rule).
+           The keys themselves belong to Chrome — this row is a door to its
+           page, plus one sentence saying nothing is bound until you bind it,
+           which is the only thing a page with no default keys must say. -->
+      <div class="orow">
+        <label for="optShortcuts" data-i18n="optShortcutsLabel">键盘快捷键</label>
+        <button type="button" class="obtn ghost" id="optShortcuts" data-i18n="optShortcutsOpen">设置快捷键</button>
+      </div>
+      <p class="ohint" data-i18n="optShortcutsHint">快捷键由 Chrome 管，不在这个扩展里。默认一个都没绑；能绑的有两件：开关字幕、开关朗读。</p>
+      <p class="ohint warn" id="optShortcutsFail" hidden data-i18n="optShortcutsFallback">这一页从这里打不开。把 chrome://extensions/shortcuts 粘到地址栏。</p>
       <p data-i18n="aboutBlurb">
         给 YouTube 加一层双语字幕：原文一行、译文一行，字体、颜色、位置都能自己调。开源、免费、无广告。
       </p>

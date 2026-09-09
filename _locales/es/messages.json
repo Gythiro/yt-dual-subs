@@ -336,7 +336,7 @@
     "message": "La URL base de la API debe ser una dirección https:// completa."
   },
   "byoErrNoPerm": {
-    "message": "Sin permiso para alcanzar ese host de la API, la extensión no puede conectar."
+    "message": "Sin permiso para alcanzar ese host de la API, la extensión no puede conectar. Pulsa otra vez «Guardar y probar» y concede el permiso."
   },
   "byoErrAuth": {
     "message": "La clave fue rechazada (401/403) — comprueba que se copió entera y está activa."
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "No se puede alcanzar ese endpoint (red o restricción regional)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "No se puede acceder a esa dirección: o el servidor no está en marcha, o todavía no permite el acceso de la extensión (OLLAMA_ORIGINS en Ollama, el interruptor CORS en LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Este proveedor no tiene destino para el idioma elegido — cambia el idioma o el motor."
@@ -633,7 +636,7 @@
     "message": "Otros idiomas"
   },
   "langsMoreHint": {
-    "message": "Pulsa + para añadir uno. Todos los idiomas de la lista son destinos que aceptan los motores gratuitos y DeepL."
+    "message": "Pulsa + para añadir uno. La lista sigue los idiomas de destino que indican los motores gratuitos y DeepL."
   },
   "langsReset": {
     "message": "Restaurar predeterminados"
@@ -682,7 +685,25 @@
     "message": "Auto — seguir el navegador"
   },
   "uiLocaleHint": {
-    "message": "El idioma de los menús y ajustes de esta extensión. Algunas etiquetas dibujadas sobre el vídeo siguen el idioma del navegador. El idioma al que se traducen los subtítulos se elige en la ventana emergente y en «Idiomas de subtítulos», no aquí."
+    "message": "El idioma de los menús y ajustes de la extensión. Algunas etiquetas dibujadas sobre el vídeo siguen el idioma del navegador. El idioma al que se traducen los subtítulos se elige en la ventana de la extensión; el panel «Idiomas de subtítulos» solo decide qué idiomas aparecen allí."
+  },
+  "cmdToggleSubs": {
+    "message": "Activar o desactivar los subtítulos"
+  },
+  "cmdToggleTts": {
+    "message": "Activar o desactivar la lectura en voz alta"
+  },
+  "optShortcutsLabel": {
+    "message": "Atajos de teclado"
+  },
+  "optShortcutsOpen": {
+    "message": "Configurar atajos"
+  },
+  "optShortcutsHint": {
+    "message": "Estos atajos los gestiona Chrome, no la extensión. Al principio no hay ninguno asignado; se pueden asignar dos: subtítulos y lectura en voz alta."
+  },
+  "optShortcutsFallback": {
+    "message": "Desde aquí no se pudo abrir esa página: pega chrome://extensions/shortcuts en la barra de direcciones."
   },
   "startTargetLabel": {
     "message": "Idioma de traducción"
@@ -749,7 +770,7 @@
     }
   },
   "ttsStatusCountsWhy": {
-    "message": "$N$ frases en este vídeo · $M$ omitidas ($W$)",
+    "message": "$N$ frase(s) en este vídeo · $M$ omitida(s) ($W$)",
     "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
   },
   "ttsSkipLate": {
@@ -766,6 +787,12 @@
   },
   "ttsErrNoRegion": {
     "message": "Introduce primero la región del servicio de tu clave de Azure (p. ej. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Este ordenador no tiene voces para leer en voz alta."
+  },
+  "ttsVoicesLoading": {
+    "message": "Buscando las voces de este ordenador…"
   },
   "startPicChop1": {
     "message": "hay dos grandes"
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Ajustes de lectura en voz alta"
-  },
-  "ttsGroupSetup": {
-    "message": "Proveedor y clave"
   },
   "ttsGroupPlayback": {
     "message": "Reproducción"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Más voces…"
   },
+  "popupVoiceNone": {
+    "message": "Sin voz elegida"
+  },
   "ttsRobotVoices": {
     "message": "Robótico",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,6 +922,9 @@
     "message": "Resumir",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Volver a resumir"
+  },
   "sumFail": {
     "message": "El resumen falló; inténtalo más tarde.",
     "description": "Summary panel: generic failure line."
@@ -910,7 +940,7 @@
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "No se pudieron resumir $N$ parte(s); el resto está arriba.",
+    "message": "Fallo en $N$ parte(s); el resto está arriba.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "El endpoint de traducción está limitando las peticiones — se reanuda en unos $SECONDS$s.",
+    "message": "El endpoint de traducción está limitando las peticiones — se reanuda en unos $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

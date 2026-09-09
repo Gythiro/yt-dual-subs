@@ -1111,6 +1111,13 @@
 
   let sumEl = null;
   let sumEpoch = 0;               // bumped on close: in-flight replies are stale
+  // The last finished summary, and what it was a summary OF. Closing the panel
+  // and opening it again used to re-run the whole thing — a second full charge
+  // against the reader's own quota for a result they had just read. The key is
+  // the track, the provider and the target language: change any of the three
+  // and it is a different summary, so the price is quoted again.
+  let sumCache = null;
+  function sumForget() { sumCache = null; }
   function sumClose() {
     sumEpoch++;
     if (sumEl) { try { sumEl.remove(); } catch (_e) { /* ignore */ } sumEl = null; }
@@ -1191,7 +1198,7 @@
     }
     if (failedParts > 0) {
       body.appendChild(sumNode("p", "ytds-sum-warn",
-        tsub("sumFailedPart", [String(failedParts)], "有 $1$ 段没能总结,以上是其余部分。")));
+        tsub("sumFailedPart", [String(failedParts)], "有 $1$ 段没能总结，以上是其余部分。")));
     }
   }
   function sumFail(resp) {
@@ -1200,7 +1207,7 @@
         code === "noModel" || code === "badBaseUrl") { sumNeedKeyState(); return; }
     const body = sumBody();
     if (!body) return;
-    body.appendChild(sumNode("p", "ytds-sum-warn", ct("sumFail", "总结失败,稍后再试。")));
+    body.appendChild(sumNode("p", "ytds-sum-warn", ct("sumFail", "总结失败，稍后再试。")));
   }
   function sumNeedKeyState() {
     const body = sumBody();
@@ -1218,7 +1225,11 @@
     body.appendChild(sumButton(ct("exportConfirmBack", "取消"), null,
       () => { if (myEpoch === sumEpoch) sumClose(); }));
   }
-  function sumRun(chunks) {
+  function sumKeep(name, text, failed) {
+    sumCache = { track: cueTrackId, name: name, lang: settings.targetLang,
+      text: text, failed: failed };
+  }
+  function sumRun(chunks, name) {
     const myEpoch = sumEpoch;
     const total = chunks.length;
     if (total === 1) {
@@ -1227,6 +1238,7 @@
         { type: "sumOnce", text: chunks[0], targetLang: settings.targetLang }, (resp) => {
           if (myEpoch !== sumEpoch) return;
           if (chrome.runtime.lastError || !resp || !resp.ok) { sumFail(resp); return; }
+          sumKeep(name, resp.summary, 0);
           sumRender(resp.summary, 0);
         }));
       return;
@@ -1246,6 +1258,7 @@
           { type: "sumReduce", notes: good, targetLang: settings.targetLang }, (resp) => {
             if (myEpoch !== sumEpoch) return;
             if (chrome.runtime.lastError || !resp || !resp.ok) { sumFail(resp); return; }
+            sumKeep(name, resp.summary, failed);
             sumRender(resp.summary, failed);
           }));
         return;
@@ -1277,6 +1290,24 @@
       if (myEpoch !== sumEpoch) return;
       if (chrome.runtime.lastError || !info || !info.ok) { sumFail(null); return; }
       if (!info.configured || info.kind !== "llm") { sumNeedKeyState(); return; }
+      // Already summarized, and nothing about it has changed: give the reader
+      // back what they paid for instead of charging them for it twice. The
+      // way to spend again is a button that says so and goes through the
+      // same quote as the first time.
+      const keep = sumCache;
+      if (keep && keep.track === cueTrackId && keep.name === info.name &&
+          keep.lang === settings.targetLang) {
+        sumRender(keep.text, keep.failed);
+        const b1 = sumEl && sumEl.querySelector(".ytds-sum-body");
+        if (b1) {
+          b1.appendChild(sumButton(ct("sumAgain", "重新总结"), "ytds-sum-again", () => {
+            if (myEpoch !== sumEpoch) return;
+            sumForget();
+            openSummary();
+          }));
+        }
+        return;
+      }
       // The whole track leaves the browser and burns the user's own quota —
       // said out loud BEFORE the first request, the export precedent.
       const b2 = sumBody();
@@ -1285,7 +1316,7 @@
         tsub("sumConfirm", [info.name, String(chunks.length)],
           "会把整条字幕发给 $1$，分 $2$ 段，花的是你自己的额度。")));
       b2.appendChild(sumButton(ct("sumStart", "开始总结"), "ytds-sum-primary",
-        () => { if (myEpoch === sumEpoch) sumRun(chunks); }));
+        () => { if (myEpoch === sumEpoch) sumRun(chunks, info.name); }));
       b2.appendChild(sumButton(ct("exportConfirmBack", "取消"), null,
         () => { if (myEpoch === sumEpoch) sumClose(); }));
     }));
@@ -1805,10 +1836,24 @@
   // line needs nothing" — snaps the video back to full speed under it. Every
   // dense passage then alternates slow/normal and cuts tails (measured on
   // V6IItDAEtjs). Lines must be sized against the rate the user chose.
-  let ttsUserRate = 0;          // 0 = unknown, fall back to the live value
-  // The last absolute video rate we asked inject for, held until the element
-  // is seen at something else — see ttsDuck and the sampler in cueTick.
-  let ttsLastFit = 0;
+  // The viewer's own rate, and it comes from ONE place: inject, which is the
+  // only side that knows whose hand moved the dial (采样器根修-方案 §三). It
+  // used to be sampled off the element whenever no fit of ours was applied,
+  // and that signal was wrong three ways: cruise keeps a fit on every line so
+  // the sampler never opened; before the first line there was no sample at all
+  // and the fallback read our own slowdown; and clearing a fit and inject
+  // letting go of the rate are two different moments, so the ticks in between
+  // wrote our rate down as the viewer's choice.
+  let ttsUserBase = 0;          // 0 = not told yet
+  // The absolute rate we last asked for (0 = we are asking for nothing). Set
+  // optimistically the moment a duck goes out, then corrected by inject's
+  // report — the element's own ratechange can beat the postMessage back.
+  let ttsAsked = 0;
+  // What inject says it is holding right now (0 = it has let go). This is the
+  // half the element cannot tell us: clearing a fit and the player actually
+  // giving the rate back are two different moments, and the ticks in between
+  // read exactly like a viewer who chose 0.85.
+  let ttsHeld = 0;
   // Judging playhead jumps needs both clocks from the SAME tick: background
   // tabs clamp the poll to ~1s and 2× playback doubles the honest video
   // delta, so only |videoΔ − wallΔ×rate| means anything, never videoΔ alone.
@@ -2005,7 +2050,7 @@
       try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (_e) { /* ignore */ }
     }
     ttsFit = undefined;             // it described the line that just stopped
-    ttsLastFit = 0;                 // …and so did the rate it asked for
+    ttsAsked = 0;                   // …and so did the rate it asked for
     ttsAheadClear();
     ttsAheadOff = false;             // the provider may be a different one now
     ttsSpokenText = "";
@@ -2038,7 +2083,7 @@
     // lag nobody ever heard.
     ttsDebtMs = 0;
     ttsFit = undefined;
-    ttsLastFit = 0;
+    ttsAsked = 0;
     ttsSpokenIdx = -1;               // a seek back must be allowed to re-read it
     ttsSpokenText = "";
     // The landing spot may be about to re-duck: releasing here and re-ducking
@@ -2137,12 +2182,11 @@
     // sampler below, which only looks while no fit of ours is applied, was
     // shut for the whole gap. On a stretch with no subtitles it stayed shut.
     if (!on) ttsFit = undefined;
-    // Remember the absolute rate we asked for, so the sampler can tell our own
-    // slowdown from a rate the viewer chose. inject applies it asynchronously
-    // and lets go of it asynchronously too: for a tick or two after the fit is
-    // cleared the element still reads what WE asked for, and sampling there
-    // wrote our slowdown down as the viewer's choice.
-    if (on && fit != null) ttsLastFit = fit;
+    // What we are asking for, written down before the message leaves. inject
+    // will confirm it, but its reply can arrive AFTER the element's own
+    // ratechange — and a ratechange with no ask on record reads as the viewer
+    // reaching for the dial.
+    ttsAsked = (on && typeof fit === "number" && fit > 0) ? fit : 0;
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: !!on,
       pct: settings.ttsDuckPct, fit: fit }, "*"); }
     catch (_e) { /* ignore */ }
@@ -2459,8 +2503,8 @@
     const v = getVideo();
     // The USER'S rate, not the live one — the live one may be our own
     // slowdown, and sizing against it declares the next line "fits unaided",
-    // whose no-fit duck then snaps the video back up (see ttsUserRate).
-    const vRate = ttsUserRate || ((v && v.playbackRate) || 1);
+    // whose no-fit duck then snaps the video back up (see ttsUserBase).
+    const vRate = ttsUserBase || ((v && v.playbackRate) || 1);
     // The line's real window runs to the NEXT line's start, not to its own
     // cue end — the gap between cues is free speaking time (the competitor's
     // continuous track eats it too), and an overlapping next cue takes over
@@ -2925,7 +2969,7 @@
     const ownMs = nx && nx.start != null
       ? Math.max(300, nx.start - vv.currentTime * 1000 - netPenalty) : 0;
     // Same base-rate rule as ttsFitFor: never size against our own slowdown.
-    const vRate = ttsUserRate || vv.playbackRate || 1;
+    const vRate = ttsUserBase || vv.playbackRate || 1;
     const ownNeed = ownMs ? (est * vRate) / ownMs : 0;
     ttsCruiseNote(ownNeed);                             // structural need
     let leftMs = ownMs, needRate = ownNeed;
@@ -3255,26 +3299,23 @@
       ttsTickVid = -1;      // the ad runs its own clock; leaving it is not a jump
       return;
     }
-    // Sample the viewer's own rate only while none of our fits is applied —
-    // while one is, the live value is our slowdown, not their choice.
+    // Sample the viewer's own rate only while nothing of ours is on the rate:
+    // we are asking for nothing AND inject says it is holding nothing. The
+    // second half is the one the element cannot supply — clearing a fit and
+    // the player giving the rate back are different moments, and the ticks
+    // between them read exactly like a viewer who chose 0.85. The old gate
+    // asked "is a fit applied", which a dense stretch keeps true on every
+    // line, so it was shut for the whole passage (采样器根修-方案 §二 bug 1);
+    // inject's report is what covers that stretch now.
     //
     // AFTER the advert check, not before it. An advert plays at its own rate,
     // and the stop above has just cleared our fit — so every tick of every
     // advert used to be sampled as if the viewer had chosen it. Someone
     // watching at 1.5x had that written down as 1.0 by the first ad break,
     // and every line after it was sized against a rate they never picked.
-    //
-    // And not while the element still reads the rate WE asked for: clearing
-    // the fit and inject letting go of the rate are two different moments,
-    // and the ticks in between look exactly like a viewer who chose 0.85.
-    if (ttsFit === undefined) {
-      const live = video.playbackRate || 1;
-      if (ttsLastFit && Math.abs(live - ttsLastFit) < 0.02) {
-        // still at our own rate: inject has not restored it yet
-      } else {
-        ttsUserRate = live;
-        ttsLastFit = 0;
-      }
+    if (!ttsAsked && !ttsHeld) {
+      const live = video.playbackRate || 0;
+      if (live > 0) ttsUserBase = live;
     }
     const t = video.currentTime * 1000;
     // Judge the jump BEFORE the cue transition below: the residual of the old
@@ -3710,6 +3751,16 @@
     if (typeof data.nonce === "number" && data.nonce !== configNonce) return; // stale (nonce)
     nocuesFallback = false;
     stopFallback();                 // cue mode wins; stop scraping
+    // The viewer's rate, before any line has asked for anything: the sampler
+    // below runs on the cue tick, and the first line can be sized before the
+    // first tick. (Not separately provable in the rig — the tick lands inside
+    // the same 250ms, so removing this line stays green. It is kept for the
+    // window it closes, not for a test it passes: 采样器根修-方案 §二 bug 2.)
+    if (!ttsUserBase) {
+      const v0 = getVideo();
+      const live0 = v0 && v0.playbackRate;
+      if (live0 > 0) ttsUserBase = live0;
+    }
     // Why the translation leg is missing, when it is. A 429 feeds the worker's
     // cross-video gate; a track that DID bring its translation clears it.
     cueTlangStatus = Number(data.tlangStatus) || 0;
@@ -3766,6 +3817,12 @@
       // once, and a hand-rolled videoId compare closed the confirm between
       // opening it and pressing start (measured live).
       if (cueTrackId && sumEl) sumClose();
+      // Not the guard — the key check in openSummary already makes a summary
+      // of the old track unreachable (its track no longer matches). This is
+      // so the text of a track nobody is watching stops being held in memory.
+      // Mutation-tested: removing it keeps every assertion green, which is
+      // exactly what "redundant on purpose" looks like.
+      if (cueTrackId) sumForget();
       cueTrackId = data.trackId;
     }
     // Track-level echo detection: an aligned "translation" that repeats the
@@ -3940,7 +3997,8 @@
           // much, and what the sizing believed at the time. Cue indexes and
           // numbers only — reading a cut-tails report off a live video.
           cru: ttsCruising,
-          uRate: ttsUserRate,
+          uRate: ttsUserBase,
+          asked: ttsAsked,
           debt: Math.round(ttsDebtMs),
           over: ttsOverran,
           jumps: ttsJumpCuts,
@@ -4255,14 +4313,56 @@
     }
     const plan = exportPlan;
     const cues = plan.cues;
-    const run = { total: plan.chunks.length, done: 0, cancel: false };
+    const run = { total: plan.chunks.length, done: 0, cancel: false, waitUntil: 0 };
     exportRun = run;
     exportLast = null;
 
     let failed = 0, code = "";
     try {
+      // The own-key lane keeps a rate-limit gate of its own (429s from the
+      // provider). Firing thirty chunks into a shut door spends thirty tries to
+      // learn what the worker already knows, and the popup meanwhile shows a
+      // progress line that never moves — which reads as a hang. Wait it out
+      // once, with the countdown the whole-track path already shows, and let
+      // the stop button through. D88 left this half open because the rig could
+      // not reach session storage; it can now.
+      const askByoGate = () => new Promise((resolve) => {
+        const sent = extCall(() => chrome.runtime.sendMessage({ type: "byoGate" },
+          (resp) => resolve(chrome.runtime.lastError ? null : resp)));
+        if (!sent) resolve(null);
+      });
+      const gate = await askByoGate();
+      if (gate && gate.ok && gate.gated && gate.gateUntil > Date.now()) {
+        let until = gate.gateUntil;
+        let ticks = 0;
+        run.waitUntil = until;
+        // …and ask again every couple of seconds rather than sitting out the
+        // first answer. That lane also carries the live translation of the
+        // video, and its backoff is cleared by the first request that gets
+        // through — so the door can open long before the number we were given,
+        // and waiting out a stale number is waiting for nothing. `exportRun`
+        // in the condition is the other half: a second download replaces this
+        // run, and the one left behind must not wake up and start sending.
+        while (Date.now() < until && !run.cancel && exportRun === run) {
+          await new Promise((r) => setTimeout(r, 500));
+          if (++ticks % 4) continue;
+          const again = await askByoGate();
+          if (!again || !again.ok) continue;      // asleep: keep the old number
+          until = (again.gated && again.gateUntil > Date.now()) ? again.gateUntil : 0;
+          run.waitUntil = until;
+        }
+        run.waitUntil = 0;
+        if (run.cancel || exportRun !== run) {
+          return finishExport({ ok: false, reason: "cancelled" });
+        }
+      }
       for (const chunk of plan.chunks) {
-        if (run.cancel) return finishExport({ ok: false, reason: "cancelled" });
+        // Replaced as well as cancelled: a run that is no longer the current
+        // one has nobody waiting for its file, and every chunk it still sends
+        // spends the reader's quota on a download they abandoned.
+        if (run.cancel || exportRun !== run) {
+          return finishExport({ ok: false, reason: "cancelled" });
+        }
         const groups = chunk.map((idxs) => idxs.map((i) => cues[i].text));
         const resp = await sendExportChunk(groups);
         if (resp && resp.ok && Array.isArray(resp.values) && resp.values.length === chunk.length) {
@@ -4397,11 +4497,14 @@
         });
         const waitOut = async (until) => {
           run.waitUntil = until;
-          while (Date.now() < until && !run.cancel) {
+          // exportRun === run: same reason as the own-key path — a second
+          // download replaces this one, and the run left waiting must not come
+          // back to life when its number is up.
+          while (Date.now() < until && !run.cancel && exportRun === run) {
             await new Promise((r) => setTimeout(r, 500));
           }
           run.waitUntil = 0;
-          return !run.cancel;
+          return !run.cancel && exportRun === run;
         };
         const g = await queryGate();
         if (g && g.gated && g.gateUntil > Date.now()) {
@@ -4454,7 +4557,7 @@
     el.className = "ytds-toast";
     el.setAttribute("role", "status");
     el.textContent = t("trackWarnDubOnly",
-      "提示:此视频只有 AI 配音的自动字幕,没有原声语言的字幕轨,双语字幕可能和声音对不上。");
+      "提示：此视频只有 AI 配音的自动字幕，没有原声语言的字幕轨，双语字幕可能和声音对不上。");
     player.appendChild(el);
     requestAnimationFrame(() => el.classList.add("ytds-toast-show"));
     setTimeout(() => {
@@ -4478,6 +4581,17 @@
     if (d.type === "exportdata") { resolveExportData(d); return; }
     if (!settings.enabled) return;
 
+    if (d.type === "ttsrate") {
+      // Who owns the rate, from the only side that can tell. A report arrives
+      // on every duck and every release — which is every line boundary — so a
+      // viewer who reaches for the speed menu is noticed within one line even
+      // in a dense stretch, where the old element-sampling was shut for the
+      // whole passage because every line carried a fit.
+      const base = Number(d.base) || 0;
+      if (base > 0) ttsUserBase = base;
+      ttsHeld = Number(d.applied) || 0;
+      return;
+    }
     if (d.type === "cues") onCues(d);
     else if (d.type === "nocues") onNoCues(d);
     else if (d.type === "trackwarn") {
@@ -4597,7 +4711,8 @@
     hintedThisVideo = false;    // a new video may spend one more first-run hint
     blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery
     ttsStop(true);              // never carry a speaking line across videos
-    ttsUserRate = 0;            // the next video re-samples the user's rate
+    ttsUserBase = 0;            // the next video is told afresh
+    ttsAsked = 0;
     ttsSpoken = 0;              // the popup's counts describe THIS video
     ttsSkipped = 0;
     ttsSkipWhy = Object.create(null);   // the reasons belonged to that video

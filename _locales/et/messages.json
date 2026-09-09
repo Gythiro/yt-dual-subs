@@ -336,13 +336,13 @@
     "message": "API baas-URL peab olema täielik https:// aadress."
   },
   "byoErrNoPerm": {
-    "message": "Ilma loata selle API hostini jõuda ei saa laiendus ühenduda."
+    "message": "Ilma loata selle API hostini jõuda ei saa laiendus ühenduda. Vajuta uuesti „Salvesta ja testi“ ja anna luba."
   },
   "byoErrAuth": {
     "message": "Võti lükati tagasi (401/403) — kontrolli, et see on täielikult kopeeritud ja aktiivne."
   },
   "byoErrListAuth": {
-    "message": "Sellel võtmel pole loendi lugemise õigust. Anna see teenusepakkuja juures ja tõmba uuesti.",
+    "message": "Sellel võtmel pole loendi lugemise õigust. Anna see õigus teenusepakkuja paneelis ja tõmba uuesti.",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Selle lõpp-punktini ei pääse (võrgu- või piirkondlik piirang)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Sellele aadressile ei saa ühendust: server ei tööta või pole veel laiendusele juurdepääsu lubanud (Ollamas OLLAMA_ORIGINS, LM Studios CORS-lüliti)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Sellel teenusepakkujal pole valitud keele jaoks sihtkeelt — muuda keelt või mootorit."
@@ -465,7 +468,7 @@
     "message": "Versioon"
   },
   "aboutBlurb": {
-    "message": "Teine subtiitririda YouTube’ile: originaal ühel real, tõlge teisel; font, värv ja asukoht on sinu valida. Avatud lähtekood, tasuta, reklaamideta."
+    "message": "Teine subtiitririda YouTube'ile: originaal ühel real, tõlge teisel; font, värv ja asukoht on sinu valida. Avatud lähtekood, tasuta, reklaamideta."
   },
   "aboutPrivacy": {
     "message": "Laiendusel pole meie serverit ja see ei kogu statistikat. Subtiitritekst läheb ainult valitud tõlketeenusele; oma võtme korral hoitakse võtit ainult selles arvutis."
@@ -498,7 +501,7 @@
     "message": "Rohkem mudeleid…"
   },
   "popupModelFetch": {
-    "message": "Too mudelid seadetes"
+    "message": "Hangi mudelid seadetes"
   },
   "popupModelSwitched": {
     "message": "Edaspidi: $MODEL$",
@@ -510,7 +513,7 @@
     "message": "Mudelit pole valitud"
   },
   "exportUsesYouTube": {
-    "message": "Allalaadimine kasutab YouTube’i enda kogu raja tõlget — tasuta ega kuluta sinu API võtit."
+    "message": "Allalaadimine kasutab YouTube'i enda kogu raja tõlget — tasuta ega kuluta sinu API võtit."
   },
   "exportUseByo": {
     "message": "Tõlgi oma võtmega (täpsem, kulutab kvooti)"
@@ -556,7 +559,7 @@
     }
   },
   "exportPartial": {
-    "message": "$N$ tükk(i) langes YouTube’i tõlkele",
+    "message": "$N$ tükk(i) langes YouTube'i tõlkele",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -585,7 +588,7 @@
     "message": "Saada tagasisidet või teata veast"
   },
   "ftReview": {
-    "message": "Hinda Chrome Web Store’is"
+    "message": "Hinda Chrome Web Store'is"
   },
   "optNeedKey": {
     "message": "Võtit veel pole — seda teenusepakkujat ei saa enne võtme lisamist kasutada."
@@ -633,7 +636,7 @@
     "message": "Muud keeled"
   },
   "langsMoreHint": {
-    "message": "Vajuta + lisamiseks. Iga loetletud keel on selline, mida tasuta mootorid ja DeepL sihtkeelena aktsepteerivad."
+    "message": "Vajuta + lisamiseks. Loend järgib sihtkeeli, mille toovad välja tasuta mootorid ja DeepL."
   },
   "langsReset": {
     "message": "Taasta vaikeväärtused"
@@ -682,7 +685,25 @@
     "message": "Automaatne — järgi brauserit"
   },
   "uiLocaleHint": {
-    "message": "Selle laienduse enda menüüde ja seadete keel. Mõned videole joonistatud sildid järgivad endiselt brauseri keelt. Millisesse keelde subtiitrid tõlgitakse, valitakse hüpikaknas ja jaotises „Subtiitrite keeled“ — mitte siin."
+    "message": "Selle laienduse enda menüüde ja seadete keel. Mõni otse videole joonistatud silt järgib endiselt brauseri keelt. Mis keelde subtiitrid tõlgitakse, valitakse hüpikaknas; „Subtiitrite keeled“ paneel otsustab ainult selle, millised keeled hüpikaknas loetletakse."
+  },
+  "cmdToggleSubs": {
+    "message": "Subtiitrid sisse või välja"
+  },
+  "cmdToggleTts": {
+    "message": "Ettelugemine sisse või välja"
+  },
+  "optShortcutsLabel": {
+    "message": "Kiirklahvid"
+  },
+  "optShortcutsOpen": {
+    "message": "Määra kiirklahvid"
+  },
+  "optShortcutsHint": {
+    "message": "Neid klahve hoiab Chrome, mitte laiendus. Alguses pole ühtegi määratud; määrata saab kaks: subtiitrid sisse/välja ja ettelugemine sisse/välja."
+  },
+  "optShortcutsFallback": {
+    "message": "Siit see leht ei avanenud — kleebi chrome://extensions/shortcuts aadressiribale."
   },
   "startTargetLabel": {
     "message": "Tõlkekeel"
@@ -753,7 +774,7 @@
     "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
   },
   "ttsSkipLate": {
-    "message": "tõlge ei jõudnud kohale"
+    "message": "tõlge ei jõudnud õigeks ajaks kohale"
   },
   "ttsSkipSilent": {
     "message": "hääl jäi tulemata"
@@ -765,7 +786,13 @@
     "message": "Teenusepiirkond"
   },
   "ttsErrNoRegion": {
-    "message": "Sisesta esmalt oma Azure’i võtme teenusepiirkond (nt eastus)."
+    "message": "Sisesta esmalt oma Azure'i võtme teenusepiirkond (nt eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Sellel arvutil pole ettelugemiseks hääli."
+  },
+  "ttsVoicesLoading": {
+    "message": "Hangime selle arvuti hääled…"
   },
   "startPicChop1": {
     "message": "on kaks suurt"
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Ettelugemise seaded"
-  },
-  "ttsGroupSetup": {
-    "message": "Teenusepakkuja ja võti"
   },
   "ttsGroupPlayback": {
     "message": "Taasesitus"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Rohkem hääli…"
   },
+  "popupVoiceNone": {
+    "message": "Häält pole valitud"
+  },
   "ttsRobotVoices": {
     "message": "Robootiline",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,6 +922,9 @@
     "message": "Tee kokkuvõte",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Tee uus kokkuvõte"
+  },
   "sumFail": {
     "message": "Kokkuvõte ebaõnnestus, proovi hiljem uuesti.",
     "description": "Summary panel: generic failure line."
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Tõlke lõpp-punkt piirab päringuid — jätkub umbes $SECONDS$s pärast.",
+    "message": "Tõlke lõpp-punkt piirab päringuid — jätkub umbes $SECONDS$ s pärast.",
     "placeholders": {
       "seconds": {
         "content": "$1",

@@ -336,13 +336,13 @@
     "message": "URL-ul de bază al API-ului trebuie să fie o adresă https:// completă."
   },
   "byoErrNoPerm": {
-    "message": "Fără permisiunea de a accesa acel host API, extensia nu se poate conecta."
+    "message": "Fără permisiunea de a accesa acel host API, extensia nu se poate conecta. Apasă din nou „Salvează și testează” și acordă accesul."
   },
   "byoErrAuth": {
     "message": "Cheia a fost respinsă (401/403) — verifică dacă a fost copiată integral și este activă."
   },
   "byoErrListAuth": {
-    "message": "Cheia aceasta nu are dreptul să citească lista. Acordă-i permisiunea la furnizor și încearcă din nou.",
+    "message": "Cheia aceasta nu are dreptul să citească lista. Acordă-i permisiunea în panoul furnizorului și încearcă din nou.",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Nu se poate ajunge la acel endpoint (rețea sau restricție regională)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Nu se poate ajunge la această adresă: fie serverul nu rulează, fie încă nu permite accesul extensiei (OLLAMA_ORIGINS la Ollama, comutatorul CORS în LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Acest furnizor nu oferă limba aleasă — schimbă limba sau motorul."
@@ -633,7 +636,7 @@
     "message": "Alte limbi"
   },
   "langsMoreHint": {
-    "message": "Apasă + ca să adaugi una. Fiecare limbă din listă e acceptată ca țintă de motoarele gratuite și de DeepL."
+    "message": "Apasă + ca să adaugi una. Lista urmează limbile țintă indicate de motoarele gratuite și de DeepL."
   },
   "langsReset": {
     "message": "Restabilește implicitele"
@@ -682,7 +685,25 @@
     "message": "Automat — urmează browserul"
   },
   "uiLocaleHint": {
-    "message": "Limba meniurilor și setărilor acestei extensii. Câteva etichete de pe videoclip urmează tot limba browserului. Limba în care se traduc subtitrările se alege din popup și la „Limbi de subtitrare” — nu aici."
+    "message": "Limba meniurilor și a setărilor extensiei. Câteva etichete desenate pe video urmează în continuare limba browserului. Limba în care sunt traduse subtitrările se alege în fereastra extensiei; panoul „Limbi de subtitrare” decide doar ce limbi apar acolo."
+  },
+  "cmdToggleSubs": {
+    "message": "Activează sau dezactivează subtitrările"
+  },
+  "cmdToggleTts": {
+    "message": "Activează sau dezactivează citirea cu voce"
+  },
+  "optShortcutsLabel": {
+    "message": "Scurtături de tastatură"
+  },
+  "optShortcutsOpen": {
+    "message": "Setează scurtăturile"
+  },
+  "optShortcutsHint": {
+    "message": "Aceste scurtături le ține Chrome, nu extensia. La început nu e atribuită niciuna; se pot atribui două: subtitrări pornit/oprit și citire cu voce pornit/oprit."
+  },
+  "optShortcutsFallback": {
+    "message": "De aici pagina nu s-a deschis — lipește chrome://extensions/shortcuts în bara de adrese."
   },
   "startTargetLabel": {
     "message": "Limba de traducere"
@@ -749,7 +770,7 @@
     }
   },
   "ttsStatusCountsWhy": {
-    "message": "$N$ propoziții în acest videoclip · $M$ omise ($W$)",
+    "message": "Propoziții: $N$ în acest videoclip · omise: $M$ ($W$)",
     "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
   },
   "ttsSkipLate": {
@@ -766,6 +787,12 @@
   },
   "ttsErrNoRegion": {
     "message": "Introduceți mai întâi regiunea de serviciu a cheii Azure (de ex. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Acest calculator nu are voci pentru citire cu voce tare."
+  },
+  "ttsVoicesLoading": {
+    "message": "Se preiau vocile acestui calculator…"
   },
   "startPicChop1": {
     "message": "sunt două mari"
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Setări citire vocală"
-  },
-  "ttsGroupSetup": {
-    "message": "Furnizor și cheie"
   },
   "ttsGroupPlayback": {
     "message": "Redare"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Mai multe voci…"
   },
+  "popupVoiceNone": {
+    "message": "Nicio voce aleasă"
+  },
   "ttsRobotVoices": {
     "message": "Robotice",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,12 +922,15 @@
     "message": "Rezumă",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Rezumă din nou"
+  },
   "sumFail": {
     "message": "Rezumatul a eșuat — încearcă din nou mai târziu.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Aceasta va trimite întreaga pistă de subtitrări către $PROVIDER$, în $PARTS$ părți, pe cota ta.",
+    "message": "Aceasta va trimite întreaga pistă de subtitrări către $PROVIDER$ (părți: $PARTS$), pe cota ta.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
@@ -910,7 +940,7 @@
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "$N$ părți nu au putut fi rezumate; restul este mai sus.",
+    "message": "Eșec la $N$ parte/părți; restul este mai sus.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Endpoint-ul de traducere limitează rata — se reia în aproximativ $SECONDS$s.",
+    "message": "Endpoint-ul de traducere limitează rata — se reia în aproximativ $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

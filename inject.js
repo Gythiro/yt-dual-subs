@@ -938,11 +938,32 @@
   let rateSavedBase = -1;       // the user's own rate, to give back
   let rateSet = -1;             // what the player actually became after our set
   let rateUserTouched = false;  // user moved the rate mid-video: hands off
+  // Who owns the rate right now, said out loud. This side is the only one that
+  // knows: content used to work it out by watching the element and reading
+  // back our own slowdown as the viewer's choice — three separate bugs from
+  // one wrong signal (采样器根修-方案 §二). Quiet when nothing changed, so a
+  // per-line duck does not turn into a message storm.
+  let rateSaid = "";
+  function rateReport(p) {
+    let cur = 0;
+    try {
+      if (p && typeof p.getPlaybackRate === "function") cur = p.getPlaybackRate() || 0;
+    } catch (_e) { /* a player mid-teardown answers nothing */ }
+    const applied = rateSet >= 0 ? rateSet : 0;
+    // The viewer's own rate: what we saved when we took the wheel, or simply
+    // what the player is at when we are not holding it.
+    const base = rateSavedBase >= 0 ? rateSavedBase : cur;
+    const stamp = applied + "|" + base + "|" + (rateUserTouched ? 1 : 0);
+    if (stamp === rateSaid) return;
+    rateSaid = stamp;
+    post("ttsrate", { applied: applied, base: base, touched: rateUserTouched });
+  }
   function rateRestore(p, cur) {
     if (rateSavedBase < 0) return;
     if (cur === rateSet) p.setPlaybackRate(rateSavedBase);
     else rateUserTouched = true;
     rateSavedBase = -1; rateSet = -1;
+    rateReport(p);
   }
   function shareRate(p, on, fit) {
     if (typeof p.getPlaybackRate !== "function" ||
@@ -956,6 +977,11 @@
     if (rateSet >= 0 && cur !== rateSet) {      // moved since we set it
       rateUserTouched = true;
       rateSavedBase = -1; rateSet = -1;
+      // Redundant today — duck() reports after every message, so this state
+      // reaches content either way, and a mutation removing this line stays
+      // green. Kept because shareRate's own contract is "report what you
+      // changed": the day anything else calls it, this is what makes it true.
+      rateReport(p);
       return;
     }
     const base = rateSavedBase >= 0 ? rateSavedBase : cur;
@@ -973,6 +999,7 @@
     rateSet = p.getPlaybackRate();              // read back all the same: the
                                                 // comparand is what it BECAME
     if (rateSet === rateSavedBase) { rateSavedBase = -1; rateSet = -1; }
+    rateReport(p);
   }
 
   function duck(on, pct, fit, nav) {
@@ -993,7 +1020,8 @@
         duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1;
         rateSavedBase = -1; rateSet = -1;
       }
-      if (nav) rateUserTouched = false;         // new video, fresh benefit
+      if (nav) { rateUserTouched = false; rateSaid = ""; }  // new video, fresh benefit
+      if (p) rateReport(p);
     } catch (_e) {
       duckRampClear();
       duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1;

@@ -172,6 +172,34 @@
       tint: "#0F2B46", initials: "DL"
     },
     {
+      // The local-model path with the address already filled in. It is the
+      // custom endpoint's most common destination by far (issue #4), and
+      // asking someone to type http://localhost:11434/v1 is asking them to
+      // know the port, the /v1, and that Ollama speaks OpenAI's dialect.
+      //
+      // Fixed address on purpose: byoBaseUrl is one key for the whole
+      // extension, so a second editable endpoint would fight the custom one
+      // for it. Ollama on another port is what Custom is still there for —
+      // the guide says so.
+      id: "ollama", name: "Ollama (local)", short: "Ollama", kind: "llm",
+      // The guide has one local-model walkthrough, and it is Ollama's: the
+      // address, the OLLAMA_ORIGINS line everybody trips over, which models
+      // are worth running. A second section under its own name would be the
+      // same page written twice.
+      guideAnchor: "local",
+      baseUrl: "http://localhost:11434/v1",
+      origin: "http://localhost:11434",
+      // Nothing to authenticate with: Ollama ignores auth, and an empty key
+      // here means "send no Authorization header", not "not set up yet".
+      noKey: true,
+      localServer: true,
+      defaultModel: "",
+      models: [],
+      keyUrl: "",
+      pricingUrl: "",
+      tint: "#1F2937", initials: "OL"
+    },
+    {
       id: "custom", name: "Custom (OpenAI-compatible)", nameKey: "byoCustom",
       kind: "llm",
       custom: true,
@@ -641,7 +669,15 @@
     noAudio: "ttsErrNoAudio"
   };
 
-  function errorKey(code) {
+  // "Cannot reach it" means something else for an endpoint the reader typed in
+  // themselves. A public API that will not answer is a network or a regional
+  // problem; a server of their own is usually either not running or not yet
+  // allowing the extension to call it — and a browser cannot tell those two
+  // apart, because a CORS refusal reaches script as an ordinary network error.
+  // So that message names both, and names the setting that fixes the second.
+  function errorKey(code, provider) {
+    if (code === "netfail" && provider &&
+        (provider.custom || provider.localServer)) return "byoErrNetfailLocal";
     return ERROR_KEYS[code] || "byoErrFailed";
   }
 
@@ -701,7 +737,7 @@
       keyHint: "AIza…",
       keyUrl: "https://console.cloud.google.com/apis/credentials",
       pricingUrl: "https://cloud.google.com/text-to-speech/pricing",
-      tint: "#4285F4", initials: "G"
+      tint: "#1967D2", initials: "G"
     },
     {
       // The only one that asks for nothing. Chrome already ships voices; this

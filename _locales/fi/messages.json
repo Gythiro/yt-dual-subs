@@ -336,7 +336,7 @@
     "message": "API-perusosoitteen on oltava täydellinen https://-osoite."
   },
   "byoErrNoPerm": {
-    "message": "Ilman lupaa kyseiseen API-palvelimeen laajennus ei voi yhdistää."
+    "message": "Ilman lupaa kyseiseen API-palvelimeen laajennus ei voi yhdistää. Paina ”Tallenna ja testaa” uudelleen ja myönnä lupa."
   },
   "byoErrAuth": {
     "message": "Avain hylättiin (401/403) — tarkista, että kopioit sen kokonaan ja että se on aktiivinen."
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Päätepisteeseen ei saada yhteyttä (verkko- tai alueellinen rajoitus)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Osoitteeseen ei saada yhteyttä: palvelin ei ole käynnissä tai se ei salli vielä laajennuksen pääsyä (Ollamassa OLLAMA_ORIGINS, LM Studiossa CORS-kytkin)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Tämä palveluntarjoaja ei tue valitsemaasi kieltä — vaihda kieltä tai moottoria."
@@ -495,7 +498,7 @@
     "message": "Käännösmalli"
   },
   "popupModelMore": {
-    "message": "Lisää malleja…"
+    "message": "Muita malleja…"
   },
   "popupModelFetch": {
     "message": "Hae mallit asetuksissa"
@@ -633,7 +636,7 @@
     "message": "Muut kielet"
   },
   "langsMoreHint": {
-    "message": "Paina + lisätäksesi kielen. Jokainen listattu kieli on sellainen, jonka ilmaiset moottorit ja DeepL hyväksyvät kohteeksi."
+    "message": "Paina + lisätäksesi kielen. Lista seuraa kohdekieliä, jotka ilmaiset moottorit ja DeepL ilmoittavat."
   },
   "langsReset": {
     "message": "Palauta oletukset"
@@ -682,7 +685,25 @@
     "message": "Automaattinen — seuraa selainta"
   },
   "uiLocaleHint": {
-    "message": "Tämän laajennuksen omien valikoiden ja asetusten kieli. Muutama videolle piirretty teksti seuraa yhä selaimen kieltä. Mihin kieleen tekstitykset käännetään, valitaan ponnahdusikkunassa ja kohdassa “Tekstityskielet” — ei täällä."
+    "message": "Tämän laajennuksen omien valikoiden ja asetusten kieli. Muutama suoraan videolle piirretty teksti seuraa yhä selaimen kieltä. Kielen, jolle tekstitykset käännetään, valitset ponnahdusikkunassa; ”Tekstityskielet”-näkymä päättää vain, mitkä kielet siellä näkyvät."
+  },
+  "cmdToggleSubs": {
+    "message": "Tekstitys päälle tai pois"
+  },
+  "cmdToggleTts": {
+    "message": "Ääneen lukeminen päälle tai pois"
+  },
+  "optShortcutsLabel": {
+    "message": "Pikanäppäimet"
+  },
+  "optShortcutsOpen": {
+    "message": "Aseta pikanäppäimet"
+  },
+  "optShortcutsHint": {
+    "message": "Nämä näppäimet ovat Chromen, eivät laajennuksen. Aluksi mitään ei ole määritetty; määritettäviä on kaksi: tekstitys päälle/pois ja ääneen lukeminen päälle/pois."
+  },
+  "optShortcutsFallback": {
+    "message": "Sivu ei auennut täältä — liitä chrome://extensions/shortcuts osoiteriville."
   },
   "startTargetLabel": {
     "message": "Käännöskieli"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "Anna ensin Azure-avaimesi palvelualue (esim. eastus)."
   },
+  "ttsNoSynth": {
+    "message": "Tässä koneessa ei ole ääniä lukemiseen."
+  },
+  "ttsVoicesLoading": {
+    "message": "Haetaan tämän koneen äänet…"
+  },
   "startPicChop1": {
     "message": "on kaksi isoa"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Lue ääneen -asetukset"
-  },
-  "ttsGroupSetup": {
-    "message": "Tarjoaja ja avain"
   },
   "ttsGroupPlayback": {
     "message": "Toisto"
@@ -857,7 +881,10 @@
     "message": "Ääntä ei kuulunut — yritä uudelleen tai valitse toinen ääni."
   },
   "popupVoiceMore": {
-    "message": "Lisää ääniä…"
+    "message": "Muita ääniä…"
+  },
+  "popupVoiceNone": {
+    "message": "Ääntä ei valittu"
   },
   "ttsRobotVoices": {
     "message": "Robottimainen",
@@ -895,6 +922,9 @@
     "message": "Tee tiivistelmä",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Tiivistä uudelleen"
+  },
   "sumFail": {
     "message": "Tiivistelmä epäonnistui – yritä myöhemmin uudelleen.",
     "description": "Summary panel: generic failure line."
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Käännöspäätepiste rajoittaa pyyntöjä — jatketaan noin $SECONDS$s kuluttua.",
+    "message": "Käännöspäätepiste rajoittaa pyyntöjä — jatketaan noin $SECONDS$ s kuluttua.",
     "placeholders": {
       "seconds": {
         "content": "$1",

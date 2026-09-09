@@ -235,7 +235,7 @@
     "message": "Nessuna traduzione disponibile per questo video — prova il motore Traccia intera o un'altra lingua di destinazione."
   },
   "exportLimited": {
-    "message": "YouTube sta limitando in questo momento la traduzione dell’intera traccia — riprova tra un minuto. Con una chiave tua, la scheda di esportazione offre una spunta per aggirarlo."
+    "message": "YouTube sta limitando in questo momento la traduzione dell'intera traccia — riprova tra un minuto. Con una chiave tua, la scheda di esportazione offre una spunta per aggirarlo."
   },
   "exportNoCues": {
     "message": "Nessun sottotitolo da scaricare — riproduci qualche secondo per caricare i sottotitoli, poi riprova."
@@ -336,7 +336,7 @@
     "message": "L'URL di base dell'API deve essere un indirizzo https:// completo."
   },
   "byoErrNoPerm": {
-    "message": "Senza il permesso di raggiungere quell'host API l'estensione non può connettersi."
+    "message": "Senza il permesso di raggiungere quell'host API l'estensione non può connettersi. Premi di nuovo «Salva e prova» e concedi l'accesso."
   },
   "byoErrAuth": {
     "message": "La chiave è stata rifiutata (401/403) — verifica di averla copiata per intero e che sia attiva."
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Impossibile raggiungere quell'endpoint (rete o restrizione regionale)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Impossibile raggiungere questo indirizzo: o il server non è in esecuzione, o non consente ancora l'accesso all'estensione (OLLAMA_ORIGINS per Ollama, l'opzione CORS in LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Questo provider non ha una destinazione per la lingua scelta — cambia lingua o motore."
@@ -468,7 +471,7 @@
     "message": "Una seconda riga di sottotitoli per YouTube: l'originale su una riga, la traduzione sull'altra, con carattere, colore e posizione a tua scelta. Open source, gratuito, senza pubblicità."
   },
   "aboutPrivacy": {
-    "message": "L’estensione non ha un nostro server e non raccoglie statistiche. Il testo dei sottotitoli va solo al servizio di traduzione scelto; con una chiave tua, la chiave è salvata solo su questo computer."
+    "message": "L'estensione non ha un nostro server e non raccoglie statistiche. Il testo dei sottotitoli va solo al servizio di traduzione scelto; con una chiave tua, la chiave è salvata solo su questo computer."
   },
   "aboutChangelog": {
     "message": "Novità"
@@ -498,7 +501,7 @@
     "message": "Altri modelli…"
   },
   "popupModelFetch": {
-    "message": "Scarica i modelli in impostazioni"
+    "message": "Recupera i modelli nelle impostazioni"
   },
   "popupModelSwitched": {
     "message": "D'ora in poi: $MODEL$",
@@ -633,7 +636,7 @@
     "message": "Altre lingue"
   },
   "langsMoreHint": {
-    "message": "Premi + per aggiungerne una. Ogni lingua elencata è accettata come destinazione dai motori gratuiti e da DeepL."
+    "message": "Premi + per aggiungerne una. L'elenco segue le lingue di destinazione indicate dai motori gratuiti e da DeepL."
   },
   "langsReset": {
     "message": "Ripristina predefinite"
@@ -682,7 +685,25 @@
     "message": "Auto — segui il browser"
   },
   "uiLocaleHint": {
-    "message": "La lingua dei menu e delle impostazioni dell’estensione. Alcune etichette sul video seguono ancora la lingua del browser. La lingua in cui tradurre i sottotitoli si sceglie nel popup e in “Lingue dei sottotitoli” — non qui."
+    "message": "La lingua dei menu e delle impostazioni dell'estensione. Alcune etichette disegnate sul video seguono ancora la lingua del browser. La lingua in cui vengono tradotti i sottotitoli si sceglie nel popup; il pannello «Lingue dei sottotitoli» decide solo quali lingue il popup elenca."
+  },
+  "cmdToggleSubs": {
+    "message": "Attivare o disattivare i sottotitoli"
+  },
+  "cmdToggleTts": {
+    "message": "Attivare o disattivare la lettura ad alta voce"
+  },
+  "optShortcutsLabel": {
+    "message": "Scorciatoie da tastiera"
+  },
+  "optShortcutsOpen": {
+    "message": "Imposta le scorciatoie"
+  },
+  "optShortcutsHint": {
+    "message": "Queste scorciatoie le gestisce Chrome, non l'estensione. All'inizio non ne è assegnata nessuna; se ne possono assegnare due: sottotitoli e lettura ad alta voce."
+  },
+  "optShortcutsFallback": {
+    "message": "Da qui la pagina non si è aperta: incolla chrome://extensions/shortcuts nella barra degli indirizzi."
   },
   "startTargetLabel": {
     "message": "Lingua di traduzione"
@@ -694,7 +715,7 @@
     "message": "Copia info diagnostiche"
   },
   "diagCopied": {
-    "message": "Copiato — incollalo in un’email o in una segnalazione"
+    "message": "Copiato — incollalo in un'email o in una segnalazione"
   },
   "diagCopyFail": {
     "message": "Copia non riuscita — fai uno screenshot"
@@ -749,7 +770,7 @@
     }
   },
   "ttsStatusCountsWhy": {
-    "message": "$N$ frasi in questo video · $M$ saltate ($W$)",
+    "message": "$N$ frase/i in questo video · $M$ saltata/e ($W$)",
     "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
   },
   "ttsSkipLate": {
@@ -759,13 +780,19 @@
     "message": "nessun suono emesso"
   },
   "ttsEnableHint": {
-    "message": "Se attivo, la traduzione di ogni sottotitolo viene pronunciata appena compare; una riga la cui traduzione non è pronta in tempo viene saltata, non recuperata dopo. Mentre una riga viene letta, l’audio del video scende al livello impostato sotto. Una voce cloud troppo lunga rallenta anche un po’ il video — le voci del browser non comunicano la durata, quindi non possono farlo."
+    "message": "Se attivo, la traduzione di ogni sottotitolo viene pronunciata appena compare; una riga la cui traduzione non è pronta in tempo viene saltata, non recuperata dopo. Mentre una riga viene letta, l'audio del video scende al livello impostato sotto. Una voce cloud troppo lunga rallenta anche un po' il video — le voci del browser non comunicano la durata, quindi non possono farlo."
   },
   "ttsRegionLabel": {
     "message": "Area del servizio"
   },
   "ttsErrNoRegion": {
     "message": "Inserisci prima l'area del servizio della tua chiave Azure (ad es. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Questo computer non ha voci per leggere ad alta voce."
+  },
+  "ttsVoicesLoading": {
+    "message": "Recupero delle voci di questo computer…"
   },
   "startPicChop1": {
     "message": "c'è due grandi"
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Impostazioni lettura ad alta voce"
-  },
-  "ttsGroupSetup": {
-    "message": "Fornitore e chiave"
   },
   "ttsGroupPlayback": {
     "message": "Riproduzione"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Altre voci…"
   },
+  "popupVoiceNone": {
+    "message": "Nessuna voce scelta"
+  },
   "ttsRobotVoices": {
     "message": "Robotico",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,12 +922,15 @@
     "message": "Riassumi",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Riassumi di nuovo"
+  },
   "sumFail": {
     "message": "Il riassunto non è riuscito: riprova più tardi.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Questo invierà l'intera traccia di sottotitoli a $PROVIDER$, in $PARTS$ parti, sulla tua quota.",
+    "message": "Questo invierà l'intera traccia di sottotitoli a $PROVIDER$, in $PARTS$ parte/i, sulla tua quota.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
@@ -910,7 +940,7 @@
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "$N$ parte/i non riassumibili; il resto è sopra.",
+    "message": "Non è stato possibile riassumere $N$ parte/i; il resto è sopra.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -919,11 +949,11 @@
     "description": "Row label in the small in-player menu. One word."
   },
   "tlangLimitedNote": {
-    "message": "Al momento la traduzione di YouTube è limitata; le frasi intelligenti (Google) coprono il resto. Riproverà da solo più tardi.",
+    "message": "Al momento la traduzione di YouTube è limitata; le frasi intelligenti (Google) coprono il resto. Riproverà automaticamente più tardi.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "L'endpoint di traduzione sta limitando le richieste — ripresa tra circa $SECONDS$s.",
+    "message": "L'endpoint di traduzione sta limitando le richieste — ripresa tra circa $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

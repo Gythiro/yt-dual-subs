@@ -354,7 +354,7 @@
     "message": "The API base URL must be a full https:// address."
   },
   "byoErrNoPerm": {
-    "message": "Without permission to reach that API host the extension cannot connect."
+    "message": "Without permission to reach that API host the extension cannot connect. Press “Save and test” again and allow it."
   },
   "byoErrAuth": {
     "message": "The key was rejected (401/403) — check that it was copied in full and is active."
@@ -380,6 +380,9 @@
   },
   "byoErrNetfail": {
     "message": "Cannot reach that endpoint (network or regional restriction)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Cannot reach that address: either the server is not running, or it has not been told to allow the extension (OLLAMA_ORIGINS for Ollama, the CORS switch in LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "This provider has no target for your chosen language — change the language or the engine."
@@ -489,7 +492,25 @@
     "message": "Auto — follow the browser"
   },
   "uiLocaleHint": {
-    "message": "The language of this extension's own menus and settings. A few labels drawn on the video itself still follow the browser's language. What subtitles get translated into is chosen in the popup and under “Subtitle languages” — not here."
+    "message": "The language of this extension's own menus and settings. A few labels drawn on the video itself still follow the browser's language. The language your subtitles are translated into is chosen in the popup; the “Subtitle languages” pane only decides which languages the popup lists."
+  },
+  "cmdToggleSubs": {
+    "message": "Subtitles on or off"
+  },
+  "cmdToggleTts": {
+    "message": "Read aloud on or off"
+  },
+  "optShortcutsLabel": {
+    "message": "Keyboard shortcuts"
+  },
+  "optShortcutsOpen": {
+    "message": "Set shortcuts"
+  },
+  "optShortcutsHint": {
+    "message": "Chrome keeps these keys, not the extension. Nothing is bound to begin with; two things can be: subtitles on/off and read aloud on/off."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome would not open that page from here — paste chrome://extensions/shortcuts into the address bar."
   },
   "startTargetLabel": {
     "message": "Translation language"
@@ -745,7 +766,7 @@
     "message": "Other languages"
   },
   "langsMoreHint": {
-    "message": "Press + to add one. Every language listed is one the free engines and DeepL accept as a target."
+    "message": "Press + to add one. The list follows what the free engines and DeepL give as target languages."
   },
   "langsReset": {
     "message": "Restore defaults"
@@ -789,9 +810,6 @@
   },
   "ttsVolLabel": {
     "message": "Read-aloud volume"
-  },
-  "ttsGroupSetup": {
-    "message": "Provider & key"
   },
   "ttsGroupPlayback": {
     "message": "Playback"
@@ -838,6 +856,12 @@
   "ttsErrNoRegion": {
     "message": "Enter the service region of your Azure key first (e.g. eastus)."
   },
+  "ttsNoSynth": {
+    "message": "This computer has no voices to speak with."
+  },
+  "ttsVoicesLoading": {
+    "message": "Looking for this computer's voices…"
+  },
   "ttsErrRefused": {
     "message": "The provider refused this request — try a different voice."
   },
@@ -862,6 +886,9 @@
   },
   "popupVoiceMore": {
     "message": "More voices…"
+  },
+  "popupVoiceNone": {
+    "message": "No voice chosen"
   },
   "ttsRobotVoices": {
     "message": "Robotic",
@@ -899,6 +926,9 @@
     "message": "Summarize",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Summarize again"
+  },
   "sumFail": {
     "message": "The summary failed. Try again later.",
     "description": "Summary panel: generic failure line."
@@ -927,7 +957,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "The translation endpoint is rate-limiting — resuming in about $SECONDS$s.",
+    "message": "The translation endpoint is rate-limiting — resuming in about $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

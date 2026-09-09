@@ -100,7 +100,7 @@
     "message": "本视频：智能整句（Google）"
   },
   "backendStatusLimited": {
-    "message": "翻译接口暂时限流，已自动放慢重试；已翻译的句子不受影响。"
+    "message": "翻译接口暂时限流，已自动放慢重试；已翻译的句子还在。"
   },
   "diagCopy": {
     "message": "复制诊断信息"
@@ -354,7 +354,7 @@
     "message": "接口地址必须是 https:// 开头的完整地址。"
   },
   "byoErrNoPerm": {
-    "message": "没有授权访问这个接口域名，无法连接。"
+    "message": "没有授权访问这个接口域名，无法连接。再点一次「保存并测通」，在弹出的窗口里允许。"
   },
   "byoErrAuth": {
     "message": "Key 被拒绝(401/403):检查是否复制完整、是否已开通。"
@@ -380,6 +380,9 @@
   },
   "byoErrNetfail": {
     "message": "连不上这个接口(网络或区域限制)。"
+  },
+  "byoErrNetfailLocal": {
+    "message": "连不上这个地址：要么服务没在跑，要么它还没允许扩展访问（Ollama 用 OLLAMA_ORIGINS，LM Studio 开 CORS 开关）。"
   },
   "byoErrUnsupportedTarget": {
     "message": "这家不支持当前目标语言，换语言或换引擎。"
@@ -489,7 +492,25 @@
     "message": "自动（跟随浏览器）"
   },
   "uiLocaleHint": {
-    "message": "只影响这个插件自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。字幕翻译成什么语言，在弹窗和「字幕语言」里选，与这里无关。"
+    "message": "只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文用哪种语言，在弹窗里选；「字幕语言」那一面只决定弹窗里列出哪些语言。"
+  },
+  "cmdToggleSubs": {
+    "message": "开关字幕"
+  },
+  "cmdToggleTts": {
+    "message": "开关朗读"
+  },
+  "optShortcutsLabel": {
+    "message": "键盘快捷键"
+  },
+  "optShortcutsOpen": {
+    "message": "设置快捷键"
+  },
+  "optShortcutsHint": {
+    "message": "快捷键由 Chrome 管，不在这个扩展里。默认一个都没绑；能绑的有两件：开关字幕、开关朗读。"
+  },
+  "optShortcutsFallback": {
+    "message": "这一页从这里打不开。把 chrome://extensions/shortcuts 粘到地址栏。"
   },
   "startTargetLabel": {
     "message": "译文语言"
@@ -745,7 +766,7 @@
     "message": "其他语言"
   },
   "langsMoreHint": {
-    "message": "点 + 加进上面的列表。列出的语言，都是免费引擎和 DeepL 认的目标语言。"
+    "message": "点 + 加进上面的列表。这份列表按免费引擎和 DeepL 给出的目标语言来列。"
   },
   "langsReset": {
     "message": "恢复默认"
@@ -789,9 +810,6 @@
   },
   "ttsVolLabel": {
     "message": "朗读音量"
-  },
-  "ttsGroupSetup": {
-    "message": "服务商与 Key"
   },
   "ttsGroupPlayback": {
     "message": "播放"
@@ -838,6 +856,12 @@
   "ttsErrNoRegion": {
     "message": "先填你 Azure Key 所在的服务区域（如 eastus）再测通。"
   },
+  "ttsNoSynth": {
+    "message": "这台电脑没有可用的朗读音色。"
+  },
+  "ttsVoicesLoading": {
+    "message": "正在读取这台电脑的音色…"
+  },
   "ttsErrRefused": {
     "message": "服务商拒绝了这次请求——换一个音色试试。"
   },
@@ -858,6 +882,9 @@
   },
   "popupVoiceMore": {
     "message": "更多音色…"
+  },
+  "popupVoiceNone": {
+    "message": "未选音色"
   },
   "ttsRobotVoices": {
     "message": "机器音",
@@ -895,8 +922,11 @@
     "message": "开始总结",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "重新总结"
+  },
   "sumFail": {
-    "message": "总结失败,稍后再试。",
+    "message": "总结失败，稍后再试。",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
@@ -910,7 +940,7 @@
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "有 $N$ 段没能总结,以上是其余部分。",
+    "message": "有 $N$ 段没能总结，以上是其余部分。",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "翻译端点正在限流，约 $SECONDS$ 秒后继续",
+    "message": "翻译接口正在限流，约 $SECONDS$ 秒后继续",
     "placeholders": {
       "seconds": {
         "content": "$1",

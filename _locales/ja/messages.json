@@ -336,13 +336,13 @@
     "message": "APIのベースURLは https:// から始まる完全なアドレスにしてください。"
   },
   "byoErrNoPerm": {
-    "message": "そのAPIホストへのアクセス許可がないと、拡張機能は接続できません。"
+    "message": "そのAPIホストへのアクセス許可がないと、拡張機能は接続できません。「保存してテスト」をもう一度押して、許可してください。"
   },
   "byoErrAuth": {
     "message": "キーが拒否されました（401/403）。全文がコピーされているか、有効かを確認してください。"
   },
   "byoErrListAuth": {
-    "message": "このキーには一覧を読む権限がありません。提供元の管理画面で権限を追加してから、もう一度取得してください。",
+    "message": "このキーには一覧を読む権限がありません。プロバイダーの管理画面で権限を追加してから、もう一度取得してください。",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "そのエンドポイントに到達できません（ネットワークまたは地域制限）。"
+  },
+  "byoErrNetfailLocal": {
+    "message": "そのアドレスに接続できません。サーバーが起動していないか、拡張機能からのアクセスをまだ許可していません（Ollama は OLLAMA_ORIGINS、LM Studio は CORS のスイッチ）。"
   },
   "byoErrUnsupportedTarget": {
     "message": "このプロバイダーには選択した言語の翻訳先がありません。言語またはエンジンを変更してください。"
@@ -633,7 +636,7 @@
     "message": "その他の言語"
   },
   "langsMoreHint": {
-    "message": "+ を押して追加します。一覧の言語はすべて、無料エンジンとDeepLの翻訳先として使えます。"
+    "message": "+ を押して追加します。一覧は、無料エンジンと DeepL が翻訳先として挙げている言語に沿っています。"
   },
   "langsReset": {
     "message": "デフォルトに戻す"
@@ -682,7 +685,25 @@
     "message": "自動 — ブラウザに合わせる"
   },
   "uiLocaleHint": {
-    "message": "この拡張機能のメニューと設定の言語です。動画上に描画される一部のラベルは、ブラウザの言語に従います。字幕の翻訳先はポップアップと「字幕の言語」で選びます。ここではありません。"
+    "message": "この拡張機能のメニューと設定の言語です。動画上に描画される一部のラベルは、ブラウザの言語に従います。字幕の翻訳先はポップアップで選びます。「字幕の言語」の画面は、ポップアップに並ぶ言語を決めるだけです。"
+  },
+  "cmdToggleSubs": {
+    "message": "字幕のオン/オフ"
+  },
+  "cmdToggleTts": {
+    "message": "読み上げのオン/オフ"
+  },
+  "optShortcutsLabel": {
+    "message": "キーボードショートカット"
+  },
+  "optShortcutsOpen": {
+    "message": "ショートカットを設定"
+  },
+  "optShortcutsHint": {
+    "message": "ショートカットを持っているのは Chrome で、この拡張機能ではありません。最初は何も割り当てられていません。割り当てられるのは 2 つ、字幕のオン/オフと読み上げのオン/オフです。"
+  },
+  "optShortcutsFallback": {
+    "message": "このページはここからは開けませんでした。chrome://extensions/shortcuts をアドレスバーに貼り付けてください。"
   },
   "startTargetLabel": {
     "message": "翻訳言語"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "先に Azure キーのサービスリージョンを入力してください（例: eastus）。"
   },
+  "ttsNoSynth": {
+    "message": "このパソコンには使える音声がありません。"
+  },
+  "ttsVoicesLoading": {
+    "message": "このパソコンの音声を読み込み中…"
+  },
   "startPicChop1": {
     "message": "二つある大きな"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "読み上げ設定"
-  },
-  "ttsGroupSetup": {
-    "message": "プロバイダーとキー"
   },
   "ttsGroupPlayback": {
     "message": "再生"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "他の音声…"
   },
+  "popupVoiceNone": {
+    "message": "音声未選択"
+  },
   "ttsRobotVoices": {
     "message": "ロボット風",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,6 +922,9 @@
     "message": "要約する",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "もう一度要約"
+  },
   "sumFail": {
     "message": "要約に失敗しました。しばらくしてからもう一度お試しください。",
     "description": "Summary panel: generic failure line."
@@ -919,7 +949,7 @@
     "description": "Row label in the small in-player menu. One word."
   },
   "tlangLimitedNote": {
-    "message": "YouTube本体の翻訳は現在レート制限中です。スマート文（Google）で補完しています。あとで自動的に再試行します。",
+    "message": "YouTube本体の翻訳は現在レート制限中です。スマート文単位（Google）で補完しています。あとで自動的に再試行します。",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {

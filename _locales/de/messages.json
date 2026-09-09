@@ -336,13 +336,13 @@
     "message": "Die API-Basis-URL muss eine vollständige https://-Adresse sein."
   },
   "byoErrNoPerm": {
-    "message": "Ohne Berechtigung, diesen API-Host zu erreichen, kann die Erweiterung nicht verbinden."
+    "message": "Ohne Berechtigung, diesen API-Host zu erreichen, kann die Erweiterung nicht verbinden. Drücke erneut „Speichern und testen“ und erlaube den Zugriff."
   },
   "byoErrAuth": {
     "message": "Der Schlüssel wurde abgelehnt (401/403) — prüfen, ob er vollständig kopiert und aktiv ist."
   },
   "byoErrListAuth": {
-    "message": "Dieser Schlüssel darf die Liste nicht lesen. Erteile ihm beim Anbieter die Leseberechtigung und hol sie erneut ab.",
+    "message": "Dieser Schlüssel darf die Liste nicht lesen. Erteile ihm im Dashboard des Anbieters die Leseberechtigung und hol sie erneut ab.",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Dieser Endpunkt ist nicht erreichbar (Netzwerk oder regionale Einschränkung)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Diese Adresse ist nicht erreichbar: Entweder läuft der Server nicht, oder er erlaubt der Erweiterung den Zugriff noch nicht (OLLAMA_ORIGINS bei Ollama, der CORS-Schalter in LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Dieser Anbieter hat kein Ziel für deine gewählte Sprache — Sprache oder Engine ändern."
@@ -498,7 +501,7 @@
     "message": "Weitere Modelle…"
   },
   "popupModelFetch": {
-    "message": "Modelle in den Einstellungen holen"
+    "message": "Modelle in den Einstellungen abrufen"
   },
   "popupModelSwitched": {
     "message": "Ab jetzt: $MODEL$",
@@ -633,7 +636,7 @@
     "message": "Weitere Sprachen"
   },
   "langsMoreHint": {
-    "message": "Mit + eine hinzufügen. Jede gelistete Sprache akzeptieren die kostenlosen Engines und DeepL als Ziel."
+    "message": "Mit + eine hinzufügen. Die Liste folgt den Zielsprachen, die die kostenlosen Engines und DeepL angeben."
   },
   "langsReset": {
     "message": "Standard wiederherstellen"
@@ -682,7 +685,25 @@
     "message": "Automatisch — dem Browser folgen"
   },
   "uiLocaleHint": {
-    "message": "Die Sprache der Menüs und Einstellungen dieser Erweiterung. Einige direkt auf dem Video eingeblendete Beschriftungen folgen weiterhin der Browsersprache. Die Zielsprache der Untertitel wird im Popup und unter „Untertitelsprachen“ gewählt — nicht hier."
+    "message": "Die Sprache der Menüs und Einstellungen dieser Erweiterung. Einige direkt auf dem Video eingeblendete Beschriftungen folgen weiterhin der Browsersprache. Die Zielsprache der Untertitel wird im Popup gewählt; der Bereich „Untertitelsprachen“ legt nur fest, welche Sprachen das Popup anbietet."
+  },
+  "cmdToggleSubs": {
+    "message": "Untertitel ein/aus"
+  },
+  "cmdToggleTts": {
+    "message": "Vorlesen ein/aus"
+  },
+  "optShortcutsLabel": {
+    "message": "Tastenkürzel"
+  },
+  "optShortcutsOpen": {
+    "message": "Kürzel festlegen"
+  },
+  "optShortcutsHint": {
+    "message": "Diese Tasten verwaltet Chrome, nicht die Erweiterung. Zu Beginn ist keine belegt; belegen lassen sich zwei: Untertitel ein/aus und Vorlesen ein/aus."
+  },
+  "optShortcutsFallback": {
+    "message": "Von hier aus ließ sich die Seite nicht öffnen — füge chrome://extensions/shortcuts in die Adressleiste ein."
   },
   "startTargetLabel": {
     "message": "Übersetzungssprache"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "Gib zuerst die Serviceregion deines Azure-Schlüssels ein (z. B. eastus)."
   },
+  "ttsNoSynth": {
+    "message": "Dieser Computer hat keine Stimmen zum Vorlesen."
+  },
+  "ttsVoicesLoading": {
+    "message": "Stimmen dieses Computers werden abgerufen…"
+  },
   "startPicChop1": {
     "message": "es gibt zwei große"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Vorlese-Einstellungen"
-  },
-  "ttsGroupSetup": {
-    "message": "Anbieter & Schlüssel"
   },
   "ttsGroupPlayback": {
     "message": "Wiedergabe"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Weitere Stimmen…"
   },
+  "popupVoiceNone": {
+    "message": "Keine Stimme gewählt"
+  },
   "ttsRobotVoices": {
     "message": "Robotisch",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -888,29 +915,32 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Zusammenfassungen brauchen deinen eigenen Dienst: einen Anbieter mit deinem Schlüssel oder ein lokales Modell auf diesem Rechner. Die kostenlosen Dienste übersetzen nur, sie fassen nicht zusammen.",
+    "message": "Zusammenfassungen brauchen deinen eigenen Dienst: einen Anbieter mit deinem Schlüssel oder ein lokales Modell auf diesem Rechner. Die kostenlosen Engines übersetzen nur, sie fassen nicht zusammen.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
     "message": "Zusammenfassen",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Erneut zusammenfassen"
+  },
   "sumFail": {
     "message": "Zusammenfassung fehlgeschlagen — versuch es später noch einmal.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Das schickt die komplette Untertitelspur an $PROVIDER$, in $PARTS$ Teilen, auf dein eigenes Kontingent.",
+    "message": "Das schickt die komplette Untertitelspur an $PROVIDER$, in $PARTS$ Teil(en), auf dein eigenes Kontingent.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
   "sumWorking": {
-    "message": "Fasse zusammen … Teil $DONE$/$TOTAL$",
+    "message": "Wird zusammengefasst… Teil $DONE$/$TOTAL$",
     "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "$N$ Teil(e) ließen sich nicht zusammenfassen; oben steht der Rest.",
+    "message": "Fehlgeschlagen bei $N$ Teil(en); oben steht der Rest.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -919,11 +949,11 @@
     "description": "Row label in the small in-player menu. One word."
   },
   "tlangLimitedNote": {
-    "message": "YouTubes eigene Übersetzung ist gerade ratenbegrenzt; intelligente Sätze (Google) springen ein. Es wird später automatisch erneut versucht.",
+    "message": "YouTubes eigene Übersetzung ist gerade wegen zu vieler Anfragen gedrosselt; intelligente Sätze (Google) springen ein. Es wird später automatisch erneut versucht.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Der Übersetzungsendpunkt begrenzt die Anfragerate — Fortsetzung in etwa $SECONDS$s.",
+    "message": "Der Übersetzungsendpunkt begrenzt die Anfragerate — Fortsetzung in etwa $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

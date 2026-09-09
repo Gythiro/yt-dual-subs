@@ -64,6 +64,14 @@
       "all_frames": false
     }
   ],
+  "commands": {
+    "toggle-subtitles": {
+      "description": "__MSG_cmdToggleSubs__"
+    },
+    "toggle-read-aloud": {
+      "description": "__MSG_cmdToggleTts__"
+    }
+  },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Dual Subtitles for YouTube",

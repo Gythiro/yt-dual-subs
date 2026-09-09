@@ -77,6 +77,13 @@ a { text-underline-offset: 3px; }
 [lang^="zh"] .olabel, [lang^="ja"] .olabel, [lang^="ko"] .olabel {
   text-transform: none; letter-spacing: .8px;
 }
+/* Thai belongs in that carve-out too, and needs it more: tracking pulls its
+   vowel signs and tone marks away from the consonants they sit on, so a label
+   like แสดงในป๊อปอัป comes apart rather than reading as spaced small caps.
+   Uppercase would also only ever reach the Latin words inside it. */
+[lang^="th"] .olabel {
+  text-transform: none; letter-spacing: 0;
+}
 
 /* ------------------------------ section nav ------------------------------ */
 .oside { display: flex; flex-direction: column; gap: 18px; }
@@ -170,9 +177,11 @@ a { text-underline-offset: 3px; }
   min-height: 2.8em; display: flex; align-items: flex-end;   /* two-line worst case: cards stay level */
 }
 .ocmp-h.on { color: var(--accent); font-weight: 600; }
-[lang^="zh"] .ocmp-h, [lang^="ja"] .ocmp-h, [lang^="ko"] .ocmp-h {
+[lang^="zh"] .ocmp-h, [lang^="ja"] .ocmp-h, [lang^="ko"] .ocmp-h,
+[lang^="th"] .ocmp-h {
   text-transform: none;
 }
+[lang^="th"] .ocmp-h { letter-spacing: 0; }
 .ocmp-card {
   background: #000; border: 1px solid var(--line); border-radius: 8px;
   padding: 12px 12px 10px; flex: 1;
@@ -356,6 +365,13 @@ input[type="text"], input[type="url"], input[type="password"], select {
   background: var(--surface-2); color: var(--txt);
   border: 1px solid var(--line); border-radius: 8px;
 }
+/* The same two lines the popup has (popup.css): a field that answers the
+   pointer, and a focused one that says so in the accent rather than only
+   through the focus ring. */
+input[type="text"]:hover, input[type="url"]:hover,
+input[type="password"]:hover, select:hover { border-color: #454545; }
+input[type="text"]:focus, input[type="url"]:focus,
+input[type="password"]:focus, select:focus { border-color: var(--accent); }
 input::placeholder { color: #8c9095; }   /* token-table grey, 5.0:1 on surface-2 (spec §2) */
 input[hidden] { display: none; }
 
@@ -373,6 +389,13 @@ input[hidden] { display: none; }
 #ttsRegionRow > label { flex: none; white-space: nowrap; }
 #ttsRegionRow input { flex: 1; min-width: 0; }
 .orow[hidden] { display: none; }
+/* The fetch row carries two explanatory labels, not two verbs: D89 chose those
+   words on purpose ("what does this button even do?"). Side by side they fit
+   English and nothing else — German runs "Vollständige Liste dieser Sprache mit
+   deinem Schlüssel abrufen" against "Zurück zu den üblichen Stimmen". Same
+   answer the model row already reached: stack them. */
+#ttsFetchRow { flex-direction: column; align-items: stretch; }
+#ttsFetchRow .obtn, #ttsFetchRow .olink { align-self: flex-start; }
 
 /* Slider rows stack: label + readout above, full-width track below — the
    readouts form a column whatever length the locale's label is. */
@@ -413,8 +436,10 @@ input[hidden] { display: none; }
   flex: none; background: var(--surface-2); color: var(--txt);
   border: 1px solid var(--line); font-weight: 500;
 }
-.obtn:hover { filter: brightness(1.1); }
-.obtn:disabled { opacity: .6; cursor: default; }
+/* :not(:disabled) — a button that is busy testing a key brightened under the
+   pointer and read as still pressable. */
+.obtn:hover:not(:disabled) { filter: brightness(1.1); }
+.obtn:disabled { opacity: .6; cursor: default; filter: none; }
 
 /* read-aloud playback half: same column rhythm as the section, and a locked
    face while the stored provider has no key — the inputs carry the real
@@ -424,6 +449,16 @@ input[hidden] { display: none; }
 .otts-use.locked .ochk, .otts-use.locked input { cursor: default; }
 
 .ochk { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); cursor: pointer; }
+/* An author display: wins over the hidden attribute — this repo has shipped
+   that mistake three times (设计规范 §2). The "show key" label is hidden while
+   there is no draft, and without this line it simply would not be. */
+.ochk[hidden] { display: none; }
+/* The playback half is one group — a switch and the two levels it governs (the
+   popup keeps them together too). The four-line explanation between the switch
+   and the sliders was sitting on the same 16px the group uses between its own
+   members, so the group read as two. Pull the prose up against the control it
+   explains: 组内紧,组间松 (设计规范 §2). */
+.otts-use > .ohint { margin-top: -7px; }
 /* The read-aloud master switch is a primary action, not an aside like "show
    the key" — full text colour, same as the popup's switch row. */
 .ochk-primary { color: var(--txt); }
@@ -452,6 +487,13 @@ input[hidden] { display: none; }
 
 .ohint { margin: 0; font-size: 11.5px; color: var(--muted); }
 .ohint[hidden] { display: none; }
+/* Two of these lines are not hints: #modelMsg and #ttsVoiceMsg carry the answer
+   to a button press, failure included. They were styled as hints, so a refused
+   fetch came out the same muted grey as the sentence explaining the field —
+   contrast fine, meaning lost. Same three colours .omsg already uses. */
+.ohint.ok { color: #5fd38a; }
+.ohint.err { color: #ff8a8a; }
+.ohint.warn { color: #ffd88a; }
 .omsg { margin: -6px 0 0; font-size: 12.5px; color: var(--muted); }
 .omsg[hidden] { display: none; }
 .omsg.ok { color: #5fd38a; }

@@ -324,19 +324,19 @@
     "message": "Anahtar bu tarayıcıda, bu makinede kalır — asla karşıya yüklenmez. Altyazı metni yalnızca seçtiğin sağlayıcıya gider."
   },
   "byoErrNoProvider": {
-    "message": "Önce bir sağlayıcı seç."
+    "message": "Önce bir sağlayıcı seçin."
   },
   "byoErrNoKey": {
-    "message": "Önce bir API anahtarı girin, ardından Kaydet ve test et’e basın."
+    "message": "Önce bir API anahtarı girin, ardından Kaydet ve dene'ye basın."
   },
   "byoErrNoModel": {
     "message": "Bu sağlayıcı için bir model adı yazman gerekiyor."
   },
   "byoErrBadBaseUrl": {
-    "message": "API taban URL’si tam bir https:// adresi olmalı."
+    "message": "API taban URL'si tam bir https:// adresi olmalı."
   },
   "byoErrNoPerm": {
-    "message": "Bu API sunucusuna erişim izni olmadan eklenti bağlanamaz."
+    "message": "Bu API sunucusuna erişim izni olmadan eklenti bağlanamaz. “Kaydet ve dene” düğmesine tekrar basıp izin verin."
   },
   "byoErrAuth": {
     "message": "Anahtar reddedildi (401/403) — tam kopyalandığından ve etkin olduğundan emin ol."
@@ -358,22 +358,25 @@
     "message": "Model istenen gibi satır satır yanıt vermedi, daha küçük yeniden denemeler de başarısız oldu — başka bir model dene."
   },
   "byoErrReasoning": {
-    "message": "Bu model yalnızca düşünce zincirini döndürdü, çeviri yok — düşünmeyen bir model seç."
+    "message": "Bu model yalnızca düşünce zincirini döndürdü, çeviri yok — düşünmeyen bir model seçin."
   },
   "byoErrNetfail": {
     "message": "Bu uç noktaya ulaşılamıyor (ağ veya bölgesel kısıtlama)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Bu adrese ulaşılamıyor: ya sunucu çalışmıyor ya da eklentinin erişimine henüz izin vermiyor (Ollama'da OLLAMA_ORIGINS, LM Studio'da CORS anahtarı)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Bu sağlayıcının seçtiğin dil için hedefi yok — dili veya motoru değiştir."
   },
   "byoErrFailed": {
-    "message": "Bağlantı başarısız. Biraz sonra tekrar dene."
+    "message": "Bağlantı başarısız. Biraz sonra tekrar deneyin."
   },
   "optTitle": {
     "message": "Çeviri hizmeti kurulumu"
   },
   "optIntro": {
-    "message": "Bir sağlayıcı seç ve kendi API anahtarını yapıştır. Anahtar bu makinede kalır; altyazı metni yalnızca seçtiğin sağlayıcıya gider."
+    "message": "Bir sağlayıcı seçin ve kendi API anahtarınızı yapıştırın. Anahtar bu makinede kalır; altyazı metni yalnızca seçtiğiniz sağlayıcıya gider."
   },
   "optPricingLink": {
     "message": "Fiyatlandırma ve ücretsiz katman"
@@ -414,10 +417,10 @@
     "message": "kullanımda"
   },
   "optAfterSetup": {
-    "message": "İşin bitince eklenti penceresini aç ve Motor’u \"Kendi anahtarınız (LLM / DeepL)\" olarak ayarla."
+    "message": "İşiniz bitince eklenti penceresini açın ve Motor'u \"Kendi anahtarınız (LLM / DeepL)\" olarak ayarlayın."
   },
   "optTrademark": {
-    "message": "Tüm sağlayıcı adları ve logoları ilgili sahiplerinin ticari markalarıdır. Bu eklenti bunlardan hiçbiriyle bağlantılı değildir, onlar tarafından onaylanmamış veya desteklenmemiştir; işaretler yalnızca seçtiğin API’yi tanımlamak için gösterilir."
+    "message": "Tüm sağlayıcı adları ve logoları ilgili sahiplerinin ticari markalarıdır. Bu eklenti bunlardan hiçbiriyle bağlantılı değildir, onlar tarafından onaylanmamış veya desteklenmemiştir; işaretler yalnızca seçtiğin API'yi tanımlamak için gösterilir."
   },
   "optSections": {
     "message": "Bölümler"
@@ -435,7 +438,7 @@
     "message": "Üç şey. Kullanmak için hiçbir şey kurmana gerek yok."
   },
   "startS1Title": {
-    "message": "Bir video aç — bu kadar"
+    "message": "Bir video açın — bu kadar"
   },
   "startS1Body": {
     "message": "Altyazısı olan herhangi bir YouTube videosu: iki satır kendiliğinden görünür."
@@ -444,7 +447,7 @@
     "message": "İstediğin yere koy"
   },
   "startS2Body": {
-    "message": "Altyazı kutusunun sol üstündeki tutamacı tutup istediğin yere sürükle. Eski yerine koymak için tutamaca çift tıkla."
+    "message": "Altyazı kutusunun sol üstündeki tutamacı tutup istediğiniz yere sürükleyin. Eski yerine koymak için tutamaca çift tıklayın."
   },
   "startS2Alt": {
     "message": "Oynatıcı şeması: altyazı kutusunun sol üst köşesinde altı noktalı bir tutamaç, kutuyu başka bir konuma sürüklüyor"
@@ -453,7 +456,7 @@
     "message": "Daha iyi çeviriler ister misin"
   },
   "startS3Body": {
-    "message": "Kendi API anahtarını ekle: tam cümle çevirisi ve dışa aktarırken tüm video çevirisi."
+    "message": "Kendi API anahtarınızı ekleyin: tam cümle çevirisi ve dışa aktarırken tüm video çevirisi."
   },
   "startGoSetup": {
     "message": "Çeviri hizmeti kur"
@@ -510,7 +513,7 @@
     "message": "Model seçilmedi"
   },
   "exportUsesYouTube": {
-    "message": "İndirme, YouTube’un kendi tam parça çevirisini kullanır — ücretsizdir ve API anahtarını harcamaz."
+    "message": "İndirme, YouTube'un kendi tam parça çevirisini kullanır — ücretsizdir ve API anahtarını harcamaz."
   },
   "exportUseByo": {
     "message": "Kendi anahtarımla çevir (daha yakın eşleşme, kota harcar)"
@@ -579,13 +582,13 @@
     "message": "Puanla"
   },
   "ftGithub": {
-    "message": "GitHub’da kaynak kodu"
+    "message": "GitHub'da kaynak kodu"
   },
   "ftFeedback": {
     "message": "Geri bildirim gönder veya hata bildir"
   },
   "ftReview": {
-    "message": "Chrome Web Store’da puanla"
+    "message": "Chrome Web Store'da puanla"
   },
   "optNeedKey": {
     "message": "Henüz anahtar yok — bir tane eklemeden bu sağlayıcı kullanılamaz."
@@ -633,7 +636,7 @@
     "message": "Diğer diller"
   },
   "langsMoreHint": {
-    "message": "Eklemek için + tuşuna basın. Listedeki her dil, ücretsiz motorların ve DeepL’in hedef olarak kabul ettiği bir dildir."
+    "message": "Eklemek için + tuşuna basın. Liste, ücretsiz motorların ve DeepL'in belirttiği hedef dilleri izler."
   },
   "langsReset": {
     "message": "Varsayılanları geri yükle"
@@ -682,7 +685,25 @@
     "message": "Otomatik — tarayıcıyı takip et"
   },
   "uiLocaleHint": {
-    "message": "Bu eklentinin kendi menülerinin ve ayarlarının dili. Videonun üzerine çizilen birkaç etiket yine tarayıcının dilini izler. Altyazıların hangi dile çevrileceği açılır pencerede ve “Altyazı dilleri” altında seçilir — burada değil."
+    "message": "Bu eklentinin kendi menü ve ayarlarının dili. Videonun üzerine çizilen birkaç etiket hâlâ tarayıcının dilini izler. Altyazıların hangi dile çevrileceği açılır pencerede seçilir; “Altyazı dilleri” bölümü yalnızca açılır pencerede hangi dillerin listeleneceğini belirler."
+  },
+  "cmdToggleSubs": {
+    "message": "Altyazıları aç veya kapat"
+  },
+  "cmdToggleTts": {
+    "message": "Sesli okumayı aç veya kapat"
+  },
+  "optShortcutsLabel": {
+    "message": "Klavye kısayolları"
+  },
+  "optShortcutsOpen": {
+    "message": "Kısayolları ayarla"
+  },
+  "optShortcutsHint": {
+    "message": "Bu kısayolları eklenti değil, Chrome tutar. Başlangıçta hiçbiri atanmamıştır; ikisi atanabilir: altyazı açık/kapalı ve sesli okuma açık/kapalı."
+  },
+  "optShortcutsFallback": {
+    "message": "Sayfa buradan açılmadı — chrome://extensions/shortcuts adresini adres çubuğuna yapıştırın."
   },
   "startTargetLabel": {
     "message": "Çeviri dili"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "Önce Azure anahtarınızın hizmet bölgesini girin (ör. eastus)."
   },
+  "ttsNoSynth": {
+    "message": "Bu bilgisayarda seslendirme için ses yok."
+  },
+  "ttsVoicesLoading": {
+    "message": "Bu bilgisayarın sesleri getiriliyor…"
+  },
   "startPicChop1": {
     "message": "iki büyük"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Sesli okuma ayarları"
-  },
-  "ttsGroupSetup": {
-    "message": "Sağlayıcı ve anahtar"
   },
   "ttsGroupPlayback": {
     "message": "Oynatma"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Diğer sesler…"
   },
+  "popupVoiceNone": {
+    "message": "Ses seçilmedi"
+  },
   "ttsRobotVoices": {
     "message": "Robotik",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -888,19 +915,22 @@
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedKey": {
-    "message": "Özet için kendi hizmetin gerekir: anahtarını girdiğin bir sağlayıcı ya da bu bilgisayardaki yerel bir model. Ücretsiz motorlar yalnızca çevirir, özetlemez.",
+    "message": "Özet için kendi hizmetiniz gerekir: anahtarını girdiğiniz bir sağlayıcı ya da bu bilgisayardaki yerel bir model. Ücretsiz motorlar yalnızca çevirir, özetlemez.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumStart": {
     "message": "Özetle",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Yeniden özetle"
+  },
   "sumFail": {
-    "message": "Özet başarısız oldu — daha sonra tekrar dene.",
+    "message": "Özet başarısız oldu — daha sonra tekrar deneyin.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Bu, altyazı parçasının tamamını $PROVIDER$ hizmetine gönderir ($PARTS$ parça), kendi kotandan.",
+    "message": "Bu, altyazı parçasının tamamını $PROVIDER$ hizmetine gönderir ($PARTS$ parça), kendi kotanızdan.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Çeviri endpoint’i hız sınırına takıldı — yaklaşık $SECONDS$s içinde devam edilecek.",
+    "message": "Çeviri endpoint'i hız sınırına takıldı — yaklaşık $SECONDS$ s içinde devam edilecek.",
     "placeholders": {
       "seconds": {
         "content": "$1",

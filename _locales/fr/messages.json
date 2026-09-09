@@ -18,7 +18,7 @@
     "message": "Paramètres"
   },
   "enableAria": {
-    "message": "Activer l'extension"
+    "message": "Activer l’extension"
   },
   "previewTag": {
     "message": "Aperçu"
@@ -85,10 +85,10 @@
     "message": "Votre propre clé (LLM / DeepL)"
   },
   "backendTipHtml": {
-    "message": "<b>Auto</b> : utilise la traduction de piste complète de YouTube dès que la vidéo le permet, et bascule vers les phrases intelligentes sinon.<br><b>Piste complète</b> : la traduction native de YouTube, alignée cue par cue. Un usage intensif peut provoquer une limitation temporaire par YouTube — l'extension attend et réessaie.<br><b>Phrases intelligentes</b> : reconstitue les sous-titres fragmentés en phrases complètes, puis les traduit via le service gratuit de Google — meilleure formulation que la piste complète sur les pistes mal découpées, mais un usage intensif peut aussi y être limité ; l'extension ralentit et réessaie.<br><b>Clé personnelle</b> : envoie la phrase reconstituée au fournisseur que vous avez configuré."
+    "message": "<b>Auto</b> : utilise la traduction de piste complète de YouTube dès que la vidéo le permet, et bascule vers les phrases intelligentes sinon.<br><b>Piste complète</b> : la traduction native de YouTube, alignée cue par cue. Un usage intensif peut provoquer une limitation temporaire par YouTube — l’extension attend et réessaie.<br><b>Phrases intelligentes</b> : reconstitue les sous-titres fragmentés en phrases complètes, puis les traduit via le service gratuit de Google — meilleure formulation que la piste complète sur les pistes mal découpées, mais un usage intensif peut aussi y être limité ; l’extension ralentit et réessaie.<br><b>Clé personnelle</b> : envoie la phrase reconstituée au fournisseur que vous avez configuré."
   },
   "backendGtxHint": {
-    "message": "Utilise le service gratuit de Google — un usage intensif peut être brièvement limité ; l'extension régule le rythme et réessaie automatiquement."
+    "message": "Utilise le service gratuit de Google — un usage intensif peut être brièvement limité ; l’extension régule le rythme et réessaie automatiquement."
   },
   "backendStatusTlang": {
     "message": "Cette vidéo : traduction piste complète (YouTube)"
@@ -133,7 +133,7 @@
     "message": "essayer"
   },
   "posTryNoVideo": {
-    "message": "Ouvrez d'abord une vidéo YouTube"
+    "message": "Ouvrez d’abord une vidéo YouTube"
   },
   "resetPos": {
     "message": "Réinitialiser la position"
@@ -235,7 +235,7 @@
     "message": "Aucune traduction disponible pour cette vidéo — essayez le moteur Piste complète ou une autre langue cible."
   },
   "exportLimited": {
-    "message": "YouTube limite actuellement la traduction de pistes entières — réessayez dans une minute. Avec votre propre clé, la carte d'export propose une case pour contourner cette limite."
+    "message": "YouTube limite actuellement la traduction de pistes entières — réessayez dans une minute. Avec votre propre clé, la carte d’export propose une case pour contourner cette limite."
   },
   "exportNoCues": {
     "message": "Aucun sous-titre téléchargeable — lancez la lecture quelques secondes pour charger les sous-titres, puis réessayez."
@@ -244,13 +244,13 @@
     "message": "Ouvrez une page de vidéo YouTube pour exporter."
   },
   "exportFailed": {
-    "message": "Échec de l'export — actualisez la page et réessayez."
+    "message": "Échec de l’export — actualisez la page et réessayez."
   },
   "updateNotesLabel": {
     "message": "Ouvrir les notes de version après les mises à jour"
   },
   "trackWarnDubOnly": {
-    "message": "Attention : cette vidéo n'a que des sous-titres auto issus d'un doublage IA (pas de piste en langue originale) ; les sous-titres bilingues peuvent ne pas correspondre à l'audio."
+    "message": "Attention : cette vidéo n’a que des sous-titres auto issus d’un doublage IA (pas de piste en langue originale) ; les sous-titres bilingues peuvent ne pas correspondre à l’audio."
   },
   "whatsNewRow": {
     "message": "Voir les nouveautés de la v$VER$ →",
@@ -272,7 +272,7 @@
     "message": "Fournisseur"
   },
   "byoBaseLabel": {
-    "message": "Adresse de l'endpoint"
+    "message": "Adresse de l’endpoint"
   },
   "byoModelLabel": {
     "message": "Modèle"
@@ -327,7 +327,7 @@
     "message": "Choisissez d’abord un fournisseur."
   },
   "byoErrNoKey": {
-    "message": "Saisissez d'abord une clé API, puis cliquez sur Enregistrer et tester."
+    "message": "Saisissez d’abord une clé API, puis cliquez sur Enregistrer et tester."
   },
   "byoErrNoModel": {
     "message": "Ce fournisseur exige un nom de modèle."
@@ -336,13 +336,13 @@
     "message": "L’URL de base de l’API doit être une adresse https:// complète."
   },
   "byoErrNoPerm": {
-    "message": "Sans autorisation d’atteindre cet hôte API, l’extension ne peut pas se connecter."
+    "message": "Sans autorisation d’atteindre cet hôte API, l’extension ne peut pas se connecter. Appuyez de nouveau sur « Enregistrer et tester » et autorisez l’accès."
   },
   "byoErrAuth": {
     "message": "Clé refusée (401/403) — vérifiez qu’elle a été copiée en entier et qu’elle est active."
   },
   "byoErrListAuth": {
-    "message": "Cette clé n'a pas le droit de lire la liste. Accordez-lui cette permission chez le fournisseur, puis réessayez.",
+    "message": "Cette clé n’a pas le droit de lire la liste. Accordez-lui cette permission dans le tableau de bord du fournisseur, puis réessayez.",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Impossible d’atteindre ce point de terminaison (réseau ou restriction régionale)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Impossible de joindre cette adresse : soit le serveur ne tourne pas, soit il n’autorise pas encore l’extension (OLLAMA_ORIGINS pour Ollama, l’option CORS dans LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Ce fournisseur n’a pas de cible pour la langue choisie — changez de langue ou de moteur."
@@ -468,7 +471,7 @@
     "message": "Une seconde ligne de sous-titres pour YouTube : l’original sur une ligne, la traduction sur l’autre, police, couleur et position au choix. Open source, gratuit, sans pub."
   },
   "aboutPrivacy": {
-    "message": "L'extension n'a aucun serveur de notre côté et ne collecte aucune statistique. Le texte des sous-titres n'est envoyé qu'au service de traduction que vous choisissez ; avec votre propre clé, celle-ci est stockée uniquement sur cet ordinateur."
+    "message": "L’extension n’a aucun serveur de notre côté et ne collecte aucune statistique. Le texte des sous-titres n’est envoyé qu’au service de traduction que vous choisissez ; avec votre propre clé, celle-ci est stockée uniquement sur cet ordinateur."
   },
   "aboutChangelog": {
     "message": "Journal des modifications"
@@ -498,10 +501,10 @@
     "message": "Plus de modèles…"
   },
   "popupModelFetch": {
-    "message": "Récupérer dans les réglages"
+    "message": "Récupérer les modèles dans les réglages"
   },
   "popupModelSwitched": {
-    "message": "À partir d'ici : $MODEL$",
+    "message": "Désormais : $MODEL$",
     "placeholders": {
       "model": { "content": "$1" }
     }
@@ -633,7 +636,7 @@
     "message": "Autres langues"
   },
   "langsMoreHint": {
-    "message": "Appuyez sur + pour en ajouter une. Chaque langue listée est acceptée comme cible par les moteurs gratuits et DeepL."
+    "message": "Appuyez sur + pour en ajouter une. La liste suit les langues cibles annoncées par les moteurs gratuits et DeepL."
   },
   "langsReset": {
     "message": "Rétablir par défaut"
@@ -682,7 +685,25 @@
     "message": "Auto — suivre le navigateur"
   },
   "uiLocaleHint": {
-    "message": "La langue des menus et réglages de cette extension. Quelques libellés affichés sur la vidéo suivent encore la langue du navigateur. La langue de traduction des sous-titres se choisit dans le popup et sous « Langues des sous-titres » — pas ici."
+    "message": "La langue des menus et réglages de l’extension. Quelques libellés affichés sur la vidéo suivent encore la langue du navigateur. La langue de traduction des sous-titres se choisit dans la fenêtre de l’extension ; le volet « Langues des sous-titres » décide seulement des langues qu’elle propose."
+  },
+  "cmdToggleSubs": {
+    "message": "Activer ou désactiver les sous-titres"
+  },
+  "cmdToggleTts": {
+    "message": "Activer ou désactiver la lecture à voix haute"
+  },
+  "optShortcutsLabel": {
+    "message": "Raccourcis clavier"
+  },
+  "optShortcutsOpen": {
+    "message": "Définir les raccourcis"
+  },
+  "optShortcutsHint": {
+    "message": "Ces raccourcis sont gérés par Chrome, pas par l’extension. Aucun n’est attribué au départ ; deux peuvent l’être : sous-titres et lecture à voix haute."
+  },
+  "optShortcutsFallback": {
+    "message": "Impossible d’ouvrir cette page d’ici — collez chrome://extensions/shortcuts dans la barre d’adresse."
   },
   "startTargetLabel": {
     "message": "Langue de traduction"
@@ -703,7 +724,7 @@
     "message": "Lire à voix haute"
   },
   "ttsIntro": {
-    "message": "Faites lire la ligne traduite à voix haute. Les voix de votre navigateur n'ont besoin d'aucune clé ; les fournisseurs cloud se configurent et se testent ici."
+    "message": "Faites lire la ligne traduite à voix haute. Les voix de votre navigateur n’ont besoin d’aucune clé ; les fournisseurs cloud se configurent et se testent ici."
   },
   "ttsVoiceLabel": {
     "message": "Voix"
@@ -720,7 +741,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Avec les voix de votre navigateur, rien n'est envoyé nulle part — c'est votre ordinateur qui lit la ligne. Avec un fournisseur cloud, le texte à lire n'est envoyé qu'au fournisseur choisi, et la clé reste sur cet appareil."
+    "message": "Avec les voix de votre navigateur, rien n’est envoyé nulle part — c’est votre ordinateur qui lit la ligne. Avec un fournisseur cloud, le texte à lire n’est envoyé qu’au fournisseur choisi, et la clé reste sur cet appareil."
   },
   "ttsEnableLabel": {
     "message": "Lire la traduction à voix haute dans la vidéo"
@@ -749,23 +770,29 @@
     }
   },
   "ttsStatusCountsWhy": {
-    "message": "$N$ phrases dans cette vidéo · $M$ ignorées ($W$)",
+    "message": "$N$ phrase(s) dans cette vidéo · $M$ ignorée(s) ($W$)",
     "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
   },
   "ttsSkipLate": {
     "message": "traduction arrivée trop tard"
   },
   "ttsSkipSilent": {
-    "message": "aucun son n'est sorti"
+    "message": "aucun son n’est sorti"
   },
   "ttsEnableHint": {
-    "message": "Une fois activé, la traduction de chaque sous-titre est lue dès qu'elle apparaît ; une ligne dont la traduction n'est pas prête à temps est ignorée plutôt que rattrapée plus tard. Pendant la lecture, le son de la vidéo baisse au niveau défini ci-dessous. Une voix cloud trop longue ralentit aussi un peu la vidéo — les voix de votre navigateur n'indiquent pas leur durée, elles ne le peuvent donc pas."
+    "message": "Une fois activé, la traduction de chaque sous-titre est lue dès qu’elle apparaît ; une ligne dont la traduction n’est pas prête à temps est ignorée plutôt que rattrapée plus tard. Pendant la lecture, le son de la vidéo baisse au niveau défini ci-dessous. Une voix cloud trop longue ralentit aussi un peu la vidéo — les voix de votre navigateur n’indiquent pas leur durée, elles ne le peuvent donc pas."
   },
   "ttsRegionLabel": {
     "message": "Région du service"
   },
   "ttsErrNoRegion": {
-    "message": "Saisissez d'abord la région du service de votre clé Azure (ex. eastus)."
+    "message": "Saisissez d’abord la région du service de votre clé Azure (ex. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Cet ordinateur n’a aucune voix pour lire à voix haute."
+  },
+  "ttsVoicesLoading": {
+    "message": "Récupération des voix de cet ordinateur…"
   },
   "startPicChop1": {
     "message": "y a deux grandes"
@@ -785,9 +812,6 @@
   "ttsOpenSettings": {
     "message": "Paramètres de lecture à voix haute"
   },
-  "ttsGroupSetup": {
-    "message": "Fournisseur et clé"
-  },
   "ttsGroupPlayback": {
     "message": "Lecture"
   },
@@ -801,16 +825,16 @@
     "message": "Un problème"
   },
   "troubleStep1": {
-    "message": "Vérifiez d'abord l'interrupteur dans la popup — s'il est désactivé, toute la couche de sous-titres reste masquée."
+    "message": "Vérifiez d’abord l’interrupteur dans la popup — s’il est désactivé, toute la couche de sous-titres reste masquée."
   },
   "troubleStep2": {
-    "message": "Cette vidéo a-t-elle des sous-titres ? Essayez le bouton CC du lecteur : sans original, il n'y a rien à traduire."
+    "message": "Cette vidéo a-t-elle des sous-titres ? Essayez le bouton CC du lecteur : sans original, il n’y a rien à traduire."
   },
   "troubleStep3": {
-    "message": "Essayez une vidéo populaire. Si tout le reste fonctionne et que celle-ci seule échoue, c'est généralement la piste de sous-titres de cette vidéo."
+    "message": "Essayez une vidéo populaire. Si tout le reste fonctionne et que celle-ci seule échoue, c’est généralement la piste de sous-titres de cette vidéo."
   },
   "troubleDiagHint": {
-    "message": "Toujours bloqué ? Collez les infos de diagnostic dans votre e-mail ou votre ticket — elles indiquent la version, l'état du moteur et ce que fait l'onglet actuel, ce qui évite un aller-retour ou deux."
+    "message": "Toujours bloqué ? Collez les infos de diagnostic dans votre e-mail ou votre ticket — elles indiquent la version, l’état du moteur et ce que fait l’onglet actuel, ce qui évite un aller-retour ou deux."
   },
   "ttsPreview": {
     "message": "Aperçu"
@@ -854,10 +878,13 @@
     "message": "Le fournisseur a refusé cette demande — essayez une autre voix."
   },
   "ttsErrNoAudio": {
-    "message": "L'audio n'est pas arrivé — réessayez, ou choisissez une autre voix."
+    "message": "L’audio n’est pas arrivé — réessayez, ou choisissez une autre voix."
   },
   "popupVoiceMore": {
     "message": "Plus de voix…"
+  },
+  "popupVoiceNone": {
+    "message": "Aucune voix choisie"
   },
   "ttsRobotVoices": {
     "message": "Robotiques",
@@ -895,6 +922,9 @@
     "message": "Résumer",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Résumer à nouveau"
+  },
   "sumFail": {
     "message": "Le résumé a échoué — réessayez plus tard.",
     "description": "Summary panel: generic failure line."
@@ -910,7 +940,7 @@
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "$N$ partie(s) n’ont pas pu être résumées ; le reste est ci-dessus.",
+    "message": "Échec sur $N$ partie(s) ; le reste est ci-dessus.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "L'endpoint de traduction limite le débit — reprise dans environ $SECONDS$s.",
+    "message": "L’endpoint de traduction limite le débit — reprise dans environ $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

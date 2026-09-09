@@ -336,13 +336,13 @@
     "message": "O URL de base da API tem de ser um endereço https:// completo."
   },
   "byoErrNoPerm": {
-    "message": "Sem permissão para aceder a esse servidor da API, a extensão não consegue ligar-se."
+    "message": "Sem permissão para aceder a esse servidor da API, a extensão não consegue ligar-se. Prima “Guardar e testar” de novo e conceda o acesso."
   },
   "byoErrAuth": {
     "message": "A chave foi recusada (401/403) — verifique se foi copiada na íntegra e está ativa."
   },
   "byoErrListAuth": {
-    "message": "Esta chave não tem permissão para ler a lista. Conceda essa permissão no painel do fornecedor e procure de novo.",
+    "message": "Esta chave não tem permissão para ler a lista. Conceda essa permissão no painel do fornecedor e obtenha de novo.",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Não é possível contactar esse endpoint (rede ou restrição regional)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Não foi possível aceder a esse endereço: ou o servidor não está a correr, ou ainda não permite o acesso da extensão (OLLAMA_ORIGINS no Ollama, o interruptor CORS no LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Este fornecedor não tem o idioma escolhido como destino — mude o idioma ou o motor."
@@ -633,7 +636,7 @@
     "message": "Outras línguas"
   },
   "langsMoreHint": {
-    "message": "Prima + para adicionar. Todos os idiomas listados são aceites como destino pelos motores gratuitos e pelo DeepL."
+    "message": "Prima + para adicionar. A lista segue os idiomas de destino indicados pelos motores gratuitos e pelo DeepL."
   },
   "langsReset": {
     "message": "Repor predefinições"
@@ -682,7 +685,25 @@
     "message": "Automático — seguir o navegador"
   },
   "uiLocaleHint": {
-    "message": "O idioma dos menus e definições da própria extensão. Algumas etiquetas desenhadas sobre o próprio vídeo continuam a seguir o idioma do navegador. O idioma para o qual as legendas são traduzidas escolhe-se no popup e em “Idiomas das legendas” — não aqui."
+    "message": "O idioma dos menus e das definições da extensão. Algumas etiquetas desenhadas sobre o vídeo continuam a seguir o idioma do navegador. O idioma para o qual as legendas são traduzidas escolhe-se no popup; o painel “Idiomas das legendas” só decide que idiomas o popup lista."
+  },
+  "cmdToggleSubs": {
+    "message": "Ativar ou desativar as legendas"
+  },
+  "cmdToggleTts": {
+    "message": "Ativar ou desativar a leitura em voz alta"
+  },
+  "optShortcutsLabel": {
+    "message": "Atalhos de teclado"
+  },
+  "optShortcutsOpen": {
+    "message": "Definir atalhos"
+  },
+  "optShortcutsHint": {
+    "message": "Estes atalhos são do Chrome, não da extensão. No início não há nenhum definido; podem definir-se dois: legendas ligadas/desligadas e leitura em voz alta ligada/desligada."
+  },
+  "optShortcutsFallback": {
+    "message": "A página não abriu daqui — cole chrome://extensions/shortcuts na barra de endereços."
   },
   "startTargetLabel": {
     "message": "Idioma da tradução"
@@ -749,7 +770,7 @@
     }
   },
   "ttsStatusCountsWhy": {
-    "message": "$N$ frases neste vídeo · $M$ ignoradas ($W$)",
+    "message": "$N$ frase(s) neste vídeo · $M$ ignorada(s) ($W$)",
     "placeholders": {"n": {"content": "$1"}, "m": {"content": "$2"}, "w": {"content": "$3"}}
   },
   "ttsSkipLate": {
@@ -766,6 +787,12 @@
   },
   "ttsErrNoRegion": {
     "message": "Introduza primeiro a região do serviço da sua chave Azure (p. ex. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Este computador não tem vozes para ler em voz alta."
+  },
+  "ttsVoicesLoading": {
+    "message": "A obter as vozes deste computador…"
   },
   "startPicChop1": {
     "message": "há duas grandes"
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Definições de leitura em voz alta"
-  },
-  "ttsGroupSetup": {
-    "message": "Fornecedor e chave"
   },
   "ttsGroupPlayback": {
     "message": "Reprodução"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Mais vozes…"
   },
+  "popupVoiceNone": {
+    "message": "Nenhuma voz escolhida"
+  },
   "ttsRobotVoices": {
     "message": "Robótico",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,6 +922,9 @@
     "message": "Resumir",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Resumir de novo"
+  },
   "sumFail": {
     "message": "O resumo falhou — tente novamente mais tarde.",
     "description": "Summary panel: generic failure line."
@@ -910,7 +940,7 @@
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "$N$ parte(s) não puderam ser resumidas; o resto está acima.",
+    "message": "Falha em $N$ parte(s); o resto está acima.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "O endpoint de tradução está a limitar os pedidos — a retomar daqui a cerca de $SECONDS$s.",
+    "message": "O endpoint de tradução está a limitar os pedidos — a retomar daqui a cerca de $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

@@ -336,7 +336,7 @@
     "message": "Bazowy URL API musi być pełnym adresem https://."
   },
   "byoErrNoPerm": {
-    "message": "Bez uprawnienia do tego hosta API rozszerzenie nie może się połączyć."
+    "message": "Bez uprawnienia do tego hosta API rozszerzenie nie może się połączyć. Naciśnij ponownie „Zapisz i przetestuj” i zezwól na dostęp."
   },
   "byoErrAuth": {
     "message": "Klucz odrzucony (401/403) — sprawdź, czy skopiowano go w całości i czy jest aktywny."
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "Nie można dotrzeć do tego endpointu (sieć lub ograniczenie regionalne)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Nie można połączyć się z tym adresem: serwer nie działa albo jeszcze nie zezwala rozszerzeniu na dostęp (OLLAMA_ORIGINS w Ollamie, przełącznik CORS w LM Studio)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Ten dostawca nie obsługuje wybranego języka — zmień język lub silnik."
@@ -498,7 +501,7 @@
     "message": "Więcej modeli…"
   },
   "popupModelFetch": {
-    "message": "Pobierz modele w ustawieniach"
+    "message": "Pobierz listę modeli w ustawieniach"
   },
   "popupModelSwitched": {
     "message": "Od teraz: $MODEL$",
@@ -633,7 +636,7 @@
     "message": "Inne języki"
   },
   "langsMoreHint": {
-    "message": "Naciśnij +, aby dodać. Każdy język na liście jest akceptowany jako docelowy przez darmowe silniki i DeepL."
+    "message": "Naciśnij +, aby dodać. Lista podąża za językami docelowymi, które podają darmowe silniki i DeepL."
   },
   "langsReset": {
     "message": "Przywróć domyślne"
@@ -682,7 +685,25 @@
     "message": "Auto — jak w przeglądarce"
   },
   "uiLocaleHint": {
-    "message": "Język menu i ustawień samego rozszerzenia. Kilka etykiet na filmie nadal podąża za językiem przeglądarki. Na jaki język tłumaczyć napisy, wybierasz w oknie podręcznym i w „Języki napisów” — nie tutaj."
+    "message": "Język menu i ustawień samego rozszerzenia. Kilka etykiet rysowanych na filmie nadal podąża za językiem przeglądarki. Język, na który tłumaczone są napisy, wybiera się w okienku rozszerzenia; panel „Języki napisów” decyduje tylko o tym, które języki są w nim wypisane."
+  },
+  "cmdToggleSubs": {
+    "message": "Włącz lub wyłącz napisy"
+  },
+  "cmdToggleTts": {
+    "message": "Włącz lub wyłącz czytanie na głos"
+  },
+  "optShortcutsLabel": {
+    "message": "Skróty klawiszowe"
+  },
+  "optShortcutsOpen": {
+    "message": "Ustaw skróty"
+  },
+  "optShortcutsHint": {
+    "message": "Tymi skrótami zarządza Chrome, nie rozszerzenie. Na początku żaden nie jest przypisany; przypisać można dwa: napisy wł./wył. i czytanie na głos wł./wył."
+  },
+  "optShortcutsFallback": {
+    "message": "Stąd ta strona się nie otworzyła — wklej chrome://extensions/shortcuts w pasku adresu."
   },
   "startTargetLabel": {
     "message": "Język tłumaczenia"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "Najpierw wprowadź region usługi swojego klucza Azure (np. eastus)."
   },
+  "ttsNoSynth": {
+    "message": "Ten komputer nie ma głosów do czytania na głos."
+  },
+  "ttsVoicesLoading": {
+    "message": "Pobieranie listy głosów tego komputera…"
+  },
   "startPicChop1": {
     "message": "są dwa duże"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Ustawienia czytania na głos"
-  },
-  "ttsGroupSetup": {
-    "message": "Dostawca i klucz"
   },
   "ttsGroupPlayback": {
     "message": "Odtwarzanie"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Więcej głosów…"
   },
+  "popupVoiceNone": {
+    "message": "Nie wybrano głosu"
+  },
   "ttsRobotVoices": {
     "message": "Robotyczne",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,12 +922,15 @@
     "message": "Podsumuj",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Podsumuj ponownie"
+  },
   "sumFail": {
     "message": "Podsumowanie się nie powiodło — spróbuj później.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "To wyśle całą ścieżkę napisów do $PROVIDER$, w $PARTS$ częściach, na Twój własny limit.",
+    "message": "To wyśle całą ścieżkę napisów do $PROVIDER$ (części: $PARTS$), na Twój własny limit.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Endpoint tłumaczenia ogranicza liczbę zapytań — wznowienie za ok. $SECONDS$s.",
+    "message": "Endpoint tłumaczenia ogranicza liczbę zapytań — wznowienie za ok. $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",

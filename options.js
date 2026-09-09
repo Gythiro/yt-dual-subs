@@ -132,8 +132,8 @@ function applyI18n() {
     const s = t(el.dataset.i18nAria, "");
     if (s) el.setAttribute("aria-label", s);
   });
-  const title = t("optTitle", "");
-  if (title) document.title = title + " — " + t("extName", "Dual Subtitles for YouTube");
+  const title = t("optTitle", "翻译服务设置");
+  if (title) document.title = title + " — " + t("extName", "Dual Subtitles for YouTube™");
 }
 
 // ---- provider helpers ------------------------------------------------------
@@ -160,11 +160,59 @@ function providerLabel(p) {
 }
 
 // ---- list ------------------------------------------------------------------
+// Which pane the list is serving. It began as the translation pane's own
+// navigation; read-aloud had a dropdown for the same job, which meant the same
+// question wore two shapes, and only one of them could show a key tick or say
+// which provider is in use (asked for on 2026-08-30: "the provider choice in
+// options should look the same as translation's").
+let listSec = "setup";
+
+// What the list is a list OF, and what each row has to say about a provider:
+// which ones can be set up, which have a key stored, which one is in use, and
+// what a click on one means. Everything below is written once against this.
+function listMode() {
+  if (listSec === "readaloud") {
+    return {
+      items: P.tts.list,
+      stored: ttsStored,
+      inUse: () => state.ttsProvider,
+      label: (p) => (p.nameKey ? t(p.nameKey, p.name) : p.name),
+      open: () => ttsProvider(),
+      // Same contract as the translation half: a click changes what you are
+      // SETTING UP, never what is speaking. Save-and-test is what switches.
+      pick: (p) => {
+        const sel = $("ttsProviderSel");
+        if (!sel || sel.value === p.id) return;
+        sel.value = p.id;
+        sel.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    };
+  }
+  return {
+    items: providerList(),
+    stored: storedKeys,
+    inUse: () => state.byoProvider,
+    label: providerLabel,
+    open: () => P.get(editing),
+    pick: (p) => {
+      if (editing === p.id) return;
+      editing = p.id;                 // set it up; nothing switches yet
+      showMsg("", null);
+      showModelMsg("", null);
+      renderList();
+      renderDetail();
+    }
+  };
+}
+
 function renderList() {
   const ul = $("plist");
   ul.textContent = "";
   let openTabId = "";
-  for (const p of providerList()) {
+  const mode = listMode();
+  const openNow = mode.open();
+  const openId = openNow ? openNow.id : "";
+  for (const p of mode.items) {
     const li = document.createElement("li");
     // The <ul> is the tablist; a tablist owns tabs. Leaving the wrappers as
     // listitems puts a role that is not "tab" between the two, so the tabs
@@ -174,30 +222,30 @@ function renderList() {
     li.setAttribute("role", "presentation");
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "pitem" + (p.id === editing ? " on" : "");
+    btn.className = "pitem" + (p.id === openId ? " on" : "");
     btn.setAttribute("role", "tab");
-    btn.setAttribute("aria-selected", String(p.id === editing));
+    btn.setAttribute("aria-selected", String(p.id === openId));
     // Same three-part pattern popup uses for #lineTabs: the tab has an id, it
     // names the panel it opens, and the panel names it back (below). Provider
     // ids are the ASCII slugs in providers.js, so they make legal id values.
     btn.id = "ptab-" + p.id;
     btn.setAttribute("aria-controls", "detail");
-    if (p.id === editing) openTabId = btn.id;
+    if (p.id === openId) openTabId = btn.id;
     btn.appendChild(ICONS.iconFor(p));
 
     const name = document.createElement("span");
     name.className = "pitem-name";
-    name.textContent = providerLabel(p);
+    name.textContent = mode.label(p);
     btn.appendChild(name);
 
     // Which one the extension is actually translating with — the thing the
     // highlight used to imply and no longer does.
-    if (p.id === state.byoProvider) {
+    if (p.id === mode.inUse()) {
       const inUse = document.createElement("span");
       inUse.className = "pitem-inuse";
       inUse.textContent = t("optInUse", "使用中");
       btn.appendChild(inUse);
-    } else if (storedKeys[p.id]) {
+    } else if (mode.stored[p.id]) {
       const ok = document.createElement("span");
       ok.className = "pitem-ok";
       ok.textContent = "✓";
@@ -205,14 +253,7 @@ function renderList() {
       btn.appendChild(ok);
     }
 
-    btn.addEventListener("click", () => {
-      if (editing === p.id) return;
-      editing = p.id;                 // set it up; nothing switches yet
-      showMsg("", null);
-      showModelMsg("", null);
-      renderList();
-      renderDetail();
-    });
+    btn.addEventListener("click", () => mode.pick(p));
     li.appendChild(btn);
     ul.appendChild(li);
   }
@@ -276,7 +317,7 @@ function renderModelField(p) {
   input.placeholder = t("byoModelRequired", "必填：模型名");
 
   if (!choices.length) {
-    showModelMsg(t("optNoModelsYet", "还没有模型列表——点右边的按钮用你的 Key 拉取，或直接手填。"), null);
+    showModelMsg(t("optNoModelsYet", "还没有模型列表——用你的 Key 拉一份，或者直接手填。"), null);
   }
 }
 
@@ -294,6 +335,13 @@ function showModelMsg(text, kind) {
 // about a key is false in both directions.
 function paintNeedBanner(p, hasKey) {
   const el = $("needKey");
+  if (p.noKey) {
+    // Nothing to fill in: the address ships with the provider and the server
+    // it points at does not authenticate. Saying "no key yet" here would be
+    // telling the reader to go and find something that does not exist.
+    el.hidden = true;
+    return;
+  }
   if (p.custom) {
     el.textContent = t("optNeedBase", "还没填接口地址，这个服务商暂时用不了。");
     el.hidden = !!(state.byoBaseUrl && state.byoBaseUrl.trim());
@@ -304,11 +352,37 @@ function paintNeedBanner(p, hasKey) {
 }
 
 // ---- key field -------------------------------------------------------------
+// Both key fields, one rule: the "show" control belongs to a draft, not to a
+// saved key. Called on every repaint and on every keystroke.
+function paintShowKey(inputId, wrapId) {
+  const inp = $(inputId);
+  const wrap = $(wrapId);
+  if (!inp || !wrap) return;
+  const draft = !!inp.value;
+  wrap.hidden = !draft;
+  if (!draft) {
+    const box = wrap.querySelector("input[type=\"checkbox\"]");
+    if (box && box.checked) { box.checked = false; inp.type = "password"; }
+  }
+}
+
+// "When you are done here, switch the popup's engine over" is a to-do. Once the
+// popup IS on the own-key engine it has been done, and a permanent line under
+// the primary button is telling the reader to do something they already did.
+// Read only — writing `engine` from this page was ruled out (HCI audit §五).
+function paintAfterSetupNote(engine) {
+  const el = $("optAfterSetup");
+  if (el) el.hidden = engine === "byo";
+}
+
 function paintKeyField(p) {
   const inp = $("key");
   const clear = $("keyClear");
   inp.value = "";
   inp.type = $("showKey").checked ? "text" : "password";
+  // Nothing typed yet, and a saved key is never written back here — so there is
+  // nothing "show" could reveal. It comes back the moment there is a draft.
+  paintShowKey("key", "showKeyWrap");
   inp.placeholder = p.kind === "deepl" ? "xxxxxxxx-xxxx-…:fx" : "sk-…";
   clear.hidden = true;
 
@@ -352,7 +426,7 @@ function renderDetail() {
   // nine cases out of ten, and which is where the CORS line everybody trips
   // over is written down.
   $("pGuideLink").href = SITE_URL + "guide.html?lang=" + uiLang() +
-    "#" + (p.custom ? "local" : p.id);
+    "#" + (p.guideAnchor || (p.custom ? "local" : p.id));
 
   $("baseRow").hidden = !p.custom;
   $("baseUrl").value = state.byoBaseUrl || "";
@@ -370,8 +444,8 @@ function showMsg(text, kind) {
   el.hidden = !text;
 }
 
-function errText(code) {
-  return t(P.errorKey(code), t("byoErrFailed", "连接失败，稍后再试。"));
+function errText(code, provider) {
+  return t(P.errorKey(code, provider), t("byoErrFailed", "连接失败，稍后再试。"));
 }
 
 // The same 401 means two different things depending on when it arrives.
@@ -497,7 +571,8 @@ function withSetup(btn, busyKey, busyFallback, onError, run, adopt) {
   if (pl.error) { onError(pl.error); return; }
   // A custom endpoint is allowed to have no key at all — Ollama and LM Studio
   // ignore auth; the worker sends no Authorization header for an empty key.
-  if (!pl.typedKey && !storedKeys[pl.provider.id] && !pl.provider.custom) { onError("noKey"); return; }
+  if (!pl.typedKey && !storedKeys[pl.provider.id] &&
+      !pl.provider.custom && !pl.provider.noKey) { onError("noKey"); return; }
 
   const label = btn.textContent;
   btn.disabled = true;
@@ -542,7 +617,7 @@ async function runTest(pl) {
       showMsg(tsub("byoTestOk", [sample], "连接成功：" + sample), "ok");
     } else {
       markVerified(pl.provider.id, false);
-      showMsg(errText(resp && resp.code), "err");
+      showMsg(errText(resp && resp.code, pl.provider), "err");
     }
   } finally {
     paintKeyField(pl.provider);
@@ -724,9 +799,12 @@ function showSection(name) {
     const el = $(def.el);
     if (el) el.hidden = key !== sec;
   }
-  // The provider list belongs to the setup view only — it is that view's
-  // navigation, not the page's.
-  $("plistWrap").hidden = sec !== "setup";
+  // The list serves both panes that choose a provider — it is their
+  // navigation, not the page's, so the other three panes still hide it.
+  listSec = sec;
+  $("plistWrap").hidden = sec !== "setup" && sec !== "readaloud";
+  if (!$("plistWrap").hidden) renderList();
+  if (sec === "readaloud") ttsKeysRefresh();
   document.querySelectorAll(".onav-item").forEach((b) => {
     const on = b.dataset.sec === sec;
     b.classList.toggle("on", on);
@@ -739,7 +817,7 @@ function showSection(name) {
   // "Translation service setup" whichever pane you were on. The heading and
   // the title come from the same key, so they cannot disagree.
   const heading = $("pageTitle").textContent;
-  if (heading) document.title = heading + " — " + t("extName", "Dual Subtitles for YouTube");
+  if (heading) document.title = heading + " — " + t("extName", "Dual Subtitles for YouTube™");
   // The footer's privacy/trademark lines show per pane (options.css keys off
   // this attribute); the feedback link stays on every pane.
   const oft = $("oft");
@@ -910,6 +988,29 @@ async function onDiagCopy() {
   }
 }
 
+// Chrome's own shortcuts page. A plain <a href> to a chrome:// URL is refused
+// by the browser, so the door has to be a button that asks tabs.create — and
+// because that route is the browser's to allow, the button says so when it is
+// turned away instead of looking like a dead control. Nothing else on this
+// page can open it, so the address is spelled out in that message: it is the
+// one place a viewer can still get there by hand.
+const SHORTCUTS_URL = "chrome://extensions/shortcuts";
+
+function openShortcutsPage() {
+  const fail = $("optShortcutsFail");
+  const refused = () => { if (fail) fail.hidden = false; };
+  if (fail) fail.hidden = true;
+  try {
+    chrome.tabs.create({ url: SHORTCUTS_URL }, () => {
+      // lastError must be read inside the callback or Chrome logs it as
+      // unchecked; it is also the only signal that the tab was refused.
+      if (chrome.runtime.lastError) refused();
+    });
+  } catch (_e) {
+    refused();
+  }
+}
+
 function initAbout() {
   const lang = uiLang();
   let ver = "";
@@ -924,6 +1025,8 @@ function initAbout() {
   set("troubleFeedback", SITE_URL + "feedback.html?lang=" + lang + "&src=options");
   const diag = $("aboutDiag");
   if (diag) diag.addEventListener("click", onDiagCopy);
+  const keys = $("optShortcuts");
+  if (keys) keys.addEventListener("click", openShortcutsPage);
 }
 
 // ---- wiring ----------------------------------------------------------------
@@ -934,6 +1037,18 @@ function initAbout() {
 // of it silently spends the user gesture), the key never rides back into the
 // DOM, and the test exercises the stored configuration, not the draft.
 const ttsStored = Object.create(null);      // providerId -> true (never the key)
+
+// Every read-aloud provider's key state in one read. paintTtsKeyField only
+// ever learned about the provider it was painting, so the list's ticks
+// appeared one at a time as rows were clicked — a list that tells you what is
+// configured only after you have visited each row tells you nothing.
+function ttsKeysRefresh() {
+  chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+    const keys = (got && got.ttsKeys) || {};
+    for (const p of P.tts.list) ttsStored[p.id] = !!keys[p.id];
+    if (listSec === "readaloud") renderList();
+  });
+}
 
 function ttsProvider() {
   return P.tts.get($("ttsProviderSel").value) || null;
@@ -946,11 +1061,37 @@ function showTtsMsg(text, kind) {
   el.hidden = !text;
 }
 
+// Whose page this is, and where its key comes from — the same three answers
+// the translation pane puts at the top of its column.
+function paintTtsHead(p) {
+  const slot = $("ttsIcon");
+  if (slot) {
+    slot.textContent = "";
+    if (self.YTDS_ICONS && p) slot.appendChild(ICONS.iconFor(p));
+  }
+  const name = $("ttsPName");
+  if (name && p) name.textContent = (p.nameKey ? t(p.nameKey, p.name) : p.name);
+  const keyLink = $("ttsKeyLink");
+  if (keyLink) {
+    keyLink.hidden = !(p && p.keyUrl);
+    if (p && p.keyUrl) keyLink.href = p.keyUrl;
+  }
+  const priceLink = $("ttsPricingLink");
+  if (priceLink) {
+    priceLink.hidden = !(p && p.pricingUrl);
+    if (p && p.pricingUrl) priceLink.href = p.pricingUrl;
+  }
+  // The guide has one read-aloud section, not one per provider.
+  const guide = $("ttsGuideLink");
+  if (guide) guide.href = SITE_URL + "guide.html?lang=" + uiLang() + "&src=options#readaloud";
+}
+
 function paintTtsKeyField(p) {
   const inp = $("ttsKey");
   const clear = $("ttsKeyClear");
   inp.value = "";
   inp.type = $("ttsShowKey").checked ? "text" : "password";
+  paintShowKey("ttsKey", "ttsShowKeyWrap");
   inp.placeholder = p.keyHint != null ? p.keyHint : "sk-…";
   clear.hidden = true;
   // Azure's key is bound to a region that becomes the request host; only a
@@ -1018,6 +1159,16 @@ function localVoicesFor(lang) {
 let localVoiceRetry = 0;
 let localVoiceTimer = 0;
 
+// Hoisted out of initReadaloud: the voice painter needs it too, and it closes
+// over nothing.
+function showTtsVoiceMsg(text, kind) {
+  const el = $("ttsVoiceMsg");
+  if (!el) return;
+  el.textContent = text || "";
+  el.className = "ohint" + (kind ? " " + kind : "");
+  el.hidden = !text;
+}
+
 function paintTtsVoices(p) {
   const sel = $("ttsVoiceSel");
   sel.textContent = "";
@@ -1036,6 +1187,13 @@ function paintTtsVoices(p) {
   // startup: whenever it draws an empty local list, it tries again shortly.
   // That covers the cold page, a provider switched while still cold, and a
   // voice pack that finishes installing later.
+  // Whether this machine, after every retry, really has nothing to speak with.
+  // Until the retries are spent an empty list means "not built yet", which is
+  // why this cannot simply be `!choices.length`.
+  if (p.localVoices && choices.length && localVoicesGone) {
+    localVoicesGone = false;
+    paintTtsUse();
+  }
   if (p.localVoices && !choices.length && localVoiceRetry < 8) {
     localVoiceRetry++;
     clearTimeout(localVoiceTimer);
@@ -1043,9 +1201,23 @@ function paintTtsVoices(p) {
       const now = ttsProvider();
       if (now && now.localVoices) paintTtsVoices(now);
     }, 120 * localVoiceRetry);
+    // …and say so. An empty dropdown on the engine that needs no key at all is
+    // read as "this is broken" — the comment above says as much, and until now
+    // nothing on screen said otherwise.
+    showTtsVoiceMsg(t("ttsVoicesLoading", "正在读取这台电脑的音色…"), null);
+  } else if (p.localVoices && !choices.length) {
+    // Out of tries: this machine really has none. Do NOT let Preview run into
+    // its own failure text, which talks about keys this engine never had — and
+    // do not leave the switch below looking ready, because turning it on would
+    // buy silence with no explanation.
+    showTtsVoiceMsg(t("ttsNoSynth", "这台电脑没有可用的朗读音色。"), "warn");
+    if (!localVoicesGone) { localVoicesGone = true; paintTtsUse(); }
   } else if (choices.length) {
     localVoiceRetry = 0;
+    if (p.localVoices) showTtsVoiceMsg("", null);
   }
+  const preview = $("ttsPreview");
+  if (preview) preview.disabled = p.localVoices && !choices.length;
   const inLanguage = !p.localVoices && voiceCatalogue === "language" &&
     (fetchedVoices[p.id] || []).length > 0;
   const add = (parent, v) => {
@@ -1181,36 +1353,74 @@ function voiceToSave(p) {
 // Mirrors popup.js's ttsUsable — the two must not drift, or one page offers a
 // switch the other knows cannot sound.
 const TTS_REGION_OK = /^[a-z0-9]{1,42}$/;      // mirrors background.js resolveTts
-function ttsReady() {
+// Not a boolean any more: three different things lock this half, and the banner
+// above it was telling all three "no key yet" — including Azure, where the key
+// IS there and the region is not, and the browser's own engine, where there is
+// no key field to fill in the first place. Returns "" when nothing is wrong.
+// Set by the voice painter once its retries are spent on an empty machine, and
+// cleared the moment voices do arrive. ttsLock cannot work this out itself: the
+// table is built asynchronously and is empty for the first few hundred
+// milliseconds of every cold page.
+let localVoicesGone = false;
+
+function ttsLock() {
   const p = P.tts.get(state.ttsProvider || "");
-  if (!p) return Promise.resolve(false);
+  if (!p) return Promise.resolve("noKey");
   // Mirrors popup.js ttsUsable: a browser without speechSynthesis cannot be
-  // offered the engine that depends on it.
+  // offered the engine that depends on it — and a browser that has it but no
+  // voices installed cannot either.
   if (p.localVoices) {
-    return Promise.resolve(typeof speechSynthesis !== "undefined");
+    if (typeof speechSynthesis === "undefined") return Promise.resolve("noSynth");
+    return Promise.resolve(localVoicesGone ? "noSynth" : "");
   }
   return new Promise((res) => {
     chrome.storage.sync.get({ ttsRegion: "" }, (sy) => {
       // Azure's key is bound to a region that becomes the request host, and the
       // key is stored before the test runs — so "has a key" can still mean
-      // "cannot speak a single line".
+      // "cannot speak a single line". That is the case the banner used to
+      // answer with "no key yet".
       if (p.needsRegion &&
           !TTS_REGION_OK.test(String((sy && sy.ttsRegion) || "").trim().toLowerCase())) {
-        return res(false);
+        return res("noRegion");
       }
-      if (p.keyless) return res(true);
+      if (p.keyless) return res("");
       chrome.storage.local.get({ ttsKeys: {} }, (got) => {
-        res(!!(((got && got.ttsKeys) || {})[p.id]));
+        res(((got && got.ttsKeys) || {})[p.id] ? "" : "noKey");
       });
     });
   });
 }
 
+const TTS_LOCK_KEYS = {
+  noKey: ["optNeedKey", "还没填 Key，这个服务商暂时用不了。"],
+  noRegion: ["ttsErrNoRegion", "先填你 Azure Key 所在的服务区域（如 eastus）再测通。"],
+  noSynth: ["ttsNoSynth", "这台电脑没有可用的朗读音色。"]
+};
+
+// Which paint is the latest. ttsLock reads storage twice, so two quick
+// switches (or a popup write arriving mid-read) can resolve out of order and
+// leave the older answer on screen — a ready provider shown as locked, or the
+// other way round.
+let ttsUseGen = 0;
+
 function paintTtsUse() {
   const use = $("ttsUse");
   if (!use) return;
-  ttsReady().then((ready) => {
-    $("ttsNeedKey").hidden = ready;
+  const gen = ++ttsUseGen;
+  ttsLock().then((why) => {
+    if (gen !== ttsUseGen) return;
+    const ready = !why;
+    const banner = $("ttsNeedKey");
+    if (banner) {
+      banner.hidden = ready;
+      // Say which of the three it is. Whatever is missing, this names it — the
+      // reader was previously sent looking for a key field that either already
+      // held a key or did not exist.
+      if (!ready) {
+        const pair = TTS_LOCK_KEYS[why] || TTS_LOCK_KEYS.noKey;
+        banner.textContent = t(pair[0], pair[1]);
+      }
+    }
     use.classList.toggle("locked", !ready);
     for (const id of ["ttsEnabled", "ttsVolume", "ttsDuckPct"]) {
       const el = $(id);
@@ -1261,10 +1471,6 @@ function writeTtsModel(p, m) {
 function initReadaloud() {
   const sel = $("ttsProviderSel");
   if (!sel) return;
-  const guide = $("ttsGuideLink");
-  if (guide) {
-    guide.href = SITE_URL + "guide.html?lang=" + uiLang() + "&src=options#readaloud";
-  }
   const en = $("ttsEnabled");
   if (en) {
     chrome.storage.sync.get({ ttsEnabled: false }, (got) => { en.checked = !!(got && got.ttsEnabled); });
@@ -1315,10 +1521,12 @@ function initReadaloud() {
   }
   const cur = P.tts.get(state.ttsProvider) || P.tts.list[0];
   sel.value = cur.id;
+  paintTtsHead(cur);
   paintTtsKeyField(cur);
   paintTtsVoices(cur);
   paintTtsModel(cur);
   paintTtsUse();
+  ttsKeysRefresh();
 
   // Put back the language catalogue this key fetched last time, if it was for
   // the language in force now. The built-in family paints first and stays if
@@ -1376,9 +1584,11 @@ function initReadaloud() {
     // …and neither is the catalogue it switched to: another provider's fetched
     // list is not this one's.
     voiceCatalogue = "family";
+    paintTtsHead(p);
     paintTtsKeyField(p);
     paintTtsVoices(p);
     paintTtsModel(p);
+    renderList();          // the highlight on the left follows the draft
   });
   $("ttsModelSel").addEventListener("change", () => {
     const p = ttsProvider();
@@ -1415,7 +1625,7 @@ function initReadaloud() {
   // language, spoken by the machine.
   function speakLocalSample(voiceName) {
     const synth = window.speechSynthesis;
-    if (!synth) { showTtsMsg(t("ttsPreviewFail", "播不出来"), "err"); return; }
+    if (!synth) { showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err"); return; }
     try { synth.cancel(); } catch (_e) { /* ignore */ }
     const lang = state.targetLang || "zh-CN";
     const u = new SpeechSynthesisUtterance(
@@ -1424,7 +1634,7 @@ function initReadaloud() {
     const v = (synth.getVoices() || []).find((x) => x && x.name === voiceName);
     if (v) u.voice = v;
     try { synth.speak(u); } catch (_e) {
-      showTtsMsg(t("ttsPreviewFail", "播不出来"), "err");
+      showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err");
     }
   }
 
@@ -1444,11 +1654,11 @@ function initReadaloud() {
       const cleanup = () => { try { URL.revokeObjectURL(url); } catch (_e) { /* ignore */ } done(); };
       previewAudio.addEventListener("ended", cleanup);
       previewAudio.addEventListener("error", () => {
-        showTtsMsg(t("ttsPreviewFail", "播不出来"), "err");
+        showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err");
         cleanup();
       });
       previewAudio.play().catch(() => {
-        showTtsMsg(t("ttsPreviewFail", "播不出来"), "err");
+        showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err");
         cleanup();
       });
     } catch (_e) { done(); }
@@ -1460,20 +1670,13 @@ function initReadaloud() {
   // extra plumbing. Permissions are not requested here: only a provider whose
   // key went through Save-and-test can be previewed, and that flow already
   // granted the host.
-  function showTtsVoiceMsg(text, kind) {
-    const el = $("ttsVoiceMsg");
-    if (!el) return;
-    el.textContent = text || "";
-    el.className = "ohint" + (kind ? " " + kind : "");
-    el.hidden = !text;
-  }
 
   $("ttsFetchVoices").addEventListener("click", () => {
     const p = ttsProvider();
     if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
     if (!ttsStored[p.id] && !p.keyless) { showTtsMsg(errText("noKey"), "err"); return; }
     const btn = $("ttsFetchVoices");
-    const label = t("ttsFetchVoices", "拉取这个语言的更多音色");
+    const label = t("ttsFetchVoices", "用你的 Key 拉取这个语言的完整音色清单");
     btn.disabled = true;
     btn.textContent = t("ttsFetching", "拉取中…");
     const done = () => { btn.disabled = false; btn.textContent = label; };
@@ -1504,7 +1707,7 @@ function initReadaloud() {
         showTtsVoiceMsg(extra.length
           ? tsub("ttsVoicesSwitched", [String(extra.length)],
             "这是你的 Key 在当前语言下的全部 " + extra.length + " 个音色,只对这个语言生效;点上面那行换回常用音色。")
-          : t("ttsVoicesNone", "这家在这个语言下没有额外音色。"), extra.length ? "ok" : null);
+          : t("ttsVoicesNone", "这家在这个语言下没有额外音色——内置的那些照样能用。"), extra.length ? "ok" : null);
         done();
       })
       .catch((err) => { showTtsVoiceMsg(listErrText((err && err.code) || "failed"), "err"); done(); });
@@ -1611,7 +1814,7 @@ function initReadaloud() {
     const btn = $("ttsTestBtn");
     const label = btn.textContent;
     btn.disabled = true;
-    btn.textContent = t("byoTesting", "正在测试…");
+    btn.textContent = t("byoTesting", "测试中…");
     const done = () => { btn.disabled = false; btn.textContent = label; };
     showTtsMsg("", null);
     try {
@@ -1666,11 +1869,16 @@ function initCrossPageSync() {
           paintTtsUse();                       // a key appearing/vanishing flips the lock
           const p = ttsProvider();
           if (p && $("ttsKey") && !$("ttsKey").value) paintTtsKeyField(p);
+          ttsKeysRefresh();                    // …and a tick appears or goes
         }
         return;
       }
       if (area !== "sync") return;
       const c = changes;
+      if (c.engine) {
+        state.engine = String(c.engine.newValue || "");
+        paintAfterSetupNote(state.engine);
+      }
       if (c.ttsEnabled) {
         const en = $("ttsEnabled");
         const v = !!c.ttsEnabled.newValue;
@@ -1699,6 +1907,7 @@ function initCrossPageSync() {
         const shown = P.tts.get(sel && sel.value);
         if (shown && shown.id === state.ttsProvider && c.ttsVoice) paintTtsVoices(shown);
         paintTtsUse();
+        if (listSec === "readaloud") renderList();   // 使用中 moved
       }
       if (c.ttsRegion) {
         const r = $("ttsRegion");
@@ -1862,6 +2071,8 @@ function wire() {
   $("showKey").addEventListener("change", (e) => {
     $("key").type = e.target.checked ? "text" : "password";
   });
+  $("key").addEventListener("input", () => paintShowKey("key", "showKeyWrap"));
+  $("ttsKey").addEventListener("input", () => paintShowKey("ttsKey", "ttsShowKeyWrap"));
 
   $("keyClear").addEventListener("click", async () => {
     const p = current();
@@ -1870,7 +2081,7 @@ function wire() {
     markVerified(p.id, false);
     paintKeyField(p);
     renderList();
-    showMsg(t("byoKeyCleared", "已清除本机保存的 Key。"), null);
+    showMsg(t("byoKeyCleared", "已清除这台电脑上保存的 Key。"), null);
   });
 
   $("testBtn").addEventListener("click", () => {
@@ -1900,9 +2111,10 @@ wire();
 
 chrome.storage.sync.get(
   { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN", langShown: null,
-    byoModelBy: {}, ttsProvider: "local-speech", ttsVoice: "" },
+    byoModelBy: {}, ttsProvider: "local-speech", ttsVoice: "", engine: "auto" },
   (got) => {
     state = Object.assign(state, got || {});
+    paintAfterSetupNote(state.engine);
     modelsBy = Object.assign(Object.create(null), (got && got.byoModelBy) || {});
     // The active provider's model is authoritative for it — older profiles have
     // byoModel but no byoModelBy yet.

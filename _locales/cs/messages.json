@@ -336,13 +336,13 @@
     "message": "Základní URL API musí být úplná adresa https://."
   },
   "byoErrNoPerm": {
-    "message": "Bez oprávnění k tomuto hostiteli API se rozšíření nemůže připojit."
+    "message": "Bez oprávnění k tomuto hostiteli API se rozšíření nemůže připojit. Stiskněte znovu „Uložit a otestovat“ a přístup povolte."
   },
   "byoErrAuth": {
     "message": "Klíč byl odmítnut (401/403) — zkontrolujte, že je zkopírovaný celý a je aktivní."
   },
   "byoErrListAuth": {
-    "message": "Tenhle klíč nemá oprávnění číst seznam. Přidejte mu ho u poskytovatele a zkuste to znovu.",
+    "message": "Tento klíč nemá oprávnění číst seznam. Přidejte mu ho v panelu poskytovatele a zkuste to znovu.",
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
@@ -362,6 +362,9 @@
   },
   "byoErrNetfail": {
     "message": "K tomuto koncovému bodu se nelze připojit (síťové nebo regionální omezení)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "K této adrese se nelze připojit: server neběží, nebo zatím nepovoluje přístup rozšíření (OLLAMA_ORIGINS u Ollamy, přepínač CORS v LM Studiu)."
   },
   "byoErrUnsupportedTarget": {
     "message": "Tento poskytovatel nemá cíl pro zvolený jazyk — změňte jazyk nebo překladač."
@@ -633,7 +636,7 @@
     "message": "Další jazyky"
   },
   "langsMoreHint": {
-    "message": "Stiskněte + pro přidání. Každý uvedený jazyk přijímají bezplatné překladače i DeepL jako cílový."
+    "message": "Stiskněte + pro přidání. Seznam vychází z cílových jazyků, které uvádějí bezplatné překladače a DeepL."
   },
   "langsReset": {
     "message": "Obnovit výchozí"
@@ -682,7 +685,25 @@
     "message": "Automaticky — podle prohlížeče"
   },
   "uiLocaleHint": {
-    "message": "Jazyk nabídek a nastavení tohoto rozšíření. Některé popisky přímo na videu se stále řídí jazykem prohlížeče. Do jakého jazyka se titulky překládají, se volí ve vyskakovacím okně a v části „Jazyky titulků“ — ne tady."
+    "message": "Jazyk nabídek a nastavení tohoto rozšíření. Několik popisků vykreslených přímo ve videu se stále řídí jazykem prohlížeče. Jazyk, do kterého se titulky překládají, se vybírá ve vyskakovacím okně; panel „Jazyky titulků“ jen určuje, které jazyky okno nabízí."
+  },
+  "cmdToggleSubs": {
+    "message": "Zapnout nebo vypnout titulky"
+  },
+  "cmdToggleTts": {
+    "message": "Zapnout nebo vypnout čtení nahlas"
+  },
+  "optShortcutsLabel": {
+    "message": "Klávesové zkratky"
+  },
+  "optShortcutsOpen": {
+    "message": "Nastavit zkratky"
+  },
+  "optShortcutsHint": {
+    "message": "Tyto zkratky spravuje Chrome, ne rozšíření. Zpočátku není přiřazená žádná; přiřadit lze dvě: titulky zap/vyp a čtení nahlas zap/vyp."
+  },
+  "optShortcutsFallback": {
+    "message": "Odsud se stránka neotevřela — vložte chrome://extensions/shortcuts do adresního řádku."
   },
   "startTargetLabel": {
     "message": "Jazyk překladu"
@@ -767,6 +788,12 @@
   "ttsErrNoRegion": {
     "message": "Nejprve zadejte oblast služby svého klíče Azure (např. eastus)."
   },
+  "ttsNoSynth": {
+    "message": "Tento počítač nemá žádné hlasy pro předčítání."
+  },
+  "ttsVoicesLoading": {
+    "message": "Načítání hlasů tohoto počítače…"
+  },
   "startPicChop1": {
     "message": "jsou dva velké"
   },
@@ -784,9 +811,6 @@
   },
   "ttsOpenSettings": {
     "message": "Nastavení čtení nahlas"
-  },
-  "ttsGroupSetup": {
-    "message": "Poskytovatel a klíč"
   },
   "ttsGroupPlayback": {
     "message": "Přehrávání"
@@ -859,6 +883,9 @@
   "popupVoiceMore": {
     "message": "Další hlasy…"
   },
+  "popupVoiceNone": {
+    "message": "Hlas nevybrán"
+  },
   "ttsRobotVoices": {
     "message": "Robotické",
     "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
@@ -895,12 +922,15 @@
     "message": "Shrnout",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
+  "sumAgain": {
+    "message": "Shrnout znovu"
+  },
   "sumFail": {
     "message": "Shrnutí se nezdařilo, zkuste to později.",
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Tím se celá stopa titulků pošle službě $PROVIDER$, ve $PARTS$ částech, na váš vlastní limit.",
+    "message": "Tím se celá stopa titulků pošle službě $PROVIDER$ (částí: $PARTS$), na váš vlastní limit.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
   },
@@ -910,7 +940,7 @@
     "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
   },
   "sumFailedPart": {
-    "message": "$N$ část(i) se nepodařilo shrnout; výše je zbytek.",
+    "message": "Nepodařilo se shrnout částí: $N$; výše je zbytek.",
     "description": "Summary panel: some chunks failed. $N$ = how many.",
     "placeholders": {"n": {"content": "$1"}}
   },
@@ -923,7 +953,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Překladový endpoint omezuje počet požadavků — pokračování za přibližně $SECONDS$s.",
+    "message": "Překladový endpoint omezuje počet požadavků — pokračování za přibližně $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",
