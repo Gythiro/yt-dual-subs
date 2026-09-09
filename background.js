@@ -537,7 +537,7 @@ function translateAligned(texts, targetLang, urgent) {
 const LANG_NAMES = LANGS.englishNames();
 
 // Numbered-line protocol. "|" is the separator on purpose: a tab would be
-// mangled into a NUL by parts of our JSON tooling (see HANDOFF), and models
+// mangled into a NUL by parts of our JSON tooling, and models
 // reproduce a pipe far more reliably than exotic delimiters.
 function packNumbered(texts) {
   return texts.map((s, i) => (i + 1) + "|" + String(s).replace(/\s*\n\s*/g, " ")).join("\n");

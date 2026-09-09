@@ -4,7 +4,7 @@
   "name": "__MSG_extName__",
   "version": "3.6.0",
   "description": "__MSG_extDesc__",
-  "minimum_chrome_version": "102",
+  "minimum_chrome_version": "111",
   "permissions": ["storage"],
   "host_permissions": [
     "https://translate.googleapis.com/*"

@@ -590,6 +590,7 @@ function initAbout() {
   set("aboutSite", SITE_URL + "?src=options&lang=" + lang);
   set("aboutGithub", "https://github.com/Gythiro/yt-dual-subs");
   set("aboutChangelog", SITE_URL + "updated.html?lang=" + lang + "&src=options");
+  set("aboutRoadmap", SITE_URL + "roadmap.html?lang=" + lang + "&src=options");
   set("aboutFeedback", SITE_URL + "feedback.html?lang=" + lang + "&src=options");
 }
 

@@ -400,7 +400,9 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 .ficon:hover { color: var(--txt); background: var(--surface-2); border-color: var(--line); }
 .ficon svg { width: 16px; height: 16px; display: block; }
 .ficon span { font-size: 12px; line-height: 1; white-space: nowrap; }
-.ft-sep { height: 1px; background: var(--line); margin: 4px 0 6px; }
+/* Full-bleed like the two borders around it: the footer's own border-top sits
+   outside its 15px padding, so this one cancels that padding to match. */
+.ft-sep { height: 1px; background: var(--line); margin: 4px -15px 6px; }
 
 /* ============================ FOOTER ============================ */
 .ft {

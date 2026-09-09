@@ -145,6 +145,7 @@
   "aboutBlurb": {"message":"為 YouTube 加上一層雙語字幕:原文一行、譯文一行,字型、顏色、位置都能自己調。開源、免費、無廣告。"},
   "aboutPrivacy": {"message":"我們沒有伺服器,也不做任何統計。字幕文字只會送往你選擇的翻譯服務;使用自備 Key 時,Key 只會保存在這台電腦上。"},
   "aboutChangelog": {"message":"更新日誌"},
+  "aboutRoadmap": {"message":"開發計劃"},
   "optFeedbackLink": {"message":"回報問題"},
   "popupByoConfigure": {"message":"設定…"},
   "popupByoNotSet": {"message":"還沒設定"},

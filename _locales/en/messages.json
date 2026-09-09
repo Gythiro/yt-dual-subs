@@ -145,6 +145,7 @@
   "aboutBlurb": {"message":"A second subtitle line for YouTube: the original on one line, the translation on the other, with the font, colour and position up to you. Open source, free, no ads."},
   "aboutPrivacy": {"message":"We have no server and collect no statistics. Subtitle text goes only to the translation service you pick; with your own key, the key is stored on this computer only."},
   "aboutChangelog": {"message":"Changelog"},
+  "aboutRoadmap": {"message":"Roadmap"},
   "optFeedbackLink": {"message":"Report a problem"},
   "popupByoConfigure": {"message":"Configure…"},
   "popupByoNotSet": {"message":"not set up"},
