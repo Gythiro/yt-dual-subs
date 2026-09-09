@@ -44,13 +44,14 @@ const cfg = {
   // somewhere first. A stored choice always wins over this.
   ttsProvider: "local-speech",
   ttsVoice: "",          // read-aloud voice ("" = the provider's default)
-  ttsRegion: ""          // Azure only: the region its key is bound to ("eastus")
+  ttsRegion: "",         // Azure only: the region its key is bound to ("eastus")
+  ttsModelBy: {}         // per-provider speech-model override (settings page)
 };
 
 const cfgReady = new Promise((resolve) => {
   chrome.storage.sync.get(
     { engine: "auto", backend: "tlang", byoProvider: "", byoModel: "", byoBaseUrl: "",
-      ttsProvider: "local-speech", ttsVoice: "", ttsRegion: "" },
+      ttsProvider: "local-speech", ttsVoice: "", ttsRegion: "", ttsModelBy: {} },
     (got) => {
       got = got || {};
       // Same read-side migration as content.js: a stored "gtx" backend was a
@@ -66,6 +67,8 @@ const cfgReady = new Promise((resolve) => {
       cfg.ttsProvider = String(got.ttsProvider || "");
       cfg.ttsVoice = String(got.ttsVoice || "");
       cfg.ttsRegion = String(got.ttsRegion || "");
+      cfg.ttsModelBy = (got.ttsModelBy && typeof got.ttsModelBy === "object")
+        ? got.ttsModelBy : {};
       resolve();
     }
   );
@@ -86,6 +89,10 @@ chrome.storage.onChanged.addListener((changes, area) => {
     if (!(k in changes)) continue;
     const v = changes[k].newValue;
     cfg[k] = typeof v === "string" ? v : cfg[k];
+  }
+  if ("ttsModelBy" in changes) {
+    const v = changes.ttsModelBy.newValue;
+    cfg.ttsModelBy = (v && typeof v === "object") ? v : {};
   }
   // Provider/model/endpoint changed mid-flight: queued jobs were built for the
   // old target and their answers would be attributed to the new one. Drop them;
@@ -128,13 +135,21 @@ async function resolveByo(opts) {
     origin = parsed.origin;
   }
 
-  const key = await keyFor(p.id);
-  if (!key) throw tag(new Error("no api key"), { noKey: true, code: "noKey" });
+  // A key is what the twelve named providers authenticate with; a custom
+  // endpoint may not want one at all (Ollama and LM Studio ignore auth), so
+  // there an empty key means "send no Authorization header", not "not set up".
+  const key = (await keyFor(p.id)) || "";
+  if (!key && !p.custom) throw tag(new Error("no api key"), { noKey: true, code: "noKey" });
 
   const endpoint = PROVIDERS.endpointFor(p, { baseUrl, key });
   if (p.kind === "deepl") origin = new URL(endpoint).origin;   // free vs pro
 
-  await ensureHostPermission(origin);
+  // Named providers must hold their declared host permission. A custom origin
+  // may be one the manifest cannot name (a tunnel domain): the grant check
+  // would always fail there, while the fetch itself can still succeed under
+  // CORS if the server allows this extension — so for custom endpoints a
+  // missing grant downgrades from "refuse" to "let the request find out".
+  await ensureHostPermission(origin, { soft: !!p.custom });
 
   const model = (asked
     ? ((cfg.byoModelBy || {})[p.id] || p.defaultModel || "")
@@ -146,8 +161,10 @@ async function resolveByo(opts) {
 }
 
 // Host permission is granted from the popup (a user gesture is required, which
-// a worker does not have) — here we only verify and report.
-async function ensureHostPermission(origin) {
+// a worker does not have) — here we only verify and report. `soft` (custom
+// endpoints) turns a missing grant into a pass: those origins may be
+// unrequestable by design, and the fetch is still subject to CORS.
+async function ensureHostPermission(origin, opts) {
   if (!chrome.permissions || !origin) return;
   let has = false;
   try {
@@ -155,7 +172,9 @@ async function ensureHostPermission(origin) {
   } catch (_e) {
     return;                       // cannot tell: let the request itself decide
   }
-  if (!has) throw tag(new Error("host permission missing"), { noPerm: true, code: "noPerm", origin });
+  if (!has && !(opts && opts.soft)) {
+    throw tag(new Error("host permission missing"), { noPerm: true, code: "noPerm", origin });
+  }
 }
 
 function tag(err, props) {
@@ -886,10 +905,10 @@ async function llmOnce(texts, targetLang, target, opts) {
     stream: false
   }, target.provider.extraBody || {});
   const headers = Object.assign(
-    {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + target.key
-    },
+    { "Content-Type": "application/json" },
+    // No key (keyless custom endpoint) means no Authorization header at all —
+    // "Bearer " with nothing after it is the shape some servers 401 on.
+    target.key ? { Authorization: "Bearer " + target.key } : {},
     target.provider.extraHeaders || {}
   );
 
@@ -1093,6 +1112,73 @@ function translateExport(groups, targetLang) {
   });
 }
 
+// ---- video summary ----------------------------------------------------------
+// BYO-only: the free endpoints translate, they do not summarize. Every piece
+// rides the byo lane exactly like an export chunk — solo, noShed, not urgent —
+// so a summary obeys the same pacing and backoff as everything else there.
+// The stamps ride IN the text so the model can only anchor chapters to marks
+// that really exist; asking it to invent times is how stamps get hallucinated.
+function sumLang(targetLang) { return LANG_NAMES[targetLang] || targetLang || "the input language"; }
+const SUM_SHAPE =
+  "Format, exactly:\n" +
+  "TLDR: <one sentence>\n" +
+  "@ <stamp> <chapter title>\n" +
+  "- <key point>\n" +
+  "(3-8 chapters, 1-3 points each; every <stamp> must be copied verbatim from " +
+  "the input stamps; no markdown, no preamble, nothing else.)";
+function sumMapMessages(chunk, targetLang) {
+  return [
+    { role: "system", content:
+      "You take notes on one segment of a video's subtitle track. Input lines " +
+      "look like [m:ss] text. Write 3-6 key points in " + sumLang(targetLang) +
+      ", each as \"- [m:ss] point\", the stamp copied verbatim from the line " +
+      "where the point begins. No preamble, no markdown, nothing else." },
+    { role: "user", content: chunk }
+  ];
+}
+function sumReduceMessages(notes, targetLang) {
+  return [
+    { role: "system", content:
+      "You merge segment notes of one video into a summary in " +
+      sumLang(targetLang) + ".\n" + SUM_SHAPE },
+    { role: "user", content: notes.join("\n\n") }
+  ];
+}
+function sumOnceMessages(chunk, targetLang) {
+  return [
+    { role: "system", content:
+      "You summarize a video from its subtitle track. Input lines look like " +
+      "[m:ss] text. Answer in " + sumLang(targetLang) + ".\n" + SUM_SHAPE },
+    { role: "user", content: chunk }
+  ];
+}
+// DeepL holds a byo slot but has no chat endpoint — a summary cannot go there,
+// and saying so beats a 404 dressed up as a connection failure.
+async function sumLlm(messages) {
+  const target = await resolveByo({});
+  if (target.provider.kind !== "llm") {
+    throw tag(new Error("summary needs a chat model"), { needLlm: true, code: "needLlm" });
+  }
+  const out = await llmOnce([""], "", target, {
+    messages,
+    unpack: (raw) => [String(raw == null ? "" : raw).trim()]
+  });
+  return (out && out[0]) || "";
+}
+function summarizeJob(messages, label) {
+  return cfgReady.then(() => new Promise((resolve, reject) => enqueue(byoLane, {
+    text: label,
+    targetLang: "",
+    urgent: false,
+    solo: true,
+    noShed: true,
+    cacheKey: "",
+    send: () => sumLlm(messages).then((r) => [r]),
+    resolve,
+    reject
+  })));
+}
+
 // DeepL target codes, from the same shared table. Regional variants are
 // required for EN and PT; ZH-HANS / ZH-HANT are the two Chinese targets.
 // A language with no entry has no DeepL target, and saying so beats silently
@@ -1292,7 +1378,8 @@ async function resolveTts(lang, askedProvider) {
       throw tag(new Error("no azure region"), { noKey: true, code: "noRegion" });
     }
   }
-  return { provider: p, key, voice, model: p.defaultModel, region };
+  return { provider: p, key, voice,
+    model: ((cfg.ttsModelBy || {})[p.id] || p.defaultModel || ""), region };
 }
 
 
@@ -1822,7 +1909,7 @@ async function byoModels(providerId) {
   const t = await resolveByo({ needModel: false, provider: providerId });
   if (t.provider.kind === "deepl") return { models: [] };
   const headers = Object.assign(
-    { Authorization: "Bearer " + t.key },
+    t.key ? { Authorization: "Bearer " + t.key } : {},   // keyless custom: no header
     t.provider.extraHeaders || {}
   );
   let res;
@@ -2163,6 +2250,40 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         noPerm: !!(err && err.noPerm),
         noKey: !!(err && err.noKey)
       }));
+    return true;
+  }
+  if (msg && msg.type === "sumInfo") {
+    cfgReady.then(async () => {
+      let name = "", configured = false, kind = "";
+      try {
+        const t = await resolveByo({ needModel: false });
+        configured = true;
+        kind = t.provider.kind;
+        name = t.provider.short || t.provider.name || t.provider.id;
+      } catch (_e) { /* unconfigured: the empty state says so */ }
+      sendResponse({ ok: true, configured: configured, kind: kind, name: name });
+    }).catch(() => sendResponse({ ok: false }));
+    return true;
+  }
+  if (msg && msg.type === "sumMap") {
+    summarizeJob(sumMapMessages(String(msg.text || ""), msg.targetLang), "sum map")
+      .then((v) => sendResponse({ ok: true, notes: String(Array.isArray(v) ? (v[0] || "") : (v || "")) }))
+      .catch((err) => sendResponse({ ok: false,
+        code: (err && err.code) || "failed", error: String(err) }));
+    return true;
+  }
+  if (msg && msg.type === "sumReduce") {
+    summarizeJob(sumReduceMessages((msg.notes || []).map(String), msg.targetLang), "sum reduce")
+      .then((v) => sendResponse({ ok: true, summary: String(Array.isArray(v) ? (v[0] || "") : (v || "")) }))
+      .catch((err) => sendResponse({ ok: false,
+        code: (err && err.code) || "failed", error: String(err) }));
+    return true;
+  }
+  if (msg && msg.type === "sumOnce") {
+    summarizeJob(sumOnceMessages(String(msg.text || ""), msg.targetLang), "sum once")
+      .then((v) => sendResponse({ ok: true, summary: String(Array.isArray(v) ? (v[0] || "") : (v || "")) }))
+      .catch((err) => sendResponse({ ok: false,
+        code: (err && err.code) || "failed", error: String(err) }));
     return true;
   }
   if (msg && msg.type === "ttsVoices") {

@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "paras kiinaan",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Tarjoaja"
   },
   "byoBaseLabel": {
-    "message": "API-perus-URL (https)"
+    "message": "Päätepisteen osoite"
   },
   "byoModelLabel": {
     "message": "Malli"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Ei avainta vielä — tätä palveluntarjoajaa ei voi käyttää ennen kuin lisäät avaimen."
   },
+  "optNeedBase": {
+    "message": "Ei päätepisteen osoitetta vielä — tätä palveluntarjoajaa ei voi käyttää ennen kuin lisäät osoitteen."
+  },
   "optBaseHint": {
-    "message": "Sekä perusosoite että täysi päätepiste kelpaavat, esim. https://example.com/v1 tai https://example.com/v1/chat/completions."
+    "message": "Liitä perus-URL tai täydellinen päätepiste — esim. https://example.com/v1 tai https://example.com/v1/chat/completions. Tämän tietokoneen mallipalvelimelle (Ollama, LM Studio) käytä http://localhost:11434/v1 — pelkkä http hyväksytään vain localhostissa, ja avain voi jäädä tyhjäksi."
   },
   "startS1Alt": {
     "message": "Soittimen kaavio: alkuperäinen rivi ja käännetty rivi kuvan alareunassa"
@@ -783,13 +790,13 @@
     "message": "Toisto epäonnistui — tarkista avain ja kokeile Tallenna ja testaa"
   },
   "ttsFetchVoices": {
-    "message": "Hae lisää ääniä avaimellasi"
+    "message": "Hae tämän kielen täysi lista avaimellasi"
   },
   "ttsFetching": {
     "message": "Haetaan…"
   },
   "ttsVoicesSwitched": {
-    "message": "Näytetään nyt $N$ ääntä, joita avaimesi voi käyttää. Ääni, jonka nimessä on kieli, toimii vain kyseiselle kielelle.",
+    "message": "Kaikki $N$ ääntä, jotka avaimesi tarjoaa tälle kielelle — mukaan lukien vanhemmat Standard / Wavenet -tasot. Ne toimivat vain tälle kielelle; yllä oleva linkki palauttaa tavallisiin ääniin, jotka seuraavat käännöskieltä itsestään. Mitään ei katoa: hakeminen uudelleen tuo tämän listan takaisin.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Takaisin ääniin, jotka seuraavat kieltäsi"
+    "message": "Takaisin tavallisiin ääniin (ne seuraavat kieltä)"
   },
   "ttsVoicesNone": {
     "message": "Tällä palveluntarjoajalla ei ole lisäääniä tälle kielelle — sisäänrakennetut äänet toimivat silti."
@@ -825,6 +832,53 @@
     "message": "Salli tekstitystekstin valinta ja kopiointi",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Tekstin valinta",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Tiivistelmä",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Videon tiivistelmä",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Sulje",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Tällä videolla ei ole käyttökelpoista tekstitysraitaa.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Tiivistelmä vaatii oman käännöspalvelusi (oma avain tai paikallinen päätepiste) — ilmaiset moottorit vain kääntävät.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Tee tiivistelmä",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Tiivistelmä epäonnistui – yritä myöhemmin uudelleen.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Koko tekstitysraita lähetetään palvelulle $PROVIDER$ ($PARTS$ osassa) omalla kiintiölläsi.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Tiivistetään… osa $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ osaa ei voitu tiivistää; loput ovat yllä.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Tekstitykset",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "YouTuben oma käännös on juuri nyt rajoitettu; älykkäät lauseet (Google) paikkaavat sen. Se yrittää myöhemmin itse uudelleen.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Käännöspäätepiste rajoittaa pyyntöjä — jatketaan noin $SECONDS$s kuluttua.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

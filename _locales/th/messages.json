@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "เหมาะกับภาษาจีน",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "ผู้ให้บริการ"
   },
   "byoBaseLabel": {
-    "message": "URL ฐาน API (https)"
+    "message": "ที่อยู่เอนด์พอยต์"
   },
   "byoModelLabel": {
     "message": "โมเดล"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "ยังไม่มีคีย์ — ใช้ผู้ให้บริการนี้ไม่ได้จนกว่าจะเพิ่มคีย์"
   },
+  "optNeedBase": {
+    "message": "ยังไม่มีที่อยู่เอนด์พอยต์ — ใช้ผู้ให้บริการนี้ไม่ได้จนกว่าจะกรอกที่อยู่"
+  },
   "optBaseHint": {
-    "message": "ใช้ได้ทั้ง base URL และปลายทางแบบเต็ม เช่น https://example.com/v1 หรือ https://example.com/v1/chat/completions"
+    "message": "วาง URL พื้นฐานหรือเอนด์พอยต์เต็มรูปแบบ — เช่น https://example.com/v1 หรือ https://example.com/v1/chat/completions สำหรับเซิร์ฟเวอร์โมเดลบนคอมพิวเตอร์เครื่องนี้ (Ollama, LM Studio) ให้ใช้ http://localhost:11434/v1 — localhost เป็นที่เดียวที่ยอมรับ http ธรรมดาได้ และคีย์สามารถเว้นว่างได้"
   },
   "startS1Alt": {
     "message": "แผนภาพเครื่องเล่น: บรรทัดต้นฉบับและบรรทัดคำแปลอยู่ใกล้ด้านล่างของภาพ"
@@ -783,13 +790,13 @@
     "message": "เล่นไม่ได้ — ตรวจสอบคีย์แล้วลองบันทึกและทดสอบ"
   },
   "ttsFetchVoices": {
-    "message": "ดึงเสียงเพิ่มด้วยคีย์ของคุณ"
+    "message": "ดึงรายการเต็มของภาษานี้ด้วยคีย์ของคุณ"
   },
   "ttsFetching": {
     "message": "กำลังดึง…"
   },
   "ttsVoicesSwitched": {
-    "message": "กำลังแสดง $N$ เสียงที่คีย์ของคุณใช้ได้ เสียงที่ชื่อมีภาษากำกับจะใช้ได้เฉพาะภาษานั้นเท่านั้น",
+    "message": "เสียงทั้ง $N$ รายการที่คีย์ของคุณมีให้สำหรับภาษานี้ — รวมระดับ Standard / Wavenet รุ่นเก่าด้วย ใช้ได้เฉพาะภาษานี้เท่านั้น ลิงก์ด้านบนจะกลับไปยังเสียงทั่วไป ซึ่งจะตามภาษาที่แปลเอง ไม่มีอะไรหายไป: ดึงอีกครั้งแล้วรายการนี้จะกลับมา",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "กลับไปที่เสียงที่เปลี่ยนตามภาษา"
+    "message": "กลับไปยังเสียงทั่วไป (ตามภาษาอัตโนมัติ)"
   },
   "ttsVoicesNone": {
     "message": "ผู้ให้บริการนี้ไม่มีเสียงเพิ่มสำหรับภาษานี้ — เสียงในตัวยังใช้ได้"
@@ -825,6 +832,53 @@
     "message": "ให้เลือกและคัดลอกข้อความคำบรรยายได้",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "เลือกข้อความ",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "สรุป",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "สรุปวิดีโอ",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "ปิด",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "วิดีโอนี้ไม่มีแทร็กคำบรรยายที่ใช้ได้​",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "การสรุปต้องใช้บริการแปลของคุณเอง (คีย์ของคุณเองหรือเอนด์พอยต์ในเครื่อง) — เอนจินฟรีทำได้แค่แปล",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "สรุปเลย",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "สรุปไม่สำเร็จ — ลองใหม่ภายหลัง",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "แทร็กคำบรรยายทั้งหมดจะถูกส่งไปยัง $PROVIDER$ (แบ่งเป็น $PARTS$ ส่วน) โดยใช้โควตาของคุณเอง",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "กำลังสรุป… ส่วนที่ $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "สรุปไม่ได้ $N$ ส่วน ส่วนที่เหลืออยู่ด้านบน",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "คำบรรยาย",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "ขณะนี้การแปลของ YouTube ถูกจำกัดอัตรา ประโยคอัจฉริยะ (Google) กำลังช่วยเติมให้ จะลองใหม่เองในภายหลัง",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "เอนด์พอยต์การแปลกำลังจำกัดอัตรา — จะดำเนินการต่อในอีกประมาณ $SECONDS$ วินาที",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

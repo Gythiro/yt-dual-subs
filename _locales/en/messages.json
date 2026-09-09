@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "best for Chinese",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -286,7 +290,7 @@
     "message": "Provider"
   },
   "byoBaseLabel": {
-    "message": "API base URL (https)"
+    "message": "Endpoint address"
   },
   "byoModelLabel": {
     "message": "Model"
@@ -597,8 +601,11 @@
   "optNeedKey": {
     "message": "No key yet — this provider cannot be used until you add one."
   },
+  "optNeedBase": {
+    "message": "No endpoint address yet — this provider cannot be used until you enter one."
+  },
   "optBaseHint": {
-    "message": "A base URL or a full endpoint both work, e.g. https://example.com/v1 or https://example.com/v1/chat/completions."
+    "message": "Paste a base URL or a full endpoint — e.g. https://example.com/v1 or https://example.com/v1/chat/completions. For a model server on this computer (Ollama, LM Studio) use http://localhost:11434/v1 — localhost is the only place plain http is accepted, and the key can stay empty."
   },
   "startS1Alt": {
     "message": "Player diagram: an original line and a translated line sit near the bottom of the picture"
@@ -658,13 +665,13 @@
     "message": "Could not play — check the key and try Save and test"
   },
   "ttsFetchVoices": {
-    "message": "Fetch more voices with your key"
+    "message": "Fetch this language's full list with your key"
   },
   "ttsFetching": {
     "message": "Fetching…"
   },
   "ttsVoicesSwitched": {
-    "message": "Now showing the $N$ voices your key can use. A voice whose name carries a language works only for that one.",
+    "message": "All $N$ voices your key offers for this language — including the older Standard / Wavenet tiers. They work for this language only; the link above returns to the everyday voices, which follow the translation language on their own. Nothing is lost: fetching again brings this list back.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -672,7 +679,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Back to voices that follow your language"
+    "message": "Back to the everyday voices (they follow the language)"
   },
   "ttsVoicesNone": {
     "message": "This provider has no extra voices for this language — the built-in ones still work."
@@ -829,6 +836,53 @@
     "message": "Let me select and copy subtitle text",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Select text",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Summary",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Video summary",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Close",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "This video has no usable subtitle track.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Summaries need your own translation service (own key or a local endpoint) — the free engines only translate.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Summarize",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "The summary failed — try again later.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "The whole subtitle track will be sent to $PROVIDER$ (in $PARTS$ part(s)), on your own quota.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Summarizing… part $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ part(s) could not be summarized; the rest is above.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Subtitles",
     "description": "Row label in the small in-player menu. One word."
@@ -836,5 +890,14 @@
   "tlangLimitedNote": {
     "message": "YouTube's own translation is rate-limited right now; smart sentences (Google) is filling in. It retries by itself later.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "The translation endpoint is rate-limiting — resuming in about $SECONDS$s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

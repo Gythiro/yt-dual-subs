@@ -50,6 +50,14 @@
     '<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.956 6.521H12.522c-.577 0-1.044.468-1.044 1.044v3.13c0 .577-.466 1.044-1.043 1.044H1.044c-.577 0-1.044.467-1.044 1.044v4.174C0 17.533.467 18 1.044 18h10.434c.577 0 1.044-.467 1.044-1.043v-3.13c0-.578.466-1.044 1.043-1.044h9.391c.577 0 1.044-.467 1.044-1.044V7.565c0-.576-.467-1.044-1.044-1.044z"></path></svg>';
   // <<< MARKS
 
+  // Hand-drawn, not from Simple Icons (kept outside the generated markers):
+  // the custom endpoint is anyone's OpenAI-compatible server — most often a
+  // box of the user's own (Ollama, LM Studio) — so it wears a server stack.
+  // No status light: an LED nothing drives would always be lying (the icon
+  // review, 2026-08-28). The vent slots are holes, so they take the tint.
+  PATHS.custom =
+    '<svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" xmlns="http://www.w3.org/2000/svg"><path d="M4 3.5h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zm1.5 3.1a1 1 0 0 0 0 1.8h6a1 1 0 1 0 0-1.8h-6zM4 12.5h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zm1.5 3.1a1 1 0 0 0 0 1.8h6a1 1 0 1 0 0-1.8h-6z"/></svg>';
+
   // Generated entries are already complete <svg> elements (several marks need
   // more than one path), so they are used as-is.
   const MARKS = PATHS;

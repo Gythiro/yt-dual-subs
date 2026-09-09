@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "tốt nhất cho tiếng Trung",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Nhà cung cấp"
   },
   "byoBaseLabel": {
-    "message": "URL gốc API (https)"
+    "message": "Địa chỉ endpoint"
   },
   "byoModelLabel": {
     "message": "Mô hình"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Chưa có khóa — chưa dùng được nhà cung cấp này cho đến khi bạn thêm khóa."
   },
+  "optNeedBase": {
+    "message": "Chưa có địa chỉ endpoint — chưa dùng được nhà cung cấp này cho đến khi bạn nhập địa chỉ."
+  },
   "optBaseHint": {
-    "message": "URL gốc hoặc endpoint đầy đủ đều được, ví dụ https://example.com/v1 hoặc https://example.com/v1/chat/completions."
+    "message": "Dán URL gốc hoặc endpoint đầy đủ — ví dụ https://example.com/v1 hoặc https://example.com/v1/chat/completions. Với máy chủ mô hình trên máy này (Ollama, LM Studio) hãy dùng http://localhost:11434/v1 — localhost là nơi duy nhất chấp nhận http thuần, và khóa có thể để trống."
   },
   "startS1Alt": {
     "message": "Sơ đồ trình phát: một dòng gốc và một dòng dịch nằm gần đáy hình"
@@ -783,13 +790,13 @@
     "message": "Không phát được — kiểm tra khóa rồi thử Lưu và kiểm tra"
   },
   "ttsFetchVoices": {
-    "message": "Tải thêm giọng bằng khóa của bạn"
+    "message": "Tải danh sách đầy đủ ngôn ngữ này bằng khóa của bạn"
   },
   "ttsFetching": {
     "message": "Đang tải…"
   },
   "ttsVoicesSwitched": {
-    "message": "Đang hiện $N$ giọng mà khóa của bạn dùng được. Giọng có tên kèm ngôn ngữ chỉ dùng cho ngôn ngữ đó.",
+    "message": "Tất cả $N$ giọng mà khóa của bạn cung cấp cho ngôn ngữ này — gồm cả các bậc Standard / Wavenet cũ hơn. Chúng chỉ dùng cho ngôn ngữ này; liên kết phía trên đưa về các giọng thường dùng, vốn tự theo ngôn ngữ dịch. Không mất gì: tải lại sẽ hiện danh sách này.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Quay lại giọng đi theo ngôn ngữ của bạn"
+    "message": "Quay lại giọng thường dùng (tự theo ngôn ngữ)"
   },
   "ttsVoicesNone": {
     "message": "Nhà cung cấp này không có giọng bổ sung cho ngôn ngữ này — giọng có sẵn vẫn dùng được."
@@ -825,6 +832,53 @@
     "message": "Cho phép chọn và sao chép văn bản phụ đề",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Chọn văn bản",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Tóm tắt",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Tóm tắt video",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Đóng",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Video này không có track phụ đề dùng được.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Tóm tắt cần dịch vụ dịch của riêng bạn (khóa riêng hoặc endpoint cục bộ) — các engine miễn phí chỉ dịch thôi.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Tóm tắt ngay",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Tóm tắt thất bại — thử lại sau.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Toàn bộ track phụ đề sẽ được gửi tới $PROVIDER$ (chia $PARTS$ phần), dùng hạn mức của bạn.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Đang tóm tắt… phần $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ phần không tóm tắt được; phần còn lại ở trên.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Phụ đề",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "Bản dịch của YouTube hiện đang bị giới hạn tốc độ; câu thông minh (Google) đang bổ sung. Sẽ tự thử lại sau.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Endpoint dịch đang giới hạn tốc độ — sẽ tiếp tục sau khoảng $SECONDS$s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

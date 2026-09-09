@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "parim hiina keele jaoks",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Teenusepakkuja"
   },
   "byoBaseLabel": {
-    "message": "API baas-URL (https)"
+    "message": "Lõpp-punkti aadress"
   },
   "byoModelLabel": {
     "message": "Mudel"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Võtit veel pole — seda teenusepakkujat ei saa enne võtme lisamist kasutada."
   },
+  "optNeedBase": {
+    "message": "Lõpp-punkti aadressi veel pole — seda teenusepakkujat ei saa enne aadressi sisestamist kasutada."
+  },
   "optBaseHint": {
-    "message": "Sobib nii baas-URL kui ka täielik lõpp-punkt, nt https://example.com/v1 või https://example.com/v1/chat/completions."
+    "message": "Kleebi baas-URL või täielik lõpp-punkt — nt https://example.com/v1 või https://example.com/v1/chat/completions. Selle arvuti mudeliserveri (Ollama, LM Studio) jaoks kasuta http://localhost:11434/v1 — localhost on ainus koht, kus tavaline http on lubatud, ja võti võib jääda tühjaks."
   },
   "startS1Alt": {
     "message": "Pleieri skeem: originaalrida ja tõlkerida pildi allosas"
@@ -783,13 +790,13 @@
     "message": "Ei õnnestunud esitada — kontrolli võtit ja proovi Salvesta ja testi"
   },
   "ttsFetchVoices": {
-    "message": "Hangi võtmega rohkem hääli"
+    "message": "Hangi selle keele täisloend oma võtmega"
   },
   "ttsFetching": {
     "message": "Hangin…"
   },
   "ttsVoicesSwitched": {
-    "message": "Kuvatakse $N$ häält, mida sinu võti kasutada saab. Hääl, mille nimes on keel, töötab ainult selles keeles.",
+    "message": "Kõik $N$ häält, mida sinu võti selle keele jaoks pakub — sh vanemad Standard / Wavenet tasemed. Need töötavad ainult selle keele jaoks; ülalolev link viib tagasi igapäevaste häälte juurde, mis järgivad ise tõlkekeelt. Midagi ei kao: uuesti hankimine toob selle loendi tagasi.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Tagasi häälte juurde, mis järgivad su keelt"
+    "message": "Tagasi igapäevaste häälte juurde (need järgivad keelt)"
   },
   "ttsVoicesNone": {
     "message": "Sellel pakkujal pole selle keele jaoks lisahääli — sisseehitatud hääled töötavad endiselt."
@@ -825,6 +832,53 @@
     "message": "Luba subtiitrite teksti valimine ja kopeerimine",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Teksti valimine",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Kokkuvõte",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Video kokkuvõte",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Sulge",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Sellel videol pole kasutatavat subtiitririda.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Kokkuvõte vajab sinu enda tõlketeenust (oma võti või kohalik lõpp-punkt) — tasuta mootorid ainult tõlgivad.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Tee kokkuvõte",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Kokkuvõte ebaõnnestus, proovi hiljem uuesti.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Kogu subtiitririda saadetakse teenusele $PROVIDER$ ($PARTS$ osas) sinu kvoodi arvelt.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Teen kokkuvõtet… osa $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ osa ei õnnestunud kokku võtta; ülejäänu on üleval.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Subtiitrid",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "YouTube'i enda tõlge on praegu kiiruspiiranguga; nutikad laused (Google) täidavad vahepeal. See proovib hiljem ise uuesti.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Tõlke lõpp-punkt piirab päringuid — jätkub umbes $SECONDS$s pärast.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

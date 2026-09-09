@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "阿里云百炼 Qwen-TTS"
   },
+  "provTtsZhReco": {
+    "message": "中文推荐",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -286,7 +290,7 @@
     "message": "服务商"
   },
   "byoBaseLabel": {
-    "message": "接口地址（https）"
+    "message": "接口地址"
   },
   "byoModelLabel": {
     "message": "模型"
@@ -597,8 +601,11 @@
   "optNeedKey": {
     "message": "还没填 Key，这个服务商暂时用不了。"
   },
+  "optNeedBase": {
+    "message": "还没填接口地址，这个服务商暂时用不了。"
+  },
   "optBaseHint": {
-    "message": "填 Base URL 或完整接口地址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。"
+    "message": "填 Base URL 或完整接口地址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本机模型服务（Ollama、LM Studio）填 http://localhost:11434/v1 —— 只有本机回环地址可以用 http，Key 可留空。"
   },
   "startS1Alt": {
     "message": "播放器示意图：画面下方是一行原文和一行译文"
@@ -658,13 +665,13 @@
     "message": "播不出来——检查 Key，或先「保存并测通」"
   },
   "ttsFetchVoices": {
-    "message": "用你的 Key 拉取更多音色"
+    "message": "用你的 Key 拉取这个语言的完整音色清单"
   },
   "ttsFetching": {
     "message": "拉取中…"
   },
   "ttsVoicesSwitched": {
-    "message": "已切到你的 Key 能用的 $N$ 个音色。名字里带语言的音色，只对那一种语言有效。",
+    "message": "这是你的 Key 在当前语言下能用的全部 $N$ 个音色，包含较老的 Standard / Wavenet 档。它们只对当前语言有效；点上面那行字可以换回常用音色（换语言会自动跟着走）。什么都不会丢：想再看这份完整清单，重新拉取一次就行。",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -672,7 +679,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "回到跟着语言走的音色"
+    "message": "换回常用音色（自动跟随语言）"
   },
   "ttsVoicesNone": {
     "message": "这家在这个语言下没有额外音色——内置的那些照样能用。"
@@ -825,6 +832,53 @@
     "message": "允许选中复制字幕文本",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "选中复制",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "总结",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "视频总结",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "关闭",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "这支视频没有可用的字幕轨。",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "总结要用你自己的翻译服务(自带 Key 或本地端点),免费引擎只翻译不总结。",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "开始总结",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "总结失败,稍后再试。",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "整轨字幕将发给 $PROVIDER$(分 $PARTS$ 段),用你自己的额度。",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "总结中… 第 $DONE$/$TOTAL$ 段",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "有 $N$ 段没能总结,以上是其余部分。",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "字幕",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "YouTube 翻译暂时被限流，已用智能整句（Google）顶上；稍后会自动再试。",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "翻译端点正在限流，约 $SECONDS$ 秒后继续",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

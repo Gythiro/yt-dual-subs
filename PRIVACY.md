@@ -32,17 +32,20 @@ There is **no developer-operated backend**. No data is ever sent to the develope
 ### 1. Your settings (stored locally in your browser)
 Your display preferences — target language, translation engine, subtitle position, fonts, colors, sizes, and on/off state — are saved using the browser's `chrome.storage.sync` API. This data stays in your own browser profile and is synced by **your browser account** across your own devices. It is **not transmitted to the developer** and contains no personal information.
 
-### 2. Caption text (sent only to the translation service, only to translate)
+### 2. Caption text (sent only to the service you chose — to translate, or, on your explicit click, to summarize)
 To show a translated line, the extension reads the caption/subtitle text of the video you are **currently watching** and sends that text to a translation service **solely to obtain the translation**, which is then displayed back to you as an overlay. Depending on the engine selected in the settings — chosen by you, or picked per video by the default **Auto** mode:
 
 - **Whole-track engine:** the translation is requested from **YouTube's own** caption-translation endpoint (`youtube.com/api/timedtext`), reusing the request the YouTube player itself already makes.
 - **Smart-sentences engine:** the caption text is sent to **Google's public Translate endpoint** (`translate.googleapis.com`) to be translated.
 - **Auto (default):** uses the Whole-track engine whenever the video's track can be translated, and the Smart-sentences engine otherwise. With no API key of your own configured, those two endpoints are the only ones ever contacted.
 - **Your own provider (optional, off by default):** if — and only if — you enter an API key on the settings page and pick a provider, caption text is sent to **that provider's endpoint instead**, and to no one else. Which provider that is, is entirely your choice; their handling of the text is governed by their own privacy policy.
+- **Your own custom endpoint (optional, off by default):** the "Custom (OpenAI-compatible)" provider sends caption text to **whatever server address you type in** — including a model server running on your own computer (`http://localhost` / `http://127.0.0.1`, e.g. Ollama or LM Studio; loopback requests do not leave the machine, which is why these two are the only plain-http addresses the field accepts). Where that text goes is decided by the address you entered, and by nothing else.
 
 Only the caption text of the video you are actively watching is transmitted, and only for the purpose of translating it. The extension does **not** log, store, or transmit this text anywhere else, and the developer never receives it. Requests to YouTube's and Google's endpoints are handled by them under Google's own privacy policy: https://policies.google.com/privacy
 
 **One exception, and it is announced before it happens:** when you export a video's subtitles as an SRT file *and* tick "translate with my own key", the **whole caption track** of that video is sent to your provider — not just the part you have watched. The extension shows you how many requests that will take and asks you to confirm before anything is sent, and the option is off by default.
+
+**The video-summary feature works the same way, and is likewise announced first:** choosing "Summary" in the player menu sends the **whole caption track** to the translation provider **you** configured — your own key, or your own custom endpoint; the free engines are never used for this — solely to produce the chapter summary shown back to you. The panel names that provider and the number of parts before anything is sent, nothing at all is sent until you press the button, and the developer never receives the text.
 
 ### 3. Read-aloud text (optional, off by default)
 
@@ -59,7 +62,7 @@ If you choose to use your own translation or speech provider, the key you enter 
 - **`storage`** — to save your subtitle preferences locally (see above), and an API key you choose to add.
 - **Host access to `www.youtube.com`** (content scripts) — to display the bilingual subtitle overlay inside the YouTube player and read the active caption track of the video you are watching.
 - **Host access to `translate.googleapis.com`** — to fetch machine translations of caption text for the Smart-sentences engine (used automatically when YouTube's own track translation is unavailable, or when selected manually).
-- **Optional host access to translation and speech providers** — the extension ships with access to none of them. Each provider's domain (including the endpoints used only for speech — `texttospeech.googleapis.com`, `*.tts.speech.microsoft.com` and `api.elevenlabs.io`) is listed as an *optional* host permission, and Chrome asks you to grant exactly one of them at the moment you press "Save and test" for that provider. A provider you never choose is never contacted and never granted anything.
+- **Optional host access to translation and speech providers** — the extension ships with access to none of them. Each provider's domain (including the endpoints used only for speech — `texttospeech.googleapis.com`, `*.tts.speech.microsoft.com` and `api.elevenlabs.io` — and the two loopback hosts `http://localhost` / `http://127.0.0.1`, which exist solely so a model server on your own machine can be used and whose traffic does not leave that machine) is listed as an *optional* host permission, and Chrome asks you to grant it at the moment you press "Save and test" for that provider. A provider you never choose is never contacted and never granted anything. A custom endpoint on any other domain is not in this list at all: requests to it are only possible if that server itself opts in via CORS.
 
 The extension requests the narrowest permissions needed for these features and nothing more. It does not request access to your tabs, browsing history, or any other websites.
 

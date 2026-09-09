@@ -28,6 +28,12 @@ const DEFAULTS = {
   byoModel: "",                // empty = the provider's default model
   byoBaseUrl: "",              // custom provider only (https, validated)
   updateNotes: true,           // open release notes page after feature updates
+  // Steady-cruise backdoor keys (no UI here or anywhere yet): content.js
+  // sizes read-aloud with them in dense stretches; listed to keep the
+  // DEFAULTS contract with content.js in sync.
+  ttsCruise: true,
+  ttsCruiseRate: 1.25,
+  ttsCruiseVideo: 0.85,
   order: "orig-top",           // "orig-top" | "trans-top"
   rowGap: 4,
   position: "bottom",          // "top" | "center" | "bottom"
@@ -688,7 +694,9 @@ function paintTtsVoicePick(usable, current, storedVoice) {
       // Not p.name: that literal is the Chinese one for the providers that are
       // known by a Chinese name abroad, and an English reader with one key
       // configured was shown a group headed 浏览器内置（免费）.
-      g.label = p.nameKey ? t(p.nameKey, p.name) : p.name;
+      g.label = (p.nameKey ? t(p.nameKey, p.name) : p.name) +
+        ((p.id === "qwen-tts" && /^zh\b/i.test(state.targetLang || ""))
+          ? " · " + t("provTtsZhReco", "中文推荐") : "");
       // Machine voices last inside the family's group — providers.js orders
       // the flat list that way. optgroups cannot nest, so here the heading is
       // implicit; the single-provider path below gets the labelled group.
@@ -970,13 +978,16 @@ function paintByoPanel() {
   chrome.storage.local.get({ byoKeys: {}, byoOk: {} }, (got) => {
     const keys = (got && got.byoKeys) || {};
     const okMap = (got && got.byoOk) || {};
-    const configured = (P ? P.list : []).filter((x) => keys[x.id]);
+    // "Set up" means a saved key — except the custom endpoint, whose whole
+    // configuration may be just a base URL (a keyless local server).
+    const isSetUp = (x) => !!keys[x.id] || (x.custom && !!state.byoBaseUrl);
+    const configured = (P ? P.list : []).filter(isSetUp);
     const model = state.byoModel || p.defaultModel || "";
 
     if (!pick || configured.length < 2) {
       if (pick) pick.hidden = true;
       sum.hidden = false;
-      sum.textContent = keys[p.id]
+      sum.textContent = isSetUp(p)
         ? label + (model ? " · " + model : "")
         : label + " — " + notSet;
       // The model id is the part users compare against a bill or a doc, and in
@@ -1117,8 +1128,20 @@ function startPoll(tabId) {
     const s = await sendToTab(tabId, { type: "exportStatus" });
     if (!s || !s.ok) return;
     if (!s.running) { stopPoll(); return; }
-    showExportMsg(tsub("exportProgress", [String(s.done), String(s.total)],
-      "翻译中… " + s.done + "/" + s.total), null);
+    // Rate-limit waits get a live countdown — a frozen "generating…" over a
+    // 2-minute gate reads as a hang (reported from the real machine). The seconds come from the
+    // run's own waitUntil (whole-track gate) or the BYO lane's session gate.
+    const waitUntil = Number(s.waitUntil) || 0;
+    if (waitUntil > Date.now()) {
+      const secs = Math.max(1, Math.ceil((waitUntil - Date.now()) / 1000));
+      showExportMsg(tsub("exportWaiting", [String(secs)],
+        "翻译端点正在限流，约 " + secs + " 秒后继续"), "warn");
+      return;
+    }
+    if (s.total > 0) {
+      showExportMsg(tsub("exportProgress", [String(s.done), String(s.total)],
+        "翻译中… " + s.done + "/" + s.total), null);
+    }
   }, 700);
 }
 
@@ -1148,7 +1171,10 @@ async function runExport(useByo) {
     const tab = await getActiveTab();
     if (!tab || tab.id == null) { showExportMsg(NOT_YOUTUBE(), "err"); return; }
     tabId = tab.id;
-    if (useByo) startPoll(tabId);
+    // Both paths poll now: the whole-track path can sit inside a rate-limit
+    // wait, and a wait without a countdown or a stop button reads as a hang.
+    startPoll(tabId);
+    setExportBusy(true, true);
     const resp = await sendToTab(tabId, {
       type: "exportSrt", variant: exportVariant, byo: !!useByo
     });

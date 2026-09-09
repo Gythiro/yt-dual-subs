@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio（Qwen-TTS）"
   },
+  "provTtsZhReco": {
+    "message": "中国語におすすめ",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "プロバイダー"
   },
   "byoBaseLabel": {
-    "message": "APIベースURL（https）"
+    "message": "エンドポイント"
   },
   "byoModelLabel": {
     "message": "モデル"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "キーがまだありません。追加するまでこのプロバイダーは使えません。"
   },
+  "optNeedBase": {
+    "message": "エンドポイントがまだ入力されていません。入力するまでこのプロバイダーは使えません。"
+  },
   "optBaseHint": {
-    "message": "ベースURLでもエンドポイント全体でも構いません。例: https://example.com/v1 または https://example.com/v1/chat/completions。"
+    "message": "ベースURLまたは完全なエンドポイントを貼り付けます。例: https://example.com/v1 または https://example.com/v1/chat/completions。このパソコン上のモデルサーバー（Ollama、LM Studio）なら http://localhost:11434/v1 を使ってください。平文のhttpが使えるのはlocalhostのみで、キーは空のままで構いません。"
   },
   "startS1Alt": {
     "message": "プレーヤー図: 画面下部付近に原文と訳文の2行が並んでいる"
@@ -783,13 +790,13 @@
     "message": "再生できません — キーを確認し、「保存してテスト」を試してください"
   },
   "ttsFetchVoices": {
-    "message": "キーで音声を追加取得"
+    "message": "この言語の全リストをキーで取得"
   },
   "ttsFetching": {
     "message": "取得中…"
   },
   "ttsVoicesSwitched": {
-    "message": "キーで使える $N$ 件の音声を表示しています。名前に言語が付いている音声は、その言語専用です。",
+    "message": "キーがこの言語で提供する全 $N$ 件の音声です。以前の Standard / Wavenet 階層も含みます。この言語専用です。上のリンクでいつもの音声に戻れます。いつもの音声は翻訳言語に自動で追従します。消えることはありません。再取得すればこのリストは戻ります。",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "言語に追従する音声に戻す"
+    "message": "いつもの音声に戻る（言語に追従）"
   },
   "ttsVoicesNone": {
     "message": "このプロバイダーにはこの言語の追加音声がありません — 組み込み音声は引き続き使えます。"
@@ -825,6 +832,53 @@
     "message": "字幕テキストを選択してコピーする",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "テキスト選択",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "要約",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "動画の要約",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "閉じる",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "この動画には利用できる字幕トラックがありません。",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "要約には自分の翻訳サービス(自分のキーまたはローカルエンドポイント)が必要です。無料エンジンは翻訳のみです。",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "要約する",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "要約に失敗しました。しばらくしてからもう一度お試しください。",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "字幕トラック全体が $PROVIDER$ に送信されます($PARTS$ 分割)。あなたの利用枠を消費します。",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "要約中… $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ 個のパートは要約できませんでした。残りは上記のとおりです。",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "字幕",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "YouTube本体の翻訳は現在レート制限中です。スマート文（Google）で補完しています。あとで自動的に再試行します。",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "翻訳エンドポイントがレート制限中です。約 $SECONDS$ 秒後に再開します。",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

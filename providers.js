@@ -172,15 +172,19 @@
       tint: "#0F2B46", initials: "DL"
     },
     {
-      id: "custom", name: "Custom (OpenAI-compatible)", kind: "llm",
+      id: "custom", name: "Custom (OpenAI-compatible)", nameKey: "byoCustom",
+      kind: "llm",
       custom: true,
+      short: "Custom", shortKey: "byoCustom",
       baseUrl: "",
       origin: "",
       defaultModel: "",
       models: [],
       keyUrl: "",
       pricingUrl: "",
-      tint: "#5A5A5A", initials: "…"
+      // Slate, not the plain grey it shared with Grok — the two sat in the
+      // list as the same colourless tile (the icon review, 2026-08-28).
+      tint: "#5C6B7A", initials: "…"
     }
   ];
 
@@ -208,19 +212,33 @@
     return [provider.origin + "/*"].concat((provider.altOrigins || []).map((o) => o + "/*"));
   }
 
-  // https only, no credentials in the URL, no trailing slash. Returns
-  // { baseUrl, origin } or null — the single gate for user-supplied endpoints.
+  // https only — with one carved-out exception — no credentials in the URL,
+  // no trailing slash. Returns { baseUrl, origin } or null — the single gate
+  // for user-supplied endpoints.
+  //
+  // The exception: plain http is allowed for the loopback hosts (localhost /
+  // 127.0.0.1 / [::1]) and nothing else. The https rule exists to keep API
+  // keys off cleartext networks; loopback traffic never reaches a network, so
+  // the rule has nothing to protect there — and refusing it is what kept
+  // local model servers (Ollama on 11434, LM Studio on 1234) unusable
+  // (issue #4). "localhost." with a trailing dot and lookalike subdomains
+  // (localhost.evil.com) resolve elsewhere and stay refused.
   //
   // Accepts EITHER a base URL or a full endpoint. Provider docs hand out the
   // full ".../v1/chat/completions" form as often as the base, and pasting that
   // into a base-URL field would otherwise produce
   // ".../chat/completions/chat/completions" and a 404 the user cannot explain.
+  function isLoopbackHost(hostname) {
+    const h = String(hostname || "").toLowerCase();
+    return h === "localhost" || h === "127.0.0.1" || h === "[::1]";
+  }
   function parseCustomBase(input) {
     const raw = String(input || "").trim();
     if (!raw) return null;
     let u;
     try { u = new URL(raw); } catch (_e) { return null; }
-    if (u.protocol !== "https:") return null;
+    if (u.protocol !== "https:" &&
+        !(u.protocol === "http:" && isLoopbackHost(u.hostname))) return null;
     if (u.username || u.password) return null;
     const path = u.pathname
       .replace(/\/+$/, "")
@@ -619,6 +637,9 @@
       baseUrl: "https://api.openai.com/v1",
       origin: "https://api.openai.com",
       defaultModel: "gpt-4o-mini-tts",
+      // The documented speech models. gpt-4o-mini-tts is the default (the
+      // newer voices need it); tts-1/-hd stay for anyone matching older docs.
+      models: ["gpt-4o-mini-tts", "tts-1", "tts-1-hd"],
       // The speech voices are a fixed, documented set — no list endpoint to ask.
       // The documented set, all of them cross-language. ballad/verse/marin/cedar
       // arrived after the first cut and need gpt-4o-mini-tts, which is the
@@ -688,13 +709,19 @@
       baseUrl: "https://dashscope.aliyuncs.com",
       origin: "https://dashscope.aliyuncs.com",
       defaultModel: "qwen3-tts-flash",
-      // A spread rather than all forty-eight: standard Mandarin of both
-      // genders, the English- and Russian-flavoured ones, and four dialects,
-      // which are the reason to pick this provider at all.
+      // The documented sisters on the same endpoint; the console lists more
+      // (dated snapshots, realtime) that the picker's free-entry can reach.
+      models: ["qwen3-tts-flash", "qwen3-tts-instruct-flash", "qwen-tts"],
+      // A spread rather than all forty-eight (a wall of names helps nobody):
+      // Mandarin personas of both genders, the international-flavoured ones,
+      // and the dialects — which are the reason to pick this provider at all.
+      // Widened 12→22 on the maintainer's "阿里这个音色特别好" (2026-08-28);
+      // the full documented list stays in the official voice-list page.
       voices: [
-        "Cherry", "Ethan", "Serena", "Chelsie", "Nofish",
+        "Cherry", "Serena", "Ethan", "Chelsie", "Momo", "Vivian", "Moon",
+        "Kai", "Neil", "Seren", "Nofish",
         "Jennifer", "Ryan", "Katerina",
-        "Dylan", "Jada", "Sunny", "Rocky"
+        "Dylan", "Jada", "Sunny", "Eric", "Rocky", "Kiki", "Li", "Peter"
       ],
       defaultVoice: "Cherry",
       keyHint: "sk-…",
@@ -714,6 +741,10 @@
       // but is not the model a new key reaches first, and the store copy must
       // describe what people actually get.
       defaultModel: "eleven_multilingual_v2",
+      // The current API model family: v2 is the safe default, the 2.5 pair is
+      // cheaper/faster, v3 is the newest and the reason this picker exists.
+      models: ["eleven_multilingual_v2", "eleven_turbo_v2_5",
+               "eleven_flash_v2_5", "eleven_v3"],
       // Voice ids, not names — ElevenLabs identifies by id and the label comes
       // from the list endpoint. These are the documented stock voices.
       voices: [

@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "알리바바 모델 스튜디오 (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "중국어 추천",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "제공업체"
   },
   "byoBaseLabel": {
-    "message": "API 기본 URL (https)"
+    "message": "엔드포인트 주소"
   },
   "byoModelLabel": {
     "message": "모델"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "아직 키가 없습니다 — 키를 추가해야 이 제공업체를 사용할 수 있습니다."
   },
+  "optNeedBase": {
+    "message": "아직 엔드포인트 주소가 없습니다 — 주소를 입력해야 이 제공업체를 사용할 수 있습니다."
+  },
   "optBaseHint": {
-    "message": "기본 URL과 전체 엔드포인트 모두 가능합니다. 예: https://example.com/v1 또는 https://example.com/v1/chat/completions."
+    "message": "기본 URL 또는 전체 엔드포인트를 붙여넣으세요 — 예: https://example.com/v1 또는 https://example.com/v1/chat/completions. 이 컴퓨터의 모델 서버(Ollama, LM Studio)는 http://localhost:11434/v1을 사용하세요 — localhost에서만 일반 http가 허용되며, 키는 비워 둬도 됩니다."
   },
   "startS1Alt": {
     "message": "플레이어 도식: 화면 하단 근처에 원문 줄과 번역 줄이 있습니다"
@@ -783,13 +790,13 @@
     "message": "재생할 수 없습니다 — 키를 확인하고 저장 후 테스트를 시도하세요"
   },
   "ttsFetchVoices": {
-    "message": "키로 음성 더 가져오기"
+    "message": "키로 이 언어의 전체 목록 가져오기"
   },
   "ttsFetching": {
     "message": "가져오는 중…"
   },
   "ttsVoicesSwitched": {
-    "message": "키가 쓸 수 있는 $N$개 음성을 표시합니다. 이름에 언어가 적힌 음성은 그 언어에만 동작합니다.",
+    "message": "키가 이 언어에 제공하는 음성 $N$개 전부 — 이전 Standard / Wavenet 등급 포함. 이 언어에서만 동작합니다. 위 링크를 누르면 일반 음성으로 돌아가며, 일반 음성은 번역 언어를 알아서 따라갑니다. 목록은 사라지지 않습니다. 다시 가져오면 이 목록이 돌아옵니다.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "언어를 따라가는 음성으로 돌아가기"
+    "message": "일반 음성으로 돌아가기 (언어를 따라감)"
   },
   "ttsVoicesNone": {
     "message": "이 제공업체에는 이 언어의 추가 음성이 없습니다 — 내장 음성은 계속 사용할 수 있습니다."
@@ -825,6 +832,53 @@
     "message": "자막 텍스트 선택 및 복사",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "텍스트 선택",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "요약",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "동영상 요약",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "닫기",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "이 동영상에는 사용할 수 있는 자막 트랙이 없습니다.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "요약에는 본인의 번역 서비스(자체 키 또는 로컬 엔드포인트)가 필요합니다. 무료 엔진은 번역만 합니다.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "요약하기",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "요약에 실패했습니다. 나중에 다시 시도하세요.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "자막 트랙 전체가 $PROVIDER$(으)로 전송됩니다($PARTS$개 부분). 본인 할당량이 사용됩니다.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "요약 중… $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$개 부분은 요약하지 못했습니다. 나머지는 위에 있습니다.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "자막",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "지금은 YouTube 자체 번역이 요청 한도에 걸려 스마트 문장(Google)이 대신 채웁니다. 나중에 자동으로 다시 시도합니다.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "번역 엔드포인트가 속도 제한 중입니다 — 약 $SECONDS$초 후 재개합니다.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

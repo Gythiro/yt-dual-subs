@@ -36,6 +36,13 @@
     ttsVolume: 100,            // spoken line's own loudness, 0-100 (Audio.volume)
     ttsDuckPct: 25,            // original audio while a line speaks, as % of the
                                // user's own volume (inject.js ducks to this)
+    // Steady cruise — backdoor keys: no UI, no locale strings; tuned by ear
+    // from the console until the defaults settle. In a dense stretch speech
+    // is floored at ttsCruiseRate and EVERY line ships a fit of
+    // ttsCruiseVideo × the user's own rate, instead of per-line firefighting.
+    ttsCruise: true,
+    ttsCruiseRate: 1.25,
+    ttsCruiseVideo: 0.85,
     engine: "auto",              // "auto" | "tlang" | "gtx" | "byo" (source of
                                  // truth since 3.4; "byo" = own key, since 3.6)
     backend: "tlang",            // legacy pre-3.4 key ("tlang" | "gtx"); kept as a
@@ -275,6 +282,7 @@
     try { if (toggleBtn) { toggleBtn.remove(); toggleBtn = null; } } catch (_e) { /* ignore */ }
     moreEl = null;
     try { closeMenu(); } catch (_e) { /* ignore */ }
+    try { sumClose(); } catch (_e) { /* ignore */ }
     try { document.removeEventListener("mousedown", onDocMouseDownForMenu, true); } catch (_e) { /* ignore */ }
     try { document.removeEventListener("selectionchange", flushHeldLines); } catch (_e) { /* ignore */ }
     try { window.removeEventListener("mouseup", onAnyMouseUp, true); } catch (_e) { /* ignore */ }
@@ -385,6 +393,9 @@
       ttsErr = "";
       ttsFailRun = 0;
     }
+    // A different voice has a different start-up cost; the measured average
+    // belongs to the voice it was measured on.
+    if ("ttsProvider" in changes || "ttsVoice" in changes) ttsLocalNetEma = 0;
     // Loudness is a live control: the options slider should be audible on the
     // line that is speaking, not on the next one. Duck depth stays per-line —
     // it is sent with each duck message, and restore compares what was SET.
@@ -715,13 +726,27 @@
 
   // Coalesce triggers (class mutations fire in bursts while the cursor rides
   // the progress bar) into one computation per frame.
+  let liftWasAutohide = null;   // last seen state; null = not yet observed
   function scheduleLift() {
     if (liftRaf) return;
-    liftRaf = requestAnimationFrame(() => { liftRaf = 0; computeLift(); });
+    liftRaf = requestAnimationFrame(() => {
+      liftRaf = 0;
+      computeLift();
+      // The controls the menu is anchored to just slid away: a menu floating
+      // alone over the picture is debris — it goes with them. On the EDGE
+      // into autohide only, never on mere presence of the class: unrelated
+      // class churn while the bar is already hidden must not eat the menu
+      // (the rig's player is even BORN with ytp-autohide).
+      const pl = getPlayer();
+      const hid = !!(pl && pl.classList.contains("ytp-autohide"));
+      if (menuEl && hid && liftWasAutohide === false) closeMenu();
+      liftWasAutohide = hid;
+    });
   }
 
   function observePlayerControls(player) {
     if (liftObserver) liftObserver.disconnect();
+    liftWasAutohide = null;            // a new player gets a fresh edge
     liftObserver = new MutationObserver(scheduleLift);
     liftObserver.observe(player, { attributes: true, attributeFilter: ["class"] });
     computeLift();
@@ -1019,6 +1044,235 @@
     if (!settings.selectText) { selectGesture = false; flushHeldLines(); }
   }
 
+  // ---- video summary --------------------------------------------------------
+  // BYO-only, click-to-request, chunked map→reduce. The panel is a content
+  // surface like the overlay and the menu: textContent rendering only, closed
+  // on navigation / orphaning / the master switch, absolute inside the player
+  // so fullscreen keeps it.
+  const SUM_CHUNK_CHARS = 9000;
+  const SUM_OVERLAP_CHARS = 900;
+  function sumStamp(sec) {
+    const t = Math.max(0, Math.round(sec));
+    const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), r = t % 60;
+    const rr = String(r).padStart(2, "0");
+    return h ? h + ":" + String(m).padStart(2, "0") + ":" + rr : m + ":" + rr;
+  }
+  function sumParseStamp(str) {
+    const m = String(str || "").trim().match(/^(\d+):(\d{2})(?::(\d{2}))?$/);
+    if (!m) return -1;
+    return m[3] != null
+      ? (+m[1]) * 3600 + (+m[2]) * 60 + (+m[3])
+      : (+m[1]) * 60 + (+m[2]);
+  }
+  // The ORIGINAL track feeds the model (translate+summarize in one pass — the
+  // reply is asked for in targetLang); stamps ride in the text so chapters
+  // can only anchor to marks that exist.
+  function sumRows() {
+    const rows = [];
+    if (!cueList) return rows;
+    for (const c of cueList) {
+      const x = String(c.text || "").trim();
+      if (x) rows.push("[" + sumStamp((c.start || 0) / 1000) + "] " + x);
+    }
+    return rows;
+  }
+  function sumChunksFromRows(lines) {
+    const chunks = [];
+    let cur = [], size = 0;
+    for (const l of lines) {
+      if (size + l.length > SUM_CHUNK_CHARS && cur.length) {
+        chunks.push(cur.join("\n"));
+        // ~10% tail rides into the next chunk so a point cut at the seam is
+        // whole in at least one of them.
+        const keep = []; let kept = 0;
+        for (let i = cur.length - 1; i >= 0 && kept < SUM_OVERLAP_CHARS; i--) {
+          keep.unshift(cur[i]); kept += cur[i].length;
+        }
+        cur = keep; size = kept;
+      }
+      cur.push(l); size += l.length;
+    }
+    if (cur.length) chunks.push(cur.join("\n"));
+    return chunks;
+  }
+
+  let sumEl = null;
+  let sumEpoch = 0;               // bumped on close: in-flight replies are stale
+  function sumClose() {
+    sumEpoch++;
+    if (sumEl) { try { sumEl.remove(); } catch (_e) { /* ignore */ } sumEl = null; }
+  }
+  function sumNode(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function sumBody() {
+    const player = getPlayer();
+    if (!player) return null;
+    if (!sumEl || !sumEl.isConnected) {
+      sumEl = sumNode("div", "ytds-sum");
+      sumEl.addEventListener("mousedown", (e) => e.stopPropagation());
+      const head = sumNode("div", "ytds-sum-head");
+      head.appendChild(sumNode("span", "ytds-sum-title", ct("sumPanelTitle", "视频总结")));
+      const close = sumNode("button", "ytds-sum-close", "\u00d7");
+      close.type = "button";
+      close.setAttribute("aria-label", ct("sumClose", "关闭"));
+      close.addEventListener("click", sumClose);
+      head.appendChild(close);
+      sumEl.appendChild(head);
+      sumEl.appendChild(sumNode("div", "ytds-sum-body"));
+      player.appendChild(sumEl);
+    }
+    const body = sumEl.querySelector(".ytds-sum-body");
+    body.textContent = "";
+    return body;
+  }
+  function sumButton(label, cls, onClick) {
+    const b = sumNode("button", "ytds-sum-btn" + (cls ? " " + cls : ""), label);
+    b.type = "button";
+    b.addEventListener("click", onClick);
+    return b;
+  }
+  function sumSeek(sec) {
+    const v = getVideo();
+    if (!v || sec < 0) return;
+    try { v.currentTime = sec; } catch (_e) { /* a rig video has no setter */ }
+  }
+  // TLDR: line, "@ stamp title" chapters, "- point" bullets — the contract
+  // sumOnceMessages/sumReduceMessages pin on the worker side. Parsed
+  // tolerantly: a line that fits nothing joins the open chapter as a point.
+  function sumRender(text, failedParts) {
+    const body = sumBody();
+    if (!body) return;
+    let chapters = null;
+    for (const raw of String(text || "").split("\n")) {
+      const line = raw.trim();
+      if (!line) continue;
+      const tl = line.match(/^TLDR[::]\s*(.*)$/i);
+      if (tl) { body.appendChild(sumNode("p", "ytds-sum-tldr", tl[1])); continue; }
+      // The stamps ride the input as [m:ss], and a model that copies them
+      // verbatim writes "@ [0:44] title" — measured on qwen2.5:7b live. The
+      // brackets are welcome either way; only the stamp inside them matters.
+      const ch = line.match(/^@\s*\[?(\d+:\d{2}(?::\d{2})?)\]?\s*(.*)$/);
+      if (ch) {
+        chapters = chapters || body.appendChild(sumNode("div", "ytds-sum-chapters"));
+        const row = sumNode("div", "ytds-sum-ch");
+        const sec = sumParseStamp(ch[1]);
+        const st = sumButton(ch[1], "ytds-sum-stamp", () => sumSeek(sec));
+        row.appendChild(st);
+        row.appendChild(sumNode("span", "ytds-sum-ch-title", ch[2]));
+        chapters.appendChild(row);
+        continue;
+      }
+      const pt = line.match(/^[-•]\s*(.*)$/);
+      const dest = chapters && chapters.lastChild ? chapters : null;
+      const li = sumNode("div", "ytds-sum-pt", pt ? pt[1] : line);
+      if (dest) dest.appendChild(li); else body.appendChild(li);
+    }
+    if (failedParts > 0) {
+      body.appendChild(sumNode("p", "ytds-sum-warn",
+        tsub("sumFailedPart", [String(failedParts)], "有 $1$ 段没能总结,以上是其余部分。")));
+    }
+  }
+  function sumFail(resp) {
+    const code = (resp && resp.code) || "failed";
+    if (code === "noProvider" || code === "needLlm" || code === "noKey" ||
+        code === "noModel" || code === "badBaseUrl") { sumNeedKeyState(); return; }
+    const body = sumBody();
+    if (!body) return;
+    body.appendChild(sumNode("p", "ytds-sum-warn", ct("sumFail", "总结失败,稍后再试。")));
+  }
+  function sumNeedKeyState() {
+    const body = sumBody();
+    if (!body) return;
+    body.appendChild(sumNode("p", null,
+      ct("sumNeedKey", "总结要用你自己的翻译服务(自带 Key 或本地端点),免费引擎只翻译不总结。")));
+    body.appendChild(sumButton(ct("byoConfigure", "去配置"), "ytds-sum-primary",
+      () => extCall(() => chrome.runtime.sendMessage({ type: "openOptions" }))));
+  }
+  function sumProgress(done, total, myEpoch) {
+    const body = sumBody();
+    if (!body) return;
+    body.appendChild(sumNode("p", "ytds-sum-busy",
+      tsub("sumWorking", [String(done), String(total)], "总结中… 第 $1$/$2$ 段")));
+    body.appendChild(sumButton(ct("exportConfirmBack", "取消"), null,
+      () => { if (myEpoch === sumEpoch) sumClose(); }));
+  }
+  function sumRun(chunks) {
+    const myEpoch = sumEpoch;
+    const total = chunks.length;
+    if (total === 1) {
+      sumProgress(0, 1, myEpoch);
+      extCall(() => chrome.runtime.sendMessage(
+        { type: "sumOnce", text: chunks[0], targetLang: settings.targetLang }, (resp) => {
+          if (myEpoch !== sumEpoch) return;
+          if (chrome.runtime.lastError || !resp || !resp.ok) { sumFail(resp); return; }
+          sumRender(resp.summary, 0);
+        }));
+      return;
+    }
+    const notes = [];
+    let failed = 0;
+    const step = (i) => {
+      // Redundant with the reply-side epoch check below and kept on purpose
+      // (the D83/D85 double-guard shape): each survives alone, the pair died
+      // together under combined mutation. This half is what stops a DIRECT
+      // step() call after a close, if a refactor ever adds one.
+      if (myEpoch !== sumEpoch) return;             // closed / cancelled
+      if (i >= total) {
+        const good = notes.filter((x) => x != null);
+        if (!good.length) { sumFail(null); return; }
+        extCall(() => chrome.runtime.sendMessage(
+          { type: "sumReduce", notes: good, targetLang: settings.targetLang }, (resp) => {
+            if (myEpoch !== sumEpoch) return;
+            if (chrome.runtime.lastError || !resp || !resp.ok) { sumFail(resp); return; }
+            sumRender(resp.summary, failed);
+          }));
+        return;
+      }
+      sumProgress(i, total, myEpoch);
+      extCall(() => chrome.runtime.sendMessage(
+        { type: "sumMap", text: chunks[i], targetLang: settings.targetLang }, (resp) => {
+          if (myEpoch !== sumEpoch) return;
+          if (chrome.runtime.lastError || !resp || !resp.ok) { failed++; notes[i] = null; }
+          else notes[i] = resp.notes;
+          step(i + 1);
+        }));
+    };
+    step(0);
+  }
+  function openSummary() {
+    const rows = sumRows();
+    if (!rows.length) {
+      const body = sumBody();
+      if (body) body.appendChild(sumNode("p", null, ct("sumEmpty", "这支视频没有可用的字幕轨。")));
+      return;
+    }
+    const chunks = sumChunksFromRows(rows);
+    const myEpoch = sumEpoch;
+    const body = sumBody();
+    if (!body) return;
+    body.appendChild(sumNode("p", "ytds-sum-busy", "…"));
+    extCall(() => chrome.runtime.sendMessage({ type: "sumInfo" }, (info) => {
+      if (myEpoch !== sumEpoch) return;
+      if (chrome.runtime.lastError || !info || !info.ok) { sumFail(null); return; }
+      if (!info.configured || info.kind !== "llm") { sumNeedKeyState(); return; }
+      // The whole track leaves the browser and burns the user's own quota —
+      // said out loud BEFORE the first request, the export precedent.
+      const b2 = sumBody();
+      if (!b2) return;
+      b2.appendChild(sumNode("p", null,
+        tsub("sumConfirm", [info.name, String(chunks.length)],
+          "整轨字幕将发给 $1$(分 $2$ 段),用你自己的额度。")));
+      b2.appendChild(sumButton(ct("sumStart", "开始总结"), "ytds-sum-primary",
+        () => { if (myEpoch === sumEpoch) sumRun(chunks); }));
+      b2.appendChild(sumButton(ct("exportConfirmBack", "取消"), null,
+        () => { if (myEpoch === sumEpoch) sumClose(); }));
+    }));
+  }
+
   // ---- the in-player menu (behind the toggle button's arrow) ---------------
   // Entry plan B, picked 2026-08-24: the button keeps its one job — a click
   // still toggles the subtitles — and a small arrow in its corner pulls out a
@@ -1032,12 +1286,47 @@
   function ct(key, fb) {
     try { return chrome.i18n.getMessage(key) || fb; } catch (_e) { return fb; }
   }
+  // ct with $1$-style substitutions; the fallback substitutes too, or the rig
+  // (whose getMessage answers nothing) would show literal "$1$" to a reader.
+  function tsub(key, subs, fb) {
+    try {
+      const v = chrome.i18n.getMessage(key, subs);
+      if (v) return v;
+    } catch (_e) { /* fall through to the inline fallback */ }
+    let out = String(fb || "");
+    (subs || []).forEach((x, i) => { out = out.replace("$" + (i + 1) + "$", x); });
+    return out;
+  }
+
+  // One stroke family for the menu (1.8px, round caps, currentColor) — the
+  // in-player equivalent of provider-icons' single visual system. Static
+  // markup only; the label is set with textContent, never markup. The
+  // selection glyph is two subtitle lines with the top one boxed: an I-beam
+  // reads as "edit", and this toggle edits nothing.
+  const MENU_SVG_ATTRS = 'xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+  const MENU_ICONS = {
+    enabled: '<svg class="ytds-mi-icon" ' + MENU_SVG_ATTRS + '><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M6.5 12.2h6.5M6.5 15.4h9.5"/></svg>',
+    ttsEnabled: '<svg class="ytds-mi-icon" ' + MENU_SVG_ATTRS + '><path d="M4.5 10v4h3l4.5 3.8V6.2L7.5 10h-3z"/><path d="M15.2 9.6a3.6 3.6 0 0 1 0 4.8M17.6 7.6a6.6 6.6 0 0 1 0 8.8"/></svg>',
+    selectText: '<svg class="ytds-mi-icon" ' + MENU_SVG_ATTRS + '><rect x="3.2" y="6.6" width="13.6" height="4.8" rx="1.4"/><path d="M6 9h8M6 16.4h12"/></svg>',
+    summary: '<svg class="ytds-mi-icon" ' + MENU_SVG_ATTRS + '><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4.5"/></svg>',
+    openOptions: '<svg class="ytds-mi-icon" ' + MENU_SVG_ATTRS + '><circle cx="12" cy="12" r="3.1"/><path d="M12 4.6v2.2M12 17.2v2.2M4.6 12h2.2M17.2 12h2.2M6.9 6.9l1.5 1.5M15.6 15.6l1.5 1.5M17.1 6.9l-1.5 1.5M8.4 15.6l-1.5 1.5"/></svg>'
+  };
+  // The right-hand slot: an empty box that fills with a check — the shape
+  // says "this is a switch" even while it is off, which the bare hover-only
+  // checkmark never managed. The settings row carries the leave arrow.
+  const MENU_STATE_SVG = '<svg class="ytds-mi-state" ' + MENU_SVG_ATTRS + '><rect x="4.2" y="4.2" width="15.6" height="15.6" rx="3.4"/><path class="ytds-check" d="M8 12.3l2.7 2.7 5.4-6"/></svg>';
+  const MENU_GO_SVG = '<svg class="ytds-mi-state ytds-mi-go" ' + MENU_SVG_ATTRS + '><path d="M7.5 16.5l9-9M9.5 7.5h7v7"/></svg>';
 
   const MENU_ROWS = [
     { key: "enabled", label: () => ct("menuSubtitles", "字幕") },
     { key: "ttsEnabled", label: () => ct("optNavReadaloud", "朗读") },
-    { key: "selectText", label: () => ct("selectTextLabel", "允许选中复制字幕文本") },
-    { key: "openOptions", label: () => ct("openOptions", "设置"), action: true }
+    // Its own SHORT key, not the popup checkbox's sentence: a menu row is a
+    // name, and the sentence wrapped to two lines and read as an action.
+    { key: "selectText", label: () => ct("menuSelectText", "选中复制") },
+    { key: "summary", label: () => ct("menuSummary", "总结"), action: true,
+      run: () => openSummary() },
+    { key: "openOptions", label: () => ct("openOptions", "设置"), action: true,
+      run: () => extCall(() => chrome.runtime.sendMessage({ type: "openOptions" })) }
   ];
 
   function closeMenu() {
@@ -1064,19 +1353,31 @@
     // close it (the document listener below) nor pause the player.
     menuEl.addEventListener("mousedown", (e) => e.stopPropagation());
     for (const row of MENU_ROWS) {
+      // The switches and the actions live apart: ONE visible seam before the
+      // first action row is what tells a row that flips from a row that does.
+      if (row.action && !menuEl.querySelector(".ytds-msep")) {
+        const sep = document.createElement("div");
+        sep.className = "ytds-msep";
+        menuEl.appendChild(sep);
+      }
       const b = document.createElement("button");
       b.type = "button";
       b.className = "ytds-mi";
       b.setAttribute("data-key", row.key);
-      b.textContent = row.label();
+      b.innerHTML = (MENU_ICONS[row.key] || "") +
+        '<span class="ytds-mi-label"></span>' +
+        (row.action ? MENU_GO_SVG : MENU_STATE_SVG);
+      b.querySelector(".ytds-mi-label").textContent = row.label();
       if (!row.action) b.setAttribute("aria-pressed", settings[row.key] ? "true" : "false");
       b.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
         if (orphaned) { closeMenu(); return; }
         if (row.action) {
-          // A content script has no openOptionsPage; the worker opens it.
-          extCall(() => chrome.runtime.sendMessage({ type: "openOptions" }));
+          // A content script has no openOptionsPage; the worker opens the
+          // settings page, and the summary panel opens itself — each action
+          // row carries its own run().
+          if (row.run) row.run();
           closeMenu();
           return;
         }
@@ -1114,6 +1415,16 @@
     menuEl.style.right = Math.max(8, Math.round(pr.right - br.right)) + "px";
     menuEl.style.bottom = Math.max(48, Math.round(pr.bottom - br.top) + 4) + "px";
     player.appendChild(menuEl);
+    // Never taller than the player: a mini-player is ~225px high, and richer
+    // rows would run the first ones off its top — lower the anchor instead
+    // (the redesign review's height audit; measured, not assumed).
+    // Small embeds first cap the menu's own height (it scrolls past that),
+    // then the anchor comes down if the capped menu still overflows the top.
+    menuEl.style.maxHeight = Math.max(96, pr.height - 8) + "px";
+    const mh = menuEl.getBoundingClientRect().height;
+    const b0 = parseFloat(menuEl.style.bottom) || 0;
+    const over = b0 + mh - (pr.height - 4);
+    if (over > 0) menuEl.style.bottom = Math.max(4, b0 - over) + "px";
   }
 
   function onDocMouseDownForMenu(e) {
@@ -1354,6 +1665,12 @@
   // had this from the start (400ms, measured remaining); here the remaining
   // is an ESTIMATE, so the window is slightly wider to absorb its error.
   const TTS_LOCAL_GRACE_MS = 500;
+  // The speak()→start hole of Chrome's NETWORKED built-in voices (D34): a
+  // conservative default until a real measurement exists, then a moving
+  // average, capped — past the cap it is the never-begins watchdog's problem.
+  const TTS_LOCAL_NET_PENALTY_MS = 1200;
+  const TTS_LOCAL_NET_PENALTY_MAX = 3000;
+  let ttsLocalNetEma = 0;       // reset when the voice or provider changes
   let localTimer = 0;
   // Lines decoded but not yet on air, by cue index. Their bytes live in a
   // closure inside ttsPlay, so this is the only handle anything else has on
@@ -1452,6 +1769,52 @@
   // This line's fit (the absolute video rate at which it would just fit), kept
   // only while it is on air so a live duck-depth change can carry it along.
   let ttsFit;
+  // The USER'S playback rate — sampled only while no fit of ours is applied.
+  // Sizing a line against the live playbackRate reads back our own slowdown:
+  // with the video already held at 0.8 the next line computes "fits without
+  // help", ships a duck with no fit, and inject — for whom no-fit means "this
+  // line needs nothing" — snaps the video back to full speed under it. Every
+  // dense passage then alternates slow/normal and cuts tails (measured on
+  // V6IItDAEtjs). Lines must be sized against the rate the user chose.
+  let ttsUserRate = 0;          // 0 = unknown, fall back to the live value
+  // Judging playhead jumps needs both clocks from the SAME tick: background
+  // tabs clamp the poll to ~1s and 2× playback doubles the honest video
+  // delta, so only |videoΔ − wallΔ×rate| means anything, never videoΔ alone.
+  let ttsTickWall = 0;          // Date.now() at the last cueTick sample
+  let ttsTickVid = -1;          // video ms at that sample; -1 = don't judge yet
+  let ttsJumpCuts = 0;          // calibration count only — shown nowhere
+  let ttsOverran = 0;           // lines the NEXT line's takeover cut short — recorded, not acted on
+  // ---- steady cruise -------------------------------------------------------
+  // Per-line sizing in a dense stretch was the audible wobble: speech jumping
+  // 1.0↔1.4 line to line, the video snapping back at every seam. After two
+  // consecutive tight sizings the pair LOCKS — speech at least ttsCruiseRate,
+  // video at ttsCruiseVideo of the USER'S rate — and holds until three roomy
+  // sizings in a row. The hysteresis is the point. While cruising EVERY line
+  // ships a fit: a fitless duck snaps the video back (inject shareRate), and
+  // a set module ttsFit also parks the user-rate sampler for the stretch —
+  // without that, cueTick would read our own 0.85 back as the user's choice.
+  let ttsCruiseTight = 0, ttsCruiseLoose = 0, ttsCruising = false;
+  function ttsCruiseNote(needRate) {
+    if (!settings.ttsCruise) { ttsCruising = false; return; }
+    if (needRate >= 1.05) {
+      ttsCruiseLoose = 0;
+      if (++ttsCruiseTight >= 2) ttsCruising = true;
+    } else if (needRate <= 0.8) {
+      ttsCruiseTight = 0;
+      if (++ttsCruiseLoose >= 3) ttsCruising = false;
+    }
+    // in between: keep the state and both counters — flapping here would just
+    // move the square wave one level up
+  }
+  function ttsCruiseSpeech(rate) {
+    const r = Math.max(1, Math.min(1.4, Number(settings.ttsCruiseRate) || 1.25));
+    return Math.min(1.4, Math.max(rate || 1, r));
+  }
+  function ttsCruiseFit(fit, vRate) {
+    const f = Math.max(0.5, Math.min(1, Number(settings.ttsCruiseVideo) || 0.85));
+    const cAbs = vRate * f;
+    return fit != null ? Math.min(fit, cAbs) : cAbs;
+  }
   let ttsSkipped = 0;           // lines skipped on this video — a line whose
                                 // translation wasn't ready, or whose synthesis
                                 // failed; nav resets both
@@ -1510,6 +1873,7 @@
   function ttsStop(navigated) {
     ttsEpoch++;
     ttsSpokenIdx = -1;
+    if (ttsHoldTimer) { clearTimeout(ttsHoldTimer); ttsHoldTimer = 0; }
     if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } ttsAudio = null; }
     if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } ttsBlobUrl = ""; }
     if (localTimer) { clearTimeout(localTimer); localTimer = 0; }
@@ -1523,9 +1887,40 @@
     ttsAheadClear();
     ttsAheadOff = false;             // the provider may be a different one now
     ttsSpokenText = "";
+    ttsTickVid = -1;                 // a fresh start is not a jump
+    ttsCruiseTight = 0; ttsCruiseLoose = 0; ttsCruising = false;
     for (const rel of Array.from(ttsPendingRelease.values())) rel();
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: false, nav: !!navigated }, "*"); }
     catch (_e) { /* ignore */ }
+  }
+
+  // Stop the line the viewer seeked away from — and ONLY that line. Not
+  // ttsStop: the look-ahead window survives (a short jump forward lands
+  // inside it) and the epoch stays (in-flight replies are already refused by
+  // the containment test). Not a bare pause either: ttsFollowPause would
+  // resume it on the next tick as if nothing had happened.
+  function ttsCutResidual(tMs) {
+    if (ttsAudio) { try { ttsAudio.pause(); } catch (_e) { /* ignore */ } ttsAudio = null; }
+    if (ttsBlobUrl) { try { URL.revokeObjectURL(ttsBlobUrl); } catch (_e) { /* ignore */ } ttsBlobUrl = ""; }
+    if (localTimer) { clearTimeout(localTimer); localTimer = 0; }
+    if (localDeferTimer) { clearTimeout(localDeferTimer); localDeferTimer = 0; }
+    localStartedAt = 0;
+    if (localUtter) {
+      localUtter = null;
+      try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (_e) { /* ignore */ }
+    }
+    ttsFit = undefined;
+    ttsSpokenIdx = -1;               // a seek back must be allowed to re-read it
+    ttsSpokenText = "";
+    // The landing spot may be about to re-duck: releasing here and re-ducking
+    // one tick later is the square wave the duck-hold removed. Hold when a cue
+    // is live at the landing time; the safety lets go if nobody claims it.
+    if (settings.ttsEnabled && !orphaned && cueList && activeCueIdxAt(tMs) >= 0) {
+      clearTimeout(ttsHoldTimer);
+      ttsHoldTimer = setTimeout(() => { ttsHoldTimer = 0; ttsDuck(false); }, 700);
+    } else {
+      ttsDuck(false);
+    }
   }
 
   // Duck rides ONE message with everything inject.js needs: the duck depth
@@ -1578,7 +1973,35 @@
     } catch (_e) { /* a paused voice is not worth an exception */ }
   }
 
+  // A line's end is not the passage's end. Releasing the duck between two
+  // lines that nearly touch made dense passages a 25%↔100% square wave — and
+  // the release, carrying no fit, snapped the video back to full speed for
+  // the seam. When the next line starts within this window, keep the duck
+  // (and the fit it carries); the next takeover re-ducks with its own
+  // numbers. The safety timer is for the seam that never gets its next line
+  // (translation missing, line skipped): held quiet with nobody speaking is
+  // the "original audio stuck low" bug, so an unclaimed hold lets go.
+  const TTS_DUCK_HOLD_MS = 1400;
+  let ttsHoldTimer = 0;
+  function ttsDuckOffOrHold(idx) {
+    if (settings.ttsEnabled && !orphaned && idx != null && cueList) {
+      const v = getVideo();
+      const nx = ttsWindowEnd(idx);
+      if (v && !v.paused && !isAdShowing() && nx && nx.start != null) {
+        const gap = nx.start - v.currentTime * 1000;
+        if (gap > -500 && gap < TTS_DUCK_HOLD_MS) {
+          clearTimeout(ttsHoldTimer);
+          ttsHoldTimer = setTimeout(() => { ttsHoldTimer = 0; ttsDuck(false); },
+            Math.max(0, gap) + 600);
+          return;
+        }
+      }
+    }
+    ttsDuck(false);
+  }
+
   function ttsDuck(on, fit) {
+    if (on && ttsHoldTimer) { clearTimeout(ttsHoldTimer); ttsHoldTimer = 0; }
     try { window.postMessage({ source: "ytds-content", type: "ttsDuck", on: !!on,
       pct: settings.ttsDuckPct, fit: fit }, "*"); }
     catch (_e) { /* ignore */ }
@@ -1732,6 +2155,46 @@
     return now >= ttsLineStartMs(idx) && (nx == null || nx.start == null || now < nx.start);
   }
 
+  // The claim's containment test at an EXPLICIT time. The jump judge runs
+  // before the tick moves activeCueIdx, so ttsClaimStillCurrent's shortcut
+  // would answer for where the viewer WAS, not where they landed.
+  function ttsSpokenContains(tMs) {
+    if (ttsSpokenIdx < 0) return false;
+    const nx = ttsWindowEnd(ttsSpokenIdx);
+    return tMs >= ttsLineStartMs(ttsSpokenIdx) &&
+      (nx == null || nx.start == null || tMs < nx.start);
+  }
+
+  // A jump that lands INSIDE the sentence being spoken: keep speaking, but
+  // line the cloud audio up with the new spot — what is left to say should
+  // take as long as what is left to watch, the same account ttsPlay settles
+  // for a seek that lands mid-line. The local engine has no seek; it keeps
+  // its old offset, as before.
+  function ttsRealign(tMs) {
+    const a = ttsAudio;
+    if (!a || a.paused || a.ended) return;
+    const nx = ttsWindowEnd(ttsSpokenIdx);
+    const cue = cueList && cueList[ttsSpokenIdx];
+    const winEnd = nx && nx.start != null ? nx.start
+      : (cue && cue.end != null ? cue.end : 0);
+    if (!winEnd) return;
+    const leftS = Math.max(0, (winEnd - tMs) / 1000);
+    const dur = a.duration || 0;
+    if (!isFinite(dur) || dur <= 0.3) return;
+    const target = Math.max(0, Math.min(dur - 0.05, dur - leftS * (a.playbackRate || 1)));
+    // Only for a real displacement — nudging every wobble is its own stutter.
+    if (Math.abs(target - a.currentTime) > 0.35) {
+      try { a.currentTime = target; } catch (_e) { /* not seekable: play on */ }
+    }
+  }
+
+  function ttsOnTimeJump(tMs) {
+    if (ttsSpokenIdx < 0) return;
+    if (ttsSpokenContains(tMs)) { ttsRealign(tMs); return; }
+    ttsJumpCuts++;
+    ttsCutResidual(tMs);
+  }
+
   // One sentence-worth of speech, or one slice-worth? Own-key aligned answers
   // fill the per-cue cache and every slice speaks its own line; the
   // group-text engines cache one string for the whole sentence and the other
@@ -1794,7 +2257,10 @@
   function ttsFitFor(audio, cue, next) {
     const durMs = (audio.duration || 0) * 1000;
     const v = getVideo();
-    const vRate = (v && v.playbackRate) || 1;
+    // The USER'S rate, not the live one — the live one may be our own
+    // slowdown, and sizing against it declares the next line "fits unaided",
+    // whose no-fit duck then snaps the video back up (see ttsUserRate).
+    const vRate = ttsUserRate || ((v && v.playbackRate) || 1);
     // The line's real window runs to the NEXT line's start, not to its own
     // cue end — the gap between cues is free speaking time (the competitor's
     // continuous track eats it too), and an overlapping next cue takes over
@@ -1805,10 +2271,15 @@
       ? endMs - v.currentTime * 1000
       : (cue && cue.dur) || 0);
     const needRate = (durMs * vRate) / leftMs;
+    ttsCruiseNote(needRate);
     let fit;
     if (needRate > 1) {
       audio.playbackRate = Math.min(1.4, needRate);
       if (needRate > 1.4) fit = (1.4 * leftMs) / durMs;
+    }
+    if (ttsCruising) {
+      audio.playbackRate = ttsCruiseSpeech(audio.playbackRate);
+      fit = ttsCruiseFit(fit, vRate);
     }
     return fit;
   }
@@ -1980,6 +2451,7 @@
         return;
       }
       const prev = ttsAudio, prevUrl = ttsBlobUrl;
+      if (prev && !prev.paused && !prev.ended) ttsOverran++;   // cut by the next line: counted, not acted on
       if (prev) { try { prev.pause(); } catch (_e) { /* ignore */ } }
       if (prevUrl) { try { URL.revokeObjectURL(prevUrl); } catch (_e) { /* ignore */ } }
       ttsAudio = audio;
@@ -1989,7 +2461,7 @@
       audio.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
       audio.addEventListener("ended", () => {
         if (myEpoch !== ttsEpoch || ttsAudio !== audio) return;
-        ttsDuck(false);
+        ttsDuckOffOrHold(idx);       // a near-touching next line keeps the duck
       });
       // Kept so a mid-line duck-depth change can be re-sent WITH it: the fit is
       // what holds this line's video slow-down, and a duck message without it
@@ -2105,6 +2577,22 @@
       synth.addEventListener("voiceschanged", take);
     } catch (_e) { /* no local engine here: the API path is unaffected */ }
   })();
+  // One rulebook for "which machine voice will speak": the live list when it
+  // answers, the primed copy when it does not, the stored name first, then a
+  // voice that at least speaks the language (the system default is chosen for
+  // the SYSTEM — an English voice reading Chinese is its ordinary outcome).
+  // Extracted so the sizing can ask about the voice BEFORE speaking: whether
+  // it is a networked one decides the window budget below.
+  function pickLocalVoice(synth, voiceName, lang) {
+    const all = (synth.getVoices() || []);
+    const pool = all.length ? all : localVoices;
+    let v = voiceName ? pool.find((x) => x && x.name === voiceName) : null;
+    if (!v && pool.length) {
+      const base = String(lang || "").split("-")[0].toLowerCase();
+      v = pool.find((x) => x && String(x.lang || "").toLowerCase().split("-")[0] === base);
+    }
+    return v || null;
+  }
   function ttsSpeakLocal(text, lang, voiceName, myEpoch, idx) {
     const synth = window.speechSynthesis;
     if (!synth) { ttsSkipped++; ttsErr = "failed"; ttsFailRun++; return; }
@@ -2133,14 +2621,31 @@
     // margin its own maths had counted on, and a same-cue seek during the
     // wait had the same effect for free.
     const nx = idx != null ? ttsWindowEnd(idx) : null;
+    // Networked built-ins ("Google …", localService === false) fetch their
+    // audio between speak() and `start` — seconds, measured live (D34) — and
+    // that latency burns the very window this sizing counts on: the line then
+    // overruns and the next one cuts it, however right the maths were.
+    // Budget the hole up front: the measured average once one exists, a
+    // conservative default before it. A machine voice starts at once.
+    const chosenVoice = pickLocalVoice(synth, voiceName, lang);
+    let localSpeakAt = 0;
+    const netPenalty = chosenVoice && chosenVoice.localService === false
+      ? Math.min(TTS_LOCAL_NET_PENALTY_MAX, ttsLocalNetEma || TTS_LOCAL_NET_PENALTY_MS)
+      : 0;
     const leftMs = nx && nx.start != null
-      ? Math.max(300, nx.start - vv.currentTime * 1000) : 0;
-    const vRate = vv.playbackRate || 1;
+      ? Math.max(300, nx.start - vv.currentTime * 1000 - netPenalty) : 0;
+    // Same base-rate rule as ttsFitFor: never size against our own slowdown.
+    const vRate = ttsUserRate || vv.playbackRate || 1;
     const needRate = leftMs ? (est * vRate) / leftMs : 0;
+    ttsCruiseNote(needRate);
     rate = 1; fit = undefined;
     if (needRate > 1) {
       rate = Math.min(1.4, needRate);
       if (needRate > 1.4) fit = (1.4 * leftMs) / est;
+    }
+    if (ttsCruising) {
+      rate = ttsCruiseSpeech(rate);
+      fit = ttsCruiseFit(fit, vRate);
     }
     estAtRate = est / rate;
     try { synth.cancel(); } catch (_e) { /* ignore */ }
@@ -2154,25 +2659,9 @@
     if (lang) u.lang = lang;
     u.rate = rate;
     u.volume = Math.max(0, Math.min(1, settings.ttsVolume / 100));
-    {
-      // The live call is the authority when it has an answer; the primed list
-      // covers the window where it does not.
-      const all = (synth.getVoices() || []);
-      const pool = all.length ? all : localVoices;
-      let v = voiceName ? pool.find((x) => x && x.name === voiceName) : null;
-      // The stored name may be one this machine does not have — ttsVoice rides
-      // storage.sync, and these names are whatever is installed locally. Left
-      // unset, the utterance goes to the system default, and the system default
-      // is chosen for the SYSTEM, not for the language being read: an English
-      // voice reading Chinese is the ordinary outcome. The machine's own list
-      // for this language is a better answer, and it is the same one both
-      // menus already show, so all three finally agree.
-      if (!v && pool.length) {
-        const base = String(lang || "").split("-")[0].toLowerCase();
-        v = pool.find((x) => x && String(x.lang || "").toLowerCase().split("-")[0] === base);
-      }
-      if (v) u.voice = v;
-    }
+    // Chosen once, above, where the sizing needed to know whether the voice
+    // is networked; the rulebook lives in pickLocalVoice.
+    if (chosenVoice) u.voice = chosenVoice;
     // The guard comes FIRST. cancel() makes Chrome fire end on the utterance it
     // stopped, and that end lands after the next line has already armed its own
     // watchdog — clearing the timer before checking whose end this is would let
@@ -2183,7 +2672,7 @@
       localTimer = 0;
       localUtter = null;
       localStartedAt = 0;
-      ttsDuck(false);
+      ttsDuckOffOrHold(idx);         // a near-touching next line keeps the duck
     };
     // The line never began. Not the same event as done(): nothing was said, so
     // it is a skip with a reason rather than a line that finished — and the
@@ -2227,6 +2716,16 @@
       ttsFailRun = 0;
       localStartedAt = Date.now();
       localEstMs = estAtRate;
+      // Feed the start-latency budget with what actually happened — only for
+      // networked voices; a machine voice's ~0 would drag the average under
+      // what the "Google …" voices really cost.
+      if (localSpeakAt && chosenVoice && chosenVoice.localService === false) {
+        const lat = Date.now() - localSpeakAt;
+        if (lat >= 0 && lat < 15000) {
+          ttsLocalNetEma = ttsLocalNetEma
+            ? Math.round(0.7 * ttsLocalNetEma + 0.3 * lat) : lat;
+        }
+      }
       clearTimeout(localTimer);
       localTimer = setTimeout(done, Math.min(TTS_LOCAL_MAX_MS,
         Math.max(TTS_LOCAL_MIN_MS, estAtRate)));
@@ -2234,7 +2733,12 @@
     localUtter = u;
     clearTimeout(localTimer);
     localTimer = setTimeout(neverBegan, TTS_LOCAL_START_MS);
+    // Mirror the audio path's takeover: the module-level fit is what a live
+    // duck-depth change resends. Without it, dragging the original-volume
+    // slider during local speech shipped a fitless duck and undid the slowdown.
+    ttsFit = fit;
     ttsDuck(true, fit);            // sized up front, same three tiers as audio
+    localSpeakAt = Date.now();
     try { synth.speak(u); } catch (_e) { neverBegan(); }
     };
     // GRACE: the audio path has let a finishing line say its last word since
@@ -2403,6 +2907,9 @@
     if (!settings.enabled || !cueList) return;
     const video = getVideo();
     if (!video) return;
+    // Sample the user's own rate only while none of our fits is applied —
+    // while one is, the live value is our slowdown, not their choice.
+    if (ttsFit === undefined) ttsUserRate = video.playbackRate || 1;
     ttsFollowPause(!!video.paused);
     // An advertisement is not this video. Treated exactly like a gap between
     // cues — clear the overlay, stop the line — because that is what it is:
@@ -2414,9 +2921,27 @@
         forceBlankLines();
         ttsStop();
       }
+      ttsTickVid = -1;      // the ad runs its own clock; leaving it is not a jump
       return;
     }
     const t = video.currentTime * 1000;
+    // Judge the jump BEFORE the cue transition below: the residual of the old
+    // place has to be gone before the new place claims the speaker.
+    {
+      const wall = Date.now();
+      if (ttsTickVid >= 0) {
+        const expected = video.paused ? 0
+          : (wall - ttsTickWall) * (video.playbackRate || 1);
+        // 1500, not smaller: the arrow keys move 5s and a double-tap 10s —
+        // the jumps worth cutting for are all far past it — while a sub-1.5s
+        // scrub usually stays inside the sentence, where cutting is wrong
+        // anyway. The 40% term keeps a clamped background tick at 2× honest.
+        if (Math.abs((t - ttsTickVid) - expected) > Math.max(1500, 0.4 * expected)) {
+          ttsOnTimeJump(t);
+        }
+      }
+      ttsTickWall = wall; ttsTickVid = t;
+    }
 
     const idx = activeCueIdxAt(t);
 
@@ -2872,6 +3397,11 @@
     // function is synchronous, so none can interleave before that.
     if (data.trackId && data.trackId !== cueTrackId) {
       if (cueTrackId) { transCache.clear(); transInflight.clear(); }
+      // The summary panel's source text goes with the track. Only HERE, on a
+      // real track change: a page load delivers the same track more than
+      // once, and a hand-rolled videoId compare closed the confirm between
+      // opening it and pressing start (measured live).
+      if (cueTrackId && sumEl) sumClose();
       cueTrackId = data.trackId;
     }
     // Track-level echo detection: an aligned "translation" that repeats the
@@ -3051,6 +3581,7 @@
         running: !!exportRun,
         done: exportRun ? exportRun.done : 0,
         total: exportRun ? exportRun.total : 0,
+        waitUntil: exportRun ? (exportRun.waitUntil || 0) : 0,
         result: exportRun ? null : exportLast
       });
       return;                                               // sync reply
@@ -3457,8 +3988,50 @@
     else if (cueAligned === true && cueList && cueList.length && cueList.some((c) => c.trans)) {
       cues = cueList;
     } else {
-      // Fetch a complete paired set from inject (works in any backend mode).
-      cues = await exportCues();
+      // The whole-track fetch can sit behind YouTube's rate-limit gate for
+      // minutes. This path now runs under a run object of its own — the popup
+      // polls it for a countdown (waitUntil) and its stop button flips the
+      // same cancel — and it WAITS the gate out instead of burning its tries
+      // on a door the worker already knows is shut (the half of D83 that
+      // stayed open). One fresh 429 buys one wait-and-retry; a second refusal
+      // falls through to the ordinary "limited" answer instead of looping.
+      const run = { total: 0, done: 0, cancel: false, waitUntil: 0 };
+      exportRun = run;
+      try {
+        const queryGate = () => new Promise((resolve) => {
+          const sent = extCall(() => chrome.runtime.sendMessage({ type: "tlangGate" },
+            (resp) => resolve(chrome.runtime.lastError ? null : resp)));
+          if (!sent) resolve(null);
+        });
+        const waitOut = async (until) => {
+          run.waitUntil = until;
+          while (Date.now() < until && !run.cancel) {
+            await new Promise((r) => setTimeout(r, 500));
+          }
+          run.waitUntil = 0;
+          return !run.cancel;
+        };
+        const g = await queryGate();
+        if (g && g.gated && g.gateUntil > Date.now()) {
+          if (!(await waitOut(g.gateUntil))) return { ok: false, reason: "cancelled" };
+        }
+        cues = await exportCues();
+        if (run.cancel) return { ok: false, reason: "cancelled" };
+        // Only when the gate ANSWERS: a silent worker means no countdown to
+        // show and no honest length to wait, so the old immediate "limited"
+        // stands rather than a blind half-minute.
+        if (exportTransLimited && (!cues || !cues.some((c) => c.trans))) {
+          const g2 = await queryGate();
+          if (g2 && g2.ok) {
+            const until = g2.gated && g2.gateUntil > Date.now()
+              ? g2.gateUntil : Date.now() + 5000;
+            if (!(await waitOut(until))) return { ok: false, reason: "cancelled" };
+            cues = await exportCues();
+          }
+        }
+      } finally {
+        if (exportRun === run) exportRun = null;
+      }
     }
 
     if (!cues || !cues.length) return { ok: false, reason: "nocues" };
@@ -3579,6 +4152,7 @@
   // STATE / TEARDOWN / SPA NAV
   // =========================================================================
   function teardownAll() {
+    sumClose();                      // the panel is a surface like the overlay
     stopCueLoop();
     stopFallback();
     pendingOrig = null;              // held text belongs to the old video
@@ -3617,6 +4191,8 @@
 
   function onNav() {
     if (orphaned) return;
+    sumClose();                      // the summary belongs to the video being left
+
     // Whatever is still queued belongs to the video being left: we would throw
     // the answers away (cueEpoch), and on a run of shorts those requests are
     // what earns the rate limit that the NEXT one waits out.
@@ -3627,6 +4203,7 @@
     hintedThisVideo = false;    // a new video may spend one more first-run hint
     blankRecoveries = 0;        // and a fresh budget for blank-overlay recovery
     ttsStop(true);              // never carry a speaking line across videos
+    ttsUserRate = 0;            // the next video re-samples the user's rate
     ttsSpoken = 0;              // the popup's counts describe THIS video
     ttsSkipped = 0;
     ttsErr = "";                // and so does the reason they stayed silent

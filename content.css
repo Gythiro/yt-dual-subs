@@ -158,27 +158,84 @@ html.ytds-active .caption-window {
   top: 7px; bottom: 7px;               /* the pill sits inside the capsule */
 }
 .ytds-menu {
+  box-sizing: border-box;              /* the max-height cap must include the
+                                          padding and border, or a 162px cap
+                                          renders 176px tall (measured) */
   position: absolute; z-index: 70;
-  display: flex; flex-direction: column; gap: 2px;
-  min-width: 190px; padding: 4px;
-  background: #1f2124; border: 1px solid #33363a; border-radius: 8px;
+  display: flex; flex-direction: column;
+  min-width: 230px; max-width: 320px; padding: 6px 0; overflow-y: auto;
+  background: #1f2124; border: 1px solid #33363a; border-radius: 12px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, .55);
   pointer-events: auto;
 }
 .ytds-mi {
-  display: flex; justify-content: space-between; align-items: center; gap: 12px;
-  margin: 0; padding: 7px 10px; border: 0; border-radius: 6px;
+  display: flex; align-items: center; gap: 12px;
+  margin: 0; min-height: 32px; padding: 5px 14px; border: 0;
   background: transparent; color: #f1f1f1; text-align: left;
-  font: 400 13px/1.3 Roboto, Arial, sans-serif; cursor: pointer;
-  /* The select row reuses the popup's full-sentence label; de/en run long.
-     Wrap inside a bounded width instead of stretching the menu off the
-     player. */
-  white-space: normal; max-width: 250px;
+  font: 400 13px/1.35 Roboto, Arial, sans-serif; cursor: pointer;
+  /* Long locales wrap — never ellipsis: a menu label cut to "Select t…" is
+     worse than a taller row (design spec: size for the longest language). */
+  white-space: normal;
 }
 .ytds-mi:hover { background: #27292c; }
-.ytds-mi::after { content: ""; min-width: 14px; text-align: right; color: #3ea6ff; }
-.ytds-mi[aria-pressed="true"]::after { content: "\2713"; }
-.ytds-mi[data-key="openOptions"]::after { content: "\2197"; color: #b6b9be; }
+.ytds-mi:focus-visible {
+  outline: 2px solid #3ea6ff; outline-offset: -2px; border-radius: 8px;
+}
+.ytds-mi-icon {
+  flex: none; width: 20px; height: 20px; opacity: .9;
+}
+.ytds-mi-label { flex: 1 1 auto; min-width: 0; }
+.ytds-mi-state { flex: none; width: 18px; height: 18px; color: rgba(255, 255, 255, .45); }
+.ytds-mi[aria-pressed="true"] .ytds-mi-state { color: #3ea6ff; }
+.ytds-mi-state .ytds-check { visibility: hidden; }
+.ytds-mi[aria-pressed="true"] .ytds-mi-state .ytds-check { visibility: visible; }
+.ytds-mi-go { color: #b6b9be; }
+.ytds-msep { height: 1px; margin: 5px 0; background: #33363a; }
+
+.ytds-sum {
+  box-sizing: border-box;
+  position: absolute; z-index: 69; top: 12px; right: 12px;
+  width: min(340px, 46%); max-height: calc(100% - 24px);
+  display: flex; flex-direction: column;
+  background: #1f2124; border: 1px solid #33363a; border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .55);
+  pointer-events: auto; color: #f1f1f1;
+  font: 400 13px/1.5 Roboto, Arial, sans-serif;
+}
+.ytds-sum-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px 8px; border-bottom: 1px solid #33363a;
+}
+.ytds-sum-title { font-weight: 500; }
+.ytds-sum-close {
+  border: 0; background: transparent; color: #b6b9be;
+  font-size: 18px; line-height: 1; cursor: pointer;
+  padding: 2px 6px; border-radius: 6px;
+}
+.ytds-sum-close:hover { background: #27292c; color: #fff; }
+.ytds-sum-close:focus-visible, .ytds-sum-btn:focus-visible,
+.ytds-sum-stamp:focus-visible { outline: 2px solid #3ea6ff; outline-offset: -2px; }
+.ytds-sum-body { padding: 10px 14px 12px; overflow-y: auto; }
+.ytds-sum-tldr { margin: 0 0 10px; font-weight: 500; }
+.ytds-sum-ch { margin-top: 10px; display: flex; align-items: baseline; gap: 8px; }
+.ytds-sum-ch-title { font-weight: 500; }
+.ytds-sum-stamp {
+  border: 0; background: #27292c; color: #3ea6ff;
+  font: 500 12px/1 Roboto, Arial, sans-serif;
+  padding: 3px 7px; border-radius: 6px; cursor: pointer;
+}
+.ytds-sum-stamp:hover { background: #2f3235; }
+.ytds-sum-pt { margin: 4px 0 0 46px; color: #b6b9be; }
+.ytds-sum-warn { margin: 10px 0 0; color: #ffd88a; }
+.ytds-sum-busy { margin: 0 0 8px; color: #b6b9be; }
+.ytds-sum-btn {
+  margin: 8px 8px 0 0; border: 1px solid #33363a; background: #27292c;
+  color: #f1f1f1; font: 400 13px/1 Roboto, Arial, sans-serif;
+  padding: 7px 12px; border-radius: 8px; cursor: pointer;
+}
+.ytds-sum-btn:hover { background: #2f3235; }
+.ytds-sum-primary { background: #3ea6ff; border-color: #3ea6ff; color: #0e0f11; font-weight: 500; }
+.ytds-sum-primary:hover { background: #66b8ff; }
 
 #ytds-overlay.ytds-select .ytds-line {
   pointer-events: auto;

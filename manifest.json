@@ -27,7 +27,9 @@
     "https://api.deepl.com/*",
     "https://texttospeech.googleapis.com/*",
     "https://*.tts.speech.microsoft.com/*",
-    "https://api.elevenlabs.io/*"
+    "https://api.elevenlabs.io/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
   ],
   "background": {
     "service_worker": "background.js"

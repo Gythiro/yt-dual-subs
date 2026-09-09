@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "лучший для китайского",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Провайдер"
   },
   "byoBaseLabel": {
-    "message": "Базовый URL API (https)"
+    "message": "Адрес эндпоинта"
   },
   "byoModelLabel": {
     "message": "Модель"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Ключа ещё нет — этот сервис нельзя использовать, пока его не добавите."
   },
+  "optNeedBase": {
+    "message": "Адреса эндпоинта ещё нет — этот сервис нельзя использовать, пока его не укажете."
+  },
   "optBaseHint": {
-    "message": "Подойдёт и базовый URL, и полный адрес, напр. https://example.com/v1 или https://example.com/v1/chat/completions."
+    "message": "Вставьте базовый URL или полный эндпоинт — например, https://example.com/v1 или https://example.com/v1/chat/completions. Для сервера модели на этом компьютере (Ollama, LM Studio) укажите http://localhost:11434/v1 — localhost — единственное место, где допускается обычный http, и ключ можно оставить пустым."
   },
   "startS1Alt": {
     "message": "Схема плеера: строка оригинала и строка перевода внизу кадра"
@@ -783,13 +790,13 @@
     "message": "Не удалось воспроизвести — проверьте ключ и нажмите «Сохранить и проверить»"
   },
   "ttsFetchVoices": {
-    "message": "Загрузить ещё голоса с ключом"
+    "message": "Загрузить полный список этого языка ключом"
   },
   "ttsFetching": {
     "message": "Загрузка…"
   },
   "ttsVoicesSwitched": {
-    "message": "Показаны $N$ голосов, доступных с вашим ключом. Голос с языком в названии работает только для этого языка.",
+    "message": "Все $N$ голосов, доступных по вашему ключу для этого языка — включая более старые уровни Standard / Wavenet. Они работают только для этого языка; ссылка выше возвращает к обычным голосам, которые сами следуют языку перевода. Ничего не теряется: повторная загрузка вернёт этот список.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Вернуться к голосам, которые следуют за языком"
+    "message": "Назад к обычным голосам (они следуют языку)"
   },
   "ttsVoicesNone": {
     "message": "У этого провайдера нет дополнительных голосов для этого языка — встроенные по-прежнему работают."
@@ -825,6 +832,53 @@
     "message": "Выделять и копировать текст субтитров",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Выделение текста",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Суммаризация",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Краткое содержание видео",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Закрыть",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "У этого видео нет пригодной дорожки субтитров.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Для суммаризации нужен ваш собственный сервис перевода (свой ключ или локальный эндпоинт) — бесплатные движки только переводят.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Суммировать",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Суммаризация не удалась — попробуйте позже.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Вся дорожка субтитров будет отправлена в $PROVIDER$ ($PARTS$ част.) за счёт вашей квоты.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Суммирую… часть $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ част. не удалось суммировать; остальное выше.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Субтитры",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "Сейчас собственный перевод YouTube ограничен по частоте; умные предложения (Google) заполняют пробелы. Позже повтор произойдёт сам.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Эндпоинт перевода ограничивает частоту запросов — продолжим примерно через $SECONDS$ с.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "najlepszy do chińskiego",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Dostawca"
   },
   "byoBaseLabel": {
-    "message": "Bazowy URL API (https)"
+    "message": "Adres endpointu"
   },
   "byoModelLabel": {
     "message": "Model"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Brak klucza — tego dostawcy nie użyjesz, dopóki go nie dodasz."
   },
+  "optNeedBase": {
+    "message": "Brak adresu endpointu — tego dostawcy nie użyjesz, dopóki go nie podasz."
+  },
   "optBaseHint": {
-    "message": "Działa zarówno bazowy URL, jak i pełny endpoint, np. https://example.com/v1 lub https://example.com/v1/chat/completions."
+    "message": "Wklej bazowy URL lub pełny endpoint — np. https://example.com/v1 lub https://example.com/v1/chat/completions. Dla serwera modelu na tym komputerze (Ollama, LM Studio) użyj http://localhost:11434/v1 — localhost to jedyne miejsce, gdzie akceptowany jest zwykły http, a klucz może pozostać pusty."
   },
   "startS1Alt": {
     "message": "Schemat odtwarzacza: linia oryginału i linia tłumaczenia u dołu obrazu"
@@ -783,13 +790,13 @@
     "message": "Nie udało się odtworzyć — sprawdź klucz i spróbuj Zapisz i testuj"
   },
   "ttsFetchVoices": {
-    "message": "Pobierz więcej głosów swoim kluczem"
+    "message": "Pobierz pełną listę tego języka swoim kluczem"
   },
   "ttsFetching": {
     "message": "Pobieranie…"
   },
   "ttsVoicesSwitched": {
-    "message": "Wyświetlam $N$ głosów dostępnych z Twoim kluczem. Głos z językiem w nazwie działa tylko dla tego języka.",
+    "message": "Wszystkie $N$ głosów, które Twój klucz oferuje dla tego języka — w tym starsze poziomy Standard / Wavenet. Działają tylko dla tego języka; link powyżej wraca do codziennych głosów, które same podążają za językiem tłumaczenia. Nic nie ginie: ponowne pobranie przywraca tę listę.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Wróć do głosów, które podążają za językiem"
+    "message": "Wróć do codziennych głosów (podążają za językiem)"
   },
   "ttsVoicesNone": {
     "message": "Ten dostawca nie ma dodatkowych głosów dla tego języka — wbudowane nadal działają."
@@ -825,6 +832,53 @@
     "message": "Pozwól mi zaznaczać i kopiować tekst napisów",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Zaznaczanie tekstu",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Podsumowanie",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Podsumowanie filmu",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Zamknij",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Ten film nie ma używalnej ścieżki napisów.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Podsumowanie wymaga własnej usługi tłumaczenia (własny klucz lub lokalny endpoint) — darmowe silniki tylko tłumaczą.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Podsumuj",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Podsumowanie się nie powiodło — spróbuj później.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Cała ścieżka napisów zostanie wysłana do $PROVIDER$ (w $PARTS$ częściach) na Twój własny limit.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Podsumowuję… część $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "Nie udało się podsumować $N$ części; reszta powyżej.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Napisy",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "Własne tłumaczenie YouTube jest teraz ograniczone limitem; inteligentne zdania (Google) wypełniają lukę. Ponowi próbę samo później.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Endpoint tłumaczenia ogranicza liczbę zapytań — wznowienie za ok. $SECONDS$s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

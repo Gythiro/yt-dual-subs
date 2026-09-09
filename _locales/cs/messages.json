@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "tip pro čínštinu",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Poskytovatel"
   },
   "byoBaseLabel": {
-    "message": "Základní URL API (https)"
+    "message": "Adresa endpointu"
   },
   "byoModelLabel": {
     "message": "Model"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Zatím žádný klíč — tohoto poskytovatele nelze použít, dokud ho nepřidáte."
   },
+  "optNeedBase": {
+    "message": "Zatím žádná adresa endpointu — tohoto poskytovatele nelze použít, dokud ji nezadáte."
+  },
   "optBaseHint": {
-    "message": "Funguje základní URL i celý koncový bod, např. https://example.com/v1 nebo https://example.com/v1/chat/completions."
+    "message": "Vložte základní URL nebo celý endpoint — např. https://example.com/v1 nebo https://example.com/v1/chat/completions. Pro server s modelem na tomto počítači (Ollama, LM Studio) použijte http://localhost:11434/v1 — localhost je jediné místo, kde se přijímá prosté http, a klíč může zůstat prázdný."
   },
   "startS1Alt": {
     "message": "Schéma přehrávače: původní a přeložený řádek u spodního okraje obrazu"
@@ -783,13 +790,13 @@
     "message": "Nelze přehrát — zkontrolujte klíč a zkuste Uložit a otestovat"
   },
   "ttsFetchVoices": {
-    "message": "Načíst další hlasy pomocí klíče"
+    "message": "Načíst úplný seznam tohoto jazyka pomocí klíče"
   },
   "ttsFetching": {
     "message": "Načítání…"
   },
   "ttsVoicesSwitched": {
-    "message": "Zobrazuje se $N$ hlasů, které váš klíč umí použít. Hlas, v jehož názvu je jazyk, funguje jen pro ten jeden.",
+    "message": "Všech $N$ hlasů, které váš klíč nabízí pro tento jazyk — včetně starších úrovní Standard / Wavenet. Fungují jen pro tento jazyk; odkaz výše vás vrátí k běžným hlasům, které se samy přizpůsobují jazyku překladu. Nic se neztratí: opětovné načtení tento seznam znovu zobrazí.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Zpět k hlasům, které sledují tvůj jazyk"
+    "message": "Zpět k běžným hlasům (sledují jazyk)"
   },
   "ttsVoicesNone": {
     "message": "Tento poskytovatel nemá další hlasy pro tento jazyk — vestavěné stále fungují."
@@ -825,6 +832,53 @@
     "message": "Umožnit výběr a kopírování textu titulků",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Výběr textu",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Shrnutí",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Shrnutí videa",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Zavřít",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Toto video nemá použitelnou stopu titulků.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Shrnutí potřebuje vlastní překladovou službu (vlastní klíč nebo lokální endpoint) — bezplatné služby jen překládají.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Shrnout",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Shrnutí se nezdařilo, zkuste to později.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Celá stopa titulků bude odeslána službě $PROVIDER$ (v $PARTS$ částech) a spotřebuje tvou kvótu.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Shrnuji… část $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ část(i) se nepodařilo shrnout; výše je zbytek.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Titulky",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "Vlastní překlad YouTube je teď omezený limitem; chytré věty (Google) to doplňují. Později se to zkusí znovu samo.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Překladový endpoint omezuje počet požadavků — pokračování za přibližně $SECONDS$s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

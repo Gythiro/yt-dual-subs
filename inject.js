@@ -858,7 +858,43 @@
   // what they actually SET — never recompute at restore time: the duck depth
   // is a live setting, and the player may snap a rate to its own steps.
   let duckSavedVol = -1;        // the user's volume, to give back
-  let duckSetVol = -1;          // what we set — the polite-restore comparand
+  let duckSetVol = -1;          // the level we are holding (the ramp's target)
+  // The 25%↔100% square wave was audible on every dense passage, so the two
+  // transitions ramp over ~200ms instead of stepping. Ownership is no longer
+  // "volume equals the target" — mid-ramp it never is — but "volume equals
+  // the LAST VALUE WE WROTE": any other reading means the user grabbed the
+  // slider, and the ramp stops where it stands rather than fighting them
+  // (their later duck-off then simply drops the capture, as before).
+  let duckLastWrote = -1;       // the polite-ownership comparand
+  let duckRampTimer = 0;
+  const DUCK_RAMP_MS = 200;
+  const DUCK_RAMP_STEPS = 4;
+  function duckRampClear() {
+    if (duckRampTimer) { clearTimeout(duckRampTimer); duckRampTimer = 0; }
+  }
+  // A chain of setTimeouts, not setInterval — everything inject schedules runs
+  // on setTimeout (the test clock's stated contract), and the chain form means
+  // a cleared timer stops the whole ramp mid-flight.
+  function duckRampTo(p, target, onDone) {
+    duckRampClear();
+    const from = p.getVolume();
+    if (from === target) { duckLastWrote = target; if (onDone) onDone(); return; }
+    let step = 0;
+    const tick = () => {
+      duckRampTimer = 0;
+      let cur;
+      try { cur = p.getVolume(); } catch (_e) { return; }
+      if (cur !== duckLastWrote && cur !== from) return;   // user grabbed it
+      step++;
+      const v = step >= DUCK_RAMP_STEPS ? target
+        : Math.round(from + (target - from) * step / DUCK_RAMP_STEPS);
+      duckLastWrote = v;
+      try { p.setVolume(v); } catch (_e) { return; }
+      if (step >= DUCK_RAMP_STEPS) { if (onDone) onDone(); return; }
+      duckRampTimer = setTimeout(tick, DUCK_RAMP_MS / DUCK_RAMP_STEPS);
+    };
+    duckRampTimer = setTimeout(tick, DUCK_RAMP_MS / DUCK_RAMP_STEPS);
+  }
   function duckVolume(p, on, pct) {
     if (typeof p.getVolume !== "function" || typeof p.setVolume !== "function") return;
     if (on) {
@@ -866,24 +902,29 @@
       if (duckSavedVol >= 0) {
         // Already ducked, and the depth moved under us: the popup's two volume
         // sliders sit together, so this one has to answer as promptly as the
-        // other. Recompute from the SAVED volume, never from the ducked one —
+        // other — a chasing ramp would lag the drag, so this branch still
+        // steps. Recompute from the SAVED volume, never from the ducked one —
         // compounding would walk the audio down to nothing over a long line.
-        // Anything else (the same depth again, or the user moving the player's
-        // own volume) leaves it alone.
         const want = Math.round(duckSavedVol * share / 100);
-        if (want !== duckSetVol && p.getVolume() === duckSetVol) {
+        if (want !== duckSetVol && p.getVolume() === duckLastWrote) {
+          duckRampClear();
           duckSetVol = want;
-          p.setVolume(duckSetVol);
+          duckLastWrote = want;
+          p.setVolume(want);
         }
         return;
       }
       const v = p.getVolume();
       duckSavedVol = v;
       duckSetVol = Math.round(v * share / 100);
-      p.setVolume(duckSetVol);
+      duckLastWrote = v;                 // the ramp starts from their value
+      duckRampTo(p, duckSetVol);
     } else {
       if (duckSavedVol < 0) return;
-      if (p.getVolume() === duckSetVol) p.setVolume(duckSavedVol);
+      const giveBack = duckSavedVol;
+      if (p.getVolume() === duckLastWrote) {
+        duckRampTo(p, giveBack, () => { duckLastWrote = -1; });
+      }
       duckSavedVol = -1; duckSetVol = -1;
     }
   }
@@ -948,11 +989,15 @@
         // stale saved volume makes the next video's first duck decide it is
         // "already ducked to the right place" and set nothing at all, so the
         // line speaks over full-volume audio with no sign of why.
-        duckSavedVol = -1; duckSetVol = -1; rateSavedBase = -1; rateSet = -1;
+        duckRampClear();
+        duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1;
+        rateSavedBase = -1; rateSet = -1;
       }
       if (nav) rateUserTouched = false;         // new video, fresh benefit
     } catch (_e) {
-      duckSavedVol = -1; duckSetVol = -1; rateSavedBase = -1; rateSet = -1;
+      duckRampClear();
+      duckSavedVol = -1; duckSetVol = -1; duckLastWrote = -1;
+      rateSavedBase = -1; rateSet = -1;
     }
   }
 

@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "Çince için en iyisi",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Sağlayıcı"
   },
   "byoBaseLabel": {
-    "message": "API temel URL'si (https)"
+    "message": "Endpoint adresi"
   },
   "byoModelLabel": {
     "message": "Model"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Henüz anahtar yok — bir tane eklemeden bu sağlayıcı kullanılamaz."
   },
+  "optNeedBase": {
+    "message": "Henüz endpoint adresi yok — bir tane girmeden bu sağlayıcı kullanılamaz."
+  },
   "optBaseHint": {
-    "message": "Taban URL veya tam uç nokta, ikisi de olur; örn. https://example.com/v1 veya https://example.com/v1/chat/completions."
+    "message": "Bir temel URL veya tam bir endpoint yapıştırın — örn. https://example.com/v1 veya https://example.com/v1/chat/completions. Bu bilgisayardaki bir model sunucusu (Ollama, LM Studio) için http://localhost:11434/v1 kullanın — düz http yalnızca localhost için kabul edilir ve anahtar boş bırakılabilir."
   },
   "startS1Alt": {
     "message": "Oynatıcı şeması: orijinal satır ve çevrilmiş satır görüntünün altına yakın duruyor"
@@ -783,13 +790,13 @@
     "message": "Oynatılamadı — anahtarı kontrol edip Kaydet ve dene'yi deneyin"
   },
   "ttsFetchVoices": {
-    "message": "Anahtarınızla daha fazla ses getirin"
+    "message": "Bu dilin tam listesini anahtarınızla getirin"
   },
   "ttsFetching": {
     "message": "Getiriliyor…"
   },
   "ttsVoicesSwitched": {
-    "message": "Anahtarınızın kullanabileceği $N$ ses gösteriliyor. Adında dil geçen bir ses yalnızca o dil için çalışır.",
+    "message": "Anahtarınızın bu dil için sunduğu tüm $N$ ses — eski Standard / Wavenet kademeleri dahil. Yalnızca bu dilde çalışırlar; yukarıdaki bağlantı, çeviri dilini kendiliğinden izleyen günlük seslere döner. Hiçbir şey kaybolmaz: yeniden getirmek bu listeyi geri getirir.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Dili takip eden seslere dön"
+    "message": "Günlük seslere dön (dile uyarlar)"
   },
   "ttsVoicesNone": {
     "message": "Bu sağlayıcının bu dil için ek sesi yok — yerleşik sesler hâlâ çalışır."
@@ -825,6 +832,53 @@
     "message": "Altyazı metnini seçip kopyalayabileyim",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Metin seçimi",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Özet",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Video özeti",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Kapat",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Bu videonun kullanılabilir bir altyazı parçası yok.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Özet için kendi çeviri hizmetin gerekir (kendi anahtarın veya yerel endpoint) — ücretsiz motorlar yalnızca çevirir.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Özetle",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Özet başarısız oldu — daha sonra tekrar dene.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Tüm altyazı parçası $PROVIDER$ hizmetine gönderilecek ($PARTS$ parça hâlinde), kendi kotandan.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Özetleniyor… bölüm $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ bölüm özetlenemedi; kalanı yukarıda.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Altyazılar",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "YouTube'un kendi çevirisi şu anda hız sınırına takıldı; akıllı cümleler (Google) yerini dolduruyor. Daha sonra kendiliğinden yeniden dener.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Çeviri endpoint’i hız sınırına takıldı — yaklaşık $SECONDS$s içinde devam edilecek.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

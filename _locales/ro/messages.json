@@ -35,6 +35,10 @@
   "provQwenTts": {
     "message": "Alibaba Model Studio (Qwen-TTS)"
   },
+  "provTtsZhReco": {
+    "message": "ideal pentru chineză",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
   "provElevenlabs": {
     "message": "ElevenLabs"
   },
@@ -268,7 +272,7 @@
     "message": "Furnizor"
   },
   "byoBaseLabel": {
-    "message": "URL de bază API (https)"
+    "message": "Adresă endpoint"
   },
   "byoModelLabel": {
     "message": "Model"
@@ -564,8 +568,11 @@
   "optNeedKey": {
     "message": "Nicio cheie încă — acest furnizor nu poate fi folosit până nu adaugi una."
   },
+  "optNeedBase": {
+    "message": "Nicio adresă de endpoint încă — acest furnizor nu poate fi folosit până nu introduci una."
+  },
   "optBaseHint": {
-    "message": "Funcționează atât un URL de bază, cât și un endpoint complet, de ex. https://example.com/v1 sau https://example.com/v1/chat/completions."
+    "message": "Lipește un URL de bază sau un endpoint complet — de ex. https://example.com/v1 sau https://example.com/v1/chat/completions. Pentru un server de model pe acest computer (Ollama, LM Studio) folosește http://localhost:11434/v1 — localhost e singurul loc unde http simplu e acceptat, iar cheia poate rămâne goală."
   },
   "startS1Alt": {
     "message": "Diagramă player: o linie originală și una tradusă, aproape de baza imaginii"
@@ -783,13 +790,13 @@
     "message": "Nu s-a putut reda — verifică cheia, apoi salvează și testează"
   },
   "ttsFetchVoices": {
-    "message": "Preia mai multe voci cu cheia ta"
+    "message": "Preia lista completă a acestei limbi cu cheia ta"
   },
   "ttsFetching": {
     "message": "Se încarcă…"
   },
   "ttsVoicesSwitched": {
-    "message": "Se afișează acum cele $N$ voci pe care le poate folosi cheia ta. O voce al cărei nume include o limbă funcționează doar pentru acea limbă.",
+    "message": "Toate cele $N$ voci pe care le oferă cheia ta pentru această limbă — inclusiv nivelurile mai vechi Standard / Wavenet. Funcționează doar pentru această limbă; linkul de mai sus revine la vocile obișnuite, care urmează singure limba traducerii. Nimic nu se pierde: dacă preiei din nou, lista revine.",
     "placeholders": {
       "n": {
         "content": "$1"
@@ -797,7 +804,7 @@
     }
   },
   "ttsBackToFamily": {
-    "message": "Înapoi la vocile care urmează limba ta"
+    "message": "Înapoi la vocile obișnuite (urmează limba)"
   },
   "ttsVoicesNone": {
     "message": "Acest furnizor nu are voci suplimentare pentru această limbă — cele integrate funcționează în continuare."
@@ -825,6 +832,53 @@
     "message": "Permite-mi să selectez și să copiez textul subtitrărilor",
     "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
   },
+  "menuSelectText": {
+    "message": "Selectare text",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Rezumat",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Rezumatul videoclipului",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Închide",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Acest videoclip nu are o pistă de subtitrări utilizabilă.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedKey": {
+    "message": "Rezumatul are nevoie de propriul tău serviciu de traducere (cheie proprie sau endpoint local) — motoarele gratuite doar traduc.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumStart": {
+    "message": "Rezumă",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumFail": {
+    "message": "Rezumatul a eșuat — încearcă din nou mai târziu.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Întreaga pistă de subtitrări va fi trimisă către $PROVIDER$ (în $PARTS$ părți), pe cota ta.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {"provider": {"content": "$1"}, "parts": {"content": "$2"}}
+  },
+  "sumWorking": {
+    "message": "Se rezumă… partea $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {"done": {"content": "$1"}, "total": {"content": "$2"}}
+  },
+  "sumFailedPart": {
+    "message": "$N$ părți nu au putut fi rezumate; restul este mai sus.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {"n": {"content": "$1"}}
+  },
   "menuSubtitles": {
     "message": "Subtitrări",
     "description": "Row label in the small in-player menu. One word."
@@ -832,5 +886,14 @@
   "tlangLimitedNote": {
     "message": "Traducerea YouTube e limitată momentan; propozițiile inteligente (Google) preiau. Reîncearcă automat mai târziu.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Endpoint-ul de traducere limitează rata — se reia în aproximativ $SECONDS$s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
   }
 }

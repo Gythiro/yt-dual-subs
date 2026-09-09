@@ -20,10 +20,12 @@ const P = self.YTDS_PROVIDERS;
 const ICONS = self.YTDS_ICONS;
 const SITE_URL = "https://gythiro.github.io/yt-dual-subs/";
 
-// Keep in step with popup.js and store-assets/v3.6设计/00-R3设计.md §4: a custom
-// endpoint can only be requested at runtime if the manifest declares
-// "https://*/*" as an optional host permission, which is still an open call.
-const ALLOW_CUSTOM_ENDPOINT = false;
+// Switched on for local model servers (issue #4): the manifest now declares
+// the two loopback hosts, so http://localhost / http://127.0.0.1 endpoints are
+// requestable; any other custom origin is unrequestable by design and runs
+// under CORS instead (the server must allow this extension — Ollama's
+// OLLAMA_ORIGINS, LM Studio's CORS toggle). Keep in step with popup.js.
+const ALLOW_CUSTOM_ENDPOINT = true;
 
 // Through YTDS_I18N so the interface-language override (About section below)
 // applies here too; "auto" resolves to plain chrome.i18n.getMessage.
@@ -232,6 +234,21 @@ function showModelMsg(text, kind) {
   el.hidden = !text;
 }
 
+// The first-run nag names the thing actually missing: a key for the named
+// providers, the endpoint address for the custom one — custom has no key to
+// miss (Ollama / LM Studio ignore auth; resolveByo sends none), so nagging it
+// about a key is false in both directions.
+function paintNeedBanner(p, hasKey) {
+  const el = $("needKey");
+  if (p.custom) {
+    el.textContent = t("optNeedBase", "还没填接口地址，这个服务商暂时用不了。");
+    el.hidden = !!(state.byoBaseUrl && state.byoBaseUrl.trim());
+  } else {
+    el.textContent = t("optNeedKey", "还没填 Key，这个服务商暂时用不了。");
+    el.hidden = hasKey;
+  }
+}
+
 // ---- key field -------------------------------------------------------------
 function paintKeyField(p) {
   const inp = $("key");
@@ -245,7 +262,7 @@ function paintKeyField(p) {
     const key = ((got && got.byoKeys) || {})[p.id] || "";
     storedKeys[p.id] = !!key;
     // The one thing a first-time visitor has to notice.
-    $("needKey").hidden = !!key;
+    paintNeedBanner(p, !!key);
     if (!key) return;
     // Every DeepL Free key ends in ":fx", so masking to those four characters
     // would tell the user nothing — mask the last four before the suffix.
@@ -401,23 +418,37 @@ function sendToBackground(msg) {
 function withSetup(btn, busyKey, busyFallback, onError, run, adopt) {
   const pl = plan();
   if (pl.error) { onError(pl.error); return; }
-  if (!pl.typedKey && !storedKeys[pl.provider.id]) { onError("noKey"); return; }
+  // A custom endpoint is allowed to have no key at all — Ollama and LM Studio
+  // ignore auth; the worker sends no Authorization header for an empty key.
+  if (!pl.typedKey && !storedKeys[pl.provider.id] && !pl.provider.custom) { onError("noKey"); return; }
 
   const label = btn.textContent;
   btn.disabled = true;
   btn.textContent = t(busyKey, busyFallback);
   const done = () => { btn.disabled = false; btn.textContent = label; };
 
+  const proceed = () => {
+    (adopt === false ? persistForProvider(pl) : persist(pl))
+      .then(() => run(pl))
+      // A rejection here would otherwise be swallowed and read as a no-op.
+      .catch((err) => onError((err && err.code) || "failed"))
+      .then(done, done);
+  };
+
+  // A custom origin outside the manifest's declared list (a tunnel domain)
+  // cannot be granted, ever — Chrome refuses the request, sometimes by
+  // throwing before the callback exists. That must not dead-end the flow: the
+  // worker will still try the fetch under CORS (the server's own consent).
+  // Loopback origins ARE declared, so a named provider's refusal still counts.
   try {
     chrome.permissions.request({ origins: pl.origins }, (granted) => {
-      if (chrome.runtime.lastError || !granted) { done(); onError("noPerm"); return; }
-      (adopt === false ? persistForProvider(pl) : persist(pl))
-        .then(() => run(pl))
-        // A rejection here would otherwise be swallowed and read as a no-op.
-        .catch((err) => onError((err && err.code) || "failed"))
-        .then(done, done);
+      if ((chrome.runtime.lastError || !granted) && !pl.provider.custom) {
+        done(); onError("noPerm"); return;
+      }
+      proceed();
     });
   } catch (_e) {
+    if (pl.provider.custom) { proceed(); return; }
     done();
     onError("noPerm");
   }
@@ -1110,6 +1141,45 @@ function paintTtsUse() {
   });
 }
 
+// The read-aloud model picker: shown only for providers that document more
+// than one speech model. The stored override lives per provider (ttsModelBy,
+// the byoModelBy shape) so switching providers never bleeds a model across.
+function paintTtsModel(p) {
+  const row = $("ttsModelRow");
+  if (!row) return;
+  const has = !!(p && p.models && p.models.length);
+  row.hidden = !has;
+  if (!has) return;
+  const sel = $("ttsModelSel"), inp = $("ttsModelInput");
+  sel.textContent = "";
+  for (const m of p.models) {
+    const o = document.createElement("option");
+    o.value = m;
+    o.textContent = m;
+    sel.appendChild(o);
+  }
+  const customOpt = document.createElement("option");
+  customOpt.value = CUSTOM_MODEL;
+  customOpt.textContent = t("optModelCustom", "自定义…");
+  sel.appendChild(customOpt);
+  chrome.storage.sync.get({ ttsModelBy: {} }, (got) => {
+    const m = ((got && got.ttsModelBy) || {})[p.id] || p.defaultModel || "";
+    if (p.models.indexOf(m) >= 0) { sel.value = m; inp.hidden = true; inp.value = ""; }
+    else { sel.value = CUSTOM_MODEL; inp.hidden = false; inp.value = m; }
+  });
+}
+function writeTtsModel(p, m) {
+  chrome.storage.sync.get({ ttsModelBy: {} }, (got) => {
+    const map = Object.assign({}, (got && got.ttsModelBy) || {});
+    const v = String(m || "").trim();
+    // The default needs no entry — an empty map is the "never touched" state,
+    // and stale overrides are what this delete is for.
+    if (!v || v === p.defaultModel) delete map[p.id];
+    else map[p.id] = v;
+    chrome.storage.sync.set({ ttsModelBy: map });
+  });
+}
+
 function initReadaloud() {
   const sel = $("ttsProviderSel");
   if (!sel) return;
@@ -1157,13 +1227,19 @@ function initReadaloud() {
   for (const p of P.tts.list) {
     const o = document.createElement("option");
     o.value = p.id;
-    o.textContent = p.name;
+    // The one voice family Chinese listeners rate above the global engines
+    // says so — but only when Chinese is what is being READ (the target
+    // language, never the UI locale: an English UI reading zh still wants it).
+    o.textContent = (p.id === "qwen-tts" && /^zh\b/i.test(state.targetLang || ""))
+      ? p.name + " · " + t("provTtsZhReco", "中文推荐")
+      : p.name;
     sel.appendChild(o);
   }
   const cur = P.tts.get(state.ttsProvider) || P.tts.list[0];
   sel.value = cur.id;
   paintTtsKeyField(cur);
   paintTtsVoices(cur);
+  paintTtsModel(cur);
   paintTtsUse();
 
   // The machine's voice table is not ready when this page paints: the first
@@ -1207,6 +1283,23 @@ function initReadaloud() {
     voiceCatalogue = "family";
     paintTtsKeyField(p);
     paintTtsVoices(p);
+    paintTtsModel(p);
+  });
+  $("ttsModelSel").addEventListener("change", () => {
+    const p = ttsProvider();
+    if (!p) return;
+    const inp = $("ttsModelInput");
+    if ($("ttsModelSel").value === CUSTOM_MODEL) {
+      inp.hidden = false;
+      inp.focus();
+      return;                        // stored when the typed name lands below
+    }
+    inp.hidden = true;
+    writeTtsModel(p, $("ttsModelSel").value);
+  });
+  $("ttsModelInput").addEventListener("change", () => {
+    const p = ttsProvider();
+    if (p) writeTtsModel(p, $("ttsModelInput").value);
   });
   $("ttsShowKey").addEventListener("change", () => {
     $("ttsKey").type = $("ttsShowKey").checked ? "text" : "password";
@@ -1664,6 +1757,8 @@ function wire() {
   $("baseUrl").addEventListener("change", (e) => {
     state.byoBaseUrl = e.target.value.trim();
     chrome.storage.sync.set({ byoBaseUrl: state.byoBaseUrl });
+    const p = current();
+    if (p && p.custom) paintNeedBanner(p, !!storedKeys[p.id]);
   });
 
   $("showKey").addEventListener("change", (e) => {

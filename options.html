@@ -70,12 +70,13 @@
       </p>
 
       <div class="ofield" id="baseRow" hidden>
-        <label for="baseUrl" data-i18n="byoBaseLabel">接口地址（https）</label>
+        <label for="baseUrl" data-i18n="byoBaseLabel">接口地址</label>
         <input type="url" id="baseUrl" spellcheck="false" autocomplete="off"
-               placeholder="https://example.com/v1" />
+               placeholder="http://localhost:11434/v1" />
         <p class="ohint" data-i18n="optBaseHint">
           填 Base URL 或完整接口地址都行，例如 https://example.com/v1
-          或 https://example.com/v1/chat/completions。
+          或 https://example.com/v1/chat/completions。本机模型服务（Ollama、LM Studio）填
+          http://localhost:11434/v1 —— 只有本机回环地址可以用 http，Key 可留空。
         </p>
       </div>
 
@@ -320,6 +321,17 @@
       </div>
       <!-- Azure only: its key is bound to a region that becomes the request
            host. Hidden for every provider that has one fixed endpoint. -->
+      <div class="ofield" id="ttsModelRow" hidden>
+        <label for="ttsModelSel" data-i18n="byoModelLabel">模型</label>
+        <!-- Same bargain as the translation pane: a curated list that always
+             works, and a free entry for whatever the provider ships next —
+             "what if the models move on" is exactly the question this answers. -->
+        <div class="orow">
+          <select id="ttsModelSel"></select>
+        </div>
+        <input type="text" id="ttsModelInput" hidden spellcheck="false"
+               autocomplete="off" />
+      </div>
       <div class="ofield" id="ttsRegionRow" hidden>
         <label for="ttsRegion" data-i18n="ttsRegionLabel">服务区域</label>
         <input type="text" id="ttsRegion" list="ttsRegionList" placeholder="eastus"
@@ -355,9 +367,9 @@
              matters more than portability. -->
         <div class="orow" id="ttsFetchRow" hidden>
           <button type="button" class="obtn ghost" id="ttsFetchVoices"
-                  data-i18n="ttsFetchVoices">用你的 Key 拉取更多音色</button>
+                  data-i18n="ttsFetchVoices">用你的 Key 拉取这个语言的完整音色清单</button>
           <button type="button" class="olink" id="ttsBackToFamily" hidden
-                  data-i18n="ttsBackToFamily">回到跟着语言走的音色</button>
+                  data-i18n="ttsBackToFamily">换回常用音色（自动跟随语言）</button>
         </div>
         <p class="ohint" id="ttsVoiceMsg" role="status" aria-live="polite" hidden></p>
       </div>
