@@ -92,6 +92,17 @@
     },
     {
       id: "kimi", name: "Kimi (Moonshot)", short: "Kimi", kind: "llm",
+      sites: [
+        { host: "api.moonshot.cn", nameKey: "byoSiteCn", baseUrl: "https://api.moonshot.cn/v1",
+          origin: "https://api.moonshot.cn",
+          keyUrl: "https://platform.kimi.com/console/api-keys",
+          pricingUrl: "https://platform.kimi.com/docs/pricing/chat" },
+        { host: "api.moonshot.ai", nameKey: "byoSiteGlobal", baseUrl: "https://api.moonshot.ai/v1",
+          origin: "https://api.moonshot.ai",
+          keyUrl: "https://platform.kimi.ai/console/api-keys",
+          pricingUrl: "https://platform.kimi.ai/docs/pricing/chat" }
+      ],
+      altOrigins: ["https://api.moonshot.ai"],
       baseUrl: "https://api.moonshot.cn/v1",
       origin: "https://api.moonshot.cn",
       defaultModel: "",
@@ -102,6 +113,17 @@
     },
     {
       id: "glm", name: "智谱 GLM", nameKey: "provGlm", short: "GLM", kind: "llm",
+      sites: [
+        { host: "open.bigmodel.cn", nameKey: "byoSiteCn", baseUrl: "https://open.bigmodel.cn/api/paas/v4",
+          origin: "https://open.bigmodel.cn",
+          keyUrl: "https://bigmodel.cn/usercenter/apikeys",
+          pricingUrl: "https://bigmodel.cn/pricing" },
+        { host: "api.z.ai", nameKey: "byoSiteGlobal", baseUrl: "https://api.z.ai/api/paas/v4",
+          origin: "https://api.z.ai",
+          keyUrl: "https://z.ai/manage-apikey/apikey-list",
+          pricingUrl: "https://docs.z.ai/guides/overview/pricing" }
+      ],
+      altOrigins: ["https://api.z.ai"],
       baseUrl: "https://open.bigmodel.cn/api/paas/v4",
       origin: "https://open.bigmodel.cn",
       defaultModel: "",
@@ -112,6 +134,19 @@
     },
     {
       id: "qwen", name: "Alibaba 百炼 (Qwen / DeepSeek)", nameKey: "provQwen",
+      sites: [
+        { host: "dashscope.aliyuncs.com", nameKey: "byoSiteCn",
+          baseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+          origin: "https://dashscope.aliyuncs.com",
+          keyUrl: "https://bailian.console.aliyun.com/?tab=model#/api-key",
+          pricingUrl: "https://help.aliyun.com/zh/model-studio/model-pricing" },
+        { host: "dashscope-intl.aliyuncs.com", nameKey: "byoSiteGlobal",
+          baseUrl: "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+          origin: "https://dashscope-intl.aliyuncs.com",
+          keyUrl: "https://modelstudio.console.alibabacloud.com/?tab=model#/api-key",
+          pricingUrl: "https://www.alibabacloud.com/help/en/model-studio/model-pricing" }
+      ],
+      altOrigins: ["https://dashscope-intl.aliyuncs.com"],
       short: "百炼", shortKey: "provQwenShort", kind: "llm",
       // The generic host serves workspace-scoped ("sk-ws-…") Bailian keys too,
       // verified R3-S3 — so users never need the custom-endpoint path for it.
@@ -140,6 +175,22 @@
     },
     {
       id: "siliconflow", name: "SiliconFlow 硅基流动", nameKey: "provSiliconflow", short: "SiliconFlow", kind: "llm",
+      // SiliconFlow runs two independent platforms — a China site billed in RMB
+      // and a global one — with separate registrations. A key from one is not
+      // accepted by the other, which is how an overseas reader's perfectly
+      // good key came back refused: the address was hard-coded to the China
+      // site. Same story for the three below.
+      sites: [
+        { host: "api.siliconflow.cn", nameKey: "byoSiteCn", baseUrl: "https://api.siliconflow.cn/v1",
+          origin: "https://api.siliconflow.cn",
+          keyUrl: "https://cloud.siliconflow.cn/account/ak",
+          pricingUrl: "https://siliconflow.cn/pricing" },
+        { host: "api.siliconflow.com", nameKey: "byoSiteGlobal", baseUrl: "https://api.siliconflow.com/v1",
+          origin: "https://api.siliconflow.com",
+          keyUrl: "https://cloud.siliconflow.com/account/ak",
+          pricingUrl: "https://www.siliconflow.com/pricing" }
+      ],
+      altOrigins: ["https://api.siliconflow.com"],
       baseUrl: "https://api.siliconflow.cn/v1",
       origin: "https://api.siliconflow.cn",
       defaultModel: "",
@@ -234,9 +285,23 @@
   // Everything we would request for one provider, as match patterns. DeepL gets
   // both hosts at once: the free/pro split follows the key, and prompting again
   // after a plan change would read as a bug.
-  function originsFor(provider, customOrigin) {
+  // Which of a provider's platforms this reader is on. Unknown or unset means
+  // the first, which is what everyone had before there was a choice — so an
+  // existing setup keeps working without being asked anything.
+  function siteFor(provider, host) {
+    const list = provider && provider.sites;
+    if (!list || !list.length) return null;
+    return list.find((x) => x.host === host) || list[0];
+  }
+
+  // Ask for the host actually about to be used, not both of a provider's two.
+  // Chrome's prompt names the domain, and naming one the reader has not chosen
+  // is asking for access to somewhere we will never go.
+  function originsFor(provider, customOrigin, siteHost) {
     if (!provider) return [];
     if (provider.custom) return customOrigin ? [customOrigin + "/*"] : [];
+    const site = siteFor(provider, siteHost);
+    if (site) return [site.origin + "/*"];
     return [provider.origin + "/*"].concat((provider.altOrigins || []).map((o) => o + "/*"));
   }
 
@@ -525,7 +590,16 @@
     const names = (hit.length ? hit : all).map((v) => v.name);
     return {
       normal: names.filter((n) => !ttsLocalVoiceIsMachine(n)),
-      machine: names.filter(ttsLocalVoiceIsMachine)
+      machine: names.filter(ttsLocalVoiceIsMachine),
+      // Whether this list is actually THIS language's. The fallback above
+      // hands back every voice on the machine when nothing matched, which is
+      // the difference between "here are your Swahili voices" and "here is
+      // everything, and none of it reads Swahili" — a caller that cannot tell
+      // the two apart offers an English voice for a Swahili line and says
+      // nothing. Measured 2026-09-03: a Mac with 180 voices, 0 for sw, read
+      // the Swahili translation aloud in Samantha, with neither surface
+      // mentioning it.
+      matched: hit.length > 0
     };
   }
 
@@ -656,9 +730,12 @@
     noProvider: "byoErrNoProvider",
     noKey: "byoErrNoKey",
     noModel: "byoErrNoModel",
+    noModelEmpty: "byoErrNoModelEmpty",
+    notApi: "byoErrNotApi",
     badBaseUrl: "byoErrBadBaseUrl",
     noPerm: "byoErrNoPerm",
     auth: "byoErrAuth",
+    forbidden: "byoErrForbidden",
     limited: "byoErrLimited",
     quota: "byoErrQuota",
     badRequest: "byoErrBadRequest",
@@ -681,9 +758,26 @@
   // allowing the extension to call it — and a browser cannot tell those two
   // apart, because a CORS refusal reaches script as an ordinary network error.
   // So that message names both, and names the setting that fixes the second.
-  function errorKey(code, provider) {
-    if (code === "netfail" && provider &&
-        (provider.custom || provider.localServer)) return "byoErrNetfailLocal";
+  // A 403 from a server on this machine is not an account problem — Ollama and
+  // LM Studio refuse a browser origin they were never told to allow, and say
+  // it with 403. Telling that reader to check a balance, or a key they never
+  // typed (these presets are keyless), sends them somewhere that does not
+  // exist.
+  // "Set OLLAMA_ORIGINS, or flip the CORS switch in LM Studio" is the right
+  // advice for a server on this machine and misleading for anything else: a
+  // custom endpoint pointed at a public https host that fails to resolve got
+  // told to go and configure Ollama. So the local wording follows the ADDRESS,
+  // not merely the fact that the reader typed one.
+  function isLoopback(origin) {
+    const h = String(origin || "").replace(/^https?:\/\//, "").split(/[:/]/)[0].toLowerCase();
+    return h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h === "::1";
+  }
+
+  function errorKey(code, provider, origin) {
+    const own = provider && (provider.localServer ||
+      (provider.custom && (origin === undefined || isLoopback(origin))));
+    if (code === "netfail" && own) return "byoErrNetfailLocal";
+    if (code === "forbidden" && own) return "byoErrForbiddenLocal";
     return ERROR_KEYS[code] || "byoErrFailed";
   }
 
@@ -699,6 +793,7 @@
   const TTS_PROVIDERS = [
     {
       id: "openai-tts", name: "OpenAI TTS", short: "OpenAI", kind: "openai-speech",
+      listModels: true,
       baseUrl: "https://api.openai.com/v1",
       origin: "https://api.openai.com",
       defaultModel: "gpt-4o-mini-tts",
@@ -750,8 +845,13 @@
       // is the entry that lets someone hear the feature at all before deciding
       // whether it is worth an API key — and the answer to "read-aloud needs a
       // paid account" being the first thing a new user meets. Quality is
-      // whatever the operating system has, and it speaks locally, so nothing
-      // here can reach a network: no key, no host, no request.
+      // whatever the operating system has. It asks for no key and no host of
+      // OURS — which is not the same as "nothing leaves the machine", and the
+      // shorter claim that used to stand here was false: Chrome's own online
+      // voices (localService === false; the ones named "Google …") hand the
+      // line to their maker to be synthesized. resolveTts and PRIVACY.md say
+      // so; this comment was the source of a settings-page sentence that went
+      // on promising the opposite in twenty languages.
       id: "local-speech", name: "浏览器内置（免费）", nameKey: "provLocalSpeech",
       // shortKey too: the bare short leaked Chinese into nineteen
       // locales' popup voice row (spotted in the de cuthint shot, 2026-09-01).
@@ -775,6 +875,14 @@
       short: "Qwen-TTS", kind: "qwen-tts",
       baseUrl: "https://dashscope.aliyuncs.com",
       origin: "https://dashscope.aliyuncs.com",
+      // Same two platforms as the translate side's 百炼 entry.
+      sites: [
+        { host: "dashscope.aliyuncs.com", nameKey: "byoSiteCn", baseUrl: "https://dashscope.aliyuncs.com",
+          origin: "https://dashscope.aliyuncs.com" },
+        { host: "dashscope-intl.aliyuncs.com", nameKey: "byoSiteGlobal", baseUrl: "https://dashscope-intl.aliyuncs.com",
+          origin: "https://dashscope-intl.aliyuncs.com" }
+      ],
+      altOrigins: ["https://dashscope-intl.aliyuncs.com"],
       defaultModel: "qwen3-tts-flash",
       // The documented sisters on the same endpoint; the console lists more
       // (dated snapshots, realtime) that the picker's free-entry can reach.
@@ -802,6 +910,7 @@
       // OpenAI's, and its own cloned voices if the user has made any. Plain
       // binary mp3, which is the cleanest shape any of these providers has.
       id: "elevenlabs", name: "ElevenLabs", nameKey: "provElevenlabs", short: "ElevenLabs", kind: "elevenlabs",
+      listModels: true,
       baseUrl: "https://api.elevenlabs.io",
       origin: "https://api.elevenlabs.io",
       // Multilingual v2 is the default on purpose: v3 speaks more languages
@@ -832,6 +941,17 @@
       // the region comes from settings (needsRegion below), baseUrl is unused.
       baseUrl: "",
       origin: "https://*.tts.speech.microsoft.com",
+      // Azure China is a separate cloud (operated by 21Vianet) with its own
+      // accounts and its own domain; a key from one cloud is not accepted by
+      // the other. Only the host suffix differs — the region the reader types
+      // still goes in front of it.
+      sites: [
+        { host: "tts.speech.microsoft.com", nameKey: "byoSiteGlobal", suffix: "tts.speech.microsoft.com",
+          origin: "https://*.tts.speech.microsoft.com" },
+        { host: "tts.speech.azure.cn", nameKey: "byoSiteCn", suffix: "tts.speech.azure.cn",
+          origin: "https://*.tts.speech.azure.cn" }
+      ],
+      altOrigins: ["https://*.tts.speech.azure.cn"],
       needsRegion: true,
       defaultModel: "",
       // The Multilingual neural family switches language by itself — the only
@@ -867,6 +987,14 @@
       // Authorization header", and the voice is hand-typed because these
       // servers rarely publish a voice list (D109).
       id: "custom-speech", name: "Custom (OpenAI-compatible)", nameKey: "byoCustom",
+      // `GET /v1/audio/voices` is what the self-hosted OpenAI-compatible
+      // speech servers answer on — AllTalk, Kokoro-FastAPI, openai-edge-tts
+      // all serve it. It is not in OpenAI's own spec, so a server that has
+      // never heard of it answers 404 and the reader keeps typing the name,
+      // exactly as before. This is the one provider we ship no voices for,
+      // which makes it the one where guessing a name is hardest.
+      listVoices: true,
+      listModels: true,
       kind: "openai-speech",
       custom: true,
       short: "Custom", shortKey: "byoCustom",
@@ -935,10 +1063,12 @@
     get,
     allOrigins,
     originsFor,
+    siteFor,
     parseCustomBase,
     endpointFor,
     usableModels,
     errorKey,
+    isLoopback,
     tts: {
       list: TTS_PROVIDERS,
       get: (id) => TTS_BY_ID[id] || null,

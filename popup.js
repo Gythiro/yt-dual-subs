@@ -619,6 +619,18 @@ function skipWhyText(code) {
       code === "neverBegan" || code === "nosynth") {
     return t("ttsSkipSilent", "没出声");
   }
+  // …and these never reached a provider at all: the extension stopped at its
+  // own door. No key stored, no endpoint typed, no host permission, no model
+  // — nothing left this machine, so "the provider refused those requests" is
+  // a statement about someone else's server for a request that was never
+  // sent. It is the same shape as the privacy sentence next door: an
+  // assertion about a system we did not talk to. Measured 2026-09-03 with the
+  // key deleted: zero synthesis requests, and the card said the provider had
+  // refused three of them.
+  if (code === "noKey" || code === "noProvider" || code === "noPerm" ||
+      code === "badBaseUrl" || code === "noModel") {
+    return t("ttsSkipNotSet", "这台电脑上还没配好");
+  }
   // Everything else is a provider's own refusal code (429, quota, auth…).
   // These used to map to the empty string, so the reader saw a bare
   // "skipped 40" with nothing to act on — reported in exactly those words
@@ -1056,7 +1068,12 @@ function paintByoPanel() {
     if (!pick || configured.length < 2) {
       if (pick) pick.hidden = true;
       sum.hidden = false;
-      sum.textContent = isSetUp(p) ? label : label + " — " + notSet;
+      // "Untested" is said in the dropdown when two or more are configured, and
+      // was silent for the reader with exactly one — who is the likeliest to be
+      // looking at a key that has never answered anything.
+      sum.textContent = !isSetUp(p) ? label + " — " + notSet
+        : okMap[p.id] ? label
+        : label + " · " + t("popupByoUntested", "未验证");
       sum.title = sum.textContent;
       return;
     }
@@ -2105,7 +2122,7 @@ function wire() {
       // it resets everything: "finish every line" stayed on, and each provider
       // still remembered the model and voice last used with it.
       chrome.storage.sync.remove(["ttsProvider", "ttsVoice", "ttsRegion",
-        "ttsComplete", "byoModelBy", "ttsModelBy"]);
+        "ttsComplete", "byoModelBy", "ttsModelBy", "byoSiteBy"]);
       paintByoPanel();               // the summary must stop claiming a key
       paintTtsCard();                // …and so must the read-aloud card
     } catch (_e) { /* ignore */ }
@@ -2113,6 +2130,17 @@ function wire() {
     refreshEngineStatus();
     refreshTtsStatus();              // reset turned read-aloud off: hide its line
     paintTtsCard();                  // …and put the switch row back to unchecked
+    // DEFAULTS carries zh-CN because a file has to carry something; the value
+    // a fresh install actually gets is derived from the browser's languages.
+    // Reset says "back to how it was when first installed", so it asks for
+    // that same guess rather than leaving everyone on Chinese.
+    try {
+      chrome.runtime.sendMessage({ type: "guessTargetLang" }, (resp) => {
+        if (chrome.runtime.lastError || !resp || !resp.ok) return;
+        state.targetLang = resp.targetLang;
+        bindUI();
+      });
+    } catch (_e) { /* ignore */ }
   });
 }
 

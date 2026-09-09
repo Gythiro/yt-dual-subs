@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Nhà cung cấp"
   },
+  "byoSiteLabel": {
+    "message": "Nền tảng"
+  },
+  "byoSiteHint": {
+    "message": "Chọn trang bạn đã đăng ký — hai nền tảng này tách biệt và khóa của bên này không được bên kia chấp nhận."
+  },
+  "byoSiteGlobal": {
+    "message": "Quốc tế"
+  },
+  "byoSiteCn": {
+    "message": "Trung Quốc đại lục"
+  },
   "byoBaseLabel": {
     "message": "Địa chỉ endpoint"
   },
@@ -302,8 +314,11 @@
   "byoKeyClear": {
     "message": "Xóa"
   },
+  "byoKeyReplace": {
+    "message": "Thay thế"
+  },
   "byoKeyCleared": {
-    "message": "Khóa lưu trên máy này đã được xóa."
+    "message": "Khóa lưu trên máy này đã bị xóa."
   },
   "byoKeySaved": {
     "message": "đã lưu ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Nhập khóa API trước, rồi nhấn Lưu và kiểm tra."
   },
   "byoErrNoModel": {
-    "message": "Nhà cung cấp này cần bạn nhập tên mô hình."
+    "message": "Chọn mô hình trước — chọn một mục trong danh sách, hoặc nhấn “Liệt kê mô hình bằng khóa của tôi”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Nhà cung cấp này không có danh sách. Tải các mô hình có sẵn trước, hoặc tự nhập tên mô hình."
+  },
+  "byoErrNotApi": {
+    "message": "Địa chỉ đó trả về một trang web, không phải API — thường là tường đăng nhập hoặc mạng chặn yêu cầu. Kiểm tra địa chỉ, hoặc thử mạng khác."
   },
   "byoErrBadBaseUrl": {
     "message": "URL gốc của API phải là địa chỉ https:// đầy đủ."
@@ -355,7 +376,13 @@
     "message": "Không có quyền truy cập máy chủ API đó thì tiện ích không thể kết nối. Nhấn “Lưu và kiểm tra” lần nữa và cho phép truy cập."
   },
   "byoErrAuth": {
-    "message": "Khóa bị từ chối (401/403) — kiểm tra đã sao chép đầy đủ và khóa còn hiệu lực."
+    "message": "Khóa bị từ chối (401) — kiểm tra đã sao chép đầy đủ và vẫn còn hiệu lực."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Máy chủ trên máy này từ chối yêu cầu (403). Rất có thể chưa được cấu hình để cho phép tiện ích: OLLAMA_ORIGINS với Ollama, công tắc CORS trong LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Nhà cung cấp từ chối yêu cầu này (403). Thường khóa vẫn ổn, tài khoản không được phép thực hiện — số dư chưa thanh toán, xác minh danh tính còn chờ, mô hình chưa bật, hoặc khu vực. Kiểm tra tài khoản trong bảng điều khiển của nhà cung cấp."
   },
   "byoErrListAuth": {
     "message": "Khoá này không có quyền đọc danh sách. Hãy cấp quyền đó trong trang quản lý của nhà cung cấp rồi lấy lại.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Nhà cung cấp đang giới hạn tốc độ — đang chậm lại và tự động thử lại."
   },
+  "byoErrLimitedTest": {
+    "message": "Nhà cung cấp đang giới hạn tốc độ. Đợi một chút rồi nhấn lại."
+  },
   "byoErrQuota": {
-    "message": "Khóa này đã hết hạn mức cho kỳ hiện tại."
+    "message": "Tài khoản này đã hết số dư hoặc hạn mức cho kỳ hiện tại — nạp thêm trong bảng điều khiển của nhà cung cấp để tiếp tục."
   },
   "byoErrBadRequest": {
     "message": "Endpoint từ chối yêu cầu — tên mô hình hoặc URL gốc có thể sai."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Liệt kê mô hình bằng khóa của tôi"
   },
+  "optFetchModelsNoKey": {
+    "message": "Liệt kê mô hình có sẵn"
+  },
   "optFetching": {
     "message": "Đang liệt kê…"
   },
@@ -407,6 +440,14 @@
     "message": "Tìm thấy $N$ mô hình",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” không còn trong danh sách của nhà cung cấp này — hãy chọn cái khác phía trên.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Bật hoặc tắt đọc to"
   },
+  "cmdToggleTransLine": {
+    "message": "Hiện hoặc ẩn dòng dịch"
+  },
   "optShortcutsLabel": {
     "message": "Phím tắt"
   },
@@ -730,7 +774,7 @@
     "message": "Đặt phím tắt"
   },
   "optShortcutsHint": {
-    "message": "Phím tắt do Chrome giữ, không phải tiện ích này. Ban đầu chưa gán phím nào; có hai thứ gán được: bật/tắt phụ đề và bật/tắt đọc to."
+    "message": "Chrome giữ các phím này, không phải tiện ích. Ban đầu chưa gán gì; có thể gán ba thao tác: bật/tắt phụ đề, bật/tắt đọc to, và hiện hoặc ẩn dòng dịch."
   },
   "optShortcutsFallback": {
     "message": "Trang đó không mở được từ đây — dán chrome://extensions/shortcuts vào thanh địa chỉ."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Với giọng của trình duyệt, không gửi gì đi đâu — máy tính tự đọc dòng đó. Với nhà cung cấp đám mây, văn bản cần đọc chỉ gửi đến nhà cung cấp bạn đã chọn, và khóa vẫn ở trên máy này."
+    "message": "Hầu hết giọng nói sẵn có của trình duyệt được cài trên máy tính này và đọc câu ngay tại đây. Một số thì không: Chrome cũng cung cấp giọng trực tuyến — những giọng có tên bắt đầu bằng \"Google\" — và với những giọng đó trình duyệt gửi câu đến nhà sản xuất. Với nhà cung cấp đám mây, văn bản cần đọc chỉ được gửi đến nhà cung cấp bạn đã chọn, còn khóa vẫn ở trên máy này."
   },
   "ttsEnableLabel": {
     "message": "Đọc to bản dịch trong video"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Nhà cung cấp này không có giọng bổ sung cho ngôn ngữ này — giọng có sẵn vẫn dùng được."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Đã tải $N$ giọng nói — đây là gợi ý dưới trường phía trên.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "Nữ"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Trình duyệt"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Khóa lưu trên máy này đã bị xóa. Khóa đó đang được dùng, nên bản dịch giờ đi qua $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "chưa thiết lập trên máy này"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Máy tính này không có giọng đọc $NAME$. Danh sách bên dưới là giọng của các ngôn ngữ khác — chọn một giọng, dòng sẽ được đọc với giọng của ngôn ngữ đó.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -305,6 +305,18 @@
   "byoProviderLabel": {
     "message": "服務商"
   },
+  "byoSiteLabel": {
+    "message": "站點"
+  },
+  "byoSiteHint": {
+    "message": "按你註冊帳號的那個網站選——兩邊是各自獨立的平台，Key 不通用。"
+  },
+  "byoSiteGlobal": {
+    "message": "國際"
+  },
+  "byoSiteCn": {
+    "message": "中國大陸"
+  },
   "byoBaseLabel": {
     "message": "介面位址"
   },
@@ -318,10 +330,21 @@
     "message": "API Key"
   },
   "byoKeyClear": {
-    "message": "清除"
+    "message": "刪除"
+  },
+  "byoKeyReplace": {
+    "message": "更換"
   },
   "byoKeyCleared": {
-    "message": "已清除這台電腦上儲存的 Key。"
+    "message": "已刪除這台電腦上儲存的 Key。"
+  },
+  "byoKeyClearedMoved": {
+    "message": "已刪除這台電腦上儲存的 Key。原本在用的是它，現在改用 $NAME$。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
   "byoKeySaved": {
     "message": "已儲存 ····$LAST4$",
@@ -364,7 +387,13 @@
     "message": "先填 API Key，再點「儲存並測試」。"
   },
   "byoErrNoModel": {
-    "message": "這家需要手動填模型名稱。"
+    "message": "先選一個模型——從清單裡挑一個，或者按「用我的 Key 拉取模型」。"
+  },
+  "byoErrNoModelEmpty": {
+    "message": "這家沒有內建清單。先拉一次可用模型，或者直接手填模型名。"
+  },
+  "byoErrNotApi": {
+    "message": "那個地址回的是一個網頁，不是介面——多半是登入頁或網路在中間攔截。檢查地址，或者換個網路。"
   },
   "byoErrBadBaseUrl": {
     "message": "介面網址必須是 https:// 開頭的完整網址。"
@@ -373,7 +402,13 @@
     "message": "沒有授權存取這個介面網域，無法連線。再點一次「儲存並測試」，在彈出的視窗裡允許。"
   },
   "byoErrAuth": {
-    "message": "Key 被拒絕(401/403):檢查是否複製完整、是否已開通。"
+    "message": "Key 被拒絕（401）：檢查是不是完整複製、是不是還有效。"
+  },
+  "byoErrForbiddenLocal": {
+    "message": "這台電腦上的服務拒絕了這次呼叫（403）。多半是它還沒被允許接受擴充功能的請求：Ollama 用 OLLAMA_ORIGINS，LM Studio 開 CORS 開關。"
+  },
+  "byoErrForbidden": {
+    "message": "服務商拒絕了這次呼叫（403）。通常不是 Key 寫錯了，而是這個帳號不被允許這樣呼叫——餘額不足、實名認證還沒做、這個模型沒開通，或者所在地區受限。去服務商後台看看帳號狀態。"
   },
   "byoErrListAuth": {
     "message": "這把 Key 沒有「讀取清單」的權限。去服務商後台給它加上，再拉一次。",
@@ -382,8 +417,11 @@
   "byoErrLimited": {
     "message": "服務商限流，已自動放慢重試。"
   },
+  "byoErrLimitedTest": {
+    "message": "服務商正在限流。等一會兒再按一次。"
+  },
   "byoErrQuota": {
-    "message": "這個 Key 本期額度已用完。"
+    "message": "這個帳號本期的餘額或額度已經用完——去服務商後台儲值或等下個週期。"
   },
   "byoErrBadRequest": {
     "message": "介面拒絕了請求：模型名稱或介面網址可能不對。"
@@ -418,6 +456,9 @@
   "optFetchModels": {
     "message": "用我的 Key 取得模型"
   },
+  "optFetchModelsNoKey": {
+    "message": "拉取可用模型"
+  },
   "optFetching": {
     "message": "取得中…"
   },
@@ -428,6 +469,10 @@
         "content": "$1"
       }
     }
+  },
+  "optModelRetired": {
+    "message": "「$MODEL$」已經不在這家的清單裡了——從上面重新選一個。",
+    "placeholders": { "model": { "content": "$1" } }
   },
   "optModelsFailed": {
     "message": "取得失敗——可以直接手填模型名稱。"
@@ -516,6 +561,9 @@
   "cmdToggleTts": {
     "message": "開關朗讀"
   },
+  "cmdToggleTransLine": {
+    "message": "開關譯文行（只留原文）"
+  },
   "optShortcutsLabel": {
     "message": "鍵盤快速鍵"
   },
@@ -523,7 +571,7 @@
     "message": "設定快速鍵"
   },
   "optShortcutsHint": {
-    "message": "快速鍵由 Chrome 管，不在這個擴充功能裡。預設一個都沒綁；能綁的有兩件：開關字幕、開關朗讀。"
+    "message": "快捷鍵由 Chrome 管，不在這個擴充功能裡。預設一個都沒綁；能綁的有三件：開關字幕、開關朗讀、開關譯文行。"
   },
   "optShortcutsFallback": {
     "message": "這一頁從這裡打不開。把 chrome://extensions/shortcuts 貼到網址列。"
@@ -757,6 +805,10 @@
   "ttsVoicesNone": {
     "message": "這家在這個語言下沒有額外音色——內建的那些照樣能用。"
   },
+  "ttsVoicesSuggested": {
+    "message": "拉到 $N$ 個音色，已作為上面輸入框的候選。",
+    "placeholders": { "n": { "content": "$1" } }
+  },
   "ttsVoiceFemale": {
     "message": "女聲"
   },
@@ -775,7 +827,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "用瀏覽器自帶的音色時，什麼都不會送出去——是你這台電腦自己在念。用雲端服務商時，要朗讀的文字只會發給你選擇的那一家，Key 只存在本機。"
+    "message": "瀏覽器內建的音色，多數裝在你這台電腦上，由它自己念。也有幾個不是：Chrome 還提供連網音色——名字以「Google」開頭的那幾個——用它們時，瀏覽器會把這句話發給它的製造商。用雲端服務商時，要朗讀的文字只發給你選擇的那一家，Key 只存在本機。"
   },
   "ttsEnableLabel": {
     "message": "在影片裡朗讀譯文"
@@ -898,6 +950,14 @@
   },
   "ttsNoSynth": {
     "message": "這台電腦沒有可用的朗讀音色。"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "這台電腦沒有能讀$NAME$的音色。下面列的是別的語言的音色——選中它，念出來就是那個語言的口音。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoicesLoading": {
     "message": "正在讀取這台電腦的音色…"
@@ -1031,6 +1091,9 @@
   },
   "ttsSkipRefused": {
     "message": "服務商拒絕了請求"
+  },
+  "ttsSkipNotSet": {
+    "message": "這台電腦上還沒配好"
   },
   "statusTrackRetry": {
     "message": "字幕軌沒拿到，正在自動重試；急的話重新整理頁面立即重來。"

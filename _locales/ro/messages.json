@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Furnizor"
   },
+  "byoSiteLabel": {
+    "message": "Site"
+  },
+  "byoSiteHint": {
+    "message": "Alege site-ul pe care te-ai înregistrat — cele două sunt platforme separate și o cheie de pe una nu e acceptată de cealaltă."
+  },
+  "byoSiteGlobal": {
+    "message": "Internațional"
+  },
+  "byoSiteCn": {
+    "message": "China continentală"
+  },
   "byoBaseLabel": {
     "message": "Adresă endpoint"
   },
@@ -302,8 +314,11 @@
   "byoKeyClear": {
     "message": "Șterge"
   },
+  "byoKeyReplace": {
+    "message": "Înlocuiește"
+  },
   "byoKeyCleared": {
-    "message": "Cheia salvată pe acest dispozitiv a fost ștearsă."
+    "message": "Cheia stocată pe acest computer a fost ștearsă."
   },
   "byoKeySaved": {
     "message": "salvat ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Introdu mai întâi o cheie API, apoi apasă Salvează și testează."
   },
   "byoErrNoModel": {
-    "message": "Acest furnizor necesită un nume de model."
+    "message": "Alege mai întâi un model — alege unul din listă sau apasă „Listează modelele cu cheia mea”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Acest furnizor nu oferă nicio listă. Preia mai întâi modelele disponibile sau introdu tu numele modelului."
+  },
+  "byoErrNotApi": {
+    "message": "Acea adresă a răspuns cu o pagină web, nu cu API — de obicei un ecran de autentificare sau o rețea care interceptează cererile. Verifică adresa sau încearcă o altă rețea."
   },
   "byoErrBadBaseUrl": {
     "message": "URL-ul de bază al API-ului trebuie să fie o adresă https:// completă."
@@ -355,7 +376,13 @@
     "message": "Fără permisiunea de a accesa acel host API, extensia nu se poate conecta. Apasă din nou „Salvează și testează” și acordă accesul."
   },
   "byoErrAuth": {
-    "message": "Cheia a fost respinsă (401/403) — verifică dacă a fost copiată integral și este activă."
+    "message": "Cheia a fost respinsă (401) — verifică dacă a fost copiată integral și e încă activă."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Serverul de pe acest calculator a refuzat apelul (403). Cel mai probabil nu a fost configurat să permită extensia: OLLAMA_ORIGINS pentru Ollama, comutatorul CORS din LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Furnizorul a refuzat apelul (403). De obicei cheia e în regulă, dar contul nu are permisiunea — sold neachitat, o verificare de identitate încă în așteptare, un model neactivat sau regiunea. Verifică contul în consola furnizorului."
   },
   "byoErrListAuth": {
     "message": "Cheia aceasta nu are dreptul să citească lista. Acordă-i permisiunea în panoul furnizorului și încearcă din nou.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Furnizorul limitează rata — încetinim și reîncercăm automat."
   },
+  "byoErrLimitedTest": {
+    "message": "Furnizorul limitează cererile. Așteaptă un moment și apasă din nou."
+  },
   "byoErrQuota": {
-    "message": "Această cheie nu mai are cotă pentru perioada curentă."
+    "message": "Contul nu mai are credit sau cotă pentru perioada curentă — reîncarcă-l din consola furnizorului ca să continui."
   },
   "byoErrBadRequest": {
     "message": "Endpointul a refuzat cererea — numele modelului sau URL-ul de bază ar putea fi greșite."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Listează modelele cu cheia mea"
   },
+  "optFetchModelsNoKey": {
+    "message": "Listează modelele disponibile"
+  },
   "optFetching": {
     "message": "Se listează…"
   },
@@ -407,6 +440,14 @@
     "message": "$N$ modele găsite",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” nu mai este pe lista acestui furnizor — alege altul mai sus.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Activează sau dezactivează citirea cu voce"
   },
+  "cmdToggleTransLine": {
+    "message": "Afișează sau ascunde linia de traducere"
+  },
   "optShortcutsLabel": {
     "message": "Scurtături de tastatură"
   },
@@ -730,7 +774,7 @@
     "message": "Setează scurtăturile"
   },
   "optShortcutsHint": {
-    "message": "Aceste scurtături le ține Chrome, nu extensia. La început nu e atribuită niciuna; se pot atribui două: subtitrări pornit/oprit și citire cu voce pornit/oprit."
+    "message": "Chrome păstrează aceste taste, nu extensia. La început nu e asociat nimic; se pot asocia trei lucruri: subtitrări pornit/oprit, citire cu voce tare pornit/oprit și afișarea sau ascunderea liniei de traducere."
   },
   "optShortcutsFallback": {
     "message": "De aici pagina nu s-a deschis — lipește chrome://extensions/shortcuts în bara de adrese."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Cu vocile browserului, nu se trimite nimic nicăieri — computerul tău rostește linia. Cu un furnizor cloud, textul de rostit ajunge doar la furnizorul ales de tine, iar cheia rămâne pe acest computer."
+    "message": "Majoritatea vocilor proprii ale browserului sunt instalate pe acest computer și citesc linia aici. Câteva nu sunt: Chrome oferă și voci online — cele ale căror nume încep cu „Google” — iar pentru acestea browserul trimite linia către producător. Cu un furnizor cloud, textul de rostit ajunge doar la furnizorul pe care l-ai ales, iar cheia rămâne pe acest dispozitiv."
   },
   "ttsEnableLabel": {
     "message": "Citește traducerea cu voce tare în video"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Acest furnizor nu are voci suplimentare pentru această limbă — cele integrate funcționează în continuare."
+  },
+  "ttsVoicesSuggested": {
+    "message": "S-au preluat $N$ voci — sunt sugestii sub câmpul de mai sus.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "feminină"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Browser"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Cheia stocată pe acest computer a fost ștearsă. Era în uz, deci traducerea trece acum prin $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "neconfigurat pe acest computer"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Acest computer nu are o voce care să citească $NAME$. Lista de mai jos conține voci din alte limbi — alege una și linia va fi citită cu accentul acelei limbi.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

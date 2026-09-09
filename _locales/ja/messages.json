@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "プロバイダー"
   },
+  "byoSiteLabel": {
+    "message": "サイト"
+  },
+  "byoSiteHint": {
+    "message": "登録したサイトを選んでください。2つは別のプラットフォームなので、一方のキーはもう一方では使えません。"
+  },
+  "byoSiteGlobal": {
+    "message": "インターナショナル"
+  },
+  "byoSiteCn": {
+    "message": "中国本土"
+  },
   "byoBaseLabel": {
     "message": "エンドポイント"
   },
@@ -300,7 +312,10 @@
     "message": "APIキー"
   },
   "byoKeyClear": {
-    "message": "クリア"
+    "message": "削除"
+  },
+  "byoKeyReplace": {
+    "message": "変更"
   },
   "byoKeyCleared": {
     "message": "この端末に保存されていたキーを削除しました。"
@@ -346,7 +361,13 @@
     "message": "先にAPIキーを入力してから、「保存してテスト」を押してください。"
   },
   "byoErrNoModel": {
-    "message": "このプロバイダーではモデル名の入力が必要です。"
+    "message": "先にモデルを選んでください。一覧から選ぶか、「このキーでモデルを一覧表示」を押してください。"
+  },
+  "byoErrNoModelEmpty": {
+    "message": "このプロバイダーには一覧がありません。先に利用可能なモデルを取得するか、モデル名を直接入力してください。"
+  },
+  "byoErrNotApi": {
+    "message": "そのアドレスは API ではなくウェブページを返しました。ログイン画面や、通信を傍受するネットワークが原因であることが多いです。アドレスを確認するか、別のネットワークをお試しください。"
   },
   "byoErrBadBaseUrl": {
     "message": "APIのベースURLは https:// から始まる完全なアドレスにしてください。"
@@ -355,7 +376,13 @@
     "message": "そのAPIホストへのアクセス許可がないと、拡張機能は接続できません。「保存してテスト」をもう一度押して、許可してください。"
   },
   "byoErrAuth": {
-    "message": "キーが拒否されました（401/403）。全文がコピーされているか、有効かを確認してください。"
+    "message": "キーが拒否されました（401）。全文がコピーされているか、まだ有効かを確認してください。"
+  },
+  "byoErrForbiddenLocal": {
+    "message": "このマシン上のサーバーが呼び出しを拒否しました（403）。拡張機能の許可が未設定の可能性が高いです。Ollama なら OLLAMA_ORIGINS、LM Studio なら CORS スイッチを確認してください。"
+  },
+  "byoErrForbidden": {
+    "message": "プロバイダーがこの呼び出しを拒否しました（403）。キー自体は問題なく、アカウント側で許可されていないことが多いです。未払い残高、本人確認の未完了、モデル未有効化、リージョン制限など。プロバイダーのコンソールでアカウントを確認してください。"
   },
   "byoErrListAuth": {
     "message": "このキーには一覧を読む権限がありません。プロバイダーの管理画面で権限を追加してから、もう一度取得してください。",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "プロバイダーがレート制限中です。自動で速度を落として再試行します。"
   },
+  "byoErrLimitedTest": {
+    "message": "プロバイダーがレート制限中です。少し待ってからもう一度押してください。"
+  },
   "byoErrQuota": {
-    "message": "このキーは現在の期間のクォータを使い切っています。"
+    "message": "このアカウントは今期のクレジットまたはクォータを使い切っています。続行するにはプロバイダーのコンソールでチャージしてください。"
   },
   "byoErrBadRequest": {
     "message": "エンドポイントがリクエストを拒否しました。モデル名またはベースURLが誤っている可能性があります。"
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "キーでモデル一覧を取得"
   },
+  "optFetchModelsNoKey": {
+    "message": "利用可能なモデルを一覧表示"
+  },
   "optFetching": {
     "message": "取得中…"
   },
@@ -407,6 +440,14 @@
     "message": "$N$件のモデルが見つかりました",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "「$MODEL$」はこのプロバイダーのリストにありません。上で別のものを選んでください。",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "読み上げのオン/オフ"
   },
+  "cmdToggleTransLine": {
+    "message": "翻訳行の表示／非表示"
+  },
   "optShortcutsLabel": {
     "message": "キーボードショートカット"
   },
@@ -730,7 +774,7 @@
     "message": "ショートカットを設定"
   },
   "optShortcutsHint": {
-    "message": "ショートカットを持っているのは Chrome で、この拡張機能ではありません。最初は何も割り当てられていません。割り当てられるのは 2 つ、字幕のオン/オフと読み上げのオン/オフです。"
+    "message": "これらのキーは拡張機能ではなくChromeが管理します。最初は何も割り当てられていません。割り当てできるのは字幕のオン/オフ、読み上げのオン/オフ、翻訳行の表示/非表示の3つです。"
   },
   "optShortcutsFallback": {
     "message": "このページはここからは開けませんでした。chrome://extensions/shortcuts をアドレスバーに貼り付けてください。"
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "ブラウザ内蔵の音声なら、どこにも送信しません。このパソコンが行を読み上げます。クラウドの場合、読み上げるテキストは選んだサービスにだけ送られ、キーはこのパソコン内に残ります。"
+    "message": "ブラウザ本体の音声のほとんどは、このパソコンにインストールされており、ここで読み上げます。一部は例外です。Chrome はオンライン音声（名前が「Google」で始まるもの）も用意しており、その場合ブラウザは読み上げる文を提供元へ送ります。クラウドのプロバイダーを使う場合、読み上げるテキストは選んだプロバイダーにのみ送られ、キーはこのパソコンに残ります。"
   },
   "ttsEnableLabel": {
     "message": "動画で翻訳を読み上げる"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "このプロバイダーにはこの言語の追加音声がありません — 組み込み音声は引き続き使えます。"
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$件の音声を取得しました。上の欄の候補です。",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "女性"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "ブラウザ"
+  },
+  "byoKeyClearedMoved": {
+    "message": "この端末に保存されていたキーは削除されました。使用中だったため、翻訳は $NAME$ 経由になります。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "このパソコンでは未設定"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "このパソコンには$NAME$を読み上げる音声がありません。下のリストは他の言語の音声です。どれかを選ぶと、その言語のアクセントで読み上げます。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

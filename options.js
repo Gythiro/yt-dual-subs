@@ -84,6 +84,9 @@ const fetchedModels = Object.create(null);  // providerId -> [model ids]
 // thing that writes — which is also what stops us from spending someone's
 // quota on a page load.
 const CATALOG_STORE = "byoCatalogs";
+// Which platform each provider is set to. Mirrors modelsBy: read once at boot,
+// written back whole on every change.
+let siteBy = Object.create(null);
 let catalogs = Object.create(null);
 
 // The key, the normalisation and the "which stored list belongs to the key and
@@ -180,6 +183,11 @@ function listMode() {
       items: P.tts.list,
       stored: ttsStored,
       inUse: () => state.ttsProvider,
+      // A provider whose key is gone cannot speak, and the popup has always
+      // said so ("not set up · Configure…"). This list went on badging it "in
+      // use", so the two pages told the reader different stories about the
+      // same provider. Keyless ones (the browser's own voices) stay usable.
+      usable: (p) => !!(ttsStored[p.id] || p.keyless),
       label: (p) => (p.nameKey ? t(p.nameKey, p.name) : p.name),
       open: () => ttsProvider(),
       // Same contract as the translation half: a click changes what you are
@@ -196,6 +204,8 @@ function listMode() {
     items: providerList(),
     stored: storedKeys,
     inUse: () => state.byoProvider,
+    // Same story on this side; Ollama needs no key, so it stays usable.
+    usable: (p) => !!(storedKeys[p.id] || p.noKey),
     label: providerLabel,
     open: () => P.get(editing),
     pick: (p) => {
@@ -244,7 +254,7 @@ function renderList() {
 
     // Which one the extension is actually translating with — the thing the
     // highlight used to imply and no longer does.
-    if (p.id === mode.inUse()) {
+    if (p.id === mode.inUse() && mode.usable(p)) {
       const inUse = document.createElement("span");
       inUse.className = "pitem-inuse";
       inUse.textContent = t("optInUse", "使用中");
@@ -328,7 +338,9 @@ function renderModelField(p) {
 function showModelMsg(text, kind) {
   const el = $("modelMsg");
   el.textContent = text || "";
-  el.classList.remove("ok", "err");
+  // "warn" is set by the retired-model notice below and was not in this list,
+  // so the next message inherited its colour.
+  el.classList.remove("ok", "err", "warn");
   if (kind) el.classList.add(kind);
   el.hidden = !text;
 }
@@ -379,29 +391,145 @@ function paintAfterSetupNote(engine) {
   if (el) el.hidden = engine === "byo";
 }
 
-function paintKeyField(p) {
-  const inp = $("key");
-  const clear = $("keyClear");
-  inp.value = "";
-  inp.type = $("showKey").checked ? "text" : "password";
-  // Nothing typed yet, and a saved key is never written back here — so there is
-  // nothing "show" could reveal. It comes back the moment there is a draft.
-  paintShowKey("key", "showKeyWrap");
-  inp.placeholder = p.kind === "deepl" ? "xxxxxxxx-xxxx-…:fx" : "sk-…";
-  clear.hidden = true;
+// The two rows are the same idea twice, so they are one function. `which`
+// picks the pane: its row, its group, and where the choice is stored.
+// A dropdown, like every other choice on this page, rather than a pair of
+// buttons carrying bare hostnames. The hostname is the proof, not the label:
+// what a reader knows is which website they signed up on, so that is what the
+// option says, with the domain after it for the one who wants to be sure.
+function renderSiteRow(p, which) {
+  const row = $(which === "tts" ? "ttsSiteRow" : "siteRow");
+  const sel = $(which === "tts" ? "ttsSiteSeg" : "siteSeg");
+  if (!row || !sel) return;
+  const sites = (p && p.sites) || null;
+  row.hidden = !sites;
+  sel.textContent = "";
+  if (!sites) return;
+  const chosen = (siteBy[p.id] || sites[0].host);
+  for (const site of sites) {
+    const o = document.createElement("option");
+    o.value = site.host;
+    // Written out rather than folded into one t() with a computed fallback:
+    // the leak gate reads the literal form, and a fallback that only exists
+    // inside a ternary is exactly the shape it is there to refuse.
+    const siteName = site.nameKey === "byoSiteCn"
+      ? t("byoSiteCn", "中国大陆")
+      : t("byoSiteGlobal", "国际");
+    o.textContent = siteName + "（" + site.host + "）";
+    o.selected = site.host === chosen;
+    sel.appendChild(o);
+  }
+  sel.onchange = () => pickSite(p, sel.value, which);
+}
 
-  chrome.storage.local.get({ byoKeys: {} }, (got) => {
-    const key = ((got && got.byoKeys) || {})[p.id] || "";
-    storedKeys[p.id] = !!key;
-    // The one thing a first-time visitor has to notice.
-    paintNeedBanner(p, !!key);
-    if (!key) return;
+// Switching platform means the stored key belongs to the other account, so the
+// tick it earned there is not evidence here. The key itself is left alone: a
+// reader who switches back should not have to paste it again.
+function pickSite(p, host, which) {
+  if (siteBy[p.id] === host) return;
+  siteBy[p.id] = host;
+  chrome.storage.sync.set({ byoSiteBy: Object.assign({}, siteBy) });
+  if (which !== "tts") markVerified(p.id, false);
+  renderSiteRow(p, which);
+  if (which === "tts") { paintTtsKeyField(p); paintTtsUse(); }
+  else { renderDetail(); }
+}
+
+// Which providers are mid-replacement. A stored key is never written back into
+// the box, so "there is a key" and "I am typing a new one" are two states, and
+// the box belongs only to the second. Cleared when the provider changes.
+const replacing = Object.create(null);
+
+// Both panes hold a key the same way, so they paint it with one function.
+// Before this, a saved key showed as an EMPTY password box whose placeholder
+// read "saved ····1234", and a link called "Clear" beside it. Two readers in a
+// row misread that — one of them the person who wrote it — because "clear"
+// means "empty this box" and the box was already empty, while the action was
+// "delete the key". A placeholder is also not in the accessibility tree: with
+// a screen reader, a saved key and no key sounded identical.
+function paintHeldKey(o) {
+  const inp = $(o.input);
+  const held = $(o.held);
+  inp.value = "";
+  inp.type = $(o.show).checked ? "text" : "password";
+  paintShowKey(o.input, o.showWrap);
+  inp.placeholder = o.placeholder;
+  held.hidden = true;
+  inp.hidden = false;
+  inp.disabled = false;
+
+  chrome.storage.local.get({ [o.store]: {} }, (got) => {
+    const key = ((got && got[o.store]) || {})[o.id] || "";
+    if (o.onKey) o.onKey(!!key);
+    if (!key || replacing[o.id]) return;
     // Every DeepL Free key ends in ":fx", so masking to those four characters
     // would tell the user nothing — mask the last four before the suffix.
     const last4 = key.replace(/:fx$/, "").slice(-4);
-    inp.placeholder = tsub("byoKeySaved", [last4], "已保存 ····" + last4);
-    clear.hidden = false;
+    $(o.heldText).textContent = tsub("byoKeySaved", [last4], "已保存 ····" + last4);
+    held.hidden = false;
+    // Hidden is not enough: a password manager will happily fill a box it
+    // cannot see, and the next Save would store whatever it put there.
+    inp.hidden = true;
+    inp.disabled = true;
+    paintShowKey(o.input, o.showWrap);
+    if (o.after) o.after();
   });
+  if (o.after) o.after();
+}
+
+function paintKeyField(p) {
+  // Ollama authenticates nothing — the worker sends no Authorization header for
+  // it at all. An API-key box on that panel asks the reader for something that
+  // does not exist, and anything typed into it would be stored and sent to
+  // their own machine for no reason. The read-aloud pane has hidden this row
+  // for the browser's built-in voices since it was built; this side had not.
+  const keyField = $("key") && $("key").closest(".ofield");
+  if (keyField) keyField.hidden = !!p.noKey;
+  if (p.noKey) {
+    // Still repaint the banner: it belongs to the provider on screen, and
+    // returning without touching it left the previous provider's "No key yet"
+    // hanging over a panel that has no key field at all. paintNeedBanner
+    // already knows to hide itself for this kind of provider.
+    paintNeedBanner(p, true);
+    storedKeys[p.id] = false;
+    paintModelGate(p);
+    return;
+  }
+  paintHeldKey({
+    id: p.id, store: "byoKeys",
+    input: "key", show: "showKey", showWrap: "showKeyWrap",
+    held: "keyHeld", heldText: "keyHeldText",
+    placeholder: p.kind === "deepl" ? "xxxxxxxx-xxxx-…:fx" : "sk-…",
+    onKey: (has) => {
+      storedKeys[p.id] = has;
+      paintNeedBanner(p, has);          // the one thing a first-time visitor must notice
+    },
+    after: () => paintModelGate(p)
+  });
+}
+
+// The model row cannot do anything without a key: the list is fetched with it,
+// and "List models with my key" says so in its own name. Leaving both live and
+// refusing on click sent the reader a message about the OTHER button, printed
+// above the field it was telling them to go and fill. Off is the honest state;
+// the banner above already says why.
+function paintModelGate(p) {
+  // "List models with my key" names a key this provider does not have. Same
+  // button, same act, minus the half that is not true here.
+  const fetchBtn = $("fetchModels");
+  if (fetchBtn) {
+    fetchBtn.textContent = p.noKey
+      ? t("optFetchModelsNoKey", "拉取可用模型")
+      : t("optFetchModels", "用我的 Key 拉取模型");
+  }
+  const need = !p.custom && !p.noKey && !storedKeys[p.id] && !$("key").value.trim();
+  for (const id of ["modelSel", "fetchModels", "modelInput"]) {
+    const el = $(id);
+    if (!el) continue;
+    el.disabled = need;
+    if (need) el.title = t("optNeedKey", "还没填 Key，这个服务商暂时用不了。");
+    else el.removeAttribute("title");
+  }
 }
 
 // ---- detail ----------------------------------------------------------------
@@ -417,12 +545,18 @@ function renderDetail() {
   kind.hidden = p.kind !== "deepl";
   kind.textContent = "DeepL API";
 
+  // The console and the price list belong to the platform, not to the brand:
+  // sending a reader on the global site to the China console is how this whole
+  // thread started.
+  const site = P.siteFor(p, siteBy[p.id]);
+  const keyUrl = (site && site.keyUrl) || p.keyUrl;
+  const pricingUrl = (site && site.pricingUrl) || p.pricingUrl;
   const keyLink = $("pKeyLink");
-  keyLink.hidden = !p.keyUrl;
-  if (p.keyUrl) keyLink.href = p.keyUrl;
+  keyLink.hidden = !keyUrl;
+  if (keyUrl) keyLink.href = keyUrl;
   const priceLink = $("pPricingLink");
-  priceLink.hidden = !p.pricingUrl;
-  if (p.pricingUrl) priceLink.href = p.pricingUrl;
+  priceLink.hidden = !pricingUrl;
+  if (pricingUrl) priceLink.href = pricingUrl;
   // The guide's sections are named after the provider, except the custom one:
   // there is no #custom section and never was, so choosing it and pressing
   // "see the guide" landed at the top of the page. What that reader wants is
@@ -435,21 +569,46 @@ function renderDetail() {
   $("baseRow").hidden = !p.custom;
   $("baseUrl").value = state.byoBaseUrl || "";
 
+  renderSiteRow(p, "byo");
   renderModelField(p);
   paintKeyField(p);
   showMsg("", null);
 }
 
-function showMsg(text, kind) {
+// `detail` is the provider's own sentence, already redacted and capped in the
+// worker. It goes on its own line under ours, in the muted colour, because it
+// is evidence rather than instruction — and because it arrives in whatever
+// language the provider answers in, which is not necessarily the reader's.
+function showMsg(text, kind, detail) {
   const el = $("msg");
   el.textContent = text || "";
   el.classList.remove("ok", "err", "warn");
   if (kind) el.classList.add(kind);
+  if (text && detail) {
+    const line = document.createElement("span");
+    line.className = "omsg-raw";
+    line.textContent = detail;
+    el.appendChild(line);
+  }
   el.hidden = !text;
 }
 
+// The rate-limit sentence promises the extension is already retrying, which is
+// true of the translation lane and false of a button the reader just pressed:
+// nothing retries a probe. Same code, different room, different sentence.
+function testErrText(code, provider) {
+  if (code === "limited") {
+    return t("byoErrLimitedTest", "服务商正在限流。等一会儿再按一次。");
+  }
+  return errText(code, provider);
+}
+
 function errText(code, provider) {
-  return t(P.errorKey(code, provider), t("byoErrFailed", "连接失败，稍后再试。"));
+  // The address matters to the wording: the local advice (OLLAMA_ORIGINS, LM
+  // Studio's CORS switch) is right for a server on this machine and misleading
+  // for a public host someone typed into the custom field.
+  const origin = provider && provider.custom ? (state.byoBaseUrl || "") : undefined;
+  return t(P.errorKey(code, provider, origin), t("byoErrFailed", "连接失败，稍后再试。"));
 }
 
 // The same 401 means two different things depending on when it arrives.
@@ -460,7 +619,14 @@ function errText(code, provider) {
 // No Access", which is exactly the combination that produced this), OpenAI's
 // are per-scope. Telling that user to check they copied the key in full sends
 // them to re-paste a key that was never wrong.
-function listErrText(code) {
+// "This key isn't allowed to read the list" is only true of a key that WORKS.
+// Said about a key that has never passed a test, it sends the reader hunting
+// for a permission switch that would not have helped: the key is simply wrong.
+function listErrText(code, provider) {
+  const proven = provider && verifiedOk[provider.id];
+  if ((code === "auth" || code === "noPerm") && !proven) {
+    return errText(code, provider);
+  }
   if (code === "auth" || code === "noPerm") {
     return t("byoErrListAuth",
       "这把 Key 没有「读取清单」的权限。去服务商后台给它加上，再拉一次。");
@@ -489,7 +655,7 @@ function plan() {
     baseUrl = parsed.baseUrl;
     origins = P.originsFor(p, parsed.origin);
   } else {
-    origins = P.originsFor(p);
+    origins = P.originsFor(p, null, siteBy[p.id]);
   }
   return { provider: p, origins, typedKey, model, baseUrl };
 }
@@ -583,17 +749,38 @@ function sendToBackground(msg) {
 // is what happened on the real machine.
 // `adopt` says whether finishing this makes the provider the one in use. Saving
 // and testing a key does; asking a provider what models it has does not.
-function withSetup(btn, busyKey, busyFallback, onError, run, adopt) {
+// Takes the busy label already resolved, not a key and a fallback as two loose
+// arguments. That shape was only ever legal to the leak scanner by accident —
+// it inherits legality from a t() still open in its lookback window, so adding
+// an unrelated function nearby turned two long-standing strings into findings.
+// A string that has to be near something else to be correct is not correct.
+function withSetup(btn, busyLabel, onError, run, adopt) {
   const pl = plan();
   if (pl.error) { onError(pl.error); return; }
   // A custom endpoint is allowed to have no key at all — Ollama and LM Studio
   // ignore auth; the worker sends no Authorization header for an empty key.
   if (!pl.typedKey && !storedKeys[pl.provider.id] &&
       !pl.provider.custom && !pl.provider.noKey) { onError("noKey"); return; }
+  // A model name is required by every llm provider, and nine of the twelve ship
+  // no default — so "no model yet" is the state most people land in. It used to
+  // be caught in the worker, one round trip later, AFTER persist() had already
+  // written byoProvider and stored the key: a test that could not pass left the
+  // extension switched to a provider that cannot translate, wearing the "in
+  // use" tick. Asking here costs nothing and changes nothing on the way out.
+  // Guarded on adopt: fetching the model list is exactly the case where the
+  // model is legitimately still empty.
+  if (adopt !== false && pl.provider.kind === "llm" && !pl.model) {
+    // Nine of the twelve ship no model list, so "choose one from the list"
+    // points at a dropdown holding nothing but "Custom…". Name the door that
+    // is actually there.
+    const canPick = (pl.provider.models && pl.provider.models.length) ||
+      (fetchedModels[pl.provider.id] || []).length;
+    onError(canPick ? "noModel" : "noModelEmpty"); return;
+  }
 
   const label = btn.textContent;
   btn.disabled = true;
-  btn.textContent = t(busyKey, busyFallback);
+  btn.textContent = busyLabel;
   const done = () => { btn.disabled = false; btn.textContent = label; };
 
   const proceed = () => {
@@ -632,9 +819,10 @@ async function runTest(pl) {
       markVerified(pl.provider.id, true);
       renderList();
       showMsg(tsub("byoTestOk", [sample], "连接成功：" + sample), "ok");
+      freshenModels(pl.provider);
     } else {
       markVerified(pl.provider.id, false);
-      showMsg(errText(resp && resp.code, pl.provider), "err");
+      showMsg(testErrText(resp && resp.code, pl.provider), "err", resp && resp.detail);
     }
   } finally {
     paintKeyField(pl.provider);
@@ -657,12 +845,48 @@ async function runFetchModels(pl) {
         "拉到 " + resp.models.length + " 个模型"), "ok");
     } else {
       showModelMsg(resp && resp.code
-        ? listErrText(resp.code)
+        ? listErrText(resp.code, pl.provider)
         : t("optModelsFailed", "拉取失败——可以直接手填模型名。"), "err");
     }
   } finally {
     paintKeyField(pl.provider);
   }
+}
+
+// The model names we ship go stale on their own: some are aliases that always
+// point at the current model (deepseek-chat, gemini-flash-latest, qwen-flash)
+// and cannot rot, but the rest carry a version in the name — qwen3.7-flash,
+// deepseek-v4-flash, eleven_multilingual_v2 — and one day the provider retires
+// them. Nothing here would ever notice.
+//
+// So after a test that PASSED, ask the provider what it actually offers. The
+// key has just proved it works, which is the whole point of doing it here
+// rather than when the key is saved: a refusal now cannot be mistaken for
+// "the key is bad". And it is enrichment, never a gate — a key that is not
+// allowed to read the list (byoErrListAuth exists for exactly that) still has
+// a working default, so this failing must cost nothing and say nothing.
+//
+// Deleting the shipped defaults and forcing this instead would turn a soft
+// failure into a hard one for those keys: no default, no list, no way forward
+// but typing a name the reader does not know.
+function freshenModels(p) {
+  if (!p || p.kind !== "llm" || p.custom || p.noKey) return;
+  sendToBackground({ type: "byoModels", provider: p.id })
+    .then((resp) => {
+      if (!resp || !resp.ok || !resp.models || !resp.models.length) return;   // silent
+      if (current() !== p) return;                    // the reader moved on
+      fetchedModels[p.id] = resp.models;
+      catalogSave("m", p.id, resp, resp.models, null);
+      const chosen = modelsBy[p.id] || p.defaultModel || "";
+      renderModelField(p);
+      // The one thing worth interrupting for: the model in force is not on the
+      // provider's list any more. That is the shape a retired model takes.
+      if (chosen && resp.models.indexOf(chosen) === -1) {
+        showModelMsg(tsub("optModelRetired", [chosen],
+          "「" + chosen + "」已经不在这家的清单里了——从上面重新选一个。"), "warn");
+      }
+    })
+    .catch(() => { /* enrichment only */ });
 }
 
 // ---- target languages ------------------------------------------------------
@@ -1010,12 +1234,13 @@ function paintTtsHead(p) {
 
 function paintTtsKeyField(p) {
   const inp = $("ttsKey");
-  const clear = $("ttsKeyClear");
-  inp.value = "";
-  inp.type = $("ttsShowKey").checked ? "text" : "password";
-  paintShowKey("ttsKey", "ttsShowKeyWrap");
-  inp.placeholder = p.keyHint != null ? p.keyHint : "sk-…";
-  clear.hidden = true;
+  paintHeldKey({
+    id: p.id, store: "ttsKeys",
+    input: "ttsKey", show: "ttsShowKey", showWrap: "ttsShowKeyWrap",
+    held: "ttsKeyHeld", heldText: "ttsKeyHeldText",
+    placeholder: p.keyHint != null ? p.keyHint : "sk-…",
+    onKey: (has) => { ttsStored[p.id] = has; }
+  });
   // Azure's key is bound to a region that becomes the request host; only a
   // provider that says so gets the field.
   const regionRow = $("ttsRegionRow");
@@ -1035,14 +1260,6 @@ function paintTtsKeyField(p) {
       });
     }
   }
-  chrome.storage.local.get({ ttsKeys: {} }, (got) => {
-    const key = ((got && got.ttsKeys) || {})[p.id] || "";
-    ttsStored[p.id] = !!key;
-    if (!key) return;
-    const last4 = key.slice(-4);
-    inp.placeholder = tsub("byoKeySaved", [last4], "已保存 ····" + last4);
-    clear.hidden = false;
-  });
 }
 
 // Who the voice is and which language it grew up speaking — the accent it
@@ -1117,14 +1334,31 @@ function paintTtsVoices(p) {
   if (typedInp) typedInp.hidden = !p.custom;
   sel.hidden = !!p.custom;
   if (p.custom) {
-    if (typedInp && document.activeElement !== typedInp && !typedInp.value) {
+    // The typed name is the choice, but it need not be a guess: whatever the
+    // server answered on /v1/audio/voices becomes the suggestion list. This is
+    // the one provider we ship no voices for, which made it the one where a
+    // reader had nothing to go on.
+    const dl = $("ttsVoiceList");
+    if (dl) {
+      dl.textContent = "";
+      for (const v of (fetchedVoices[p.id] || [])) {
+        const o = document.createElement("option");
+        o.value = v;
+        dl.appendChild(o);
+      }
+    }
+    // state.ttsVoice is whatever the provider IN USE is speaking with, which
+    // is only this server's voice when this server is the one in use. Filling
+    // the box from it while looking at a different provider handed Azure's
+    // "en-US-AvaMultilingualNeural" to a custom endpoint — and typing then
+    // appended to it, so the name that went out was a splice of the two.
+    if (typedInp && document.activeElement !== typedInp && !typedInp.value &&
+        state.ttsProvider === p.id) {
       typedInp.value = state.ttsVoice || "";
     }
     showTtsVoiceMsg("", null);
     const preview = $("ttsPreview");
     if (preview) preview.disabled = false;
-    const row = $("ttsFetchRow");
-    if (row) row.hidden = true;
     const keyField = $("ttsKey");
     if (keyField) {
       const field = keyField.closest(".ofield");
@@ -1132,6 +1366,17 @@ function paintTtsVoices(p) {
     }
     const testBtn = $("ttsTestBtn");
     if (testBtn) testBtn.hidden = false;
+    // Last, so nothing above can undo it. This branch returns before the code
+    // that dresses the select, and the fetch row lives down there — so it is
+    // decided here, and decided by the capability rather than set true and
+    // forgotten. (A line further up used to hide this row unconditionally,
+    // from the days when a custom server was assumed to publish no voices.)
+    const fetchRow = $("ttsFetchRow");
+    if (fetchRow) fetchRow.hidden = !p.listVoices;
+    const fetchOne = $("ttsFetchVoices");
+    if (fetchOne) fetchOne.hidden = !p.listVoices;
+    const backOne = $("ttsBackToFamily");
+    if (backOne) backOne.hidden = true;        // there is no family to go back to
     return;
   }
   const choices = p.localVoices
@@ -1176,7 +1421,23 @@ function paintTtsVoices(p) {
     if (!localVoicesGone) { localVoicesGone = true; paintTtsUse(); }
   } else if (choices.length) {
     localVoiceRetry = 0;
-    if (p.localVoices) showTtsVoiceMsg("", null);
+    if (p.localVoices) {
+      // A machine can have plenty of voices and none that read the language
+      // being translated into. The list falls back to all of them so there is
+      // still something to choose, but silence about it is how an English
+      // voice ends up reading Swahili — chosen by us, unremarked by either
+      // surface.
+      let sameLang = true;
+      try {
+        const sp = P.tts.localVoiceSplit(window.speechSynthesis, state.targetLang);
+        sameLang = !sp || sp.matched !== false;
+      } catch (_e) { /* keep quiet rather than warn on a broken read */ }
+      const info = LANGS.get(state.targetLang);
+      showTtsVoiceMsg(sameLang ? "" : tsub("ttsNoVoiceForLang",
+        [(info && info.native) || state.targetLang],
+        "这台电脑没有能读$1$的音色。下面列的是别的语言的音色——选中它，念出来就是那个语言的口音。"),
+        sameLang ? null : "warn");
+    }
   }
   const preview = $("ttsPreview");
   if (preview) preview.disabled = p.localVoices && !choices.length;
@@ -1246,7 +1507,15 @@ function paintTtsVoices(p) {
     add(sel, want);
     choices.push(want);
   }
-  if (want && choices.includes(want)) sel.value = want;
+  if (want && choices.includes(want)) {
+    sel.value = want;
+  } else if (p.defaultVoice && choices.includes(p.defaultVoice)) {
+    // A voice stored for ANOTHER provider is not a choice here, and letting
+    // the select fall to whatever happens to be first put "Xiaoxiao ·
+    // 中文（简体）" in front of a reader on an English interface reading
+    // English. This provider's own default is the honest starting point.
+    sel.value = p.defaultVoice;
+  }
   const row = $("ttsFetchRow");
   if (row) row.hidden = !p.listVoices;
   const back = $("ttsBackToFamily");
@@ -1409,6 +1678,36 @@ function paintTtsUse() {
 // The read-aloud model picker: shown only for providers that document more
 // than one speech model. The stored override lives per provider (ttsModelBy,
 // the byoModelBy shape) so switching providers never bleeds a model across.
+// The same thing the translation pane does, on this side. The lists shipped
+// here carry versions in their names — qwen3-tts-flash, tts-1,
+// eleven_multilingual_v2 — so one day each is retired and the dropdown would
+// go on offering it with nothing to notice. After a test that PASSED, ask.
+// Enrichment, never a gate: a key that may not read the list keeps its working
+// default and hears nothing about it.
+function freshenTtsModels(p) {
+  if (!p || !p.listModels) return;
+  sendToBackground({ type: "ttsModels", provider: p.id })
+    .then((resp) => {
+      if (!resp || !resp.ok || !resp.models || !resp.models.length) return;   // silent
+      if (ttsProvider() !== p) return;                  // the reader moved on
+      const known = (p.models || []).slice();
+      const fresh = resp.models.filter((m) => known.indexOf(m) === -1);
+      if (!fresh.length && resp.models.length >= known.length) return;
+      ttsFetchedModels[p.id] = resp.models;
+      paintTtsModel(p);
+      const chosen = $("ttsModelSel") ? $("ttsModelSel").value : "";
+      if (chosen && resp.models.indexOf(chosen) === -1) {
+        showTtsMsg(tsub("optModelRetired", [chosen],
+          "「" + chosen + "」已经不在这家的清单里了——从上面重新选一个。"), "warn");
+      }
+    })
+    .catch(() => { /* enrichment only */ });
+}
+
+// Models this provider actually answered with, per provider id. Empty until a
+// test passes; the shipped list is what shows before that.
+const ttsFetchedModels = Object.create(null);
+
 function paintTtsModel(p) {
   const row = $("ttsModelRow");
   if (!row) return;
@@ -1419,7 +1718,7 @@ function paintTtsModel(p) {
   if (!has) return;
   const sel = $("ttsModelSel"), inp = $("ttsModelInput");
   sel.textContent = "";
-  for (const m of p.models) {
+  for (const m of (ttsFetchedModels[p.id] || p.models)) {
     const o = document.createElement("option");
     o.value = m;
     o.textContent = m;
@@ -1573,6 +1872,7 @@ function initReadaloud() {
     // list is not this one's.
     voiceCatalogue = "family";
     paintTtsHead(p);
+    renderSiteRow(p, "tts");
     paintTtsKeyField(p);
     paintTtsVoices(p);
     paintTtsModel(p);
@@ -1604,8 +1904,15 @@ function initReadaloud() {
       const keys = Object.assign({}, (got && got.ttsKeys) || {});
       delete keys[p.id];
       chrome.storage.local.set({ ttsKeys: keys }, () => {
+        ttsStored[p.id] = false;
+        replacing[p.id] = false;
         paintTtsKeyField(p);
         paintTtsUse();             // clearing the stored provider's key re-locks
+        renderList();              // …and the "in use" badge goes with the key
+        // …and say so. This pane deleted a key in silence while the translation
+        // pane, one panel away, announced the same act through an aria-live
+        // region. Same sentence, already translated.
+        showTtsMsg(t("byoKeyCleared", "已删除这台电脑上保存的 Key。"), null);
       });
     });
   });
@@ -1629,26 +1936,48 @@ function initReadaloud() {
   // One player for both doors into it: Preview, and Save-and-test once it has
   // proved the key. The blob is released when the line finishes.
   let previewAudio = null;
+
+  // Stopping the line that is playing BECAUSE a new one is starting is not a
+  // failure — but play()'s promise cannot tell the two apart: pausing an
+  // element mid-play rejects it with AbortError, exactly as a codec fault
+  // would. So the second press of Preview (or of Save-and-test, which plays a
+  // sample too) printed "couldn't play it — check the key" about the FIRST
+  // line, over a key that had just passed the test. Mark the element we stop
+  // on purpose and let its rejection go quietly.
+  function stopPreview() {
+    if (!previewAudio) return;
+    previewAudio.ytdsSuperseded = true;
+    try { previewAudio.pause(); } catch (_e) { /* ignore */ }
+    previewAudio = null;
+  }
+
   function playPreview(resp, after) {
     const done = () => { if (after) after(); };
     if (!resp || !resp.b64) { done(); return; }
-    if (previewAudio) { try { previewAudio.pause(); } catch (_e) { /* ignore */ } }
+    stopPreview();
     try {
       const bin = atob(resp.b64);
       const bytes = new Uint8Array(bin.length);
       for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
       const url = URL.createObjectURL(new Blob([bytes], { type: resp.mime || "audio/mpeg" }));
-      previewAudio = new Audio(url);
-      const cleanup = () => { try { URL.revokeObjectURL(url); } catch (_e) { /* ignore */ } done(); };
-      previewAudio.addEventListener("ended", cleanup);
-      previewAudio.addEventListener("error", () => {
+      const el = new Audio(url);
+      previewAudio = el;
+      // A superseded element hands nothing back to its caller either: the
+      // press that replaced it owns the button now, and letting the old
+      // `after` run would re-enable it under the new line.
+      const finish = (quiet) => {
+        try { URL.revokeObjectURL(url); } catch (_e) { /* ignore */ }
+        if (previewAudio === el) previewAudio = null;
+        if (!quiet) done();
+      };
+      const failed = () => {
+        if (el.ytdsSuperseded) { finish(true); return; }
         showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err");
-        cleanup();
-      });
-      previewAudio.play().catch(() => {
-        showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err");
-        cleanup();
-      });
+        finish(false);
+      };
+      el.addEventListener("ended", () => finish(false));
+      el.addEventListener("error", failed);
+      el.play().catch(failed);
     } catch (_e) { done(); }
   }
 
@@ -1659,24 +1988,42 @@ function initReadaloud() {
   // key went through Save-and-test can be previewed, and that flow already
   // granted the host.
 
+  // The translation pane fetches its list with the key that is in the box,
+  // saving it first without adopting the provider. This side refused with
+  // "enter an API key first" while the key sat right there, typed.
   $("ttsFetchVoices").addEventListener("click", () => {
     const p = ttsProvider();
     if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
-    if (!ttsStored[p.id] && !p.keyless) { showTtsMsg(errText("noKey"), "err"); return; }
+    const typedNow = ($("ttsKey") && $("ttsKey").value.trim()) || "";
+    if (!typedNow && !ttsStored[p.id] && !p.keyless) {
+      showTtsMsg(errText("noKey"), "err"); return;
+    }
     const btn = $("ttsFetchVoices");
     const label = t("ttsFetchVoices", "用你的 Key 拉取这个语言的完整音色清单");
     btn.disabled = true;
     btn.textContent = t("ttsFetching", "拉取中…");
     const done = () => { btn.disabled = false; btn.textContent = label; };
     showTtsVoiceMsg("", null);
+    // A key typed but not yet saved has to reach storage before the worker can
+    // use it — the same bargain the translation pane's fetch strikes. It does
+    // NOT adopt the provider: asking a provider what it offers is a question,
+    // not a decision.
+    const keyReady = typedNow
+      ? new Promise((resolve) => chrome.storage.local.get({ ttsKeys: {} }, (got) => {
+          const keys = Object.assign({}, (got && got.ttsKeys) || {});
+          keys[p.id] = typedNow;
+          chrome.storage.local.set({ ttsKeys: keys }, () => { ttsStored[p.id] = true; resolve(); });
+        }))
+      : Promise.resolve();
     // Which provider and which language, same as the two probe buttons: this
     // button had the same two races and got neither fix at the time.
-    sendToBackground({ type: "ttsVoices", provider: p.id, targetLang: state.targetLang })
+    keyReady.then(() =>
+      sendToBackground({ type: "ttsVoices", provider: p.id, targetLang: state.targetLang }))
       .then((resp) => {
         if (!resp || !resp.ok) {
           // Falling back to the built-in family is the honest failure: a voice
           // list is not something a user can type in by hand.
-          showTtsVoiceMsg(listErrText(resp && resp.code), "err");
+          showTtsVoiceMsg(listErrText(resp && resp.code, p), "err");
           done();
           return;
         }
@@ -1692,6 +2039,17 @@ function initReadaloud() {
         paintTtsVoices(p);
         // Say what changed and what it costs, not "more". These voices work for
         // the language they were fetched for and no other.
+        if (p.custom) {
+          // Not "for this language" and not "switch back": a custom server's
+          // voices are neither language-scoped nor a second tier over a family.
+          showTtsVoiceMsg(extra.length
+            ? tsub("ttsVoicesSuggested", [String(extra.length)],
+                "拉到 " + extra.length + " 个音色，已作为上面输入框的候选。")
+            : t("ttsVoicesNone", "这家在这个语言下没有额外音色——内置的那些照样能用。"),
+            extra.length ? "ok" : null);
+          done();
+          return;
+        }
         showTtsVoiceMsg(extra.length
           ? tsub("ttsVoicesSwitched", [String(extra.length)],
             "这是你的 Key 在当前语言下的全部 " + extra.length + " 个音色,只对这个语言生效;点上面那行换回常用音色。")
@@ -1755,7 +2113,7 @@ function initReadaloud() {
     btn.textContent = t("ttsPreviewPlaying", "播放中…");
     const done = () => { btn.disabled = false; btn.textContent = label; };
     showTtsMsg("", null);
-    if (previewAudio) { try { previewAudio.pause(); } catch (_e) { /* ignore */ } }
+    stopPreview();
     // Say WHICH provider and WHICH language, rather than letting the worker
     // read them back out of storage. The provider dropdown does not write on
     // change at all, and the language one writes on a different async path
@@ -1768,7 +2126,7 @@ function initReadaloud() {
       provider: p.id, targetLang: state.targetLang })
       .then((resp) => {
         if (!resp || !resp.ok) {
-          showTtsMsg(errText(resp && resp.code), "err");
+          showTtsMsg(testErrText(resp && resp.code, p), "err");
           done();
           return;
         }
@@ -1796,6 +2154,13 @@ function initReadaloud() {
 
   $("ttsTestBtn").addEventListener("click", () => {
     const p = ttsProvider();
+    // Which provider was actually speaking before this press. persistTts writes
+    // ttsProvider BEFORE the probe runs, so a test that fails used to leave the
+    // extension pointed at the provider that just refused — the pane showed it
+    // as "in use" and every spoken line failed afterwards. Saving the key is
+    // still right (the reader typed it, and the next thing they fix may be the
+    // region or the voice); adopting a provider that could not answer is not.
+    const spokeBefore = state.ttsProvider;
     if (!p) { showTtsMsg(errText("noProvider"), "err"); return; }
     const typed = $("ttsKey").value.trim();
     // An empty key is a valid custom configuration (no Authorization header)
@@ -1839,7 +2204,16 @@ function initReadaloud() {
             targetLang: state.targetLang,
             voice: p.custom ? voiceToSave(p) : $("ttsVoiceSel").value }))
           .then((resp) => {
+            if (!resp || !resp.ok) {
+              // Put the engine back where it was; the key stays saved.
+              if (spokeBefore && spokeBefore !== p.id) {
+                state.ttsProvider = spokeBefore;
+                chrome.storage.sync.set({ ttsProvider: spokeBefore });
+                renderList();
+              }
+            }
             if (resp && resp.ok) {
+              freshenTtsModels(p);
               const kb = Math.max(1, Math.round((resp.bytes || 0) / 1024));
               showTtsMsg(tsub("ttsTestOk", [String(kb), voiceLabel(resp.voice || "")],
                 "连接成功：试音 " + kb + " KB（" + (resp.voice || "") + "）"), "ok");
@@ -1847,7 +2221,7 @@ function initReadaloud() {
               // substitute for hearing it.
               playPreview(resp);
             } else {
-              showTtsMsg(errText(resp && resp.code), "err");
+              showTtsMsg(testErrText(resp && resp.code, p), "err");
             }
           })
           .catch((err) => showTtsMsg(errText((err && err.code) || "failed"), "err"))
@@ -2098,27 +2472,81 @@ function wire() {
   $("showKey").addEventListener("change", (e) => {
     $("key").type = e.target.checked ? "text" : "password";
   });
-  $("key").addEventListener("input", () => paintShowKey("key", "showKeyWrap"));
+  $("key").addEventListener("input", () => {
+    paintShowKey("key", "showKeyWrap");
+    const p = current(); if (p) paintModelGate(p);   // typing a key unlocks the model row at once
+  });
   $("ttsKey").addEventListener("input", () => paintShowKey("ttsKey", "ttsShowKeyWrap"));
+
+  // "Replace" only swaps the clothes: the old key stays until a new one is
+  // saved, so backing out costs nothing. Cancel puts the row back.
+  $("keyReplace").addEventListener("click", () => {
+    const p = current(); if (!p) return;
+    replacing[p.id] = true;
+    paintKeyField(p);
+    const inp = $("key"); if (inp) { try { inp.focus(); } catch (_e) {} }
+  });
+  $("ttsKeyReplace").addEventListener("click", () => {
+    const p = ttsProvider(); if (!p) return;
+    replacing[p.id] = true;
+    paintTtsKeyField(p);
+    const inp = $("ttsKey"); if (inp) { try { inp.focus(); } catch (_e) {} }
+  });
+  // Deleting the key of the provider the extension is TRANSLATING with used to
+  // change nothing except the key: this list went on calling it "in use", the
+  // popup called it "not set up · Configure…", and a second provider with a
+  // working key sat one row away, never offered — the popup's picker only
+  // appears once two are set up. The translation-language pane has answered
+  // this shape for a long time: take away the one in use and it moves to
+  // another and says which. Same act, same answer.
+  function successorFor(p) {
+    // The same predicate this list uses for its ✓: a stored key, or — for the
+    // one that needs none — a Save-and-test that actually answered. Without
+    // that second half the handover walked people onto a local Ollama they may
+    // never have run, which is a worse dead end than the one being fixed.
+    const pool = providerList().filter((q) =>
+      q.id !== p.id && (storedKeys[q.id] || (q.noKey && verifiedOk[q.id])));
+    return pool.find((q) => verifiedOk[q.id]) || pool[0] || null;
+  }
 
   $("keyClear").addEventListener("click", async () => {
     const p = current();
     if (!p) return;
     await saveKey(p.id, null);
     markVerified(p.id, false);
+    replacing[p.id] = false;
+    let moved = null;
+    if (state.byoProvider === p.id) {
+      moved = successorFor(p);
+      if (moved) {
+        state.byoProvider = moved.id;
+        chrome.storage.sync.set({ byoProvider: moved.id });
+      }
+    }
     paintKeyField(p);
     renderList();
-    showMsg(t("byoKeyCleared", "已清除这台电脑上保存的 Key。"), null);
+    // The red line under the model row belonged to the key that is now gone;
+    // leaving it up puts two contradictory sentences on one screen.
+    showModelMsg("", null);
+    showMsg(moved
+      ? tsub("byoKeyClearedMoved", [providerLabel(moved)],
+          "已删除这台电脑上保存的 Key。原来用的是它，现在改用 $1$。")
+      : t("byoKeyCleared", "已删除这台电脑上保存的 Key。"), null);
+    // The button that was pressed leaves with the row it sat in, so focus has
+    // to be put somewhere on purpose or it falls to the body and a keyboard
+    // reader loses their place.
+    const back = $("key");
+    if (back && !back.hidden) { try { back.focus(); } catch (_e) { /* ignore */ } }
   });
 
   $("testBtn").addEventListener("click", () => {
-    withSetup($("testBtn"), "byoTesting", "测试中…",
-      (code) => showMsg(errText(code), "err"), runTest);
+    withSetup($("testBtn"), t("byoTesting", "测试中…"),
+      (code) => showMsg(testErrText(code, current()), "err"), runTest);
   });
 
   $("fetchModels").addEventListener("click", () => {
-    withSetup($("fetchModels"), "optFetching", "拉取中…",
-      (code) => showModelMsg(listErrText(code), "err"), runFetchModels, false);
+    withSetup($("fetchModels"), t("optFetching", "拉取中…"),
+      (code) => showModelMsg(listErrText(code, current()), "err"), runFetchModels, false);
   });
 }
 
@@ -2138,11 +2566,13 @@ wire();
 
 chrome.storage.sync.get(
   { byoProvider: "", byoModel: "", byoBaseUrl: "", targetLang: "zh-CN", langShown: null,
-    byoModelBy: {}, ttsProvider: "local-speech", ttsVoice: "", engine: "auto" },
+    byoModelBy: {}, byoSiteBy: {},
+    ttsProvider: "local-speech", ttsVoice: "", engine: "auto" },
   (got) => {
     state = Object.assign(state, got || {});
     paintAfterSetupNote(state.engine);
     modelsBy = Object.assign(Object.create(null), (got && got.byoModelBy) || {});
+    siteBy = Object.assign(Object.create(null), (got && got.byoSiteBy) || {});
     // The active provider's model is authoritative for it — older profiles have
     // byoModel but no byoModelBy yet.
     if (state.byoProvider && state.byoModel && !modelsBy[state.byoProvider]) {

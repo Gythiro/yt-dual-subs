@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Tarjoaja"
   },
+  "byoSiteLabel": {
+    "message": "Sivusto"
+  },
+  "byoSiteHint": {
+    "message": "Valitse sivusto, jolla rekisteröidyit — ne ovat erillisiä alustoja, eikä toisen avain kelpaa toisella."
+  },
+  "byoSiteGlobal": {
+    "message": "Kansainvälinen"
+  },
+  "byoSiteCn": {
+    "message": "Manner-Kiina"
+  },
   "byoBaseLabel": {
     "message": "Päätepisteen osoite"
   },
@@ -300,7 +312,10 @@
     "message": "API-avain"
   },
   "byoKeyClear": {
-    "message": "Tyhjennä"
+    "message": "Poista"
+  },
+  "byoKeyReplace": {
+    "message": "Korvaa"
   },
   "byoKeyCleared": {
     "message": "Tälle koneelle tallennettu avain on poistettu."
@@ -346,7 +361,13 @@
     "message": "Syötä ensin API-avain ja paina sitten Tallenna ja testaa."
   },
   "byoErrNoModel": {
-    "message": "Tälle palveluntarjoajalle on kirjoitettava mallin nimi."
+    "message": "Valitse ensin malli — valitse listasta tai paina ”Listaa mallit avaimellani”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Tämä palveluntarjoaja ei toimita listaa. Hae ensin saatavilla olevat mallit tai kirjoita mallin nimi itse."
+  },
+  "byoErrNotApi": {
+    "message": "Osoite vastasi verkkosivulla, ei API:lla — yleensä kirjautumissivu tai verkko, joka sieppaa pyynnöt. Tarkista osoite tai kokeile toista verkkoa."
   },
   "byoErrBadBaseUrl": {
     "message": "API-perusosoitteen on oltava täydellinen https://-osoite."
@@ -355,7 +376,13 @@
     "message": "Ilman lupaa kyseiseen API-palvelimeen laajennus ei voi yhdistää. Paina ”Tallenna ja testaa” uudelleen ja myönnä lupa."
   },
   "byoErrAuth": {
-    "message": "Avain hylättiin (401/403) — tarkista, että kopioit sen kokonaan ja että se on aktiivinen."
+    "message": "Avain hylättiin (401) — tarkista, että se kopioitiin kokonaan ja on yhä voimassa."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Tämän koneen palvelin hylkäsi kutsun (403). Sille ei todennäköisesti ole kerrottu sallia laajennusta: OLLAMA_ORIGINS Ollamalle, CORS-kytkin LM Studiossa."
+  },
+  "byoErrForbidden": {
+    "message": "Palveluntarjoaja hylkäsi tämän kutsun (403). Avain on yleensä kunnossa, mutta tili ei saa tehdä sitä — maksamaton saldo, kesken oleva henkilöllisyystarkistus, malli jota ei ole otettu käyttöön tai alue. Tarkista tili palveluntarjoajan konsolista."
   },
   "byoErrListAuth": {
     "message": "Tällä avaimella ei ole oikeutta lukea listaa. Anna oikeus palveluntarjoajan hallinnassa ja hae uudelleen.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Palveluntarjoaja rajoittaa pyyntötahtia — hidastetaan ja yritetään automaattisesti uudelleen."
   },
+  "byoErrLimitedTest": {
+    "message": "Palveluntarjoaja rajoittaa pyyntöjä. Odota hetki ja paina uudelleen."
+  },
   "byoErrQuota": {
-    "message": "Tämän avaimen kiintiö on loppunut tältä jaksolta."
+    "message": "Tämän tilin saldo tai kiintiö on loppunut tältä jaksolta — täydennä sitä palveluntarjoajan konsolissa jatkaaksesi."
   },
   "byoErrBadRequest": {
     "message": "Päätepiste hylkäsi pyynnön — mallin nimi tai perusosoite voi olla väärin."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Listaa mallit avaimellani"
   },
+  "optFetchModelsNoKey": {
+    "message": "Listaa saatavilla olevat mallit"
+  },
   "optFetching": {
     "message": "Listataan…"
   },
@@ -407,6 +440,14 @@
     "message": "Löytyi $N$ mallia",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” ei ole enää tämän palveluntarjoajan listalla — valitse toinen yllä.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Ääneen lukeminen päälle tai pois"
   },
+  "cmdToggleTransLine": {
+    "message": "Näytä tai piilota käännösrivi"
+  },
   "optShortcutsLabel": {
     "message": "Pikanäppäimet"
   },
@@ -730,7 +774,7 @@
     "message": "Aseta pikanäppäimet"
   },
   "optShortcutsHint": {
-    "message": "Nämä näppäimet ovat Chromen, eivät laajennuksen. Aluksi mitään ei ole määritetty; määritettäviä on kaksi: tekstitys päälle/pois ja ääneen lukeminen päälle/pois."
+    "message": "Chrome pitää nämä näppäimet, ei laajennus. Aluksi mitään ei ole sidottu; sidottavissa on kolme: tekstitykset päälle/pois, ääneen luku päälle/pois ja käännösrivin näyttäminen tai piilottaminen."
   },
   "optShortcutsFallback": {
     "message": "Sivu ei auennut täältä — liitä chrome://extensions/shortcuts osoiteriville."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Selaimen omilla äänillä mitään ei lähetetä minnekään — tietokoneesi puhuu rivin itse. Pilvipalvelussa puhuttava teksti menee vain valitsemallesi palvelulle, ja avain pysyy tällä koneella."
+    "message": "Suurin osa selaimen omista äänistä on asennettu tälle tietokoneelle, ja ne puhuvat rivin täällä. Muutama ei: Chrome tarjoaa myös verkkoääniä — ne, joiden nimet alkavat \"Google\"-sanalla — ja niiden kohdalla selain lähettää rivin valmistajalleen. Pilvipalveluntarjoajaa käytettäessä puhuttava teksti menee vain valitsemallesi palveluntarjoajalle, ja avain pysyy tällä koneella."
   },
   "ttsEnableLabel": {
     "message": "Lue käännös ääneen videossa"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Tällä palveluntarjoajalla ei ole lisäääniä tälle kielelle — sisäänrakennetut äänet toimivat silti."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Haettu $N$ ääntä — ne ovat ehdotuksia yllä olevan kentän alla.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "naisääni"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Selain"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Tälle koneelle tallennettu avain on poistettu. Se oli käytössä, joten käännöksen hoitaa nyt $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "ei määritetty tällä tietokoneella"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Tällä tietokoneella ei ole ääntä, joka lukee kieltä $NAME$. Alla on muiden kielten ääniä — valitse yksi, niin rivi luetaan kyseisen kielen aksentilla.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

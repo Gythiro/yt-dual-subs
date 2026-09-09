@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Provedor"
   },
+  "byoSiteLabel": {
+    "message": "Site"
+  },
+  "byoSiteHint": {
+    "message": "Escolha o site em que você se cadastrou — os dois são plataformas distintas e a chave de um não é aceita pelo outro."
+  },
+  "byoSiteGlobal": {
+    "message": "Internacional"
+  },
+  "byoSiteCn": {
+    "message": "China continental"
+  },
   "byoBaseLabel": {
     "message": "Endereço do endpoint"
   },
@@ -300,10 +312,13 @@
     "message": "Chave da API"
   },
   "byoKeyClear": {
-    "message": "Limpar"
+    "message": "Excluir"
+  },
+  "byoKeyReplace": {
+    "message": "Substituir"
   },
   "byoKeyCleared": {
-    "message": "A chave salva neste computador foi removida."
+    "message": "A chave armazenada neste computador foi excluída."
   },
   "byoKeySaved": {
     "message": "salva ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Digite uma chave de API primeiro e depois pressione Salvar e testar."
   },
   "byoErrNoModel": {
-    "message": "Este provedor precisa que o nome do modelo seja digitado."
+    "message": "Escolha um modelo primeiro — selecione um da lista ou clique em “Listar modelos com minha chave”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Este provedor não traz uma lista. Busque os modelos disponíveis primeiro ou digite o nome do modelo."
+  },
+  "byoErrNotApi": {
+    "message": "Esse endereço respondeu com uma página da web, não com a API — geralmente uma tela de login ou uma rede que intercepta as solicitações. Confira o endereço ou tente outra rede."
   },
   "byoErrBadBaseUrl": {
     "message": "A URL base da API precisa ser um endereço https:// completo."
@@ -355,7 +376,13 @@
     "message": "Sem permissão para acessar esse host da API, a extensão não consegue conectar. Pressione “Salvar e testar” de novo e conceda o acesso."
   },
   "byoErrAuth": {
-    "message": "A chave foi recusada (401/403) — confira se foi copiada por completo e está ativa."
+    "message": "A chave foi recusada (401) — confira se foi copiada por inteiro e ainda está ativa."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "O servidor nesta máquina recusou a chamada (403). Muito provavelmente não foi configurado para permitir a extensão: OLLAMA_ORIGINS no Ollama, a opção CORS no LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "O provedor recusou esta chamada (403). Em geral a chave está ok e a conta é que não tem permissão — saldo em atraso, verificação de identidade pendente, modelo não ativado ou a região. Confira a conta no console do provedor."
   },
   "byoErrListAuth": {
     "message": "Esta chave não tem permissão para ler a lista. Conceda essa permissão no painel do provedor e busque de novo.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "O provedor está limitando o ritmo — reduzindo a velocidade e tentando de novo automaticamente."
   },
+  "byoErrLimitedTest": {
+    "message": "O provedor está limitando as requisições. Aguarde um momento e pressione novamente."
+  },
   "byoErrQuota": {
-    "message": "Esta chave está sem cota no período atual."
+    "message": "Esta conta está sem crédito ou cota no período atual — recarregue no console do provedor para continuar."
   },
   "byoErrBadRequest": {
     "message": "O endpoint recusou o pedido — o nome do modelo ou a URL base pode estar errado."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Listar modelos com minha chave"
   },
+  "optFetchModelsNoKey": {
+    "message": "Listar modelos disponíveis"
+  },
   "optFetching": {
     "message": "Listando…"
   },
@@ -407,6 +440,14 @@
     "message": "$N$ modelos encontrados",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” não está mais na lista deste provedor — escolha outro acima.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Ativar ou desativar a leitura em voz alta"
   },
+  "cmdToggleTransLine": {
+    "message": "Mostrar ou ocultar a linha de tradução"
+  },
   "optShortcutsLabel": {
     "message": "Atalhos de teclado"
   },
@@ -730,7 +774,7 @@
     "message": "Definir atalhos"
   },
   "optShortcutsHint": {
-    "message": "Esses atalhos são do Chrome, não da extensão. No começo nenhum vem definido; dá para definir dois: legendas ligadas/desligadas e leitura em voz alta ligada/desligada."
+    "message": "O Chrome reserva essas teclas, não a extensão. Nada vem vinculado de início; três ações podem ser: ligar/desligar legendas, ligar/desligar a leitura em voz alta e mostrar ou ocultar a linha de tradução."
   },
   "optShortcutsFallback": {
     "message": "A página não abriu daqui — cole chrome://extensions/shortcuts na barra de endereços."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Com as vozes do próprio navegador, nada é enviado a lugar nenhum — o computador fala a linha. Com um provedor na nuvem, o texto a ser falado vai só para o provedor que você escolheu, e a chave fica neste computador."
+    "message": "A maioria das vozes do próprio navegador está instalada neste computador e fala o texto aqui. Algumas não: o Chrome também oferece vozes online — as cujo nome começa com \"Google\" — e, para essas, o navegador envia o texto ao fabricante. Com um provedor na nuvem, o texto a ser falado vai somente ao provedor que você escolheu, e a chave permanece neste computador."
   },
   "ttsEnableLabel": {
     "message": "Ler a tradução em voz alta no vídeo"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Este provedor não tem vozes extras para este idioma — as integradas ainda funcionam."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Obtidas $N$ vozes — são sugestões no campo acima.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "feminina"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Navegador"
+  },
+  "byoKeyClearedMoved": {
+    "message": "A chave armazenada neste computador foi excluída. Ela estava em uso, então a tradução agora passa por $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "não configurado neste computador"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Este computador não tem uma voz que leia $NAME$. A lista abaixo mostra vozes de outros idiomas — escolha uma e a linha será lida com o sotaque desse idioma.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

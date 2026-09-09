@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Dostawca"
   },
+  "byoSiteLabel": {
+    "message": "Witryna"
+  },
+  "byoSiteHint": {
+    "message": "Wybierz serwis, na którym się zarejestrowałeś — to dwie osobne platformy i klucz z jednej nie jest akceptowany przez drugą."
+  },
+  "byoSiteGlobal": {
+    "message": "Międzynarodowa"
+  },
+  "byoSiteCn": {
+    "message": "Chiny kontynentalne"
+  },
   "byoBaseLabel": {
     "message": "Adres endpointu"
   },
@@ -300,7 +312,10 @@
     "message": "Klucz API"
   },
   "byoKeyClear": {
-    "message": "Wyczyść"
+    "message": "Usuń"
+  },
+  "byoKeyReplace": {
+    "message": "Zastąp"
   },
   "byoKeyCleared": {
     "message": "Klucz zapisany na tym komputerze został usunięty."
@@ -346,7 +361,13 @@
     "message": "Najpierw wpisz klucz API, potem naciśnij Zapisz i testuj."
   },
   "byoErrNoModel": {
-    "message": "Ten dostawca wymaga wpisania nazwy modelu."
+    "message": "Najpierw wybierz model — wskaż jeden z listy albo naciśnij „Lista modeli z moim kluczem”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Ten dostawca nie udostępnia listy. Najpierw pobierz dostępne modele albo wpisz nazwę modelu samodzielnie."
+  },
+  "byoErrNotApi": {
+    "message": "Ten adres zwrócił stronę internetową, a nie API — zwykle to strona logowania albo sieć przechwytująca żądania. Sprawdź adres albo spróbuj innej sieci."
   },
   "byoErrBadBaseUrl": {
     "message": "Bazowy URL API musi być pełnym adresem https://."
@@ -355,7 +376,13 @@
     "message": "Bez uprawnienia do tego hosta API rozszerzenie nie może się połączyć. Naciśnij ponownie „Zapisz i przetestuj” i zezwól na dostęp."
   },
   "byoErrAuth": {
-    "message": "Klucz odrzucony (401/403) — sprawdź, czy skopiowano go w całości i czy jest aktywny."
+    "message": "Klucz został odrzucony (401) — sprawdź, czy skopiowano go w całości i czy nadal jest aktywny."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Serwer na tym komputerze odrzucił wywołanie (403). Najpewniej nie zezwolono rozszerzeniu: OLLAMA_ORIGINS dla Ollama, przełącznik CORS w LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Dostawca odrzucił to wywołanie (403). Zazwyczaj klucz jest w porządku, a konto nie ma uprawnień — nieopłacone saldo, weryfikacja tożsamości w toku, niewłączony model lub region. Sprawdź konto w konsoli dostawcy."
   },
   "byoErrListAuth": {
     "message": "Ten klucz nie ma uprawnienia do odczytu listy. Nadaj je w panelu dostawcy i pobierz ponownie.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Dostawca ogranicza tempo żądań — zwalniam i ponawiam automatycznie."
   },
+  "byoErrLimitedTest": {
+    "message": "Dostawca ogranicza liczbę żądań. Poczekaj chwilę i naciśnij ponownie."
+  },
   "byoErrQuota": {
-    "message": "Ten klucz wyczerpał limit na bieżący okres."
+    "message": "Na tym koncie skończył się kredyt lub limit w bieżącym okresie — doładuj je w konsoli dostawcy, aby kontynuować."
   },
   "byoErrBadRequest": {
     "message": "Endpoint odrzucił żądanie — nazwa modelu lub bazowy URL mogą być błędne."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Pobierz listę modeli kluczem"
   },
+  "optFetchModelsNoKey": {
+    "message": "Lista dostępnych modeli"
+  },
   "optFetching": {
     "message": "Pobieranie…"
   },
@@ -407,6 +440,14 @@
     "message": "Znaleziono $N$ modeli",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$” nie ma już na liście tego dostawcy — wybierz inny powyżej.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Włącz lub wyłącz czytanie na głos"
   },
+  "cmdToggleTransLine": {
+    "message": "Pokaż lub ukryj linię tłumaczenia"
+  },
   "optShortcutsLabel": {
     "message": "Skróty klawiszowe"
   },
@@ -730,7 +774,7 @@
     "message": "Ustaw skróty"
   },
   "optShortcutsHint": {
-    "message": "Tymi skrótami zarządza Chrome, nie rozszerzenie. Na początku żaden nie jest przypisany; przypisać można dwa: napisy wł./wył. i czytanie na głos wł./wył."
+    "message": "Chrome zachowuje te klawisze, nie rozszerzenie. Na początku nic nie jest przypisane; można powiązać trzy rzeczy: napisy włącz/wyłącz, czytanie na głos włącz/wyłącz oraz pokaż lub ukryj linię tłumaczenia."
   },
   "optShortcutsFallback": {
     "message": "Stąd ta strona się nie otworzyła — wklej chrome://extensions/shortcuts w pasku adresu."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Przy głosach przeglądarki nic nie jest nigdzie wysyłane — komputer sam wypowiada linijkę. Przy dostawcy chmurowym tekst do odczytu trafia wyłącznie do wybranego dostawcy, a klucz zostaje na tym komputerze."
+    "message": "Większość głosów samej przeglądarki jest zainstalowana na tym komputerze i odczytuje tekst tutaj. Kilka z nich nie: Chrome oferuje też głosy online — te, których nazwy zaczynają się od „Google” — i w ich przypadku przeglądarka wysyła tekst do ich twórcy. Przy dostawcy chmurowym tekst do odczytania trafia wyłącznie do wybranego przez Ciebie dostawcy, a klucz pozostaje na tym komputerze."
   },
   "ttsEnableLabel": {
     "message": "Czytaj tłumaczenie na głos w filmie"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Ten dostawca nie ma dodatkowych głosów dla tego języka — wbudowane nadal działają."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Pobrano $N$ głosów — to sugestie pod polem powyżej.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "żeński"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Przeglądarka"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Klucz zapisany na tym komputerze został usunięty. Był on w użyciu, więc tłumaczenie odbywa się teraz przez $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "nie skonfigurowano na tym komputerze"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Ten komputer nie ma głosu, który odczytuje $NAME$. Lista poniżej to głosy innych języków — wybierz jeden, a linia zostanie odczytana z akcentem tego języka.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

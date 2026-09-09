@@ -264,7 +264,13 @@ a { text-underline-offset: 3px; }
 }
 .pitem:hover { background: var(--surface-2); }
 .pitem.on { background: var(--accent-dim); color: var(--accent); font-weight: 600; }
-.pitem-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Two lines rather than an ellipsis. "Alibaba Cloud Model Studio (Q…" and
+   "Eigene Brow…" told a reader nothing they could act on, and the badge beside
+   them made it worse by taking the width first. A provider's name is the one
+   thing this list exists to say. */
+.pitem-name { flex: 1; min-width: 0; overflow-wrap: anywhere; white-space: normal;
+  line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; }
 .pitem-ok { flex: none; font-size: 11px; color: #5fd38a; }
 .pitem.on .pitem-ok { color: inherit; }
 /* Which provider the extension actually translates with. The highlight means
@@ -503,6 +509,20 @@ input[hidden] { display: none; }
 .omsg.ok { color: #5fd38a; }
 .omsg.err { color: #ff8a8a; }
 .omsg.warn { color: #ffd88a; }
+/* A stored key, said in words rather than through an empty box's placeholder.
+   The placeholder was the only signal that a key existed, and a placeholder is
+   not in the accessibility tree at all: a screen reader heard the same thing
+   whether a key was saved or not. */
+.okeyheld { display: flex; align-items: center; gap: 12px; padding: 9px 12px;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; }
+.okeyheld[hidden] { display: none; }
+.okeyheld-t { flex: 1; font-size: 12.5px; color: var(--ink); }
+.olink.danger { color: #ff8a8a; }
+/* The provider's own words, under ours. Muted on purpose: our sentence is the
+   instruction, this is the evidence behind it. Same colour as .ohint, which is
+   already measured by layout-audit. */
+.omsg-raw { display: block; margin-top: 5px; font-size: 11.5px; color: var(--muted);
+            overflow-wrap: anywhere; }
 
 .onote {
   margin: 0; padding: 10px 12px; font-size: 12.5px; color: var(--muted);

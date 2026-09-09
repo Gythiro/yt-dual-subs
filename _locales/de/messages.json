@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Anbieter"
   },
+  "byoSiteLabel": {
+    "message": "Plattform"
+  },
+  "byoSiteHint": {
+    "message": "Wähle die Seite, auf der du dich registriert hast — die beiden sind getrennte Plattformen, und ein Schlüssel der einen wird von der anderen nicht akzeptiert."
+  },
+  "byoSiteGlobal": {
+    "message": "International"
+  },
+  "byoSiteCn": {
+    "message": "Festlandchina"
+  },
   "byoBaseLabel": {
     "message": "Endpunktadresse"
   },
@@ -302,8 +314,11 @@
   "byoKeyClear": {
     "message": "Löschen"
   },
+  "byoKeyReplace": {
+    "message": "Ersetzen"
+  },
   "byoKeyCleared": {
-    "message": "Der auf diesem Gerät gespeicherte Schlüssel wurde entfernt."
+    "message": "Der auf diesem Computer gespeicherte Schlüssel wurde gelöscht."
   },
   "byoKeySaved": {
     "message": "gespeichert ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Zuerst einen API-Schlüssel eingeben, dann Speichern und testen."
   },
   "byoErrNoModel": {
-    "message": "Bei diesem Anbieter muss ein Modellname eingegeben werden."
+    "message": "Wähle zuerst ein Modell — nimm eines aus der Liste oder klicke auf „Modelle mit meinem Schlüssel auflisten“."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Dieser Anbieter liefert keine Liste. Zuerst die verfügbaren Modelle abrufen oder den Modellnamen selbst eingeben."
+  },
+  "byoErrNotApi": {
+    "message": "Diese Adresse hat mit einer Webseite geantwortet, nicht mit der API — meist eine Anmeldeseite oder ein Netzwerk, das Anfragen abfängt. Adresse prüfen oder ein anderes Netzwerk versuchen."
   },
   "byoErrBadBaseUrl": {
     "message": "Die API-Basis-URL muss eine vollständige https://-Adresse sein."
@@ -355,7 +376,13 @@
     "message": "Ohne Berechtigung, diesen API-Host zu erreichen, kann die Erweiterung nicht verbinden. Drücke erneut „Speichern und testen“ und erlaube den Zugriff."
   },
   "byoErrAuth": {
-    "message": "Der Schlüssel wurde abgelehnt (401/403) — prüfen, ob er vollständig kopiert und aktiv ist."
+    "message": "Der Schlüssel wurde abgelehnt (401) — prüfe, ob er vollständig kopiert und noch aktiv ist."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Der Server auf diesem Rechner hat den Aufruf abgelehnt (403). Vermutlich darf die Erweiterung nicht zugreifen: OLLAMA_ORIGINS bei Ollama, der CORS-Schalter in LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Der Anbieter hat diesen Aufruf abgelehnt (403). Meist ist der Schlüssel in Ordnung, das Konto darf ihn aber nicht ausführen — offener Betrag, ausstehende Identitätsprüfung, nicht aktiviertes Modell oder die Region. Prüfe das Konto in der Konsole des Anbieters."
   },
   "byoErrListAuth": {
     "message": "Dieser Schlüssel darf die Liste nicht lesen. Erteile ihm im Dashboard des Anbieters die Leseberechtigung und hol sie erneut ab.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Der Anbieter drosselt die Anfragen — es wird automatisch verlangsamt und erneut versucht."
   },
+  "byoErrLimitedTest": {
+    "message": "Der Anbieter drosselt die Anfragen. Warte kurz und drücke erneut."
+  },
   "byoErrQuota": {
-    "message": "Dieser Schlüssel hat für den aktuellen Zeitraum kein Kontingent mehr."
+    "message": "Dieses Konto hat für den aktuellen Zeitraum kein Guthaben oder Kontingent mehr — lade es in der Konsole des Anbieters auf, um fortzufahren."
   },
   "byoErrBadRequest": {
     "message": "Der Endpunkt hat die Anfrage abgelehnt — Modellname oder Basis-URL sind möglicherweise falsch."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Modelle mit meinem Schlüssel auflisten"
   },
+  "optFetchModelsNoKey": {
+    "message": "Verfügbare Modelle auflisten"
+  },
   "optFetching": {
     "message": "Auflisten…"
   },
@@ -407,6 +440,14 @@
     "message": "$N$ Modelle gefunden",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$“ steht nicht mehr in der Liste dieses Anbieters — wählen Sie oben ein anderes.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Vorlesen ein/aus"
   },
+  "cmdToggleTransLine": {
+    "message": "Übersetzungszeile ein- oder ausblenden"
+  },
   "optShortcutsLabel": {
     "message": "Tastenkürzel"
   },
@@ -730,7 +774,7 @@
     "message": "Kürzel festlegen"
   },
   "optShortcutsHint": {
-    "message": "Diese Tasten verwaltet Chrome, nicht die Erweiterung. Zu Beginn ist keine belegt; belegen lassen sich zwei: Untertitel ein/aus und Vorlesen ein/aus."
+    "message": "Chrome behält diese Tasten, nicht die Erweiterung. Anfangs ist nichts belegt; drei Dinge können es sein: Untertitel ein/aus, Vorlesen ein/aus und die Übersetzungszeile ein- oder ausblenden."
   },
   "optShortcutsFallback": {
     "message": "Von hier aus ließ sich die Seite nicht öffnen — füge chrome://extensions/shortcuts in die Adressleiste ein."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Mit den Stimmen des Browsers wird nichts gesendet — der Computer spricht die Zeile selbst. Bei einem Cloud-Anbieter geht der vorzulesende Text nur an den gewählten Anbieter, und der Schlüssel bleibt auf diesem Gerät."
+    "message": "Die meisten Stimmen Ihres Browsers sind auf diesem Computer installiert und sprechen den Text hier vor. Einige nicht: Chrome bietet auch Online-Stimmen an — jene, deren Namen mit \"Google\" beginnen — und für diese sendet der Browser den Text an den Hersteller. Bei einem Cloud-Anbieter geht der vorzulesende Text nur an den Anbieter Ihrer Wahl, und der Schlüssel bleibt auf diesem Gerät."
   },
   "ttsEnableLabel": {
     "message": "Übersetzung im Video vorlesen"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Dieser Anbieter hat keine zusätzlichen Stimmen für diese Sprache — die integrierten funktionieren weiterhin."
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$ Stimmen geladen — sie sind Vorschläge unter dem Feld oben.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "weiblich"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Browser"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Der auf diesem Computer gespeicherte Schlüssel wurde gelöscht. Er war in Verwendung, daher läuft die Übersetzung jetzt über $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "auf diesem Computer nicht eingerichtet"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Dieser Computer hat keine Stimme, die $NAME$ vorliest. Die Liste unten zeigt Stimmen anderer Sprachen — wählen Sie eine aus, dann wird die Zeile mit dem Akzent dieser Sprache vorgelesen.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

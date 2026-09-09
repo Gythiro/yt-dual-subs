@@ -305,6 +305,18 @@
   "byoProviderLabel": {
     "message": "Provider"
   },
+  "byoSiteLabel": {
+    "message": "Site"
+  },
+  "byoSiteHint": {
+    "message": "Pick the site you signed up on — the two are separate platforms and a key from one is not accepted by the other."
+  },
+  "byoSiteGlobal": {
+    "message": "International"
+  },
+  "byoSiteCn": {
+    "message": "Mainland China"
+  },
   "byoBaseLabel": {
     "message": "Endpoint address"
   },
@@ -318,10 +330,21 @@
     "message": "API key"
   },
   "byoKeyClear": {
-    "message": "Clear"
+    "message": "Delete"
+  },
+  "byoKeyReplace": {
+    "message": "Replace"
   },
   "byoKeyCleared": {
-    "message": "The key stored on this machine has been removed."
+    "message": "The key stored on this machine has been deleted."
+  },
+  "byoKeyClearedMoved": {
+    "message": "The key stored on this machine has been deleted. That one was in use, so translation now goes through $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
   "byoKeySaved": {
     "message": "saved ····$LAST4$",
@@ -364,7 +387,13 @@
     "message": "Enter an API key first, then press Save and test."
   },
   "byoErrNoModel": {
-    "message": "This provider needs a model name typed in."
+    "message": "Pick a model first — choose one from the list, or press “List models with my key”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "This provider ships no list. Fetch the available models first, or type the model name yourself."
+  },
+  "byoErrNotApi": {
+    "message": "That address answered with a web page, not the API — usually a sign-in wall or a network that intercepts requests. Check the address, or try another network."
   },
   "byoErrBadBaseUrl": {
     "message": "The API base URL must be a full https:// address."
@@ -373,7 +402,13 @@
     "message": "Without permission to reach that API host the extension cannot connect. Press “Save and test” again and allow it."
   },
   "byoErrAuth": {
-    "message": "The key was rejected (401/403) — check that it was copied in full and is active."
+    "message": "The key was rejected (401) — check that it was copied in full and is still active."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "The server on this machine refused the call (403). It has most likely not been told to allow the extension: OLLAMA_ORIGINS for Ollama, the CORS switch in LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "The provider refused this call (403). Usually the key is fine and the account is not allowed to make it — an unpaid balance, an identity check still pending, a model not switched on, or the region. Check the account in the provider's console."
   },
   "byoErrListAuth": {
     "message": "This key isn't allowed to read the list. Give it that permission in the provider's dashboard, then fetch again.",
@@ -382,8 +417,11 @@
   "byoErrLimited": {
     "message": "The provider is rate-limiting — slowing down and retrying automatically."
   },
+  "byoErrLimitedTest": {
+    "message": "The provider is rate-limiting. Wait a moment and press it again."
+  },
   "byoErrQuota": {
-    "message": "This key is out of quota for the current period."
+    "message": "This account is out of credit or quota for the current period — top it up in the provider's console to carry on."
   },
   "byoErrBadRequest": {
     "message": "The endpoint refused the request — the model name or base URL may be wrong."
@@ -418,6 +456,9 @@
   "optFetchModels": {
     "message": "List models with my key"
   },
+  "optFetchModelsNoKey": {
+    "message": "List available models"
+  },
   "optFetching": {
     "message": "Listing…"
   },
@@ -428,6 +469,10 @@
         "content": "$1"
       }
     }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” is no longer on this provider's list — pick another one above.",
+    "placeholders": { "model": { "content": "$1" } }
   },
   "optModelsFailed": {
     "message": "Could not list models — type the model name instead."
@@ -516,6 +561,9 @@
   "cmdToggleTts": {
     "message": "Read aloud on or off"
   },
+  "cmdToggleTransLine": {
+    "message": "Show or hide the translation line"
+  },
   "optShortcutsLabel": {
     "message": "Keyboard shortcuts"
   },
@@ -523,7 +571,7 @@
     "message": "Set shortcuts"
   },
   "optShortcutsHint": {
-    "message": "Chrome keeps these keys, not the extension. Nothing is bound to begin with; two things can be: subtitles on/off and read aloud on/off."
+    "message": "Chrome keeps these keys, not the extension. Nothing is bound to begin with; three things can be: subtitles on/off, read aloud on/off, and show or hide the translation line."
   },
   "optShortcutsFallback": {
     "message": "Chrome would not open that page from here — paste chrome://extensions/shortcuts into the address bar."
@@ -757,6 +805,10 @@
   "ttsVoicesNone": {
     "message": "This provider has no extra voices for this language — the built-in ones still work."
   },
+  "ttsVoicesSuggested": {
+    "message": "Fetched $N$ voices — they are suggestions under the field above.",
+    "placeholders": { "n": { "content": "$1" } }
+  },
   "ttsVoiceFemale": {
     "message": "Female"
   },
@@ -775,7 +827,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "With your browser's own voices, nothing is sent anywhere — your computer speaks the line itself. With a cloud provider, the text to be spoken goes only to the provider you chose, and the key stays on this machine."
+    "message": "Most of your browser's own voices are installed on this computer and speak the line here. A few are not: Chrome also offers online voices — the ones whose names begin with \"Google\" — and for those the browser sends the line to its maker. With a cloud provider, the text to be spoken goes only to the provider you chose, and the key stays on this machine."
   },
   "ttsEnableLabel": {
     "message": "Read the translation aloud in the video"
@@ -898,6 +950,14 @@
   },
   "ttsNoSynth": {
     "message": "This computer has no voices to speak with."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "This computer has no voice that reads $NAME$. The list below is other languages' voices — pick one and the line will be read with that language's accent.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoicesLoading": {
     "message": "Looking for this computer's voices…"
@@ -1035,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "the provider refused those requests"
+  },
+  "ttsSkipNotSet": {
+    "message": "not set up on this computer"
   },
   "statusTrackRetry": {
     "message": "The subtitle track hasn't arrived — retrying automatically. In a hurry? Refresh the page to try again now."

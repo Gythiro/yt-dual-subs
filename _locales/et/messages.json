@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Teenusepakkuja"
   },
+  "byoSiteLabel": {
+    "message": "Platvorm"
+  },
+  "byoSiteHint": {
+    "message": "Vali sait, millel registreerusid — need on eraldi platvormid ja ühe võti ei kehti teisel."
+  },
+  "byoSiteGlobal": {
+    "message": "Rahvusvaheline"
+  },
+  "byoSiteCn": {
+    "message": "Mandri-Hiina"
+  },
   "byoBaseLabel": {
     "message": "Lõpp-punkti aadress"
   },
@@ -300,10 +312,13 @@
     "message": "API võti"
   },
   "byoKeyClear": {
-    "message": "Tühjenda"
+    "message": "Kustuta"
+  },
+  "byoKeyReplace": {
+    "message": "Asenda"
   },
   "byoKeyCleared": {
-    "message": "Sellele seadmele salvestatud võti on eemaldatud."
+    "message": "Sellel arvutil salvestatud võti on kustutatud."
   },
   "byoKeySaved": {
     "message": "salvestatud ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Sisesta esmalt API-võti, seejärel vajuta Salvesta ja testi."
   },
   "byoErrNoModel": {
-    "message": "See teenusepakkuja vajab sisestatud mudeli nime."
+    "message": "Vali esmalt mudel — vali üks loendist või vajuta „Loetle mudelid minu võtmega“."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "See pakkuja ei paku nimekirja. Hangi esmalt saadaolevad mudelid või sisesta mudeli nimi ise."
+  },
+  "byoErrNotApi": {
+    "message": "See aadress vastas veebilehega, mitte API-ga — tavaliselt sisselogimissein või võrk, mis pealtkuulab päringuid. Kontrolli aadressi või proovi teist võrku."
   },
   "byoErrBadBaseUrl": {
     "message": "API baas-URL peab olema täielik https:// aadress."
@@ -355,7 +376,13 @@
     "message": "Ilma loata selle API hostini jõuda ei saa laiendus ühenduda. Vajuta uuesti „Salvesta ja testi“ ja anna luba."
   },
   "byoErrAuth": {
-    "message": "Võti lükati tagasi (401/403) — kontrolli, et see on täielikult kopeeritud ja aktiivne."
+    "message": "Võti lükati tagasi (401) — kontrolli, et see on täielikult kopeeritud ja endiselt aktiivne."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Selle masina server keeldus päringust (403). Tõenäoliselt pole talle öeldud, et laiendit lubada: OLLAMA_ORIGINS Ollama jaoks, CORS-lüliti LM Studios."
+  },
+  "byoErrForbidden": {
+    "message": "Teenusepakkuja keeldus päringust (403). Tavaliselt on võti korras ja kontol pole luba seda teha — tasumata saldo, ootel identiteedikontroll, sisse lülitamata mudel või piirkond. Kontrolli kontot teenusepakkuja konsoolis."
   },
   "byoErrListAuth": {
     "message": "Sellel võtmel pole loendi lugemise õigust. Anna see õigus teenusepakkuja paneelis ja tõmba uuesti.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Teenusepakkuja piirab päringute sagedust — aeglustan ja proovin automaatselt uuesti."
   },
+  "byoErrLimitedTest": {
+    "message": "Teenusepakkuja piirab päringuid. Oota hetk ja vajuta uuesti."
+  },
   "byoErrQuota": {
-    "message": "Selle võtme kvoot on käesolevaks perioodiks otsas."
+    "message": "Sellel kontol on selle perioodi krediit või kvoot otsas — täienda seda teenusepakkuja konsoolis, et jätkata."
   },
   "byoErrBadRequest": {
     "message": "Lõpp-punkt keeldus päringust — mudeli nimi või baas-URL võib olla vale."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Loetle mudelid võtmega"
   },
+  "optFetchModelsNoKey": {
+    "message": "Loetle saadaolevad mudelid"
+  },
   "optFetching": {
     "message": "Loetlemine…"
   },
@@ -407,6 +440,14 @@
     "message": "Leitud $N$ mudelit",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$“ pole enam selle pakkuja nimekirjas — vali ülal teine.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Ettelugemine sisse või välja"
   },
+  "cmdToggleTransLine": {
+    "message": "Näita või peida tõlkerida"
+  },
   "optShortcutsLabel": {
     "message": "Kiirklahvid"
   },
@@ -730,7 +774,7 @@
     "message": "Määra kiirklahvid"
   },
   "optShortcutsHint": {
-    "message": "Neid klahve hoiab Chrome, mitte laiendus. Alguses pole ühtegi määratud; määrata saab kaks: subtiitrid sisse/välja ja ettelugemine sisse/välja."
+    "message": "Need klahvid kuuluvad Chrome'ile, mitte laiendusele. Algselt pole midagi seotud; siduda saab kolm asja: subtiitrid sisse/välja, ettelugemine sisse/välja ja tõlkerida näita või peida."
   },
   "optShortcutsFallback": {
     "message": "Siit see leht ei avanenud — kleebi chrome://extensions/shortcuts aadressiribale."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Brauseri enda häältega ei saadeta midagi kuhugi — arvuti loeb rea ise ette. Pilveteenuse puhul läheb etteloetav tekst ainult valitud pakkujale ja võti jääb sellele masinale."
+    "message": "Enamik brauseri enda hääli on paigaldatud sellesse arvutisse ja loevad teksti siin ette. Mõned mitte: Chrome pakub ka veebihääli — need, mille nimed algavad sõnaga \"Google\" — ja nende puhul saadab brauser teksti nende tootjale. Pilveteenuse puhul läheb kõneldav tekst ainult teie valitud teenusepakkujale ning võti jääb sellesse masinasse."
   },
   "ttsEnableLabel": {
     "message": "Loe tõlge videos ette"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Sellel pakkujal pole selle keele jaoks lisahääli — sisseehitatud hääled töötavad endiselt."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Laaditi $N$ häält — need on soovitused ülaloleva välja all.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "naishääl"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Brauser"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Selles arvutis salvestatud võti on kustutatud. See oli kasutusel, seega toimub tõlge nüüd $NAME$ kaudu.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "selles arvutis seadistamata"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Sellel arvutil pole häält, mis loeks keelt $NAME$. Allpool on teiste keelte hääled — vali üks ja rida loetakse selle keele aktsendiga.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -65,6 +65,19 @@
         <a id="pGuideLink" target="_blank" rel="noopener" data-i18n="byoGuide">还不会配？看教程</a>
       </p>
 
+      <!-- A few providers run two independent platforms — a China site and a
+           global one — with separate accounts whose keys are not
+           interchangeable. The address used to be hard-coded to one of them,
+           so a reader on the other got a flat refusal for a key that was
+           perfectly good. The buttons carry the bare hostnames: those need no
+           translation, and they are what the provider's own console shows. -->
+      <div class="ofield" id="siteRow" hidden>
+        <label for="siteSeg" id="siteRowLabel" data-i18n="byoSiteLabel">站点</label>
+        <select id="siteSeg"></select>
+        <p class="ohint" id="siteHint" data-i18n="byoSiteHint">
+          按你注册账号的那个网站选——两边是各自独立的平台，Key 不通用。
+        </p>
+      </div>
       <p class="oneed" id="needKey" hidden data-i18n="optNeedKey">
         还没填 Key，这个服务商暂时用不了。
       </p>
@@ -78,6 +91,28 @@
           或 https://example.com/v1/chat/completions。本机的 Ollama、LM Studio 填
           http://localhost:11434/v1 这种地址就行。Key 可以留空；http 只有本机回环地址能用。
         </p>
+      </div>
+
+      <!-- Key first, model second. It was the other way round, and the order on
+           screen was the reverse of the order you must work in: the model list
+           cannot exist until a key does, and "List models with my key" refuses
+           without one. A reader starting at the top met an empty model box for
+           a provider whose name they had just clicked, with nothing to type in
+           it. The read-aloud pane on this same page already runs key-then-model;
+           so does every comparable tool we looked at. -->
+      <div class="ofield">
+        <div class="ofield-head">
+          <label for="key" data-i18n="byoKeyLabel">API Key</label>
+          <span class="ospacer"></span>
+          <label class="ochk" id="showKeyWrap" hidden><input type="checkbox" id="showKey" />
+            <span data-i18n="optShowKey">显示</span></label>
+        </div>
+        <div class="okeyheld" id="keyHeld" hidden>
+          <span class="okeyheld-t" id="keyHeldText"></span>
+          <button type="button" class="olink" id="keyReplace" data-i18n="byoKeyReplace">更换</button>
+          <button type="button" class="olink danger" id="keyClear" data-i18n="byoKeyClear">删除</button>
+        </div>
+        <input type="password" id="key" spellcheck="false" autocomplete="off" />
       </div>
 
       <div class="ofield" id="modelRow">
@@ -94,17 +129,6 @@
         <input type="text" id="modelInput" spellcheck="false" autocomplete="off"
                aria-labelledby="modelSelLabel" hidden />
         <p class="ohint" id="modelMsg" role="status" aria-live="polite" hidden></p>
-      </div>
-
-      <div class="ofield">
-        <div class="ofield-head">
-          <label for="key" data-i18n="byoKeyLabel">API Key</label>
-          <span class="ospacer"></span>
-          <label class="ochk" id="showKeyWrap" hidden><input type="checkbox" id="showKey" />
-            <span data-i18n="optShowKey">显示</span></label>
-          <button type="button" class="olink" id="keyClear" hidden data-i18n="byoKeyClear">清除</button>
-        </div>
-        <input type="password" id="key" spellcheck="false" autocomplete="off" />
       </div>
 
       <button type="button" class="obtn primary" id="testBtn" data-i18n="byoTest">保存并测通</button>
@@ -382,13 +406,30 @@
           这类本机朗读服务）。Key 可以留空；http 只有本机回环地址能用。
         </p>
       </div>
+      <!-- A few providers run two independent platforms — a China site and a
+           global one — with separate accounts whose keys are not
+           interchangeable. The address used to be hard-coded to one of them,
+           so a reader on the other got a flat refusal for a key that was
+           perfectly good. The buttons carry the bare hostnames: those need no
+           translation, and they are what the provider's own console shows. -->
+      <div class="ofield" id="ttsSiteRow" hidden>
+        <label for="ttsSiteSeg" id="ttsSiteRowLabel" data-i18n="byoSiteLabel">站点</label>
+        <select id="ttsSiteSeg"></select>
+        <p class="ohint" id="ttsSiteHint" data-i18n="byoSiteHint">
+          按你注册账号的那个网站选——两边是各自独立的平台，Key 不通用。
+        </p>
+      </div>
       <div class="ofield">
         <div class="ofield-head">
           <label for="ttsKey" data-i18n="byoKeyLabel">API Key</label>
           <span class="ospacer"></span>
           <label class="ochk" id="ttsShowKeyWrap" hidden><input type="checkbox" id="ttsShowKey" />
             <span data-i18n="optShowKey">显示</span></label>
-          <button type="button" class="olink" id="ttsKeyClear" hidden data-i18n="byoKeyClear">清除</button>
+        </div>
+        <div class="okeyheld" id="ttsKeyHeld" hidden>
+          <span class="okeyheld-t" id="ttsKeyHeldText"></span>
+          <button type="button" class="olink" id="ttsKeyReplace" data-i18n="byoKeyReplace">更换</button>
+          <button type="button" class="olink danger" id="ttsKeyClear" data-i18n="byoKeyClear">删除</button>
         </div>
         <input type="password" id="ttsKey" spellcheck="false" autocomplete="off" />
       </div>
@@ -431,7 +472,12 @@
         <div class="orow">
           <select id="ttsVoiceSel"></select>
           <input type="text" id="ttsVoiceInput" hidden spellcheck="false"
-                 autocomplete="off" placeholder="af_bella" />
+                 autocomplete="off" placeholder="af_bella" list="ttsVoiceList" />
+          <!-- Filled from whatever the server answered on /v1/audio/voices.
+               The field stays free text: a server can hold voices that path
+               never reported, and typing one has always been the contract
+               here. Suggestions only. -->
+          <datalist id="ttsVoiceList"></datalist>
           <button type="button" class="obtn ghost" id="ttsPreview"
                   data-i18n="ttsPreview">试听</button>
         </div>
@@ -489,7 +535,7 @@
         </div>
         <p class="ohint" data-i18n="ttsCompleteHint">开倍速时长句常被下一句顶掉结尾。打开后画面会按需要放慢到读完为止（最低不低于你所选倍速的四分之一），空隙处再追回来。</p>
       </div>
-      <p class="ohint" data-i18n="ttsPrivacyNote">用浏览器自带的音色时，什么都不会发出去——是你这台电脑自己在念。用云服务商时，要朗读的文本只发给你选择的那一家，Key 只存在本机。</p>
+      <p class="ohint" data-i18n="ttsPrivacyNote">浏览器自带的音色，多数装在你这台电脑上，由它自己念。也有几个不是：Chrome 还提供联网音色——名字以「Google」开头的那几个——用它们时，浏览器会把这句话发给它的制造商。用云服务商时，要朗读的文本只发给你选择的那一家，Key 只存在本机。</p>
     </section>
 
     <!-- Two cards side by side in one view (the same move the Getting-started
@@ -514,7 +560,7 @@
         <label for="optShortcuts" data-i18n="optShortcutsLabel">键盘快捷键</label>
         <button type="button" class="obtn ghost" id="optShortcuts" data-i18n="optShortcutsOpen">设置快捷键</button>
       </div>
-      <p class="ohint" data-i18n="optShortcutsHint">快捷键由 Chrome 管，不在这个扩展里。默认一个都没绑；能绑的有两件：开关字幕、开关朗读。</p>
+      <p class="ohint" data-i18n="optShortcutsHint">快捷键由 Chrome 管，不在这个扩展里。默认一个都没绑；能绑的有三件：开关字幕、开关朗读、开关译文行。</p>
       <p class="ohint warn" id="optShortcutsFail" hidden data-i18n="optShortcutsFallback">这一页从这里打不开。把 chrome://extensions/shortcuts 粘到地址栏。</p>
       <p data-i18n="aboutBlurb">
         给 YouTube 加一层双语字幕：原文一行、译文一行，字体、颜色、位置都能自己调。开源、免费、无广告。

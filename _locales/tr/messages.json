@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Sağlayıcı"
   },
+  "byoSiteLabel": {
+    "message": "Site"
+  },
+  "byoSiteHint": {
+    "message": "Kayıt olduğunuz siteyi seçin — ikisi ayrı platformlar ve birinin anahtarı diğerinde kabul edilmez."
+  },
+  "byoSiteGlobal": {
+    "message": "Uluslararası"
+  },
+  "byoSiteCn": {
+    "message": "Çin Anakara"
+  },
   "byoBaseLabel": {
     "message": "Endpoint adresi"
   },
@@ -300,10 +312,13 @@
     "message": "API anahtarı"
   },
   "byoKeyClear": {
-    "message": "Temizle"
+    "message": "Sil"
+  },
+  "byoKeyReplace": {
+    "message": "Değiştir"
   },
   "byoKeyCleared": {
-    "message": "Bu cihazda kayıtlı anahtar silindi."
+    "message": "Bu makinede saklanan anahtar silindi."
   },
   "byoKeySaved": {
     "message": "kayıtlı ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Önce bir API anahtarı girin, ardından Kaydet ve dene'ye basın."
   },
   "byoErrNoModel": {
-    "message": "Bu sağlayıcı için bir model adı yazman gerekiyor."
+    "message": "Önce bir model seçin — listeden birini seçin veya “Anahtarımla modelleri listele”ye basın."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Bu sağlayıcı liste göndermiyor. Önce kullanılabilir modelleri getirin veya model adını kendiniz yazın."
+  },
+  "byoErrNotApi": {
+    "message": "Bu adres API değil, bir web sayfası döndürdü — genellikle bir giriş duvarı veya istekleri kesen bir ağ. Adresi kontrol edin veya başka bir ağ deneyin."
   },
   "byoErrBadBaseUrl": {
     "message": "API taban URL'si tam bir https:// adresi olmalı."
@@ -355,7 +376,13 @@
     "message": "Bu API sunucusuna erişim izni olmadan eklenti bağlanamaz. “Kaydet ve dene” düğmesine tekrar basıp izin verin."
   },
   "byoErrAuth": {
-    "message": "Anahtar reddedildi (401/403) — tam kopyalandığından ve etkin olduğundan emin ol."
+    "message": "Anahtar reddedildi (401) — eksiksiz kopyalandığından ve hâlâ etkin olduğundan emin olun."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Bu makinedeki sunucu çağrıyı reddetti (403). Büyük olasılıkla uzantıya izin verilmemiş: Ollama için OLLAMA_ORIGINS, LM Studio'daki CORS anahtarı."
+  },
+  "byoErrForbidden": {
+    "message": "Sağlayıcı bu çağrıyı reddetti (403). Anahtar genellikle sorunsuzdur; hesabın bunu yapmasına izin verilmiyor — ödenmemiş bakiye, bekleyen kimlik doğrulaması, açılmamış bir model veya bölge. Hesabı sağlayıcının konsolundan kontrol edin."
   },
   "byoErrListAuth": {
     "message": "Bu anahtarın listeyi okuma izni yok. Sağlayıcının panelinden izni verip yeniden çekin.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Sağlayıcı hız sınırı uyguluyor — yavaşlatılıp otomatik olarak yeniden deneniyor."
   },
+  "byoErrLimitedTest": {
+    "message": "Sağlayıcı hız sınırına takıldı. Biraz bekleyip tekrar basın."
+  },
   "byoErrQuota": {
-    "message": "Bu anahtarın mevcut dönem kotası dolmuş."
+    "message": "Bu hesabın geçerli dönem için kredisi veya kotası tükenmiş — devam etmek için sağlayıcının konsolundan yükleme yapın."
   },
   "byoErrBadRequest": {
     "message": "Uç nokta isteği reddetti — model adı veya taban URL yanlış olabilir."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Anahtarımla modelleri listele"
   },
+  "optFetchModelsNoKey": {
+    "message": "Kullanılabilir modelleri listele"
+  },
   "optFetching": {
     "message": "Listeleniyor…"
   },
@@ -407,6 +440,14 @@
     "message": "$N$ model bulundu",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” artık bu sağlayıcının listesinde yok — yukarıdan başka birini seçin.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Sesli okumayı aç veya kapat"
   },
+  "cmdToggleTransLine": {
+    "message": "Çeviri satırını göster veya gizle"
+  },
   "optShortcutsLabel": {
     "message": "Klavye kısayolları"
   },
@@ -730,7 +774,7 @@
     "message": "Kısayolları ayarla"
   },
   "optShortcutsHint": {
-    "message": "Bu kısayolları eklenti değil, Chrome tutar. Başlangıçta hiçbiri atanmamıştır; ikisi atanabilir: altyazı açık/kapalı ve sesli okuma açık/kapalı."
+    "message": "Bu tuşları Chrome tutar, uzantı değil. Başlangıçta hiçbir şey atanmaz; üç şey atanabilir: altyazı aç/kapat, sesli okuma aç/kapat ve çeviri satırını göster veya gizle."
   },
   "optShortcutsFallback": {
     "message": "Sayfa buradan açılmadı — chrome://extensions/shortcuts adresini adres çubuğuna yapıştırın."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Tarayıcının kendi sesleriyle hiçbir şey hiçbir yere gönderilmez — satırı bilgisayarınızın kendisi okur. Bir bulut sağlayıcıda okunacak metin yalnızca seçtiğiniz sağlayıcıya gider; anahtar bu makinede kalır."
+    "message": "Tarayıcınızın kendi seslerinin çoğu bu bilgisayara yüklüdür ve metni burada okur. Birkaçı yüklü değildir: Chrome çevrimiçi sesler de sunar — adları \"Google\" ile başlayanlar — ve bunlar için tarayıcı metni üreticisine gönderir. Bir bulut sağlayıcısı kullanıldığında okunacak metin yalnızca seçtiğiniz sağlayıcıya gider ve anahtar bu makinede kalır."
   },
   "ttsEnableLabel": {
     "message": "Videoda çeviriyi sesli oku"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Bu sağlayıcının bu dil için ek sesi yok — yerleşik sesler hâlâ çalışır."
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$ ses alındı — bunlar yukarıdaki alanın altındaki önerilerdir.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "kadın"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Tarayıcı"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Bu bilgisayarda saklanan anahtar silindi. Kullanımdaki anahtar buydu, bu yüzden çeviri artık $NAME$ üzerinden yapılıyor.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "bu bilgisayarda ayarlanmamış"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Bu bilgisayarda $NAME$ okuyan bir ses yok. Aşağıdaki liste diğer dillerin sesleri — birini seçin, satır o dilin aksanıyla okunur.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

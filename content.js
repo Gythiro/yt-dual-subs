@@ -1254,6 +1254,14 @@
     if (!sumEl || !sumEl.isConnected) {
       sumEl = sumNode("div", "ytds-sum");
       sumEl.addEventListener("mousedown", (e) => e.stopPropagation());
+      // The panel opens INSIDE the player, so focus stayed on the player and
+      // its buttons were a long tab away. It takes focus itself — the panel,
+      // not a button in it: the export dialog can put focus on its confirm key
+      // because it owns the page, but here the space bar belongs to YouTube,
+      // and a focused "Summarize" would turn Pause into Spend.
+      sumEl.tabIndex = -1;
+      sumEl.setAttribute("role", "region");
+      sumEl.setAttribute("aria-label", ct("sumPanelTitle", "视频总结"));
       const head = sumNode("div", "ytds-sum-head");
       head.appendChild(sumNode("span", "ytds-sum-title", ct("sumPanelTitle", "视频总结")));
       const close = sumNode("button", "ytds-sum-close", "\u00d7");
@@ -1264,6 +1272,7 @@
       sumEl.appendChild(head);
       sumEl.appendChild(sumNode("div", "ytds-sum-body"));
       player.appendChild(sumEl);
+      try { sumEl.focus({ preventScroll: true }); } catch (_e) { /* ignore */ }
     }
     const body = sumEl.querySelector(".ytds-sum-body");
     body.textContent = "";
@@ -2463,10 +2472,17 @@
         text = tlangSpanText(span);
       }
     }
+    // A stranded mark is the same case as a swallowed fragment: the sentence
+    // went out with the cue before, and this one has nothing left to say. It
+    // reaches here only on a MANUAL track, where there are no spans to swallow
+    // it — a cloud voice was being sent "。" to pronounce, which spends a
+    // request to say nothing AND cuts off the sentence still being spoken.
+    if (text === undefined && cueAligned && isStrandedMark(cue.trans, origText)) return null;
     if (text === undefined && cueAligned && typeof cue.trans === "string" && cue.trans) {
       text = dedupeTrans(cue.trans, origText);
     } else if (text === undefined && tcueList && cueAligned === false) {
       const m = nearestTcue(cue.start);
+      if (m && isStrandedMark(m.text, origText)) return null;
       if (m) text = dedupeTrans(m.text, origText);
     }
     if (text === undefined) {
@@ -3632,6 +3648,22 @@
     return settings.showOriginal ? "" : origText;
   }
 
+  // YouTube translates each fragment of a track on its own, and when one
+  // sentence spans two cues the whole translation lands in the first — leaving
+  // the second holding nothing but the mark that closed it. A line that carries
+  // nothing but PUNCTUATION is that stranded tail, not a translation of the
+  // words beside it. Two things it deliberately is not: a symbol is not a mark
+  // (a music cue's "♪" is that cue's own line, and ♪ is a symbol, not
+  // punctuation), and "..." -> "……" is a real translation — so the ORIGINAL has
+  // to have had a word in it before any of this applies.
+  const WORDISH = /[\p{L}\p{N}]/u;
+  const MARKS_ONLY = /^[\p{P}\s]+$/u;
+
+  function isStrandedMark(trans, origText) {
+    const t = String(trans || "").trim();
+    return !!t && MARKS_ONLY.test(t) && WORDISH.test(String(origText || ""));
+  }
+
   // A "translation" identical to its original adds nothing — this happens when
   // the source language matched the target in a way the upstream lang check
   // could not see. Render it as the same-language case.
@@ -3668,6 +3700,13 @@
         const whole = span ? tlangSpanText(span) : "";
         if (whole) { setTranslation(whole, origText); return; }
       }
+      // Spans only exist on a scrolling track (they are built for the voice),
+      // so on a MANUAL track this is where the stranded mark arrived on screen:
+      // the yellow line under "around the world every year." read "。" for the
+      // two seconds that cue was up, wiping the sentence it belongs to. Leave
+      // the line alone — the sentence already on it is this cue's sentence,
+      // which is exactly what the span path above holds on a scrolling track.
+      if (isStrandedMark(cue.trans, origText)) return;
       setTranslation(dedupeTrans(cue.trans, origText), origText);
       return;
     }
@@ -3679,6 +3718,8 @@
     if (tcueList && cueAligned === false) {
       const m = nearestTcue(cue.start);
       if (m) {
+        // Same cut, matched by timestamp instead of by index.
+        if (isStrandedMark(m.text, origText)) return;
         setTranslation(dedupeTrans(m.text, origText), origText);
         return;
       }
@@ -4358,9 +4399,31 @@
     return p(h, 2) + ":" + p(m, 2) + ":" + p(s, 2) + "," + p(ms3, 3);
   }
 
+  // A file is one translated line per cue — that is what both lanes write and
+  // what a player expects. So the stranded mark (see isStrandedMark) has no
+  // line of its own to be: give it back to the sentence it closes and leave
+  // this cue its original text alone, rather than writing an entry whose whole
+  // translation is "。". Deliberately NOT done here: painting the sentence
+  // across a scrolling track's fragments the way the overlay does. The overlay
+  // is a live reading aid and can hold a line still; the own-key lane writes
+  // one line per cue, and a file where three consecutive entries repeat the
+  // same sentence would not match it.
+  function exportTrans(cues) {
+    const out = cues.map((c) => Object.assign({}, c));
+    for (let i = 0; i < out.length; i++) {
+      const tr = (out[i].trans || "").trim();
+      if (!isStrandedMark(tr, out[i].text)) continue;
+      const prev = i > 0 ? out[i - 1] : null;
+      if (prev && (prev.trans || "").trim()) prev.trans = (prev.trans || "").trim() + tr;
+      out[i].trans = "";
+    }
+    return out;
+  }
+
   // Build SRT text from start-sorted cues (ends computed). Returns {text,count}.
   // "orig" | "trans" | "bi"; bilingual line order follows the user's order pref.
   function buildSrt(cues, variant) {
+    if (variant !== "orig") cues = exportTrans(cues);
     const out = [];
     let n = 0;
     for (let i = 0; i < cues.length; i++) {
@@ -4566,7 +4629,12 @@
 
   // Codes worth stopping the whole download for: every remaining chunk would
   // fail the same way, so asking the provider 30 more times is pure noise.
-  const EXPORT_FATAL = new Set(["auth", "noKey", "noPerm", "noProvider", "noModel",
+  // Anything that the next chunk cannot possibly do better. "quota" and
+  // "forbidden" were missing: a wallet that is empty on chunk one is empty on
+  // chunk thirty, and an account that may not call this model never may. So
+  // was "badRequest" — one typo in a model name used to spend the whole track.
+  const EXPORT_FATAL = new Set(["auth", "forbidden", "noKey", "noPerm", "noProvider",
+                                "noModel", "quota", "badRequest",
                                 "badBaseUrl", "unsupportedTarget"]);
 
   async function runByoExport(variant) {

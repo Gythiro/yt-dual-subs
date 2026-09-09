@@ -305,6 +305,18 @@
   "byoProviderLabel": {
     "message": "服务商"
   },
+  "byoSiteLabel": {
+    "message": "站点"
+  },
+  "byoSiteHint": {
+    "message": "按你注册账号的那个网站选——两边是各自独立的平台，Key 不通用。"
+  },
+  "byoSiteGlobal": {
+    "message": "国际"
+  },
+  "byoSiteCn": {
+    "message": "中国大陆"
+  },
   "byoBaseLabel": {
     "message": "接口地址"
   },
@@ -318,10 +330,21 @@
     "message": "API Key"
   },
   "byoKeyClear": {
-    "message": "清除"
+    "message": "删除"
+  },
+  "byoKeyReplace": {
+    "message": "更换"
   },
   "byoKeyCleared": {
-    "message": "已清除这台电脑上保存的 Key。"
+    "message": "已删除这台电脑上保存的 Key。"
+  },
+  "byoKeyClearedMoved": {
+    "message": "已删除这台电脑上保存的 Key。原来在用的是它，现在改用 $NAME$。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
   "byoKeySaved": {
     "message": "已保存 ····$LAST4$",
@@ -364,7 +387,13 @@
     "message": "先填 API Key，再点「保存并测试」。"
   },
   "byoErrNoModel": {
-    "message": "这家需要手动填模型名。"
+    "message": "先选一个模型——从清单里挑一个，或者按「用我的 Key 拉取模型」。"
+  },
+  "byoErrNoModelEmpty": {
+    "message": "这家没有内置清单。先拉一次可用模型，或者直接手填模型名。"
+  },
+  "byoErrNotApi": {
+    "message": "那个地址回的是一个网页，不是接口——多半是登录页或网络在中间拦截。检查地址，或者换个网络。"
   },
   "byoErrBadBaseUrl": {
     "message": "接口地址必须是 https:// 开头的完整地址。"
@@ -373,7 +402,13 @@
     "message": "没有授权访问这个接口域名，无法连接。再点一次「保存并测通」，在弹出的窗口里允许。"
   },
   "byoErrAuth": {
-    "message": "Key 被拒绝(401/403):检查是否复制完整、是否已开通。"
+    "message": "Key 被拒绝（401）：检查是不是完整复制、是不是还有效。"
+  },
+  "byoErrForbiddenLocal": {
+    "message": "这台电脑上的服务拒绝了这次调用（403）。多半是它还没被允许接受扩展的请求：Ollama 用 OLLAMA_ORIGINS，LM Studio 开 CORS 开关。"
+  },
+  "byoErrForbidden": {
+    "message": "服务商拒绝了这次调用（403）。通常不是 Key 写错了，而是这个账号不被允许这样调用——余额不足、实名认证还没做、这个模型没开通，或者所在地区受限。去服务商后台看看账号状态。"
   },
   "byoErrListAuth": {
     "message": "这把 Key 没有「读取清单」的权限。去服务商后台给它加上，再拉一次。",
@@ -382,8 +417,11 @@
   "byoErrLimited": {
     "message": "服务商限流，已自动放慢重试。"
   },
+  "byoErrLimitedTest": {
+    "message": "服务商正在限流。等一会儿再按一次。"
+  },
   "byoErrQuota": {
-    "message": "这个 Key 本期额度已用完。"
+    "message": "这个账号本期的余额或额度已经用完——去服务商后台充值或等下个周期。"
   },
   "byoErrBadRequest": {
     "message": "接口拒绝了请求：模型名或接口地址可能不对。"
@@ -418,6 +456,9 @@
   "optFetchModels": {
     "message": "用我的 Key 拉取模型"
   },
+  "optFetchModelsNoKey": {
+    "message": "拉取可用模型"
+  },
   "optFetching": {
     "message": "拉取中…"
   },
@@ -428,6 +469,10 @@
         "content": "$1"
       }
     }
+  },
+  "optModelRetired": {
+    "message": "「$MODEL$」已经不在这家的清单里了——从上面重新选一个。",
+    "placeholders": { "model": { "content": "$1" } }
   },
   "optModelsFailed": {
     "message": "拉取失败——可以直接手填模型名。"
@@ -516,6 +561,9 @@
   "cmdToggleTts": {
     "message": "开关朗读"
   },
+  "cmdToggleTransLine": {
+    "message": "开关译文行（只留原文）"
+  },
   "optShortcutsLabel": {
     "message": "键盘快捷键"
   },
@@ -523,7 +571,7 @@
     "message": "设置快捷键"
   },
   "optShortcutsHint": {
-    "message": "快捷键由 Chrome 管，不在这个扩展里。默认一个都没绑；能绑的有两件：开关字幕、开关朗读。"
+    "message": "快捷键由 Chrome 管，不在这个扩展里。默认一个都没绑；能绑的有三件：开关字幕、开关朗读、开关译文行。"
   },
   "optShortcutsFallback": {
     "message": "这一页从这里打不开。把 chrome://extensions/shortcuts 粘到地址栏。"
@@ -757,6 +805,10 @@
   "ttsVoicesNone": {
     "message": "这家在这个语言下没有额外音色——内置的那些照样能用。"
   },
+  "ttsVoicesSuggested": {
+    "message": "拉到 $N$ 个音色，已作为上面输入框的候选。",
+    "placeholders": { "n": { "content": "$1" } }
+  },
   "ttsVoiceFemale": {
     "message": "女声"
   },
@@ -775,7 +827,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "用浏览器自带的音色时，什么都不会发出去——是你这台电脑自己在念。用云服务商时，要朗读的文本只发给你选择的那一家，Key 只存在本机。"
+    "message": "浏览器自带的音色，多数装在你这台电脑上，由它自己念。也有几个不是：Chrome 还提供联网音色——名字以「Google」开头的那几个——用它们时，浏览器会把这句话发给它的制造商。用云服务商时，要朗读的文本只发给你选择的那一家，Key 只存在本机。"
   },
   "ttsEnableLabel": {
     "message": "在视频里朗读译文"
@@ -898,6 +950,14 @@
   },
   "ttsNoSynth": {
     "message": "这台电脑没有可用的朗读音色。"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "这台电脑没有能读$NAME$的音色。下面列的是别的语言的音色——选中它，念出来就是那个语言的口音。",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoicesLoading": {
     "message": "正在读取这台电脑的音色…"
@@ -1031,6 +1091,9 @@
   },
   "ttsSkipRefused": {
     "message": "服务商拒绝了请求"
+  },
+  "ttsSkipNotSet": {
+    "message": "这台电脑上还没配好"
   },
   "statusTrackRetry": {
     "message": "字幕轨没拿到，正在自动重试；急的话刷新页面立即重来。"

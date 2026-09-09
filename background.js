@@ -45,6 +45,13 @@ const cfg = {
   ttsProvider: "local-speech",
   ttsVoice: "",          // read-aloud voice ("" = the provider's default)
   ttsRegion: "",         // Azure only: the region its key is bound to ("eastus")
+  // Which of a provider's platforms this reader is on, keyed by provider id.
+  // A handful of providers run two — a China site and a global one — with
+  // separate accounts whose keys are not interchangeable. One map covers both
+  // panes: a translate id and a read-aloud id never collide. Empty (and any
+  // id not in it) means the first site, which is where everyone was before
+  // there was a choice.
+  byoSiteBy: {},
   // custom-speech only. Its OWN key on purpose: byoBaseUrl already belongs to
   // the translation pane's custom entry, and two editable endpoints sharing
   // one key overwrite each other (the D105 scar).
@@ -95,7 +102,8 @@ function cfgRefresh() {
       { byoProvider: cfg.byoProvider, byoModel: cfg.byoModel,
         byoBaseUrl: cfg.byoBaseUrl, ttsProvider: cfg.ttsProvider,
         ttsVoice: cfg.ttsVoice, ttsRegion: cfg.ttsRegion,
-        ttsBaseUrl: cfg.ttsBaseUrl, ttsModelBy: cfg.ttsModelBy },
+        ttsBaseUrl: cfg.ttsBaseUrl, ttsModelBy: cfg.ttsModelBy,
+        byoSiteBy: cfg.byoSiteBy },
       (got) => {
         got = got || {};
         for (const k of ["byoProvider", "byoModel", "byoBaseUrl",
@@ -104,6 +112,9 @@ function cfgRefresh() {
         }
         if (got.ttsModelBy && typeof got.ttsModelBy === "object") {
           cfg.ttsModelBy = got.ttsModelBy;
+        }
+        if (got.byoSiteBy && typeof got.byoSiteBy === "object") {
+          cfg.byoSiteBy = got.byoSiteBy;
         }
         resolve();
       }
@@ -130,6 +141,16 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if ("ttsModelBy" in changes) {
     const v = changes.ttsModelBy.newValue;
     cfg.ttsModelBy = (v && typeof v === "object") ? v : {};
+  }
+  // Switching a provider to its other platform changes the address every queued
+  // job would go to, so it counts as a target change like the model does — and
+  // it must land here rather than waiting for the next worker start, or the
+  // reader picks the global site, presses Save and test, and is answered by the
+  // China one.
+  if ("byoSiteBy" in changes) {
+    const v = changes.byoSiteBy.newValue;
+    cfg.byoSiteBy = (v && typeof v === "object") ? v : {};
+    byoChanged = true;
   }
   // Provider/model/endpoint changed mid-flight: queued jobs were built for the
   // old target and their answers would be attributed to the new one. Drop them;
@@ -187,6 +208,11 @@ async function resolveByo(opts) {
 
   let baseUrl = p.baseUrl;
   let origin = p.origin;
+  // A provider with two platforms answers on the one this reader chose. The
+  // default is its first site — where everyone was before there was a choice —
+  // so an existing setup keeps working without being asked anything.
+  const site = PROVIDERS.siteFor(p, (cfg.byoSiteBy || {})[p.id]);
+  if (site) { baseUrl = site.baseUrl || baseUrl; origin = site.origin || origin; }
   if (p.custom) {
     const parsed = PROVIDERS.parseCustomBase(cfg.byoBaseUrl);
     if (!parsed) throw tag(new Error("bad custom base url"), { noKey: true, code: "badBaseUrl" });
@@ -978,7 +1004,11 @@ async function llmOnce(texts, targetLang, target, opts) {
     res = await fetch(target.endpoint + "/chat/completions", {
       method: "POST",
       headers,
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      // Without this a hung socket owns the "Testing…" button, and later the
+      // lane, until the worker is killed. The read-aloud side has had it since
+      // it shipped; this side had none at all.
+      signal: AbortSignal.timeout(BYO_TIMEOUT_MS)
     });
   } catch (_e) {
     throw tag(new Error("llm fetch failed"), { netfail: true, code: "netfail" });
@@ -989,6 +1019,15 @@ async function llmOnce(texts, targetLang, target, opts) {
   try {
     data = await res.json();
   } catch (_e) {
+    // A 200 whose body is a web page is not a model misbehaving: it is a login
+    // wall, a captive portal or a challenge page standing where the API should
+    // be. Blaming the model sent the reader off to pick a different one, which
+    // could never have helped.
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    if (ct.includes("html") || ct.includes("text/plain")) {
+      throw tag(new Error("llm answered with a page, not JSON"),
+        { badShape: true, code: "notApi" });
+    }
     throw tag(new Error("llm bad json"), { badShape: true, code: "badShape" });
   }
   const choice = data && data.choices && data.choices[0];
@@ -1344,7 +1383,8 @@ async function deeplTranslate(texts, targetLang, target, context) {
         "Content-Type": "application/json",
         Authorization: "DeepL-Auth-Key " + target.key
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(BYO_TIMEOUT_MS)
     });
   } catch (_e) {
     throw tag(new Error("deepl fetch failed"), { netfail: true, code: "netfail" });
@@ -1379,26 +1419,60 @@ function redactSecrets(text) {
       "$1: REDACTED");
 }
 
-// One place to turn HTTP status into our error vocabulary. 401/403 is a key
-// problem the user must fix (never retried); 429/5xx is the lane's backoff.
+// One place to turn HTTP status into our error vocabulary. Auth problems the
+// user must fix are never retried; 429/5xx is the lane's backoff.
+//
+// 401 and 403 used to share one sentence, "the key was rejected — check that
+// it was copied in full". Probed with a deliberately wrong key, every provider
+// we ship answers 401: siliconflow, deepseek, openrouter, glm, anthropic. So a
+// 403 in the wild is almost never a mistyped key — it is a key that works on
+// an account which is not allowed to make this call (no balance, no identity
+// check, a model not enabled, a region block, or a local server that has not
+// been told to allow us). Merging them cost a real user two rounds of checking
+// a key that was never wrong, and cost us the ability to tell from his report
+// which of the two he had actually hit.
 async function throwForStatus(res, who) {
   if (res.ok) return;
   const s = res.status;
-  if (s === 401 || s === 403) {
-    throw tag(new Error(who + " auth " + s), { authFailed: true, code: "auth" });
+  // Read it once, here, and carry it on every error this function throws. The
+  // provider almost always says something more useful than our sentence can
+  // ("model not found", "please complete real-name verification", "balance
+  // insufficient"), and until now we collected that text, redacted it, handed
+  // it to the page — and displayed none of it. Keys are stripped by
+  // redactSecrets; what is left is the provider's own words.
+  const detail = await bodyDetail(res);
+  if (s === 401) {
+    throw tag(new Error(who + " auth " + s), { authFailed: true, code: "auth", detail: detail });
+  }
+  if (s === 403) {
+    // …unless the body says the money ran out, which some providers dress as a
+    // refusal rather than a 402.
+    throw tag(new Error(who + " forbidden " + s),
+      { authFailed: true, code: creditGone(detail) ? "quota" : "forbidden", detail: detail });
+  }
+  // 402 Payment Required is exactly that: DeepSeek and OpenRouter both answer
+  // it when the balance is gone. It used to fall through to "try again in a
+  // moment", which is advice that can never come true.
+  if (s === 402) {
+    throw tag(new Error(who + " payment " + s),
+      { authFailed: true, code: "quota", detail: detail });
   }
   if (s === 429 || s === 456 || s >= 500) {
     // DeepL 456 = quota exhausted for the billing period; treat as limited so
     // the lane stops hammering, and let the popup explain it.
-    throw tag(new Error(who + " limited " + s), {
-      rateLimited: true, code: s === 456 ? "quota" : "limited"
-    });
+    // A 429 can also be an empty wallet (OpenAI and Gemini both answer it when
+    // the free allowance is gone); the read-aloud side has read the body for
+    // this since it shipped, and the translate side did not. And a plain 500 or
+    // 502 is not a throttle: the lane still backs off, but the reader is told
+    // the connection failed rather than promised it will pass.
+    const spent = (s === 429 || s === 456) && (s === 456 || creditGone(detail));
+    const code = spent ? "quota"
+      : (s === 429 || s === 503) ? "limited" : (s >= 500 ? "server" : "limited");
+    throw tag(new Error(who + " limited " + s),
+      { rateLimited: true, code: code, detail: detail });
   }
-  let detail = "";
-  try { detail = redactSecrets((await res.text()).slice(0, 200)); }
-  catch (_e) { /* ignore */ }
   throw tag(new Error(who + " http " + s + " " + detail), {
-    badRequest: true, code: s === 400 || s === 404 ? "badRequest" : "http"
+    badRequest: true, code: s === 400 || s === 404 ? "badRequest" : "http", detail: detail
   });
 }
 
@@ -1429,6 +1503,9 @@ function keyForTts(providerId) {
 // The upper bound on one synthesis request. Deliberately generous: the point
 // is to stop a hung socket from owning the "Testing…" button (and, later, the
 // lane) until the worker is killed — not to give up on a slow provider.
+const BYO_TIMEOUT_MS = 45000;   // one translate/chat call; generous, because a
+                                // long batch legitimately takes a while
+const BYO_LIST_TIMEOUT_MS = 15000;  // asking a provider what models it has
 const TTS_TIMEOUT_MS = 15000;   // synthesis AND the three voice-list fetches:
                                 // "Fetch more voices" spins forever otherwise
 
@@ -1478,6 +1555,16 @@ async function resolveTts(lang, askedProvider) {
   // same way (and by the same parser) as the translation pane's custom base.
   let baseUrl = p.baseUrl;
   let origin = p.origin;
+  // Same two-platform story as the translate pane: 百炼 answers on its own
+  // global host, and Azure China is a separate cloud whose Speech endpoints
+  // live on another domain entirely. Only the suffix differs there — the
+  // region the reader typed still goes in front of it.
+  const ttsSite = PROVIDERS.siteFor(p, (cfg.byoSiteBy || {})[p.id]);
+  const hostSuffix = (ttsSite && ttsSite.suffix) || "tts.speech.microsoft.com";
+  if (ttsSite) {
+    if (ttsSite.baseUrl) baseUrl = ttsSite.baseUrl;
+    if (ttsSite.origin) origin = ttsSite.origin;
+  }
   if (p.custom) {
     const parsed = PROVIDERS.parseCustomBase(cfg.ttsBaseUrl);
     if (!parsed) throw tag(new Error("bad tts base url"), { noKey: true, code: "badBaseUrl" });
@@ -1532,7 +1619,7 @@ async function resolveTts(lang, askedProvider) {
       throw tag(new Error("no azure region"), { noKey: true, code: "noRegion" });
     }
   }
-  return { provider: p, key, voice, baseUrl,
+  return { hostSuffix: hostSuffix, provider: p, key, voice, baseUrl,
     model: ((cfg.ttsModelBy || {})[p.id] || p.defaultModel || ""), region };
 }
 
@@ -1619,11 +1706,32 @@ function qwenBizError(payload) {
 // fix that does not exist. Bounded and best-effort: the body is only ever used
 // to choose between two sentences, so failing to read it costs the better one
 // and nothing more.
-async function ttsOutOfCredit(res) {
+// Shared by both sides. An exhausted allowance arrives dressed as a rejected
+// key or a throttle often enough that reading the body is the only way to tell
+// them apart, and the two need opposite words: one says top up, the other says
+// wait. The Chinese providers say it in Chinese, and DeepSeek answers 402 with
+// "Insufficient Balance" — none of which the English-only pattern matched.
+function creditGone(body) {
+  return /insufficient[_ ]?(quota|balance|credits?|funds)|quota[_ ]?exceeded|exceeded your current quota|out of credits?|arrears|余额不足|额度.{0,4}(不足|用完|耗尽)|欠费/i
+    .test(String(body || ""));
+}
+
+// The body, once, safe to show: secrets stripped, length capped, and the JSON
+// scaffolding peeled off so the line reads as a sentence rather than a dump.
+async function bodyDetail(res) {
   let body = "";
-  try { body = String(await res.text()).slice(0, 400); } catch (_e) { return false; }
-  return /insufficient_quota|quota_exceeded|exceeded your current quota|out of credits?/i
-    .test(body);
+  try { body = String(await res.text()).slice(0, 600); } catch (_e) { return ""; }
+  let msg = "";
+  try {
+    const j = JSON.parse(body);
+    const e = j && (j.error || j.err || j);
+    msg = String((e && (e.message || e.msg)) || j.message || j.msg || "");
+  } catch (_e) { /* not JSON — fall back to the raw text */ }
+  return redactSecrets((msg || body).replace(/\s+/g, " ").trim()).slice(0, 200);
+}
+
+async function outOfCredit(res) {
+  return creditGone(await bodyDetail(res));
 }
 
 // One more try for a connection that failed outright, the way the translate
@@ -1649,13 +1757,26 @@ async function withTtsRetry(run) {
 // two buttons of the same card meant one backend fault got two explanations,
 // depending on whether the user pressed test or fetch voices.
 async function ttsThrowForStatus(res) {
-  if (res.status === 401 || res.status === 403) {
-    // An exhausted allowance dressed as a rejected key: some ElevenLabs
-    // accounts answer 401 for it. "Check that the key was copied in full"
-    // sends the reader to look for a fault in a key that is fine.
-    const spent = await ttsOutOfCredit(res);
-    throw tag(new Error("tts auth " + res.status),
-      spent ? { rateLimited: true, code: "quota" } : { code: "auth" });
+  // Read once, carry on everything thrown from here: the provider's own
+  // sentence is usually the specific half. Google answers 403 with "Cloud
+  // Text-to-Speech API has not been used in project … Enable it by visiting",
+  // which is the entire fix, and this side used to drop it and say "the key
+  // was rejected (401) — check that it was copied in full" instead. Our own
+  // guide already told the reader that a 403 here means the API is not
+  // switched on; the product contradicted the guide.
+  const detail = await bodyDetail(res);
+  if (res.status === 401) {
+    throw tag(new Error("tts auth 401"),
+      creditGone(detail) ? { rateLimited: true, code: "quota", detail: detail }
+                         : { code: "auth", detail: detail });
+  }
+  if (res.status === 403) {
+    // Same split the translate side makes: every speech provider answers 401
+    // to a key that is simply wrong, so a 403 is a key that works on an
+    // account that may not make this call — an API not enabled, an unpaid
+    // balance, a region.
+    throw tag(new Error("tts forbidden 403"),
+      { code: creditGone(detail) ? "quota" : "forbidden", detail: detail });
   }
   if (res.status === 429 || res.status >= 500) {
     // Both mean "back off", but they do not mean the same thing to the reader.
@@ -1667,10 +1788,10 @@ async function ttsThrowForStatus(res) {
     const throttled = res.status === 429 || res.status === 503;
     // …and the other way round: OpenAI returns 429 when the credit is gone.
     // The rate-limit wording promises it will pass, and this will not.
-    const spent = res.status === 429 && await ttsOutOfCredit(res);
+    const spent = res.status === 429 && creditGone(detail);
     throw tag(new Error("tts http " + res.status), {
       rateLimited: true,
-      code: spent ? "quota" : (throttled ? "limited" : "server")
+      code: spent ? "quota" : (throttled ? "limited" : "server"), detail: detail
     });
   }
   // Anything else the provider refused — 400, 404, 415, 422. NOT badRequest:
@@ -1678,7 +1799,7 @@ async function ttsThrowForStatus(res) {
   // fields, and the read-aloud card has neither. A retired ElevenLabs voice id
   // (404, and the id is in the path) sent the reader off to check two controls
   // they cannot see, past the one control that is actually wrong.
-  if (!res.ok) throw tag(new Error("tts http " + res.status), { code: "refused" });
+  if (!res.ok) throw tag(new Error("tts http " + res.status), { code: "refused", detail: detail });
 }
 
 // The most of a line that qwen3-tts-flash will accept, cut where a listener
@@ -1767,7 +1888,7 @@ async function ttsSynthesize(text, t, targetLang) {
   let req;
   if (kind === "azure-speech") {
     req = {
-      url: "https://" + t.region + ".tts.speech.microsoft.com/cognitiveservices/v1",
+      url: "https://" + t.region + "." + t.hostSuffix + "/cognitiveservices/v1",
       init: {
         method: "POST",
         headers: {
@@ -2069,7 +2190,8 @@ async function byoModels(providerId) {
   );
   let res;
   try {
-    res = await fetch(t.endpoint + "/models", { headers });
+    res = await fetch(t.endpoint + "/models",
+      { headers, signal: AbortSignal.timeout(BYO_LIST_TIMEOUT_MS) });
   } catch (_e) {
     throw tag(new Error("models fetch failed"), { netfail: true, code: "netfail" });
   }
@@ -2086,6 +2208,38 @@ async function byoModels(providerId) {
   // with one key) must not be shown for another. It never sees the key itself.
   return { models: PROVIDERS.usableModels(ids),
     forKey: await keyFingerprint(t.key), forBase: t.endpoint || "" };
+}
+
+// What this speech provider still offers. The shipped lists carry versions in
+// their names — qwen3-tts-flash, tts-1, eleven_multilingual_v2 — and the day a
+// provider retires one, the dropdown here would go on offering it. The
+// translation pane already asks; this is the same question on this side.
+// Google and Azure have no model to choose, only voices, and both can already
+// list those.
+async function ttsModels(providerId) {
+  const t = await resolveTts(undefined, providerId);
+  const p = t.provider;
+  if (!p.listModels) return { models: [], listable: false };
+  const base = (t.baseUrl || "").replace(/\/+$/, "");
+  if (!base) return { models: [], listable: false };
+  const headers = t.key ? { Authorization: "Bearer " + t.key } : {};
+  let res;
+  try {
+    res = await fetch(base + "/models",
+      { headers, signal: AbortSignal.timeout(TTS_TIMEOUT_MS) });
+  } catch (_e) {
+    throw tag(new Error("tts models fetch failed"), { netfail: true, code: "netfail" });
+  }
+  await ttsThrowForStatus(res);
+  let data;
+  try { data = await res.json(); } catch (_e) {
+    throw tag(new Error("tts models bad json"), { badShape: true, code: "badShape" });
+  }
+  // OpenAI-compatible servers answer {data:[{id}]}; ElevenLabs answers a bare
+  // array of {model_id}. Take whichever shape arrives.
+  const rows = (data && data.data) || (Array.isArray(data) ? data : []);
+  const ids = rows.map((m) => m && (m.id || m.model_id)).filter(Boolean);
+  return { models: ids, listable: true, forKey: await keyFingerprint(t.key), forBase: base };
 }
 
 // The read-aloud twin of byoModels: the voices this provider has FOR THE
@@ -2128,6 +2282,32 @@ async function ttsVoices(asked) {
     return { voices: names, listable: true,
       forKey: await keyFingerprint(t.key), forBase: p.baseUrl || "" };
   }
+  if (p.kind === "openai-speech" && p.custom) {
+    const base = (t.baseUrl || "").replace(/\/+$/, "");
+    if (!base) return { voices: [], listable: false };
+    try {
+      res = await fetch(base + "/audio/voices",
+        { headers: t.key ? { Authorization: "Bearer " + t.key } : {},
+          signal: AbortSignal.timeout(TTS_TIMEOUT_MS) });
+    } catch (_e) {
+      throw tag(new Error("voices fetch failed"), { netfail: true, code: "netfail" });
+    }
+    // A server that never heard of this path says 404, and that is not a
+    // failure worth a red line: it means "type the name", which is what this
+    // provider has always meant. Everything else is a real refusal.
+    if (res.status === 404) return { voices: [], listable: false };
+    await ttsThrowForStatus(res);
+    const data = await res.json().catch(() => null);
+    // Kokoro answers {voices:["af_bella",…]}, AllTalk {voices:[{name}]},
+    // some answer the bare array. Take whichever arrives; keep strings only.
+    const rows = (data && (data.voices || data.data)) || (Array.isArray(data) ? data : []);
+    const names = rows
+      .map((v) => (typeof v === "string" ? v : (v && (v.name || v.id || v.voice_id))))
+      .filter((v) => typeof v === "string" && v);
+    return { voices: names, listable: true,
+      forKey: await keyFingerprint(t.key), forBase: base };
+  }
+
   if (p.kind === "elevenlabs") {
     // 100 is the largest page the endpoint serves, and a library of cloned
     // voices goes past it. Without following the token the menu stopped at the
@@ -2171,7 +2351,7 @@ async function ttsVoices(asked) {
   }
   // azure-speech
   try {
-    res = await fetch("https://" + t.region + ".tts.speech.microsoft.com" +
+    res = await fetch("https://" + t.region + "." + t.hostSuffix +
       "/cognitiveservices/voices/list",
       { headers: { "Ocp-Apim-Subscription-Key": t.key },
         signal: AbortSignal.timeout(TTS_TIMEOUT_MS) });
@@ -2257,10 +2437,18 @@ function mapAcceptToTarget(code) {
 // once, only when sync holds no targetLang (a reinstall under the same account
 // keeps whatever the user had), and the start page shows it with a one-click
 // change. Existing users are never touched: the static default stays zh-CN.
-function deriveTargetLang() {
+// `force` is the reset: "back to how it was when first installed" has to
+// include this guess, and the stored value is exactly what the reset just
+// wrote. Without it a reader in Vietnamese pressed Reset and started getting
+// Chinese subtitles — DEFAULTS carries zh-CN, and install-time derivation was
+// the only thing that had ever overwritten it.
+function deriveTargetLang(force, done) {
+  const finished = (code) => { if (done) { try { done(code || ""); } catch (_e) { /* ignore */ } } };
   try {
     chrome.storage.sync.get("targetLang", (got) => {
-      if (got && typeof got.targetLang === "string" && got.targetLang) return;
+      if (!force && got && typeof got.targetLang === "string" && got.targetLang) {
+        finished(got.targetLang); return;
+      }
       const uiLangCode = () => {
         try { return (chrome.i18n && chrome.i18n.getUILanguage && chrome.i18n.getUILanguage()) || ""; }
         catch (_e) { return ""; }
@@ -2268,7 +2456,9 @@ function deriveTargetLang() {
       const finish = (codes) => {
         let pick = "";
         for (const c of codes) { pick = mapAcceptToTarget(c); if (pick) break; }
-        try { chrome.storage.sync.set({ targetLang: pick || "en" }); } catch (_e) { /* ignore */ }
+        const chosen = pick || "en";
+        try { chrome.storage.sync.set({ targetLang: chosen }, () => finished(chosen)); }
+        catch (_e) { finished(chosen); }
       };
       try {
         chrome.i18n.getAcceptLanguages((accepts) => {
@@ -2276,7 +2466,7 @@ function deriveTargetLang() {
         });
       } catch (_e) { finish([uiLangCode()]); }
     });
-  } catch (_e) { /* ignore */ }
+  } catch (_e) { finished(""); }
 }
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -2346,7 +2536,15 @@ chrome.runtime.onInstalled.addListener((details) => {
 // every surface that shows it repaints itself.
 const COMMAND_KEYS = {
   "toggle-subtitles": ["enabled", true],
-  "toggle-read-aloud": ["ttsEnabled", false]
+  "toggle-read-aloud": ["ttsEnabled", false],
+  // Hiding just the translation, keeping the original, is a thing a language
+  // learner does over and over in one video — guess first, then check. The
+  // setting has always existed; it lived four clicks deep in the line-style
+  // panel, which is the wrong depth for something done that often. A command
+  // with no suggested key costs nothing to everyone who never binds it, and
+  // costs no room in the player menu, which is already at five items and opens
+  // over the picture.
+  "toggle-translation-line": ["showTranslation", true]
 };
 
 if (chrome.commands && chrome.commands.onCommand) {
@@ -2384,6 +2582,12 @@ async function uiTableFor() {
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg && msg.type === "uiTable") {
     uiTableFor().then((t) => sendResponse(t || null)).catch(() => sendResponse(null));
+    return true;                                            // async reply
+  }
+  if (msg && msg.type === "guessTargetLang") {
+    // The popup's reset, asking for the install-time guess again. One
+    // implementation of "which language does this reader want", not two.
+    deriveTargetLang(true, (code) => sendResponse({ ok: !!code, targetLang: code }));
     return true;                                            // async reply
   }
   if (msg && msg.type === "openOptions") {
@@ -2532,6 +2736,13 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         code: (err && err.code) || "failed", error: String(err) }));
     return true;
   }
+  if (msg && msg.type === "ttsModels") {
+    cfgRefresh()
+      .then(() => ttsModels(msg.provider))
+      .then((r) => sendResponse(Object.assign({ ok: true }, r)))
+      .catch((e) => sendResponse({ ok: false, code: (e && e.code) || "failed" }));
+    return true;
+  }
   if (msg && msg.type === "ttsVoices") {
     cfgReady
       .then(() => ttsVoices({ provider: msg.provider, targetLang: msg.targetLang }))
@@ -2594,7 +2805,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       .catch((err) => sendResponse({
         ok: false,
         code: (err && err.code) || "failed",
-        error: String(err)
+        error: String(err),
+        detail: (err && err.detail) || ""
       }));
     return true;
   }

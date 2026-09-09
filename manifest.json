@@ -22,6 +22,10 @@
     "https://dashscope.aliyuncs.com/*",
     "https://ark.cn-beijing.volces.com/*",
     "https://api.siliconflow.cn/*",
+    "https://api.siliconflow.com/*",
+    "https://dashscope-intl.aliyuncs.com/*",
+    "https://api.moonshot.ai/*",
+    "https://api.z.ai/*",
     "https://openrouter.ai/*",
     "https://api-free.deepl.com/*",
     "https://api.deepl.com/*",
@@ -29,7 +33,8 @@
     "https://*.tts.speech.microsoft.com/*",
     "https://api.elevenlabs.io/*",
     "http://localhost/*",
-    "http://127.0.0.1/*"
+    "http://127.0.0.1/*",
+    "https://*.tts.speech.azure.cn/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -70,6 +75,9 @@
     },
     "toggle-read-aloud": {
       "description": "__MSG_cmdToggleTts__"
+    },
+    "toggle-translation-line": {
+      "description": "__MSG_cmdToggleTransLine__"
     }
   },
   "action": {

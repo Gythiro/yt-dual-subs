@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Fornitore"
   },
+  "byoSiteLabel": {
+    "message": "Sito"
+  },
+  "byoSiteHint": {
+    "message": "Scegli il sito su cui ti sei registrato — sono due piattaforme distinte e una chiave dell'una non è accettata dall'altra."
+  },
+  "byoSiteGlobal": {
+    "message": "Internazionale"
+  },
+  "byoSiteCn": {
+    "message": "Cina continentale"
+  },
   "byoBaseLabel": {
     "message": "Indirizzo endpoint"
   },
@@ -300,10 +312,13 @@
     "message": "Chiave API"
   },
   "byoKeyClear": {
-    "message": "Cancella"
+    "message": "Elimina"
+  },
+  "byoKeyReplace": {
+    "message": "Sostituisci"
   },
   "byoKeyCleared": {
-    "message": "La chiave salvata su questo computer è stata rimossa."
+    "message": "La chiave salvata su questo computer è stata eliminata."
   },
   "byoKeySaved": {
     "message": "salvata ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Inserisci prima una chiave API, poi premi Salva e testa."
   },
   "byoErrNoModel": {
-    "message": "Questo provider richiede il nome di un modello."
+    "message": "Scegli prima un modello — selezionane uno dall'elenco oppure premi “Elenca i modelli con la mia chiave”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Questo provider non fornisce un elenco. Recupera prima i modelli disponibili, oppure inserisci tu il nome del modello."
+  },
+  "byoErrNotApi": {
+    "message": "Quell'indirizzo ha risposto con una pagina web, non con l'API — di solito una schermata di accesso o una rete che intercetta le richieste. Controlla l'indirizzo o prova un'altra rete."
   },
   "byoErrBadBaseUrl": {
     "message": "L'URL di base dell'API deve essere un indirizzo https:// completo."
@@ -355,7 +376,13 @@
     "message": "Senza il permesso di raggiungere quell'host API l'estensione non può connettersi. Premi di nuovo «Salva e prova» e concedi l'accesso."
   },
   "byoErrAuth": {
-    "message": "La chiave è stata rifiutata (401/403) — verifica di averla copiata per intero e che sia attiva."
+    "message": "La chiave è stata rifiutata (401) — verifica che sia stata copiata per intero e che sia ancora attiva."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Il server su questa macchina ha rifiutato la chiamata (403). Molto probabilmente non è stato configurato per consentire l'estensione: OLLAMA_ORIGINS per Ollama, l'opzione CORS in LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Il provider ha rifiutato questa chiamata (403). Di solito la chiave è valida e l'account non è autorizzato a farla — saldo non pagato, verifica dell'identità ancora in sospeso, modello non attivato o regione. Controlla l'account nella console del provider."
   },
   "byoErrListAuth": {
     "message": "Questa chiave non può leggere l'elenco. Concedile quel permesso nel pannello del provider e riprova.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Il provider sta limitando le richieste — attendo e riprovo automaticamente."
   },
+  "byoErrLimitedTest": {
+    "message": "Il provider sta limitando le richieste. Attendi un momento e premilo di nuovo."
+  },
   "byoErrQuota": {
-    "message": "Questa chiave ha esaurito la quota per il periodo in corso."
+    "message": "Questo account ha esaurito il credito o la quota per il periodo in corso — ricaricalo nella console del provider per continuare."
   },
   "byoErrBadRequest": {
     "message": "L'endpoint ha rifiutato la richiesta — il nome del modello o l'URL di base potrebbero essere errati."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Elenca i modelli con la mia chiave"
   },
+  "optFetchModelsNoKey": {
+    "message": "Elenca i modelli disponibili"
+  },
   "optFetching": {
     "message": "Elenco…"
   },
@@ -407,6 +440,14 @@
     "message": "Trovati $N$ modelli",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” non è più nell'elenco di questo provider — scegline un altro sopra.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Attivare o disattivare la lettura ad alta voce"
   },
+  "cmdToggleTransLine": {
+    "message": "Mostra o nascondi la riga di traduzione"
+  },
   "optShortcutsLabel": {
     "message": "Scorciatoie da tastiera"
   },
@@ -730,7 +774,7 @@
     "message": "Imposta le scorciatoie"
   },
   "optShortcutsHint": {
-    "message": "Queste scorciatoie le gestisce Chrome, non l'estensione. All'inizio non ne è assegnata nessuna; se ne possono assegnare due: sottotitoli e lettura ad alta voce."
+    "message": "Chrome tiene questi tasti, non l'estensione. All'inizio non è assegnato nulla; si possono assegnare tre cose: sottotitoli on/off, lettura ad alta voce on/off e mostra o nascondi la riga di traduzione."
   },
   "optShortcutsFallback": {
     "message": "Da qui la pagina non si è aperta: incolla chrome://extensions/shortcuts nella barra degli indirizzi."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "Con le voci del browser non viene inviato nulla — è il computer a pronunciare la riga. Con un provider cloud, il testo da pronunciare va solo al provider scelto e la chiave resta su questo computer."
+    "message": "La maggior parte delle voci del browser è installata su questo computer e pronuncia la riga qui. Alcune no: Chrome offre anche voci online — quelle i cui nomi iniziano con \"Google\" — e per queste il browser invia la riga al produttore. Con un provider cloud, il testo da pronunciare va solo al provider che hai scelto e la chiave resta su questa macchina."
   },
   "ttsEnableLabel": {
     "message": "Leggi la traduzione ad alta voce nel video"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Questo provider non ha voci extra per questa lingua — quelle integrate funzionano comunque."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Recuperate $N$ voci — sono i suggerimenti sotto il campo sopra.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "femminile"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Browser"
+  },
+  "byoKeyClearedMoved": {
+    "message": "La chiave salvata su questo computer è stata eliminata. Era quella in uso, quindi la traduzione ora passa da $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "non configurato su questo computer"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Questo computer non ha una voce che legge $NAME$. L'elenco sotto mostra voci di altre lingue — scegline una e la riga verrà letta con l'accento di quella lingua.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -287,6 +287,18 @@
   "byoProviderLabel": {
     "message": "Poskytovatel"
   },
+  "byoSiteLabel": {
+    "message": "Web"
+  },
+  "byoSiteHint": {
+    "message": "Vyberte web, na kterém jste se zaregistrovali — jde o dvě samostatné platformy a klíč z jedné druhá nepřijme."
+  },
+  "byoSiteGlobal": {
+    "message": "Mezinárodní"
+  },
+  "byoSiteCn": {
+    "message": "Pevninská Čína"
+  },
   "byoBaseLabel": {
     "message": "Adresa endpointu"
   },
@@ -300,10 +312,13 @@
     "message": "API klíč"
   },
   "byoKeyClear": {
-    "message": "Vymazat"
+    "message": "Smazat"
+  },
+  "byoKeyReplace": {
+    "message": "Nahradit"
   },
   "byoKeyCleared": {
-    "message": "Klíč uložený v tomto počítači byl odstraněn."
+    "message": "Klíč uložený na tomto počítači byl smazán."
   },
   "byoKeySaved": {
     "message": "uloženo ····$LAST4$",
@@ -346,7 +361,13 @@
     "message": "Nejprve zadejte API klíč a pak stiskněte Uložit a otestovat."
   },
   "byoErrNoModel": {
-    "message": "Tento poskytovatel vyžaduje zadaný název modelu."
+    "message": "Nejprve vyberte model — zvolte jeden ze seznamu, nebo stiskněte „Vypsat modely mým klíčem“."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Tento poskytovatel žádný seznam nenabízí. Nejprve načtěte dostupné modely, nebo zadejte název modelu sami."
+  },
+  "byoErrNotApi": {
+    "message": "Tato adresa odpověděla webovou stránkou, ne API — obvykle přihlašovací zeď nebo síť, která zachytává požadavky. Zkontrolujte adresu, nebo zkuste jinou síť."
   },
   "byoErrBadBaseUrl": {
     "message": "Základní URL API musí být úplná adresa https://."
@@ -355,7 +376,13 @@
     "message": "Bez oprávnění k tomuto hostiteli API se rozšíření nemůže připojit. Stiskněte znovu „Uložit a otestovat“ a přístup povolte."
   },
   "byoErrAuth": {
-    "message": "Klíč byl odmítnut (401/403) — zkontrolujte, že je zkopírovaný celý a je aktivní."
+    "message": "Klíč byl odmítnut (401) — zkontrolujte, že je zkopírovaný celý a stále aktivní."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Server na tomto počítači požadavek odmítl (403). Pravděpodobně nemá povolené toto rozšíření: OLLAMA_ORIGINS u Ollama, přepínač CORS v LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Poskytovatel tento požadavek odmítl (403). Klíč je většinou v pořádku, účet ale požadavek nesmí odeslat — nezaplacený zůstatek, čekající ověření identity, nezapnutý model nebo region. Zkontrolujte účet v konzoli poskytovatele."
   },
   "byoErrListAuth": {
     "message": "Tento klíč nemá oprávnění číst seznam. Přidejte mu ho v panelu poskytovatele a zkuste to znovu.",
@@ -364,8 +391,11 @@
   "byoErrLimited": {
     "message": "Poskytovatel omezuje počet požadavků — zpomalujeme a automaticky zkoušíme znovu."
   },
+  "byoErrLimitedTest": {
+    "message": "Poskytovatel omezuje počet požadavků. Chvilku počkejte a stiskněte znovu."
+  },
   "byoErrQuota": {
-    "message": "Tento klíč má pro aktuální období vyčerpanou kvótu."
+    "message": "Tento účet vyčerpal kredit nebo kvótu na aktuální období — dobijte ho v konzoli poskytovatele a pokračujte."
   },
   "byoErrBadRequest": {
     "message": "Koncový bod požadavek odmítl — název modelu nebo základní URL může být špatně."
@@ -400,6 +430,9 @@
   "optFetchModels": {
     "message": "Vypsat modely pomocí klíče"
   },
+  "optFetchModelsNoKey": {
+    "message": "Zobrazit dostupné modely"
+  },
   "optFetching": {
     "message": "Načítání…"
   },
@@ -407,6 +440,14 @@
     "message": "Nalezeno $N$ modelů",
     "placeholders": {
       "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$“ už není v seznamu tohoto poskytovatele — vyberte jiný výše.",
+    "placeholders": {
+      "model": {
         "content": "$1"
       }
     }
@@ -723,6 +764,9 @@
   "cmdToggleTts": {
     "message": "Zapnout nebo vypnout čtení nahlas"
   },
+  "cmdToggleTransLine": {
+    "message": "Zobrazit nebo skrýt řádek překladu"
+  },
   "optShortcutsLabel": {
     "message": "Klávesové zkratky"
   },
@@ -730,7 +774,7 @@
     "message": "Nastavit zkratky"
   },
   "optShortcutsHint": {
-    "message": "Tyto zkratky spravuje Chrome, ne rozšíření. Zpočátku není přiřazená žádná; přiřadit lze dvě: titulky zap/vyp a čtení nahlas zap/vyp."
+    "message": "Tyto klávesy si ponechává Chrome, ne rozšíření. Na začátku není nic přiřazeno; přiřadit lze tři věci: zapnutí/vypnutí titulků, zapnutí/vypnutí čtení nahlas a zobrazení nebo skrytí řádku překladu."
   },
   "optShortcutsFallback": {
     "message": "Odsud se stránka neotevřela — vložte chrome://extensions/shortcuts do adresního řádku."
@@ -771,7 +815,7 @@
     }
   },
   "ttsPrivacyNote": {
-    "message": "S vlastními hlasy prohlížeče se nic nikam neodesílá — počítač řádek vysloví sám. U cloudové služby jde text k vyslovení jen k poskytovateli, kterého jste zvolili, a klíč zůstává na tomto počítači."
+    "message": "Většina hlasů vestavěných v prohlížeči je nainstalovaná v tomto počítači a čte řádek přímo tady. Některé ne: Chrome nabízí i online hlasy — ty, jejichž názvy začínají na „Google“ — a u nich prohlížeč odesílá řádek výrobci. U cloudového poskytovatele jde text k přečtení jen k poskytovateli, kterého jste zvolili, a klíč zůstává v tomto počítači."
   },
   "ttsEnableLabel": {
     "message": "Číst překlad nahlas ve videu"
@@ -904,6 +948,14 @@
   },
   "ttsVoicesNone": {
     "message": "Tento poskytovatel nemá další hlasy pro tento jazyk — vestavěné stále fungují."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Načteno $N$ hlasů — jsou to návrhy pod polem výše.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "ženský"
@@ -1052,5 +1104,24 @@
   },
   "provLocalSpeechShort": {
     "message": "Prohlížeč"
+  },
+  "byoKeyClearedMoved": {
+    "message": "Klíč uložený v tomto počítači byl smazán. Používal se, proto překlad nyní probíhá přes $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsSkipNotSet": {
+    "message": "nenastaveno na tomto počítači"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Tento počítač nemá hlas, který čte $NAME$. Níže jsou hlasy jiných jazyků — vyberte jeden a řádek se přečte s přízvukem daného jazyka.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   }
 }
