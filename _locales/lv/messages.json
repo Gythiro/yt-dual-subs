@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Sava atslēga vēl nav iestatīta, tāpēc pašlaik netiek tulkots. Izmantojiet zemāk esošo „Iestatīt…”, lai to pievienotu."
+  },
   "byoProviderLabel": {
     "message": "Sniedzējs"
   },

@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "La clau pròpia encara no està configurada, així que ara no es tradueix. Utilitza «Configura…» a continuació."
+  },
   "byoProviderLabel": {
     "message": "Proveïdor"
   },

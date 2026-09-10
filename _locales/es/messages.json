@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Tu propia clave aún no está configurada, por lo que ahora no se traduce. Usa «Configurar…» abajo para añadirla."
+  },
   "byoProviderLabel": {
     "message": "Proveedor"
   },

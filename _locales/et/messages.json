@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Oma võti on veel seadistamata, seega hetkel ei tõlgita. Selle lisamiseks kasuta allolevat nuppu „Seadista…“."
+  },
   "byoProviderLabel": {
     "message": "Teenusepakkuja"
   },

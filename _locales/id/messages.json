@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Kunci kamu belum disetel, jadi saat ini tidak ada terjemahan. Gunakan “Setel…” di bawah untuk menambahkannya."
+  },
   "byoProviderLabel": {
     "message": "Penyedia"
   },

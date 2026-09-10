@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Vlastiti ključ još nije postavljen, pa se trenutno ne prevodi. Upotrijebite „Postavi…” u nastavku za unos."
+  },
   "byoProviderLabel": {
     "message": "Pružatelj"
   },

@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "La chiave personale non è ancora configurata, quindi non è in corso la traduzione. Usa «Configura…» qui sotto."
+  },
   "byoProviderLabel": {
     "message": "Fornitore"
   },

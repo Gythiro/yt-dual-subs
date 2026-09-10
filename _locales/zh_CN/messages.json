@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "自带 Key 还没配置好，所以现在不会翻译。点下面的「配置…」把它设起来。"
+  },
   "byoProviderLabel": {
     "message": "服务商"
   },

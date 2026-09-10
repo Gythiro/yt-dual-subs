@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "自備 Key 還沒設定，因此目前無法進行翻譯。請用下方的「設定…」來完成配置。"
+  },
   "byoProviderLabel": {
     "message": "服務商"
   },

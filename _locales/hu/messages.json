@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "A saját kulcs még nincs beállítva, így jelenleg nincs fordítás. Használd a lenti „Beállítás…” gombot a megadásához."
+  },
   "byoProviderLabel": {
     "message": "Szolgáltató"
   },

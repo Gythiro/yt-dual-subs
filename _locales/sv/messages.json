@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Egen nyckel är inte inställd än, så för närvarande pågår ingen översättning. Använd ”Ställ in…” nedan."
+  },
   "byoProviderLabel": {
     "message": "Leverantör"
   },

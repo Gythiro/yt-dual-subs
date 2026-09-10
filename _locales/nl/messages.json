@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Je eigen sleutel is nog niet ingesteld, dus er wordt nu niet vertaald. Gebruik “Instellen…” hieronder om dit te doen."
+  },
   "byoProviderLabel": {
     "message": "Aanbieder"
   },

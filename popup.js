@@ -506,6 +506,31 @@ async function paintEngineStatus() {
     return;
   }
 
+  // Own-key is chosen and there is nothing behind it yet. The panel below says
+  // "DeepSeek — not set up · Configure…", which reads as a label on a setting;
+  // what it does not say is that the setting is in force right now and nothing
+  // will be translated while it stands. Own-key mode is not auto mode, so every
+  // sentence below this point was skipped and the line simply went quiet on a
+  // video — three real-machine walks picked this out of the dropdown to see
+  // what it was and went back to the video waiting for subtitles.
+  // Before the checks below it, because this is true of the SETTING, whatever
+  // tab is in front; and not a warning, because an empty field the reader fills
+  // in one click is not a fault to file diagnostics about.
+  if (onByo) {
+    let keys = {}, okMap = {};
+    try {
+      const got = await chrome.storage.local.get({ byoKeys: {}, byoOk: {} });
+      keys = (got && got.byoKeys) || {};
+      okMap = (got && got.byoOk) || {};
+    } catch (_e) { /* unreadable storage: fall through and stay quiet */ }
+    if (!isByoSetUp(activeProvider(), keys, okMap)) {
+      el.textContent = t("backendStatusByoUnset",
+        "自带 Key 还没配置好，所以现在不会翻译。点下面的「配置…」把它设起来。");
+      el.hidden = false;
+      return;
+    }
+  }
+
   if (!tab || tab.id == null) return;
   // Nothing answered, or a YouTube page with no player: the home page, search
   // results, a channel — and, right after an installation, a video tab that
@@ -1503,6 +1528,24 @@ function activeProvider() {
   return (P && P.get(state.byoProvider)) || null;
 }
 
+// "Set up" means a saved key — except the custom endpoint, whose whole
+// configuration may be just a base URL (a keyless local server), and the
+// keyless presets (Ollama), where the only proof there is anything at that
+// address is a passed Save-and-test (byoOk). Keys alone answered this until
+// 2026-09-01: a tested Ollama was then offered nowhere — the menu skipped it,
+// the panel row called it unconfigured, and the picker sat empty at full CSS
+// width because its value matched no option.
+// One function because two surfaces ask: the panel row says WHETHER, the status
+// line says what FOLLOWS from it. A row calling a provider configured while the
+// line above it says nothing is being translated is how a reader stops
+// believing either of them.
+function isByoSetUp(x, keys, okMap) {
+  if (!x) return false;
+  return !!(keys || {})[x.id] ||
+    (x.custom && !!state.byoBaseUrl) ||
+    (x.noKey && !!(okMap || {})[x.id]);
+}
+
 function byoErrText(code, provider) {
   return t(P ? P.errorKey(code, provider) : "byoErrFailed",
     t("byoErrFailed", "连接失败，稍后再试。"));
@@ -1529,6 +1572,13 @@ function paintByoPanel() {
     sum.textContent = notSet;
     sum.hidden = false;
     if (pick) pick.hidden = true;
+    // No provider chosen at all — the factory state, and the state a reset
+    // returns to. This return used to skip paintModelBtn, so a panel that had
+    // once been configured kept the model button and its hidden 配置…: after a
+    // reset the row said "not set up" and offered no way in. The status line
+    // now points at that button by name, which makes its being there part of
+    // what this branch has to guarantee.
+    paintModelBtn(null);
     return;
   }
   // Short name here: at 360px the full "Alibaba 百炼 (Qwen / DeepSeek)" would
@@ -1543,16 +1593,7 @@ function paintByoPanel() {
   chrome.storage.local.get({ byoKeys: {}, byoOk: {} }, (got) => {
     const keys = (got && got.byoKeys) || {};
     const okMap = (got && got.byoOk) || {};
-    // "Set up" means a saved key — except the custom endpoint, whose whole
-    // configuration may be just a base URL (a keyless local server), and the
-    // keyless presets (Ollama), where the only proof there is anything at that
-    // address is a passed Save-and-test (byoOk). Keys alone answered this
-    // until 2026-09-01: a tested Ollama was then offered nowhere — the menu
-    // skipped it, this row called it unconfigured, and the picker sat empty
-    // at full CSS width because its value matched no option.
-    const isSetUp = (x) => !!keys[x.id] ||
-      (x.custom && !!state.byoBaseUrl) ||
-      (x.noKey && !!okMap[x.id]);
+    const isSetUp = (x) => isByoSetUp(x, keys, okMap);
     const configured = (P ? P.list : []).filter(isSetUp);
     const model = state.byoModel || p.defaultModel || "";
     // The model used to be half of this line's text. It is now the row's own

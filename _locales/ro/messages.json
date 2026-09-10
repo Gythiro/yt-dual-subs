@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Cheia ta nu este încă setată, deci momentan nu se traduce. Folosește „Configurează…” de mai jos pentru a o adăuga."
+  },
   "byoProviderLabel": {
     "message": "Furnizor"
   },

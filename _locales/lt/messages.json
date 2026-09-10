@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Savas raktas dar nenustatytas, todėl šiuo metu neverčiama. Norėdami jį pridėti, naudokite žemiau esantį „Nustatyti…“."
+  },
   "byoProviderLabel": {
     "message": "Teikėjas"
   },

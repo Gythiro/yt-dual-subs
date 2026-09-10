@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Hindi pa naka-set ang sarili mong key kaya walang isinasalin ngayon. Gamitin ang “I-set up…” sa ibaba."
+  },
   "byoProviderLabel": {
     "message": "Provider"
   },

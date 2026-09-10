@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Kendi anahtarınız henüz kurulmadı, bu yüzden şu an çeviri yapılmıyor. Eklemek için aşağıdaki “Yapılandır…” seçeneğini kullanın."
+  },
   "byoProviderLabel": {
     "message": "Sağlayıcı"
   },

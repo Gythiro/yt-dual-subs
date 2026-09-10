@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Your own key is not set up yet, so nothing is being translated. Use “Configure…” below to set it up."
+  },
   "byoProviderLabel": {
     "message": "Provider"
   },

@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Din egen nøkkel er ikke satt opp ennå, så det oversettes ikke nå. Bruk «Sett opp…» nedenfor for å legge den til."
+  },
   "byoProviderLabel": {
     "message": "Leverandør"
   },

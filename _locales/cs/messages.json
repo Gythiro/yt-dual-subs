@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Vlastní klíč ještě není nastavený, takže se momentálně nepřekládá. K zadání použijte „Nastavit…“ níže."
+  },
   "byoProviderLabel": {
     "message": "Poskytovatel"
   },

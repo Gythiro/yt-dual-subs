@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Votre propre clé n’est pas encore configurée, la traduction est donc en pause. Utilisez « Configurer… » ci-dessous."
+  },
   "byoProviderLabel": {
     "message": "Fournisseur"
   },

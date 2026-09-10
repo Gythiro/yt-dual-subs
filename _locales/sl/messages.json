@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Lastni ključ še ni nastavljen, zato se trenutno ne prevaja. Uporabi „Nastavi…“ spodaj, da ga dodaš."
+  },
   "byoProviderLabel": {
     "message": "Ponudnik"
   },

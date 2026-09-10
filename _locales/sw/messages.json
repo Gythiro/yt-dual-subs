@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Ufunguo wako bado haujawekwa, kwa hivyo tafsiri haifanyiki sasa. Tumia “Sanidi…” hapa chini kuuongeza."
+  },
   "byoProviderLabel": {
     "message": "Mtoa huduma"
   },

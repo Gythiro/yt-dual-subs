@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Khóa của bạn chưa được thiết lập, nên hiện tại không dịch được. Hãy dùng “Cấu hình…” bên dưới để thêm."
+  },
   "byoProviderLabel": {
     "message": "Nhà cung cấp"
   },

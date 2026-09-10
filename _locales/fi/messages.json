@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Oma avain on vielä määrittämättä, joten käännöstä ei nyt tehdä. Käytä alla olevaa ”Määritä…” -painiketta."
+  },
   "byoProviderLabel": {
     "message": "Tarjoaja"
   },

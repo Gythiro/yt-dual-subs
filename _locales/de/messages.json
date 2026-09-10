@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Eigener Schlüssel ist noch nicht eingerichtet, daher wird gerade nicht übersetzt. Nutzen Sie „Einrichten…“ unten."
+  },
   "byoProviderLabel": {
     "message": "Anbieter"
   },

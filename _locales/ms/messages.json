@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Kunci sendiri belum diset, jadi tiada terjemahan buat masa ini. Guna “Konfigurasi…” di bawah untuk menetapkannya."
+  },
   "byoProviderLabel": {
     "message": "Penyedia"
   },

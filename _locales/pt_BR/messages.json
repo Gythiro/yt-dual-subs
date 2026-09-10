@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "A chave própria ainda não está configurada, então a tradução está pausada. Use “Configurar…” abaixo."
+  },
   "byoProviderLabel": {
     "message": "Provedor"
   },

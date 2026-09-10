@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "A sua chave ainda não está configurada, pelo que não está a ser traduzido. Utilize «Configurar…» abaixo."
+  },
   "byoProviderLabel": {
     "message": "Fornecedor"
   },

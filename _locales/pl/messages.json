@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Własny klucz nie jest jeszcze ustawiony, więc tłumaczenie obecnie nie działa. Użyj „Konfiguruj…” poniżej."
+  },
   "byoProviderLabel": {
     "message": "Dostawca"
   },

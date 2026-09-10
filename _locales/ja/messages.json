@@ -284,6 +284,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "自分のキーが未設定のため、現在は翻訳されていません。下の「設定…」から追加してください。"
+  },
   "byoProviderLabel": {
     "message": "プロバイダー"
   },

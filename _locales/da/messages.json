@@ -309,6 +309,9 @@
       }
     }
   },
+  "backendStatusByoUnset": {
+    "message": "Egen nøgle er ikke sat op endnu, så der oversættes ikke nu. Brug »Sæt op…« nedenfor for at gøre det."
+  },
   "byoProviderLabel": {
     "message": "Udbyder"
   },
