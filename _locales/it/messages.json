@@ -422,7 +422,7 @@
     "message": "Configurazione del servizio di traduzione"
   },
   "optIntro": {
-    "message": "Scegli un provider e incolla la tua chiave API."
+    "message": "Scegli un fornitore e incolla la tua chiave API."
   },
   "optPricingLink": {
     "message": "Prezzi e piano gratuito"
@@ -549,7 +549,7 @@
     "message": "non configurato"
   },
   "popupByoPick": {
-    "message": "Provider di traduzione"
+    "message": "Fornitore di traduzione"
   },
   "popupByoUntested": {
     "message": "non verificato"

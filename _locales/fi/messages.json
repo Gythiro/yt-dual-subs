@@ -683,7 +683,7 @@
     "message": "Soittimessa on pieni valikko"
   },
   "startS4Body": {
-    "message": "Pieni nuoli tekstityspainikkeen vieressä avaa valikon: tekstitykset, ääneenlukeminen, tekstin valinta, videon yhteenveto ja asetukset — poistumatta soittimesta."
+    "message": "Pieni nuoli tekstityspainikkeen vieressä avaa valikon: tekstitykset, lue ääneen, tekstin valinta, videon tiivistelmä ja asetukset — poistumatta soittimesta."
   },
   "startS4Alt": {
     "message": "Soittimen kuva: pieni nuoli tekstityspainikkeen vieressä oikealla alhaalla avaa pienen valikon"
@@ -824,7 +824,7 @@
     "message": "Lue käännös ääneen videossa"
   },
   "ttsVolLabel": {
-    "message": "Lukuäänen voimakkuus"
+    "message": "Lue ääneen -voimakkuus"
   },
   "ttsDuckLabel": {
     "message": "Alkuperäinen ääni puhuttaessa"
@@ -833,7 +833,7 @@
     "message": "Puhuu"
   },
   "ttsStatusOn": {
-    "message": "Lukuääni päällä"
+    "message": "Lue ääneen päällä"
   },
   "ttsStatusCounts": {
     "message": "$N$ riviä tässä videossa · $M$ ohitettu",

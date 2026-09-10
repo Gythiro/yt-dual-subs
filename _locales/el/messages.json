@@ -83,7 +83,7 @@
     "message": "Αυτόματα (προτείνεται)"
   },
   "backendTlang": {
-    "message": "Όλο το κομμάτι (YouTube)"
+    "message": "Όλοι οι υπότιτλοι (YouTube)"
   },
   "backendGtx": {
     "message": "Έξυπνες προτάσεις (Google)"
@@ -119,7 +119,7 @@
     "message": "Οι υπότιτλοι αυτού του βίντεο είναι ήδη στη γλώσσα μετάφρασής σου — δεν υπάρχει τίποτα να μεταφραστεί."
   },
   "backendStatusNoTrack": {
-    "message": "Δεν βρέθηκε κομμάτι υποτίτλων γι’ αυτό το βίντεο, οπότε δεν υπάρχει τίποτα να εμφανιστεί.",
+    "message": "Δεν βρέθηκαν υπότιτλοι γι’ αυτό το βίντεο, οπότε δεν υπάρχει τίποτα να εμφανιστεί.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
   "backendStatusNoVideo": {
@@ -276,7 +276,7 @@
     "message": "Δεν υπάρχει μετάφραση γι’ αυτό το βίντεο — δοκίμασε τη μηχανή Όλο το κομμάτι ή άλλη γλώσσα μετάφρασης."
   },
   "exportLimited": {
-    "message": "Το YouTube περιορίζει τώρα τη μετάφραση όλου του κομματιού — ξαναδοκίμασε σε ένα λεπτό. Άλλαξε τη «Μηχανή» σε «Δικό σου κλειδί» και η κάρτα εξαγωγής προσφέρει ένα τικ που το παρακάμπτει."
+    "message": "Το YouTube περιορίζει τώρα τη μετάφραση όλων των υποτίτλων — ξαναδοκίμασε σε ένα λεπτό. Άλλαξε τη «Μηχανή» σε «Δικό σου κλειδί» και η κάρτα εξαγωγής προσφέρει ένα τικ που το παρακάμπτει."
   },
   "exportNoCues": {
     "message": "Δεν υπάρχουν υπότιτλοι για λήψη — παίξε μερικά δευτερόλεπτα ώστε να φορτωθούν, και ξαναδοκίμασε."
@@ -732,10 +732,10 @@
     "message": "Δεν υπάρχει ακόμα κλειδί — αυτός ο πάροχος δεν μπορεί να χρησιμοποιηθεί μέχρι να προσθέσεις ένα."
   },
   "optNeedBase": {
-    "message": "Δεν υπάρχει ακόμα διεύθυνση σημείου — αυτός ο πάροχος δεν μπορεί να χρησιμοποιηθεί μέχρι να γράψεις μία."
+    "message": "Δεν υπάρχει ακόμα διεύθυνση τελικού σημείου — αυτός ο πάροχος δεν μπορεί να χρησιμοποιηθεί μέχρι να γράψεις μία."
   },
   "optBaseHint": {
-    "message": "Δουλεύουν και το βασικό URL και το πλήρες σημείο, π.χ. https://example.com/v1 ή https://example.com/v1/chat/completions. Ένας διακομιστής μοντέλων σε αυτό το μηχάνημα παίρνει τη θύρα του — http://localhost:11434/v1 για Ollama, http://localhost:1234/v1 για LM Studio. Το κλειδί μπορεί να μείνει άδειο· το http δουλεύει μόνο για διευθύνσεις loopback."
+    "message": "Δουλεύουν και το βασικό URL και το πλήρες τελικό σημείο, π.χ. https://example.com/v1 ή https://example.com/v1/chat/completions. Ένας διακομιστής μοντέλων σε αυτό το μηχάνημα παίρνει τη θύρα του — http://localhost:11434/v1 για Ollama, http://localhost:1234/v1 για LM Studio. Το κλειδί μπορεί να μείνει άδειο· το http δουλεύει μόνο για διευθύνσεις loopback."
   },
   "startS1Alt": {
     "message": "Σχέδιο προγράμματος αναπαραγωγής: μια πρωτότυπη γραμμή και μια μεταφρασμένη κάθονται κοντά στο κάτω μέρος της εικόνας"
@@ -1055,11 +1055,11 @@
     "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
   },
   "sumStart": {
-    "message": "Σύνοψη",
+    "message": "Δημιουργία περίληψης",
     "description": "Summary panel: the button that starts the (quota-burning) run."
   },
   "sumAgain": {
-    "message": "Περίληψη ξανά"
+    "message": "Δημιουργία ξανά"
   },
   "sumFail": {
     "message": "Η περίληψη απέτυχε. Δοκίμασε αργότερα.",
@@ -1116,7 +1116,7 @@
     }
   },
   "optTtsBaseHint": {
-    "message": "Δουλεύουν και το βασικό URL και το πλήρες σημείο, π.χ. http://localhost:8880/v1 ή http://localhost:8880/v1/audio/speech (τοπικοί διακομιστές ομιλίας όπως Kokoro ή openai-edge-tts). Το κλειδί μπορεί να μείνει άδειο· το σκέτο http δουλεύει μόνο για διευθύνσεις loopback."
+    "message": "Δουλεύουν και το βασικό URL και το πλήρες τελικό σημείο, π.χ. http://localhost:8880/v1 ή http://localhost:8880/v1/audio/speech (τοπικοί διακομιστές ομιλίας όπως Kokoro ή openai-edge-tts). Το κλειδί μπορεί να μείνει άδειο· το σκέτο http δουλεύει μόνο για διευθύνσεις loopback."
   },
   "optTtsNeedUrl": {
     "message": "Δεν υπάρχει ακόμα διεύθυνση σημείου — αυτός ο πάροχος δεν μπορεί να χρησιμοποιηθεί μέχρι να προσθέσεις μία."

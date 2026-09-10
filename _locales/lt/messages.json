@@ -513,7 +513,7 @@
     "message": "naudojama"
   },
   "optAfterSetup": {
-    "message": "Kai čia baigsi, atidaryk plėtinio langelį ir nustatyk Variklį į „Savas raktas“."
+    "message": "Kai čia baigsi, atidaryk plėtinio langelį ir nustatyk Engine į „Savas raktas“."
   },
   "optTrademark": {
     "message": "Visi teikėjų pavadinimai ir logotipai yra jų savininkų prekių ženklai. Šis plėtinys su jais nesusijęs, jų nepatvirtintas ir nerėmimas; ženklai rodomi tik tam, kad atpažintum pasirinktą API."
