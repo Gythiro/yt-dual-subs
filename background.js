@@ -63,7 +63,7 @@ const cfgReady = new Promise((resolve) => {
   chrome.storage.sync.get(
     { engine: "auto", backend: "tlang", byoProvider: "", byoModel: "", byoBaseUrl: "",
       ttsProvider: "local-speech", ttsVoice: "", ttsRegion: "", ttsBaseUrl: "",
-      ttsModelBy: {} },
+      ttsModelBy: {}, byoSiteBy: {} },
     (got) => {
       got = got || {};
       // Same read-side migration as content.js: a stored "gtx" backend was a
@@ -82,6 +82,15 @@ const cfgReady = new Promise((resolve) => {
       cfg.ttsBaseUrl = String(got.ttsBaseUrl || "");
       cfg.ttsModelBy = (got.ttsModelBy && typeof got.ttsModelBy === "object")
         ? got.ttsModelBy : {};
+      // Which of a provider's two platforms this reader signed up on. It was
+      // in cfgRefresh and in the onChanged mirror but NOT in this first read,
+      // so a worker that had just started — which, in MV3, is most of the
+      // time — resolved every provider to its first site until the reader
+      // happened to change a setting. A key issued on the global platform was
+      // then sent to the China host, on the translate side as well as the
+      // speech side, and no amount of re-picking the site could fix it.
+      cfg.byoSiteBy = (got.byoSiteBy && typeof got.byoSiteBy === "object")
+        ? got.byoSiteBy : {};
       resolve();
     }
   );
@@ -588,7 +597,16 @@ function takeBatch(lane, only) {
   for (const q of queues) {
     for (let i = 0; i < q.length && batch.length < lane.maxBatch; ) {
       const job = q[i];
-      if (job.targetLang !== head.targetLang || chars + job.text.length > lane.maxBatchChars) {
+      // A solo job may not ride along either. The HEAD decides how the batch
+      // goes out (pump calls batch[0].send), so a solo swept in here has its
+      // own sender dropped: an aligned request would come back as a flat
+      // string instead of {aligned, translated}, and an export chunk as one
+      // line instead of its groups. In own-key mode content.js queues both
+      // kinds on this queue in the same breath — a single-cue group as a plain
+      // translate, a multi-cue group as translateAligned — so the collision is
+      // the ordinary case rather than a corner.
+      if (job.solo || job.targetLang !== head.targetLang ||
+          chars + job.text.length > lane.maxBatchChars) {
         i++;
         continue;
       }
@@ -754,7 +772,13 @@ async function gtxFetch(text, targetLang, attempt) {
 
   let res;
   try {
-    res = await fetch(url, { method: "GET" });
+    // A deadline, like every other outbound call here. Without one, a socket
+    // that is accepted and then never answers — how a blocked endpoint usually
+    // behaves, as opposed to a refused connection — held the free lane for as
+    // long as the operating system took to give up, minutes, with the pump
+    // awaiting this one send and the subtitles stuck on "…". The fall back to
+    // YouTube's own translation needs an error to fire; none was coming.
+    res = await fetch(url, { method: "GET", signal: AbortSignal.timeout(GTX_TIMEOUT_MS) });
   } catch (_e) {
     throw tag(new Error("translate fetch failed"), { netfail: true, code: "netfail" });
   }
@@ -1503,6 +1527,10 @@ function keyForTts(providerId) {
 // The upper bound on one synthesis request. Deliberately generous: the point
 // is to stop a hung socket from owning the "Testing…" button (and, later, the
 // lane) until the worker is killed — not to give up on a slow provider.
+// The free endpoint answers in well under a second when it answers at all, so
+// this is a "something is wrong" line rather than a budget: past it, falling
+// back to YouTube's own translation beats waiting.
+const GTX_TIMEOUT_MS = 12000;
 const BYO_TIMEOUT_MS = 45000;   // one translate/chat call; generous, because a
                                 // long batch legitimately takes a while
 const BYO_LIST_TIMEOUT_MS = 15000;  // asking a provider what models it has
@@ -1961,7 +1989,12 @@ async function ttsSynthesize(text, t, targetLang) {
     // back to a hard cut if the line has no punctuation at all.
     text = qwenFit(text);
     req = {
-      url: t.provider.baseUrl +
+      // The site the reader picked, not the provider's first entry: 百炼 runs
+      // two independent platforms and resolveTts has already resolved which
+      // one this key belongs to. Reading provider.baseUrl here sent every
+      // line from a global-site account to the China host, which their key
+      // does not answer to and the manifest was never asked to reach.
+      url: (t.baseUrl || t.provider.baseUrl) +
         "/api/v1/services/aigc/multimodal-generation/generation",
       init: {
         method: "POST",
