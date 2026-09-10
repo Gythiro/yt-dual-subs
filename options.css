@@ -296,7 +296,13 @@ a { text-underline-offset: 3px; }
    wraps on one side only, the two lists still start on the same line. */
 #secFonts .olangs { grid-template-rows: auto auto; }
 #secFonts .olang-col { display: grid; grid-template-rows: subgrid; grid-row: span 2; align-content: start; }
-.ofont-hd .olabel { margin: 0; flex: none; }
+/* `flex: none` sized this heading by its own text and let it hang out of the
+   column when the text was long — Spanish "Mostradas en la ventana emergente"
+   is eight pixels past the edge, which the uppercase letter-spacing above
+   makes worse in every language. The row already wraps; the heading now gives
+   ground inside it instead of growing past it, and the two columns still line
+   up because they share a row track. */
+.ofont-hd .olabel { margin: 0; flex: 0 1 auto; min-width: 0; }
 .ofont-hd input[type="search"] {
   /* Wide enough for its placeholder ("Search font names"); narrower, the
      placeholder was cut mid-word. The row wraps, so on a narrow column the
