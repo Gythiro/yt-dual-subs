@@ -403,7 +403,7 @@
     "message": "Tā adrese atbildēja ar tīmekļa lapu, ne API — parasti pieteikšanās siena vai tīkls, kas pārtver vaicājumus. Pārbaudi adresi vai mēģini citu tīklu."
   },
   "byoErrBadBaseUrl": {
-    "message": "API bāzes URL jābūt pilnai https:// adresei."
+    "message": "API bāzes URL jābūt pilnai adresei, kas sākas ar https:// — http:// darbojas tikai ar localhost un 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "Adresē ir atslēga. Izņem to no adreses un ielīmē API atslēgas laukā — adrese sinhronizējas ar pārlūka kontu, atslēgas lauks ne."
@@ -735,7 +735,7 @@
     "message": "Endpointa adreses vēl nav — šo sniedzēju nevar lietot, kamēr to neievadīsi."
   },
   "optBaseHint": {
-    "message": "Der gan bāzes URL, gan pilns endpoints, piem. https://example.com/v1 vai https://example.com/v1/chat/completions. Ollama vai LM Studio šajā datorā pareizā forma ir http://localhost:11434/v1. Atslēga var palikt tukša; parastais http darbojas tikai loopback adresēm."
+    "message": "Der gan bāzes URL, gan pilns endpoints, piem. https://example.com/v1 vai https://example.com/v1/chat/completions. Modeļu serveris šajā datorā izmanto savu portu — http://localhost:11434/v1 priekš Ollama, http://localhost:1234/v1 priekš LM Studio. Atslēga var palikt tukša; http darbojas tikai loopback adresēm."
   },
   "startS1Alt": {
     "message": "Atskaņotāja shēma: oriģināla rinda un tulkojuma rinda pie kadra apakšas"

@@ -403,7 +403,7 @@
     "message": "Та адреса је одговорила веб-страницом, не API-јем — обично зид за пријаву или мрежа која пресреће захтеве. Провери адресу или пробај другу мрежу."
   },
   "byoErrBadBaseUrl": {
-    "message": "Основни URL API-ја мора бити пуна адреса https://."
+    "message": "Основни URL API-ја мора бити пуна адреса која почиње са https:// — http:// ради само за localhost и 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "У адреси је кључ. Извади га из адресе и налепи у поље API кључа — адреса се синхронизује са налогом прегледача, поље кључа не."
@@ -735,7 +735,7 @@
     "message": "Још нема адресе endpointа — овог провајдера не можеш да користиш док је не унесеш."
   },
   "optBaseHint": {
-    "message": "Ради и основни URL и пуни endpoint, нпр. https://example.com/v1 или https://example.com/v1/chat/completions. За Ollama или LM Studio на овом рачунару прави облик је http://localhost:11434/v1. Кључ може да остане празан; обичан http ради само за loopback адресе."
+    "message": "Ради и основни URL и пуни endpoint, нпр. https://example.com/v1 или https://example.com/v1/chat/completions. Сервер модела на овом рачунару узима свој порт — http://localhost:11434/v1 за Ollama, http://localhost:1234/v1 за LM Studio. Кључ може да остане празан; http ради само за loopback адресе."
   },
   "startS1Alt": {
     "message": "Шема плејера: оригинални ред и преведени ред при дну слике"

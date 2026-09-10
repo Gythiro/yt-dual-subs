@@ -370,7 +370,7 @@
     "message": "Tato adresa odpověděla webovou stránkou, ne API — obvykle přihlašovací zeď nebo síť, která zachytává požadavky. Zkontrolujte adresu, nebo zkuste jinou síť."
   },
   "byoErrBadBaseUrl": {
-    "message": "Základní URL API musí být úplná adresa https://."
+    "message": "Základní URL API musí být úplná adresa začínající na https:// — http:// funguje jen pro localhost a 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Bez oprávnění k tomuto hostiteli API se rozšíření nemůže připojit. Stiskněte znovu „Uložit a otestovat“ a přístup povolte."
@@ -659,7 +659,7 @@
     "message": "Zatím žádná adresa endpointu — tohoto poskytovatele nelze použít, dokud ji nezadáte."
   },
   "optBaseHint": {
-    "message": "Funguje base URL i úplný endpoint, např. https://example.com/v1 nebo https://example.com/v1/chat/completions. Pro Ollamu nebo LM Studio na tomto počítači je správný tvar http://localhost:11434/v1. Klíč může zůstat prázdný; obyčejné http funguje jen pro loopback adresy."
+    "message": "Funguje base URL i úplný endpoint, např. https://example.com/v1 nebo https://example.com/v1/chat/completions. Modelový server na tomto počítači používá svůj port — http://localhost:11434/v1 pro Ollama, http://localhost:1234/v1 pro LM Studio. Klíč může zůstat prázdný; http funguje jen pro loopback adresy."
   },
   "startS1Alt": {
     "message": "Schéma přehrávače: původní a přeložený řádek u spodního okraje obrazu"

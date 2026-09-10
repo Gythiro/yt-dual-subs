@@ -403,7 +403,7 @@
     "message": "Tas adresas atsakė tinklalapiu, ne API — paprastai prisijungimo siena arba tinklas, kuris perima užklausas. Patikrink adresą arba bandyk kitą tinklą."
   },
   "byoErrBadBaseUrl": {
-    "message": "API bazinis URL turi būti visas https:// adresas."
+    "message": "API bazinis URL turi būti visas adresas, prasidedantis https:// — http:// veikia tik su localhost ir 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "Adrese yra raktas. Išimk jį iš adreso ir įklijuok į API rakto lauką — adresas sinchronizuojamas su naršyklės paskyra, rakto laukas ne."
@@ -735,7 +735,7 @@
     "message": "Endpointo adreso dar nėra — šio teikėjo negalima naudoti, kol jo neįvesi."
   },
   "optBaseHint": {
-    "message": "Tinka ir bazinis URL, ir visas endpointas, pvz. https://example.com/v1 arba https://example.com/v1/chat/completions. Ollama arba LM Studio šiame kompiuteryje tinkama forma yra http://localhost:11434/v1. Raktas gali likti tuščias; paprastas http veikia tik loopback adresams."
+    "message": "Tinka ir bazinis URL, ir visas endpointas, pvz. https://example.com/v1 arba https://example.com/v1/chat/completions. Modelių serveris šiame kompiuteryje naudoja savo prievadą — http://localhost:11434/v1 skirtas Ollama, http://localhost:1234/v1 skirtas LM Studio. Raktas gali likti tuščias; http veikia tik loopback adresams."
   },
   "startS1Alt": {
     "message": "Grotuvo schema: originalo eilutė ir vertimo eilutė prie apatinio kadro krašto"

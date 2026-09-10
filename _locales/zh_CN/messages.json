@@ -403,7 +403,7 @@
     "message": "那个地址回的是一个网页，不是接口——多半是登录页或网络在中间拦截。检查地址，或者换个网络。"
   },
   "byoErrBadBaseUrl": {
-    "message": "接口地址必须是 https:// 开头的完整地址。"
+    "message": "接口地址要填完整，https:// 开头——http:// 只有 localhost 和 127.0.0.1 能用。"
   },
   "byoErrUrlHasKey": {
     "message": "地址里带着 Key。把它从地址里去掉，填进下面的 API Key 栏——地址会随浏览器账号同步，Key 栏不会。"
@@ -735,7 +735,7 @@
     "message": "还没填接口地址，这个服务商暂时用不了。"
   },
   "optBaseHint": {
-    "message": "填 Base URL 或完整接口地址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本机的 Ollama、LM Studio 填 http://localhost:11434/v1 这种地址就行。Key 可以留空；http 只有本机回环地址能用。"
+    "message": "填 Base URL 或完整接口地址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本机跑的模型服务器要填它自己的端口——Ollama 是 http://localhost:11434/v1，LM Studio 是 http://localhost:1234/v1。Key 可以留空；http 只有本机回环地址能用。"
   },
   "startS1Alt": {
     "message": "播放器示意图：画面下方是一行原文和一行译文"

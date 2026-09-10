@@ -403,7 +403,7 @@
     "message": "Ta naslov je odgovoril s spletno stranjo, ne z API — ponavadi prijavna stena ali omrežje, ki prestreza zahteve. Preveri naslov ali poskusi drugo omrežje."
   },
   "byoErrBadBaseUrl": {
-    "message": "Osnovni URL API mora biti polni naslov https://."
+    "message": "Osnovni URL API mora biti polni naslov, ki se začne z https:// — http:// deluje samo za localhost in 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "V naslovu je ključ. Vzemi ga iz naslova in prilepi v polje API ključa — naslov se sinhronizira z računom brskalnika, polje ključa ne."
@@ -735,7 +735,7 @@
     "message": "Naslova endpointa še ni — tega ponudnika ne moreš uporabljati, dokler ga ne vpišeš."
   },
   "optBaseHint": {
-    "message": "Deluje osnovni URL ali polni endpoint, npr. https://example.com/v1 ali https://example.com/v1/chat/completions. Za Ollama ali LM Studio na tem računalniku je prava oblika http://localhost:11434/v1. Ključ lahko ostane prazen; navadni http deluje samo za loopback naslove."
+    "message": "Deluje osnovni URL ali polni endpoint, npr. https://example.com/v1 ali https://example.com/v1/chat/completions. Modelni strežnik na tem računalniku uporablja svoja vrata — http://localhost:11434/v1 za Ollama, http://localhost:1234/v1 za LM Studio. Ključ lahko ostane prazen; http deluje samo za loopback naslove."
   },
   "startS1Alt": {
     "message": "Shema predvajalnika: izvirna vrstica in prevedena vrstica pri spodnjem robu slike"

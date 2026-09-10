@@ -403,7 +403,7 @@
     "message": "Alamat tu jawab dengan halaman web, bukan API — biasanya dinding log masuk atau rangkaian yang potong permintaan. Semak alamat, atau cuba rangkaian lain."
   },
   "byoErrBadBaseUrl": {
-    "message": "URL asas API mestilah alamat https:// yang penuh."
+    "message": "URL asas API mestilah alamat penuh yang bermula dengan https:// — http:// hanya boleh guna untuk localhost dan 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "Alamat ada kunci dalamnya. Keluarkan dari alamat dan tampal ke medan kunci API — alamat disegerakkan ke akaun pelayar kamu, medan kunci tidak."
@@ -735,7 +735,7 @@
     "message": "Belum ada alamat endpoint — penyedia ni tak boleh digunakan sampai kamu masukkan satu."
   },
   "optBaseHint": {
-    "message": "URL asas atau endpoint penuh kedua-duanya boleh, cth. https://example.com/v1 atau https://example.com/v1/chat/completions. Untuk Ollama atau LM Studio pada mesin ni, http://localhost:11434/v1 bentuk yang betul. Kunci boleh dibiarkan kosong; http biasa hanya untuk alamat gelung balik."
+    "message": "URL asas atau endpoint penuh kedua-duanya boleh, cth. https://example.com/v1 atau https://example.com/v1/chat/completions. Pelayan model pada mesin ni guna port dia sendiri — http://localhost:11434/v1 untuk Ollama, http://localhost:1234/v1 untuk LM Studio. Kunci boleh dibiarkan kosong; http hanya untuk alamat gelung balik."
   },
   "startS1Alt": {
     "message": "Gambar rajah pemain: baris asal dan baris terjemahan duduk dekat bahagian bawah gambar"

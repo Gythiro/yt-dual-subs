@@ -403,7 +403,7 @@
     "message": "Ta adresa je odgovorila web-stranicom, ne API-jem — obično zid za prijavu ili mreža koja presreće zahtjeve. Provjeri adresu ili pokušaj drugu mrežu."
   },
   "byoErrBadBaseUrl": {
-    "message": "Osnovni URL API-ja mora biti puna adresa https://."
+    "message": "Osnovni URL API-ja mora biti puna adresa koja počinje s https:// — http:// radi samo za localhost i 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "U adresi je ključ. Izvadi ga iz adrese i zalijepi u polje API ključa — adresa se sinkronizira s računom preglednika, polje ključa ne."
@@ -735,7 +735,7 @@
     "message": "Još nema adrese endpointa — ovog pružatelja ne možeš koristiti dok je ne uneseš."
   },
   "optBaseHint": {
-    "message": "Radi i osnovni URL i puni endpoint, npr. https://example.com/v1 ili https://example.com/v1/chat/completions. Za Ollama ili LM Studio na ovom računalu pravi oblik je http://localhost:11434/v1. Ključ može ostati prazan; obični http radi samo za loopback adrese."
+    "message": "Radi i osnovni URL i puni endpoint, npr. https://example.com/v1 ili https://example.com/v1/chat/completions. Server modela na ovom računalu uzima svoj port — http://localhost:11434/v1 za Ollama, http://localhost:1234/v1 za LM Studio. Ključ može ostati prazan; http radi samo za loopback adrese."
   },
   "startS1Alt": {
     "message": "Shema reproduktora: izvorni redak i prevedeni redak pri dnu slike"

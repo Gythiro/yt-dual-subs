@@ -403,7 +403,7 @@
     "message": "Den adressen svarade med en webbsida, inte API:t — oftast en inloggningsvägg eller ett nätverk som fångar upp anrop. Kolla adressen, eller prova ett annat nätverk."
   },
   "byoErrBadBaseUrl": {
-    "message": "API-basadressen måste vara en fullständig https://-adress."
+    "message": "API-basadressen måste vara en fullständig adress som börjar med https:// — http:// fungerar bara för localhost och 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "Adressen innehåller en nyckel. Ta bort den från adressen och klistra in den i fältet för API-nyckel — adressen synkas till ditt webbläsarkonto, nyckelfältet gör det inte."
@@ -735,7 +735,7 @@
     "message": "Ingen slutpunktsadress än — den här leverantören kan inte användas förrän du anger en."
   },
   "optBaseHint": {
-    "message": "En basadress eller en fullständig slutpunkt fungerar båda, t.ex. https://example.com/v1 eller https://example.com/v1/chat/completions. För Ollama eller LM Studio på den här datorn är http://localhost:11434/v1 rätt form. Nyckeln kan lämnas tom; vanlig http fungerar bara för loopback-adresser."
+    "message": "En basadress eller en fullständig slutpunkt fungerar båda, t.ex. https://example.com/v1 eller https://example.com/v1/chat/completions. En modellserver på den här datorn använder sin port — http://localhost:11434/v1 för Ollama, http://localhost:1234/v1 för LM Studio. Nyckeln kan lämnas tom; http fungerar bara för loopback-adresser."
   },
   "startS1Alt": {
     "message": "Spelardiagram: en originalrad och en översatt rad sitter nära nederkanten av bilden"

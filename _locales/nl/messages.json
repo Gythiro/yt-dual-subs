@@ -403,7 +403,7 @@
     "message": "Dat adres antwoordde met een webpagina, niet met de API — meestal een inlogmuur of een netwerk dat verzoeken onderschept. Check het adres, of probeer een ander netwerk."
   },
   "byoErrBadBaseUrl": {
-    "message": "De API-basis-URL moet een volledig https://-adres zijn."
+    "message": "De API-basis-URL moet een volledig adres dat begint met https:// zijn — http:// werkt alleen voor localhost en 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "Er zit een sleutel in het adres. Haal hem uit het adres en plak hem in het veld API-sleutel — het adres wordt met je browseraccount gesynchroniseerd, het sleutelveld niet."
@@ -735,7 +735,7 @@
     "message": "Nog geen eindpuntadres — deze aanbieder kan pas als je er een invoert."
   },
   "optBaseHint": {
-    "message": "Een basis-URL of een volledig eindpunt, beide werken, bijv. https://example.com/v1 of https://example.com/v1/chat/completions. Voor Ollama of LM Studio op deze machine is http://localhost:11434/v1 de juiste vorm. De sleutel mag leeg blijven; gewoon http werkt alleen voor loopback-adressen."
+    "message": "Een basis-URL of een volledig eindpunt, beide werken, bijv. https://example.com/v1 of https://example.com/v1/chat/completions. Een modelserver op deze machine gebruikt zijn eigen poort — http://localhost:11434/v1 voor Ollama, http://localhost:1234/v1 voor LM Studio. De sleutel mag leeg blijven; http werkt alleen voor loopback-adressen."
   },
   "startS1Alt": {
     "message": "Spelerdiagram: een originele regel en een vertaalde regel zitten onder in beeld"

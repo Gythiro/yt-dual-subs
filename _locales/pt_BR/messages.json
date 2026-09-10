@@ -370,7 +370,7 @@
     "message": "Esse endereço respondeu com uma página da web, não com a API — geralmente uma tela de login ou uma rede que intercepta as solicitações. Confira o endereço ou tente outra rede."
   },
   "byoErrBadBaseUrl": {
-    "message": "A URL base da API precisa ser um endereço https:// completo."
+    "message": "A URL base da API precisa ser um endereço completo começando com https:// — http:// só funciona para localhost e 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Sem permissão para acessar esse host da API, a extensão não consegue conectar. Pressione “Salvar e testar” de novo e conceda o acesso."
@@ -659,7 +659,7 @@
     "message": "Ainda sem endereço do endpoint — este provedor não pode ser usado até você informar um."
   },
   "optBaseHint": {
-    "message": "Tanto uma base URL quanto um endpoint completo funcionam, ex.: https://example.com/v1 ou https://example.com/v1/chat/completions. Para Ollama ou LM Studio nesta máquina, http://localhost:11434/v1 é o formato certo. A chave pode ficar vazia; http simples só funciona para endereços de loopback."
+    "message": "Tanto uma base URL quanto um endpoint completo funcionam, ex.: https://example.com/v1 ou https://example.com/v1/chat/completions. Um servidor de modelo nesta máquina usa a sua própria porta — http://localhost:11434/v1 para Ollama, http://localhost:1234/v1 para LM Studio. A chave pode ficar vazia; http só funciona para endereços de loopback."
   },
   "startS1Alt": {
     "message": "Diagrama do player: uma linha original e uma linha traduzida perto da parte de baixo da imagem"

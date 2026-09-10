@@ -370,7 +370,7 @@
     "message": "See aadress vastas veebilehega, mitte API-ga — tavaliselt sisselogimissein või võrk, mis pealtkuulab päringuid. Kontrolli aadressi või proovi teist võrku."
   },
   "byoErrBadBaseUrl": {
-    "message": "API baas-URL peab olema täielik https:// aadress."
+    "message": "API baas-URL peab olema täielik aadress, mis algab https:// — http:// töötab ainult localhost ja 127.0.0.1 jaoks."
   },
   "byoErrNoPerm": {
     "message": "Ilma loata selle API hostini jõuda ei saa laiendus ühenduda. Vajuta uuesti „Salvesta ja testi“ ja anna luba."
@@ -659,7 +659,7 @@
     "message": "Lõpp-punkti aadressi veel pole — seda teenusepakkujat ei saa enne aadressi sisestamist kasutada."
   },
   "optBaseHint": {
-    "message": "Sobib nii base URL kui ka täielik lõpp-punkt, nt https://example.com/v1 või https://example.com/v1/chat/completions. Selle arvuti Ollama või LM Studio jaoks on õige kuju http://localhost:11434/v1. Võtme võib tühjaks jätta; lihtne http töötab ainult loopback-aadressidel."
+    "message": "Sobib nii base URL kui ka täielik lõpp-punkt, nt https://example.com/v1 või https://example.com/v1/chat/completions. Selles arvutis asuv mudeliserver kasutab oma porti — http://localhost:11434/v1 Ollama jaoks, http://localhost:1234/v1 LM Studio jaoks. Võtme võib tühjaks jätta; http töötab ainult loopback-aadressidel."
   },
   "startS1Alt": {
     "message": "Pleieri skeem: originaalrida ja tõlkerida pildi allosas"

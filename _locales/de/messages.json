@@ -370,7 +370,7 @@
     "message": "Diese Adresse hat mit einer Webseite geantwortet, nicht mit der API — meist eine Anmeldeseite oder ein Netzwerk, das Anfragen abfängt. Adresse prüfen oder ein anderes Netzwerk versuchen."
   },
   "byoErrBadBaseUrl": {
-    "message": "Die API-Basis-URL muss eine vollständige https://-Adresse sein."
+    "message": "Die API-Basis-URL muss eine vollständige Adresse sein, die mit https:// beginnt — http:// geht nur für localhost und 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Ohne Berechtigung, diesen API-Host zu erreichen, kann die Erweiterung nicht verbinden. Drücke erneut „Speichern und testen“ und erlaube den Zugriff."
@@ -659,7 +659,7 @@
     "message": "Noch keine Endpunktadresse — dieser Anbieter kann erst verwendet werden, wenn du eine einträgst."
   },
   "optBaseHint": {
-    "message": "Eine Base-URL oder ein vollständiger Endpunkt gehen beide, z. B. https://example.com/v1 oder https://example.com/v1/chat/completions. Für Ollama oder LM Studio auf diesem Rechner passt http://localhost:11434/v1. Der Schlüssel darf leer bleiben; einfaches http geht nur für Loopback-Adressen."
+    "message": "Eine Base-URL oder ein vollständiger Endpunkt gehen beide, z. B. https://example.com/v1 oder https://example.com/v1/chat/completions. Ein Modellserver auf diesem Rechner nimmt seinen eigenen Port — http://localhost:11434/v1 für Ollama, http://localhost:1234/v1 für LM Studio. Der Schlüssel darf leer bleiben; http geht nur für Loopback-Adressen."
   },
   "startS1Alt": {
     "message": "Player-Diagramm: eine Originalzeile und eine übersetzte Zeile sitzen unten im Bild"

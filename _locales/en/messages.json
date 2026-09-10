@@ -403,7 +403,7 @@
     "message": "That address answered with a web page, not the API — usually a sign-in wall or a network that intercepts requests. Check the address, or try another network."
   },
   "byoErrBadBaseUrl": {
-    "message": "The API base URL must be a full https:// address."
+    "message": "The API base URL needs the whole address, starting with https:// — http:// works only for localhost and 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "The address has a key in it. Take it out of the address and paste it into the API key field — the address is synced to your browser account, the key field is not."
@@ -735,7 +735,7 @@
     "message": "No endpoint address yet — this provider cannot be used until you enter one."
   },
   "optBaseHint": {
-    "message": "A base URL or a full endpoint both work, e.g. https://example.com/v1 or https://example.com/v1/chat/completions. For Ollama or LM Studio on this machine, http://localhost:11434/v1 is the right shape. The key can stay empty; plain http only works for loopback addresses."
+    "message": "Either the base URL or the full endpoint works, e.g. https://example.com/v1 or https://example.com/v1/chat/completions. A model server on this machine takes the port that server uses — http://localhost:11434/v1 for Ollama, http://localhost:1234/v1 for LM Studio. The key can be left empty; http is only allowed for loopback addresses."
   },
   "startS1Alt": {
     "message": "Player diagram: an original line and a translated line sit near the bottom of the picture"

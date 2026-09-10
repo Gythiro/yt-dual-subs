@@ -370,7 +370,7 @@
     "message": "Quell'indirizzo ha risposto con una pagina web, non con l'API — di solito una schermata di accesso o una rete che intercetta le richieste. Controlla l'indirizzo o prova un'altra rete."
   },
   "byoErrBadBaseUrl": {
-    "message": "L'URL di base dell'API deve essere un indirizzo https:// completo."
+    "message": "L'URL di base dell'API deve essere un indirizzo completo che inizi con https:// — http:// vale solo per localhost e 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Senza il permesso di raggiungere quell'host API l'estensione non può connettersi. Premi di nuovo «Salva e prova» e concedi l'accesso."
@@ -659,7 +659,7 @@
     "message": "Nessun indirizzo endpoint — questo provider non si può usare finché non ne inserisci uno."
   },
   "optBaseHint": {
-    "message": "Vanno bene sia una base URL sia un endpoint completo, ad es. https://example.com/v1 o https://example.com/v1/chat/completions. Per Ollama o LM Studio su questo computer, http://localhost:11434/v1 è la forma giusta. La chiave può restare vuota; l'http semplice vale solo per gli indirizzi di loopback."
+    "message": "Vanno bene sia una base URL sia un endpoint completo, ad es. https://example.com/v1 o https://example.com/v1/chat/completions. Un server di modelli su questo computer usa la propria porta — http://localhost:11434/v1 per Ollama, http://localhost:1234/v1 per LM Studio. La chiave può restare vuota; http vale solo per gli indirizzi di loopback."
   },
   "startS1Alt": {
     "message": "Schema del player: una riga originale e una tradotta in basso nell'immagine"

@@ -370,7 +370,7 @@
     "message": "Cette adresse a renvoyé une page web, pas l’API — généralement un écran de connexion ou un réseau qui intercepte les requêtes. Vérifiez l’adresse, ou essayez un autre réseau."
   },
   "byoErrBadBaseUrl": {
-    "message": "L’URL de base de l’API doit être une adresse https:// complète."
+    "message": "L’URL de base de l’API doit être une adresse complète commençant par https:// — http:// ne vaut que pour localhost et 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Sans autorisation d’atteindre cet hôte API, l’extension ne peut pas se connecter. Appuyez de nouveau sur « Enregistrer et tester » et autorisez l’accès."
@@ -659,7 +659,7 @@
     "message": "Pas encore d’adresse d’endpoint — ce fournisseur est inutilisable tant que vous n’en saisissez pas une."
   },
   "optBaseHint": {
-    "message": "Une base URL ou un endpoint complet conviennent, p. ex. https://example.com/v1 ou https://example.com/v1/chat/completions. Pour Ollama ou LM Studio sur cette machine, http://localhost:11434/v1 est la bonne forme. La clé peut rester vide ; le http simple ne vaut que pour les adresses de boucle locale."
+    "message": "Une base URL ou un endpoint complet conviennent, p. ex. https://example.com/v1 ou https://example.com/v1/chat/completions. Un serveur de modèle sur cette machine prend son propre port — http://localhost:11434/v1 pour Ollama, http://localhost:1234/v1 pour LM Studio. La clé peut rester vide ; http ne vaut que pour les adresses de boucle locale."
   },
   "startS1Alt": {
     "message": "Schéma du lecteur : une ligne originale et une ligne traduite en bas de l’image"

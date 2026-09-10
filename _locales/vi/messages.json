@@ -370,7 +370,7 @@
     "message": "Địa chỉ đó trả về một trang web, không phải API — thường là tường đăng nhập hoặc mạng chặn yêu cầu. Kiểm tra địa chỉ, hoặc thử mạng khác."
   },
   "byoErrBadBaseUrl": {
-    "message": "URL gốc của API phải là địa chỉ https:// đầy đủ."
+    "message": "URL gốc của API phải là địa chỉ đầy đủ bắt đầu bằng https:// — http:// chỉ dùng được cho localhost và 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Không có quyền truy cập máy chủ API đó thì tiện ích không thể kết nối. Nhấn “Lưu và kiểm tra” lần nữa và cho phép truy cập."
@@ -659,7 +659,7 @@
     "message": "Chưa có địa chỉ endpoint — chưa dùng được nhà cung cấp này cho đến khi bạn nhập địa chỉ."
   },
   "optBaseHint": {
-    "message": "Điền base URL hay endpoint đầy đủ đều được, ví dụ https://example.com/v1 hoặc https://example.com/v1/chat/completions. Ollama hay LM Studio trên máy này thì điền http://localhost:11434/v1. Khóa để trống cũng được; http thường chỉ dùng cho địa chỉ loopback."
+    "message": "Điền base URL hay endpoint đầy đủ đều được, ví dụ https://example.com/v1 hoặc https://example.com/v1/chat/completions. Máy chủ mô hình trên máy này dùng cổng riêng của nó — http://localhost:11434/v1 cho Ollama, http://localhost:1234/v1 cho LM Studio. Khóa để trống cũng được; http chỉ dùng cho địa chỉ loopback."
   },
   "startS1Alt": {
     "message": "Sơ đồ trình phát: một dòng gốc và một dòng dịch nằm gần đáy hình"

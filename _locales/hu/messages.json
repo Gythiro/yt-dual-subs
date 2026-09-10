@@ -403,7 +403,7 @@
     "message": "Ez a cím weboldallal válaszolt, nem az API-val — általában bejelentkezési fal vagy a kéréseket elfogó hálózat. Ellenőrizd a címet, vagy próbálj másik hálózatot."
   },
   "byoErrBadBaseUrl": {
-    "message": "Az API alap-URL-jének teljes https:// címnek kell lennie."
+    "message": "Az API alap-URL-jének teljes, https://-sel kezdődő címnek kell lennie — a http:// csak localhost és 127.0.0.1 esetén működik."
   },
   "byoErrUrlHasKey": {
     "message": "A címben kulcs van. Vedd ki a címből, és illeszd az API-kulcs mezőbe — a cím szinkronizálódik a böngészőfiókoddal, a kulcsmező nem."
@@ -735,7 +735,7 @@
     "message": "Még nincs végpontcím — ez a szolgáltató addig nem használható, amíg nem írsz be egyet."
   },
   "optBaseHint": {
-    "message": "Alap-URL és teljes végpont is jó, pl. https://example.com/v1 vagy https://example.com/v1/chat/completions. Az ezen a gépen futó Ollama vagy LM Studio esetén a http://localhost:11434/v1 a helyes forma. A kulcs üresen maradhat; sima http csak loopback-címeken működik."
+    "message": "Alap-URL és teljes végpont is jó, pl. https://example.com/v1 vagy https://example.com/v1/chat/completions. Az ezen a gépen futó modellkiszolgáló a saját portját használja — http://localhost:11434/v1 Ollama, http://localhost:1234/v1 LM Studio esetén. A kulcs üresen maradhat; a http csak loopback-címeken működik."
   },
   "startS1Alt": {
     "message": "Lejátszó ábra: egy eredeti sor és egy fordított sor a kép alján"

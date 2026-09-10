@@ -370,7 +370,7 @@
     "message": "そのアドレスは API ではなくウェブページを返しました。ログイン画面や、通信を傍受するネットワークが原因であることが多いです。アドレスを確認するか、別のネットワークをお試しください。"
   },
   "byoErrBadBaseUrl": {
-    "message": "APIのベースURLは https:// から始まる完全なアドレスにしてください。"
+    "message": "APIのベースURLは https:// から始まる完全なアドレスにしてください — http:// が使えるのは localhost と 127.0.0.1 だけです。"
   },
   "byoErrNoPerm": {
     "message": "そのAPIホストへのアクセス許可がないと、拡張機能は接続できません。「保存してテスト」をもう一度押して、許可してください。"
@@ -659,7 +659,7 @@
     "message": "エンドポイントがまだ入力されていません。入力するまでこのプロバイダーは使えません。"
   },
   "optBaseHint": {
-    "message": "Base URL でも完全なエンドポイントでも構いません。例: https://example.com/v1 または https://example.com/v1/chat/completions。このパソコンの Ollama や LM Studio なら http://localhost:11434/v1 の形です。キーは空でも可。http が使えるのはループバックアドレスだけです。"
+    "message": "Base URL でも完全なエンドポイントでも構いません。例: https://example.com/v1 または https://example.com/v1/chat/completions。このパソコンのモデルサーバーはそのポートを使います — Ollama なら http://localhost:11434/v1、LM Studio なら http://localhost:1234/v1。キーは空でも可。http が使えるのはループバックアドレスだけです。"
   },
   "startS1Alt": {
     "message": "プレーヤー図: 画面下部付近に原文と訳文の2行が並んでいる"

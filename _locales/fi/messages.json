@@ -370,7 +370,7 @@
     "message": "Osoite vastasi verkkosivulla, ei API:lla — yleensä kirjautumissivu tai verkko, joka sieppaa pyynnöt. Tarkista osoite tai kokeile toista verkkoa."
   },
   "byoErrBadBaseUrl": {
-    "message": "API-perusosoitteen on oltava täydellinen https://-osoite."
+    "message": "API-perusosoitteen on oltava täydellinen osoite, joka alkaa https:// — http:// toimii vain localhost ja 127.0.0.1 osoitteille."
   },
   "byoErrNoPerm": {
     "message": "Ilman lupaa kyseiseen API-palvelimeen laajennus ei voi yhdistää. Paina ”Tallenna ja testaa” uudelleen ja myönnä lupa."
@@ -659,7 +659,7 @@
     "message": "Ei päätepisteen osoitetta vielä — tätä palveluntarjoajaa ei voi käyttää ennen kuin lisäät osoitteen."
   },
   "optBaseHint": {
-    "message": "Base URL tai täysi päätepiste käyvät molemmat, esim. https://example.com/v1 tai https://example.com/v1/chat/completions. Tämän koneen Ollamalle tai LM Studiolle oikea muoto on http://localhost:11434/v1. Avaimen voi jättää tyhjäksi; pelkkä http toimii vain loopback-osoitteille."
+    "message": "Base URL tai täysi päätepiste käyvät molemmat, esim. https://example.com/v1 tai https://example.com/v1/chat/completions. Tämän koneen mallipalvelin käyttää omaa porttiaan — http://localhost:11434/v1 Ollamalle, http://localhost:1234/v1 LM Studiolle. Avaimen voi jättää tyhjäksi; http toimii vain loopback-osoitteille."
   },
   "startS1Alt": {
     "message": "Soittimen kaavio: alkuperäinen rivi ja käännetty rivi kuvan alareunassa"

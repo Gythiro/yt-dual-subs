@@ -403,7 +403,7 @@
     "message": "Aquesta adreça ha respost amb una pàgina web, no amb l'API — sol ser una pantalla d'inici de sessió o una xarxa que intercepta les peticions. Comprova l'adreça, o prova una altra xarxa."
   },
   "byoErrBadBaseUrl": {
-    "message": "L'URL base de l'API ha de ser una adreça https:// completa."
+    "message": "L'URL base de l'API ha de ser una adreça completa que comenci per https:// — http:// només funciona per a localhost i 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "L'adreça porta una clau a dins. Treu-la de l'adreça i enganxa-la al camp de la clau de l'API — l'adreça se sincronitza amb el compte del navegador, el camp de la clau no."
@@ -735,7 +735,7 @@
     "message": "Encara no hi ha adreça d'endpoint — aquest proveïdor no es pot fer servir fins que n'introdueixis una."
   },
   "optBaseHint": {
-    "message": "Una URL base o un endpoint complet serveixen tots dos, p. ex. https://example.com/v1 o https://example.com/v1/chat/completions. Per a Ollama o LM Studio en aquest ordinador, http://localhost:11434/v1 és la forma correcta. La clau pot quedar buida; l'http simple només funciona amb adreces de loopback."
+    "message": "Una URL base o un endpoint complet serveixen tots dos, p. ex. https://example.com/v1 o https://example.com/v1/chat/completions. Un servidor de models en aquest ordinador utilitza el seu propi port — http://localhost:11434/v1 per a Ollama, http://localhost:1234/v1 per a LM Studio. La clau pot quedar buida; http només funciona amb adreces de loopback."
   },
   "startS1Alt": {
     "message": "Diagrama del reproductor: una línia original i una de traduïda a prop de la part inferior de la imatge"

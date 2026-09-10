@@ -403,7 +403,7 @@
     "message": "那個地址回的是一個網頁，不是介面——多半是登入頁或網路在中間攔截。檢查地址，或者換個網路。"
   },
   "byoErrBadBaseUrl": {
-    "message": "介面網址必須是 https:// 開頭的完整網址。"
+    "message": "介面網址要填完整，https:// 開頭——http:// 只有 localhost 和 127.0.0.1 能用。"
   },
   "byoErrUrlHasKey": {
     "message": "網址裡帶著 Key。把它從網址裡去掉，填進下面的 API Key 欄——網址會隨瀏覽器帳號同步，Key 欄不會。"
@@ -734,7 +734,7 @@
     "message": "還沒填介面位址，這個服務商暫時用不了。"
   },
   "optBaseHint": {
-    "message": "填 Base URL 或完整介面位址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本機的 Ollama、LM Studio 填 http://localhost:11434/v1 這種位址就行。Key 可以留空；http 只有本機回環位址能用。"
+    "message": "填 Base URL 或完整介面位址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本機跑的模型伺服器要填它自己的連接埠——Ollama 是 http://localhost:11434/v1，LM Studio 是 http://localhost:1234/v1。Key 可以留空；http 只有本機回環位址能用。"
   },
   "startS1Alt": {
     "message": "播放器示意圖：畫面下方是一行原文和一行譯文"

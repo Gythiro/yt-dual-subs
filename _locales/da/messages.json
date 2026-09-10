@@ -403,7 +403,7 @@
     "message": "Den adresse svarede med en webside, ikke API’et — oftest en loginmur eller et netværk, der opsnapper kald. Tjek adressen, eller prøv et andet netværk."
   },
   "byoErrBadBaseUrl": {
-    "message": "API-basen skal være en fuld https://-adresse."
+    "message": "API-basen skal være en fuld adresse, der starter med https:// — http:// virker kun til localhost og 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "Adressen har en nøgle i sig. Tag den ud af adressen og sæt den ind i feltet til API-nøgle — adressen synkes til din browserkonto, nøglefeltet gør ikke."
@@ -735,7 +735,7 @@
     "message": "Ingen slutpunktsadresse endnu — denne udbyder kan ikke bruges, før du angiver en."
   },
   "optBaseHint": {
-    "message": "En basis-URL eller et fuldt slutpunkt virker begge, f.eks. https://example.com/v1 eller https://example.com/v1/chat/completions. Til Ollama eller LM Studio på denne computer er http://localhost:11434/v1 den rigtige form. Nøglen kan stå tom; almindelig http virker kun til loopback-adresser."
+    "message": "En basis-URL eller et fuldt slutpunkt virker begge, f.eks. https://example.com/v1 eller https://example.com/v1/chat/completions. En modelserver på denne computer tager den port, den bruger — http://localhost:11434/v1 til Ollama, http://localhost:1234/v1 til LM Studio. Nøglen kan stå tom; http virker kun til loopback-adresser."
   },
   "startS1Alt": {
     "message": "Afspillerdiagram: en originallinje og en oversat linje sidder nederst i billedet"

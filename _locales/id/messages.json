@@ -403,7 +403,7 @@
     "message": "Alamat itu menjawab dengan halaman web, bukan API — biasanya dinding masuk atau jaringan yang menyadap permintaan. Cek alamatnya, atau coba jaringan lain."
   },
   "byoErrBadBaseUrl": {
-    "message": "URL dasar API harus alamat https:// yang lengkap."
+    "message": "URL dasar API harus alamat lengkap yang diawali https:// — http:// hanya jalan untuk localhost dan 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "Ada kunci di dalam alamat. Keluarkan dari alamat dan tempel ke kolom kunci API — alamat disinkronkan ke akun browser kamu, kolom kunci tidak."
@@ -735,7 +735,7 @@
     "message": "Belum ada alamat endpoint — penyedia ini tidak bisa dipakai sampai kamu memasukkan satu."
   },
   "optBaseHint": {
-    "message": "URL dasar atau endpoint lengkap, keduanya jalan, mis. https://example.com/v1 atau https://example.com/v1/chat/completions. Untuk Ollama atau LM Studio di mesin ini, http://localhost:11434/v1 bentuk yang pas. Kuncinya boleh kosong; http biasa hanya jalan untuk alamat loopback."
+    "message": "URL dasar atau endpoint lengkap, keduanya jalan, mis. https://example.com/v1 atau https://example.com/v1/chat/completions. Server model di mesin ini memakai portnya sendiri — http://localhost:11434/v1 untuk Ollama, http://localhost:1234/v1 untuk LM Studio. Kuncinya boleh kosong; http hanya jalan untuk alamat loopback."
   },
   "startS1Alt": {
     "message": "Diagram pemutar: satu baris asli dan satu baris terjemahan duduk di dekat bawah gambar"

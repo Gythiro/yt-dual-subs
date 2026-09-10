@@ -370,7 +370,7 @@
     "message": "Bu adres API değil, bir web sayfası döndürdü — genellikle bir giriş duvarı veya istekleri kesen bir ağ. Adresi kontrol edin veya başka bir ağ deneyin."
   },
   "byoErrBadBaseUrl": {
-    "message": "API taban URL'si tam bir https:// adresi olmalı."
+    "message": "API taban URL'si https:// ile başlayan tam bir adres olmalı — http:// yalnızca localhost ve 127.0.0.1 için çalışır."
   },
   "byoErrNoPerm": {
     "message": "Bu API sunucusuna erişim izni olmadan eklenti bağlanamaz. “Kaydet ve dene” düğmesine tekrar basıp izin verin."
@@ -659,7 +659,7 @@
     "message": "Henüz endpoint adresi yok — bir tane girmeden bu sağlayıcı kullanılamaz."
   },
   "optBaseHint": {
-    "message": "Base URL de tam endpoint de olur, örn. https://example.com/v1 veya https://example.com/v1/chat/completions. Bu bilgisayardaki Ollama ya da LM Studio için doğru biçim http://localhost:11434/v1. Anahtar boş kalabilir; düz http yalnızca loopback adreslerinde çalışır."
+    "message": "Base URL de tam endpoint de olur, örn. https://example.com/v1 veya https://example.com/v1/chat/completions. Bu bilgisayardaki model sunucusu kendi portunu kullanır — Ollama için http://localhost:11434/v1, LM Studio için http://localhost:1234/v1. Anahtar boş kalabilir; http yalnızca loopback adreslerinde çalışır."
   },
   "startS1Alt": {
     "message": "Oynatıcı şeması: orijinal satır ve çevrilmiş satır görüntünün altına yakın duruyor"

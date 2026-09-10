@@ -403,7 +403,7 @@
     "message": "Този адрес върна уебстраница, не API — обикновено стена за вход или мрежа, която прихваща заявки. Провери адреса или пробвай друга мрежа."
   },
   "byoErrBadBaseUrl": {
-    "message": "Базовият URL на API трябва да е пълен адрес https://."
+    "message": "Базовият URL на API трябва да е пълен адрес с https:// — http:// работи само за localhost и 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "В адреса има ключ. Махни го от адреса и го постави в полето за API ключ — адресът се синхронизира с акаунта в браузъра, полето за ключ — не."
@@ -735,7 +735,7 @@
     "message": "Още няма адрес на endpoint — този доставчик не може да се ползва, докато не въведеш един."
   },
   "optBaseHint": {
-    "message": "Работи и базов URL, и пълен endpoint, напр. https://example.com/v1 или https://example.com/v1/chat/completions. За Ollama или LM Studio на този компютър правилната форма е http://localhost:11434/v1. Ключът може да остане празен; обикновен http работи само за loopback адреси."
+    "message": "Работи и базов URL, и пълен endpoint, напр. https://example.com/v1 или https://example.com/v1/chat/completions. Модел сървър на този компютър използва съответния порт — http://localhost:11434/v1 за Ollama, http://localhost:1234/v1 за LM Studio. Ключът може да остане празен; http работи само за loopback адреси."
   },
   "startS1Alt": {
     "message": "Схема на плейъра: ред с оригинал и ред с превод близо до долния край на картината"

@@ -370,7 +370,7 @@
     "message": "ที่อยู่นั้นตอบกลับเป็นหน้าเว็บ ไม่ใช่ API — มักเป็นหน้าเข้าสู่ระบบหรือเครือข่ายที่ดักคำขอ ตรวจสอบที่อยู่ หรือลองเครือข่ายอื่น"
   },
   "byoErrBadBaseUrl": {
-    "message": "API base URL ต้องเป็นที่อยู่ https:// แบบเต็ม"
+    "message": "API base URL ต้องเป็นที่อยู่แบบเต็มที่ขึ้นต้นด้วย https:// — ส่วน http:// ใช้ได้เฉพาะ localhost และ 127.0.0.1"
   },
   "byoErrNoPerm": {
     "message": "หากไม่ได้รับสิทธิ์เข้าถึงโฮสต์ API ส่วนขยายจะเชื่อมต่อไม่ได้ กด “บันทึกแล้วทดสอบ” อีกครั้งแล้วอนุญาต"
@@ -659,7 +659,7 @@
     "message": "ยังไม่มีที่อยู่เอนด์พอยต์ — ใช้ผู้ให้บริการนี้ไม่ได้จนกว่าจะกรอกที่อยู่"
   },
   "optBaseHint": {
-    "message": "ใส่ Base URL หรือเอนด์พอยต์เต็มก็ได้ เช่น https://example.com/v1 หรือ https://example.com/v1/chat/completions ถ้าเป็น Ollama หรือ LM Studio ในเครื่องนี้ ใช้ http://localhost:11434/v1 คีย์เว้นว่างได้ ส่วน http ใช้ได้เฉพาะที่อยู่ loopback"
+    "message": "ใส่ Base URL หรือเอนด์พอยต์เต็มก็ได้ เช่น https://example.com/v1 หรือ https://example.com/v1/chat/completions เซิร์ฟเวอร์โมเดลในเครื่องนี้จะใช้พอร์ตของตัวเอง — Ollama คือ http://localhost:11434/v1, LM Studio คือ http://localhost:1234/v1 คีย์เว้นว่างได้ ส่วน http ใช้ได้เฉพาะที่อยู่ loopback"
   },
   "startS1Alt": {
     "message": "แผนภาพเครื่องเล่น: บรรทัดต้นฉบับและบรรทัดคำแปลอยู่ใกล้ด้านล่างของภาพ"

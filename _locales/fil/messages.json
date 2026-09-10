@@ -403,7 +403,7 @@
     "message": "Web page ang isinagot ng address na 'yon, hindi API — kadalasan login wall o network na humaharang ng request. Tingnan ang address, o subukan ang ibang network."
   },
   "byoErrBadBaseUrl": {
-    "message": "Dapat buong https:// address ang API base URL."
+    "message": "Dapat buong address na nag-uumpisa sa https:// ang API base URL — gumagana lang ang http:// para sa localhost at 127.0.0.1."
   },
   "byoErrUrlHasKey": {
     "message": "May key sa address. Alisin doon at i-paste sa field ng API key — sine-sync ang address sa browser account mo, hindi ang field ng key."
@@ -735,7 +735,7 @@
     "message": "Wala pang address ng endpoint — hindi magagamit ang provider na 'to hanggang maglagay ka."
   },
   "optBaseHint": {
-    "message": "Puwede ang base URL o buong endpoint, hal. https://example.com/v1 o https://example.com/v1/chat/completions. Para sa Ollama o LM Studio sa machine na 'to, http://localhost:11434/v1 ang tamang hugis. Puwedeng walang laman ang key; plain http lang para sa loopback address."
+    "message": "Puwede ang base URL o buong endpoint, hal. https://example.com/v1 o https://example.com/v1/chat/completions. May sariling port ang model server sa machine na 'to — http://localhost:11434/v1 para sa Ollama, http://localhost:1234/v1 para sa LM Studio. Puwedeng walang laman ang key; http lang para sa loopback address."
   },
   "startS1Alt": {
     "message": "Diagram ng player: may orihinal na linya at isinaling linya malapit sa ibaba ng larawan"

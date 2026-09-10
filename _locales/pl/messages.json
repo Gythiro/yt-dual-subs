@@ -370,7 +370,7 @@
     "message": "Ten adres zwrócił stronę internetową, a nie API — zwykle to strona logowania albo sieć przechwytująca żądania. Sprawdź adres albo spróbuj innej sieci."
   },
   "byoErrBadBaseUrl": {
-    "message": "Bazowy URL API musi być pełnym adresem https://."
+    "message": "Bazowy URL API musi być pełnym adresem zaczynającym się od https:// — http:// działa tylko dla localhost i 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Bez uprawnienia do tego hosta API rozszerzenie nie może się połączyć. Naciśnij ponownie „Zapisz i przetestuj” i zezwól na dostęp."
@@ -659,7 +659,7 @@
     "message": "Brak adresu endpointu — tego dostawcy nie użyjesz, dopóki go nie podasz."
   },
   "optBaseHint": {
-    "message": "Zadziała i base URL, i pełny endpoint, np. https://example.com/v1 lub https://example.com/v1/chat/completions. Dla Ollamy lub LM Studio na tym komputerze właściwa forma to http://localhost:11434/v1. Klucz może zostać pusty; zwykłe http działa tylko dla adresów loopback."
+    "message": "Zadziała i base URL, i pełny endpoint, np. https://example.com/v1 lub https://example.com/v1/chat/completions. Serwer modelu na tym komputerze używa swojego portu — http://localhost:11434/v1 dla Ollamy, http://localhost:1234/v1 dla LM Studio. Klucz może zostać pusty; http działa tylko dla adresów loopback."
   },
   "startS1Alt": {
     "message": "Schemat odtwarzacza: linia oryginału i linia tłumaczenia u dołu obrazu"

@@ -370,7 +370,7 @@
     "message": "Acea adresă a răspuns cu o pagină web, nu cu API — de obicei un ecran de autentificare sau o rețea care interceptează cererile. Verifică adresa sau încearcă o altă rețea."
   },
   "byoErrBadBaseUrl": {
-    "message": "URL-ul de bază al API-ului trebuie să fie o adresă https:// completă."
+    "message": "URL-ul de bază al API-ului trebuie să fie o adresă completă care începe cu https:// — http:// merge doar pentru localhost și 127.0.0.1."
   },
   "byoErrNoPerm": {
     "message": "Fără permisiunea de a accesa acel host API, extensia nu se poate conecta. Apasă din nou „Salvează și testează” și acordă accesul."
@@ -659,7 +659,7 @@
     "message": "Nicio adresă de endpoint încă — acest furnizor nu poate fi folosit până nu introduci una."
   },
   "optBaseHint": {
-    "message": "Merge și un base URL, și un endpoint complet, de ex. https://example.com/v1 sau https://example.com/v1/chat/completions. Pentru Ollama sau LM Studio pe acest calculator, forma corectă e http://localhost:11434/v1. Cheia poate rămâne goală; http simplu merge doar pentru adrese de loopback."
+    "message": "Merge și un base URL, și un endpoint complet, de ex. https://example.com/v1 sau https://example.com/v1/chat/completions. Un server de model pe acest calculator ia portul pe care îl folosește — http://localhost:11434/v1 pentru Ollama, http://localhost:1234/v1 pentru LM Studio. Cheia poate rămâne goală; http merge doar pentru adrese de loopback."
   },
   "startS1Alt": {
     "message": "Diagramă player: o linie originală și una tradusă, aproape de baza imaginii"

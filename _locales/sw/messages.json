@@ -403,7 +403,7 @@
     "message": "Anwani hiyo ilijibu kwa ukurasa wa wavuti, si API — mara nyingi ni ukuta wa kuingia au mtandao unaozuia maombi. Kagua anwani, au jaribu mtandao mwingine."
   },
   "byoErrBadBaseUrl": {
-    "message": "URL msingi ya API lazima iwe anwani kamili ya https://."
+    "message": "URL msingi ya API lazima iwe anwani kamili inayoanza na https:// — http:// inafanya kazi kwa localhost na 127.0.0.1 tu."
   },
   "byoErrUrlHasKey": {
     "message": "Anwani ina ufunguo ndani yake. Utoe kwenye anwani na uubandike kwenye uga wa ufunguo wa API — anwani husawazishwa na akaunti ya kivinjari chako, uga wa ufunguo hausawazishwi."
@@ -735,7 +735,7 @@
     "message": "Bado hakuna anwani ya API — mtoa huduma huyu hawezi kutumika hadi uweke moja."
   },
   "optBaseHint": {
-    "message": "URL msingi au anwani kamili zote zinafaa, k.m. https://example.com/v1 au https://example.com/v1/chat/completions. Kwa Ollama au LM Studio kwenye kompyuta hii, http://localhost:11434/v1 ndiyo umbo sahihi. Ufunguo unaweza kubaki tupu; http tupu hufanya kazi kwa anwani za localhost tu."
+    "message": "URL msingi au anwani kamili zote zinafaa, k.m. https://example.com/v1 au https://example.com/v1/chat/completions. Seva ya modeli kwenye kompyuta hii inachukua port yake yenyewe — http://localhost:11434/v1 kwa Ollama, http://localhost:1234/v1 kwa LM Studio. Ufunguo unaweza kubaki tupu; http hufanya kazi kwa anwani za loopback tu."
   },
   "startS1Alt": {
     "message": "Mchoro wa kichezaji: mstari wa asili na mstari wa tafsiri viko karibu na chini ya picha"
