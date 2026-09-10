@@ -858,7 +858,7 @@
     "message": "Bacakan terjemahan di video"
   },
   "ttsEnableHint": {
-    "message": "Kalau nyala, terjemahan tiap subtitle diucapkan saat muncul; baris yang terjemahannya belum siap tepat waktu dilewati, bukan dikejar belakangan. Saat sebuah baris berbicara, audio video sendiri turun ke tingkat yang disetel di bawah. Baris yang kepanjangan sedikit memperlambat gambar dan meminjam jeda sesudahnya — dengan suara cloud dan suara browser sendiri; sakelar di bawah terus memperlambat sampai setiap baris selesai."
+    "message": "Kalau nyala, terjemahan tiap subtitle diucapkan saat muncul; baris yang terjemahannya belum siap tepat waktu dilewati, bukan dikejar belakangan. Saat sebuah baris berbicara, audio asli turun ke tingkat yang disetel di bawah. Baris yang kepanjangan sedikit memperlambat gambar dan meminjam jeda sesudahnya — dengan suara cloud dan suara browser sendiri; sakelar di bawah terus memperlambat agar lebih banyak baris selesai."
   },
   "langsIntro": {
     "message": "Bahasa terjemahan mana yang ditawarkan popup."

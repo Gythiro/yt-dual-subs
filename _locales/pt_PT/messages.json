@@ -867,7 +867,7 @@
     "message": "não saiu som"
   },
   "ttsEnableHint": {
-    "message": "Quando está ligado, a tradução de cada legenda é lida à medida que aparece; uma linha cuja tradução não esteja pronta a tempo é ignorada, em vez de ser recuperada mais tarde. Enquanto uma linha é lida, o áudio do próprio vídeo desce para o nível definido abaixo. Uma linha demasiado longa abranda um pouco a imagem e aproveita o intervalo a seguir — tanto com vozes na nuvem como com as do próprio navegador; o interruptor abaixo continua a abrandar até todas as linhas terminarem."
+    "message": "Quando está ligado, a tradução de cada legenda é lida à medida que aparece; uma linha cuja tradução não esteja pronta a tempo é ignorada, em vez de ser recuperada mais tarde. Enquanto uma linha é lida, o áudio original desce para o nível definido abaixo. Uma linha demasiado longa abranda um pouco a imagem e aproveita o intervalo a seguir — tanto com vozes na nuvem como com as do próprio navegador; o interruptor abaixo continua a abrandar para que mais linhas terminem."
   },
   "ttsRegionLabel": {
     "message": "Região do serviço"

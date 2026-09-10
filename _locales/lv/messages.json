@@ -858,7 +858,7 @@
     "message": "Lasīt tulkojumu skaļi video"
   },
   "ttsEnableHint": {
-    "message": "Kad ieslēgts, katra subtitra tulkojums tiek izrunāts, tiklīdz parādās; rinda, kuras tulkojums nav gatavs laikā, tiek izlaista, nevis panākta vēlāk. Kamēr rinda runā, paša video skaņa krīt līdz zemāk iestatītajam līmenim. Pārāk gara rinda nedaudz palēnina attēlu un aizņemas atstarpi aiz sevis — gan mākoņa balsīm, gan paša pārlūka; slēdzis zemāk tur palēninājumu, līdz katra rinda beidzas."
+    "message": "Kad ieslēgts, katra subtitra tulkojums tiek izrunāts, tiklīdz parādās; rinda, kuras tulkojums nav gatavs laikā, tiek izlaista, nevis panākta vēlāk. Kamēr rinda runā, oriģinālā skaņa krīt līdz zemāk iestatītajam līmenim. Pārāk gara rinda nedaudz palēnina attēlu un aizņemas atstarpi aiz sevis — gan mākoņa balsīm, gan paša pārlūka; slēdzis zemāk tur palēninājumu, lai vairāk rindu beigtos."
   },
   "langsIntro": {
     "message": "Kuras tulkojuma valodas piedāvā lodziņš."

@@ -858,7 +858,7 @@
     "message": "Läs upp översättningen i videon"
   },
   "ttsEnableHint": {
-    "message": "När det är på läses varje undertexts översättning upp när den dyker upp; en rad vars översättning inte hinner fram hoppas över i stället för att tas igen senare. Medan en rad talar sänks videons eget ljud till nivån som ställs in nedan. En rad som drar ut på tiden saktar ner bilden lite och lånar luckan efter den — både med molnröster och med webbläsarens egna; omkopplaren nedan håller kvar nedsaktningen tills varje rad är klar."
+    "message": "När det är på läses varje undertexts översättning upp när den dyker upp; en rad vars översättning inte hinner fram hoppas över i stället för att tas igen senare. Medan en rad talar sänks originalljudet till nivån som ställs in nedan. En rad som drar ut på tiden saktar ner bilden lite och lånar luckan efter den — både med molnröster och med webbläsarens egna; omkopplaren nedan håller kvar nedsaktningen så att fler rader hinner bli klara."
   },
   "langsIntro": {
     "message": "Vilka översättningsspråk popupen erbjuder."

@@ -867,7 +867,7 @@
     "message": "hlas se neozval"
   },
   "ttsEnableHint": {
-    "message": "Když je zapnuto, překlad každého titulku se vysloví, jakmile se objeví; řádek, jehož překlad není včas připraven, se přeskočí a později se nedožene. Zatímco se řádek vyslovuje, vlastní zvuk videa klesne na úroveň nastavenou níže. Řádek, který trvá déle, trochu zpomalí obraz a využije mezeru za ním — u cloudových hlasů i u hlasu prohlížeče; přepínač níže zpomaluje, dokud neskončí každý řádek."
+    "message": "Když je zapnuto, překlad každého titulku se vysloví, jakmile se objeví; řádek, jehož překlad není včas připraven, se přeskočí a později se nedožene. Zatímco se řádek vyslovuje, původní zvuk klesne na úroveň nastavenou níže. Řádek, který trvá déle, trochu zpomalí obraz a využije mezeru za ním — u cloudových hlasů i u hlasu prohlížeče; přepínač níže zpomaluje, aby skončilo více řádků."
   },
   "ttsRegionLabel": {
     "message": "Oblast služby"

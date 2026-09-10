@@ -858,7 +858,7 @@
     "message": "Llegeix la traducció en veu alta al vídeo"
   },
   "ttsEnableHint": {
-    "message": "Quan està activat, es pronuncia la traducció de cada subtítol a mesura que apareix; una línia la traducció de la qual no és a punt a temps s'omet en lloc de recuperar-la després. Mentre sona una línia, l'àudio del vídeo baixa al nivell indicat a sota. Una línia llarga alenteix una mica la imatge i aprofita el buit de després — amb veus al núvol i amb les del navegador; l'interruptor de sota continua alentint fins que acaba cada línia."
+    "message": "Quan està activat, es pronuncia la traducció de cada subtítol a mesura que apareix; una línia la traducció de la qual no és a punt a temps s'omet en lloc de recuperar-la després. Mentre sona una línia, l'àudio original baixa al nivell indicat a sota. Una línia llarga alenteix una mica la imatge i aprofita el buit de després — amb veus al núvol i amb les del navegador; l'interruptor de sota continua alentint perquè acabin més línies."
   },
   "langsIntro": {
     "message": "Quines llengües de traducció ofereix el popup."

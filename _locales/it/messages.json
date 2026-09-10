@@ -867,7 +867,7 @@
     "message": "nessun suono emesso"
   },
   "ttsEnableHint": {
-    "message": "Se attivo, la traduzione di ogni sottotitolo viene letta man mano che compare; una riga la cui traduzione non è pronta in tempo viene saltata, senza essere recuperata in seguito. Mentre una riga viene letta, l'audio del video scende al livello impostato sotto. Una riga troppo lunga rallenta un po' l'immagine e prende in prestito la pausa successiva — sia con le voci cloud sia con quella del browser; l'interruttore sotto continua a rallentare finché ogni riga non è terminata."
+    "message": "Se attivo, la traduzione di ogni sottotitolo viene letta man mano che compare; una riga la cui traduzione non è pronta in tempo viene saltata, senza essere recuperata in seguito. Mentre una riga viene letta, l'audio originale scende al livello impostato sotto. Una riga troppo lunga rallenta un po' l'immagine e prende in prestito la pausa successiva — sia con le voci cloud sia con quella del browser; l'interruttore sotto continua a rallentare per far terminare più righe."
   },
   "ttsRegionLabel": {
     "message": "Area del servizio"

@@ -867,7 +867,7 @@
     "message": "głos się nie odezwał"
   },
   "ttsEnableHint": {
-    "message": "Po włączeniu tłumaczenie każdego napisu jest odczytywane w chwili jego pojawienia się; linia, której tłumaczenie nie jest gotowe na czas, zostaje pominięta, a nie nadrabiana później. Gdy linia jest odczytywana, dźwięk filmu ścisza się do poziomu ustawionego poniżej. Zbyt długa linia nieco spowalnia obraz i korzysta z przerwy po niej — zarówno przy głosach w chmurze, jak i przy głosie przeglądarki; przełącznik poniżej utrzymuje spowolnienie, aż skończy się każda linia."
+    "message": "Po włączeniu tłumaczenie każdego napisu jest odczytywane w chwili jego pojawienia się; linia, której tłumaczenie nie jest gotowe na czas, zostaje pominięta, a nie nadrabiana później. Gdy linia jest odczytywana, oryginalny dźwięk ścisza się do poziomu ustawionego poniżej. Zbyt długa linia nieco spowalnia obraz i korzysta z przerwy po niej — zarówno przy głosach w chmurze, jak i przy głosie przeglądarki; przełącznik poniżej utrzymuje spowolnienie, aby więcej linii się skończyło."
   },
   "ttsRegionLabel": {
     "message": "Region usługi"

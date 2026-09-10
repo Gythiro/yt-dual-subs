@@ -858,7 +858,7 @@
     "message": "Læs oversættelsen op i videoen"
   },
   "ttsEnableHint": {
-    "message": "Når det er slået til, læses hver underteksts oversættelse op, når den kommer frem; en linje, hvis oversættelse ikke er klar i tide, springes over i stedet for at blive indhentet senere. Mens en linje taler, falder videoens egen lyd til det niveau, der er sat nedenfor. En linje, der trækker ud, sænker billedet lidt og låner hullet efter den — både med cloud-stemmer og med browserens egne; kontakten nedenfor holder nedsætningen, indtil hver linje er færdig."
+    "message": "Når det er slået til, læses hver underteksts oversættelse op, når den kommer frem; en linje, hvis oversættelse ikke er klar i tide, springes over i stedet for at blive indhentet senere. Mens en linje taler, falder originallyden til det niveau, der er sat nedenfor. En linje, der trækker ud, sænker billedet lidt og låner hullet efter den — både med cloud-stemmer og med browserens egne; kontakten nedenfor holder nedsætningen, så flere linjer bliver færdige."
   },
   "langsIntro": {
     "message": "Hvilke oversættelsessprog popuppen tilbyder."

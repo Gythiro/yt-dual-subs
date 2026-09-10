@@ -858,7 +858,7 @@
     "message": "A fordítás felolvasása a videóban"
   },
   "ttsEnableHint": {
-    "message": "Ha be van kapcsolva, minden felirat fordítása elhangzik, ahogy megjelenik; az a sor, amelynek a fordítása nem készül el időben, kimarad, később nem hozza be. Amíg egy sor szól, a videó saját hangja a lent beállított szintre esik. A túl hosszú sor kicsit lassítja a képet, és kölcsönveszi utána a szünetet — felhős hanggal és a böngésző sajátjával is; a lenti kapcsoló addig lassít, amíg minden sor be nem fejeződik."
+    "message": "Ha be van kapcsolva, minden felirat fordítása elhangzik, ahogy megjelenik; az a sor, amelynek a fordítása nem készül el időben, kimarad, később nem hozza be. Amíg egy sor szól, az eredeti hang a lent beállított szintre esik. A túl hosszú sor kicsit lassítja a képet, és kölcsönveszi utána a szünetet — felhős hanggal és a böngésző sajátjával is; a lenti kapcsoló tovább lassít, hogy több sor fejeződhessen be."
   },
   "langsIntro": {
     "message": "Mely fordítási nyelveket kínálja a popup."

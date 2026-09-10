@@ -867,7 +867,7 @@
     "message": "ääntä ei kuulunut"
   },
   "ttsEnableHint": {
-    "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä sitä kurota myöhemmin. Riviä luettaessa videon oma ääni laskee alla asetettuun tasoon. Pitkä rivi hidastaa kuvaa hieman ja lainaa sen jälkeisen tauon — sekä pilviäänillä että selaimen omalla; alla oleva kytkin jatkaa hidastusta, kunnes kaikki rivit on luettu."
+    "message": "Kun päällä, jokaisen tekstityksen käännös luetaan ääneen sen ilmestyessä; rivi, jonka käännös ei ehdi ajoissa, ohitetaan eikä sitä kurota myöhemmin. Riviä luettaessa alkuperäinen ääni laskee alla asetettuun tasoon. Pitkä rivi hidastaa kuvaa hieman ja lainaa sen jälkeisen tauon — sekä pilviäänillä että selaimen omalla; alla oleva kytkin jatkaa hidastusta, jotta useampi rivi ehditään lukea."
   },
   "ttsRegionLabel": {
     "message": "Palvelualue"

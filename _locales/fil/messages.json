@@ -858,7 +858,7 @@
     "message": "Basahin nang malakas ang pagsasalin sa video"
   },
   "ttsEnableHint": {
-    "message": "Kapag naka-on, binibigkas ang pagsasalin ng bawat subtitle paglitaw nito; ang linyang hindi pa handa ang pagsasalin sa oras ay nilalaktawan, hindi hinahabol mamaya. Habang may linya na nagsasalita, bumababa ang sariling audio ng video sa antas na naka-set sa ibaba. Ang mahabang linya ay medyo binabagal ang larawan at humihiram sa agwat pagkatapos — sa cloud na boses at sa sarili ng browser; pinapanatili ng switch sa ibaba ang pagbagal hanggang matapos ang bawat linya."
+    "message": "Kapag naka-on, binibigkas ang pagsasalin ng bawat subtitle paglitaw nito; ang linyang hindi pa handa ang pagsasalin sa oras ay nilalaktawan, hindi hinahabol mamaya. Habang may linya na nagsasalita, bumababa ang orihinal na audio sa antas na naka-set sa ibaba. Ang mahabang linya ay medyo binabagal ang larawan at humihiram sa agwat pagkatapos — sa cloud na boses at sa sarili ng browser; pinapanatili ng switch sa ibaba ang pagbagal para mas maraming linya ang matapos."
   },
   "langsIntro": {
     "message": "Aling wika ng pagsasalin ang inaalok ng popup."

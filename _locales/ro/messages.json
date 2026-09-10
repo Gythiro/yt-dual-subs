@@ -867,7 +867,7 @@
     "message": "nu s-a auzit niciun sunet"
   },
   "ttsEnableHint": {
-    "message": "Când e activat, traducerea fiecărei linii e rostită pe măsură ce apare; o linie a cărei traducere nu e gata la timp e omisă, nu recuperată mai târziu. Cât timp se citește o linie, sunetul videoclipului scade la nivelul setat mai jos. O linie prea lungă încetinește puțin imaginea și împrumută pauza de după — atât cu vocile din cloud, cât și cu cea a browserului; comutatorul de mai jos menține încetinirea până se termină fiecare linie."
+    "message": "Când e activat, traducerea fiecărei linii e rostită pe măsură ce apare; o linie a cărei traducere nu e gata la timp e omisă, nu recuperată mai târziu. Cât timp se citește o linie, audio original scade la nivelul setat mai jos. O linie prea lungă încetinește puțin imaginea și împrumută pauza de după — atât cu vocile din cloud, cât și cu cea a browserului; comutatorul de mai jos menține încetinirea pentru a se termina mai multe linii."
   },
   "ttsRegionLabel": {
     "message": "Regiune serviciu"

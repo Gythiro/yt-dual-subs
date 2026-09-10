@@ -858,7 +858,7 @@
     "message": "Read the translation aloud in the video"
   },
   "ttsEnableHint": {
-    "message": "When on, each subtitle's translation is spoken as it appears; a line whose translation isn't ready in time is skipped rather than caught up on later. While a line speaks, the video's own audio drops to the level set below. A line that runs long slows the picture a little and borrows the gap after it — with cloud voices and with the browser's own; the switch below keeps slowing until every line finishes."
+    "message": "When on, each subtitle's translation is spoken as it appears; a line whose translation isn't ready in time is skipped rather than caught up on later. While a line speaks, the video's own audio drops to the level set below. A line that runs long slows the picture a little and borrows the gap after it — with cloud voices and with the browser's own; the switch below keeps slowing so more of them finish."
   },
   "langsIntro": {
     "message": "Which translation languages the popup offers."

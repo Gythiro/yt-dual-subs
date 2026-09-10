@@ -867,7 +867,7 @@
     "message": "keine Stimme zu hören"
   },
   "ttsEnableHint": {
-    "message": "Wenn aktiv, wird die Übersetzung jeder Untertitelzeile gesprochen, sobald sie erscheint; eine Zeile, deren Übersetzung nicht rechtzeitig bereit ist, wird übersprungen statt nachgeholt. Während eine Zeile gesprochen wird, sinkt der eigene Ton des Videos auf den unten festgelegten Pegel. Eine zu lange Zeile verlangsamt das Bild etwas und leiht sich die Pause danach — bei Cloud-Stimmen und bei der des Browsers; der Schalter darunter hält die Verlangsamung, bis jede Zeile fertig ist."
+    "message": "Wenn aktiv, wird die Übersetzung jeder Untertitelzeile gesprochen, sobald sie erscheint; eine Zeile, deren Übersetzung nicht rechtzeitig bereit ist, wird übersprungen statt nachgeholt. Während eine Zeile gesprochen wird, sinkt der Originalton auf den unten festgelegten Pegel. Eine zu lange Zeile verlangsamt das Bild etwas und leiht sich die Pause danach — bei Cloud-Stimmen und bei der des Browsers; der Schalter darunter hält die Verlangsamung, damit mehr Zeilen fertig werden."
   },
   "ttsRegionLabel": {
     "message": "Serviceregion"

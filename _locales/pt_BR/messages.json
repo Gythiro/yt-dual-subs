@@ -867,7 +867,7 @@
     "message": "nenhum som saiu"
   },
   "ttsEnableHint": {
-    "message": "Quando ativado, a tradução de cada legenda é falada conforme aparece; uma linha cuja tradução não fica pronta a tempo é pulada, em vez de ser recuperada depois. Enquanto uma linha é falada, o áudio do próprio vídeo cai para o nível definido abaixo. Uma linha que se alonga desacelera um pouco a imagem e aproveita o intervalo seguinte — com vozes na nuvem e com as do próprio navegador; o interruptor abaixo mantém a desaceleração até que todas as linhas terminem."
+    "message": "Quando ativado, a tradução de cada legenda é falada conforme aparece; uma linha cuja tradução não fica pronta a tempo é pulada, em vez de ser recuperada depois. Enquanto uma linha é falada, o áudio original cai para o nível definido abaixo. Uma linha que se alonga desacelera um pouco a imagem e aproveita o intervalo seguinte — com vozes na nuvem e com as do próprio navegador; o interruptor abaixo mantém a desaceleração para que mais linhas terminem."
   },
   "ttsRegionLabel": {
     "message": "Região do serviço"

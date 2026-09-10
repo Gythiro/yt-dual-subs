@@ -858,7 +858,7 @@
     "message": "Čitaj prijevod naglas u videu"
   },
   "ttsEnableHint": {
-    "message": "Kad je uključeno, prijevod svakog titla izgovara se čim se pojavi; redak čiji prijevod nije stigao na vrijeme preskače se, a ne nadoknađuje kasnije. Dok se redak izgovara, vlastiti zvuk videa padne na razinu postavljenu dolje. Redak koji traje predugo malo uspori sliku i posudi prazninu iza sebe — i s glasovima u oblaku i s vlastitim glasovima preglednika; prekidač dolje drži usporavanje dok svaki redak ne završi."
+    "message": "Kad je uključeno, prijevod svakog titla izgovara se čim se pojavi; redak čiji prijevod nije stigao na vrijeme preskače se, a ne nadoknađuje kasnije. Dok se redak izgovara, izvorni zvuk padne na razinu postavljenu dolje. Redak koji traje predugo malo uspori sliku i posudi prazninu iza sebe — i s glasovima u oblaku i s vlastitim glasovima preglednika; prekidač dolje drži usporavanje kako bi više redaka završilo."
   },
   "langsIntro": {
     "message": "Koje jezike prijevoda nudi prozorčić."

@@ -858,7 +858,7 @@
     "message": "Čítať preklad nahlas vo videu"
   },
   "ttsEnableHint": {
-    "message": "Keď je zapnuté, preklad každého titulku sa vysloví, len čo sa objaví; riadok, ktorého preklad nie je včas pripravený, sa preskočí a neskôr sa nedobehne. Kým sa riadok vyslovuje, vlastný zvuk videa klesne na úroveň nastavenú nižšie. Riadok, ktorý trvá dlhšie, trochu spomalí obraz a využije medzeru za ním — pri cloudových hlasoch aj pri hlase prehliadača; prepínač nižšie spomaľuje, kým neskončí každý riadok."
+    "message": "Keď je zapnuté, preklad každého titulku sa vysloví, len čo sa objaví; riadok, ktorého preklad nie je včas pripravený, sa preskočí a neskôr sa nedobehne. Kým sa riadok vyslovuje, pôvodný zvuk klesne na úroveň nastavenú nižšie. Riadok, ktorý trvá dlhšie, trochu spomalí obraz a využije medzeru za ním — pri cloudových hlasoch aj pri hlase prehliadača; prepínač nižšie spomaľuje, aby skončilo viac riadkov."
   },
   "langsIntro": {
     "message": "Ktoré jazyky ti vyskakovacie okno ponúka na preklad."

@@ -858,7 +858,7 @@
     "message": "Beri prevod naglas v videu"
   },
   "ttsEnableHint": {
-    "message": "Ko je vklopljeno, se prevod vsakega podnapisa izgovori, ko se prikaže; vrstica, katere prevod ni pravočasno pripravljen, se preskoči in se kasneje ne dohiteva. Medtem ko vrstica govori, lastni zvok videa pade na raven, nastavljeno spodaj. Vrstica, ki traja predolgo, malo upočasni sliko in si izposodi vrzel za njo — pri oblačnih glasovih in pri lastnih glasovih brskalnika; stikalo spodaj drži upočasnitev, dokler se ne konča vsaka vrstica."
+    "message": "Ko je vklopljeno, se prevod vsakega podnapisa izgovori, ko se prikaže; vrstica, katere prevod ni pravočasno pripravljen, se preskoči in se kasneje ne dohiteva. Medtem ko vrstica govori, izvirni zvok pade na raven, nastavljeno spodaj. Vrstica, ki traja predolgo, malo upočasni sliko in si izposodi vrzel za njo — pri oblačnih glasovih in pri lastnih glasovih brskalnika; stikalo spodaj drži upočasnitev, da se konča več vrstic."
   },
   "langsIntro": {
     "message": "Katere jezike prevoda ponuja pojavno okno."

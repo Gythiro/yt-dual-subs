@@ -858,7 +858,7 @@
     "message": "Skaityti vertimą garsiai vaizdo įraše"
   },
   "ttsEnableHint": {
-    "message": "Įjungus kiekvieno subtitros vertimas ištariamas vos pasirodžius; eilutė, kurios vertimas nespėja, praleidžiama, o ne vejasi vėliau. Kol eilutė sakoma, paties vaizdo įrašo garsas krenta iki žemiau nustatytos ribos. Per ilga eilutė truputį sulėtina vaizdą ir pasiskolina tarpą po savęs — ir debesijos balsams, ir pačios naršyklės; jungiklis žemiau laiko lėtinimą, kol baigia kiekviena eilutė."
+    "message": "Įjungus kiekvieno subtitros vertimas ištariamas vos pasirodžius; eilutė, kurios vertimas nespėja, praleidžiama, o ne vejasi vėliau. Kol eilutė sakoma, originalus garsas krenta iki žemiau nustatytos ribos. Per ilga eilutė truputį sulėtina vaizdą ir pasiskolina tarpą po savęs — ir debesijos balsams, ir pačios naršyklės; jungiklis žemiau laiko lėtinimą, kad baigtųsi daugiau eilučių."
   },
   "langsIntro": {
     "message": "Kurias vertimo kalbas siūlo langelis."

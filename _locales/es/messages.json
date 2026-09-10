@@ -867,7 +867,7 @@
     "message": "no se oyó la voz"
   },
   "ttsEnableHint": {
-    "message": "Al activarlo, se pronuncia la traducción de cada subtítulo al aparecer; si una línea no está lista a tiempo, se omite en vez de recuperarla después. Mientras suena una línea, el audio del vídeo baja al nivel indicado abajo. Una línea larga ralentiza un poco la imagen y aprovecha la pausa siguiente — con voces en la nube y con las del propio navegador; el interruptor de abajo sigue ralentizando hasta que termine cada línea."
+    "message": "Al activarlo, se pronuncia la traducción de cada subtítulo al aparecer; si una línea no está lista a tiempo, se omite en vez de recuperarla después. Mientras suena una línea, el audio original baja al nivel indicado abajo. Una línea larga ralentiza un poco la imagen y aprovecha la pausa siguiente — con voces en la nube y con las del propio navegador; el interruptor de abajo sigue ralentizando para que terminen más líneas."
   },
   "ttsRegionLabel": {
     "message": "Región del servicio"

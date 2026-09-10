@@ -867,7 +867,7 @@
     "message": "hääl jäi tulemata"
   },
   "ttsEnableHint": {
-    "message": "Sisselülitatuna loetakse iga subtiitri tõlge ette selle ilmumisel; rida, mille tõlge pole õigel ajal valmis, jäetakse vahele ega loeta hiljem järele. Rea ettelugemise ajal langeb video enda heli allpool määratud tasemele. Pikk rida aeglustab pilti veidi ja laenab sellele järgneva vahe — nii pilvehäälte kui ka brauseri enda häälega; allpool olev lüliti jätkab aeglustamist, kuni iga rida on lõppenud."
+    "message": "Sisselülitatuna loetakse iga subtiitri tõlge ette selle ilmumisel; rida, mille tõlge pole õigel ajal valmis, jäetakse vahele ega loeta hiljem järele. Rea ettelugemise ajal langeb originaalheli allpool määratud tasemele. Pikk rida aeglustab pilti veidi ja laenab sellele järgneva vahe — nii pilvehäälte kui ka brauseri enda häälega; allpool olev lüliti jätkab aeglustamist, et rohkem ridu saaks lõppeda."
   },
   "ttsRegionLabel": {
     "message": "Teenusepiirkond"

@@ -867,7 +867,7 @@
     "message": "aucun son n’est sorti"
   },
   "ttsEnableHint": {
-    "message": "Lorsque cette option est activée, la traduction de chaque sous-titre est lue dès qu’elle apparaît ; une ligne dont la traduction n’est pas prête à temps est ignorée plutôt que rattrapée plus tard. Pendant la lecture d’une ligne, le son de la vidéo baisse au niveau défini ci-dessous. Une ligne trop longue ralentit un peu l’image et emprunte le silence qui suit — avec les voix cloud comme avec celle du navigateur ; le commutateur ci-dessous maintient le ralentissement jusqu’à ce que chaque ligne soit terminée."
+    "message": "Lorsque cette option est activée, la traduction de chaque sous-titre est lue dès qu’elle apparaît ; une ligne dont la traduction n’est pas prête à temps est ignorée plutôt que rattrapée plus tard. Pendant la lecture d’une ligne, l’audio original baisse au niveau défini ci-dessous. Une ligne trop longue ralentit un peu l’image et emprunte le silence qui suit — avec les voix cloud comme avec celle du navigateur ; le commutateur ci-dessous maintient le ralentissement pour que plus de lignes se terminent."
   },
   "ttsRegionLabel": {
     "message": "Région du service"

@@ -858,7 +858,7 @@
     "message": "Lees de vertaling voor in de video"
   },
   "ttsEnableHint": {
-    "message": "Als dit aan staat, wordt de vertaling van elke ondertitel uitgesproken zodra die verschijnt; een regel waarvan de vertaling niet op tijd klaar is, wordt overgeslagen in plaats van later ingehaald. Terwijl een regel spreekt, zakt het eigen geluid van de video naar het niveau hieronder. Een te lange regel vertraagt het beeld een beetje en leent de pauze erna — bij cloudstemmen en bij die van de browser; de schakelaar eronder blijft vertragen tot elke regel klaar is."
+    "message": "Als dit aan staat, wordt de vertaling van elke ondertitel uitgesproken zodra die verschijnt; een regel waarvan de vertaling niet op tijd klaar is, wordt overgeslagen in plaats van later ingehaald. Terwijl een regel spreekt, zakt het originele geluid naar het niveau hieronder. Een te lange regel vertraagt het beeld een beetje en leent de pauze erna — bij cloudstemmen en bij die van de browser; de schakelaar eronder blijft vertragen zodat er meer regels klaar zijn."
   },
   "langsIntro": {
     "message": "Welke vertaaltalen de popup aanbiedt."

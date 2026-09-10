@@ -858,7 +858,7 @@
     "message": "Les oversettelsen høyt i videoen"
   },
   "ttsEnableHint": {
-    "message": "Når den er på, leses oversettelsen av hver undertekst når den dukker opp; en linje der oversettelsen ikke er klar i tide, hoppes over i stedet for å tas igjen senere. Mens en linje leses, synker videoens egen lyd til nivået satt under. En linje som varer for lenge, senker bildet litt og låner pausen etterpå — med sky-stemmer og med nettleserens egne; bryteren under fortsetter å senke til hver linje er ferdig."
+    "message": "Når den er på, leses oversettelsen av hver undertekst når den dukker opp; en linje der oversettelsen ikke er klar i tide, hoppes over i stedet for å tas igjen senere. Mens en linje leses, synker originallyden til nivået satt under. En linje som varer for lenge, senker bildet litt og låner pausen etterpå — med sky-stemmer og med nettleserens egne; bryteren under fortsetter å senke for at flere linjer skal bli ferdige."
   },
   "langsIntro": {
     "message": "Hvilke oversettelsesspråk popupen tilbyr."

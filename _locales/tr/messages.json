@@ -867,7 +867,7 @@
     "message": "ses çıkmadı"
   },
   "ttsEnableHint": {
-    "message": "Açıkken her altyazının çevirisi göründüğü anda seslendirilir; çevirisi zamanında hazır olmayan satır sonradan telafi edilmek yerine atlanır. Bir satır seslendirilirken videonun kendi sesi aşağıda ayarlanan seviyeye düşer. Uzayan bir satır görüntüyü biraz yavaşlatır ve sonraki boşluktan ödünç alır — hem bulut sesleriyle hem tarayıcının kendi sesiyle; aşağıdaki anahtar her satır bitene kadar yavaşlatmayı sürdürür."
+    "message": "Açıkken her altyazının çevirisi göründüğü anda seslendirilir; çevirisi zamanında hazır olmayan satır sonradan telafi edilmek yerine atlanır. Bir satır seslendirilirken orijinal ses aşağıda ayarlanan seviyeye düşer. Uzayan bir satır görüntüyü biraz yavaşlatır ve sonraki boşluktan ödünç alır — hem bulut sesleriyle hem tarayıcının kendi sesiyle; aşağıdaki anahtar daha fazla satırın bitmesi için yavaşlatmayı sürdürür."
   },
   "ttsRegionLabel": {
     "message": "Hizmet bölgesi"

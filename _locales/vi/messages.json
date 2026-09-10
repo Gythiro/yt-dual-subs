@@ -867,7 +867,7 @@
     "message": "không phát ra tiếng"
   },
   "ttsEnableHint": {
-    "message": "Khi bật, bản dịch mỗi phụ đề được đọc ngay khi xuất hiện; dòng chưa kịp dịch sẽ bị bỏ qua, không đọc bù sau. Trong lúc đọc, âm thanh gốc của video hạ xuống mức đã đặt bên dưới. Dòng đọc dài sẽ làm chậm hình một chút và mượn khoảng trống phía sau — cả giọng đám mây lẫn giọng của trình duyệt; công tắc bên dưới tiếp tục làm chậm cho đến khi mọi dòng đọc xong."
+    "message": "Khi bật, bản dịch mỗi phụ đề được đọc ngay khi xuất hiện; dòng chưa kịp dịch sẽ bị bỏ qua, không đọc bù sau. Trong lúc đọc, âm gốc hạ xuống mức đã đặt bên dưới. Dòng đọc dài sẽ làm chậm hình một chút và mượn khoảng trống phía sau — cả giọng đám mây lẫn giọng của trình duyệt; công tắc bên dưới tiếp tục làm chậm để nhiều dòng đọc xong hơn."
   },
   "ttsRegionLabel": {
     "message": "Khu vực dịch vụ"
