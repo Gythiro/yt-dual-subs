@@ -251,7 +251,7 @@
     "message": "Aucune traduction disponible pour cette vidéo — essayez le moteur Piste complète ou une autre langue de traduction."
   },
   "exportLimited": {
-    "message": "YouTube limite actuellement la traduction de pistes entières — réessayez dans une minute. Avec votre propre clé, la carte d’export propose une case pour contourner cette limite."
+    "message": "YouTube limite actuellement la traduction de pistes entières — réessayez dans une minute. En passant Moteur sur Votre propre clé, la carte d’export propose une case pour contourner cette limite."
   },
   "exportNoCues": {
     "message": "Aucun sous-titre téléchargeable — lancez la lecture quelques secondes pour charger les sous-titres, puis réessayez."

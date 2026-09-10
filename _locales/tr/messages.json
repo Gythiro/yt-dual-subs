@@ -251,7 +251,7 @@
     "message": "Bu video için çeviri yok — Tüm parça motorunu veya başka bir çeviri dili deneyin."
   },
   "exportLimited": {
-    "message": "YouTube şu anda tüm parça çevirisini hız sınırına takıyor — bir dakika sonra tekrar deneyin. Kendi anahtarınız kuruluysa dışa aktarma kartı bunu atlatan bir işaret kutusu sunar."
+    "message": "YouTube şu anda tüm parça çevirisini hız sınırına takıyor — bir dakika sonra tekrar deneyin. Motor ayarını Kendi anahtarınız olarak değiştirdiğinizde, dışa aktarma kartı bunu atlatan bir işaret kutusu sunar."
   },
   "exportNoCues": {
     "message": "İndirilebilir altyazı yok — altyazıların yüklenmesi için birkaç saniye oynatın, sonra tekrar deneyin."

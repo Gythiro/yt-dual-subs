@@ -251,7 +251,7 @@
     "message": "Selle video jaoks pole tõlget — proovi kogu raja mootorit või teist tõlkekeelt."
   },
   "exportLimited": {
-    "message": "YouTube piirab hetkel kogu raja tõlkimist — proovi minuti pärast uuesti. Oma võtme seadistamisel pakub ekspordikaart linnukest, mis sellest mööda läheb."
+    "message": "YouTube piirab hetkel kogu raja tõlkimist — proovi minuti pärast uuesti. Kui muudad Mootor valikuks Oma võti, pakub ekspordikaart linnukest, mis sellest mööda läheb."
   },
   "exportNoCues": {
     "message": "Allalaaditavaid subtiitreid pole — lase videol paar sekundit mängida, et subtiitrid laaditaks, ja proovi uuesti."

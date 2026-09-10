@@ -251,7 +251,7 @@
     "message": "Keine Übersetzung für dieses Video — versuche die Engine „Ganze Spur“ oder eine andere Übersetzungssprache."
   },
   "exportLimited": {
-    "message": "YouTube drosselt gerade die Übersetzung ganzer Spuren — in einer Minute erneut versuchen. Mit eigenem Schlüssel bietet die Export-Karte ein Häkchen, das das umgeht."
+    "message": "YouTube drosselt gerade die Übersetzung ganzer Spuren — in einer Minute erneut versuchen. Wenn du Engine auf Eigener Schlüssel umstellst, bietet die Export-Karte ein Häkchen, das das umgeht."
   },
   "exportNoCues": {
     "message": "Keine herunterladbaren Untertitel — spiele ein paar Sekunden, damit die Untertitel laden, und versuche es erneut."

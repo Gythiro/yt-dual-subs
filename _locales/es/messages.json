@@ -251,7 +251,7 @@
     "message": "No hay traducción para este vídeo: prueba el motor de pista completa u otro idioma de traducción."
   },
   "exportLimited": {
-    "message": "YouTube está limitando ahora mismo la traducción de pistas enteras: inténtalo de nuevo en un minuto. Con tu propia clave configurada, la tarjeta de exportación ofrece una casilla para evitarlo."
+    "message": "YouTube está limitando ahora mismo la traducción de pistas enteras: inténtalo de nuevo en un minuto. Si cambias Motor a Tu propia clave, la tarjeta de exportación ofrece una casilla para evitarlo."
   },
   "exportNoCues": {
     "message": "No hay subtítulos descargables: reproduce unos segundos para que se carguen y vuelve a intentarlo."

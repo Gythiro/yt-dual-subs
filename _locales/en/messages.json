@@ -273,7 +273,7 @@
     "message": "No translation available for this video — try the Whole-track engine or another translation language."
   },
   "exportLimited": {
-    "message": "YouTube is rate-limiting whole-track translation right now — try again in a minute. With your own key set up, the export card offers a tick that goes around it."
+    "message": "YouTube is rate-limiting whole-track translation right now — try again in a minute. Switch Engine to Your own key and the export card offers a tick that goes around it."
   },
   "exportNoCues": {
     "message": "No downloadable subtitles — play a few seconds so captions load, then try again."

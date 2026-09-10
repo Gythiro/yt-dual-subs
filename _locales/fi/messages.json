@@ -251,7 +251,7 @@
     "message": "Tälle videolle ei ole käännöstä — kokeile koko raidan moottoria tai toista käännöskieltä."
   },
   "exportLimited": {
-    "message": "YouTube rajoittaa koko raidan käännöstä juuri nyt — yritä uudelleen minuutin kuluttua. Kun oma avain on asetettu, vientikortti tarjoaa rastin, jolla rajoituksen voi kiertää."
+    "message": "YouTube rajoittaa koko raidan käännöstä juuri nyt — yritä uudelleen minuutin kuluttua. Kun vaihdat kohdan Moottori valintaan Oma avain, vientikortti tarjoaa rastin, jolla rajoituksen voi kiertää."
   },
   "exportNoCues": {
     "message": "Ei ladattavia tekstityksiä — toista muutama sekunti, jotta tekstitykset latautuvat, ja yritä sitten uudelleen."

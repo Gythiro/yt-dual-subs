@@ -251,7 +251,7 @@
     "message": "Nu există traducere pentru acest videoclip — încearcă motorul Pistă întreagă sau altă limbă de traducere."
   },
   "exportLimited": {
-    "message": "YouTube limitează momentan traducerea întregii piste — încearcă din nou peste un minut. Cu cheia ta configurată, cardul de export oferă o bifă care ocolește limita."
+    "message": "YouTube limitează momentan traducerea întregii piste — încearcă din nou peste un minut. După ce schimbi Motor la Cheia ta, cardul de export va oferi o bifă care ocolește limita."
   },
   "exportNoCues": {
     "message": "Nu există subtitrări de descărcat — redă câteva secunde ca să se încarce, apoi reîncearcă."

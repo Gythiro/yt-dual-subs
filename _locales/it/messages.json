@@ -251,7 +251,7 @@
     "message": "Nessuna traduzione disponibile per questo video — prova il motore Traccia intera o un'altra lingua di traduzione."
   },
   "exportLimited": {
-    "message": "YouTube sta limitando in questo momento la traduzione dell'intera traccia — riprova tra un minuto. Con una chiave tua, la scheda di esportazione offre una spunta per aggirarlo."
+    "message": "YouTube sta limitando in questo momento la traduzione dell'intera traccia — riprova tra un minuto. Se imposti Motore su Chiave personale, la scheda di esportazione offre una spunta per aggirarlo."
   },
   "exportNoCues": {
     "message": "Nessun sottotitolo da scaricare — riproduci qualche secondo per caricare i sottotitoli, poi riprova."

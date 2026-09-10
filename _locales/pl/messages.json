@@ -251,7 +251,7 @@
     "message": "Brak tłumaczenia dla tego filmu — spróbuj silnika Cała ścieżka albo innego języka tłumaczenia."
   },
   "exportLimited": {
-    "message": "YouTube właśnie ogranicza tłumaczenie całej ścieżki — spróbuj za minutę. Z własnym kluczem karta eksportu oferuje zaznaczenie, które to omija."
+    "message": "YouTube właśnie ogranicza tłumaczenie całej ścieżki — spróbuj za minutę. Po przełączeniu opcji Silnik na Własny klucz karta eksportu zaoferuje zaznaczenie, które to omija."
   },
   "exportNoCues": {
     "message": "Brak napisów do pobrania — odtwórz kilka sekund, żeby się wczytały, i spróbuj ponownie."

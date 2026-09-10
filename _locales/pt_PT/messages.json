@@ -251,7 +251,7 @@
     "message": "Não há tradução disponível para este vídeo — experimente o motor Faixa completa ou outro idioma de tradução."
   },
   "exportLimited": {
-    "message": "O YouTube está a limitar a tradução da faixa completa neste momento — tente novamente daqui a um minuto. Com a sua própria chave configurada, o cartão de exportação oferece um visto que a contorna."
+    "message": "O YouTube está a limitar a tradução da faixa completa neste momento — tente novamente daqui a um minuto. Se mudar Motor para A sua chave, o cartão de exportação oferece um visto que a contorna."
   },
   "exportNoCues": {
     "message": "Não há legendas para descarregar — reproduza alguns segundos para as legendas carregarem e tente novamente."

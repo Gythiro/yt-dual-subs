@@ -251,7 +251,7 @@
     "message": "Không có bản dịch cho video này — thử công cụ Toàn phụ đề hoặc ngôn ngữ dịch khác."
   },
   "exportLimited": {
-    "message": "YouTube đang giới hạn tốc độ dịch toàn bộ phụ đề — thử lại sau một phút. Khi đã thiết lập khóa riêng, thẻ xuất có ô chọn để vượt qua giới hạn này."
+    "message": "YouTube đang giới hạn tốc độ dịch toàn bộ phụ đề — thử lại sau một phút. Khi chuyển Công cụ sang Khóa của bạn, thẻ xuất sẽ có ô chọn để vượt qua giới hạn này."
   },
   "exportNoCues": {
     "message": "Không có phụ đề để tải — phát vài giây để phụ đề tải xong, rồi thử lại."
