@@ -86,7 +86,7 @@
       <div class="ofield" id="baseRow" hidden>
         <label for="baseUrl" data-i18n="byoBaseLabel">接口地址</label>
         <input type="url" id="baseUrl" spellcheck="false" autocomplete="off"
-               placeholder="http://localhost:11434/v1" />
+               placeholder="http://localhost:PORT/v1" />
         <p class="ohint" data-i18n="optBaseHint">
           填 Base URL 或完整接口地址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本机跑的模型服务器要填它自己的端口——Ollama 是 http://localhost:11434/v1，LM Studio 是 http://localhost:1234/v1。Key 可以留空；http 只有本机回环地址能用。
         </p>

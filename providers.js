@@ -167,7 +167,11 @@
       baseUrl: "https://ark.cn-beijing.volces.com/api/v3",
       origin: "https://ark.cn-beijing.volces.com",
       // Ark takes an endpoint id (ep-...) rather than a public model name.
+      // The field said "model name" and offered to fetch a list, and neither is
+      // what this provider wants — so the box says what to paste instead. A
+      // literal, not a phrase: an endpoint id looks the same in every language.
       defaultModel: "",
+      modelPlaceholder: "ep-20260101120000-abcde",
       models: [],
       keyUrl: "https://console.volcengine.com/ark/region:ark+cn-beijing/apikey",
       pricingUrl: "https://www.volcengine.com/docs/82379/1544106",

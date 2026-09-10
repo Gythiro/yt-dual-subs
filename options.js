@@ -340,7 +340,10 @@ function renderModelField(p) {
   const typing = sel.value === CUSTOM_MODEL;
   input.hidden = !typing;
   input.value = typing ? (modelFor(p.id) || "") : "";
-  input.placeholder = t("byoModelRequired", "必填：模型名");
+  // A provider that wants something other than a model name says so with an
+  // example rather than a sentence: Ark takes an endpoint id, and "model name"
+  // sent people looking for one that does not exist.
+  input.placeholder = p.modelPlaceholder || t("byoModelRequired", "必填：模型名");
 
   if (!choices.length) {
     // A provider with no key field must not be told to use one. The button
