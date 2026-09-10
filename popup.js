@@ -224,7 +224,47 @@ function setKey(key, val) {
 // line shows the original's words instead: same language, which is exactly
 // what the overlay shows on such a track. (Named here, above paintPreview,
 // because `t` is an element inside it.)
-const previewSample = () => ({ orig: t("sampleOrig", "The quick brown fox"), trans: t("sampleTrans", "敏捷的棕色狐狸") });
+// Which packaged locale holds a language's own strings. Target codes and
+// locale folder names agree except where Chrome's list spells them
+// differently, and a target we ship no strings for simply has no entry.
+const SAMPLE_LOCALE = { "zh-CN": "zh_CN", "zh-TW": "zh_TW", "pt": "pt_BR", "iw": "he" };
+function sampleLocaleFor(lang) {
+  const code = String(lang || "").trim();
+  if (!code) return "";
+  if (SAMPLE_LOCALE[code]) return SAMPLE_LOCALE[code];
+  return code.replace("-", "_");
+}
+// The demo translation, in the language being translated INTO. It used to be
+// in the INTERFACE language, so an English interface previewing Chinese
+// subtitles showed a Spanish line — the reader had just picked Chinese from
+// the dropdown directly above it, and reasonably read that as "the choice did
+// not take". The line is fetched from the locale file for the target when we
+// ship one (an extension page may read its own packaged files, no permission
+// involved) and falls back to the interface language for a target we have no
+// strings for.
+let targetSample = { lang: "", trans: "" };
+function loadTargetSample(lang) {
+  const loc = sampleLocaleFor(lang);
+  if (!loc || targetSample.lang === lang) return;
+  targetSample = { lang, trans: "" };            // claim it before the round trip
+  let url = "";
+  try { url = chrome.runtime.getURL("_locales/" + loc + "/messages.json"); }
+  catch (_e) { return; }
+  fetch(url)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((tbl) => {
+      const msg = tbl && tbl.sampleTrans && tbl.sampleTrans.message;
+      if (!msg || targetSample.lang !== lang) return;   // a newer target won
+      targetSample.trans = String(msg);
+      paintPreview();
+    })
+    .catch(() => { /* the interface language's sample stands */ });
+}
+const previewSample = () => ({
+  orig: t("sampleOrig", "The quick brown fox"),
+  trans: (targetSample.lang === state.targetLang && targetSample.trans) ||
+    t("sampleTrans", "敏捷的棕色狐狸")
+});
 function paintPreview() {
   const ov = $("prevOverlay"), o = $("prevOrig"), t = $("prevTrans");
   if (!ov || !o || !t) return;
@@ -244,6 +284,7 @@ function paintPreview() {
   o.lang = (typeof tabLang === "string" && tabLang) || "";
   t.lang = String(state.targetLang || "");
   const tl = t.lang.toLowerCase();
+  loadTargetSample(state.targetLang);
   const sample = previewSample();
   t.textContent = (tl === "en" || tl.indexOf("en-") === 0) ? sample.orig : sample.trans;
 
@@ -449,7 +490,22 @@ async function paintEngineStatus() {
   }
 
   if (!tab || tab.id == null) return;
-  if (!r || !r.ok) return;                  // not a YouTube video page
+  // Nothing answered, or a YouTube page with no player: the home page, search
+  // results, a channel — and, right after an installation, a video tab that
+  // was already open when the extension arrived. The popup used to say
+  // nothing at all here, so someone who opened it on the wrong tab got a full
+  // screen of settings and no hint that the thing they came for lives on a
+  // video. One sentence, true of all three, and it names the way out of the
+  // one that is not obvious.
+  // `video === false` and not merely falsy: a reply that does not carry the
+  // field at all comes from a content script of another version, mid-update,
+  // and staying quiet there is what this line used to do everywhere.
+  if (!r || !r.ok || r.video === false) {
+    el.textContent = t("backendStatusNoVideo",
+      "打开一个 YouTube 视频，两行字幕就会出现在上面。已经在视频页上的话，刷新一下这个标签页。");
+    el.hidden = false;
+    return;
+  }
 
   // The caption track itself is missing and the recovery loop is on it. This
   // outranks every note below: nothing about engines or languages is true of

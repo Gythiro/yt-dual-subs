@@ -629,11 +629,17 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 
 /* footer link row — kept clear of the destructive reset button below it.
    Four equal columns, icon over label; all one colour (see popup.html). */
-.ft-links { display: flex; align-items: stretch; gap: 2px; }
+/* The four labels share one 360px row and the longest of them decides how much
+   room each gets. Japanese "フィードバック" is 78px at this size and the cell
+   left it 75px, so it grew past its own hit area. The three pixels come back
+   from the padding beside the text — none of it was doing anything, the label
+   is centred either way — rather than from the type, which every other locale
+   is sized around. */
+.ft-links { display: flex; align-items: stretch; gap: 1px; }
 .ficon {
   flex: 1; min-width: 0; text-decoration: none;
   display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 7px 2px 6px; border-radius: 8px;
+  padding: 7px 0 6px; border-radius: 8px;
   color: var(--muted); border: 1px solid transparent;
   transition: color .12s, background .12s, border-color .12s;
 }

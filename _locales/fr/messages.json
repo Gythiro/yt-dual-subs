@@ -1280,6 +1280,9 @@
     "message": "Aucune piste de sous-titres n’a été trouvée pour cette vidéo, il n’y a donc rien à afficher.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
+  "backendStatusNoVideo": {
+    "message": "Ouvrez une vidéo YouTube et les deux lignes apparaîtront dessus. Si vous y êtes déjà, actualisez l’onglet."
+  },
   "popupSummarize": {
     "message": "Résumer cette vidéo",
     "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."

@@ -122,6 +122,9 @@
     "message": "No caption track was found for this video, so there is nothing to show.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
+  "backendStatusNoVideo": {
+    "message": "Open a YouTube video and the two lines appear on it. If you are already on one, reload the tab."
+  },
   "secLayout": {
     "message": "Layout"
   },
@@ -765,7 +768,7 @@
     "message": "Read aloud, video summary, select text — all behind this little arrow"
   },
   "troubleTitle": {
-    "message": "Something wrong"
+    "message": "Something not working"
   },
   "troubleStep1": {
     "message": "Check the switch in the popup first — with it off, the whole subtitle layer stays away."

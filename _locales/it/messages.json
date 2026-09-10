@@ -1280,6 +1280,9 @@
     "message": "Nessuna traccia di sottotitoli trovata per questo video, quindi non c'è nulla da mostrare.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
+  "backendStatusNoVideo": {
+    "message": "Apri un video di YouTube e appariranno le due righe. Se ci sei già, ricarica la scheda."
+  },
   "popupSummarize": {
     "message": "Riassumi questo video",
     "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."

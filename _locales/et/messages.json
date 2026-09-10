@@ -1280,6 +1280,9 @@
     "message": "Selle video jaoks ei leitud subtiitrirada, seega pole midagi näidata.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
+  "backendStatusNoVideo": {
+    "message": "Ava YouTube'i video ja kaks rida ilmuvad sellele. Kui sa juba oled videolehel, värskenda vahelehte."
+  },
   "popupSummarize": {
     "message": "Tee videost kokkuvõte",
     "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."

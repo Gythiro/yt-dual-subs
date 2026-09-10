@@ -122,6 +122,9 @@
     "message": "這支影片沒有找到字幕軌，所以什麼都顯示不了。",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
+  "backendStatusNoVideo": {
+    "message": "打開一個 YouTube 影片，兩行字幕就會出現在上面。已經在影片頁上的話，重新整理這個分頁。"
+  },
   "secLayout": {
     "message": "版面配置"
   },

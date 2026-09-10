@@ -1280,6 +1280,9 @@
     "message": "Для этого видео не найдена дорожка субтитров — показывать нечего.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
+  "backendStatusNoVideo": {
+    "message": "Откройте видео на YouTube, и на нем появятся две строчки субтитров. Если вы уже на странице с видео, обновите вкладку."
+  },
   "popupSummarize": {
     "message": "Краткое содержание видео",
     "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."

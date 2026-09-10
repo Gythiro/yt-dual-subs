@@ -122,6 +122,9 @@
     "message": "这个视频没有找到字幕轨，所以什么都显示不了。",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
+  "backendStatusNoVideo": {
+    "message": "打开一个 YouTube 视频，两行字幕就会出现在上面。已经在视频页上的话，刷新一下这个标签页。"
+  },
   "secLayout": {
     "message": "布局"
   },

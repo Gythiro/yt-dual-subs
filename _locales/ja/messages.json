@@ -638,7 +638,7 @@
     "message": "サイト"
   },
   "ftFeedbackLabel": {
-    "message": "フィードバック"
+    "message": "ご意見"
   },
   "ftReviewLabel": {
     "message": "評価"
@@ -1279,6 +1279,9 @@
   "backendStatusNoTrack": {
     "message": "この動画のキャプショントラックが見つからないため、表示するものがありません。",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "YouTube動画を開くと2行の字幕が表示されます。すでに動画ページにいる場合はタブを再読み込みしてください。"
   },
   "popupSummarize": {
     "message": "この動画を要約",
