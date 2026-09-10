@@ -645,7 +645,7 @@ function listErrText(code, provider) {
   }
   if (code === "auth" || code === "noPerm") {
     return t("byoErrListAuth",
-      "这把 Key 没有「读取清单」的权限。去服务商后台给它加上，再拉一次。");
+      "这把 Key 没有读取清单的权限。去服务商后台给它加上，再拉一次。");
   }
   return errText(code);
 }

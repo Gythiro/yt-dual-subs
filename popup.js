@@ -2058,7 +2058,7 @@ function exportErrText(resp) {
   if (resp.reason === "same") return t("backendStatusSame", "本视频字幕已是译文语言，无需翻译。");
   if (resp.reason === "limited") {
     return t("exportLimited",
-      "YouTube 暂时限制了整轨翻译，过一会儿再试。配好自己的 Key 之后，导出卡片上会多一个勾选，可以绕开它。");
+      "YouTube 暂时限制了整轨翻译，过一会儿再试。把「翻译引擎」切到「自带 Key」之后，导出卡片上会多一个勾选，可以绕开它。");
   }
   if (resp.reason === "notrans") {
     return t("exportNoTrans", "这个视频拿不到译文，试试「整轨翻译」或换个译文语言。");
