@@ -2611,7 +2611,11 @@ function initReadaloud() {
   // language, spoken by the machine.
   function speakLocalSample(voiceName) {
     const synth = window.speechSynthesis;
-    if (!synth) { showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err"); return; }
+    // The browser's own voices have no key and no Save-and-test button on this
+    // pane, so the cloud providers' failure line sends the reader looking for
+    // two things that are not there. What is actually wrong is that this
+    // computer has nothing to speak with.
+    if (!synth) { showTtsMsg(t("ttsNoSynth", "这台电脑没有可用的朗读音色。"), "err"); return; }
     try { synth.cancel(); } catch (_e) { /* ignore */ }
     // cancel() does not clear the paused flag — it lives on speechSynthesis
     // itself and outlives whoever set it (a content script torn down mid-pause
@@ -2625,7 +2629,7 @@ function initReadaloud() {
     const v = (synth.getVoices() || []).find((x) => x && x.name === voiceName);
     if (v) u.voice = v;
     try { synth.speak(u); } catch (_e) {
-      showTtsMsg(t("ttsPreviewFail", "播不出来——检查 Key，或先「保存并测通」"), "err");
+      showTtsMsg(t("ttsNoSynth", "这台电脑没有可用的朗读音色。"), "err");
     }
   }
 
