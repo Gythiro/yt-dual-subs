@@ -422,7 +422,15 @@
     // AND gtx would only echo the original — the "double identical lines" bug
     // on e.g. a Chinese video with a Chinese target). content.js renders a
     // single line when this flag rides along with the cues.
-    const sameLang = isSameLang(trackLangOf(sourceUrl), cfg.targetLang);
+    // ONE target for the whole capture. Everything below — the sameLang
+    // verdict, which translation is asked for, and the label that says which
+    // question all of it answers — has to name the same language, or the
+    // answer arrives wearing someone else's question. Reading cfg.targetLang
+    // again further down (it is live, and the reader can change it while two
+    // fetches are in flight) is how a verdict computed for the old target came
+    // back labelled with the new one, and was believed.
+    const forLang = cfg.targetLang;
+    const sameLang = isSameLang(trackLangOf(sourceUrl), forLang);
     const wantTlang = !sameLang && cfg.mode !== "gtx";
     // Pin ONE pot-bearing URL for both legs: sourceUrl is refreshed on every
     // pot rotation, so reading it twice could pair an original fetched with one
@@ -437,7 +445,7 @@
       let tcues = null;
       if (wantTlang) {
         try {
-          const target = mapTlang(cfg.targetLang);
+          const target = mapTlang(forLang);
           const transJson = await fetchJson3Retry(buildUrl(src, target), vid, false);
           tcues = parseJson3(transJson);
         } catch (err) {
@@ -474,7 +482,7 @@
         // language answers a question nobody is asking any more. Content-side
         // this is the difference between "no translation needed" and a stale
         // verdict about a target that changed a second ago.
-        forLang: cfg.targetLang,
+        forLang,
         // Why the translation leg is missing, when it is: 0 = it isn't (or was
         // never asked), 429 = YouTube is rate-limiting it, anything else = that
         // HTTP status. content.js turns 429 into the cross-video gate and the

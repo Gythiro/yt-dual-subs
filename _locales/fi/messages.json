@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Ei mallilistaa vielä — hae lista avaimellasi tai kirjoita nimi."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Ei mallilistaa vielä — hae lista tai kirjoita nimi."
+  },
   "optShowKey": {
     "message": "Näytä"
   },
@@ -1006,6 +1009,9 @@
     "message": "Tällä videolla ei ole käyttökelpoista tekstitysraitaa.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Ota tekstitykset ensin käyttöön tiivistääksesi — tiivistelmä luodaan tekstitysraidasta."
+  },
   "sumNeedKey": {
     "message": "Tiivistelmä vaatii oman palvelusi: palveluntarjoajan, jolle annoit avaimen, tai paikallisen mallin tällä koneella. Ilmaiset moottorit vain kääntävät, eivät tiivistä.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Puhu jokainen rivi loppuun (kuva hidastuu tiheissä kohdissa)"
   },
   "ttsCompleteHint": {
-    "message": "Suuremmilla nopeuksilla pitkät rivit jäävät usein kesken, kun seuraava alkaa. Kun tämä on päällä, kuva hidastuu niin paljon kuin rivi tarvitsee — ei kuitenkaan alle neljännekseen valitsemastasi nopeudesta — ja kiri kiinni tauoissa. Kun kuva on hidastunut näin syvälle, videon oma ääni vaimenee alemmas kuin alla asetettu taso, aina hiljaisuuteen asti."
+    "message": "Suuremmilla nopeuksilla pitkät rivit jäävät usein kesken, kun seuraava alkaa. Kun tämä on päällä, kuva hidastuu niin paljon kuin rivi tarvitsee — ei kuitenkaan alle neljännekseen valitsemastasi nopeudesta — ja kiri kiinni tauoissa. Kun kuva on hidastunut näin syvälle, videon oma ääni vaimenee alemmas kuin asettamasi taso, aina hiljaisuuteen asti."
   },
   "ttsCompleteHintText": {
-    "message": "Tällä nopeudella moni rivi katkeaa kesken — kun ”Lue jokainen rivi loppuun asti” on päällä, kuva hidastuu tarpeen mukaan ja jokainen rivi luetaan loppuun."
+    "message": "Tällä nopeudella moni rivi katkeaa kesken. Kun tämä on päällä, kuva hidastuu tarpeen mukaan, jotta useampi rivi luetaan loppuun."
   },
   "ttsCompleteHintOn": {
     "message": "Ota käyttöön"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "ei määritetty tällä tietokoneella"
+  },
+  "ttsSkipNoVoice": {
+    "message": "ei ääntä tälle kielelle"
   },
   "ttsNoVoiceForLang": {
     "message": "Tällä tietokoneella ei ole ääntä, joka lukee kieltä $NAME$. Alla on muiden kielten ääniä — valitse yksi, niin rivi luetaan kyseisen kielen aksentilla.",

@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Nessun elenco di modelli — scaricalo con la tua chiave o inserisci il nome."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Nessun elenco di modelli — scaricalo o inserisci il nome."
+  },
   "optShowKey": {
     "message": "Mostra"
   },
@@ -1006,6 +1009,9 @@
     "message": "Questo video non ha una traccia di sottotitoli utilizzabile.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Attiva prima i sottotitoli per riassumere — il riassunto si basa sulla traccia di sottotitoli."
+  },
   "sumNeedKey": {
     "message": "Il riassunto richiede un servizio tuo: un provider con la tua chiave, o un modello locale su questo computer. I motori gratuiti traducono soltanto, non riassumono.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Completa ogni riga (l'immagine rallenta nelle parti dense)"
   },
   "ttsCompleteHint": {
-    "message": "Alle velocità più alte le righe lunghe perdono spesso la coda a favore della successiva. Con questa opzione, l'immagine rallenta quanto serve alla riga — mai sotto un quarto della velocità scelta — e recupera negli spazi vuoti. Mentre l'immagine è così rallentata, l'audio del video scende oltre il livello impostato sotto, fino al silenzio."
+    "message": "Alle velocità più alte le righe lunghe perdono spesso la coda a favore della successiva. Con questa opzione, l'immagine rallenta quanto serve alla riga — mai sotto un quarto della velocità scelta — e recupera negli spazi vuoti. Mentre l'immagine è così rallentata, l'audio del video scende oltre il livello che hai impostato, fino al silenzio."
   },
   "ttsCompleteHintText": {
-    "message": "A questa velocità parecchie righe vengono tagliate: con «Leggere ogni riga fino in fondo» il video rallenta quanto serve e ogni riga viene letta per intero."
+    "message": "A questa velocità parecchie righe vengono tagliate. Con questa opzione, l'immagine rallenta quanto serve per fare in modo che più righe vengano lette per intero."
   },
   "ttsCompleteHintOn": {
     "message": "Attiva"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "non configurato su questo computer"
+  },
+  "ttsSkipNoVoice": {
+    "message": "nessuna voce per questa lingua"
   },
   "ttsNoVoiceForLang": {
     "message": "Questo computer non ha una voce che legge $NAME$. L'elenco sotto mostra voci di altre lingue — scegline una e la riga verrà letta con l'accento di quella lingua.",

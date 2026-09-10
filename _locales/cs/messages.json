@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Seznam modelů zatím chybí — načtěte ho pomocí klíče, nebo zadejte název ručně."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Seznam modelů zatím chybí — načtěte jej, nebo zadejte název ručně."
+  },
   "optShowKey": {
     "message": "Zobrazit"
   },
@@ -1006,6 +1009,9 @@
     "message": "Toto video nemá použitelnou stopu titulků.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Nejprve zapněte titulky, abyste mohli vytvořit shrnutí — shrnutí se tvoří ze stopy titulků."
+  },
   "sumNeedKey": {
     "message": "Shrnutí potřebuje vaši vlastní službu: poskytovatele s vaším klíčem, nebo lokální model na tomto počítači. Bezplatné služby jen překládají, neshrnují.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Dokončit každý řádek (obraz v hustých částech zpomalí)"
   },
   "ttsCompleteHint": {
-    "message": "Při vyšších rychlostech dlouhé řádky často přijdou o konec ve prospěch následujícího. Když je to zapnuto, obraz zpomalí, jak řádek potřebuje — nikdy pod čtvrtinu zvolené rychlosti — a v mezerách se zase dožene. Zatímco je obraz takto silně zpomalený, vlastní zvuk videa klesne níž než úroveň nastavená níže, až k tichu."
+    "message": "Při vyšších rychlostech dlouhé řádky často přijdou o konec ve prospěch následujícího. Když je to zapnuto, obraz zpomalí, jak řádek potřebuje — nikdy pod čtvrtinu zvolené rychlosti — a v mezerách se zase dožene. Zatímco je obraz takto silně zpomalený, vlastní zvuk videa klesne níž než úroveň, kterou jste nastavili, až k tichu."
   },
   "ttsCompleteHintText": {
-    "message": "Při této rychlosti se dost řádků usekává — se zapnutým „Dočíst každý řádek do konce“ se obraz podle potřeby zpomalí a každý řádek se dočte."
+    "message": "Při této rychlosti se dost řádků usekává. Když je to zapnuto, obraz podle potřeby zpomalí, aby se jich dočetlo co nejvíce."
   },
   "ttsCompleteHintOn": {
     "message": "Zapnout"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "nenastaveno na tomto počítači"
+  },
+  "ttsSkipNoVoice": {
+    "message": "pro tento jazyk není hlas"
   },
   "ttsNoVoiceForLang": {
     "message": "Tento počítač nemá hlas, který čte $NAME$. Níže jsou hlasy jiných jazyků — vyberte jeden a řádek se přečte s přízvukem daného jazyka.",

@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "아직 모델 목록이 없습니다 — 키로 불러오거나 이름을 직접 입력하세요."
   },
+  "optNoModelsYetNoKey": {
+    "message": "아직 모델 목록이 없습니다 — 불러오거나 이름을 직접 입력하세요."
+  },
   "optShowKey": {
     "message": "표시"
   },
@@ -1006,6 +1009,9 @@
     "message": "이 동영상에는 사용할 수 있는 자막 트랙이 없습니다.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "요약하려면 먼저 자막을 켜야 합니다. 요약은 자막 트랙을 바탕으로 만들어집니다."
+  },
   "sumNeedKey": {
     "message": "요약에는 본인 서비스가 필요합니다. 키를 넣은 제공업체나 이 컴퓨터의 로컬 모델이면 됩니다. 무료 엔진은 번역만 하고 요약은 하지 않습니다.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "모든 줄 끝까지 읽기 (밀집 구간은 화면이 느려짐)"
   },
   "ttsCompleteHint": {
-    "message": "배속을 높이면 긴 줄의 끝부분이 다음 줄에 잘리는 경우가 많습니다. 이 옵션을 켜면 화면이 해당 줄이 필요한 만큼 느려집니다 — 선택한 배속의 1/4 미만으로는 내려가지 않으며 — 빈 구간에서 다시 따라잡습니다. 화면이 그만큼 느려진 동안 영상의 자체 오디오는 아래 설정값보다 더 낮아지며, 무음까지 내려갑니다."
+    "message": "배속을 높이면 긴 줄의 끝부분이 다음 줄에 잘리는 경우가 많습니다. 이 옵션을 켜면 화면이 해당 줄이 필요한 만큼 느려집니다 — 선택한 배속의 1/4 미만으로는 내려가지 않으며 — 빈 구간에서 다시 따라잡습니다. 화면이 그만큼 느려진 동안 영상의 자체 오디오는 설정한 값보다 더 낮아지며, 무음까지 내려갑니다."
   },
   "ttsCompleteHintText": {
-    "message": "이 배속에서는 많은 줄이 잘리고 있습니다. ‘모든 줄을 끝까지 읽고 자르지 않기’를 켜면 필요한 만큼 화면이 느려지고 모든 줄을 끝까지 읽습니다."
+    "message": "이 배속에서는 많은 줄이 잘리고 있습니다. 이 옵션을 켜면 필요한 만큼 화면이 느려져 더 많은 줄을 끝까지 읽을 수 있습니다."
   },
   "ttsCompleteHintOn": {
     "message": "켜기"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "이 컴퓨터에 설정되지 않음"
+  },
+  "ttsSkipNoVoice": {
+    "message": "이 언어의 음성 없음"
   },
   "ttsNoVoiceForLang": {
     "message": "이 컴퓨터에는 $NAME$ 읽기가 가능한 음성이 없습니다. 아래는 다른 언어의 음성입니다. 하나를 고르면 그 언어 억양으로 해당 줄이 읽힙니다.",

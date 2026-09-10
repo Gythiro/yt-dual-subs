@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Nicio listă de modele încă — obține una cu cheia ta sau tastează numele."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Nicio listă de modele încă — obține una sau tastează numele."
+  },
   "optShowKey": {
     "message": "Arată"
   },
@@ -1006,6 +1009,9 @@
     "message": "Acest videoclip nu are o pistă de subtitrări utilizabilă.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Activează mai întâi subtitrările pentru a face rezumatul — rezumatul este creat pe baza pistei de subtitrări."
+  },
   "sumNeedKey": {
     "message": "Rezumatul are nevoie de un serviciu al tău: un furnizor cu cheia ta, sau un model local pe acest calculator. Motoarele gratuite doar traduc, nu rezumă.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Termină fiecare linie (imaginea încetinește în pasajele dense)"
   },
   "ttsCompleteHint": {
-    "message": "La viteze mai mari, liniile lungi își pierd adesea finalul în următoarea. Cu această opțiune, imaginea încetinește cât are nevoie linia — niciodată sub un sfert din viteza aleasă — și recuperează în goluri. Cât timp imaginea e încetinită atât de mult, sunetul original al videoclipului scade și mai jos decât nivelul setat mai jos, până la tăcere."
+    "message": "La viteze mai mari, liniile lungi își pierd adesea finalul în următoarea. Cu această opțiune, imaginea încetinește cât are nevoie linia — niciodată sub un sfert din viteza aleasă — și recuperează în goluri. Cât timp imaginea e încetinită atât de mult, sunetul original al videoclipului scade și mai jos decât nivelul setat de tine, până la tăcere."
   },
   "ttsCompleteHintText": {
-    "message": "La această viteză destule rânduri sunt tăiate — cu „Citește fiecare rând până la capăt” pornit, imaginea încetinește cât e nevoie și fiecare rând e citit întreg."
+    "message": "La această viteză destule rânduri sunt tăiate. Cu această opțiune, imaginea încetinește cât e nevoie, astfel încât mai multe rânduri să fie citite întregi."
   },
   "ttsCompleteHintOn": {
     "message": "Activează"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "neconfigurat pe acest computer"
+  },
+  "ttsSkipNoVoice": {
+    "message": "nicio voce pentru această limbă"
   },
   "ttsNoVoiceForLang": {
     "message": "Acest computer nu are o voce care să citească $NAME$. Lista de mai jos conține voci din alte limbi — alege una și linia va fi citită cu accentul acelei limbi.",

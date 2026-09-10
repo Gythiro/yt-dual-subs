@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Chưa có danh sách mô hình — lấy bằng khóa của bạn, hoặc nhập tên."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Chưa có danh sách mô hình — lấy danh sách, hoặc nhập tên."
+  },
   "optShowKey": {
     "message": "Hiện"
   },
@@ -1006,6 +1009,9 @@
     "message": "Video này không có phụ đề nào dùng được.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Hãy bật phụ đề lên trước để tóm tắt — bản tóm tắt được lấy từ chính phụ đề."
+  },
   "sumNeedKey": {
     "message": "Tóm tắt cần dịch vụ của riêng bạn: một nhà cung cấp có khóa của bạn, hoặc mô hình chạy trên máy này. Công cụ miễn phí chỉ dịch, không tóm tắt.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Đọc hết mỗi dòng (hình chậm lại khi dày chữ)"
   },
   "ttsCompleteHint": {
-    "message": "Ở tốc độ cao, dòng dài thường bị cắt đuôi sang dòng sau. Bật tùy chọn này thì hình chậm lại đúng mức dòng cần — không thấp hơn một phần tư tốc độ bạn chọn — rồi bắt kịp ở chỗ trống. Khi hình chậm sâu như vậy, âm thanh gốc của video giảm thấp hơn mức bên dưới, xuống tới im lặng."
+    "message": "Ở tốc độ cao, dòng dài thường bị cắt đuôi sang dòng sau. Bật tùy chọn này thì hình chậm lại đúng mức dòng cần — không thấp hơn một phần tư tốc độ bạn chọn — rồi bắt kịp ở chỗ trống. Khi hình chậm sâu như vậy, âm thanh gốc của video giảm thấp hơn mức bạn chọn, xuống tới im lặng."
   },
   "ttsCompleteHintText": {
-    "message": "Ở tốc độ này khá nhiều câu bị cắt ngang — bật “Đọc trọn từng câu, không cắt ngang” thì hình sẽ chậm lại khi cần và câu nào cũng được đọc trọn."
+    "message": "Ở tốc độ này khá nhiều câu bị cắt ngang. Bật tùy chọn này thì hình sẽ chậm lại khi cần để đọc trọn được nhiều câu hơn."
   },
   "ttsCompleteHintOn": {
     "message": "Bật"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "chưa thiết lập trên máy này"
+  },
+  "ttsSkipNoVoice": {
+    "message": "không có giọng cho ngôn ngữ này"
   },
   "ttsNoVoiceForLang": {
     "message": "Máy tính này không có giọng đọc $NAME$. Danh sách bên dưới là giọng của các ngôn ngữ khác — chọn một giọng, dòng sẽ được đọc với giọng của ngôn ngữ đó.",

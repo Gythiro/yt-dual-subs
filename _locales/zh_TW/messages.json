@@ -227,11 +227,11 @@
   },
   "resetConfirmBack": {
     "message": "保留我的設定",
-    "description": "Popup: the safe button on the reset panel \u2014 closes it, changes nothing."
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
   },
   "resetConfirmGo": {
     "message": "確定重設",
-    "description": "Popup: the destructive button on the reset panel \u2014 performs the reset."
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
   },
   "toggleTurnOff": {
     "message": "關閉雙語字幕"
@@ -479,7 +479,11 @@
   },
   "optModelRetired": {
     "message": "「$MODEL$」已經不在這家的清單裡了——從上面重新選一個。",
-    "placeholders": { "model": { "content": "$1" } }
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
   },
   "optModelsFailed": {
     "message": "取得失敗——可以直接手填模型名稱。"
@@ -489,6 +493,9 @@
   },
   "optNoModelsYet": {
     "message": "還沒有模型清單——用你的 Key 取得一份，或直接手填。"
+  },
+  "optNoModelsYetNoKey": {
+    "message": "還沒有模型清單——取得一份，或直接手填。"
   },
   "optShowKey": {
     "message": "顯示"
@@ -817,7 +824,11 @@
   },
   "ttsVoicesSuggested": {
     "message": "拉到 $N$ 個音色，已作為上面輸入框的候選。",
-    "placeholders": { "n": { "content": "$1" } }
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
   },
   "ttsVoiceFemale": {
     "message": "女聲"
@@ -1024,6 +1035,9 @@
     "message": "這支影片沒有可用的字幕軌。",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "先把字幕打開再總結——總結是照著字幕軌做的。"
+  },
   "sumNeedKey": {
     "message": "總結需要你自己的翻譯服務（填過 Key 的任何一家，或本機跑的模型）。免費引擎只翻譯，不總結。",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1105,6 +1119,9 @@
   "ttsSkipNotSet": {
     "message": "這台電腦上還沒配好"
   },
+  "ttsSkipNoVoice": {
+    "message": "這家沒有這門語言的音色"
+  },
   "ttsProviderMute": {
     "message": "$NAME$ 現在讀不出聲。在上面那一行換一家——瀏覽器內建的音色也在裡面。",
     "placeholders": {
@@ -1120,10 +1137,10 @@
     "message": "盡量每句讀完（密集處畫面會更慢）"
   },
   "ttsCompleteHint": {
-    "message": "開倍速時長句常被下一句頂掉結尾。打開後畫面會按需要放慢到讀完為止（最低不低於你所選倍速的四分之一），空隙處再追回來。畫面放得很慢時，原聲會壓得比下面設的更低，直到靜音。"
+    "message": "開倍速時長句常被下一句頂掉結尾。打開後畫面會按需要放慢到讀完為止（最低不低於你所選倍速的四分之一），空隙處再追回來。畫面放得很慢時，原聲會壓得比你設的那一檔更低，直到靜音。"
   },
   "ttsCompleteHintText": {
-    "message": "此倍速下不少句子被截斷——開啟「每句讀完」後畫面會按需放慢，句句讀完。"
+    "message": "此倍速下不少句子被截斷。開啟後畫面會按需放慢，盡量把每句讀完。"
   },
   "ttsCompleteHintOn": {
     "message": "開啟"

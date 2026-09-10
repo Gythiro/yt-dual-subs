@@ -1464,13 +1464,44 @@
         tsub("sumFailedPart", [String(failedParts)], "有 $1$ 段没能总结，以上是其余部分。")));
     }
   }
+  // The refusals worth naming here. Each of these four already has a sentence
+  // in every language on the translate side, each is self-contained (none of
+  // them names a field or a button this panel does not have), and each is
+  // something the reader can act on. "Try again later" stays for the one code
+  // it is actually true of — rate limiting — and for anything unrecognised:
+  // said over a rejected key or an empty account it sent the reader back to
+  // press the same button on the same broken setup.
+  // The refusals worth naming here. Each already has a sentence in every
+  // language on the translate side, each is self-contained (none names a field
+  // or a button this panel does not have), and each is something the reader
+  // can act on. "Try again later" stays for the one code it is actually true
+  // of — rate limiting — and for anything unrecognised: said over a rejected
+  // key or an empty account it sent the reader back to press the same button
+  // on the same broken setup.
+  function sumErrLine(code) {
+    if (code === "auth") {
+      return ct("byoErrAuth", "Key 被拒绝（401）：检查是不是完整复制、是不是还有效。");
+    }
+    if (code === "quota") {
+      return ct("byoErrQuota", "这个账号本期的余额或额度已经用完——去服务商后台充值或等下个周期。");
+    }
+    if (code === "forbidden") {
+      return ct("byoErrForbidden", "服务商拒绝了这次调用（403）。通常不是 Key 写错了，而是这个账号不被允许这样调用——余额不足、实名认证还没做、这个模型没开通，或者所在地区受限。去服务商后台看看账号状态。");
+    }
+    if (code === "netfail") {
+      return ct("byoErrNetfail", "连不上这个接口(网络或区域限制)。");
+    }
+    return "";
+  }
   function sumFail(resp) {
     const code = (resp && resp.code) || "failed";
     if (code === "noProvider" || code === "needLlm" || code === "noKey" ||
         code === "noModel" || code === "badBaseUrl") { sumNeedKeyState(); return; }
     const body = sumBody();
     if (!body) return;
-    body.appendChild(sumNode("p", "ytds-sum-warn", ct("sumFail", "总结失败，稍后再试。")));
+    const named = sumErrLine(code);
+    body.appendChild(sumNode("p", "ytds-sum-warn",
+      named || ct("sumFail", "总结失败，稍后再试。")));
   }
   function sumNeedKeyState() {
     const body = sumBody();
@@ -1541,7 +1572,16 @@
     const rows = sumRows();
     if (!rows.length) {
       const body = sumBody();
-      if (body) body.appendChild(sumNode("p", null, ct("sumEmpty", "这支视频没有可用的字幕轨。")));
+      // Two different empties. With the overlay switched off there are no rows
+      // because we tore them down, not because the video has none — saying
+      // "this video has no caption track" over a video whose captions the
+      // reader can see burned into the picture is the product being wrong
+      // about something the reader can check.
+      if (body) {
+        body.appendChild(sumNode("p", null, settings.enabled
+          ? ct("sumEmpty", "这支视频没有可用的字幕轨。")
+          : ct("sumNeedSubs", "先把字幕打开再总结——总结是照着字幕轨做的。")));
+      }
       return;
     }
     const chunks = sumChunksFromRows(rows);

@@ -494,6 +494,9 @@
   "optNoModelsYet": {
     "message": "还没有模型列表——用你的 Key 拉一份，或者直接手填。"
   },
+  "optNoModelsYetNoKey": {
+    "message": "还没有模型列表——拉一份，或者直接手填。"
+  },
   "optShowKey": {
     "message": "显示"
   },
@@ -1033,6 +1036,9 @@
     "message": "这支视频没有可用的字幕轨。",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "先把字幕打开再总结——总结是照着字幕轨做的。"
+  },
   "sumNeedKey": {
     "message": "总结需要你自己的翻译服务（填过 Key 的任何一家，或本机跑的模型）。免费引擎只翻译，不总结。",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1114,6 +1120,9 @@
   "ttsSkipNotSet": {
     "message": "这台电脑上还没配好"
   },
+  "ttsSkipNoVoice": {
+    "message": "这家没有这门语言的音色"
+  },
   "ttsProviderMute": {
     "message": "$NAME$ 现在读不出声。在上面那一行换一家——浏览器自带的音色也在里面。",
     "placeholders": {
@@ -1129,10 +1138,10 @@
     "message": "尽量每句读完（密集处画面会更慢）"
   },
   "ttsCompleteHint": {
-    "message": "开倍速时长句常被下一句顶掉结尾。打开后画面会按需要放慢到读完为止（最低不低于你所选倍速的四分之一），空隙处再追回来。画面放得很慢时，原声会压得比下面设的更低，直到静音。"
+    "message": "开倍速时长句常被下一句顶掉结尾。打开后画面会按需要放慢到读完为止（最低不低于你所选倍速的四分之一），空隙处再追回来。画面放得很慢时，原声会压得比你设的那一档更低，直到静音。"
   },
   "ttsCompleteHintText": {
-    "message": "此倍速下不少句子被截断——开启「每句读完」后画面会按需放慢，句句读完。"
+    "message": "此倍速下不少句子被截断。开启后画面会按需放慢，尽量把每句读完。"
   },
   "ttsCompleteHintOn": {
     "message": "开启"

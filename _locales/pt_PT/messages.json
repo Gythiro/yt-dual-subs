@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Ainda sem lista de modelos — obtenha uma com a sua chave ou escreva o nome."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Ainda sem lista de modelos — obtenha uma ou escreva o nome."
+  },
   "optShowKey": {
     "message": "Mostrar"
   },
@@ -1006,6 +1009,9 @@
     "message": "Este vídeo não tem uma faixa de legendas utilizável.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Ative as legendas novamente para resumir — o resumo é feito a partir da faixa de legendas."
+  },
   "sumNeedKey": {
     "message": "O resumo precisa de um serviço seu: um fornecedor com a sua chave, ou um modelo local nesta máquina. Os motores gratuitos só traduzem, não resumem.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Terminar cada linha (a imagem abranda nas partes densas)"
   },
   "ttsCompleteHint": {
-    "message": "A velocidades mais altas, as linhas longas perdem frequentemente o final para a seguinte. Com isto ligado, a imagem abranda o quanto a linha precisar — nunca abaixo de um quarto da velocidade escolhida — e recupera nos intervalos. Enquanto a imagem está tão abrandada, o áudio original do vídeo desce mais do que o nível definido abaixo, até ao silêncio."
+    "message": "A velocidades mais altas, as linhas longas perdem frequentemente o final para a seguinte. Com isto ligado, a imagem abranda o quanto a linha precisar — nunca abaixo de um quarto da velocidade escolhida — e recupera nos intervalos. Enquanto a imagem está tão abrandada, o áudio original do vídeo desce mais do que o nível que definiu, até ao silêncio."
   },
   "ttsCompleteHintText": {
-    "message": "A esta velocidade várias linhas estão a ser cortadas — com “Ler cada linha até ao fim”, a imagem abranda conforme necessário e cada linha é lida por inteiro."
+    "message": "A esta velocidade várias linhas estão a ser cortadas. Com isto ligado, a imagem abranda conforme necessário para que mais linhas sejam lidas por inteiro."
   },
   "ttsCompleteHintOn": {
     "message": "Ativar"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "não configurado neste computador"
+  },
+  "ttsSkipNoVoice": {
+    "message": "sem voz para este idioma"
   },
   "ttsNoVoiceForLang": {
     "message": "Este computador não tem nenhuma voz que leia $NAME$. A lista abaixo tem vozes de outros idiomas — escolha uma e a linha será lida com o sotaque desse idioma.",

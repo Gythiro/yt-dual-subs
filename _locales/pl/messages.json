@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Brak listy modeli — pobierz ją kluczem albo wpisz nazwę."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Brak listy modeli — pobierz ją albo wpisz nazwę."
+  },
   "optShowKey": {
     "message": "Pokaż"
   },
@@ -1006,6 +1009,9 @@
     "message": "Ten film nie ma używalnej ścieżki napisów.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Najpierw włącz napisy, aby podsumować — podsumowanie powstaje na podstawie ścieżki napisów."
+  },
   "sumNeedKey": {
     "message": "Podsumowanie wymaga własnej usługi: dostawcy z Twoim kluczem albo lokalnego modelu na tym komputerze. Darmowe silniki tylko tłumaczą, nie podsumowują.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Dokańczaj każdą linijkę (obraz zwalnia w gęstych partiach)"
   },
   "ttsCompleteHint": {
-    "message": "Przy wyższych prędkościach długie linijki często tracą końcówkę na rzecz następnej. Gdy ta opcja jest włączona, obraz zwalnia tyle, ile linijka potrzebuje — nigdy poniżej jednej czwartej wybranej prędkości — i nadrabia w przerwach. Gdy obraz jest tak mocno spowolniony, dźwięk samego filmu ścisza się bardziej niż poziom ustawiony poniżej, aż do ciszy."
+    "message": "Przy wyższych prędkościach długie linijki często tracą końcówkę na rzecz następnej. Gdy ta opcja jest włączona, obraz zwalnia tyle, ile linijka potrzebuje — nigdy poniżej jednej czwartej wybranej prędkości — i nadrabia w przerwach. Gdy obraz jest tak mocno spowolniony, dźwięk samego filmu ścisza się bardziej niż poziom ustawiony przez Ciebie, aż do ciszy."
   },
   "ttsCompleteHintText": {
-    "message": "Przy tej prędkości sporo linii jest ucinanych — z włączonym „Doczytuj każdą linię do końca” obraz zwalnia w razie potrzeby i każda linia jest doczytywana."
+    "message": "Przy tej prędkości sporo linii jest ucinanych. Gdy ta opcja jest włączona, obraz zwalnia w razie potrzeby, by więcej z nich zostało doczytanych."
   },
   "ttsCompleteHintOn": {
     "message": "Włącz"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "nie skonfigurowano na tym komputerze"
+  },
+  "ttsSkipNoVoice": {
+    "message": "brak głosu dla tego języka"
   },
   "ttsNoVoiceForLang": {
     "message": "Ten komputer nie ma głosu, który odczytuje $NAME$. Lista poniżej to głosy innych języków — wybierz jeden, a linia zostanie odczytana z akcentem tego języka.",

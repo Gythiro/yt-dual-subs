@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Pas encore de liste de modèles — récupérez-en une avec votre clé, ou saisissez le nom."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Pas encore de liste de modèles — récupérez-en une, ou saisissez le nom."
+  },
   "optShowKey": {
     "message": "Afficher"
   },
@@ -1006,6 +1009,9 @@
     "message": "Cette vidéo n’a pas de piste de sous-titres exploitable.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Active d’abord les sous-titres pour résumer — le résumé est créé à partir de la piste de sous-titres."
+  },
   "sumNeedKey": {
     "message": "Le résumé demande un service à vous : un fournisseur avec votre clé, ou un modèle local sur cette machine. Les moteurs gratuits traduisent, ils ne résument pas.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Terminer chaque ligne (l’image ralentit dans les passages denses)"
   },
   "ttsCompleteHint": {
-    "message": "À plus haute vitesse, la fin des longues lignes est souvent coupée par la suivante. Avec cette option, l’image ralentit autant que la ligne l’exige — jamais en dessous d’un quart de la vitesse choisie — puis rattrape dans les silences. Tant que l’image est autant ralentie, le son original de la vidéo descend plus bas que le niveau défini ci-dessous, jusqu’au silence."
+    "message": "À plus haute vitesse, la fin des longues lignes est souvent coupée par la suivante. Avec cette option, l’image ralentit autant que la ligne l’exige — jamais en dessous d’un quart de la vitesse choisie — puis rattrape dans les silences. Tant que l’image est autant ralentie, le son original de la vidéo descend plus bas que le niveau que vous avez défini, jusqu’au silence."
   },
   "ttsCompleteHintText": {
-    "message": "À cette vitesse, pas mal de lignes sont coupées — avec « Lire chaque ligne jusqu’au bout », l’image ralentit au besoin et chaque ligne est lue en entier."
+    "message": "À cette vitesse, pas mal de lignes sont coupées. Avec cette option, l’image ralentit au besoin pour que davantage de lignes soient lues en entier."
   },
   "ttsCompleteHintOn": {
     "message": "Activer"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "non configuré sur cet ordinateur"
+  },
+  "ttsSkipNoVoice": {
+    "message": "aucune voix pour cette langue"
   },
   "ttsNoVoiceForLang": {
     "message": "Cet ordinateur n’a aucune voix qui lit $NAME$. La liste ci-dessous propose les voix d’autres langues — choisissez-en une et la ligne sera lue avec l’accent de cette langue.",

@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Noch keine Modellliste — mit dem Schlüssel abrufen oder den Namen eingeben."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Noch keine Modellliste — abrufen oder den Namen eingeben."
+  },
   "optShowKey": {
     "message": "Anzeigen"
   },
@@ -1006,6 +1009,9 @@
     "message": "Dieses Video hat keine nutzbare Untertitelspur.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Schalte zuerst die Untertitel ein, um zusammenzufassen — die Zusammenfassung wird aus der Untertitelspur erstellt."
+  },
   "sumNeedKey": {
     "message": "Zusammenfassungen brauchen deinen eigenen Dienst: einen Anbieter mit deinem Schlüssel oder ein lokales Modell auf diesem Rechner. Die kostenlosen Engines übersetzen nur, sie fassen nicht zusammen.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Jede Zeile zu Ende (Bild langsamer in dichten Stellen)"
   },
   "ttsCompleteHint": {
-    "message": "Bei höherer Geschwindigkeit verlieren lange Zeilen oft ihr Ende an die nächste. Ist dies aktiv, wird das Bild so stark verlangsamt, wie die Zeile braucht — nie unter ein Viertel der gewählten Geschwindigkeit — und holt in den Lücken wieder auf. Solange das Bild so stark verlangsamt ist, sinkt der eigene Ton des Videos weiter als der unten festgelegte Pegel, bis zur Stille."
+    "message": "Bei höherer Geschwindigkeit verlieren lange Zeilen oft ihr Ende an die nächste. Ist dies aktiv, wird das Bild so stark verlangsamt, wie die Zeile braucht — nie unter ein Viertel der gewählten Geschwindigkeit — und holt in den Lücken wieder auf. Solange das Bild so stark verlangsamt ist, sinkt der eigene Ton des Videos weiter als der von dir festgelegte Pegel, bis zur Stille."
   },
   "ttsCompleteHintText": {
-    "message": "Bei diesem Tempo werden etliche Zeilen abgeschnitten — mit „Jede Zeile zu Ende lesen“ wird das Bild nach Bedarf langsamer und jede Zeile zu Ende gelesen."
+    "message": "Bei diesem Tempo werden etliche Zeilen abgeschnitten. Ist dies aktiv, wird das Bild nach Bedarf langsamer, damit möglichst viele zu Ende gelesen werden."
   },
   "ttsCompleteHintOn": {
     "message": "Einschalten"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "auf diesem Computer nicht eingerichtet"
+  },
+  "ttsSkipNoVoice": {
+    "message": "keine Stimme für diese Sprache"
   },
   "ttsNoVoiceForLang": {
     "message": "Dieser Computer hat keine Stimme, die $NAME$ vorliest. Die Liste unten zeigt Stimmen anderer Sprachen — wähl eine aus, dann wird die Zeile mit dem Akzent dieser Sprache vorgelesen.",

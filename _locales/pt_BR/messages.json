@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Ainda sem lista de modelos — busque uma com sua chave ou apenas digite o nome."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Ainda sem lista de modelos — busque uma ou apenas digite o nome."
+  },
   "optShowKey": {
     "message": "Mostrar"
   },
@@ -1006,6 +1009,9 @@
     "message": "Este vídeo não tem uma trilha de legendas utilizável.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Ative as legendas novamente para resumir — o resumo é feito a partir da trilha de legendas."
+  },
   "sumNeedKey": {
     "message": "O resumo precisa de um serviço seu: um provedor com a sua chave, ou um modelo local nesta máquina. Os mecanismos gratuitos só traduzem, não resumem.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Terminar cada linha (a imagem desacelera nas partes densas)"
   },
   "ttsCompleteHint": {
-    "message": "Em velocidades mais altas, linhas longas costumam perder o final para a próxima. Com isso ligado, a imagem desacelera o quanto a linha precisa — nunca abaixo de um quarto da velocidade escolhida — e recupera o ritmo nos intervalos. Enquanto a imagem está tão lenta, o áudio do próprio vídeo cai além do nível definido abaixo, até o silêncio."
+    "message": "Em velocidades mais altas, linhas longas costumam perder o final para a próxima. Com isso ligado, a imagem desacelera o quanto a linha precisa — nunca abaixo de um quarto da velocidade escolhida — e recupera o ritmo nos intervalos. Enquanto a imagem está tão lenta, o áudio do próprio vídeo cai além do nível que você definiu, até o silêncio."
   },
   "ttsCompleteHintText": {
-    "message": "Nesta velocidade várias linhas estão sendo cortadas — com “Ler cada linha até o fim”, a imagem desacelera conforme necessário e cada linha é lida inteira."
+    "message": "Nesta velocidade várias linhas estão sendo cortadas. Com isso ligado, a imagem desacelera conforme necessário para que mais linhas sejam lidas inteiras."
   },
   "ttsCompleteHintOn": {
     "message": "Ativar"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "não configurado neste computador"
+  },
+  "ttsSkipNoVoice": {
+    "message": "sem voz para este idioma"
   },
   "ttsNoVoiceForLang": {
     "message": "Este computador não tem uma voz que leia $NAME$. A lista abaixo mostra vozes de outros idiomas — escolha uma e a linha será lida com o sotaque desse idioma.",

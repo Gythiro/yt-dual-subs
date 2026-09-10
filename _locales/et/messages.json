@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Mudelite loendit veel pole — too see võtmega või sisesta nimi käsitsi."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Mudelite loendit veel pole — too see või sisesta nimi käsitsi."
+  },
   "optShowKey": {
     "message": "Näita"
   },
@@ -1006,6 +1009,9 @@
     "message": "Sellel videol pole kasutatavat subtiitririda.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Kokkuvõtte tegemiseks luba uuesti subtiitrid — kokkuvõte koostatakse subtiitriraja põhjal."
+  },
   "sumNeedKey": {
     "message": "Kokkuvõte vajab sinu enda teenust: võtmega teenusepakkujat või kohalikku mudelit selles arvutis. Tasuta mootorid ainult tõlgivad, kokku ei võta.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Iga rida lõpuni (pilt aeglustub tihedates osades)"
   },
   "ttsCompleteHint": {
-    "message": "Suurematel kiirustel kaotavad pikad read sageli oma lõpu järgmisele reale. Kui see on sees, aeglustub pilt nii palju, kui rida vajab — mitte kunagi alla veerandi valitud kiirusest — ja jõuab lünkades järele. Kui pilt on nii tugevalt aeglustatud, langeb video enda heli allpool määratud tasemest veelgi, kuni vaikuseni."
+    "message": "Suurematel kiirustel kaotavad pikad read sageli oma lõpu järgmisele reale. Kui see on sees, aeglustub pilt nii palju, kui rida vajab — mitte kunagi alla veerandi valitud kiirusest — ja jõuab lünkades järele. Kui pilt on nii tugevalt aeglustatud, langeb video enda heli sinu määratud tasemest veelgi, kuni vaikuseni."
   },
   "ttsCompleteHintText": {
-    "message": "Sellel kiirusel jääb päris mitu rida pooleli — kui „Loe iga rida lõpuni“ on sees, aeglustub pilt vajadust mööda ja iga rida loetakse lõpuni."
+    "message": "Sellel kiirusel jääb päris mitu rida pooleli. Kui see on sees, aeglustub pilt vajadust mööda, et võimalikult paljud neist loetaks lõpuni."
   },
   "ttsCompleteHintOn": {
     "message": "Lülita sisse"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "selles arvutis seadistamata"
+  },
+  "ttsSkipNoVoice": {
+    "message": "selle keele jaoks pole häält"
   },
   "ttsNoVoiceForLang": {
     "message": "Sellel arvutil pole häält, mis loeks keelt $NAME$. Allpool on teiste keelte hääled — vali üks ja rida loetakse selle keele aktsendiga.",

@@ -494,6 +494,9 @@
   "optNoModelsYet": {
     "message": "No model list yet — fetch one with your key, or just type the name."
   },
+  "optNoModelsYetNoKey": {
+    "message": "No model list yet — fetch one, or just type the name."
+  },
   "optShowKey": {
     "message": "Show"
   },
@@ -1037,6 +1040,9 @@
     "message": "This video has no usable subtitle track.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Turn the subtitles back on to summarize — the summary is built from the subtitle track."
+  },
   "sumNeedKey": {
     "message": "Summaries need a service of your own: any provider with your key in the translation pane, or a local model on this machine. The free engines only translate. They don't summarize.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1118,6 +1124,9 @@
   "ttsSkipNotSet": {
     "message": "not set up on this computer"
   },
+  "ttsSkipNoVoice": {
+    "message": "no voice for this language"
+  },
   "ttsProviderMute": {
     "message": "$NAME$ can't speak right now. Pick another in the row above — your browser's own voices are in that list.",
     "placeholders": {
@@ -1133,10 +1142,10 @@
     "message": "Finish every line (the picture slows in dense parts)"
   },
   "ttsCompleteHint": {
-    "message": "At higher speeds long lines often lose their tail to the next one. With this on, the picture slows as much as the line needs — never below a quarter of your chosen speed — and catches back up in the gaps. While the picture is slowed that deep, the video's own audio drops further than the level set below, down to silence."
+    "message": "At higher speeds long lines often lose their tail to the next one. With this on, the picture slows as much as the line needs — never below a quarter of your chosen speed — and catches back up in the gaps. While the picture is slowed that deep, the video's own audio drops further than the level you set, down to silence."
   },
   "ttsCompleteHintText": {
-    "message": "Quite a few lines are being cut short at this speed — with “Finish every line” on, the picture slows as needed and every line gets read out."
+    "message": "Quite a few lines are being cut short at this speed. Turn it on and the picture slows where it needs to, so more of them finish."
   },
   "ttsCompleteHintOn": {
     "message": "Turn on"

@@ -461,6 +461,9 @@
   "optNoModelsYet": {
     "message": "Henüz model listesi yok — anahtarınla getir veya adı yaz."
   },
+  "optNoModelsYetNoKey": {
+    "message": "Henüz model listesi yok — getir veya adı yaz."
+  },
   "optShowKey": {
     "message": "Göster"
   },
@@ -1006,6 +1009,9 @@
     "message": "Bu videonun kullanılabilir bir altyazı parçası yok.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
+  "sumNeedSubs": {
+    "message": "Özetlemek için önce altyazıları açın — özet altyazı parçasından oluşturulur."
+  },
   "sumNeedKey": {
     "message": "Özet için kendi hizmetiniz gerekir: anahtarını girdiğiniz bir sağlayıcı ya da bu bilgisayardaki yerel bir model. Ücretsiz motorlar yalnızca çevirir, özetlemez.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
@@ -1091,10 +1097,10 @@
     "message": "Her satırı bitir (yoğun yerlerde görüntü yavaşlar)"
   },
   "ttsCompleteHint": {
-    "message": "Yüksek hızlarda uzun satırların sonu çoğu zaman bir sonrakine kayar. Bu açıkken görüntü, satırın ihtiyaç duyduğu kadar yavaşlar — seçtiğiniz hızın dörtte birinin altına inmeden — ve boşluklarda hızı toparlar. Görüntü o kadar yavaşlarken videonun kendi sesi, aşağıda ayarlanan seviyenin de altına iner, sessizliğe kadar."
+    "message": "Yüksek hızlarda uzun satırların sonu çoğu zaman bir sonrakine kayar. Bu açıkken görüntü, satırın ihtiyaç duyduğu kadar yavaşlar — seçtiğiniz hızın dörtte birinin altına inmeden — ve boşluklarda hızı toparlar. Görüntü o kadar yavaşlarken videonun kendi sesi, ayarladığınız seviyenin de altına iner, sessizliğe kadar."
   },
   "ttsCompleteHintText": {
-    "message": "Bu hızda epey satır yarıda kesiliyor — “Her satırı sonuna kadar oku” açıkken görüntü gerektiği kadar yavaşlar ve her satır sonuna dek okunur."
+    "message": "Bu hızda epey satır yarıda kesiliyor. Bu açıkken görüntü gerektiği kadar yavaşlar, böylece daha fazla satır sonuna dek okunur."
   },
   "ttsCompleteHintOn": {
     "message": "Aç"
@@ -1115,6 +1121,9 @@
   },
   "ttsSkipNotSet": {
     "message": "bu bilgisayarda ayarlanmamış"
+  },
+  "ttsSkipNoVoice": {
+    "message": "bu dil için ses yok"
   },
   "ttsNoVoiceForLang": {
     "message": "Bu bilgisayarda $NAME$ okuyan bir ses yok. Aşağıdaki liste diğer dillerin sesleri — birini seçin, satır o dilin aksanıyla okunur.",
