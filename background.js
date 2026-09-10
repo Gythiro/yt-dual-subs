@@ -285,7 +285,11 @@ function tag(err, props) {
 // user's LLM had answered.
 function cacheNs() {
   if (cfg.engine !== "byo") return "gtx";
-  return "byo:" + (cfg.byoProvider || "-") + ":" + (cfg.byoModel || "-");
+  // The address belongs in here for the same reason the model does: a custom
+  // endpoint moved from one server to another is a different translator, and
+  // the entries already in the cache were written by the old one.
+  return "byo:" + (cfg.byoProvider || "-") + ":" + (cfg.byoModel || "-") +
+    ":" + (cfg.byoBaseUrl || "-");
 }
 
 function cacheGet(key) {
@@ -1860,7 +1864,11 @@ function qwenFit(text) {
 // Read a DashScope SSE body and hand back everything its data: lines carried.
 async function qwenPcmFromSse(res) {
   const reader = res.body && res.body.getReader ? res.body.getReader() : null;
-  if (!reader) throw tag(new Error("no stream"), { code: "badShape" });
+  // Read-aloud has its own word for "nothing came back to play". badShape's
+  // sentence asks the reader for a model that does not think out loud, which
+  // is a sentence about translating — this card has no model of that kind and
+  // no line to act on.
+  if (!reader) throw tag(new Error("no stream"), { code: "noAudio" });
   const dec = new TextDecoder();
   const parts = [];
   let total = 0;
@@ -1905,7 +1913,7 @@ async function qwenPcmFromSse(res) {
   } finally {
     release();
   }
-  if (!total) throw tag(new Error("qwen returned no audio"), { code: "badShape" });
+  if (!total) throw tag(new Error("qwen returned no audio"), { code: "noAudio" });
   const pcm = new Uint8Array(total);
   let at = 0;
   for (const part of parts) { pcm.set(part, at); at += part.length; }
@@ -2166,7 +2174,13 @@ async function ttsSpeak(text, targetLang, urgent) {
   }
   // The language is part of the identity: the same line synthesized under a
   // different target is different audio (Google even bakes it into the voice).
-  const key = t.provider.id + "|" + t.voice + "|" + (targetLang || "") + "|" + line;
+  // The model and the address are part of what produced this audio. Without
+  // them, changing the model on a custom server — or pointing it at a
+  // different server entirely — went on replaying the previous one's voice for
+  // everything still in the cache, which is the reader hearing a change they
+  // asked for not happen.
+  const key = t.provider.id + "|" + (t.model || "") + "|" + ttsCatalogBase(t) +
+    "|" + t.voice + "|" + (targetLang || "") + "|" + line;
   const hit = TTS_CACHE.get(key);
   if (hit) {
     TTS_CACHE.delete(key);        // refresh recency
@@ -2266,7 +2280,14 @@ async function ttsModels(providerId) {
   const headers = t.key ? { Authorization: "Bearer " + t.key } : {};
   let res;
   try {
-    res = await fetch(base + "/models",
+    // Most of these are OpenAI-compatible servers whose address already ends
+    // in /v1, so "/models" hangs off it. ElevenLabs is not: its base carries no
+    // version, because synthesis and voices each name their own (/v1/… and
+    // /v2/…). Asking it for /models is a 404 — measured — so "the model you
+    // are using has been retired" could never fire for that provider, and the
+    // comment below about the shape it answers with was written for a path
+    // that has never returned anything.
+    res = await fetch(base + (p.modelsPath || "/models"),
       { headers, signal: AbortSignal.timeout(TTS_TIMEOUT_MS) });
   } catch (_e) {
     throw tag(new Error("tts models fetch failed"), { netfail: true, code: "netfail" });
@@ -2274,13 +2295,32 @@ async function ttsModels(providerId) {
   await ttsThrowForStatus(res);
   let data;
   try { data = await res.json(); } catch (_e) {
-    throw tag(new Error("tts models bad json"), { badShape: true, code: "badShape" });
+    // Same reason as the synthesis paths: badShape's sentence is about a
+    // translation model answering in the wrong shape. What happened here is
+    // that the server did not answer with a list.
+    throw tag(new Error("tts models bad json"), { badShape: true, code: "noAudio" });
   }
   // OpenAI-compatible servers answer {data:[{id}]}; ElevenLabs answers a bare
   // array of {model_id}. Take whichever shape arrives.
   const rows = (data && data.data) || (Array.isArray(data) ? data : []);
   const ids = rows.map((m) => m && (m.id || m.model_id)).filter(Boolean);
-  return { models: ids, listable: true, forKey: await keyFingerprint(t.key), forBase: base };
+  return { models: ids, listable: true,
+    forKey: await keyFingerprint(t.key), forBase: ttsCatalogBase(t) };
+}
+
+// The address a stored catalogue belongs to, computed ONE way for everyone.
+// The settings page tags a list it fetched with this and later asks for it back
+// under the same name; where the two were computed differently the list was
+// written down and never found again. Azure returned no tag at all (its
+// request host is built from the region, and the provider has no baseUrl), and
+// a custom server's list was tagged with the address the reader typed while the
+// lookup asked for the provider's empty one. Both lists vanished on reopen.
+function ttsCatalogBase(t) {
+  const p = (t && t.provider) || {};
+  if (p.kind === "azure-speech") {
+    return "https://" + (t.region || "") + "." + (t.hostSuffix || "");
+  }
+  return String((t && t.baseUrl) || p.baseUrl || "").replace(/\/+$/, "");
 }
 
 // The read-aloud twin of byoModels: the voices this provider has FOR THE
@@ -2321,7 +2361,7 @@ async function ttsVoices(asked) {
     const names = ((data && data.voices) || [])
       .map((v) => v && v.name).filter(Boolean);
     return { voices: names, listable: true,
-      forKey: await keyFingerprint(t.key), forBase: p.baseUrl || "" };
+      forKey: await keyFingerprint(t.key), forBase: ttsCatalogBase(t) };
   }
   if (p.kind === "openai-speech" && p.custom) {
     const base = (t.baseUrl || "").replace(/\/+$/, "");
@@ -2346,7 +2386,7 @@ async function ttsVoices(asked) {
       .map((v) => (typeof v === "string" ? v : (v && (v.name || v.id || v.voice_id))))
       .filter((v) => typeof v === "string" && v);
     return { voices: names, listable: true,
-      forKey: await keyFingerprint(t.key), forBase: base };
+      forKey: await keyFingerprint(t.key), forBase: ttsCatalogBase(t) };
   }
 
   if (p.kind === "elevenlabs") {
@@ -2388,7 +2428,7 @@ async function ttsVoices(asked) {
       token = next;
     }
     return { voices: [...seen], names: names, listable: true,
-      forKey: await keyFingerprint(t.key), forBase: p.baseUrl || "" };
+      forKey: await keyFingerprint(t.key), forBase: ttsCatalogBase(t) };
   }
   // azure-speech
   try {
@@ -2408,7 +2448,8 @@ async function ttsVoices(asked) {
     .filter((v) => v && v.ShortName && /Neural/i.test(v.VoiceType || v.ShortName))
     .filter((v) => !want || String(v.Locale || "").toLowerCase() === want.toLowerCase())
     .map((v) => v.ShortName);
-  return { voices: names, listable: true };
+  return { voices: names, listable: true,
+    forKey: await keyFingerprint(t.key), forBase: ttsCatalogBase(t) };
 }
 
 // Live target list, so a stale hard-coded table can never be the reason a user
@@ -2845,7 +2886,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         const kind = msg.kind === "tts" ? "tts" : "byo";
         if (kind === "tts") {
           const t = await resolveTts(undefined, msg.provider);
-          return { base: (t.provider && t.provider.baseUrl) || "", key: t.key };
+          return { base: ttsCatalogBase(t), key: t.key };
         }
         const t = await resolveByo({ needModel: false, provider: msg.provider });
         return { base: t.endpoint || "", key: t.key };

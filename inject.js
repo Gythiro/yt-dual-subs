@@ -53,8 +53,14 @@
       // the exclusion they parse as a video id that never changes, every post
       // carries a made-up videoId, and produceCues returns forever on exactly
       // the shape this arm was added to cover.
+      // /live/<id> is the third shape that carries the id in the path. It has
+      // been in isVideoPage since it was written, so the button mounted and
+      // nothing else did: no id meant produceCues returned at its second line
+      // forever, every recovery that is gated on an id went quiet, and export
+      // and summary had no complete track to work from. The two files have to
+      // agree about this or they disagree about what is playing.
       const m = u.pathname.match(
-        /^\/(?:shorts|embed)\/(?!videoseries\b|live_stream\b)([A-Za-z0-9_-]{6,})/);
+        /^\/(?:shorts|embed|live)\/(?!videoseries\b|live_stream\b)([A-Za-z0-9_-]{6,})/);
       if (m) return m[1];
       return u.searchParams.get("v") || "";
     } catch (_e) {

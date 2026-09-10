@@ -735,8 +735,13 @@ function ttsUsable(p, keys, region) {
   // actually can: no speechSynthesis, no offer.
   if (p.localVoices && !(typeof speechSynthesis !== "undefined")) return false;
   // The custom server is configured by its ADDRESS; an empty key is a valid
-  // setup there (no Authorization header) — mirrors resolveTts.
-  if (p.custom) return !!String(state.ttsBaseUrl || "").trim();
+  // setup there (no Authorization header) — mirrors resolveTts. It has to be
+  // an address the WORKER will accept, not merely a non-empty string: that is
+  // the gate resolveTts and the settings page both apply, and asking a looser
+  // question here painted the card as ready to speak over an address the
+  // engine refuses, while the settings page said, on the same data, that
+  // nothing had been typed yet.
+  if (p.custom) return !!P.parseCustomBase(String(state.ttsBaseUrl || ""));
   if (!p.keyless && !(keys || {})[p.id]) return false;
   if (p.needsRegion && !TTS_REGION_OK.test(String(region || "").trim().toLowerCase())) {
     return false;
@@ -1018,7 +1023,12 @@ function initTtsWatch() {
       }
       if (area !== "sync") return;
       let touched = false;
-      for (const k of ["ttsProvider", "ttsVoice", "ttsRegion"]) {
+      // ttsBaseUrl belongs on this list for the same reason the other three
+      // do: the settings page is where a custom server's address is typed, and
+      // whether the card can offer the switch at all is decided from it. Left
+      // off, the popup went on answering from the address it read when it
+      // opened.
+      for (const k of ["ttsProvider", "ttsVoice", "ttsRegion", "ttsBaseUrl"]) {
         if (!changes[k]) continue;
         state[k] = changes[k].newValue == null ? "" : String(changes[k].newValue);
         touched = true;

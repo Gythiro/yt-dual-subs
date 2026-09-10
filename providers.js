@@ -926,6 +926,11 @@
       // binary mp3, which is the cleanest shape any of these providers has.
       id: "elevenlabs", name: "ElevenLabs", nameKey: "provElevenlabs", short: "ElevenLabs", kind: "elevenlabs",
       listModels: true,
+      // This base carries no version, because each endpoint names its own
+      // (/v1/text-to-speech, /v2/voices). The model list has to say so too —
+      // hanging "/models" off the bare host is a 404, so the "your model has
+      // been retired" notice could never fire for this provider.
+      modelsPath: "/v1/models",
       baseUrl: "https://api.elevenlabs.io",
       origin: "https://api.elevenlabs.io",
       // Multilingual v2 is the default on purpose: v3 speaks more languages

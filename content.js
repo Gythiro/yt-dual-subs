@@ -362,9 +362,14 @@
     try { closeMenu(); } catch (_e) { /* ignore */ }
     try { sumClose(); } catch (_e) { /* ignore */ }
     try { document.removeEventListener("mousedown", onDocMouseDownForMenu, true); } catch (_e) { /* ignore */ }
+    try { document.removeEventListener("keydown", onKeyDownForMenu, true); } catch (_e) { /* ignore */ }
     try { document.removeEventListener("selectionchange", flushHeldLines); } catch (_e) { /* ignore */ }
     try { window.removeEventListener("mouseup", onAnyMouseUp, true); } catch (_e) { /* ignore */ }
     try { window.removeEventListener("click", onStrayClick, true); } catch (_e) { /* ignore */ }
+    // The one listener this teardown used to leave behind. A dead tab went on
+    // answering settings changes: flip anything in the popup afterwards and it
+    // put its overlay back and started talking to a worker that is not there.
+    try { chrome.storage.onChanged.removeListener(onStorageChanged); } catch (_e) { /* ignore */ }
     try { if (localVoicesTake && window.speechSynthesis) window.speechSynthesis.removeEventListener("voiceschanged", localVoicesTake); } catch (_e) { /* ignore */ }
     // The paused flag lives on speechSynthesis, survives us, and cancel() does
     // not clear it (see ttsFollowPause). An instance that is torn down while
@@ -433,7 +438,12 @@
     "engine", "backend", "targetLang", "byoProvider", "byoModel", "byoBaseUrl"
   ]);
 
-  chrome.storage.onChanged.addListener((changes, area) => {
+  // Held so teardown can take it back. An orphaned script kept answering
+  // storage changes: flip any setting in the popup afterwards and the dead
+  // tab put its overlay back and started talking to a worker that is not
+  // there — the one listener goOrphan did not remove.
+  const onStorageChanged = (changes, area) => {
+    if (orphaned) return;
     if (area === "sync" && changes.uiLocale) {
       const v = changes.uiLocale.newValue;
       if (v && v !== "auto") loadUiTable(); else uiTable = null;
@@ -553,7 +563,8 @@
       }
       sendConfig();
     }
-  });
+  };
+  try { chrome.storage.onChanged.addListener(onStorageChanged); } catch (_e) { /* ignore */ }
 
   // ---- generic helpers -----------------------------------------------------
   function videoIdFromLocation() {
@@ -566,8 +577,14 @@
       // and the visibilitychange one — which return early when there is no id.
       // /embed/videoseries and /embed/live_stream are excluded for the same
       // reason as there: eleven legal id characters that are not an id.
+      // /live/<id> is the third shape that carries the id in the path. It has
+      // been in isVideoPage since it was written, so the button mounted and
+      // nothing else did: no id meant produceCues returned at its second line
+      // forever, every recovery that is gated on an id went quiet, and export
+      // and summary had no complete track to work from. The two files have to
+      // agree about this or they disagree about what is playing.
       const m = u.pathname.match(
-        /^\/(?:shorts|embed)\/(?!videoseries\b|live_stream\b)([A-Za-z0-9_-]{6,})/);
+        /^\/(?:shorts|embed|live)\/(?!videoseries\b|live_stream\b)([A-Za-z0-9_-]{6,})/);
       if (m) return m[1];
       return u.searchParams.get("v") || "";
     } catch (_e) {
@@ -1811,6 +1828,22 @@
     closeMenu();
   }
   document.addEventListener("mousedown", onDocMouseDownForMenu, true);
+  // Escape closes it too. The menu is a popup over the picture and everything
+  // else that behaves like one in this extension — the popup's two inline
+  // panels, the engine tip — already answers Escape; this one only closed by
+  // clicking elsewhere, which on a video means clicking the video.
+  // NOT the summary panel: closing that by accident throws away something the
+  // reader may have paid for, and leaving it out is a decision, not an
+  // oversight.
+  function onKeyDownForMenu(e) {
+    if (orphaned || !menuEl) return;
+    if (e.key !== "Escape" && e.key !== "Esc") return;
+    // The arrow gets the focus back, so the keyboard is where it was.
+    closeMenu();
+    try { if (moreEl) moreEl.focus(); } catch (_e2) { /* ignore */ }
+    e.stopPropagation();
+  }
+  document.addEventListener("keydown", onKeyDownForMenu, true);
 
   // ---- in-player quick toggle (YouTube control bar) ------------------------
   // A small button in the player's right-controls that flips the whole

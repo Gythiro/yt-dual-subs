@@ -2946,6 +2946,30 @@ function initCrossPageSync() {
   try {
     chrome.storage.onChanged.addListener((changes, area) => {
       if (area === "local") {
+        // The translate pane's copy of "which providers have a key" and "which
+        // have proved one" is read once at boot, and the popup can empty both
+        // from another window — Reset all settings does exactly that. Without
+        // this the pane went on showing "saved ····1234" and a configured tick
+        // for a key that is gone, and the next Save-and-test failed on a key
+        // this page believed it still had. Same treatment the read-aloud half
+        // has had since it shipped.
+        if (changes.byoKeys || changes.byoOk) {
+          if (changes.byoKeys) {
+            const held = (changes.byoKeys.newValue) || {};
+            for (const id of Object.keys(storedKeys)) delete storedKeys[id];
+            for (const id of Object.keys(held)) storedKeys[id] = true;
+          }
+          if (changes.byoOk) {
+            const ok = (changes.byoOk.newValue) || {};
+            for (const id of Object.keys(verifiedOk)) delete verifiedOk[id];
+            for (const id of Object.keys(ok)) verifiedOk[id] = true;
+          }
+          // A draft the reader is in the middle of typing is never repainted
+          // away — the same bargain the read-aloud side strikes below.
+          const cur = current();
+          if (cur && $("key") && !$("key").value) paintKeyField(cur);
+          if (listSec === "setup") renderList();
+        }
         if (changes.ttsKeys) {
           paintTtsUse();                       // a key appearing/vanishing flips the lock
           const p = ttsProvider();
