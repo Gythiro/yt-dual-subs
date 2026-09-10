@@ -95,7 +95,7 @@
     "message": "<b>自動</b>：優先使用 YouTube 整軌翻譯，影片不支援時自動切換到智慧整句。<br><b>整軌翻譯</b>：YouTube 自帶的整軌翻譯，逐條對齊。重度使用時 YouTube 可能短暫限流——擴充功能會等一會兒再要一次。<br><b>智慧整句</b>：先把碎片字幕拼回完整句子，再呼叫 Google 免費介面翻譯——軌道亂時比整軌翻譯通順；重度使用同樣可能被限流，擴充功能會自動放慢重試。<br><b>自帶 Key</b>：把拼好的整句傳給你設定的服務商。"
   },
   "backendGtxHint": {
-    "message": "使用 Google 免費介面，重度使用可能被短暫限流；擴充功能會自動放慢並重試。"
+    "message": "使用 Google 免費端點，重度使用可能被短暫限流；擴充功能會自動放慢並重試。"
   },
   "backendStatusTlang": {
     "message": "本影片：整軌翻譯（YouTube）"
@@ -104,7 +104,7 @@
     "message": "本影片：智慧整句（Google）"
   },
   "backendStatusLimited": {
-    "message": "翻譯介面暫時限流，已自動放慢重試；已翻譯的句子還在。"
+    "message": "翻譯端點暫時限流，已自動放慢重試；已翻譯的句子還在。"
   },
   "diagCopy": {
     "message": "複製診斷資訊"
@@ -325,7 +325,7 @@
     "message": "中國大陸"
   },
   "byoBaseLabel": {
-    "message": "介面位址"
+    "message": "端點位址"
   },
   "byoModelLabel": {
     "message": "模型"
@@ -400,10 +400,10 @@
     "message": "這家沒有內建清單。先拉一次可用模型，或者直接手填模型名。"
   },
   "byoErrNotApi": {
-    "message": "那個地址回的是一個網頁，不是介面——多半是登入頁或網路在中間攔截。檢查地址，或者換個網路。"
+    "message": "那個地址回的是一個網頁，不是端點——多半是登入頁或網路在中間攔截。檢查地址，或者換個網路。"
   },
   "byoErrBadBaseUrl": {
-    "message": "介面網址要填完整，https:// 開頭——http:// 只有 localhost 和 127.0.0.1 能用。"
+    "message": "端點網址要填完整，https:// 開頭——http:// 只有 localhost 和 127.0.0.1 能用。"
   },
   "byoErrUrlHasKey": {
     "message": "網址裡帶著 Key。把它從網址裡去掉，填進下面的 API Key 欄——網址會隨瀏覽器帳號同步，Key 欄不會。"
@@ -434,7 +434,7 @@
     "message": "這個帳號本期的餘額或額度已經用完——去服務商後台儲值或等下個週期。"
   },
   "byoErrBadRequest": {
-    "message": "介面拒絕了請求：模型名稱或介面網址可能不對。"
+    "message": "端點拒絕了請求：模型名稱或端點網址可能不對。"
   },
   "byoErrBadShape": {
     "message": "模型沒按要求逐行回覆，自動拆小重試也失敗了——換個模型試試。"
@@ -731,10 +731,10 @@
     "message": "還沒填 Key，這個服務商暫時用不了。"
   },
   "optNeedBase": {
-    "message": "還沒填介面位址，這個服務商暫時用不了。"
+    "message": "還沒填端點位址，這個服務商暫時用不了。"
   },
   "optBaseHint": {
-    "message": "填 Base URL 或完整介面位址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本機跑的模型伺服器要填它自己的連接埠——Ollama 是 http://localhost:11434/v1，LM Studio 是 http://localhost:1234/v1。Key 可以留空；http 只有本機回環位址能用。"
+    "message": "填 Base URL 或完整端點位址都行，例如 https://example.com/v1 或 https://example.com/v1/chat/completions。本機跑的模型伺服器要填它自己的連接埠——Ollama 是 http://localhost:11434/v1，LM Studio 是 http://localhost:1234/v1。Key 可以留空；http 只有本機回環位址能用。"
   },
   "startS1Alt": {
     "message": "播放器示意圖：畫面下方是一行原文和一行譯文"
@@ -1111,10 +1111,10 @@
     }
   },
   "optTtsBaseHint": {
-    "message": "填 Base URL 或完整介面位址都可以，例如 http://localhost:8880/v1 或 http://localhost:8880/v1/audio/speech（Kokoro、openai-edge-tts 這類本機朗讀服務）。金鑰可以留空；http 只有本機回環位址能用。"
+    "message": "填 Base URL 或完整端點位址都可以，例如 http://localhost:8880/v1 或 http://localhost:8880/v1/audio/speech（Kokoro、openai-edge-tts 這類本機朗讀服務）。金鑰可以留空；http 只有本機回環位址能用。"
   },
   "optTtsNeedUrl": {
-    "message": "還沒填介面位址，這個服務商暫時用不了。"
+    "message": "還沒填端點位址，這個服務商暫時用不了。"
   },
   "ttsSkipRefused": {
     "message": "服務商拒絕了請求"

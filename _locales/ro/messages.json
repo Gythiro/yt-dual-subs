@@ -1094,7 +1094,7 @@
     "message": "Pista de subtitrări nu a sosit — se reîncearcă automat. Grăbit? Reîncarcă pagina ca să încerci imediat."
   },
   "ttsCompleteLabel": {
-    "message": "Termină fiecare linie (imaginea încetinește în pasajele dense)"
+    "message": "Încearcă să termini fiecare linie (imaginea încetinește în pasajele dense)"
   },
   "ttsCompleteHint": {
     "message": "La viteze mai mari, liniile lungi își pierd adesea finalul în următoarea. Cu această opțiune, imaginea încetinește cât are nevoie linia — niciodată sub un sfert din viteza aleasă — și recuperează în goluri. Cât timp imaginea e încetinită atât de mult, sunetul original al videoclipului scade și mai jos decât nivelul setat de tine, până la tăcere."

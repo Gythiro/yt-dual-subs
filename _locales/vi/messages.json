@@ -1094,7 +1094,7 @@
     "message": "Chưa nhận được luồng phụ đề — đang tự động thử lại. Vội thì tải lại trang để thử ngay."
   },
   "ttsCompleteLabel": {
-    "message": "Đọc hết mỗi dòng (hình chậm lại khi dày chữ)"
+    "message": "Cố gắng đọc hết mỗi dòng (hình chậm lại khi dày chữ)"
   },
   "ttsCompleteHint": {
     "message": "Ở tốc độ cao, dòng dài thường bị cắt đuôi sang dòng sau. Bật tùy chọn này thì hình chậm lại đúng mức dòng cần — không thấp hơn một phần tư tốc độ bạn chọn — rồi bắt kịp ở chỗ trống. Khi hình chậm sâu như vậy, âm thanh gốc của video giảm thấp hơn mức bạn chọn, xuống tới im lặng."

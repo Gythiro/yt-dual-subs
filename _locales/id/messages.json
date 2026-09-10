@@ -1142,7 +1142,7 @@
     "message": "Trek subtitle belum sampai — mencoba lagi sendiri. Terburu-buru? Muat ulang halaman untuk coba sekarang."
   },
   "ttsCompleteLabel": {
-    "message": "Selesaikan setiap baris (gambar melambat di bagian padat)"
+    "message": "Usahakan selesaikan setiap baris (gambar melambat di bagian padat)"
   },
   "ttsCompleteHint": {
     "message": "Di kecepatan lebih tinggi, baris panjang sering kehilangan ekornya ke baris berikutnya. Kalau ini nyala, gambar melambat sebanyak yang dibutuhkan baris itu — tidak pernah di bawah seperempat kecepatan yang kamu pilih — lalu mengejar lagi di jedanya. Saat gambar diperlambat sedalam itu, audio video sendiri turun lebih jauh dari tingkat yang kamu setel, sampai sunyi."

@@ -1142,7 +1142,7 @@
     "message": "Subtitrų takelis neatėjo — automatiškai bandau iš naujo. Skubi? Atnaujink puslapį, kad bandytum dabar."
   },
   "ttsCompleteLabel": {
-    "message": "Baigti kiekvieną eilutę (vaizdas lėtėja tankiose vietose)"
+    "message": "Bandyti baigti kiekvieną eilutę (vaizdas lėtėja tankiose vietose)"
   },
   "ttsCompleteHint": {
     "message": "Didesniu greičiu ilgos eilutės dažnai praranda uodegą kitai. Tai įjungus vaizdas lėtėja tiek, kiek eilutei reikia — niekada ne žemiau ketvirtadalio pasirinkto greičio — ir tarpų metu pasiveja. Kol vaizdas tiek sulėtintas, paties vaizdo įrašo garsas krenta žemiau tavo nustatytos ribos, iki tylos."

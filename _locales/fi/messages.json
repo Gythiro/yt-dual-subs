@@ -1094,7 +1094,7 @@
     "message": "Tekstitysraita ei saapunut — yritetään automaattisesti uudelleen. Kiire? Päivitä sivu ja yritä heti."
   },
   "ttsCompleteLabel": {
-    "message": "Puhu jokainen rivi loppuun (kuva hidastuu tiheissä kohdissa)"
+    "message": "Yritä puhua jokainen rivi loppuun (kuva hidastuu tiheissä kohdissa)"
   },
   "ttsCompleteHint": {
     "message": "Suuremmilla nopeuksilla pitkät rivit jäävät usein kesken, kun seuraava alkaa. Kun tämä on päällä, kuva hidastuu niin paljon kuin rivi tarvitsee — ei kuitenkaan alle neljännekseen valitsemastasi nopeudesta — ja kiri kiinni tauoissa. Kun kuva on hidastunut näin syvälle, videon oma ääni vaimenee alemmas kuin asettamasi taso, aina hiljaisuuteen asti."

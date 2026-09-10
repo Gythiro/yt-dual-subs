@@ -1142,7 +1142,7 @@
     "message": "Het ondertitelspoor is niet aangekomen — automatisch opnieuw proberen. Haast? Vernieuw de pagina om het nu opnieuw te proberen."
   },
   "ttsCompleteLabel": {
-    "message": "Elke regel afmaken (beeld trager in dichte stukken)"
+    "message": "Probeer elke regel af te maken (beeld trager in dichte stukken)"
   },
   "ttsCompleteHint": {
     "message": "Bij hogere snelheid verliezen lange regels hun staart vaak aan de volgende. Met dit aan vertraagt het beeld zoveel als de regel nodig heeft — nooit onder een kwart van je gekozen snelheid — en haalt in de gaten weer in. Terwijl het beeld zó traag is, zakt het eigen geluid van de video verder dan het niveau dat jij zette, tot stilte."

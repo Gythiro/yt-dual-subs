@@ -1094,7 +1094,7 @@
     "message": "Altyazı parçası gelmedi — otomatik olarak yeniden deneniyor. Aceleniz mi var? Hemen denemek için sayfayı yenileyin."
   },
   "ttsCompleteLabel": {
-    "message": "Her satırı bitir (yoğun yerlerde görüntü yavaşlar)"
+    "message": "Her satırı bitirmeye çalış (yoğun yerlerde görüntü yavaşlar)"
   },
   "ttsCompleteHint": {
     "message": "Yüksek hızlarda uzun satırların sonu çoğu zaman bir sonrakine kayar. Bu açıkken görüntü, satırın ihtiyaç duyduğu kadar yavaşlar — seçtiğiniz hızın dörtte birinin altına inmeden — ve boşluklarda hızı toparlar. Görüntü o kadar yavaşlarken videonun kendi sesi, ayarladığınız seviyenin de altına iner, sessizliğe kadar."

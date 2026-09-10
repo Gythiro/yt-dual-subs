@@ -1094,7 +1094,7 @@
     "message": "A faixa de legendas não chegou — a tentar novamente de forma automática. Com pressa? Recarregue a página para tentar já."
   },
   "ttsCompleteLabel": {
-    "message": "Terminar cada linha (a imagem abranda nas partes densas)"
+    "message": "Tentar terminar cada linha (a imagem abranda nas partes densas)"
   },
   "ttsCompleteHint": {
     "message": "A velocidades mais altas, as linhas longas perdem frequentemente o final para a seguinte. Com isto ligado, a imagem abranda o quanto a linha precisar — nunca abaixo de um quarto da velocidade escolhida — e recupera nos intervalos. Enquanto a imagem está tão abrandada, o áudio original do vídeo desce mais do que o nível que definiu, até ao silêncio."

@@ -1094,7 +1094,7 @@
     "message": "Stopa titulků nedorazila — zkouší se to automaticky znovu. Spěcháte? Obnovte stránku a zkuste to hned."
   },
   "ttsCompleteLabel": {
-    "message": "Dokončit každý řádek (obraz v hustých částech zpomalí)"
+    "message": "Zkusit dokončit každý řádek (obraz v hustých částech zpomalí)"
   },
   "ttsCompleteHint": {
     "message": "Při vyšších rychlostech dlouhé řádky často přijdou o konec ve prospěch následujícího. Když je to zapnuto, obraz zpomalí, jak řádek potřebuje — nikdy pod čtvrtinu zvolené rychlosti — a v mezerách se zase dožene. Zatímco je obraz takto silně zpomalený, vlastní zvuk videa klesne níž než úroveň, kterou jste nastavili, až k tichu."

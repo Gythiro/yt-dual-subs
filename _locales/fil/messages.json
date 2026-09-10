@@ -92,10 +92,10 @@
     "message": "Sarili mong key (LLM / DeepL)"
   },
   "backendTipHtml": {
-    "message": "<b>Auto</b>: ginagamit ang buong-track na pagsasalin ng YouTube kapag sinusuportahan ng video, at lumilipat sa matalinong pangungusap kapag hindi.<br><b>Buong track</b>: sariling pagsasalin ng YouTube; naka-align ang bawat cue. Sa mabigat na gamit, puwedeng pagbawalan ito sandali ng YouTube — maghihintay ang extension at tatanong ulit.<br><b>Matalinong pangungusap</b>: tinitipon ang pira-pirasong caption para maging buong pangungusap, tapos isinasalin sa libreng endpoint ng Google — mas maayos ang salita kaysa buong-track sa magulong track, pero sa mabigat na gamit puwede ring pagbawalan doon; bumabagal ang extension at sinusubukan ulit.<br><b>Sarili mong key</b>: ipinapadala ang nabuong pangungusap sa provider na naka-set mo."
+    "message": "<b>Auto</b>: ginagamit ang buong-track na pagsasalin ng YouTube kapag sinusuportahan ng video, at lumilipat sa matalinong pangungusap kapag hindi.<br><b>Buong track</b>: sariling pagsasalin ng YouTube; naka-align ang bawat cue. Sa mabigat na gamit, puwedeng limitahan ito sandali ng YouTube — maghihintay ang extension at tatanong ulit.<br><b>Matalinong pangungusap</b>: tinitipon ang pira-pirasong caption para maging buong pangungusap, tapos isinasalin sa libreng endpoint ng Google — mas maayos ang salita kaysa buong-track sa magulong track, pero sa mabigat na gamit puwede ring limitahan doon; bumabagal ang extension at sinusubukan ulit.<br><b>Sarili mong key</b>: ipinapadala ang nabuong pangungusap sa provider na naka-set mo."
   },
   "backendGtxHint": {
-    "message": "Ginagamit ang libreng endpoint ng Google — sa mabigat na gamit puwedeng pagbawalan sandali; inaayos ng extension ang bilis at sinusubukan ulit nang kusa."
+    "message": "Ginagamit ang libreng endpoint ng Google — sa mabigat na gamit puwedeng limitahan sandali; inaayos ng extension ang bilis at sinusubukan ulit nang kusa."
   },
   "backendStatusTlang": {
     "message": "Video na 'to: buong-track na pagsasalin (YouTube)"
@@ -104,7 +104,7 @@
     "message": "Video na 'to: matalinong pangungusap (Google)"
   },
   "backendStatusLimited": {
-    "message": "Pinagbabawalan ng endpoint ng pagsasalin — bumabagal at sinusubukan ulit nang kusa. Patuloy ang mga linyang naisalin na."
+    "message": "Nililimitahan ng endpoint ng pagsasalin — bumabagal at sinusubukan ulit nang kusa. Patuloy ang mga linyang naisalin na."
   },
   "diagCopy": {
     "message": "Kopyahin ang diagnostic info"
@@ -276,7 +276,7 @@
     "message": "Walang pagsasalin para sa video na 'to — subukan ang Buong-track na engine o ibang wika ng pagsasalin."
   },
   "exportLimited": {
-    "message": "Pinagbabawalan muna ng YouTube ang buong-track na pagsasalin ngayon — subukan ulit sa loob ng isang minuto. Ilipat ang \"Engine\" sa \"Sarili mong key\" at magkakaroon ng tsek sa export card na umiiwas dito."
+    "message": "Nililimitahan muna ng YouTube ang buong-track na pagsasalin ngayon — subukan ulit sa loob ng isang minuto. Ilipat ang \"Engine\" sa \"Sarili mong key\" at magkakaroon ng tsek sa export card na umiiwas dito."
   },
   "exportNoCues": {
     "message": "Walang ma-download na subtitle — i-play ng ilang segundo para mag-load ang mga caption, tapos subukan ulit."
@@ -425,10 +425,10 @@
     "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
   },
   "byoErrLimited": {
-    "message": "Pinagbabawalan muna ng provider — bumabagal at sinusubukan ulit nang kusa."
+    "message": "Nililimitahan muna ng provider — bumabagal at sinusubukan ulit nang kusa."
   },
   "byoErrLimitedTest": {
-    "message": "Pinagbabawalan muna ng provider. Sandali, tapos pindutin ulit."
+    "message": "Nililimitahan muna ng provider. Sandali, tapos pindutin ulit."
   },
   "byoErrQuota": {
     "message": "Wala nang credit o quota ang account na 'to para sa kasalukuyang panahon — mag-top up sa console ng provider para magpatuloy."
@@ -1103,11 +1103,11 @@
     "description": "Row label in the small in-player menu. One word."
   },
   "tlangLimitedNote": {
-    "message": "Pinagbabawalan muna ngayon ang sariling pagsasalin ng YouTube; pumupuno ang matalinong pangungusap (Google). Sinusubukan ulit nang kusa mamaya.",
+    "message": "Nililimitahan muna ngayon ang sariling pagsasalin ng YouTube; pumupuno ang matalinong pangungusap (Google). Sinusubukan ulit nang kusa mamaya.",
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Pinagbabawalan muna ng endpoint ng pagsasalin — magpapatuloy sa mga $SECONDS$ s.",
+    "message": "Nililimitahan muna ng endpoint ng pagsasalin — magpapatuloy sa mga $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",
@@ -1142,7 +1142,7 @@
     "message": "Hindi pa dumarating ang subtitle track — sinusubukan ulit nang kusa. Nagmamadali? I-refresh ang page para subukan ngayon."
   },
   "ttsCompleteLabel": {
-    "message": "Tapusin ang bawat linya (bumabagal ang larawan sa mga siksik na parte)"
+    "message": "Subukang tapusin ang bawat linya (bumabagal ang larawan sa mga siksik na parte)"
   },
   "ttsCompleteHint": {
     "message": "Sa mas mabilis na bilis, madalas mawala ang dulo ng mahahabang linya sa susunod. Kapag naka-on 'to, bumabagal ang larawan nang kailangan ng linya — hindi kailanman mas mababa sa isang-kapat ng bilis na pinili mo — at nahuhabol ulit sa mga agwat. Habang ganoon kabagal ang larawan, bumababa pa ang sariling audio ng video kaysa sa antas na naka-set mo, hanggang katahimikan."

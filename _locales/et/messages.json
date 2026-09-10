@@ -1094,7 +1094,7 @@
     "message": "Subtiitririba ei saabunud — proovitakse automaatselt uuesti. Kiire? Värskenda lehte, et kohe uuesti proovida."
   },
   "ttsCompleteLabel": {
-    "message": "Iga rida lõpuni (pilt aeglustub tihedates osades)"
+    "message": "Proovi iga rida lõpuni (pilt aeglustub tihedates osades)"
   },
   "ttsCompleteHint": {
     "message": "Suurematel kiirustel kaotavad pikad read sageli oma lõpu järgmisele reale. Kui see on sees, aeglustub pilt nii palju, kui rida vajab — mitte kunagi alla veerandi valitud kiirusest — ja jõuab lünkades järele. Kui pilt on nii tugevalt aeglustatud, langeb video enda heli sinu määratud tasemest veelgi, kuni vaikuseni."

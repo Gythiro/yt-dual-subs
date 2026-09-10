@@ -1094,7 +1094,7 @@
     "message": "Die Untertitelspur ist nicht angekommen — es wird automatisch erneut versucht. Eilig? Seite neu laden, dann sofort noch einmal."
   },
   "ttsCompleteLabel": {
-    "message": "Jede Zeile zu Ende (Bild langsamer in dichten Stellen)"
+    "message": "Möglichst jede Zeile zu Ende (Bild langsamer in dichten Stellen)"
   },
   "ttsCompleteHint": {
     "message": "Bei höherer Geschwindigkeit verlieren lange Zeilen oft ihr Ende an die nächste. Ist dies aktiv, wird das Bild so stark verlangsamt, wie die Zeile braucht — nie unter ein Viertel der gewählten Geschwindigkeit — und holt in den Lücken wieder auf. Solange das Bild so stark verlangsamt ist, sinkt der eigene Ton des Videos weiter als der von dir festgelegte Pegel, bis zur Stille."

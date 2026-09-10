@@ -1142,7 +1142,7 @@
     "message": "Undertekstsporet har ikke kommet — prøver igjen av seg selv. Har du dårlig tid? Oppdater siden for å prøve nå."
   },
   "ttsCompleteLabel": {
-    "message": "Fullfør hver linje (bildet senkes i tette partier)"
+    "message": "Prøv å fullføre hver linje (bildet senkes i tette partier)"
   },
   "ttsCompleteHint": {
     "message": "I høyere hastighet mister lange linjer ofte halen til den neste. Med denne på senkes bildet så mye linjen trenger — aldri under en fjerdedel av farten du har valgt — og tar igjen i pausene. Mens bildet er senket så mye, synker videoens egen lyd lenger enn nivået du satte, ned til stillhet."

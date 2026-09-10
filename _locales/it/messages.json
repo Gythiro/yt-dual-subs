@@ -1094,7 +1094,7 @@
     "message": "La traccia dei sottotitoli non è arrivata: nuovo tentativo automatico. Di fretta? Ricarica la pagina per riprovare subito."
   },
   "ttsCompleteLabel": {
-    "message": "Completa ogni riga (l'immagine rallenta nelle parti dense)"
+    "message": "Cerca di completare ogni riga (l'immagine rallenta nelle parti dense)"
   },
   "ttsCompleteHint": {
     "message": "Alle velocità più alte le righe lunghe perdono spesso la coda a favore della successiva. Con questa opzione, l'immagine rallenta quanto serve alla riga — mai sotto un quarto della velocità scelta — e recupera negli spazi vuoti. Mentre l'immagine è così rallentata, l'audio del video scende oltre il livello che hai impostato, fino al silenzio."

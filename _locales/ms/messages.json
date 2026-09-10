@@ -92,7 +92,7 @@
     "message": "Kunci sendiri (LLM / DeepL)"
   },
   "backendTipHtml": {
-    "message": "<b>Auto</b>: guna terjemahan trek penuh YouTube bila video menyokongnya, dan tukar ke ayat pintar bila tak menyokong.<br><b>Trek penuh</b>: terjemahan YouTube sendiri; selari petik demi petik. Penggunaan berat boleh buat YouTube hadkan sekejap — sambungan tunggu dan tanya lagi.<br><b>Ayat pintar</b>: susun semula kapsyen tercicir jadi ayat penuh, kemudian terjemah melalui hujung percuma Google — ayat lebih kemas daripada trek penuh pada trek kucar-kacir, tapi penggunaan berat boleh dihadkan di situ juga; sambungan perlahan dan cuba semula.<br><b>Kunci sendiri</b>: hantar ayat yang sudah disusun kepada penyedia yang kamu setkan."
+    "message": "<b>Auto</b>: guna terjemahan trek penuh YouTube bila video menyokongnya, dan tukar ke ayat pintar bila tak menyokong.<br><b>Trek penuh</b>: terjemahan YouTube sendiri; selari petik demi petik. Penggunaan berat boleh buat YouTube hadkan sekejap — sambungan tunggu dan tanya lagi.<br><b>Ayat pintar</b>: susun semula kapsyen tercicir jadi ayat penuh, kemudian terjemah melalui endpoint percuma Google — ayat lebih kemas daripada trek penuh pada trek kucar-kacir, tapi penggunaan berat boleh dihadkan di situ juga; sambungan perlahan dan cuba semula.<br><b>Kunci sendiri</b>: hantar ayat yang sudah disusun kepada penyedia yang kamu setkan."
   },
   "backendGtxHint": {
     "message": "Guna endpoint percuma Google — penggunaan berat mungkin dihadkan sekejap; sambungan atur irama sendiri dan cuba semula secara automatik."
@@ -434,7 +434,7 @@
     "message": "Akaun ni kehabisan kredit atau kuota untuk tempoh semasa — top up dalam konsol penyedia untuk teruskan."
   },
   "byoErrBadRequest": {
-    "message": "Hujung menolak permintaan — nama model atau URL asas mungkin salah."
+    "message": "Endpoint menolak permintaan — nama model atau URL asas mungkin salah."
   },
   "byoErrBadShape": {
     "message": "Model tak jawab baris demi baris seperti diminta, dan cubaan lebih kecil pun gagal — cuba model lain."
@@ -1107,7 +1107,7 @@
     "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
   },
   "exportWaiting": {
-    "message": "Hujung terjemahan sedang hadkan — sambung semula dalam lebih kurang $SECONDS$ s.",
+    "message": "Endpoint terjemahan sedang hadkan — sambung semula dalam lebih kurang $SECONDS$ s.",
     "placeholders": {
       "seconds": {
         "content": "$1",
@@ -1142,7 +1142,7 @@
     "message": "Trek sari kata belum sampai — cuba semula secara automatik. Tergegas? Muat semula halaman untuk cuba sekarang."
   },
   "ttsCompleteLabel": {
-    "message": "Siapkan setiap baris (gambar perlahan di bahagian padat)"
+    "message": "Cuba siapkan setiap baris (gambar perlahan di bahagian padat)"
   },
   "ttsCompleteHint": {
     "message": "Pada kelajuan lebih tinggi baris panjang sering hilang hujungnya kepada yang seterusnya. Dengan ni hidup, gambar perlahan sebanyak yang baris perlukan — tidak pernah di bawah suku kelajuan yang kamu pilih — dan kejar semula dalam jurang. Semasa gambar diperlankan sedalam tu, audio sendiri video turun lebih daripada aras yang kamu set, sampai senyap."

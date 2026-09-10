@@ -1142,7 +1142,7 @@
     "message": "Steza s podnapisi še ni prispela — samodejno poskušam znova. Hitiš? Osveži stran, da poskusiš zdaj."
   },
   "ttsCompleteLabel": {
-    "message": "Dokončaj vsako vrstico (slika se v gostih delih upočasni)"
+    "message": "Poskusi dokončati vsako vrstico (slika se v gostih delih upočasni)"
   },
   "ttsCompleteHint": {
     "message": "Pri višjih hitrostih dolge vrstice pogosto izgubijo konec naslednji. Ko je to vklopljeno, se slika upočasni toliko, kolikor vrstica potrebuje — nikoli pod četrtino izbrane hitrosti — in v vrzelih dohiti. Medtem ko je slika tako močno upočasnjena, lastni zvok videa pade nižje od ravni, ki si jo nastavil, do tišine."

@@ -1094,7 +1094,7 @@
     "message": "La pista de subtítulos no ha llegado; se reintenta automáticamente. ¿Prisa? Recarga la página para intentarlo ya."
   },
   "ttsCompleteLabel": {
-    "message": "Terminar cada línea (la imagen se ralentiza en partes densas)"
+    "message": "Intentar terminar cada línea (la imagen se ralentiza en partes densas)"
   },
   "ttsCompleteHint": {
     "message": "A velocidades altas, las líneas largas suelen perder el final en la siguiente. Con esto activado, la imagen se ralentiza lo que necesite la línea — nunca por debajo de un cuarto de la velocidad elegida — y recupera el ritmo en los huecos. Mientras la imagen va tan lenta, el audio propio del vídeo baja más que el nivel que has indicado, hasta el silencio."

@@ -1142,7 +1142,7 @@
     "message": "A feliratsáv még nem érkezett meg — magától újra próbálja. Sietős? Frissítsd az oldalt, hogy most próbáld újra."
   },
   "ttsCompleteLabel": {
-    "message": "Minden sor végig (sűrű részeken lassul a kép)"
+    "message": "Lehetőleg minden sor végig (sűrű részeken lassul a kép)"
   },
   "ttsCompleteHint": {
     "message": "Nagyobb sebességnél a hosszú sorok végét gyakran elnyeli a következő. Ha ez be van kapcsolva, a kép annyit lassul, amennyit a sor kér — soha nem megy a választott sebességed negyede alá —, és a szünetekben behozza. Amíg a kép ennyire lassú, a videó saját hangja a beállított szintnél is lejjebb esik, csendig."

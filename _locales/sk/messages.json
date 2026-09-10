@@ -1142,7 +1142,7 @@
     "message": "Stopa titulkov nedorazila — skúša sa to automaticky znova. Ponáhľaš sa? Obnov stránku a skús to hneď."
   },
   "ttsCompleteLabel": {
-    "message": "Dokončiť každý riadok (obraz v hustých častiach spomalí)"
+    "message": "Skúsiť dokončiť každý riadok (obraz v hustých častiach spomalí)"
   },
   "ttsCompleteHint": {
     "message": "Pri vyšších rýchlostiach dlhé riadky často prídu o koniec v prospech nasledujúceho. Keď je to zapnuté, obraz spomalí, ako riadok potrebuje — nikdy pod štvrtinu zvolenej rýchlosti — a v medzerách sa zase dobehne. Kým je obraz takto silno spomalený, vlastný zvuk videa klesne nižšie ako úroveň, ktorú si nastavil, až k tichu."

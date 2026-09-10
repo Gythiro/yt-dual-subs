@@ -1142,7 +1142,7 @@
     "message": "La pista de subtítols no ha arribat — es reintenta automàticament. Tens pressa? Actualitza la pàgina per provar-ho ara."
   },
   "ttsCompleteLabel": {
-    "message": "Acaba cada línia (la imatge s'alenteix a les parts denses)"
+    "message": "Intenta acabar cada línia (la imatge s'alenteix a les parts denses)"
   },
   "ttsCompleteHint": {
     "message": "A velocitats altes, les línies llargues sovint perden la cua en la següent. Amb això activat, la imatge s'alenteix tant com necessita la línia — mai per sota d'un quart de la velocitat que has triat — i recupera el ritme als buits. Mentre la imatge va tan lenta, l'àudio del vídeo baixa més que el nivell que has indicat, fins al silenci."

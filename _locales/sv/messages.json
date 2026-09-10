@@ -1142,7 +1142,7 @@
     "message": "Undertextspåret har inte kommit — försöker igen automatiskt. Bråttom? Uppdatera sidan för att prova nu."
   },
   "ttsCompleteLabel": {
-    "message": "Läs varje rad till slut (bilden saktar i täta partier)"
+    "message": "Försök läsa varje rad till slut (bilden saktar i täta partier)"
   },
   "ttsCompleteHint": {
     "message": "I högre hastighet tappar långa rader ofta slutet till nästa. Med det här på saktar bilden in så mycket raden behöver — aldrig under en fjärdedel av den hastighet du valt — och tar igen det i luckorna. Medan bilden är så långsam sänks videons eget ljud längre än nivån du ställt in, ner till tystnad."

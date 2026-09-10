@@ -1142,7 +1142,7 @@
     "message": "Subtitru celiņš nav atnācis — automātiski mēģinu vēlreiz. Steidzies? Atsvaidzini lapu, lai mēģinātu tagad."
   },
   "ttsCompleteLabel": {
-    "message": "Pabeigt katru rindu (attēls palēninās blīvās vietās)"
+    "message": "Mēģināt pabeigt katru rindu (attēls palēninās blīvās vietās)"
   },
   "ttsCompleteHint": {
     "message": "Lielākā ātrumā garas rindas bieži zaudē asti nākamajai. Kad tas ir ieslēgts, attēls palēninās tik, cik rindai vajag — nekad zem ceturtdaļas no izvēlētā ātruma — un atstarpēs atgūst. Kamēr attēls ir tik palēnināts, paša video skaņa krīt zemāk par līmeni, ko iestati, līdz klusumam."

@@ -1094,7 +1094,7 @@
     "message": "La piste de sous-titres n’est pas arrivée — nouvel essai automatique. Pressé ? Actualisez la page pour réessayer tout de suite."
   },
   "ttsCompleteLabel": {
-    "message": "Terminer chaque ligne (l’image ralentit dans les passages denses)"
+    "message": "Essayer de terminer chaque ligne (l’image ralentit dans les passages denses)"
   },
   "ttsCompleteHint": {
     "message": "À plus haute vitesse, la fin des longues lignes est souvent coupée par la suivante. Avec cette option, l’image ralentit autant que la ligne l’exige — jamais en dessous d’un quart de la vitesse choisie — puis rattrape dans les silences. Tant que l’image est autant ralentie, le son original de la vidéo descend plus bas que le niveau que vous avez défini, jusqu’au silence."

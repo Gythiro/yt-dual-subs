@@ -1142,7 +1142,7 @@
     "message": "The subtitle track hasn't arrived — retrying automatically. In a hurry? Refresh the page to try again now."
   },
   "ttsCompleteLabel": {
-    "message": "Finish every line (the picture slows in dense parts)"
+    "message": "Try to finish every line (the picture slows in dense parts)"
   },
   "ttsCompleteHint": {
     "message": "At higher speeds long lines often lose their tail to the next one. With this on, the picture slows as much as the line needs — never below a quarter of your chosen speed — and catches back up in the gaps. While the picture is slowed that deep, the video's own audio drops further than the level you set, down to silence."

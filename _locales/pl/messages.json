@@ -1094,7 +1094,7 @@
     "message": "Ścieżka napisów nie dotarła — ponawiam automatycznie. W pośpiechu? Odśwież stronę, aby spróbować od razu."
   },
   "ttsCompleteLabel": {
-    "message": "Dokańczaj każdą linijkę (obraz zwalnia w gęstych partiach)"
+    "message": "Staraj się dokończyć każdą linijkę (obraz zwalnia w gęstych partiach)"
   },
   "ttsCompleteHint": {
     "message": "Przy wyższych prędkościach długie linijki często tracą końcówkę na rzecz następnej. Gdy ta opcja jest włączona, obraz zwalnia tyle, ile linijka potrzebuje — nigdy poniżej jednej czwartej wybranej prędkości — i nadrabia w przerwach. Gdy obraz jest tak mocno spowolniony, dźwięk samego filmu ścisza się bardziej niż poziom ustawiony przez Ciebie, aż do ciszy."

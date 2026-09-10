@@ -1142,7 +1142,7 @@
     "message": "Undertekstsporet er ikke kommet — prøver igen automatisk. Har du travlt? Opdater siden for at prøve nu."
   },
   "ttsCompleteLabel": {
-    "message": "Læs hver linje færdig (billedet sænkes i tætte partier)"
+    "message": "Prøv at læse hver linje færdig (billedet sænkes i tætte partier)"
   },
   "ttsCompleteHint": {
     "message": "Ved højere hastighed mister lange linjer ofte halen til den næste. Med dette slået til sænkes billedet så meget, linjen har brug for — aldrig under en fjerdedel af den hastighed, du har valgt — og indhenter det i hullerne. Mens billedet er sænket så dybt, falder videoens egen lyd længere ned end det niveau, du har sat, ned til stilhed."

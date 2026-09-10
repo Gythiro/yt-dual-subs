@@ -1142,7 +1142,7 @@
     "message": "Traka titlova nije stigla — automatski pokušavam ponovno. Žuriš? Osvježi stranicu da pokušaš odmah."
   },
   "ttsCompleteLabel": {
-    "message": "Dovrši svaki redak (slika uspori u gustim dijelovima)"
+    "message": "Pokušaj dovršiti svaki redak (slika uspori u gustim dijelovima)"
   },
   "ttsCompleteHint": {
     "message": "Na većim brzinama dugi retci često izgube kraj zbog sljedećeg. Kad je ovo uključeno, slika uspori koliko retku treba — nikad ispod četvrtine odabrane brzine — i u prazninama se sustigne. Dok je slika toliko usporena, vlastiti zvuk videa padne niže od razine koju odabereš, sve do tišine."

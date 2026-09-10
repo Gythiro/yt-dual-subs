@@ -1094,7 +1094,7 @@
     "message": "A trilha de legendas não chegou — tentando de novo automaticamente. Com pressa? Recarregue a página para tentar agora."
   },
   "ttsCompleteLabel": {
-    "message": "Terminar cada linha (a imagem desacelera nas partes densas)"
+    "message": "Tentar terminar cada linha (a imagem desacelera nas partes densas)"
   },
   "ttsCompleteHint": {
     "message": "Em velocidades mais altas, linhas longas costumam perder o final para a próxima. Com isso ligado, a imagem desacelera o quanto a linha precisa — nunca abaixo de um quarto da velocidade escolhida — e recupera o ritmo nos intervalos. Enquanto a imagem está tão lenta, o áudio do próprio vídeo cai além do nível que você definiu, até o silêncio."
