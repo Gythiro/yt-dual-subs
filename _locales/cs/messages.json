@@ -1013,7 +1013,7 @@
     "message": "Nejprve zapněte titulky, abyste mohli vytvořit shrnutí — shrnutí se tvoří ze stopy titulků."
   },
   "sumNeedKey": {
-    "message": "Shrnutí potřebuje vaši vlastní službu: poskytovatele s vaším klíčem, nebo lokální model na tomto počítači. Bezplatné služby jen překládají, neshrnují.",
+    "message": "Shrnutí potřebuje vaši vlastní službu: poskytovatele s vaším klíčem, nebo lokální model na tomto počítači. Bezplatné překladače jen překládají, neshrnují.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumConfigure": {

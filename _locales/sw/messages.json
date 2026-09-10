@@ -83,7 +83,7 @@
     "message": "Otomatiki (inapendekezwa)"
   },
   "backendTlang": {
-    "message": "Wimbo wa manukuu (YouTube)"
+    "message": "Mkondo wa manukuu (YouTube)"
   },
   "backendGtx": {
     "message": "Sentensi mahiri (Google)"
@@ -92,13 +92,13 @@
     "message": "Ufunguo wako (LLM / DeepL)"
   },
   "backendTipHtml": {
-    "message": "<b>Otomatiki</b>: hutumia tafsiri ya wimbo wa manukuu ya YouTube video inapoweza, na inabadilisha kwenda sentensi mahiri isipoweza.<br><b>Wimbo mzima</b>: tafsiri ya YouTube yenyewe; inalingana kipande kwa kipande. Matumizi mengi yanaweza kufanya YouTube uzuie kwa muda — kiendelezi husubiri na kuomba tena.<br><b>Sentensi mahiri</b>: huunda manukuu yaliyokatakata kuwa sentensi kamili, kisha huyatafsiri kupitia kiungo cha bure cha Google — maneno bora kuliko wimbo wa manukuu kwenye nyimbo zilizochafuka, lakini matumizi mengi yanaweza kuzuiliwa huko pia; kiendelezi hupunguza kasi na kujaribu tena.<br><b>Ufunguo wako</b>: hutuma sentensi iliyokusanywa kwa mtoa huduma uliyemweka."
+    "message": "<b>Otomatiki</b>: hutumia tafsiri ya mkondo wa manukuu ya YouTube video inapoweza, na inabadilisha kwenda sentensi mahiri isipoweza.<br><b>Mkondo mzima</b>: tafsiri ya YouTube yenyewe; inalingana kipande kwa kipande. Matumizi mengi yanaweza kufanya YouTube uzuie kwa muda — kiendelezi husubiri na kuomba tena.<br><b>Sentensi mahiri</b>: huunda manukuu yaliyokatakata kuwa sentensi kamili, kisha huyatafsiri kupitia kiungo cha bure cha Google — maneno bora kuliko mkondo wa manukuu kwenye mikondo iliyochafuka, lakini matumizi mengi yanaweza kuzuiliwa huko pia; kiendelezi hupunguza kasi na kujaribu tena.<br><b>Ufunguo wako</b>: hutuma sentensi iliyokusanywa kwa mtoa huduma uliyemweka."
   },
   "backendGtxHint": {
     "message": "Hutumia kiungo cha bure cha Google — matumizi mengi yanaweza kuzuiliwa kwa muda; kiendelezi hupunguza kasi na kujaribu tena chenyewe."
   },
   "backendStatusTlang": {
-    "message": "Video hii: tafsiri ya wimbo wa manukuu (YouTube)"
+    "message": "Video hii: tafsiri ya mkondo wa manukuu (YouTube)"
   },
   "backendStatusGtx": {
     "message": "Video hii: sentensi mahiri (Google)"
@@ -119,7 +119,7 @@
     "message": "Manukuu ya video hii tayari yako katika lugha yako ya tafsiri — hakuna cha kutafsiri."
   },
   "backendStatusNoTrack": {
-    "message": "Hakuna wimbo wa manukuu uliopatikana kwa video hii, kwa hiyo hakuna cha kuonyesha.",
+    "message": "Hakuna mkondo wa manukuu uliopatikana kwa video hii, kwa hiyo hakuna cha kuonyesha.",
     "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
   },
   "backendStatusNoVideo": {
@@ -273,10 +273,10 @@
     "message": "Manukuu yamepakuliwa"
   },
   "exportNoTrans": {
-    "message": "Hakuna tafsiri ya video hii — jaribu injini ya wimbo wa manukuu au lugha nyingine ya tafsiri."
+    "message": "Hakuna tafsiri ya video hii — jaribu injini ya mkondo wa manukuu au lugha nyingine ya tafsiri."
   },
   "exportLimited": {
-    "message": "YouTube inazuia tafsiri ya wimbo wa manukuu sasa — jaribu tena baada ya dakika. Badilisha \"Injini\" iwe \"Ufunguo wako\" na kadi ya kuhamisha itatoa kisanduku cha kuteua kinachopita kizuizi hicho."
+    "message": "YouTube inazuia tafsiri ya mkondo wa manukuu sasa — jaribu tena baada ya dakika. Badilisha \"Injini\" iwe \"Ufunguo wako mwenyewe\" na kadi ya kuhamisha inatoa alama ya kutiki inayozunguka hilo."
   },
   "exportNoCues": {
     "message": "Hakuna manukuu ya kupakua — cheza sekunde chache ili manukuu yapakie, kisha jaribu tena."
@@ -291,7 +291,7 @@
     "message": "Fungua maelezo ya toleo baada ya masasisho"
   },
   "trackWarnDubOnly": {
-    "message": "Tahadhari: video hii ina manukuu otomatiki ya dubu ya AI tu (hakuna wimbo wa lugha asili), kwa hiyo manukuu ya lugha mbili yanaweza kutolingana na sauti."
+    "message": "Tahadhari: video hii ina manukuu otomatiki ya dubu ya AI tu (hakuna mkondo wa lugha asili), kwa hiyo manukuu ya lugha mbili yanaweza kutolingana na sauti."
   },
   "whatsNewRow": {
     "message": "Tazama vipya vya v$VER$ →",
@@ -651,16 +651,16 @@
     "message": "Hakuna modeli iliyochaguliwa"
   },
   "exportUsesYouTube": {
-    "message": "Upakuaji hutumia tafsiri ya wimbo wa manukuu ya YouTube yenyewe — bila malipo, na hautumii ufunguo wako wa API."
+    "message": "Upakuaji hutumia tafsiri ya mkondo wa manukuu ya YouTube yenyewe — bila malipo, na hautumii ufunguo wako wa API."
   },
   "exportUseByo": {
     "message": "Tafsiri kwa ufunguo wangu (ulinganifu bora, inatumia mgao)"
   },
   "exportByoNote": {
-    "message": "Wimbo wa manukuu utatafsiriwa na mtoa huduma wako kwa ufunguo wako. Utaona makisio kabla ya kitu chochote kutumwa."
+    "message": "Mkondo wa manukuu utatafsiriwa na mtoa huduma wako kwa ufunguo wako. Utaona makisio kabla ya kitu chochote kutumwa."
   },
   "exportConfirm": {
-    "message": "Tafsiri mistari $N$ ya manukuu kwa $NAME$ — takriban maombi $REQ$ dhidi ya mgao wako. Wimbo wa manukuu unaondoka kivinjari chako kwenda kwa mtoa huduma huyo; wakati wa kucheza, sehemu unazotazama tu ndizo zinazotumwa.",
+    "message": "Tafsiri mistari $N$ ya manukuu kwa $NAME$ — takriban maombi $REQ$ dhidi ya mgao wako. Mkondo wa manukuu unaondoka kivinjari chako kwenda kwa mtoa huduma huyo; wakati wa kucheza, sehemu unazotazama tu ndizo zinazotumwa.",
     "placeholders": {
       "name": {
         "content": "$1"
@@ -777,7 +777,7 @@
     "message": "Je, video hii ina manukuu hata kidogo? Jaribu kitufe cha CC kwenye kichezaji: bila asili hakuna cha kutafsiri."
   },
   "troubleStep3": {
-    "message": "Jaribu video maarufu. Ikiwa nyingine zinafanya kazi na hii peke yake haifanyi, mara nyingi ni wimbo wa manukuu wa video hii."
+    "message": "Jaribu video maarufu. Ikiwa nyingine zinafanya kazi na hii peke yake haifanyi, mara nyingi ni mkondo wa manukuu wa video hii."
   },
   "troubleDiagHint": {
     "message": "Bado umekwama? Bandika taarifa ya uchunguzi kwenye barua pepe au suala — inabeba toleo, hali ya injini na kile kichupo cha sasa kinachofanya, jambo linalookoa mizunguko miwili."
@@ -1040,11 +1040,11 @@
     "description": "aria-label of the summary panel's close button."
   },
   "sumEmpty": {
-    "message": "Video hii haina wimbo wa manukuu unaofaa.",
+    "message": "Video hii haina mkondo wa manukuu unaofaa.",
     "description": "Summary panel: the video has no subtitle track to summarize."
   },
   "sumNeedSubs": {
-    "message": "Washa tena manukuu ili ufanye muhtasari — muhtasari unatengenezwa kutoka wimbo wa manukuu."
+    "message": "Washa tena manukuu ili ufanye muhtasari — muhtasari unatengenezwa kutoka mkondo wa manukuu."
   },
   "sumNeedKey": {
     "message": "Muhtasari unahitaji huduma yako: mtoa huduma yeyote aliye na ufunguo wako kwenye paneli ya tafsiri, au modeli ya ndani kwenye kompyuta hii. Injini za bure hutafsiri tu. Hazifanyi muhtasari.",
@@ -1066,7 +1066,7 @@
     "description": "Summary panel: generic failure line."
   },
   "sumConfirm": {
-    "message": "Hii itatuma wimbo wa manukuu kwa $PROVIDER$, katika sehemu $PARTS$, kwa mgao wako.",
+    "message": "Hii itatuma mkondo wa manukuu kwa $PROVIDER$, katika sehemu $PARTS$, kwa mgao wako.",
     "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
     "placeholders": {
       "provider": {
@@ -1139,7 +1139,7 @@
     }
   },
   "statusTrackRetry": {
-    "message": "Wimbo wa manukuu haujafika — inajaribu tena chenyewe. Una haraka? Onyesha upya ukurasa kujaribu sasa."
+    "message": "Mkondo wa manukuu haujafika — inajaribu tena chenyewe. Una haraka? Onyesha upya ukurasa kujaribu sasa."
   },
   "ttsCompleteLabel": {
     "message": "Maliza kila mstari (picha hupungua kasi sehemu zenye msongamano)"
