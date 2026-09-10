@@ -285,11 +285,17 @@ function tag(err, props) {
 // user's LLM had answered.
 function cacheNs() {
   if (cfg.engine !== "byo") return "gtx";
-  // The address belongs in here for the same reason the model does: a custom
-  // endpoint moved from one server to another is a different translator, and
-  // the entries already in the cache were written by the old one.
+  // The address and the platform belong in here for the same reason the model
+  // does: a custom endpoint moved to another server is a different translator,
+  // and so is the same provider's other platform — separate accounts, separate
+  // answers. Everything already cached was written by the old one.
+  // The site as well as the address: a provider with two platforms answers
+  // from two separate accounts, and the requests already go to the right one.
+  // Leaving it out of the namespace meant switching platform served back what
+  // the other one had said.
   return "byo:" + (cfg.byoProvider || "-") + ":" + (cfg.byoModel || "-") +
-    ":" + (cfg.byoBaseUrl || "-");
+    ":" + (cfg.byoBaseUrl || "-") +
+    ":" + (((cfg.byoSiteBy || {})[cfg.byoProvider]) || "-");
 }
 
 function cacheGet(key) {
@@ -1531,8 +1537,10 @@ function keyForTts(providerId) {
 // The upper bound on one synthesis request. Deliberately generous: the point
 // is to stop a hung socket from owning the "Testing…" button (and, later, the
 // lane) until the worker is killed — not to give up on a slow provider.
-// The free endpoint answers in well under a second when it answers at all, so
-// this is a "something is wrong" line rather than a budget: past it, falling
+//
+// Below it, a separate one for the free translate endpoint. That one answers
+// in well under a second when it answers at all, so its line is "something is
+// wrong" rather than a budget: past it, falling
 // back to YouTube's own translation beats waiting.
 const GTX_TIMEOUT_MS = 12000;
 const BYO_TIMEOUT_MS = 45000;   // one translate/chat call; generous, because a
@@ -2277,7 +2285,12 @@ async function ttsModels(providerId) {
   if (!p.listModels) return { models: [], listable: false };
   const base = (t.baseUrl || "").replace(/\/+$/, "");
   if (!base) return { models: [], listable: false };
-  const headers = t.key ? { Authorization: "Bearer " + t.key } : {};
+  // ElevenLabs authenticates with its own header, the way synthesis and the
+  // voice list on this same provider already do. Sending it a Bearer token
+  // reaches the right address and is refused there — which is the fault the
+  // path fix above was meant to end, arriving one line later.
+  const headers = !t.key ? {}
+    : (p.keyHeader ? { [p.keyHeader]: t.key } : { Authorization: "Bearer " + t.key });
   let res;
   try {
     // Most of these are OpenAI-compatible servers whose address already ends

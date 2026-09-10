@@ -931,6 +931,9 @@
       // hanging "/models" off the bare host is a 404, so the "your model has
       // been retired" notice could never fire for this provider.
       modelsPath: "/v1/models",
+      // …and its own header. Every other listable speech provider here is
+      // OpenAI-compatible and takes a Bearer token; this one refuses that.
+      keyHeader: "xi-api-key",
       baseUrl: "https://api.elevenlabs.io",
       origin: "https://api.elevenlabs.io",
       // Multilingual v2 is the default on purpose: v3 speaks more languages

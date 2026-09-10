@@ -276,7 +276,7 @@
     "message": "Šim video nav tulkojuma — pamēģini visa celiņa Engine vai citu tulkojuma valodu."
   },
   "exportLimited": {
-    "message": "YouTube pašlaik ierobežo visa celiņa tulkojumu — pamēģini pēc minūtes. Ar iestatītu savu atslēgu eksporta karte piedāvā ķeksīti, kas to apej."
+    "message": "YouTube pašlaik ierobežo visa celiņa tulkojumu — pamēģini pēc minūtes. Pārslēdz „Engine“ uz „Sava atslēga“, un eksporta karte piedāvā ķeksīti, kas to apej."
   },
   "exportNoCues": {
     "message": "Nav subtitru lejupielādei — atskaņo dažas sekundes, lai subtitri ielādētos, tad mēģini vēlreiz."

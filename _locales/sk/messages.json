@@ -276,7 +276,7 @@
     "message": "Pre toto video nie je preklad — skús prekladač Celá stopa alebo iný jazyk prekladu."
   },
   "exportLimited": {
-    "message": "YouTube teraz obmedzuje preklad celej stopy — skús to o minútu znova. S nastaveným vlastným kľúčom ponúka karta exportu zaškrtnutie, ktoré to obíde."
+    "message": "YouTube teraz obmedzuje preklad celej stopy — skús to o minútu znova. Prepni „Prekladač“ na „Vlastný kľúč“ a karta exportu ponúkne zaškrtnutie, ktoré to obíde."
   },
   "exportNoCues": {
     "message": "Žiadne titulky na stiahnutie — prehraj pár sekúnd, nech sa titulky načítajú, a skús to znova."

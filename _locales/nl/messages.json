@@ -276,7 +276,7 @@
     "message": "Geen vertaling voor deze video — probeer de engine Heel spoor of een andere vertaaltaal."
   },
   "exportLimited": {
-    "message": "YouTube beperkt nu de vertaling van het hele spoor — over een minuut opnieuw proberen. Met je eigen sleutel erin biedt de exportkaart een vinkje dat eromheen gaat."
+    "message": "YouTube beperkt nu de vertaling van het hele spoor — over een minuut opnieuw proberen. Zet \"Engine\" op \"Je eigen sleutel\" en de exportkaart biedt een vinkje dat eromheen gaat."
   },
   "exportNoCues": {
     "message": "Geen downloadbare ondertitels — speel een paar seconden zodat de captions laden, en probeer opnieuw."

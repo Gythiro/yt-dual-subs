@@ -276,7 +276,7 @@
     "message": "Šiam vaizdo įrašui vertimo nėra — pabandyk viso takelio Engine arba kitą vertimo kalbą."
   },
   "exportLimited": {
-    "message": "YouTube dabar riboja viso takelio vertimą — pabandyk po minutės. Su nustatytu savu raktu eksporto kortelė siūlo varnelę, kuri tai apeina."
+    "message": "YouTube dabar riboja viso takelio vertimą — pabandyk po minutės. Pakeisk „Engine“ į „Savas raktas“ ir eksporto kortelėje atsiras varnelė, kuri tai apeina."
   },
   "exportNoCues": {
     "message": "Nėra subtitrų atsisiuntimui — paleisk kelias sekundes, kad subtitrai įsikeltų, tada bandyk vėl."

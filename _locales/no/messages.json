@@ -276,7 +276,7 @@
     "message": "Ingen oversettelse for denne videoen — prøv motoren Hele sporet eller et annet oversettelsesspråk."
   },
   "exportLimited": {
-    "message": "YouTube begrenser oversettelse av hele sporet akkurat nå — prøv igjen om et minutt. Med din egen nøkkel satt opp, tilbyr eksportkortet et avkrysningsfelt som går utenom."
+    "message": "YouTube begrenser oversettelse av hele sporet akkurat nå — prøv igjen om et minutt. Bytt \"Motor\" til \"Din egen nøkkel\", så tilbyr eksportkortet et avkrysningsfelt som går utenom."
   },
   "exportNoCues": {
     "message": "Ingen undertekster å laste ned — spill noen sekunder så undertekstene lastes, og prøv igjen."
@@ -714,7 +714,7 @@
     "message": "Nettsted"
   },
   "ftFeedbackLabel": {
-    "message": "Tilbakemelding"
+    "message": "Feedback"
   },
   "ftReviewLabel": {
     "message": "Vurder"

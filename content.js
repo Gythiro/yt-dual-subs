@@ -1481,13 +1481,6 @@
         tsub("sumFailedPart", [String(failedParts)], "有 $1$ 段没能总结，以上是其余部分。")));
     }
   }
-  // The refusals worth naming here. Each of these four already has a sentence
-  // in every language on the translate side, each is self-contained (none of
-  // them names a field or a button this panel does not have), and each is
-  // something the reader can act on. "Try again later" stays for the one code
-  // it is actually true of — rate limiting — and for anything unrecognised:
-  // said over a rejected key or an empty account it sent the reader back to
-  // press the same button on the same broken setup.
   // The refusals worth naming here. Each already has a sentence in every
   // language on the translate side, each is self-contained (none names a field
   // or a button this panel does not have), and each is something the reader

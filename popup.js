@@ -218,12 +218,11 @@ function setKey(key, val) {
 }
 
 // ---- live preview (mirrors content.js styleOverlay) ----------------------
-// The sample translation is in the interface language — except in English,
-// whose sample is Spanish, since the original line is English. With English
-// as the target the dropdown and the preview then disagreed, so the translation
-// line shows the original's words instead: same language, which is exactly
-// what the overlay shows on such a track. (Named here, above paintPreview,
-// because `t` is an element inside it.)
+// English as the target is its own case: the original line IS English, so the
+// translation line shows the original's words rather than a translation of
+// them — which is exactly what the overlay shows on such a track, and what
+// stops the dropdown and the preview disagreeing. (Named here, above
+// paintPreview, because `t` is an element inside it.)
 // Which packaged locale holds a language's own strings. Target codes and
 // locale folder names agree except where Chrome's list spells them
 // differently, and a target we ship no strings for simply has no entry.
@@ -242,11 +241,11 @@ function sampleLocaleFor(lang) {
 // ship one (an extension page may read its own packaged files, no permission
 // involved) and falls back to the interface language for a target we have no
 // strings for.
-let targetSample = { lang: "", trans: "" };
+let targetSample = { lang: "", trans: "", pending: false };
 function loadTargetSample(lang) {
   const loc = sampleLocaleFor(lang);
   if (!loc || targetSample.lang === lang) return;
-  targetSample = { lang, trans: "" };            // claim it before the round trip
+  targetSample = { lang, trans: "", pending: true };   // claim it before the round trip
   let url = "";
   try { url = chrome.runtime.getURL("_locales/" + loc + "/messages.json"); }
   catch (_e) { return; }
@@ -256,15 +255,22 @@ function loadTargetSample(lang) {
       const msg = tbl && tbl.sampleTrans && tbl.sampleTrans.message;
       if (!msg || targetSample.lang !== lang) return;   // a newer target won
       targetSample.trans = String(msg);
+      targetSample.pending = false;
       paintPreview();
     })
-    .catch(() => { /* the interface language's sample stands */ });
+    .catch(() => { targetSample.pending = false; paintPreview(); });
 }
-const previewSample = () => ({
-  orig: t("sampleOrig", "The quick brown fox"),
-  trans: (targetSample.lang === state.targetLang && targetSample.trans) ||
-    t("sampleTrans", "敏捷的棕色狐狸")
-});
+const previewSample = () => {
+  const mine = targetSample.lang === state.targetLang;
+  // While the target's own sample is on its way, keep whatever is on screen
+  // rather than painting the interface language's line for a moment and then
+  // replacing it: an English interface picking Chinese would flash a Spanish
+  // line, which is exactly the "did that take?" this change is here to end.
+  const trans = mine
+    ? (targetSample.trans || (targetSample.pending ? "" : t("sampleTrans", "敏捷的棕色狐狸")))
+    : t("sampleTrans", "敏捷的棕色狐狸");
+  return { orig: t("sampleOrig", "The quick brown fox"), trans };
+};
 function paintPreview() {
   const ov = $("prevOverlay"), o = $("prevOrig"), t = $("prevTrans");
   if (!ov || !o || !t) return;
@@ -286,7 +292,12 @@ function paintPreview() {
   const tl = t.lang.toLowerCase();
   loadTargetSample(state.targetLang);
   const sample = previewSample();
-  t.textContent = (tl === "en" || tl.indexOf("en-") === 0) ? sample.orig : sample.trans;
+  const next = (tl === "en" || tl.indexOf("en-") === 0) ? sample.orig : sample.trans;
+  // An empty answer means the target's own sample is still on its way: leave
+  // what is on screen rather than blanking the line or flashing the interface
+  // language's sentence in the gap. On the first paint there is nothing to
+  // keep, so the markup's own line stands until the real one lands.
+  if (next) t.textContent = next;
 
   t.style.fontFamily = fontStack(state.transFont);
   t.style.fontSize = Math.max(9, Math.round(state.transSize / 2)) + "px";
@@ -452,8 +463,14 @@ async function paintEngineStatus() {
   // vanish on a video where summarising still works, which is exactly when
   // someone reaches for it.
   const tab = await getActiveTab();
+  // With a deadline. This ask now runs BEFORE the two lines that used to
+  // return early, so a content script that is alive but busy — which never
+  // calls back and never sets lastError — would hold the whole status line,
+  // and the rate-limit warning that used to be painted without asking anyone
+  // would stop appearing at all. 900ms: a tab that has not answered by then
+  // has nothing to say that is worth the silence.
   const r = (tab && tab.id != null)
-    ? await sendToTab(tab.id, { type: "engineStatus" })
+    ? await sendToTab(tab.id, { type: "engineStatus" }, 900)
     : null;
   if (r && r.ok) noteTabLang(r.lang);
   paintSumBtn(r);

@@ -276,7 +276,7 @@
     "message": "Ingen översättning för den här videon — prova motorn Helspår eller ett annat översättningsspråk."
   },
   "exportLimited": {
-    "message": "YouTube stryper just nu översättning av hela spår — prova igen om en minut. Med en egen nyckel inställd finns en kryssruta på exportkortet som går runt det."
+    "message": "YouTube stryper just nu översättning av hela spår — prova igen om en minut. Byt \"Motor\" till \"Egen nyckel\" så erbjuder exportkortet en kryssruta som går runt det."
   },
   "exportNoCues": {
     "message": "Inga undertexter att ladda ner — spela några sekunder så att de laddas, och prova sen igen."

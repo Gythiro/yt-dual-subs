@@ -276,7 +276,7 @@
     "message": "No hi ha traducció per a aquest vídeo — prova el motor de pista completa o una altra llengua de traducció."
   },
   "exportLimited": {
-    "message": "YouTube està limitant ara la traducció de pista completa — torna-ho a provar d'aquí a un minut. Amb la teva clau configurada, la targeta d'exportació ofereix una casella que ho evita."
+    "message": "YouTube està limitant ara la traducció de pista completa — torna-ho a provar d'aquí a un minut. Canvia el «Motor» a «Clau pròpia» i la targeta d'exportació ofereix una casella que ho evita."
   },
   "exportNoCues": {
     "message": "No hi ha subtítols per descarregar — reprodueix uns quants segons perquè es carreguin i torna-ho a provar."

@@ -276,7 +276,7 @@
     "message": "Walang pagsasalin para sa video na 'to — subukan ang Buong-track na engine o ibang wika ng pagsasalin."
   },
   "exportLimited": {
-    "message": "Pinagbabawalan muna ng YouTube ang buong-track na pagsasalin ngayon — subukan ulit sa loob ng isang minuto. Kung naka-set ang sarili mong key, may tsek sa export card na umiiwas dito."
+    "message": "Pinagbabawalan muna ng YouTube ang buong-track na pagsasalin ngayon — subukan ulit sa loob ng isang minuto. Ilipat ang \"Engine\" sa \"Sarili mong key\" at magkakaroon ng tsek sa export card na umiiwas dito."
   },
   "exportNoCues": {
     "message": "Walang ma-download na subtitle — i-play ng ilang segundo para mag-load ang mga caption, tapos subukan ulit."

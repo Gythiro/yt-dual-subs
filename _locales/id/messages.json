@@ -276,7 +276,7 @@
     "message": "Tidak ada terjemahan untuk video ini — coba engine Trek utuh atau bahasa terjemahan lain."
   },
   "exportLimited": {
-    "message": "YouTube sedang membatasi terjemahan trek utuh — coba lagi dalam satu menit. Kalau kunci kamu sudah disetel, kartu ekspor punya centang yang melewatinya."
+    "message": "YouTube sedang membatasi terjemahan trek utuh — coba lagi dalam satu menit. Ganti \"Engine\" ke \"Kunci kamu\" dan kartu ekspor akan menampilkan centang yang melewatinya."
   },
   "exportNoCues": {
     "message": "Tidak ada subtitle yang bisa diunduh — putar beberapa detik supaya caption termuat, lalu coba lagi."

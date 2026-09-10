@@ -827,9 +827,15 @@ function withSetup(btn, busyLabel, onError, run, adopt) {
   const proceed = () => {
     // Remembered before anything is written, and only when this press is the
     // kind that adopts a provider (asking for a model list is not).
-    byoInUseBeforeTest = adopt === false ? null : {
-      provider: state.byoProvider, model: state.byoModel, baseUrl: state.byoBaseUrl
-    };
+    // Only a press that adopts a provider takes this snapshot. Asking for a
+    // model list must not CLEAR one either: its button stays live while a test
+    // is in flight, and clearing the snapshot there left a failed test with
+    // nothing to put back.
+    if (adopt !== false) {
+      byoInUseBeforeTest = {
+        provider: state.byoProvider, model: state.byoModel, baseUrl: state.byoBaseUrl
+      };
+    }
     (adopt === false ? persistForProvider(pl) : persist(pl))
       .then(() => run(pl))
       // A rejection here would otherwise be swallowed and read as a no-op.

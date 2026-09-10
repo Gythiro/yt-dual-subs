@@ -276,7 +276,7 @@
     "message": "Ingen oversættelse til denne video — prøv motoren Helspor eller et andet oversættelsessprog."
   },
   "exportLimited": {
-    "message": "YouTube begrænser lige nu oversættelse af hele spor — prøv igen om et minut. Med en egen nøgle sat op har eksportkortet et flueben, der går uden om det."
+    "message": "YouTube begrænser lige nu oversættelse af hele spor — prøv igen om et minut. Skift \"Motor\" til \"Egen nøgle\", så har eksportkortet et flueben, der går uden om det."
   },
   "exportNoCues": {
     "message": "Ingen undertekster at hente — afspil et par sekunder, så de indlæses, og prøv så igen."
@@ -714,7 +714,7 @@
     "message": "Websted"
   },
   "ftFeedbackLabel": {
-    "message": "Tilbagemelding"
+    "message": "Feedback"
   },
   "ftReviewLabel": {
     "message": "Bedøm"

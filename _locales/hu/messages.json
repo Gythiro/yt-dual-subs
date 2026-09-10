@@ -276,7 +276,7 @@
     "message": "Ehhez a videóhoz nincs fordítás — próbáld a Teljes sáv motort vagy másik fordítási nyelvet."
   },
   "exportLimited": {
-    "message": "A YouTube most korlátozza a teljes sávos fordítást — próbáld újra egy perc múlva. Saját kulccsal az exportkártyán van egy pipa, ami kikerüli ezt."
+    "message": "A YouTube most korlátozza a teljes sávos fordítást — próbáld újra egy perc múlva. Állítsd a „Motor”-t „Saját kulcs”-ra, és az exportkártyán megjelenik egy pipa, ami kikerüli ezt."
   },
   "exportNoCues": {
     "message": "Nincs letölthető felirat — játssz néhány másodpercet, hogy betöltődjenek, aztán próbáld újra."

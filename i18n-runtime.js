@@ -41,6 +41,34 @@
     th: "ไทย",
     tr: "Türkçe",
     vi: "Tiếng Việt",
+    // Added with the twenty-four that came in 2026-09-11. A language is only
+    // pickable if it is named here, so a locale folder without a line in this
+    // table ships strings nobody can reach: the picker went on offering the
+    // original twenty while forty-four were installed.
+    bg: "Български",
+    bn: "বাংলা",
+    ca: "Català",
+    da: "Dansk",
+    el: "Ελληνικά",
+    fil: "Filipino",
+    hi: "हिन्दी",
+    hr: "Hrvatski",
+    hu: "Magyar",
+    id: "Bahasa Indonesia",
+    lt: "Lietuvių",
+    lv: "Latviešu",
+    mr: "मराठी",
+    ms: "Bahasa Melayu",
+    nl: "Nederlands",
+    no: "Norsk",
+    sk: "Slovenčina",
+    sl: "Slovenščina",
+    sr: "Српски",
+    sv: "Svenska",
+    sw: "Kiswahili",
+    ta: "தமிழ்",
+    te: "తెలుగు",
+    uk: "Українська",
   };
 
   let manual = "";      // "" = auto (chrome.i18n decides)

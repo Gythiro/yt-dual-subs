@@ -276,7 +276,7 @@
     "message": "Za ovaj video nema prijevoda — pokušaj mehanizam Cijela traka ili drugi jezik prijevoda."
   },
   "exportLimited": {
-    "message": "YouTube trenutačno ograničava prijevod cijele trake — pokušaj za minutu. S postavljenim vlastitim ključem kartica izvoza nudi kvačicu koja to zaobilazi."
+    "message": "YouTube trenutačno ograničava prijevod cijele trake — pokušaj za minutu. Prebaci „Mehanizam” na „Vlastiti ključ” i kartica izvoza nudi kvačicu koja to zaobilazi."
   },
   "exportNoCues": {
     "message": "Nema titlova za preuzimanje — pusti par sekundi da se titlovi učitaju, pa pokušaj ponovno."

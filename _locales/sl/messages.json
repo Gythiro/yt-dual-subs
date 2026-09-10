@@ -276,7 +276,7 @@
     "message": "Za ta video ni prevoda — poskusi prevajalnik Celotna steza ali drug jezik prevoda."
   },
   "exportLimited": {
-    "message": "YouTube trenutno omejuje prevod celotne steze — poskusi spet čez minuto. Če imaš nastavljen lastni ključ, kartica izvoza ponudi kljukico, ki to obide."
+    "message": "YouTube trenutno omejuje prevod celotne steze — poskusi spet čez minuto. Preklopi »Prevajalnik« na »Lastni ključ« in kartica izvoza ponudi kljukico, ki to obide."
   },
   "exportNoCues": {
     "message": "Ni podnapisov za prenos — predvajaj nekaj sekund, da se naložijo, in poskusi znova."
@@ -714,7 +714,7 @@
     "message": "Splet"
   },
   "ftFeedbackLabel": {
-    "message": "Povratne informacije"
+    "message": "Odziv"
   },
   "ftReviewLabel": {
     "message": "Ocena"
