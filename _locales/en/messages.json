@@ -1047,7 +1047,7 @@
     "message": "Turn the subtitles back on to summarize — the summary is built from the subtitle track."
   },
   "sumNeedKey": {
-    "message": "Summaries need a service of your own: any provider with your key in the translation pane, or a local model on this machine. The free engines only translate. They don't summarize.",
+    "message": "Summaries need a service of your own: any provider with your key in the Translation service pane, or a local model on this machine. The free engines only translate. They don't summarize.",
     "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
   },
   "sumConfigure": {
