@@ -197,7 +197,7 @@
     "message": "Opacidade do contorno"
   },
   "resetAll": {
-    "message": "Redefinir tudo"
+    "message": "Redefinir configurações"
   },
   "resetConfirmText": {
     "message": "Isso apaga todas as configurações, as chaves de API salvas neste computador e o modelo e a voz lembrados de cada provedor, e reativa as dicas da primeira execução. Os domínios de provedor que você já autorizou continuam autorizados, assim como os arquivos de fonte importados.",
