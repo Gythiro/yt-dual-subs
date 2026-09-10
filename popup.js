@@ -403,6 +403,20 @@ async function paintEngineStatus() {
   el.hidden = true;
   el.classList.remove("warn");
 
+  // Ask the page what it is BEFORE the status line's early returns. The
+  // summary button answers one question — "does this page have a player" —
+  // and that answer has nothing to do with how translation is going, but it
+  // was being painted at the bottom of this function, past two returns. A
+  // rate-limited engine or a failing own-key engine therefore made the button
+  // vanish on a video where summarising still works, which is exactly when
+  // someone reaches for it.
+  const tab = await getActiveTab();
+  const r = (tab && tab.id != null)
+    ? await sendToTab(tab.id, { type: "engineStatus" })
+    : null;
+  if (r && r.ok) noteTabLang(r.lang);
+  paintSumBtn(r);
+
   const onByo = state.engine === "byo";
   let limited = false;
   let byoCode = "";
@@ -434,11 +448,7 @@ async function paintEngineStatus() {
     return;
   }
 
-  const tab = await getActiveTab();
   if (!tab || tab.id == null) return;
-  const r = await sendToTab(tab.id, { type: "engineStatus" });
-  if (r && r.ok) noteTabLang(r.lang);
-  paintSumBtn(r);
   if (!r || !r.ok) return;                  // not a YouTube video page
 
   // The caption track itself is missing and the recovery loop is on it. This
@@ -682,8 +692,16 @@ function skipWhyText(code) {
   // key deleted: zero synthesis requests, and the card said the provider had
   // refused three of them.
   if (code === "noKey" || code === "noProvider" || code === "noPerm" ||
-      code === "badBaseUrl" || code === "noModel") {
+      code === "badBaseUrl" || code === "noModel" || code === "noRegion") {
     return t("ttsSkipNotSet", "这台电脑上还没配好");
+  }
+  // Also refused at our own door, but not for want of setting up: this
+  // provider has no voice for the language being read (Chirp 3 and Qwen-TTS
+  // each speak a short list). Saying "not set up" would send someone to fix a
+  // key that is fine, and saying the provider refused would be the same lie as
+  // above — the request was never made.
+  if (code === "unsupportedTarget") {
+    return t("ttsSkipNoVoice", "这家没有这门语言的音色");
   }
   // Everything else is a provider's own refusal code (429, quota, auth…).
   // These used to map to the empty string, so the reader saw a bare
@@ -2284,7 +2302,11 @@ function wire() {
   // Bare handlers: a click event as the first argument must not be mistaken
   // for a hash.
   $("openOptions").addEventListener("click", () => toOptions());
-  $("byoConfigure").addEventListener("click", () => toOptions());
+  // …and this one names its pane. Without the hash it calls openOptionsPage(),
+  // which FOCUSES a settings tab that is already open — leaving the reader on
+  // whichever pane they last used (fonts, About) after pressing Configure on
+  // the translation card.
+  $("byoConfigure").addEventListener("click", () => toOptions("#setup"));
   const pick = $("byoPick");
   if (pick) pick.addEventListener("change", onPickProvider);
 

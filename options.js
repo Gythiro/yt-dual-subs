@@ -343,7 +343,11 @@ function renderModelField(p) {
   input.placeholder = t("byoModelRequired", "必填：模型名");
 
   if (!choices.length) {
-    showModelMsg(t("optNoModelsYet", "还没有模型列表——用你的 Key 拉一份，或者直接手填。"), null);
+    // A provider with no key field must not be told to use one. The button
+    // beside this line already switches label the same way.
+    showModelMsg(p.noKey
+      ? t("optNoModelsYetNoKey", "还没有模型列表——拉一份，或者直接手填。")
+      : t("optNoModelsYet", "还没有模型列表——用你的 Key 拉一份，或者直接手填。"), null);
   }
 }
 
@@ -767,6 +771,30 @@ function sendToBackground(msg) {
 // it inherits legality from a t() still open in its lookback window, so adding
 // an unrelated function nearby turned two long-standing strings into findings.
 // A string that has to be near something else to be correct is not correct.
+// What the extension is translating with at the moment Save-and-test is
+// pressed. The configuration has to be written before the worker can probe it,
+// so a refusal used to leave the reader pointed at the provider that just
+// refused them — subtitles stop on the video they were watching, and nothing
+// on screen connects the two. The read-aloud pane has put the engine back
+// since it shipped; this is the same bargain on this side. The key stays
+// saved either way: someone who switches back should not have to paste it.
+let byoInUseBeforeTest = null;
+function restoreByoAfterFailedTest(pl) {
+  const before = byoInUseBeforeTest;
+  byoInUseBeforeTest = null;
+  if (!before || !before.provider) return;
+  if (before.provider === pl.provider.id) return;      // it was already this one
+  state.byoProvider = before.provider;
+  state.byoModel = before.model;
+  state.byoBaseUrl = before.baseUrl;
+  chrome.storage.sync.set({
+    byoProvider: before.provider,
+    byoModel: before.model,
+    byoBaseUrl: before.baseUrl
+  });
+  renderList();
+}
+
 function withSetup(btn, busyLabel, onError, run, adopt) {
   const pl = plan();
   if (pl.error) { onError(pl.error); return; }
@@ -797,6 +825,11 @@ function withSetup(btn, busyLabel, onError, run, adopt) {
   const done = () => { btn.disabled = false; btn.textContent = label; };
 
   const proceed = () => {
+    // Remembered before anything is written, and only when this press is the
+    // kind that adopts a provider (asking for a model list is not).
+    byoInUseBeforeTest = adopt === false ? null : {
+      provider: state.byoProvider, model: state.byoModel, baseUrl: state.byoBaseUrl
+    };
     (adopt === false ? persistForProvider(pl) : persist(pl))
       .then(() => run(pl))
       // A rejection here would otherwise be swallowed and read as a no-op.
@@ -830,11 +863,13 @@ async function runTest(pl) {
     if (resp && resp.ok) {
       const sample = String(resp.sample || "").slice(0, 60);
       markVerified(pl.provider.id, true);
+      byoInUseBeforeTest = null;          // it worked: this IS the one in use now
       renderList();
       showMsg(tsub("byoTestOk", [sample], "连接成功：" + sample), "ok");
       freshenModels(pl.provider);
     } else {
       markVerified(pl.provider.id, false);
+      restoreByoAfterFailedTest(pl);
       showMsg(testErrText(resp && resp.code, pl.provider), "err", resp && resp.detail);
     }
   } finally {
