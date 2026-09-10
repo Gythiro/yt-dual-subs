@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Manukuu ya lugha mbili kwa YouTube — asili na tafsiri katika safu moja isiyopishana."
+  },
+  "headerSub": {
+    "message": "YouTube™ · safu moja"
+  },
+  "disclaimer": {
+    "message": "Haihusiani na YouTube wala Google."
+  },
+  "enableTitle": {
+    "message": "Washa / zima"
+  },
+  "openOptions": {
+    "message": "Mipangilio"
+  },
+  "enableAria": {
+    "message": "Washa kiendelezi"
+  },
+  "previewTag": {
+    "message": "Hakiki"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Mbweha kahawia mwepesi"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "bora kwa Kichina",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Sauti za kivinjari chako (bila malipo)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (ya ndani)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Hakiki hai"
+  },
+  "secTranslation": {
+    "message": "Tafsiri"
+  },
+  "targetLang": {
+    "message": "Lugha ya tafsiri"
+  },
+  "backendLabel": {
+    "message": "Injini"
+  },
+  "backendInfo": {
+    "message": "Maelezo ya injini"
+  },
+  "backendAuto": {
+    "message": "Otomatiki (inapendekezwa)"
+  },
+  "backendTlang": {
+    "message": "Wimbo wa manukuu (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Sentensi mahiri (Google)"
+  },
+  "backendByo": {
+    "message": "Ufunguo wako (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Otomatiki</b>: hutumia tafsiri ya wimbo wa manukuu ya YouTube video inapoweza, na inabadilisha kwenda sentensi mahiri isipoweza.<br><b>Wimbo mzima</b>: tafsiri ya YouTube yenyewe; inalingana kipande kwa kipande. Matumizi mengi yanaweza kufanya YouTube uzuie kwa muda — kiendelezi husubiri na kuomba tena.<br><b>Sentensi mahiri</b>: huunda manukuu yaliyokatakata kuwa sentensi kamili, kisha huyatafsiri kupitia kiungo cha bure cha Google — maneno bora kuliko wimbo wa manukuu kwenye nyimbo zilizochafuka, lakini matumizi mengi yanaweza kuzuiliwa huko pia; kiendelezi hupunguza kasi na kujaribu tena.<br><b>Ufunguo wako</b>: hutuma sentensi iliyokusanywa kwa mtoa huduma uliyemweka."
+  },
+  "backendGtxHint": {
+    "message": "Hutumia kiungo cha bure cha Google — matumizi mengi yanaweza kuzuiliwa kwa muda; kiendelezi hupunguza kasi na kujaribu tena chenyewe."
+  },
+  "backendStatusTlang": {
+    "message": "Video hii: tafsiri ya wimbo wa manukuu (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Video hii: sentensi mahiri (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Kiungo cha tafsiri kimezuia kasi — inapunguza mwendo na kujaribu tena chenyewe. Mistari iliyotafsiriwa tayari inaendelea kufanya kazi."
+  },
+  "diagCopy": {
+    "message": "Nakili taarifa ya uchunguzi"
+  },
+  "diagCopied": {
+    "message": "Imenakiliwa — ibandike kwenye barua pepe au suala"
+  },
+  "diagCopyFail": {
+    "message": "Kunikili kumeshindikana — piga picha ya skrini badala yake"
+  },
+  "backendStatusSame": {
+    "message": "Manukuu ya video hii tayari yako katika lugha yako ya tafsiri — hakuna cha kutafsiri."
+  },
+  "backendStatusNoTrack": {
+    "message": "Hakuna wimbo wa manukuu uliopatikana kwa video hii, kwa hiyo hakuna cha kuonyesha.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Fungua video ya YouTube na mistari miwili itatokea juu yake. Kama tayari uko kwenye video, pakia upya kichupo."
+  },
+  "secLayout": {
+    "message": "Muundo"
+  },
+  "secLineStyle": {
+    "message": "Mtindo wa mstari"
+  },
+  "secLineStyleHint": {
+    "message": "Fonti · Rangi · Ukubwa"
+  },
+  "orderLabel": {
+    "message": "Taratibu"
+  },
+  "orderTransTop": {
+    "message": "Tafsiri juu"
+  },
+  "orderOrigTop": {
+    "message": "Asili juu"
+  },
+  "positionLabel": {
+    "message": "Nafasi"
+  },
+  "posTop": {
+    "message": "Juu"
+  },
+  "posCenter": {
+    "message": "Katikati"
+  },
+  "posBottom": {
+    "message": "Chini"
+  },
+  "posHint": {
+    "message": "Unaweza pia kuburuta kisanduku cha manukuu kwenye video"
+  },
+  "posTryDrag": {
+    "message": "jaribu"
+  },
+  "posTryNoVideo": {
+    "message": "Fungua video ya YouTube kwanza"
+  },
+  "resetPos": {
+    "message": "Weka nafasi upya"
+  },
+  "rowGap": {
+    "message": "Nafasi ya mistari"
+  },
+  "tabTrans": {
+    "message": "Tafsiri"
+  },
+  "tabOrig": {
+    "message": "Asili"
+  },
+  "lineTabsAria": {
+    "message": "Mstari wa manukuu"
+  },
+  "lineShow": {
+    "message": "Onyesha mstari huu"
+  },
+  "fontLabel": {
+    "message": "Fonti"
+  },
+  "fontSystem": {
+    "message": "Chaguo-msingi la mfumo"
+  },
+  "fontMono": {
+    "message": "Upana-sawa"
+  },
+  "fontCjk": {
+    "message": "Inafaa CJK"
+  },
+  "sizeLabel": {
+    "message": "Ukubwa"
+  },
+  "colText": {
+    "message": "Maandishi"
+  },
+  "colBg": {
+    "message": "Usuli"
+  },
+  "colStroke": {
+    "message": "Ukingo"
+  },
+  "colTextAria": {
+    "message": "Rangi ya maandishi"
+  },
+  "colBgAria": {
+    "message": "Rangi ya usuli"
+  },
+  "colStrokeAria": {
+    "message": "Rangi ya ukingo"
+  },
+  "bgOpacity": {
+    "message": "Uwazi wa usuli"
+  },
+  "strokeOpacity": {
+    "message": "Uwazi wa ukingo"
+  },
+  "resetAll": {
+    "message": "Weka mipangilio yote upya"
+  },
+  "resetConfirmText": {
+    "message": "Hii hufuta kila mpangilio, funguo za API zilizohifadhiwa kwenye kompyuta hii, na modeli na sauti zilizokumbukwa kwa kila mtoa huduma, na inawasha tena vidokezo vya mara ya kwanza. Vikoa vya watoa huduma ulivyokwisha kuruhusu vinabaki vimeruhusiwa, na vivyo hivyo faili za fonti ulizoleta.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Acha mipangilio yangu",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Weka yote upya",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Zima manukuu mawili"
+  },
+  "toggleTurnOn": {
+    "message": "Washa manukuu mawili"
+  },
+  "handleTitle": {
+    "message": "Buruta · bofya mara mbili"
+  },
+  "handleAria": {
+    "message": "Buruta kuhamisha manukuu, bofya mara mbili kuweka upya"
+  },
+  "secExport": {
+    "message": "Hamisha"
+  },
+  "exportContent": {
+    "message": "Maudhui"
+  },
+  "exportBi": {
+    "message": "Lugha mbili"
+  },
+  "exportOrig": {
+    "message": "Asili"
+  },
+  "exportTrans": {
+    "message": "Tafsiri"
+  },
+  "exportSrt": {
+    "message": "Pakua SRT"
+  },
+  "exportWorking": {
+    "message": "Inatengeneza…"
+  },
+  "exportDone": {
+    "message": "Manukuu yamepakuliwa"
+  },
+  "exportNoTrans": {
+    "message": "Hakuna tafsiri ya video hii — jaribu injini ya wimbo wa manukuu au lugha nyingine ya tafsiri."
+  },
+  "exportLimited": {
+    "message": "YouTube inazuia tafsiri ya wimbo wa manukuu sasa — jaribu tena baada ya dakika. Ukiwa umeweka ufunguo wako, kadi ya kuhamisha ina kisanduku cha kuteua kinachopita kizuizi hicho."
+  },
+  "exportNoCues": {
+    "message": "Hakuna manukuu ya kupakua — cheza sekunde chache ili manukuu yapakie, kisha jaribu tena."
+  },
+  "exportNotYoutube": {
+    "message": "Fungua ukurasa wa video ya YouTube ili uhamishe."
+  },
+  "exportFailed": {
+    "message": "Kuhamisha kumeshindikana — onyesha upya ukurasa na ujaribu tena."
+  },
+  "updateNotesLabel": {
+    "message": "Fungua maelezo ya toleo baada ya masasisho"
+  },
+  "trackWarnDubOnly": {
+    "message": "Tahadhari: video hii ina manukuu otomatiki ya dubu ya AI tu (hakuna wimbo wa lugha asili), kwa hiyo manukuu ya lugha mbili yanaweza kutolingana na sauti."
+  },
+  "whatsNewRow": {
+    "message": "Tazama vipya vya v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Video hii: ufunguo wako ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Mtoa huduma"
+  },
+  "byoSiteLabel": {
+    "message": "Tovuti"
+  },
+  "byoSiteHint": {
+    "message": "Chagua tovuti uliyojisajili — hizi ni majukwaa mawili tofauti na ufunguo wa moja haukubaliwi na nyingine."
+  },
+  "byoSiteGlobal": {
+    "message": "Kimataifa"
+  },
+  "byoSiteCn": {
+    "message": "China bara"
+  },
+  "byoBaseLabel": {
+    "message": "Anwani ya endpoint"
+  },
+  "byoModelLabel": {
+    "message": "Modeli"
+  },
+  "byoModelRequired": {
+    "message": "Inahitajika: jina la modeli"
+  },
+  "byoKeyLabel": {
+    "message": "Ufunguo wa API"
+  },
+  "byoKeyClear": {
+    "message": "Futa"
+  },
+  "byoKeyReplace": {
+    "message": "Badilisha"
+  },
+  "byoKeyCleared": {
+    "message": "Ufunguo uliokuwa kwenye kompyuta hii umefutwa."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Ufunguo uliokuwa kwenye kompyuta hii umefutwa. Ule ulikuwa unatumika, kwa hiyo tafsiri sasa inapitia $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "umehifadhiwa ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Maalum (inayolingana na OpenAI)"
+  },
+  "byoTest": {
+    "message": "Hifadhi na ujaribu"
+  },
+  "byoTesting": {
+    "message": "Inajaribu…"
+  },
+  "byoTestOk": {
+    "message": "Imeunganishwa. Mfano: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Pata ufunguo"
+  },
+  "byoGuide": {
+    "message": "Unahitaji msaada wa kusanidi?"
+  },
+  "byoLocalHint": {
+    "message": "Ufunguo unabaki kwenye kivinjari hiki, kwenye kompyuta hii — haupakiwi kamwe. Maandishi ya manukuu huenda tu kwa mtoa huduma uliyemchagua."
+  },
+  "byoErrNoProvider": {
+    "message": "Chagua mtoa huduma kwanza."
+  },
+  "byoErrNoKey": {
+    "message": "Weka ufunguo wa API kwanza, kisha bonyeza Hifadhi na ujaribu."
+  },
+  "byoErrNoModel": {
+    "message": "Chagua modeli kwanza — chagua moja kwenye orodha, au bonyeza “Orodhesha modeli kwa ufunguo wangu”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Mtoa huduma huyu haleti orodha. Leta modeli zilizopo kwanza, au andika jina la modeli mwenyewe."
+  },
+  "byoErrNotApi": {
+    "message": "Anwani hiyo ilijibu kwa ukurasa wa wavuti, si API — mara nyingi ni ukuta wa kuingia au mtandao unaozuia maombi. Kagua anwani, au jaribu mtandao mwingine."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "URL msingi ya API lazima iwe anwani kamili ya https://."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Anwani ina ufunguo ndani yake. Utoe kwenye anwani na uubandike kwenye uga wa ufunguo wa API — anwani husawazishwa na akaunti ya kivinjari chako, uga wa ufunguo hausawazishwi."
+  },
+  "byoErrNoPerm": {
+    "message": "Bila ruhusa ya kufika kwenye seva hiyo ya API kiendelezi hakiwezi kuunganisha. Bonyeza “Hifadhi na ujaribu” tena na uruhusu."
+  },
+  "byoErrAuth": {
+    "message": "Ufunguo umekataliwa (401) — kagua kuwa umenakiliwa kamili na bado unafanya kazi."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Seva kwenye kompyuta hii ilikataa ombi (403). Huenda haijaambiwa kuruhusu kiendelezi: OLLAMA_ORIGINS kwa Ollama, swichi ya CORS katika LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Mtoa huduma alikataa ombi hili (403). Mara nyingi ufunguo uko sawa na akaunti ndiyo isiyoruhusiwa — salio lisilolipwa, ukaguzi wa utambulisho bado unasubiri, modeli haijawashwa, au eneo. Kagua akaunti kwenye dashibodi ya mtoa huduma."
+  },
+  "byoErrListAuth": {
+    "message": "Ufunguo huu hauruhusiwi kusoma orodha. Mpe ruhusa hiyo kwenye dashibodi ya mtoa huduma, kisha leta tena.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Mtoa huduma anazuia kasi — inapunguza mwendo na kujaribu tena chenyewe."
+  },
+  "byoErrLimitedTest": {
+    "message": "Mtoa huduma anazuia kasi. Subiri kidogo na ubonyeze tena."
+  },
+  "byoErrQuota": {
+    "message": "Akaunti hii imemaliza salio au mgao wa kipindi hiki — ijaze kwenye dashibodi ya mtoa huduma ili uendelee."
+  },
+  "byoErrBadRequest": {
+    "message": "Anwani ya API ilikataa ombi — jina la modeli au URL msingi linaweza kuwa si sahihi."
+  },
+  "byoErrBadShape": {
+    "message": "Modeli haikujibu mstari kwa mstari kama ilivyoulizwa, na majaribio madogo yameshindikana pia — jaribu modeli nyingine."
+  },
+  "byoErrReasoning": {
+    "message": "Modeli hiyo ilirudisha mnyororo wa mawazo tu bila tafsiri — chagua modeli isiyofikiri."
+  },
+  "byoErrNetfail": {
+    "message": "Haiwezi kufika kwenye anwani hiyo (mtandao au kizuizi cha eneo)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Haiwezi kufika kwenye anwani hiyo: ama seva haiendeshwi, au haijaambiwa kuruhusu kiendelezi (OLLAMA_ORIGINS kwa Ollama, swichi ya CORS katika LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Mtoa huduma huyu hawezi kutafsiri kwenda lugha uliyochagua — badilisha lugha au injini."
+  },
+  "byoErrFailed": {
+    "message": "Muunganisho umeshindikana. Jaribu tena baada ya kidogo."
+  },
+  "optTitle": {
+    "message": "Usanidi wa huduma ya tafsiri"
+  },
+  "optIntro": {
+    "message": "Chagua mtoa huduma na ubandike ufunguo wako wa API."
+  },
+  "optPricingLink": {
+    "message": "Bei na kiwango cha bure"
+  },
+  "optFetchModels": {
+    "message": "Orodhesha modeli kwa ufunguo wangu"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Orodhesha modeli zilizopo"
+  },
+  "optFetching": {
+    "message": "Inaorodhesha…"
+  },
+  "optModelsFetched": {
+    "message": "Imepata modeli $N$",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” haipo tena kwenye orodha ya mtoa huduma huyu — chagua nyingine hapo juu.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Haikuweza kuorodhesha modeli — andika jina la modeli badala yake."
+  },
+  "optModelCustom": {
+    "message": "Maalum…"
+  },
+  "optNoModelsYet": {
+    "message": "Bado hakuna orodha ya modeli — leta moja kwa ufunguo wako, au andika jina tu."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Bado hakuna orodha ya modeli — leta moja, au andika jina tu."
+  },
+  "optShowKey": {
+    "message": "Onyesha"
+  },
+  "optRecommended": {
+    "message": "inapendekezwa"
+  },
+  "optConfigured": {
+    "message": "Imewekwa"
+  },
+  "optInUse": {
+    "message": "inatumika"
+  },
+  "optAfterSetup": {
+    "message": "Ukimaliza hapa, fungua ibukizi ya kiendelezi na uweke Injini kuwa \"Ufunguo wako\"."
+  },
+  "optTrademark": {
+    "message": "Majina na nembo zote za watoa huduma ni alama za biashara za wamiliki wao. Kiendelezi hiki hakihusiani, hakikubaliwi wala hakifadhiliwi na yeyote kati yao; alama zinaonyeshwa tu kutambua API uliyochagua."
+  },
+  "optSections": {
+    "message": "Sehemu"
+  },
+  "optNavSetup": {
+    "message": "Huduma ya tafsiri"
+  },
+  "optNavStart": {
+    "message": "Kuanza"
+  },
+  "optNavAbout": {
+    "message": "Kuhusu"
+  },
+  "startIntro": {
+    "message": "Vitu vinne. Si lazima usanidi chochote ili uitumie."
+  },
+  "startS1Title": {
+    "message": "Fungua video — ndiyo tu"
+  },
+  "startS1Body": {
+    "message": "Video yoyote ya YouTube yenye manukuu: mistari miwili inaonekana yenyewe."
+  },
+  "startS2Title": {
+    "message": "Viweke popote upendapo"
+  },
+  "startS2Body": {
+    "message": "Shikilia kipini kwenye kona ya juu-kushoto ya kisanduku cha manukuu na kiburute popote. Bofya kipini mara mbili kikirudisha."
+  },
+  "startS2Alt": {
+    "message": "Mchoro wa kichezaji: kipini cha vitone sita kwenye kona ya juu-kushoto ya kisanduku cha manukuu, kinakiburuta kwenda nafasi nyingine"
+  },
+  "startS3Title": {
+    "message": "Unataka tafsiri bora"
+  },
+  "startS3Body": {
+    "message": "Ongeza ufunguo wako wa API: tafsiri ya sentensi kamili, na tafsiri ya video nzima unapohamisha."
+  },
+  "startGoSetup": {
+    "message": "Sanidi huduma ya tafsiri"
+  },
+  "aboutIntro": {
+    "message": "Hiki ni nini, na maandishi yako yanaenda wapi."
+  },
+  "aboutVersion": {
+    "message": "Toleo"
+  },
+  "uiLocaleLabel": {
+    "message": "Lugha ya kiolesura"
+  },
+  "uiLocaleAuto": {
+    "message": "Otomatiki — fuata kivinjari"
+  },
+  "uiLocaleHint": {
+    "message": "Lugha ya menyu na mipangilio ya kiendelezi hiki. Lebo chache zinazochorwa kwenye video yenyewe bado zinafuata lugha ya kivinjari. Lugha ya tafsiri huchaguliwa kwenye ibukizi; paneli ya “Lugha za tafsiri” inaamua tu ni lugha zipi ibukizi inaorodhesha."
+  },
+  "cmdToggleSubs": {
+    "message": "Washa au zima manukuu"
+  },
+  "cmdToggleTts": {
+    "message": "Kusoma kwa sauti on/off"
+  },
+  "cmdToggleTransLine": {
+    "message": "Onyesha au ficha mstari wa tafsiri"
+  },
+  "optShortcutsLabel": {
+    "message": "Njia za mkato za kibodi"
+  },
+  "optShortcutsOpen": {
+    "message": "Weka njia za mkato"
+  },
+  "optShortcutsHint": {
+    "message": "Chrome ndiye anayeshika vitufe hivi, si kiendelezi. Hakuna kilichofungwa mwanzoni; vitu vitatu vinaweza: washa/zima manukuu, washa/zima kusoma kwa sauti, na onyesha au ficha mstari wa tafsiri."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome haikufungua ukurasa huo kutoka hapa — bandika chrome://extensions/shortcuts kwenye upau wa anwani."
+  },
+  "startTargetLabel": {
+    "message": "Lugha ya tafsiri"
+  },
+  "startTargetHint": {
+    "message": "Ilikisiwa kutoka mapendeleo ya lugha ya kivinjari chako kiendelezi kilipowekwa. Ibadilishe hapa kama kisia si sahihi — ibukizi inaweza kuibadilisha wakati wowote."
+  },
+  "aboutBlurb": {
+    "message": "Mstari wa pili wa manukuu kwa YouTube: asili kwenye mstari mmoja, tafsiri kwenye mwingine; fonti, rangi na nafasi unazichagua wewe. Chanzo huria, bila malipo, bila matangazo."
+  },
+  "aboutPrivacy": {
+    "message": "Kiendelezi hakina seva yetu wala hakikusanyi takwimu. Maandishi ya manukuu huenda tu kwa huduma ulizochagua: huduma ya tafsiri unayochagua na, ukiziwasha, mtoa huduma wa sauti kwa kusoma kwa sauti na mtoa huduma uliyemweka kwa muhtasari. Ukiwa na ufunguo wako, ufunguo huhifadhiwa kwenye kompyuta hii tu."
+  },
+  "aboutChangelog": {
+    "message": "Orodha ya mabadiliko"
+  },
+  "aboutRoadmap": {
+    "message": "Ramani ya maendeleo"
+  },
+  "optFeedbackLink": {
+    "message": "Ripoti tatizo"
+  },
+  "popupByoConfigure": {
+    "message": "Sanidi…"
+  },
+  "popupSummarize": {
+    "message": "Fanya muhtasari wa video hii",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "haijawekwa"
+  },
+  "popupByoPick": {
+    "message": "Mtoa huduma wa tafsiri"
+  },
+  "popupByoUntested": {
+    "message": "haijajaribiwa"
+  },
+  "popupModelPick": {
+    "message": "Modeli ya tafsiri"
+  },
+  "popupModelMore": {
+    "message": "Modeli zaidi…"
+  },
+  "popupModelFetch": {
+    "message": "Leta modeli kwenye mipangilio"
+  },
+  "popupModelSwitched": {
+    "message": "Kuanzia sasa: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Hakuna modeli iliyochaguliwa"
+  },
+  "exportUsesYouTube": {
+    "message": "Upakuaji hutumia tafsiri ya wimbo wa manukuu ya YouTube yenyewe — bila malipo, na hautumii ufunguo wako wa API."
+  },
+  "exportUseByo": {
+    "message": "Tafsiri kwa ufunguo wangu (ulinganifu bora, inatumia mgao)"
+  },
+  "exportByoNote": {
+    "message": "Wimbo wa manukuu utatafsiriwa na mtoa huduma wako kwa ufunguo wako. Utaona makisio kabla ya kitu chochote kutumwa."
+  },
+  "exportConfirm": {
+    "message": "Tafsiri mistari $N$ ya manukuu kwa $NAME$ — takriban maombi $REQ$ dhidi ya mgao wako. Wimbo wa manukuu unaondoka kivinjari chako kwenda kwa mtoa huduma huyo; wakati wa kucheza, sehemu unazotazama tu ndizo zinazotumwa.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Tafsiri na upakue"
+  },
+  "exportConfirmBack": {
+    "message": "Ghairi"
+  },
+  "exportStop": {
+    "message": "Simamisha"
+  },
+  "exportStopping": {
+    "message": "Inasimamisha…"
+  },
+  "exportProgress": {
+    "message": "Inatafsiri… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "Vipande $N$ vimerudi kwenye tafsiri ya YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Upakuaji umeghairiwa."
+  },
+  "ftSite": {
+    "message": "Tovuti"
+  },
+  "ftSiteLabel": {
+    "message": "Tovuti"
+  },
+  "ftFeedbackLabel": {
+    "message": "Maoni"
+  },
+  "ftReviewLabel": {
+    "message": "Kadiria"
+  },
+  "ftGithub": {
+    "message": "Msimbo chanzo kwenye GitHub"
+  },
+  "ftFeedback": {
+    "message": "Tuma maoni au ripoti hitilafu"
+  },
+  "ftReview": {
+    "message": "Ikadirie kwenye Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Bado hakuna ufunguo — mtoa huduma huyu hawezi kutumika hadi uongeze moja."
+  },
+  "optNeedBase": {
+    "message": "Bado hakuna anwani ya API — mtoa huduma huyu hawezi kutumika hadi uweke moja."
+  },
+  "optBaseHint": {
+    "message": "URL msingi au anwani kamili zote zinafaa, k.m. https://example.com/v1 au https://example.com/v1/chat/completions. Kwa Ollama au LM Studio kwenye kompyuta hii, http://localhost:11434/v1 ndiyo umbo sahihi. Ufunguo unaweza kubaki tupu; http tupu hufanya kazi kwa anwani za localhost tu."
+  },
+  "startS1Alt": {
+    "message": "Mchoro wa kichezaji: mstari wa asili na mstari wa tafsiri viko karibu na chini ya picha"
+  },
+  "startS3Alt": {
+    "message": "Mlinganisho: injini ya bure inatafsiri sentensi moja vipande vipande, ufunguo wako unaelewa yote kisha inagawanya tena"
+  },
+  "startPicFree": {
+    "message": "Injini ya bure"
+  },
+  "startPicFreeNote": {
+    "message": "sentensi moja, iliyokatwa"
+  },
+  "startPicByo": {
+    "message": "Ufunguo wako"
+  },
+  "startPicByoNote": {
+    "message": "imeeleweka kamili, ikagawanywa tena"
+  },
+  "startS4Title": {
+    "message": "Kuna menyu ndogo kwenye kichezaji"
+  },
+  "startS4Body": {
+    "message": "Mshale mdogo kando ya kitufe cha manukuu hufungua menyu: manukuu, soma kwa sauti, chagua maandishi, muhtasari wa video na mipangilio — bila kuondoka kichezaji."
+  },
+  "startS4Alt": {
+    "message": "Mchoro wa kichezaji: mshale mdogo kando ya kitufe cha manukuu, chini kulia, hufungua menyu ndogo"
+  },
+  "menuHintBubble": {
+    "message": "Soma kwa sauti, muhtasari wa video, chagua maandishi — vyote nyuma ya mshale huu mdogo"
+  },
+  "troubleTitle": {
+    "message": "Kuna tatizo"
+  },
+  "troubleStep1": {
+    "message": "Kagua swichi kwenye ibukizi kwanza — ikiwa imezimwa, safu yote ya manukuu inakaa mbali."
+  },
+  "troubleStep2": {
+    "message": "Je, video hii ina manukuu hata kidogo? Jaribu kitufe cha CC kwenye kichezaji: bila asili hakuna cha kutafsiri."
+  },
+  "troubleStep3": {
+    "message": "Jaribu video maarufu. Ikiwa nyingine zinafanya kazi na hii peke yake haifanyi, mara nyingi ni wimbo wa manukuu wa video hii."
+  },
+  "troubleDiagHint": {
+    "message": "Bado umekwama? Bandika taarifa ya uchunguzi kwenye barua pepe au suala — inabeba toleo, hali ya injini na kile kichupo cha sasa kinachofanya, jambo linalookoa mizunguko miwili."
+  },
+  "langManage": {
+    "message": "Simamia lugha…"
+  },
+  "optNavLangs": {
+    "message": "Lugha za tafsiri"
+  },
+  "optNavReadaloud": {
+    "message": "Soma kwa sauti"
+  },
+  "ttsIntro": {
+    "message": "Soma mstari wa tafsiri kwa sauti. Sauti za kivinjari chako hazihitaji ufunguo hata kidogo; watoa huduma wa wingu wanawekwa na kujaribiwa hapa."
+  },
+  "ttsVoiceLabel": {
+    "message": "Sauti"
+  },
+  "ttsPreview": {
+    "message": "Sikiliza"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Inacheza…"
+  },
+  "ttsPreviewFail": {
+    "message": "Haikuweza kucheza — kagua ufunguo na ujaribu Hifadhi na ujaribu"
+  },
+  "ttsFetchVoices": {
+    "message": "Leta orodha kamili ya lugha hii kwa ufunguo wako"
+  },
+  "ttsFetching": {
+    "message": "Inaleta…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Hizi ni sauti zote $N$ ambazo ufunguo wako una kwa lugha ya sasa, pamoja na viwango vya zamani vya Standard / Wavenet. Zinatumika kwa lugha hii tu; bofya mstari hapo juu kurudi kwenye sauti za kila siku, zinazokufuata kati ya lugha. Unaweza kuleta orodha hii tena wakati wowote.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Rudi kwenye sauti za kila siku (zinafuata lugha)"
+  },
+  "ttsVoicesNone": {
+    "message": "Mtoa huduma huyu hana sauti za ziada za lugha hii — za ndani bado zinafanya kazi."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Imepata sauti $N$ — ni mapendekezo chini ya uga hapo juu.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Kike"
+  },
+  "ttsVoiceMale": {
+    "message": "Kiume"
+  },
+  "ttsTestOk": {
+    "message": "Imeunganishwa: sauti ya majaribio $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Sauti nyingi za kivinjari chako zimewekwa kwenye kompyuta hii na husoma mstari hapa. Chache si hivyo: Chrome pia hutoa sauti za mtandaoni — zile majina yake huanza na \"Google\" — na kwa hizo kivinjari hutuma mstari kwa mtengenezaji wake. Kwa mtoa huduma wa wingu, maandishi yasomwe huenda tu kwa mtoa huduma uliyemchagua, na ufunguo unabaki kwenye kompyuta hii."
+  },
+  "ttsEnableLabel": {
+    "message": "Soma tafsiri kwa sauti kwenye video"
+  },
+  "ttsEnableHint": {
+    "message": "Ikiwasha, tafsiri ya kila manukuu husomwa inapoonekana; mstari ambao tafsiri yake haijawa tayari kwa wakati hurukwa badala ya kuchelewa kuusoma baadaye. Mstari unaposomwa, sauti ya video yenyewe hushuka hadi kiasi kilichowekwa hapa chini. Mstari mrefu hupunguza kasi ya picha kidogo na kutumia pengo linalofuata — kwa sauti za wingu na za kivinjari chako; swichi hapa chini inaendelea kupunguza kasi hadi kila mstari umalizike."
+  },
+  "langsIntro": {
+    "message": "Ni lugha zipi za tafsiri ibukizi inazotoa."
+  },
+  "langsKept": {
+    "message": "Zinaonyeshwa kwenye ibukizi"
+  },
+  "langsKeptHint": {
+    "message": "Hizi zinaonekana kwenye menyu ya lugha ya tafsiri ya ibukizi. Weka angalau moja."
+  },
+  "langsMore": {
+    "message": "Lugha nyingine"
+  },
+  "langsMoreHint": {
+    "message": "Bonyeza + kuongeza moja. Orodha inafuata lugha za tafsiri zinazoungwa mkono na injini za bure na DeepL."
+  },
+  "langsReset": {
+    "message": "Rudisha chaguo-msingi"
+  },
+  "langsResetDone": {
+    "message": "Umerudi kwenye orodha chaguo-msingi."
+  },
+  "langsAddAria": {
+    "message": "Ongeza"
+  },
+  "langsRemoveAria": {
+    "message": "Ondoa"
+  },
+  "langsLastOne": {
+    "message": "Weka angalau moja"
+  },
+  "langsAllAdded": {
+    "message": "Kila lugha tayari iko kwenye orodha yako."
+  },
+  "langsAdded": {
+    "message": "Imeongezwa $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Ile ilikuwa inatumika, kwa hiyo lugha ya tafsiri sasa ni $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Serif ya Kichina"
+  },
+  "fontCjkRound": {
+    "message": "Mviringo wa Kichina"
+  },
+  "ttsVolLabel": {
+    "message": "Kiasi cha sauti ya kusoma"
+  },
+  "ttsGroupPlayback": {
+    "message": "Uchezaji"
+  },
+  "ttsDuckLabel": {
+    "message": "Sauti asili wakati wa kusoma"
+  },
+  "ttsDuckShort": {
+    "message": "Sauti asili"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Inasema"
+  },
+  "ttsStatusOn": {
+    "message": "Sauti imewashwa"
+  },
+  "ttsOpenSettings": {
+    "message": "Mipangilio ya kusoma kwa sauti"
+  },
+  "ttsStatusCounts": {
+    "message": "Mistari $N$ video hii · $M$ imerukwa",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "Mistari $N$ hapa · $M$ imerukwa ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "tafsiri haikuwa tayari kwa wakati"
+  },
+  "ttsSkipSilent": {
+    "message": "sauti haikutoka"
+  },
+  "ttsRegionLabel": {
+    "message": "Eneo la huduma"
+  },
+  "ttsErrNoRegion": {
+    "message": "Weka kwanza eneo la huduma la ufunguo wako wa Azure (k.m. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Kompyuta hii haina sauti za kusoma nazo."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Kompyuta hii haina sauti inayosoma $NAME$. Orodha hapa chini ni sauti za lugha nyingine — chagua moja na mstari utasomwa kwa lafudhi ya lugha hiyo.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Inatafuta sauti za kompyuta hii…"
+  },
+  "ttsErrRefused": {
+    "message": "Mtoa huduma alikataa ombi hili — jaribu sauti nyingine."
+  },
+  "ttsErrNoAudio": {
+    "message": "Sauti haikufika — jaribu tena, au chagua sauti nyingine."
+  },
+  "startPicChop1": {
+    "message": "kuna mbili kubwa",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "sababu moja ni",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Kuna sababu mbili kubwa,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "ya kwanza ni…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Sauti zaidi…"
+  },
+  "popupVoiceNone": {
+    "message": "Hakuna sauti iliyochaguliwa"
+  },
+  "ttsRobotVoices": {
+    "message": "Kama roboti",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Chagua na nakili maandishi ya manukuu",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Chagua maandishi",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Muhtasari",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Muhtasari wa video",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Funga",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Video hii haina wimbo wa manukuu unaofaa.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Washa tena manukuu ili ufanye muhtasari — muhtasari unatengenezwa kutoka wimbo wa manukuu."
+  },
+  "sumNeedKey": {
+    "message": "Muhtasari unahitaji huduma yako: mtoa huduma yeyote aliye na ufunguo wako kwenye paneli ya tafsiri, au modeli ya ndani kwenye kompyuta hii. Injini za bure hutafsiri tu. Hazifanyi muhtasari.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Sanidi huduma ya tafsiri",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Fanya muhtasari",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Fanya muhtasari tena"
+  },
+  "sumFail": {
+    "message": "Muhtasari umeshindikana. Jaribu tena baadaye.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Hii itatuma wimbo wa manukuu kwa $PROVIDER$, katika sehemu $PARTS$, kwa mgao wako.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Inafanya muhtasari… sehemu $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "Sehemu $N$ hazikuweza kufanyiwa muhtasari; nyingine ziko hapo juu.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Manukuu",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Tafsiri ya YouTube yenyewe imezuiwa kwa muda sasa; sentensi mahiri (Google) inajaza. Itajaribu tena yenyewe baadaye.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Kiungo cha tafsiri kinazuia kasi — kinaendelea baada ya takriban sekunde $SECONDS$.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "URL msingi au anwani kamili zote zinafaa, k.m. http://localhost:8880/v1 au http://localhost:8880/v1/audio/speech (seva za sauti za ndani kama Kokoro au openai-edge-tts). Ufunguo unaweza kubaki tupu; http tupu hufanya kazi kwa anwani za localhost tu."
+  },
+  "optTtsNeedUrl": {
+    "message": "Bado hakuna anwani ya API — mtoa huduma huyu hawezi kutumika hadi uongeze moja."
+  },
+  "ttsSkipRefused": {
+    "message": "mtoa huduma alikataa maombi hayo"
+  },
+  "ttsSkipNotSet": {
+    "message": "haijawekwa kwenye kompyuta hii"
+  },
+  "ttsSkipNoVoice": {
+    "message": "hakuna sauti ya lugha hii"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ hawezi kusoma sasa. Chagua mwingine kwenye safu hapo juu — sauti za kivinjari chako ziko kwenye orodha hiyo.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Wimbo wa manukuu haujafika — inajaribu tena chenyewe. Una haraka? Onyesha upya ukurasa kujaribu sasa."
+  },
+  "ttsCompleteLabel": {
+    "message": "Maliza kila mstari (picha hupungua kasi sehemu zenye msongamano)"
+  },
+  "ttsCompleteHint": {
+    "message": "Kwa kasi kubwa mistari mirefu mara nyingi hupoteza mkia wake kwa inayofuata. Ikiwasha hii, picha hupungua kasi kiasi mstari unavyohitaji — kamwe chini ya robo ya kasi uliyochagua — na inarudi kasi kwenye mapengo. Picha ikiwa imepunguzwa kasi hivyo, sauti ya video yenyewe hushuka zaidi ya kiasi ulichoweka, hadi kimya."
+  },
+  "ttsCompleteHintText": {
+    "message": "Mistari mingi inakatwa katika kasi hii. Washa, na picha hupungua kasi inapohitaji, ili mingi zaidi imalizike."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Washa"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Usionyeshe tena"
+  },
+  "provLocalSpeechShort": {
+    "message": "Kivinjari"
+  },
+  "optNavFonts": {
+    "message": "Fonti za manukuu"
+  },
+  "fontsIntro": {
+    "message": "Orodha moja inahudumia mistari yote miwili ya manukuu; ibukizi huchagua kwa kila mstari. Kila fonti iliyoorodheshwa imewekwa kwenye kompyuta hii."
+  },
+  "fontsKept": {
+    "message": "Zinaonyeshwa kwenye ibukizi"
+  },
+  "fontsMore": {
+    "message": "Fonti nyingine"
+  },
+  "fontsOnly": {
+    "message": "Fonti zinazoweza kuichora tu"
+  },
+  "fontsCounting": {
+    "message": "Inakagua…"
+  },
+  "fontsSearch": {
+    "message": "Tafuta majina ya fonti"
+  },
+  "fontsNoMatch": {
+    "message": "Hakuna fonti inayolingana."
+  },
+  "fontsKeptEmpty": {
+    "message": "Chaguo-msingi la mfumo pekee kimesalia kwa ibukizi.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Kila fonti tayari iko kwenye orodha."
+  },
+  "fontsReset": {
+    "message": "Rudisha chaguo-msingi"
+  },
+  "fontsResetDone": {
+    "message": "Orodha chaguo-msingi imerudishwa."
+  },
+  "fontsAdded": {
+    "message": "Imeongezwa $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Hakiki: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Hakiki"
+  },
+  "fontsUnavailable": {
+    "message": "Kivinjari hiki hakiruhusu kiendelezi kusoma fonti zilizowekwa, kwa hiyo Chaguo-msingi la mfumo pekee ndilo linaloweza kuchaguliwa."
+  },
+  "fontNoGlyphs": {
+    "message": "haiwezi kuuchora mstari huu"
+  },
+  "fontNotHere": {
+    "message": "haipo kwenye kompyuta hii"
+  },
+  "fontsImport": {
+    "message": "Leta faili la fonti…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; faili linakiliwa ndani ya kivinjari."
+  },
+  "fontsImported": {
+    "message": "Imeletwa $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Haikuweza kuihifadhi kwenye kivinjari; jaribu tena.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Imeondolewa $NAME$ kwenye ibukizi.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Ruka orodha hii",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Fonti iliyoletwa",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Hilo si faili la fonti ambalo kivinjari hiki linaweza kutumia."
+  },
+  "fontsImportTooBig": {
+    "message": "Faili ni kubwa mno (kikomo $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Futa fonti iliyoletwa"
+  },
+  "fontsLangLabel": {
+    "message": "Kagua kwa"
+  },
+  "fontsLangRecent": {
+    "message": "zilizotazamwa hivi karibuni"
+  },
+  "fontMoreRow": {
+    "message": "Simamia fonti…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ nyingine haziwezi kuuchora mstari huu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

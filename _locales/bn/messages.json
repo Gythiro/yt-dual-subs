@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "YouTube-এ দুই ভাষার সাবটাইটেল — মূল আর অনুবাদ এক স্তরে, একে অপরের উপর না পড়ে।"
+  },
+  "headerSub": {
+    "message": "YouTube™ · এক স্তর"
+  },
+  "disclaimer": {
+    "message": "YouTube বা Google-এর সাথে যুক্ত না।"
+  },
+  "enableTitle": {
+    "message": "চালু / বন্ধ"
+  },
+  "openOptions": {
+    "message": "সেটিংস"
+  },
+  "enableAria": {
+    "message": "এক্সটেনশন চালু করো"
+  },
+  "previewTag": {
+    "message": "পূর্বরূপ"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "চটপটে বাদামি শিয়াল"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "চীনায় ভালো",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "তোমার ব্রাউজারের নিজের ভয়েস (ফ্রি)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (লোকাল)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "লাইভ পূর্বরূপ"
+  },
+  "secTranslation": {
+    "message": "অনুবাদ"
+  },
+  "targetLang": {
+    "message": "অনুবাদের ভাষা"
+  },
+  "backendLabel": {
+    "message": "ইঞ্জিন"
+  },
+  "backendInfo": {
+    "message": "ইঞ্জিনের খবর"
+  },
+  "backendAuto": {
+    "message": "অটো (সুপারিশ)"
+  },
+  "backendTlang": {
+    "message": "পুরো ট্র্যাক (YouTube)"
+  },
+  "backendGtx": {
+    "message": "স্মার্ট বাক্য (Google)"
+  },
+  "backendByo": {
+    "message": "নিজের কী (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>অটো</b>: ভিডিও সাপোর্ট করলে YouTube-এর পুরো-ট্র্যাক অনুবাদ ব্যবহার করে, না করলে স্মার্ট বাক্যে চলে যায়।<br><b>পুরো ট্র্যাক</b>: YouTube-এর নিজের অনুবাদ; লাইনের সাথে লাইন মিলিয়ে। বেশি ব্যবহার করলে YouTube কিছুক্ষণ রেট-লিমিট করতে পারে — এক্সটেনশন অপেক্ষা করে আবার চায়।<br><b>স্মার্ট বাক্য</b>: টুকরো সাবটাইটেল জোড়া দিয়ে পুরো বাক্য বানায়, তারপর Google-এর ফ্রি এন্ডপয়েন্টে অনুবাদ করে — এলোমেলো ট্র্যাকে পুরো ট্র্যাকের চেয়ে ভালো ভাষা, কিন্তু বেশি ব্যবহার এখানেও রেট-লিমিট হতে পারে; এক্সটেনশন ধীরে চালিয়ে আবার চেষ্টা করে।<br><b>নিজের কী</b>: জোড়া বাক্যটা তুমি যে পরিষেবাদাতা সেট করেছো সেখানে পাঠায়।"
+  },
+  "backendGtxHint": {
+    "message": "Google-এর ফ্রি এন্ডপয়েন্ট ব্যবহার করে — বেশি ব্যবহার কিছুক্ষণ রেট-লিমিট হতে পারে; এক্সটেনশন নিজেই গতি কমায় আর আবার চেষ্টা করে।"
+  },
+  "backendStatusTlang": {
+    "message": "এই ভিডিও: পুরো-ট্র্যাক অনুবাদ (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "এই ভিডিও: স্মার্ট বাক্য (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "অনুবাদের এন্ডপয়েন্ট রেট-লিমিট করছে — গতি কমিয়ে নিজেই আবার চেষ্টা করছে। যে লাইনগুলো আগেই অনুবাদ হয়েছে সেগুলো চলবে।"
+  },
+  "diagCopy": {
+    "message": "ডায়াগনস্টিক কপি করো"
+  },
+  "diagCopied": {
+    "message": "কপি হয়েছে — ইমেইল বা ইস্যুতে পেস্ট করো"
+  },
+  "diagCopyFail": {
+    "message": "কপি হয়নি — স্ক্রিনশট নাও"
+  },
+  "backendStatusSame": {
+    "message": "এই ভিডিওর সাবটাইটেল ইতিমধ্যে তোমার অনুবাদের ভাষায় — অনুবাদ করার কিছু নেই।"
+  },
+  "backendStatusNoTrack": {
+    "message": "এই ভিডিওর কোনো ক্যাপশন ট্র্যাক পাওয়া যায়নি, তাই দেখানোর কিছু নেই।",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "একটি YouTube ভিডিও খোলো এবং এর উপর দুটি লাইন দেখা যাবে। যদি তুমি আগে থেকেই একটিতে থাকো, তবে ট্যাবটি রিলোড করো।"
+  },
+  "secLayout": {
+    "message": "লেআউট"
+  },
+  "secLineStyle": {
+    "message": "লাইনের স্টাইল"
+  },
+  "secLineStyleHint": {
+    "message": "ফন্ট · রঙ · সাইজ"
+  },
+  "orderLabel": {
+    "message": "ক্রম"
+  },
+  "orderTransTop": {
+    "message": "অনুবাদ উপরে"
+  },
+  "orderOrigTop": {
+    "message": "মূল উপরে"
+  },
+  "positionLabel": {
+    "message": "জায়গা"
+  },
+  "posTop": {
+    "message": "উপর"
+  },
+  "posCenter": {
+    "message": "মাঝে"
+  },
+  "posBottom": {
+    "message": "নিচে"
+  },
+  "posHint": {
+    "message": "ভিডিওতে সাবটাইটেল বক্স টেনেও সরাতে পারো"
+  },
+  "posTryDrag": {
+    "message": "চেষ্টা করো"
+  },
+  "posTryNoVideo": {
+    "message": "আগে একটা YouTube ভিডিও খোলো"
+  },
+  "resetPos": {
+    "message": "জায়গা পুনঃস্থাপন"
+  },
+  "rowGap": {
+    "message": "লাইনের ফাঁক"
+  },
+  "tabTrans": {
+    "message": "অনুবাদ"
+  },
+  "tabOrig": {
+    "message": "মূল"
+  },
+  "lineTabsAria": {
+    "message": "সাবটাইটেল লাইন"
+  },
+  "lineShow": {
+    "message": "এই লাইন দেখাও"
+  },
+  "fontLabel": {
+    "message": "ফন্ট"
+  },
+  "fontSystem": {
+    "message": "সিস্টেমের পূর্বনির্ধারিত"
+  },
+  "fontMono": {
+    "message": "মনোস্পেস"
+  },
+  "fontCjk": {
+    "message": "CJK-ফ্রেন্ডলি"
+  },
+  "sizeLabel": {
+    "message": "ফন্ট আকার"
+  },
+  "colText": {
+    "message": "টেক্সট"
+  },
+  "colBg": {
+    "message": "ব্যাকগ্রাউন্ড"
+  },
+  "colStroke": {
+    "message": "আউটলাইন"
+  },
+  "colTextAria": {
+    "message": "টেক্সটের রঙ"
+  },
+  "colBgAria": {
+    "message": "ব্যাকগ্রাউন্ডের রঙ"
+  },
+  "colStrokeAria": {
+    "message": "আউটলাইনের রঙ"
+  },
+  "bgOpacity": {
+    "message": "ব্যাকগ্রাউন্ড অপাসিটি"
+  },
+  "strokeOpacity": {
+    "message": "আউটলাইন অপাসিটি"
+  },
+  "resetAll": {
+    "message": "সব সেটিং পুনঃস্থাপন"
+  },
+  "resetConfirmText": {
+    "message": "এতে সব সেটিংস মুছে যায়, এই কম্পিউটারে সংরক্ষিত API কী, আর প্রতিটা পরিষেবাদাতার মনে রাখা মডেল ও ভয়েস — আর প্রথমবারের হিন্টগুলো আবার চালু হয়। যে পরিষেবাদাতা ডোমেইন আগেই অনুমতি দিয়েছো সেগুলো থাকবে, আমদানি করা ফন্ট ফাইলও থাকবে।",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "সেটিংস রাখো",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "সব পুনঃস্থাপন",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "দুই ভাষার সাবটাইটেল বন্ধ"
+  },
+  "toggleTurnOn": {
+    "message": "দুই ভাষার সাবটাইটেল চালু"
+  },
+  "handleTitle": {
+    "message": "টেনে সরাও · ডবল-ক্লিক পুনঃস্থাপন"
+  },
+  "handleAria": {
+    "message": "টেনে সাবটাইটেল সরাও, ডাবল-ক্লিক করে পুনঃস্থাপন"
+  },
+  "secExport": {
+    "message": "রপ্তানি"
+  },
+  "exportContent": {
+    "message": "কনটেন্ট"
+  },
+  "exportBi": {
+    "message": "দুই ভাষা"
+  },
+  "exportOrig": {
+    "message": "মূল"
+  },
+  "exportTrans": {
+    "message": "অনুবাদ"
+  },
+  "exportSrt": {
+    "message": "SRT ডাউনলোড"
+  },
+  "exportWorking": {
+    "message": "বানাচ্ছে…"
+  },
+  "exportDone": {
+    "message": "সাবটাইটেল ডাউনলোড হয়েছে"
+  },
+  "exportNoTrans": {
+    "message": "এই ভিডিওর অনুবাদ নেই — পুরো-ট্র্যাক ইঞ্জিন বা অন্য অনুবাদের ভাষা চেষ্টা করো।"
+  },
+  "exportLimited": {
+    "message": "YouTube এখন পুরো-ট্র্যাক অনুবাদ রেট-লিমিট করছে — এক মিনিট পর আবার চেষ্টা করো। নিজের কী সেট থাকলে রপ্তানি কার্ডে একটা টিক আছে যা এড়িয়ে যায়।"
+  },
+  "exportNoCues": {
+    "message": "ডাউনলোড করার সাবটাইটেল নেই — কয়েক সেকেন্ড চালাও যাতে ক্যাপশন লোড হয়, তারপর আবার চেষ্টা করো।"
+  },
+  "exportNotYoutube": {
+    "message": "রপ্তানি করতে একটা YouTube ভিডিও পেজ খোলো।"
+  },
+  "exportFailed": {
+    "message": "রপ্তানি হয়নি — পেজ রিফ্রেশ করে আবার চেষ্টা করো।"
+  },
+  "updateNotesLabel": {
+    "message": "আপডেটের পর রিলিজ নোট খোলো"
+  },
+  "trackWarnDubOnly": {
+    "message": "শোনো: এই ভিডিওতে শুধু AI-ডাব করা অটো ক্যাপশন আছে (মূল ভাষার ট্র্যাক নেই), তাই দুই ভাষার সাবটাইটেল অডিওর সাথে নাও মিলতে পারে।"
+  },
+  "whatsNewRow": {
+    "message": "v$VER$-এ নতুন কী আছে →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "এই ভিডিও: নিজের কী ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "পরিষেবাদাতা"
+  },
+  "byoSiteLabel": {
+    "message": "সাইট"
+  },
+  "byoSiteHint": {
+    "message": "যে সাইটে সাইন আপ করেছো সেটা বেছে নাও — দুটো আলাদা প্ল্যাটফর্ম, একটার কী অন্যটা নেয় না।"
+  },
+  "byoSiteGlobal": {
+    "message": "আন্তর্জাতিক"
+  },
+  "byoSiteCn": {
+    "message": "মূল ভূখণ্ড চীন"
+  },
+  "byoBaseLabel": {
+    "message": "এন্ডপয়েন্ট অ্যাড্রেস"
+  },
+  "byoModelLabel": {
+    "message": "মডেল"
+  },
+  "byoModelRequired": {
+    "message": "দরকার: মডেলের নাম"
+  },
+  "byoKeyLabel": {
+    "message": "API কী"
+  },
+  "byoKeyClear": {
+    "message": "মুছো"
+  },
+  "byoKeyReplace": {
+    "message": "বদলাও"
+  },
+  "byoKeyCleared": {
+    "message": "এই মেশিনে রাখা কী মুছে ফেলা হয়েছে।"
+  },
+  "byoKeyClearedMoved": {
+    "message": "এই মেশিনে রাখা কী মুছে ফেলা হয়েছে। সেটাই চলছিল, তাই অনুবাদ এখন $NAME$ দিয়ে যাচ্ছে।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "সংরক্ষণ ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "নিজস্ব (OpenAI-কম্প্যাটিবল)"
+  },
+  "byoTest": {
+    "message": "সংরক্ষণ করে পরীক্ষা করো"
+  },
+  "byoTesting": {
+    "message": "পরীক্ষা হচ্ছে…"
+  },
+  "byoTestOk": {
+    "message": "কানেক্ট হয়েছে। নমুনা: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "কী নাও"
+  },
+  "byoGuide": {
+    "message": "সেটআপে সাহায্য লাগবে?"
+  },
+  "byoLocalHint": {
+    "message": "কী এই ব্রাউজারে, এই মেশিনেই থাকে — কখনো আপলোড হয় না। সাবটাইটেল টেক্সট শুধু তুমি যে পরিষেবাদাতা বেছেছো সেখানে যায়।"
+  },
+  "byoErrNoProvider": {
+    "message": "আগে একটা পরিষেবাদাতা বেছে নাও।"
+  },
+  "byoErrNoKey": {
+    "message": "আগে API কী লিখে «সংরক্ষণ করে পরীক্ষা করো» চাপো।"
+  },
+  "byoErrNoModel": {
+    "message": "আগে একটা মডেল বেছে নাও — তালিকা থেকে নাও, অথবা «আমার কী দিয়ে মডেল তালিকা» চাপো।"
+  },
+  "byoErrNoModelEmpty": {
+    "message": "এই পরিষেবাদাতা কোনো তালিকা দেয় না। আগে অ্যাভেইলেবল মডেল আনো, অথবা নিজে মডেলের নাম লিখো।"
+  },
+  "byoErrNotApi": {
+    "message": "সেই অ্যাড্রেস API না, একটা ওয়েব পেজ পাঠিয়েছে — সাধারণত সাইন-ইন ওয়াল বা নেটওয়ার্ক যে রিকোয়েস্ট আটকায়। অ্যাড্রেস চেক করো, অথবা অন্য নেটওয়ার্ক চেষ্টা করো।"
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API বেস URL পুরো https:// অ্যাড্রেস হতে হবে।"
+  },
+  "byoErrUrlHasKey": {
+    "message": "অ্যাড্রেসের ভিতরে একটা কী আছে। অ্যাড্রেস থেকে বের করে API কী ফিল্ডে পেস্ট করো — অ্যাড্রেস ব্রাউজার অ্যাকাউন্টে সিঙ্ক হয়, কী ফিল্ড হয় না।"
+  },
+  "byoErrNoPerm": {
+    "message": "সেই API হোস্টে যাওয়ার অনুমতি ছাড়া এক্সটেনশন কানেক্ট করতে পারে না। আবার «সংরক্ষণ করে পরীক্ষা করো» চেপে অনুমতি দাও।"
+  },
+  "byoErrAuth": {
+    "message": "কী রিজেক্ট হয়েছে (401) — পুরোটা কপি হয়েছে কি না আর এখনো অ্যাকটিভ কি না দেখো।"
+  },
+  "byoErrForbiddenLocal": {
+    "message": "এই মেশিনের সার্ভার কলটা রিফিউজ করেছে (403)। সম্ভবত এক্সটেনশনকে অনুমতি দেওয়া হয়নি: Ollama-তে OLLAMA_ORIGINS, LM Studio-তে CORS সুইচ।"
+  },
+  "byoErrForbidden": {
+    "message": "পরিষেবাদাতা এই কল রিফিউজ করেছে (403)। সাধারণত কী ঠিক আছে, অ্যাকাউন্টটাই করতে পারছে না — বকেয়া ব্যালেন্স, আইডেন্টিটি চেক বাকি, মডেল চালু নেই, অথবা রিজিয়ন। পরিষেবাদাতার কনসোলে অ্যাকাউন্ট দেখো।"
+  },
+  "byoErrListAuth": {
+    "message": "এই কী দিয়ে তালিকা পড়া যায় না। পরিষেবাদাতার ড্যাশবোর্ডে সেই পারমিশন দাও, তারপর আবার আনো।",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "পরিষেবাদাতা রেট-লিমিট করছে — গতি কমিয়ে নিজেই আবার চেষ্টা করছে।"
+  },
+  "byoErrLimitedTest": {
+    "message": "পরিষেবাদাতা রেট-লিমিট করছে। একটু অপেক্ষা করে আবার চাপো।"
+  },
+  "byoErrQuota": {
+    "message": "এই অ্যাকাউন্টের এই পিরিয়ডের ক্রেডিট বা কোটা শেষ — চালিয়ে যেতে পরিষেবাদাতার কনসোলে টপ আপ করো।"
+  },
+  "byoErrBadRequest": {
+    "message": "এন্ডপয়েন্ট রিকোয়েস্ট রিফিউজ করেছে — মডেলের নাম বা বেস URL ভুল হতে পারে।"
+  },
+  "byoErrBadShape": {
+    "message": "মডেল লাইন ধরে লাইন উত্তর দেয়নি, ছোট করে আবার চেষ্টাও ফেল করেছে — অন্য মডেল চেষ্টা করো।"
+  },
+  "byoErrReasoning": {
+    "message": "সেই মডেল শুধু চিন্তার ধাপ পাঠিয়েছে, অনুবাদ না — নন-থিঙ্কিং মডেল বেছে নাও।"
+  },
+  "byoErrNetfail": {
+    "message": "সেই এন্ডপয়েন্টে পৌঁছানো যাচ্ছে না (নেটওয়ার্ক বা রিজিয়নের সীমা)।"
+  },
+  "byoErrNetfailLocal": {
+    "message": "সেই অ্যাড্রেসে পৌঁছানো যাচ্ছে না: হয় সার্ভার চলছে না, নাহলে এক্সটেনশনকে অনুমতি দেওয়া হয়নি (Ollama-তে OLLAMA_ORIGINS, LM Studio-তে CORS সুইচ)।"
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "এই পরিষেবাদাতা তোমার বেছে নেওয়া ভাষায় অনুবাদ করতে পারে না — ভাষা বা ইঞ্জিন বদলাও।"
+  },
+  "byoErrFailed": {
+    "message": "কানেকশন হয়নি। একটু পরে আবার চেষ্টা করো।"
+  },
+  "optTitle": {
+    "message": "অনুবাদ সার্ভিস সেটআপ"
+  },
+  "optIntro": {
+    "message": "একটা পরিষেবাদাতা বেছে নিজের API কী পেস্ট করো।"
+  },
+  "optPricingLink": {
+    "message": "দাম ও ফ্রি টিয়ার"
+  },
+  "optFetchModels": {
+    "message": "আমার কী দিয়ে মডেল তালিকা"
+  },
+  "optFetchModelsNoKey": {
+    "message": "অ্যাভেইলেবল মডেল তালিকা"
+  },
+  "optFetching": {
+    "message": "তালিকা হচ্ছে…"
+  },
+  "optModelsFetched": {
+    "message": "$N$টা মডেল পাওয়া গেছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” এই পরিষেবাদাতার তালিকায় আর নেই — উপরে অন্যটা বেছে নাও।",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "মডেল তালিকা হয়নি — নিজে মডেলের নাম লিখো।"
+  },
+  "optModelCustom": {
+    "message": "নিজস্ব…"
+  },
+  "optNoModelsYet": {
+    "message": "এখনো মডেল তালিকা নেই — কী দিয়ে আনো, অথবা নাম লিখো।"
+  },
+  "optNoModelsYetNoKey": {
+    "message": "এখনো মডেল তালিকা নেই — আনো, অথবা নাম লিখো।"
+  },
+  "optShowKey": {
+    "message": "দেখাও"
+  },
+  "optRecommended": {
+    "message": "সুপারিশ"
+  },
+  "optConfigured": {
+    "message": "সেটআপ আছে"
+  },
+  "optInUse": {
+    "message": "ব্যবহারে"
+  },
+  "optAfterSetup": {
+    "message": "এখানে শেষ হলে এক্সটেনশন পপআপ খুলে ইঞ্জিন «নিজের কী» করে দাও।"
+  },
+  "optTrademark": {
+    "message": "সব পরিষেবাদাতার নাম ও লোগো তাদের নিজ নিজ মালিকের ট্রেডমার্ক। এই এক্সটেনশন তাদের কোনোটার সাথে যুক্ত না, এন্ডোর্সড বা স্পন্সরডও না; মার্কগুলো শুধু তুমি যে API বেছেছো সেটা চেনার জন্য দেখানো হয়।"
+  },
+  "optSections": {
+    "message": "সেকশন"
+  },
+  "optNavSetup": {
+    "message": "অনুবাদ সার্ভিস"
+  },
+  "optNavStart": {
+    "message": "শুরু করা"
+  },
+  "optNavAbout": {
+    "message": "সম্পর্কে"
+  },
+  "startIntro": {
+    "message": "চারটে কথা। ব্যবহার করতে কিছু সেটআপ করতে হয় না।"
+  },
+  "startS1Title": {
+    "message": "ভিডিও খোলো — এই যা"
+  },
+  "startS1Body": {
+    "message": "সাবটাইটেল আছে এমন যেকোনো YouTube ভিডিও: দুই লাইন নিজে থেকেই আসে।"
+  },
+  "startS2Title": {
+    "message": "যেখানে খুশি সেখানে রাখো"
+  },
+  "startS2Body": {
+    "message": "সাবটাইটেল বক্সের উপর-বামের গ্রিপ ধরে যেখানে খুশি টানো। জায়গায় ফেরাতে গ্রিপে ডাবল-ক্লিক করো।"
+  },
+  "startS2Alt": {
+    "message": "প্লেয়ার ডায়াগ্রাম: সাবটাইটেল বক্সের উপর-বাম কোণায় ছয়-ডটের গ্রিপ, অন্য জায়গায় টানা হচ্ছে"
+  },
+  "startS3Title": {
+    "message": "ভালো অনুবাদ চাইলে"
+  },
+  "startS3Body": {
+    "message": "নিজের API কী যোগ করো: পুরো বাক্যে অনুবাদ, আর রপ্তানিে পুরো ভিডিওর অনুবাদ।"
+  },
+  "startGoSetup": {
+    "message": "অনুবাদ সার্ভিস সেটআপ"
+  },
+  "aboutIntro": {
+    "message": "এটা কী, আর তোমার টেক্সট কোথায় যায়।"
+  },
+  "aboutVersion": {
+    "message": "ভার্সন"
+  },
+  "uiLocaleLabel": {
+    "message": "ইন্টারফেসের ভাষা"
+  },
+  "uiLocaleAuto": {
+    "message": "অটো — ব্রাউজার অনুসরণ"
+  },
+  "uiLocaleHint": {
+    "message": "এই এক্সটেনশনের নিজের মেনু ও সেটিংসের ভাষা। ভিডিওর উপর আঁকা কিছু লেবেল এখনো ব্রাউজারের ভাষা অনুসরণ করে। অনুবাদের ভাষা পপআপে বেছে নাও; «অনুবাদের ভাষা» প্যান শুধু ঠিক করে পপআপে কোন ভাষাগুলো থাকবে।"
+  },
+  "cmdToggleSubs": {
+    "message": "সাবটাইটেল চালু বা বন্ধ"
+  },
+  "cmdToggleTts": {
+    "message": "জোরে পড়া চালু বা বন্ধ"
+  },
+  "cmdToggleTransLine": {
+    "message": "অনুবাদের লাইন দেখাও বা লুকাও"
+  },
+  "optShortcutsLabel": {
+    "message": "কীবোর্ড শর্টকাট"
+  },
+  "optShortcutsOpen": {
+    "message": "শর্টকাট সেট করো"
+  },
+  "optShortcutsHint": {
+    "message": "এই কিগুলো Chrome রাখে, এক্সটেনশন না। শুরুতে কিছু বাঁধা নেই; তিনটে জিনিস বাঁধা যায়: সাবটাইটেল চালু/বন্ধ, জোরে পড়া চালু/বন্ধ, আর অনুবাদের লাইন দেখানো বা লুকানো।"
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome এখান থেকে সেই পেজ খোলেনি — অ্যাড্রেস বারে chrome://extensions/shortcuts পেস্ট করো।"
+  },
+  "startTargetLabel": {
+    "message": "অনুবাদের ভাষা"
+  },
+  "startTargetHint": {
+    "message": "এক্সটেনশন ইনস্টলের সময় ব্রাউজারের ভাষা পছন্দ থেকে অনুমান। অনুমান ভুল হলে এখানে বদলাও — পপআপ থেকে যেকোনো সময় বদলানো যায়।"
+  },
+  "aboutBlurb": {
+    "message": "YouTube-এর জন্য আরেকটা সাবটাইটেল লাইন: এক লাইনে মূল, অন্য লাইনে অনুবাদ, ফন্ট-রঙ-জায়গা তোমার ইচ্ছেমতো। ওপেন সোর্স, ফ্রি, কোনো অ্যাড নেই।"
+  },
+  "aboutPrivacy": {
+    "message": "এই এক্সটেনশনের আমাদের কোনো সার্ভার নেই, কোনো স্ট্যাটিসটিক্সও নেয় না। সাবটাইটেল টেক্সট শুধু তুমি বেছে নেওয়া সার্ভিসে যায়: যে অনুবাদ সার্ভিস বেছেছো, আর চালু করলে জোরে পড়ার স্পিচ পরিষেবাদাতা এবং সারাংশের পরিষেবাদাতা। নিজের কী থাকলে সেটা শুধু এই কম্পিউটারেই থাকে।"
+  },
+  "aboutChangelog": {
+    "message": "চেঞ্জলগ"
+  },
+  "aboutRoadmap": {
+    "message": "রোডম্যাপ"
+  },
+  "optFeedbackLink": {
+    "message": "সমস্যা জানাও"
+  },
+  "popupByoConfigure": {
+    "message": "সেটআপ…"
+  },
+  "popupSummarize": {
+    "message": "এই ভিডিওর সারাংশ",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "সেটআপ হয়নি"
+  },
+  "popupByoPick": {
+    "message": "অনুবাদ পরিষেবাদাতা"
+  },
+  "popupByoUntested": {
+    "message": "পরীক্ষা হয়নি"
+  },
+  "popupModelPick": {
+    "message": "অনুবাদ মডেল"
+  },
+  "popupModelMore": {
+    "message": "আরও মডেল…"
+  },
+  "popupModelFetch": {
+    "message": "সেটিংসে মডেল আনো"
+  },
+  "popupModelSwitched": {
+    "message": "এখন থেকে: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "মডেল বাছা হয়নি"
+  },
+  "exportUsesYouTube": {
+    "message": "ডাউনলোড YouTube-এর নিজের পুরো-ট্র্যাক অনুবাদ ব্যবহার করে — ফ্রি, আর তোমার API কী খরচ হয় না।"
+  },
+  "exportUseByo": {
+    "message": "নিজের কী দিয়ে অনুবাদ (কাছাকাছি মিল, কোটা খরচ)"
+  },
+  "exportByoNote": {
+    "message": "পুরো ট্র্যাক তোমার পরিষেবাদাতা তোমার কী দিয়ে অনুবাদ করবে। কিছু পাঠানোর আগে একটা হিসাব দেখবে।"
+  },
+  "exportConfirm": {
+    "message": "$NAME$ দিয়ে $N$টা সাবটাইটেল লাইন অনুবাদ — তোমার নিজের কোটায় প্রায় $REQ$টা রিকোয়েস্ট। পুরো ট্র্যাক সেই পরিষেবাদাতার কাছে ব্রাউজার ছেড়ে যায়; প্লেব্যাকে শুধু যে অংশগুলো সত্যি দেখো সেগুলোই যায়।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "অনুবাদ ও ডাউনলোড"
+  },
+  "exportConfirmBack": {
+    "message": "বাতিল"
+  },
+  "exportStop": {
+    "message": "থামাও"
+  },
+  "exportStopping": {
+    "message": "থামাচ্ছে…"
+  },
+  "exportProgress": {
+    "message": "অনুবাদ হচ্ছে… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$টা চাঙ্ক YouTube-এর অনুবাদে ফিরে গেছে",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "ডাউনলোড বাতিল।"
+  },
+  "ftSite": {
+    "message": "ওয়েবসাইট"
+  },
+  "ftSiteLabel": {
+    "message": "সাইট"
+  },
+  "ftFeedbackLabel": {
+    "message": "ফিডব্যাক"
+  },
+  "ftReviewLabel": {
+    "message": "রেট"
+  },
+  "ftGithub": {
+    "message": "GitHub-এ সোর্স কোড"
+  },
+  "ftFeedback": {
+    "message": "ফিডব্যাক পাঠাও বা বাগ জানাও"
+  },
+  "ftReview": {
+    "message": "Chrome Web Store-এ রেট দাও"
+  },
+  "optNeedKey": {
+    "message": "এখনো কী নেই — একটা না যোগ করলে এই পরিষেবাদাতা ব্যবহার করা যায় না।"
+  },
+  "optNeedBase": {
+    "message": "এখনো এন্ডপয়েন্ট অ্যাড্রেস নেই — একটা না লিখলে এই পরিষেবাদাতা ব্যবহার করা যায় না।"
+  },
+  "optBaseHint": {
+    "message": "বেস URL বা পুরো এন্ডপয়েন্ট দুটোই চলে, যেমন https://example.com/v1 বা https://example.com/v1/chat/completions। এই মেশিনে Ollama বা LM Studio-এর জন্য http://localhost:11434/v1 ঠিক আকৃতি। কী খালি রাখা যায়; সাধারণ http শুধু লুপব্যাক অ্যাড্রেসে চলে।"
+  },
+  "startS1Alt": {
+    "message": "প্লেয়ার ডায়াগ্রাম: ছবির নিচে একটা মূল লাইন আর একটা অনুবাদ লাইন"
+  },
+  "startS3Alt": {
+    "message": "তুলনা: ফ্রি ইঞ্জিন এক বাক্য টুকরো করে অনুবাদ করে, নিজের কী পুরোটা বুঝে আবার ভাগ করে"
+  },
+  "startPicFree": {
+    "message": "ফ্রি ইঞ্জিন"
+  },
+  "startPicFreeNote": {
+    "message": "এক বাক্য, টুকরো করা"
+  },
+  "startPicByo": {
+    "message": "নিজের কী"
+  },
+  "startPicByoNote": {
+    "message": "পুরোটা বুঝে, আবার ভাগ"
+  },
+  "startS4Title": {
+    "message": "প্লেয়ারে একটা ছোট মেনু আছে"
+  },
+  "startS4Body": {
+    "message": "সাবটাইটেল বাটনের পাশের ছোট তীর একটা মেনু খোলে: সাবটাইটেল, জোরে পড়া, লেখা নির্বাচন, ভিডিওর সারাংশ আর সেটিংস — প্লেয়ার না ছেড়ে।"
+  },
+  "startS4Alt": {
+    "message": "প্লেয়ার ছবি: নিচের ডানে সাবটাইটেল বাটনের পাশে ছোট তীর, একটা ছোট মেনু খোলে"
+  },
+  "menuHintBubble": {
+    "message": "জোরে পড়া, ভিডিওর সারাংশ, লেখা নির্বাচন — সব এই ছোট তীরের পেছনে"
+  },
+  "troubleTitle": {
+    "message": "কিছু গণ্ডগোল"
+  },
+  "troubleStep1": {
+    "message": "আগে পপআপের সুইচ দেখো — বন্ধ থাকলে পুরো সাবটাইটেল স্তর আসে না।"
+  },
+  "troubleStep2": {
+    "message": "এই ভিডিওতে সাবটাইটেল আছে কি? প্লেয়ারের CC বাটন চেষ্টা করো: মূল না থাকলে অনুবাদ করার কিছু নেই।"
+  },
+  "troubleStep3": {
+    "message": "একটা জনপ্রিয় ভিডিও চেষ্টা করো। অন্য সব চলে আর শুধু এটা না চললে, সাধারণত এই ভিডিওর সাবটাইটেল ট্র্যাকের ব্যাপার।"
+  },
+  "troubleDiagHint": {
+    "message": "এখনো আটকে? ডায়াগনস্টিক ইমেইল বা ইস্যুতে পেস্ট করো — এতে ভার্সন, ইঞ্জিনের অবস্থা আর এই ট্যাব কী করছে থাকে, এক-দুই রাউন্ড বাঁচে।"
+  },
+  "langManage": {
+    "message": "ভাষা ম্যানেজ…"
+  },
+  "optNavLangs": {
+    "message": "অনুবাদের ভাষা"
+  },
+  "optNavReadaloud": {
+    "message": "জোরে পড়া"
+  },
+  "ttsIntro": {
+    "message": "অনুবাদের লাইন জোরে পড়ে শোনাও। ব্রাউজারের নিজের ভয়েসে কোনো কী লাগে না; ক্লাউড পরিষেবাদাতা এখানে সেটআপ ও পরীক্ষা হয়।"
+  },
+  "ttsVoiceLabel": {
+    "message": "ভয়েস"
+  },
+  "ttsPreview": {
+    "message": "পূর্বরূপ"
+  },
+  "ttsPreviewPlaying": {
+    "message": "বাজছে…"
+  },
+  "ttsPreviewFail": {
+    "message": "বাজেনি — কী চেক করে «সংরক্ষণ করে পরীক্ষা করো» চাপো"
+  },
+  "ttsFetchVoices": {
+    "message": "কী দিয়ে এই ভাষার পুরো তালিকা আনো"
+  },
+  "ttsFetching": {
+    "message": "আনছে…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "এগুলোই তোমার কী-এর এই ভাষার সব $N$টা ভয়েস, পুরনো Standard / Wavenet টিয়ারসহ। শুধু এই ভাষায় লাগে; রোজকার ভয়েসে ফিরতে উপরের লাইনে ক্লিক করো, সেগুলো ভাষা বদলালেও সাথে যায়। এই তালিকা যেকোনো সময় আবার আনা যায়।",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "রোজকার ভয়েসে ফিরো (ভাষার সাথে যায়)"
+  },
+  "ttsVoicesNone": {
+    "message": "এই পরিষেবাদাতার এই ভাষায় বাড়তি ভয়েস নেই — বিল্ট-ইনগুলো চলবে।"
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$টা ভয়েস এসেছে — উপরের ফিল্ডের নিচে সাজেশন।",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "নারী"
+  },
+  "ttsVoiceMale": {
+    "message": "পুরুষ"
+  },
+  "ttsTestOk": {
+    "message": "কানেক্ট: পরীক্ষা অডিও $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "ব্রাউজারের নিজের বেশিরভাগ ভয়েস এই কম্পিউটারে ইনস্টল, লাইনটা এখানেই বলে। কিছু না: Chrome অনলাইন ভয়েসও দেয় — যাদের নাম \"Google\" দিয়ে শুরু — সেগুলোর জন্য ব্রাউজার লাইনটা তার মেকারের কাছে পাঠায়। ক্লাউড পরিষেবাদাতাে, বলার টেক্সট শুধু তুমি যে পরিষেবাদাতা বেছেছো সেখানে যায়, আর কী এই মেশিনেই থাকে।"
+  },
+  "ttsEnableLabel": {
+    "message": "ভিডিওতে অনুবাদ জোরে পড়ো"
+  },
+  "ttsEnableHint": {
+    "message": "চালু থাকলে প্রতিটা সাবটাইটেলের অনুবাদ আসার সাথে সাথে পড়া হয়; যে লাইনের অনুবাদ সময়ে তৈরি হয়নি সেটা স্কিপ হয়, পরে ধরে নেওয়া হয় না। একটা লাইন পড়ার সময় ভিডিওর নিজের অডিও নিচের লেভেলে নেমে যায়। লম্বা লাইন ছবি একটু ধীর করে আর পরের ফাঁক ধার নেয় — ক্লাউড ভয়েসেও, ব্রাউজারের নিজের ভয়েসেও; নিচের সুইচ প্রতিটা লাইন শেষ না হওয়া পর্যন্ত ধীর রাখে।"
+  },
+  "langsIntro": {
+    "message": "পপআপে কোন অনুবাদের ভাষা থাকবে।"
+  },
+  "langsKept": {
+    "message": "পপআপে দেখা যাবে"
+  },
+  "langsKeptHint": {
+    "message": "এগুলো পপআপের অনুবাদ-ভাষার মেনুতে আসে। অন্তত একটা রাখো।"
+  },
+  "langsMore": {
+    "message": "অন্য ভাষা"
+  },
+  "langsMoreHint": {
+    "message": "+ চাপলে একটা যোগ হয়। তালিকা ফ্রি ইঞ্জিন আর DeepL যে ভাষা সাপোর্ট করে সেগুলো অনুসরণ করে।"
+  },
+  "langsReset": {
+    "message": "পূর্বনির্ধারিত ফেরাও"
+  },
+  "langsResetDone": {
+    "message": "পূর্বনির্ধারিত তালিকায় ফিরেছে।"
+  },
+  "langsAddAria": {
+    "message": "যোগ"
+  },
+  "langsRemoveAria": {
+    "message": "সরাও"
+  },
+  "langsLastOne": {
+    "message": "অন্তত একটা রাখো"
+  },
+  "langsAllAdded": {
+    "message": "সব ভাষা ইতিমধ্যে তোমার তালিকায় আছে।"
+  },
+  "langsAdded": {
+    "message": "$NAME$ যোগ হয়েছে",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "সেটাই চলছিল, তাই অনুবাদের ভাষা এখন $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "চীনা সেরিফ"
+  },
+  "fontCjkRound": {
+    "message": "চীনা গোল"
+  },
+  "ttsVolLabel": {
+    "message": "জোরে পড়ার ভলিউম"
+  },
+  "ttsGroupPlayback": {
+    "message": "প্লেব্যাক"
+  },
+  "ttsDuckLabel": {
+    "message": "পড়ার সময় আসল অডিও"
+  },
+  "ttsDuckShort": {
+    "message": "আসল অডিও"
+  },
+  "ttsStatusSpeaking": {
+    "message": "পড়ছে"
+  },
+  "ttsStatusOn": {
+    "message": "জোরে পড়া চালু"
+  },
+  "ttsOpenSettings": {
+    "message": "জোরে পড়ার সেটিংস"
+  },
+  "ttsStatusCounts": {
+    "message": "এই ভিডিও $N$ লাইন · $M$ স্কিপ",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "এখানে $N$ লাইন · $M$ স্কিপ ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "অনুবাদ সময়ে তৈরি হয়নি"
+  },
+  "ttsSkipSilent": {
+    "message": "কোনো সাউন্ড আসেনি"
+  },
+  "ttsRegionLabel": {
+    "message": "সার্ভিস রিজিয়ন"
+  },
+  "ttsErrNoRegion": {
+    "message": "আগে তোমার Azure কী-এর সার্ভিস রিজিয়ন লিখো (যেমন eastus)।"
+  },
+  "ttsNoSynth": {
+    "message": "এই কম্পিউটারে বলার মতো কোনো ভয়েস নেই।"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "এই কম্পিউটারে $NAME$ পড়ার ভয়েস নেই। নিচের তালিকা অন্য ভাষার ভয়েস — একটা বেছে নিলে সেই ভাষার উচ্চারণে পড়া হবে।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "এই কম্পিউটারের ভয়েস খুঁজছে…"
+  },
+  "ttsErrRefused": {
+    "message": "পরিষেবাদাতা এই রিকোয়েস্ট রিফিউজ করেছে — অন্য ভয়েস চেষ্টা করো।"
+  },
+  "ttsErrNoAudio": {
+    "message": "অডিও আসেনি — আবার চেষ্টা করো, অথবা অন্য ভয়েস নাও।"
+  },
+  "startPicChop1": {
+    "message": "আছে দুটো বড়",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "কারণ একটা হলো",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "দুটো বড় কারণ আছে,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "প্রথমটা হলো…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "আরও ভয়েস…"
+  },
+  "popupVoiceNone": {
+    "message": "ভয়েস বাছা হয়নি"
+  },
+  "ttsRobotVoices": {
+    "message": "রোবটিক",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "সাবটাইটেল লেখা বেছে কপি করতে দাও",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "লেখা নির্বাচন",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "সারাংশ",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "ভিডিওর সারাংশ",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "বন্ধ",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "এই ভিডিওতে ব্যবহারযোগ্য সাবটাইটেল ট্র্যাক নেই।",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "সারাংশ করতে সাবটাইটেল আবার চালু করো — সারাংশ সাবটাইটেল ট্র্যাক থেকে তৈরি হয়।"
+  },
+  "sumNeedKey": {
+    "message": "সারাংশের জন্য নিজের সার্ভিস লাগে: অনুবাদ প্যানে কী সহ যেকোনো পরিষেবাদাতা, অথবা এই মেশিনে একটা লোকাল মডেল। ফ্রি ইঞ্জিন শুধু অনুবাদ করে। সারাংশ করে না।",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "অনুবাদ সার্ভিস সেটআপ",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "সারাংশ করো",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "আবার সারাংশ"
+  },
+  "sumFail": {
+    "message": "সারাংশ হয়নি। একটু পরে আবার চেষ্টা করো।",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "পুরো সাবটাইটেল ট্র্যাক $PROVIDER$-এ যাবে, $PARTS$ ভাগে, তোমার নিজের কোটায়।",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "সারাংশ হচ্ছে… ভাগ $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ ভাগের সারাংশ হয়নি; বাকিটা উপরে।",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "সাবটাইটেল",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube-এর নিজের অনুবাদ এখন রেট-লিমিট; স্মার্ট বাক্য (Google) ভর্তি করছে। পরে নিজেই আবার চেষ্টা করবে।",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "অনুবাদের এন্ডপয়েন্ট রেট-লিমিট করছে — প্রায় $SECONDS$ সে. পরে আবার চালু।",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "বেস URL বা পুরো এন্ডপয়েন্ট দুটোই চলে, যেমন http://localhost:8880/v1 বা http://localhost:8880/v1/audio/speech (Kokoro বা openai-edge-tts-এর মতো লোকাল স্পিচ সার্ভার)। কী খালি রাখা যায়; সাধারণ http শুধু লুপব্যাক অ্যাড্রেসে চলে।"
+  },
+  "optTtsNeedUrl": {
+    "message": "এখনো এন্ডপয়েন্ট অ্যাড্রেস নেই — একটা না যোগ করলে এই পরিষেবাদাতা ব্যবহার করা যায় না।"
+  },
+  "ttsSkipRefused": {
+    "message": "পরিষেবাদাতা সেই রিকোয়েস্ট রিফিউজ করেছে"
+  },
+  "ttsSkipNotSet": {
+    "message": "এই কম্পিউটারে সেটআপ হয়নি"
+  },
+  "ttsSkipNoVoice": {
+    "message": "এই ভাষার ভয়েস নেই"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ এখন বলতে পারছে না। উপরের সারিতে অন্যটা বেছে নাও — ব্রাউজারের নিজের ভয়েস সেই তালিকায় আছে।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "সাবটাইটেল ট্র্যাক এখনো আসেনি — নিজেই আবার চেষ্টা করছে। তাড়া থাকলে পেজ রিফ্রেশ করে এখনই চেষ্টা করো।"
+  },
+  "ttsCompleteLabel": {
+    "message": "প্রতিটা লাইন শেষ করো (ঘন জায়গায় ছবি ধীর)"
+  },
+  "ttsCompleteHint": {
+    "message": "বেশি স্পিডে লম্বা লাইন প্রায়ই শেষটা পরেরটার কাছে হারায়। এটা চালু থাকলে ছবি লাইনের দরকার মতো ধীর হয় — তোমার বেছে নেওয়া স্পিডের এক-চতুর্থাংশের নিচে নয় — আর ফাঁকে ফাঁকে উঠে আসে। ছবি এতটা ধীর থাকলে ভিডিওর নিজের অডিও তোমার সেট করা লেভেলেরও নিচে নামে, নিঃশব্দ পর্যন্ত।"
+  },
+  "ttsCompleteHintText": {
+    "message": "এই স্পিডে বেশ কয়েকটা লাইন কেটে যাচ্ছে। চালু করলে যেখানে দরকার ছবি ধীর হয়, যাতে আরও বেশি লাইন শেষ হয়।"
+  },
+  "ttsCompleteHintOn": {
+    "message": "চালু করো"
+  },
+  "ttsCompleteHintNever": {
+    "message": "আর দেখিও না"
+  },
+  "provLocalSpeechShort": {
+    "message": "ব্রাউজার"
+  },
+  "optNavFonts": {
+    "message": "সাবটাইটেল ফন্ট"
+  },
+  "fontsIntro": {
+    "message": "একটা তালিকা দুই সাবটাইটেল লাইনের জন্য; পপআপ লাইন অনুযায়ী বেছে নেয়। তালিকায় থাকা প্রতিটা ফন্ট এই কম্পিউটারে ইনস্টল।"
+  },
+  "fontsKept": {
+    "message": "পপআপে দেখা যাবে"
+  },
+  "fontsMore": {
+    "message": "অন্য ফন্ট"
+  },
+  "fontsOnly": {
+    "message": "শুধু যেগুলো আঁকতে পারে"
+  },
+  "fontsCounting": {
+    "message": "চেক হচ্ছে…"
+  },
+  "fontsSearch": {
+    "message": "ফন্টের নাম খোঁজো"
+  },
+  "fontsNoMatch": {
+    "message": "কোনো ফন্ট মিলেনি।"
+  },
+  "fontsKeptEmpty": {
+    "message": "পপআপের জন্য শুধু সিস্টেমের পূর্বনির্ধারিত বাকি।",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "সব ফন্ট ইতিমধ্যে তালিকায় আছে।"
+  },
+  "fontsReset": {
+    "message": "পূর্বনির্ধারিত ফেরাও"
+  },
+  "fontsResetDone": {
+    "message": "পূর্বনির্ধারিত তালিকা ফিরেছে।"
+  },
+  "fontsAdded": {
+    "message": "$NAME$ যোগ হয়েছে",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "পূর্বরূপ: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "পূর্বরূপ"
+  },
+  "fontsUnavailable": {
+    "message": "এই ব্রাউজার এক্সটেনশনকে ইনস্টল করা ফন্ট পড়তে দেয় না, তাই শুধু সিস্টেমের পূর্বনির্ধারিত বাছা যায়।"
+  },
+  "fontNoGlyphs": {
+    "message": "এই লাইন আঁকতে পারে না"
+  },
+  "fontNotHere": {
+    "message": "এই কম্পিউটারে নেই"
+  },
+  "fontsImport": {
+    "message": "ফন্ট ফাইল আমদানি…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; ফাইলটা ব্রাউজারে কপি হয়।"
+  },
+  "fontsImported": {
+    "message": "$NAME$ আমদানি হয়েছে",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "ব্রাউজারে সংরক্ষণ হয়নি; আবার চেষ্টা করো।",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "পপআপ থেকে $NAME$ সরানো হয়েছে।",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "এই তালিকা বাদ দাও",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "আমদানি করা ফন্ট",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "এটা এমন ফন্ট ফাইল না যা এই ব্রাউজার ব্যবহার করতে পারে।"
+  },
+  "fontsImportTooBig": {
+    "message": "ফাইলটা খুব বড় (সীমা $MB$ MB)।",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "আমদানি করা ফন্ট মুছো"
+  },
+  "fontsLangLabel": {
+    "message": "চেক"
+  },
+  "fontsLangRecent": {
+    "message": "সম্প্রতি দেখা"
+  },
+  "fontMoreRow": {
+    "message": "ফন্ট ম্যানেজ…"
+  },
+  "fontHiddenRow": {
+    "message": "আরও $N$টা এই লাইন আঁকতে পারে না",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

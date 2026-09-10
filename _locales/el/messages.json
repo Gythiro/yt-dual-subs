@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Δίγλωσσοι υπότιτλοι για το YouTube — πρωτότυπο και μετάφραση σε ένα επίπεδο χωρίς επικάλυψη."
+  },
+  "headerSub": {
+    "message": "YouTube™ · ένα επίπεδο"
+  },
+  "disclaimer": {
+    "message": "Δεν σχετίζεται με το YouTube ή την Google."
+  },
+  "enableTitle": {
+    "message": "Ενεργό / ανενεργό"
+  },
+  "openOptions": {
+    "message": "Ρυθμίσεις"
+  },
+  "enableAria": {
+    "message": "Ενεργοποίηση επέκτασης"
+  },
+  "previewTag": {
+    "message": "Προεπισκ."
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Η γρήγορη καφέ αλεπού"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "ιδανικό για κινέζικα",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Οι φωνές του περιηγητή σου (δωρεάν)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (τοπικά)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Ζωντανή προεπισκόπηση"
+  },
+  "secTranslation": {
+    "message": "Μετάφραση"
+  },
+  "targetLang": {
+    "message": "Γλώσσα μετάφρασης"
+  },
+  "backendLabel": {
+    "message": "Μηχανή"
+  },
+  "backendInfo": {
+    "message": "Πληροφορίες μηχανής"
+  },
+  "backendAuto": {
+    "message": "Αυτόματα (προτείνεται)"
+  },
+  "backendTlang": {
+    "message": "Όλο το κομμάτι (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Έξυπνες προτάσεις (Google)"
+  },
+  "backendByo": {
+    "message": "Δικό σου κλειδί (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Αυτόματα</b>: χρησιμοποιεί τη μετάφραση όλου του κομματιού του YouTube όταν το βίντεο την υποστηρίζει, και περνά σε έξυπνες προτάσεις όταν δεν την υποστηρίζει.<br><b>Όλο το κομμάτι</b>: η μετάφραση του ίδιου του YouTube· γραμμή με γραμμή. Η έντονη χρήση μπορεί να κάνει το YouTube να την περιορίσει για λίγο — η επέκταση περιμένει και ξαναρωτά.<br><b>Έξυπνες προτάσεις</b>: ξαναφτιάχνει σπασμένους υπότιτλους σε ολόκληρες προτάσεις και τους μεταφράζει μέσω του δωρεάν σημείου της Google — καλύτερη διατύπωση από όλο το κομμάτι σε μπερδεμένα κομμάτια, αλλά και εκεί η έντονη χρήση μπορεί να περιοριστεί· η επέκταση πέφτει ρυθμό και ξαναδοκιμάζει.<br><b>Δικό σου κλειδί</b>: στέλνει την ολοκληρωμένη πρόταση στον πάροχο που έχεις ρυθμίσει."
+  },
+  "backendGtxHint": {
+    "message": "Χρησιμοποιεί το δωρεάν σημείο της Google — η έντονη χρήση μπορεί να περιοριστεί για λίγο· η επέκταση ρυθμίζει τον ρυθμό και ξαναδοκιμάζει μόνη της."
+  },
+  "backendStatusTlang": {
+    "message": "Αυτό το βίντεο: μετάφραση όλου του κομματιού (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Αυτό το βίντεο: έξυπνες προτάσεις (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Το σημείο μετάφρασης περιορίζει τον ρυθμό — πέφτει ρυθμός και ξαναδοκιμάζει μόνη της. Οι γραμμές που έχουν ήδη μεταφραστεί συνεχίζουν να δουλεύουν."
+  },
+  "diagCopy": {
+    "message": "Αντιγραφή διαγνωστικών"
+  },
+  "diagCopied": {
+    "message": "Αντιγράφηκε — επικόλλησέ το σε email ή θέμα"
+  },
+  "diagCopyFail": {
+    "message": "Η αντιγραφή απέτυχε — βγάλε στιγμιότυπο αντί γι’ αυτό"
+  },
+  "backendStatusSame": {
+    "message": "Οι υπότιτλοι αυτού του βίντεο είναι ήδη στη γλώσσα μετάφρασής σου — δεν υπάρχει τίποτα να μεταφραστεί."
+  },
+  "backendStatusNoTrack": {
+    "message": "Δεν βρέθηκε κομμάτι υποτίτλων γι’ αυτό το βίντεο, οπότε δεν υπάρχει τίποτα να εμφανιστεί.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Άνοιξε ένα βίντεο στο YouTube και οι δύο γραμμές θα εμφανιστούν πάνω του. Αν βρίσκεσαι ήδη σε ένα, ανανέωσε την καρτέλα."
+  },
+  "secLayout": {
+    "message": "Διάταξη"
+  },
+  "secLineStyle": {
+    "message": "Στυλ γραμμής"
+  },
+  "secLineStyleHint": {
+    "message": "Γραμματοσειρά · Χρώμα · Μέγεθος"
+  },
+  "orderLabel": {
+    "message": "Σειρά"
+  },
+  "orderTransTop": {
+    "message": "Μετάφραση πάνω"
+  },
+  "orderOrigTop": {
+    "message": "Πρωτότυπο πάνω"
+  },
+  "positionLabel": {
+    "message": "Θέση"
+  },
+  "posTop": {
+    "message": "Πάνω"
+  },
+  "posCenter": {
+    "message": "Κέντρο"
+  },
+  "posBottom": {
+    "message": "Κάτω"
+  },
+  "posHint": {
+    "message": "Μπορείς επίσης να σύρεις το πλαίσιο υποτίτλων στο βίντεο"
+  },
+  "posTryDrag": {
+    "message": "δοκίμασέ το"
+  },
+  "posTryNoVideo": {
+    "message": "Άνοιξε πρώτα ένα βίντεο YouTube"
+  },
+  "resetPos": {
+    "message": "Επαναφορά θέσης"
+  },
+  "rowGap": {
+    "message": "Απόσταση γραμμών"
+  },
+  "tabTrans": {
+    "message": "Μετάφραση"
+  },
+  "tabOrig": {
+    "message": "Πρωτότυπο"
+  },
+  "lineTabsAria": {
+    "message": "Γραμμή υποτίτλου"
+  },
+  "lineShow": {
+    "message": "Εμφάνιση γραμμής"
+  },
+  "fontLabel": {
+    "message": "Γραμματοσειρά"
+  },
+  "fontSystem": {
+    "message": "Προεπιλογή συστήματος"
+  },
+  "fontMono": {
+    "message": "Monospace"
+  },
+  "fontCjk": {
+    "message": "Φιλική προς CJK"
+  },
+  "sizeLabel": {
+    "message": "Μέγεθος"
+  },
+  "colText": {
+    "message": "Κείμενο"
+  },
+  "colBg": {
+    "message": "Φόντο"
+  },
+  "colStroke": {
+    "message": "Περίγραμμα"
+  },
+  "colTextAria": {
+    "message": "Χρώμα κειμένου"
+  },
+  "colBgAria": {
+    "message": "Χρώμα φόντου"
+  },
+  "colStrokeAria": {
+    "message": "Χρώμα περιγράμματος"
+  },
+  "bgOpacity": {
+    "message": "Αδιαφάνεια φόντου"
+  },
+  "strokeOpacity": {
+    "message": "Αδιαφάνεια περιγράμματος"
+  },
+  "resetAll": {
+    "message": "Επαναφορά ρυθμίσεων"
+  },
+  "resetConfirmText": {
+    "message": "Αυτό καθαρίζει κάθε ρύθμιση, τα κλειδιά API που είναι αποθηκευμένα σε αυτόν τον υπολογιστή, και το μοντέλο και τη φωνή που έχουν κρατηθεί για κάθε πάροχο, και ξαναανάβει τις υποδείξεις πρώτης χρήσης. Τα πεδία παρόχων που έχεις ήδη επιτρέψει μένουν επιτρεμμένα, όπως και τα αρχεία γραμματοσειρών που έχεις εισαγάγει.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Κράτα τις ρυθμίσεις",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Επαναφορά όλων",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Απενεργοποίηση δίγλωσσων υποτίτλων"
+  },
+  "toggleTurnOn": {
+    "message": "Ενεργοποίηση δίγλωσσων υποτίτλων"
+  },
+  "handleTitle": {
+    "message": "Σύρε · διπλό κλικ"
+  },
+  "handleAria": {
+    "message": "Σύρε για να μετακινήσεις τους υπότιτλους, διπλό κλικ για επαναφορά"
+  },
+  "secExport": {
+    "message": "Εξαγωγή"
+  },
+  "exportContent": {
+    "message": "Περιεχόμενο"
+  },
+  "exportBi": {
+    "message": "Δίγλωσσο"
+  },
+  "exportOrig": {
+    "message": "Πρωτότυπο"
+  },
+  "exportTrans": {
+    "message": "Μετάφραση"
+  },
+  "exportSrt": {
+    "message": "Λήψη SRT"
+  },
+  "exportWorking": {
+    "message": "Δημιουργία…"
+  },
+  "exportDone": {
+    "message": "Οι υπότιτλοι κατέβηκαν"
+  },
+  "exportNoTrans": {
+    "message": "Δεν υπάρχει μετάφραση γι’ αυτό το βίντεο — δοκίμασε τη μηχανή Όλο το κομμάτι ή άλλη γλώσσα μετάφρασης."
+  },
+  "exportLimited": {
+    "message": "Το YouTube περιορίζει τώρα τη μετάφραση όλου του κομματιού — ξαναδοκίμασε σε ένα λεπτό. Με δικό σου κλειδί ρυθμισμένο, η κάρτα εξαγωγής προσφέρει ένα τικ που το παρακάμπτει."
+  },
+  "exportNoCues": {
+    "message": "Δεν υπάρχουν υπότιτλοι για λήψη — παίξε μερικά δευτερόλεπτα ώστε να φορτωθούν, και ξαναδοκίμασε."
+  },
+  "exportNotYoutube": {
+    "message": "Άνοιξε μια σελίδα βίντεο YouTube για εξαγωγή."
+  },
+  "exportFailed": {
+    "message": "Η εξαγωγή απέτυχε — ανανέωσε τη σελίδα και ξαναδοκίμασε."
+  },
+  "updateNotesLabel": {
+    "message": "Άνοιγμα σημειώσεων έκδοσης μετά από ενημερώσεις"
+  },
+  "trackWarnDubOnly": {
+    "message": "Προσοχή: αυτό το βίντεο έχει μόνο αυτόματους υπότιτλους από AI-ντουμπλάζ (χωρίς κομμάτι στην πρωτότυπη γλώσσα), οπότε οι δίγλωσσοι υπότιτλοι μπορεί να μην ταιριάζουν με τον ήχο."
+  },
+  "whatsNewRow": {
+    "message": "Δες τι νέο έχει το v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Αυτό το βίντεο: δικό σου κλειδί ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Πάροχος"
+  },
+  "byoSiteLabel": {
+    "message": "Ιστότοπος"
+  },
+  "byoSiteHint": {
+    "message": "Διάλεξε τον ιστότοπο όπου γράφτηκες — είναι δύο ξεχωριστές πλατφόρμες και το κλειδί της μιας δεν γίνεται δεκτό από την άλλη."
+  },
+  "byoSiteGlobal": {
+    "message": "Διεθνές"
+  },
+  "byoSiteCn": {
+    "message": "Ηπειρωτική Κίνα"
+  },
+  "byoBaseLabel": {
+    "message": "Διεύθυνση σημείου"
+  },
+  "byoModelLabel": {
+    "message": "Μοντέλο"
+  },
+  "byoModelRequired": {
+    "message": "Απαιτείται: όνομα μοντέλου"
+  },
+  "byoKeyLabel": {
+    "message": "Κλειδί API"
+  },
+  "byoKeyClear": {
+    "message": "Διαγραφή"
+  },
+  "byoKeyReplace": {
+    "message": "Αντικατάσταση"
+  },
+  "byoKeyCleared": {
+    "message": "Το κλειδί που ήταν αποθηκευμένο σε αυτό το μηχάνημα διαγράφηκε."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Το κλειδί που ήταν αποθηκευμένο σε αυτό το μηχάνημα διαγράφηκε. Εκείνο ήταν σε χρήση, οπότε η μετάφραση περνά τώρα από $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "αποθηκευμένο ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Προσαρμοσμένο (συμβατό με OpenAI)"
+  },
+  "byoTest": {
+    "message": "Αποθήκευση και δοκιμή"
+  },
+  "byoTesting": {
+    "message": "Δοκιμή…"
+  },
+  "byoTestOk": {
+    "message": "Σύνδεση. Δείγμα: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Πάρε κλειδί"
+  },
+  "byoGuide": {
+    "message": "Θέλεις βοήθεια με τη ρύθμιση;"
+  },
+  "byoLocalHint": {
+    "message": "Το κλειδί μένει σε αυτό το πρόγραμμα περιήγησης, σε αυτό το μηχάνημα — δεν ανεβαίνει ποτέ. Το κείμενο των υποτίτλων πάει μόνο στον πάροχο που διάλεξες."
+  },
+  "byoErrNoProvider": {
+    "message": "Διάλεξε πρώτα έναν πάροχο."
+  },
+  "byoErrNoKey": {
+    "message": "Γράψε πρώτα ένα κλειδί API και πάτα Αποθήκευση και δοκιμή."
+  },
+  "byoErrNoModel": {
+    "message": "Διάλεξε πρώτα ένα μοντέλο — πάρε ένα από τη λίστα, ή πάτα «Λίστα μοντέλων με το κλειδί μου»."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Αυτός ο πάροχος δεν δίνει λίστα. Φέρε πρώτα τα διαθέσιμα μοντέλα, ή γράψε το όνομα του μοντέλου εσύ."
+  },
+  "byoErrNotApi": {
+    "message": "Αυτή η διεύθυνση απάντησε με ιστοσελίδα, όχι με το API — συνήθως τοίχος σύνδεσης ή δίκτυο που παρεμβαίνει στα αιτήματα. Έλεγξε τη διεύθυνση, ή δοκίμασε άλλο δίκτυο."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "Το βασικό URL του API πρέπει να είναι πλήρης διεύθυνση https://."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Η διεύθυνση έχει κλειδί μέσα. Βγάλ’ το από τη διεύθυνση και κόλλησέ το στο πεδίο κλειδιού API — η διεύθυνση συγχρονίζεται με τον λογαριασμό του προγράμματος περιήγησης, το πεδίο του κλειδιού όχι."
+  },
+  "byoErrNoPerm": {
+    "message": "Χωρίς άδεια να φτάσει αυτόν τον διακομιστή API η επέκταση δεν μπορεί να συνδεθεί. Πάτα ξανά «Αποθήκευση και δοκιμή» και επίτρεψέ το."
+  },
+  "byoErrAuth": {
+    "message": "Το κλειδί απορρίφθηκε (401) — έλεγξε ότι αντιγράφηκε ολόκληρο και ότι είναι ακόμα ενεργό."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Ο διακομιστής σε αυτό το μηχάνημα αρνήθηκε την κλήση (403). Πιθανότατα δεν του έχει ειπωθεί να επιτρέπει την επέκταση: OLLAMA_ORIGINS για το Ollama, ο διακόπτης CORS στο LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Ο πάροχος αρνήθηκε αυτή την κλήση (403). Συνήθως το κλειδί είναι εντάξει και ο λογαριασμός δεν επιτρέπεται να την κάνει — απλήρωτο υπόλοιπο, έλεγχος ταυτότητας σε εκκρεμότητα, μοντέλο που δεν έχει ανοίξει, ή η περιοχή. Κοίτα τον λογαριασμό στην κονσόλα του παρόχου."
+  },
+  "byoErrListAuth": {
+    "message": "Αυτό το κλειδί δεν επιτρέπεται να διαβάσει τη λίστα. Δώσε του αυτή την άδεια στον πίνακα του παρόχου και φέρε ξανά.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Ο πάροχος περιορίζει τον ρυθμό — πέφτει ρυθμός και ξαναδοκιμάζει μόνη της."
+  },
+  "byoErrLimitedTest": {
+    "message": "Ο πάροχος περιορίζει τον ρυθμό. Περίμενε λίγο και πάτα ξανά."
+  },
+  "byoErrQuota": {
+    "message": "Αυτός ο λογαριασμός έχει ξεμείνει από πίστωση ή όριο για την τρέχουσα περίοδο — γέμισέ τον στην κονσόλα του παρόχου για να συνεχίσεις."
+  },
+  "byoErrBadRequest": {
+    "message": "Το σημείο αρνήθηκε το αίτημα — το όνομα μοντέλου ή το βασικό URL μπορεί να είναι λάθος."
+  },
+  "byoErrBadShape": {
+    "message": "Το μοντέλο δεν απάντησε γραμμή-γραμμή όπως ζητήθηκε, και οι μικρότερες επαναλήψεις απέτυχαν κι αυτές — δοκίμασε άλλο μοντέλο."
+  },
+  "byoErrReasoning": {
+    "message": "Αυτό το μοντέλο γύρισε μόνο την αλυσίδα σκέψης του και καμία μετάφραση — διάλεξε μοντέλο που δεν «σκέφτεται»."
+  },
+  "byoErrNetfail": {
+    "message": "Αδυναμία πρόσβασης σε αυτό το σημείο (δίκτυο ή περιορισμός περιοχής)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Αδυναμία πρόσβασης σε αυτή τη διεύθυνση: είτε ο διακομιστής δεν τρέχει, είτε δεν του έχει ειπωθεί να επιτρέπει την επέκταση (OLLAMA_ORIGINS για το Ollama, ο διακόπτης CORS στο LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Αυτός ο πάροχος δεν μπορεί να μεταφράσει στη γλώσσα που διάλεξες — άλλαξε γλώσσα ή μηχανή."
+  },
+  "byoErrFailed": {
+    "message": "Η σύνδεση απέτυχε. Δοκίμασε ξανά σε λίγο."
+  },
+  "optTitle": {
+    "message": "Ρύθμιση υπηρεσίας μετάφρασης"
+  },
+  "optIntro": {
+    "message": "Διάλεξε πάροχο και κόλλησε το δικό σου κλειδί API."
+  },
+  "optPricingLink": {
+    "message": "Τιμές και δωρεάν όριο"
+  },
+  "optFetchModels": {
+    "message": "Λίστα μοντέλων με το κλειδί μου"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Λίστα διαθέσιμων μοντέλων"
+  },
+  "optFetching": {
+    "message": "Λίστα…"
+  },
+  "optModelsFetched": {
+    "message": "Βρέθηκαν $N$ μοντέλα",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "Το «$MODEL$» δεν είναι πια στη λίστα αυτού του παρόχου — διάλεξε άλλο από πάνω.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Δεν έγινε λίστα μοντέλων — γράψε το όνομα του μοντέλου."
+  },
+  "optModelCustom": {
+    "message": "Προσαρμοσμένο…"
+  },
+  "optNoModelsYet": {
+    "message": "Δεν υπάρχει ακόμα λίστα μοντέλων — φέρε μία με το κλειδί σου, ή απλώς γράψε το όνομα."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Δεν υπάρχει ακόμα λίστα μοντέλων — φέρε μία, ή απλώς γράψε το όνομα."
+  },
+  "optShowKey": {
+    "message": "Εμφάνιση"
+  },
+  "optRecommended": {
+    "message": "προτείνεται"
+  },
+  "optConfigured": {
+    "message": "Ρυθμισμένο"
+  },
+  "optInUse": {
+    "message": "σε χρήση"
+  },
+  "optAfterSetup": {
+    "message": "Όταν τελειώσεις εδώ, άνοιξε το popup της επέκτασης και βάλε τη Μηχανή σε «Δικό σου κλειδί»."
+  },
+  "optTrademark": {
+    "message": "Όλα τα ονόματα και τα λογότυπα παρόχων είναι εμπορικά σήματα των αντίστοιχων κατόχων. Αυτή η επέκταση δεν σχετίζεται με, δεν εγκρίνεται ούτε χορηγείται από κανέναν τους· τα σήματα εμφανίζονται μόνο για να αναγνωρίζεται το API που διάλεξες."
+  },
+  "optSections": {
+    "message": "Ενότητες"
+  },
+  "optNavSetup": {
+    "message": "Υπηρεσία μετάφρασης"
+  },
+  "optNavStart": {
+    "message": "Ξεκίνημα"
+  },
+  "optNavAbout": {
+    "message": "Σχετικά"
+  },
+  "startIntro": {
+    "message": "Τέσσερα πράγματα. Δεν χρειάζεται να ρυθμίσεις τίποτα για να τη χρησιμοποιήσεις."
+  },
+  "startS1Title": {
+    "message": "Άνοιξε ένα βίντεο — αυτό είναι"
+  },
+  "startS1Body": {
+    "message": "Οποιοδήποτε βίντεο YouTube που έχει υπότιτλους: οι δύο γραμμές εμφανίζονται μόνες τους."
+  },
+  "startS2Title": {
+    "message": "Βάλ’ τες όπου θέλεις"
+  },
+  "startS2Body": {
+    "message": "Κράτα τη λαβή πάνω αριστερά στο πλαίσιο υποτίτλων και σύρ’ το όπου θέλεις. Διπλό κλικ στη λαβή για να γυρίσει στη θέση της."
+  },
+  "startS2Alt": {
+    "message": "Σχέδιο προγράμματος αναπαραγωγής: λαβή έξι κουκκίδων στην πάνω αριστερή γωνία του πλαισίου υποτίτλων, που σύρεται σε άλλη θέση"
+  },
+  "startS3Title": {
+    "message": "Θέλεις καλύτερες μεταφράσεις"
+  },
+  "startS3Body": {
+    "message": "Πρόσθεσε το δικό σου κλειδί API: μετάφραση ολόκληρων προτάσεων, και ολόκληρου του βίντεο όταν εξάγεις."
+  },
+  "startGoSetup": {
+    "message": "Ρύθμισε υπηρεσία μετάφρασης"
+  },
+  "aboutIntro": {
+    "message": "Τι είναι αυτό, και πού πάει το κείμενό σου."
+  },
+  "aboutVersion": {
+    "message": "Έκδοση"
+  },
+  "uiLocaleLabel": {
+    "message": "Γλώσσα διεπαφής"
+  },
+  "uiLocaleAuto": {
+    "message": "Αυτόματα — ακολουθεί το πρόγραμμα περιήγησης"
+  },
+  "uiLocaleHint": {
+    "message": "Η γλώσσα των μενού και των ρυθμίσεων της ίδιας της επέκτασης. Μερικές ετικέτες πάνω στο ίδιο το βίντεο ακολουθούν ακόμα τη γλώσσα του προγράμματος περιήγησης. Η γλώσσα μετάφρασης διαλέγεται στο popup· το τμήμα «Γλώσσες μετάφρασης» αποφασίζει μόνο ποιες γλώσσες δείχνει το popup."
+  },
+  "cmdToggleSubs": {
+    "message": "Υπότιτλοι ανοιχτοί ή κλειστοί"
+  },
+  "cmdToggleTts": {
+    "message": "Εκφώνηση ανοιχτή/κλειστή"
+  },
+  "cmdToggleTransLine": {
+    "message": "Εμφάνιση ή απόκρυψη της γραμμής μετάφρασης"
+  },
+  "optShortcutsLabel": {
+    "message": "Συντομεύσεις πληκτρολογίου"
+  },
+  "optShortcutsOpen": {
+    "message": "Ορισμός συντομεύσεων"
+  },
+  "optShortcutsHint": {
+    "message": "Το Chrome κρατά αυτά τα πλήκτρα, όχι η επέκταση. Στην αρχή δεν είναι δεσμευμένο τίποτα· τρία πράγματα μπορούν να είναι: υπότιτλοι ανοιχτοί/κλειστοί, εκφώνηση ανοιχτή/κλειστή, και εμφάνιση ή απόκρυψη της γραμμής μετάφρασης."
+  },
+  "optShortcutsFallback": {
+    "message": "Το Chrome δεν άνοιξε εκείνη τη σελίδα από εδώ — κόλλησε το chrome://extensions/shortcuts στη γραμμή διευθύνσεων."
+  },
+  "startTargetLabel": {
+    "message": "Γλώσσα μετάφρασης"
+  },
+  "startTargetHint": {
+    "message": "Μαντεύτηκε από τις προτιμήσεις γλώσσας του προγράμματος περιήγησής σου όταν εγκαταστάθηκε η επέκταση. Άλλαξέ την εδώ αν η μαντεψιά είναι λάθος — το popup μπορεί να την αλλάξει οποιαδήποτε στιγμή."
+  },
+  "aboutBlurb": {
+    "message": "Μια δεύτερη γραμμή υποτίτλων για το YouTube: το πρωτότυπο στη μία γραμμή, η μετάφραση στην άλλη, με γραμματοσειρά, χρώμα και θέση όπως θες. Ανοιχτός κώδικας, δωρεάν, χωρίς διαφημίσεις."
+  },
+  "aboutPrivacy": {
+    "message": "Η επέκταση δεν έχει δικό μας διακομιστή και δεν μαζεύει στατιστικά. Το κείμενο των υποτίτλων πάει μόνο σε υπηρεσίες που διάλεξες: την υπηρεσία μετάφρασης που επιλέγεις και, αν τις ανοίξεις, τον πάροχο ομιλίας για την εκφώνηση και τον πάροχο που έχεις ρυθμίσει για περιλήψεις. Με δικό σου κλειδί, το κλειδί αποθηκεύεται μόνο σε αυτόν τον υπολογιστή."
+  },
+  "aboutChangelog": {
+    "message": "Αρχείο αλλαγών"
+  },
+  "aboutRoadmap": {
+    "message": "Roadmap"
+  },
+  "optFeedbackLink": {
+    "message": "Αναφορά προβλήματος"
+  },
+  "popupByoConfigure": {
+    "message": "Ρύθμιση…"
+  },
+  "popupSummarize": {
+    "message": "Περίληψη αυτού του βίντεο",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "δεν έχει ρυθμιστεί"
+  },
+  "popupByoPick": {
+    "message": "Πάροχος μετάφρασης"
+  },
+  "popupByoUntested": {
+    "message": "δεν έχει δοκιμαστεί"
+  },
+  "popupModelPick": {
+    "message": "Μοντέλο μετάφρασης"
+  },
+  "popupModelMore": {
+    "message": "Περισσότερα μοντέλα…"
+  },
+  "popupModelFetch": {
+    "message": "Φέρε μοντέλα στις ρυθμίσεις"
+  },
+  "popupModelSwitched": {
+    "message": "Από δω και πέρα: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Δεν επιλέχθηκε μοντέλο"
+  },
+  "exportUsesYouTube": {
+    "message": "Η λήψη χρησιμοποιεί τη μετάφραση όλου του κομματιού του ίδιου του YouTube — δωρεάν, και δεν ξοδεύει το κλειδί API σου."
+  },
+  "exportUseByo": {
+    "message": "Μετάφραση με το δικό μου κλειδί (πιο κοντά, ξοδεύει όριο)"
+  },
+  "exportByoNote": {
+    "message": "Όλο το κομμάτι θα μεταφραστεί από τον πάροχό σου με το κλειδί σου. Θα δεις μια εκτίμηση πριν σταλεί οτιδήποτε."
+  },
+  "exportConfirm": {
+    "message": "Μετάφραση $N$ γραμμών υποτίτλων με $NAME$ — περίπου $REQ$ αιτήματα στο δικό σου όριο. Όλο το κομμάτι φεύγει από το πρόγραμμα περιήγησής σου προς αυτόν τον πάροχο· στην αναπαραγωγή στέλνονται μόνο τα μέρη που βλέπεις πραγματικά.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Μετάφραση και λήψη"
+  },
+  "exportConfirmBack": {
+    "message": "Ακύρωση"
+  },
+  "exportStop": {
+    "message": "Διακοπή"
+  },
+  "exportStopping": {
+    "message": "Διακοπή…"
+  },
+  "exportProgress": {
+    "message": "Μετάφραση… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ τμήμα(τα) έπεσαν πίσω στη μετάφραση του YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Η λήψη ακυρώθηκε."
+  },
+  "ftSite": {
+    "message": "Ιστότοπος"
+  },
+  "ftSiteLabel": {
+    "message": "Ιστότοπος"
+  },
+  "ftFeedbackLabel": {
+    "message": "Σχόλια"
+  },
+  "ftReviewLabel": {
+    "message": "Αξιολόγηση"
+  },
+  "ftGithub": {
+    "message": "Πηγαίος κώδικας στο GitHub"
+  },
+  "ftFeedback": {
+    "message": "Στείλε σχόλια ή ανέφερε σφάλμα"
+  },
+  "ftReview": {
+    "message": "Αξιολόγησέ το στο Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Δεν υπάρχει ακόμα κλειδί — αυτός ο πάροχος δεν μπορεί να χρησιμοποιηθεί μέχρι να προσθέσεις ένα."
+  },
+  "optNeedBase": {
+    "message": "Δεν υπάρχει ακόμα διεύθυνση σημείου — αυτός ο πάροχος δεν μπορεί να χρησιμοποιηθεί μέχρι να γράψεις μία."
+  },
+  "optBaseHint": {
+    "message": "Δουλεύουν και το βασικό URL και το πλήρες σημείο, π.χ. https://example.com/v1 ή https://example.com/v1/chat/completions. Για Ollama ή LM Studio σε αυτό το μηχάνημα, το http://localhost:11434/v1 είναι το σωστό σχήμα. Το κλειδί μπορεί να μείνει άδειο· το σκέτο http δουλεύει μόνο για διευθύνσεις loopback."
+  },
+  "startS1Alt": {
+    "message": "Σχέδιο προγράμματος αναπαραγωγής: μια πρωτότυπη γραμμή και μια μεταφρασμένη κάθονται κοντά στο κάτω μέρος της εικόνας"
+  },
+  "startS3Alt": {
+    "message": "Σύγκριση: η δωρεάν μηχανή μεταφράζει μία πρόταση κομματιαστά, το δικό σου κλειδί την καταλαβαίνει ολόκληρη και την ξαναχωρίζει"
+  },
+  "startPicFree": {
+    "message": "Δωρεάν μηχανή"
+  },
+  "startPicFreeNote": {
+    "message": "μία πρόταση, κομματιασμένη"
+  },
+  "startPicByo": {
+    "message": "Δικό σου κλειδί"
+  },
+  "startPicByoNote": {
+    "message": "κατανοημένη ολόκληρη, ξαναχωρισμένη"
+  },
+  "startS4Title": {
+    "message": "Υπάρχει ένα μικρό μενού στο πρόγραμμα αναπαραγωγής"
+  },
+  "startS4Body": {
+    "message": "Το μικρό βελάκι δίπλα στο κουμπί υποτίτλων ανοίγει μενού: υπότιτλοι, εκφώνηση, επιλογή κειμένου, περίληψη βίντεο και ρυθμίσεις — χωρίς να φύγεις από το πρόγραμμα αναπαραγωγής."
+  },
+  "startS4Alt": {
+    "message": "Εικόνα προγράμματος αναπαραγωγής: ένα μικρό βελάκι δίπλα στο κουμπί υποτίτλων, κάτω δεξιά, ανοίγει ένα μικρό μενού"
+  },
+  "menuHintBubble": {
+    "message": "Εκφώνηση, περίληψη βίντεο, επιλογή κειμένου — όλα πίσω από αυτό το μικρό βελάκι"
+  },
+  "troubleTitle": {
+    "message": "Κάτι δεν πάει καλά"
+  },
+  "troubleStep1": {
+    "message": "Κοίτα πρώτα τον διακόπτη στο popup — όταν είναι κλειστός, όλο το επίπεδο υποτίτλων μένει μακριά."
+  },
+  "troubleStep2": {
+    "message": "Έχει καθόλου υπότιτλους αυτό το βίντεο; Δοκίμασε το κουμπί CC στο πρόγραμμα αναπαραγωγής: χωρίς πρωτότυπο δεν υπάρχει τίποτα να μεταφραστεί."
+  },
+  "troubleStep3": {
+    "message": "Δοκίμασε ένα γνωστό βίντεο. Αν όλα τα άλλα δουλεύουν και μόνο αυτό όχι, συνήθως φταίει το κομμάτι υποτίτλων αυτού του βίντεο."
+  },
+  "troubleDiagHint": {
+    "message": "Ακόμα κολλάς; Κόλλησε τα διαγνωστικά στο email ή στο θέμα σου — έχουν την έκδοση, την κατάσταση της μηχανής και τι κάνει η τρέχουσα καρτέλα, και γλιτώνεις έναν-δύο γύρους."
+  },
+  "langManage": {
+    "message": "Διαχείριση γλωσσών…"
+  },
+  "optNavLangs": {
+    "message": "Γλώσσες μετάφρασης"
+  },
+  "optNavReadaloud": {
+    "message": "Εκφώνηση"
+  },
+  "ttsIntro": {
+    "message": "Διάβασε δυνατά τη μεταφρασμένη γραμμή. Οι φωνές του ίδιου του προγράμματος περιήγησης δεν θέλουν καθόλου κλειδί· οι πάροχοι cloud ρυθμίζονται και δοκιμάζονται εδώ."
+  },
+  "ttsVoiceLabel": {
+    "message": "Φωνή"
+  },
+  "ttsPreview": {
+    "message": "Προεπισκ."
+  },
+  "ttsPreviewPlaying": {
+    "message": "Αναπαραγωγή…"
+  },
+  "ttsPreviewFail": {
+    "message": "Δεν παίχτηκε — έλεγξε το κλειδί και δοκίμασε Αποθήκευση και δοκιμή"
+  },
+  "ttsFetchVoices": {
+    "message": "Φέρε την πλήρη λίστα αυτής της γλώσσας με το κλειδί σου"
+  },
+  "ttsFetching": {
+    "message": "Λήψη…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Αυτές είναι και οι $N$ φωνές που έχει το κλειδί σου για την τρέχουσα γλώσσα, μαζί με τα παλαιότερα επίπεδα Standard / Wavenet. Ισχύουν μόνο γι’ αυτή τη γλώσσα· κάνε κλικ στη γραμμή από πάνω για να γυρίσεις στις καθημερινές φωνές, που σε ακολουθούν στις γλώσσες. Μπορείς να ξαναφέρεις αυτή τη λίστα όποτε θες.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Πίσω στις καθημερινές φωνές (ακολουθούν τη γλώσσα)"
+  },
+  "ttsVoicesNone": {
+    "message": "Αυτός ο πάροχος δεν έχει επιπλέον φωνές γι’ αυτή τη γλώσσα — οι ενσωματωμένες συνεχίζουν να δουλεύουν."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Ήρθαν $N$ φωνές — είναι προτάσεις κάτω από το πεδίο από πάνω.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Γυναικεία"
+  },
+  "ttsVoiceMale": {
+    "message": "Ανδρική"
+  },
+  "ttsTestOk": {
+    "message": "Σύνδεση: δοκιμαστικός ήχος $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Οι περισσότερες φωνές του ίδιου του προγράμματος περιήγησης είναι εγκατεστημένες σε αυτόν τον υπολογιστή και διαβάζουν τη γραμμή εδώ. Μερικές όχι: το Chrome προσφέρει και διαδικτυακές φωνές — εκείνες των οποίων το όνομα αρχίζει με «Google» — και γι’ αυτές το πρόγραμμα περιήγησης στέλνει τη γραμμή στον κατασκευαστή. Με πάροχο cloud, το κείμενο προς εκφώνηση πάει μόνο στον πάροχο που διάλεξες, και το κλειδί μένει σε αυτό το μηχάνημα."
+  },
+  "ttsEnableLabel": {
+    "message": "Εκφώνηση της μετάφρασης στο βίντεο"
+  },
+  "ttsEnableHint": {
+    "message": "Όταν είναι ανοιχτό, η μετάφραση κάθε υποτίτλου εκφωνείται μόλις εμφανιστεί· μια γραμμή της οποίας η μετάφραση δεν είναι έτοιμη εγκαίρως παραλείπεται αντί να αναπληρωθεί αργότερα. Όσο μιλάει μια γραμμή, ο ίδιος ο ήχος του βίντεο πέφτει στο επίπεδο που έχει οριστεί κάτω. Μια γραμμή που κρατάει πολύ επιβραδύνει λίγο την εικόνα και δανείζεται το κενό μετά — με φωνές cloud και με τις του προγράμματος περιήγησης· ο διακόπτης από κάτω συνεχίζει την επιβράδυνση μέχρι να τελειώσει κάθε γραμμή."
+  },
+  "langsIntro": {
+    "message": "Ποιες γλώσσες μετάφρασης προσφέρει το popup."
+  },
+  "langsKept": {
+    "message": "Εμφανίζονται στο popup"
+  },
+  "langsKeptHint": {
+    "message": "Αυτές εμφανίζονται στο μενού γλώσσας μετάφρασης του popup. Κράτα τουλάχιστον μία."
+  },
+  "langsMore": {
+    "message": "Άλλες γλώσσες"
+  },
+  "langsMoreHint": {
+    "message": "Πάτα + για να προσθέσεις μία. Η λίστα ακολουθεί τις γλώσσες μετάφρασης που υποστηρίζουν οι δωρεάν μηχανές και το DeepL."
+  },
+  "langsReset": {
+    "message": "Επαναφορά προεπιλογών"
+  },
+  "langsResetDone": {
+    "message": "Πίσω στην προεπιλεγμένη λίστα."
+  },
+  "langsAddAria": {
+    "message": "Προσθήκη"
+  },
+  "langsRemoveAria": {
+    "message": "Αφαίρεση"
+  },
+  "langsLastOne": {
+    "message": "Κράτα τουλάχιστον μία"
+  },
+  "langsAllAdded": {
+    "message": "Κάθε γλώσσα είναι ήδη στη λίστα σου."
+  },
+  "langsAdded": {
+    "message": "Προστέθηκε $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Εκείνη ήταν σε χρήση, οπότε η γλώσσα μετάφρασης είναι τώρα $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Κινεζική με πατούρες"
+  },
+  "fontCjkRound": {
+    "message": "Κινεζική στρογγυλεμένη"
+  },
+  "ttsVolLabel": {
+    "message": "Ένταση εκφώνησης"
+  },
+  "ttsGroupPlayback": {
+    "message": "Αναπαραγωγή"
+  },
+  "ttsDuckLabel": {
+    "message": "Πρωτότυπος ήχος όσο μιλάει"
+  },
+  "ttsDuckShort": {
+    "message": "Πρωτότυπος ήχος"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Μιλάει"
+  },
+  "ttsStatusOn": {
+    "message": "Εκφώνηση ανοιχτή"
+  },
+  "ttsOpenSettings": {
+    "message": "Ρυθμίσεις εκφώνησης"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ γραμμές σε αυτό το βίντεο · $M$ παραλείφθηκαν",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ γραμμές εδώ · $M$ παραλείφθηκαν ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "η μετάφραση δεν πρόλαβε"
+  },
+  "ttsSkipSilent": {
+    "message": "δεν βγήκε ήχος"
+  },
+  "ttsRegionLabel": {
+    "message": "Περιοχή υπηρεσίας"
+  },
+  "ttsErrNoRegion": {
+    "message": "Γράψε πρώτα την περιοχή υπηρεσίας του κλειδιού Azure σου (π.χ. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Αυτός ο υπολογιστής δεν έχει φωνές για να μιλήσει."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Αυτός ο υπολογιστής δεν έχει φωνή που να διαβάζει $NAME$. Η λίστα από κάτω είναι φωνές άλλων γλωσσών — διάλεξε μία και η γραμμή θα διαβαστεί με την προφορά εκείνης της γλώσσας.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Ψάχνει τις φωνές αυτού του υπολογιστή…"
+  },
+  "ttsErrRefused": {
+    "message": "Ο πάροχος αρνήθηκε αυτό το αίτημα — δοκίμασε άλλη φωνή."
+  },
+  "ttsErrNoAudio": {
+    "message": "Ο ήχος δεν ήρθε — ξαναδοκίμασε, ή διάλεξε άλλη φωνή."
+  },
+  "startPicChop1": {
+    "message": "υπάρχουν δύο μεγάλοι",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "λόγοι ένας είναι",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Υπάρχουν δύο μεγάλοι λόγοι,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "ο πρώτος είναι…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Περισσότερες φωνές…"
+  },
+  "popupVoiceNone": {
+    "message": "Δεν επιλέχθηκε φωνή"
+  },
+  "ttsRobotVoices": {
+    "message": "Ρομποτικές",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Να μπορώ να επιλέγω και να αντιγράφω υπότιτλους",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Επιλογή κειμένου",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Περίληψη",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Περίληψη βίντεο",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Κλείσιμο",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Αυτό το βίντεο δεν έχει χρησιμοποιήσιμο κομμάτι υποτίτλων.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Άνοιξε ξανά τους υπότιτλους για περίληψη — η περίληψη φτιάχνεται από το κομμάτι υποτίτλων."
+  },
+  "sumNeedKey": {
+    "message": "Οι περιλήψεις θέλουν υπηρεσία δική σου: οποιονδήποτε πάροχο με το κλειδί σου στο τμήμα μετάφρασης, ή τοπικό μοντέλο σε αυτό το μηχάνημα. Οι δωρεάν μηχανές μόνο μεταφράζουν. Δεν κάνουν περίληψη.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Ρύθμισε υπηρεσία μετάφρασης",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Σύνοψη",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Περίληψη ξανά"
+  },
+  "sumFail": {
+    "message": "Η περίληψη απέτυχε. Δοκίμασε αργότερα.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Αυτό θα στείλει όλο το κομμάτι υποτίτλων σε $PROVIDER$, σε $PARTS$ μέρος(-η), στο δικό σου όριο.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Περίληψη… μέρος $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ μέρος(-η) δεν μπόρεσαν να συνοψιστούν· τα υπόλοιπα είναι από πάνω.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Υπότιτλοι",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Η μετάφραση του ίδιου του YouTube περιορίζεται τώρα· οι έξυπνες προτάσεις (Google) καλύπτουν. Ξαναδοκιμάζει μόνη της αργότερα.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Το σημείο μετάφρασης περιορίζει τον ρυθμό — συνέχεια σε περίπου $SECONDS$ δευτ.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Δουλεύουν και το βασικό URL και το πλήρες σημείο, π.χ. http://localhost:8880/v1 ή http://localhost:8880/v1/audio/speech (τοπικοί διακομιστές ομιλίας όπως Kokoro ή openai-edge-tts). Το κλειδί μπορεί να μείνει άδειο· το σκέτο http δουλεύει μόνο για διευθύνσεις loopback."
+  },
+  "optTtsNeedUrl": {
+    "message": "Δεν υπάρχει ακόμα διεύθυνση σημείου — αυτός ο πάροχος δεν μπορεί να χρησιμοποιηθεί μέχρι να προσθέσεις μία."
+  },
+  "ttsSkipRefused": {
+    "message": "ο πάροχος αρνήθηκε εκείνα τα αιτήματα"
+  },
+  "ttsSkipNotSet": {
+    "message": "δεν έχει ρυθμιστεί σε αυτόν τον υπολογιστή"
+  },
+  "ttsSkipNoVoice": {
+    "message": "δεν υπάρχει φωνή γι’ αυτή τη γλώσσα"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ δεν μπορεί να μιλήσει αυτή τη στιγμή. Διάλεξε άλλο στη σειρά από πάνω — οι φωνές του προγράμματος περιήγησής σου είναι σε αυτή τη λίστα.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Το κομμάτι υποτίτλων δεν έχει φτάσει — ξαναδοκιμάζει μόνη της. Βιάζεσαι; Ανανέωσε τη σελίδα για να δοκιμάσεις τώρα."
+  },
+  "ttsCompleteLabel": {
+    "message": "Τέλος σε κάθε γραμμή (η εικόνα αργεί στα πυκνά σημεία)"
+  },
+  "ttsCompleteHint": {
+    "message": "Σε μεγαλύτερες ταχύτητες οι μακριές γραμμές χάνουν συχνά την ουρά τους στην επόμενη. Με αυτό ανοιχτό, η εικόνα αργεί όσο χρειάζεται η γραμμή — ποτέ κάτω από το ένα τέταρτο της ταχύτητας που διάλεξες — και προλαβαίνει στα κενά. Όσο η εικόνα είναι τόσο αργή, ο ίδιος ο ήχος του βίντεο πέφτει πιο κάτω από το επίπεδο που όρισες, μέχρι τη σιωπή."
+  },
+  "ttsCompleteHintText": {
+    "message": "Αρκετές γραμμές κόβονται σε αυτή την ταχύτητα. Άνοιξέ το και η εικόνα αργεί εκεί που χρειάζεται, ώστε να τελειώνουν περισσότερες."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Ενεργοποίηση"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Να μην ξαναφανεί"
+  },
+  "provLocalSpeechShort": {
+    "message": "Περιηγητής"
+  },
+  "optNavFonts": {
+    "message": "Γραμματοσειρές υποτίτλων"
+  },
+  "fontsIntro": {
+    "message": "Μία λίστα εξυπηρετεί και τις δύο γραμμές υποτίτλων· το popup διαλέγει ανά γραμμή. Κάθε γραμματοσειρά στη λίστα είναι εγκατεστημένη σε αυτόν τον υπολογιστή."
+  },
+  "fontsKept": {
+    "message": "Εμφανίζονται στο popup"
+  },
+  "fontsMore": {
+    "message": "Άλλες γραμματοσειρές"
+  },
+  "fontsOnly": {
+    "message": "Μόνο όσες μπορούν να τη ζωγραφίσουν"
+  },
+  "fontsCounting": {
+    "message": "Έλεγχος…"
+  },
+  "fontsSearch": {
+    "message": "Αναζήτηση ονομάτων γραμματοσειρών"
+  },
+  "fontsNoMatch": {
+    "message": "Καμία γραμματοσειρά δεν ταιριάζει."
+  },
+  "fontsKeptEmpty": {
+    "message": "Για το popup έμεινε μόνο η προεπιλογή συστήματος.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Κάθε γραμματοσειρά είναι ήδη στη λίστα."
+  },
+  "fontsReset": {
+    "message": "Επαναφορά προεπιλογών"
+  },
+  "fontsResetDone": {
+    "message": "Η προεπιλεγμένη λίστα επανήλθε."
+  },
+  "fontsAdded": {
+    "message": "Προστέθηκε $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Προεπισκ.: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Προεπισκ."
+  },
+  "fontsUnavailable": {
+    "message": "Αυτό το πρόγραμμα περιήγησης δεν αφήνει την επέκταση να διαβάσει τις εγκατεστημένες γραμματοσειρές, οπότε μπορεί να διαλεχτεί μόνο η προεπιλογή συστήματος."
+  },
+  "fontNoGlyphs": {
+    "message": "δεν μπορεί να ζωγραφίσει αυτή τη γραμμή"
+  },
+  "fontNotHere": {
+    "message": "δεν είναι σε αυτόν τον υπολογιστή"
+  },
+  "fontsImport": {
+    "message": "Εισαγωγή γραμματοσειράς…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2· το αρχείο αντιγράφεται στο πρόγραμμα περιήγησης."
+  },
+  "fontsImported": {
+    "message": "Εισήχθη $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Δεν αποθηκεύτηκε στο πρόγραμμα περιήγησης· ξαναδοκίμασε.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Αφαιρέθηκε $NAME$ από το popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Παράλειψη αυτής της λίστας",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Εισαγμένη γραμματοσειρά",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Αυτό δεν είναι αρχείο γραμματοσειράς που μπορεί να χρησιμοποιήσει αυτό το πρόγραμμα περιήγησης."
+  },
+  "fontsImportTooBig": {
+    "message": "Το αρχείο είναι πολύ μεγάλο (όριο $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Διαγραφή της εισαγμένης γραμματοσειράς"
+  },
+  "fontsLangLabel": {
+    "message": "Έλεγχος για"
+  },
+  "fontsLangRecent": {
+    "message": "που είδες πρόσφατα"
+  },
+  "fontMoreRow": {
+    "message": "Γραμματοσειρές…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ ακόμα δεν μπορούν να ζωγραφίσουν αυτή τη γραμμή",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Tweetalige ondertitels voor YouTube — origineel en vertaling in één laag, zonder overlap."
+  },
+  "headerSub": {
+    "message": "YouTube™ · één laag"
+  },
+  "disclaimer": {
+    "message": "Niet verbonden met YouTube of Google."
+  },
+  "enableTitle": {
+    "message": "Aan / uit"
+  },
+  "openOptions": {
+    "message": "Instellingen"
+  },
+  "enableAria": {
+    "message": "Extensie inschakelen"
+  },
+  "previewTag": {
+    "message": "Voorbeeld"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "De snelle bruine vos"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "top voor Chinees",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "De eigen stemmen van je browser (gratis)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (lokaal)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Livevoorbeeld"
+  },
+  "secTranslation": {
+    "message": "Vertaling"
+  },
+  "targetLang": {
+    "message": "Vertaaltaal"
+  },
+  "backendLabel": {
+    "message": "Engine"
+  },
+  "backendInfo": {
+    "message": "Engine-info"
+  },
+  "backendAuto": {
+    "message": "Auto (aanbevolen)"
+  },
+  "backendTlang": {
+    "message": "Heel spoor (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Slimme zinnen (Google)"
+  },
+  "backendByo": {
+    "message": "Je eigen sleutel (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b>: gebruikt YouTubes vertaling van het hele spoor als de video dat ondersteunt, en schakelt anders over op slimme zinnen.<br><b>Heel spoor</b>: YouTubes eigen vertaling; cue op cue uitgelijnd. Veel gebruik kan YouTube even het aantal verzoeken laten beperken — de extensie wacht en vraagt opnieuw.<br><b>Slimme zinnen</b>: zet fragmentarische captions om tot hele zinnen en vertaalt ze via Googles gratis eindpunt — betere formulering dan heel spoor bij rommelige sporen, maar veel gebruik kan daar ook beperkt worden; de extensie vertraagt en probeert opnieuw.<br><b>Eigen sleutel</b>: stuurt de samengestelde zin naar de aanbieder die jij hebt ingesteld."
+  },
+  "backendGtxHint": {
+    "message": "Gebruikt Googles gratis eindpunt — veel gebruik kan even beperkt worden; de extensie past het tempo aan en probeert zelf opnieuw."
+  },
+  "backendStatusTlang": {
+    "message": "Deze video: heel spoor (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Deze video: slimme zinnen (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Het vertaaleindpunt beperkt de verzoeken — tempo omlaag en automatisch opnieuw proberen. Regels die al vertaald zijn blijven werken."
+  },
+  "diagCopy": {
+    "message": "Kopieer diagnostiek"
+  },
+  "diagCopied": {
+    "message": "Gekopieerd — plak het in een e-mail of issue"
+  },
+  "diagCopyFail": {
+    "message": "Kopiëren mislukt — maak in plaats daarvan een screenshot"
+  },
+  "backendStatusSame": {
+    "message": "De ondertitels van deze video staan al in je vertaaltaal — niets te vertalen."
+  },
+  "backendStatusNoTrack": {
+    "message": "Er is geen caption-spoor voor deze video gevonden, dus er is niets te tonen.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Open een YouTube-video en de twee regels verschijnen erop. Als je er al op een bent, vernieuw dan het tabblad."
+  },
+  "secLayout": {
+    "message": "Layout"
+  },
+  "secLineStyle": {
+    "message": "Regelstijl"
+  },
+  "secLineStyleHint": {
+    "message": "Lettertype · Kleur · Grootte"
+  },
+  "orderLabel": {
+    "message": "Volgorde"
+  },
+  "orderTransTop": {
+    "message": "Vertaling boven"
+  },
+  "orderOrigTop": {
+    "message": "Origineel boven"
+  },
+  "positionLabel": {
+    "message": "Positie"
+  },
+  "posTop": {
+    "message": "Boven"
+  },
+  "posCenter": {
+    "message": "Midden"
+  },
+  "posBottom": {
+    "message": "Onder"
+  },
+  "posHint": {
+    "message": "Je kunt het ondertitelvak ook op de video verslepen"
+  },
+  "posTryDrag": {
+    "message": "probeer"
+  },
+  "posTryNoVideo": {
+    "message": "Open eerst een YouTube-video"
+  },
+  "resetPos": {
+    "message": "Positie resetten"
+  },
+  "rowGap": {
+    "message": "Regelafstand"
+  },
+  "tabTrans": {
+    "message": "Vertaling"
+  },
+  "tabOrig": {
+    "message": "Origineel"
+  },
+  "lineTabsAria": {
+    "message": "Ondertitelregel"
+  },
+  "lineShow": {
+    "message": "Deze regel tonen"
+  },
+  "fontLabel": {
+    "message": "Lettertype"
+  },
+  "fontSystem": {
+    "message": "Systeemstandaard"
+  },
+  "fontMono": {
+    "message": "Monospace"
+  },
+  "fontCjk": {
+    "message": "CJK-vriendelijk"
+  },
+  "sizeLabel": {
+    "message": "Lettergrootte"
+  },
+  "colText": {
+    "message": "Tekst"
+  },
+  "colBg": {
+    "message": "Achtergrond"
+  },
+  "colStroke": {
+    "message": "Omtrek"
+  },
+  "colTextAria": {
+    "message": "Tekstkleur"
+  },
+  "colBgAria": {
+    "message": "Achtergrondkleur"
+  },
+  "colStrokeAria": {
+    "message": "Omtrekkleur"
+  },
+  "bgOpacity": {
+    "message": "Achtergronddekking"
+  },
+  "strokeOpacity": {
+    "message": "Omtrekdekking"
+  },
+  "resetAll": {
+    "message": "Alle instellingen resetten"
+  },
+  "resetConfirmText": {
+    "message": "Dit wist elke instelling, de API-sleutels die op deze computer staan, en het model en de stem die per aanbieder onthouden zijn, en zet de hints van de eerste keer weer aan. Domeinen van aanbieders die je al hebt toegestaan blijven toegestaan, net als de lettertypebestanden die je hebt geïmporteerd.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Houd mijn instellingen",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Alles resetten",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Tweetalige ondertitels uit"
+  },
+  "toggleTurnOn": {
+    "message": "Tweetalige ondertitels aan"
+  },
+  "handleTitle": {
+    "message": "Slepen · dubbelklik reset"
+  },
+  "handleAria": {
+    "message": "Sleep om ondertitels te verplaatsen, dubbelklik om te resetten"
+  },
+  "secExport": {
+    "message": "Export"
+  },
+  "exportContent": {
+    "message": "Inhoud"
+  },
+  "exportBi": {
+    "message": "Tweetalig"
+  },
+  "exportOrig": {
+    "message": "Origineel"
+  },
+  "exportTrans": {
+    "message": "Vertaling"
+  },
+  "exportSrt": {
+    "message": "SRT downloaden"
+  },
+  "exportWorking": {
+    "message": "Bezig…"
+  },
+  "exportDone": {
+    "message": "Ondertitels gedownload"
+  },
+  "exportNoTrans": {
+    "message": "Geen vertaling voor deze video — probeer de engine Heel spoor of een andere vertaaltaal."
+  },
+  "exportLimited": {
+    "message": "YouTube beperkt nu de vertaling van het hele spoor — over een minuut opnieuw proberen. Met je eigen sleutel erin biedt de exportkaart een vinkje dat eromheen gaat."
+  },
+  "exportNoCues": {
+    "message": "Geen downloadbare ondertitels — speel een paar seconden zodat de captions laden, en probeer opnieuw."
+  },
+  "exportNotYoutube": {
+    "message": "Open een YouTube-videopagina om te exporteren."
+  },
+  "exportFailed": {
+    "message": "Export mislukt — vernieuw de pagina en probeer opnieuw."
+  },
+  "updateNotesLabel": {
+    "message": "Versienotities openen na updates"
+  },
+  "trackWarnDubOnly": {
+    "message": "Let op: deze video heeft alleen AI-nagesynchroniseerde auto-captions (geen spoor in de originele taal), dus de tweetalige ondertitels passen mogelijk niet bij het geluid."
+  },
+  "whatsNewRow": {
+    "message": "Wat is nieuw in v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Deze video: je eigen sleutel ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Aanbieder"
+  },
+  "byoSiteLabel": {
+    "message": "Site"
+  },
+  "byoSiteHint": {
+    "message": "Kies de site waarop je je hebt ingeschreven — het zijn twee aparte platforms en een sleutel van de ene wordt door de andere niet geaccepteerd."
+  },
+  "byoSiteGlobal": {
+    "message": "Internationaal"
+  },
+  "byoSiteCn": {
+    "message": "Vasteland China"
+  },
+  "byoBaseLabel": {
+    "message": "Eindpuntadres"
+  },
+  "byoModelLabel": {
+    "message": "Model"
+  },
+  "byoModelRequired": {
+    "message": "Verplicht: modelnaam"
+  },
+  "byoKeyLabel": {
+    "message": "API-sleutel"
+  },
+  "byoKeyClear": {
+    "message": "Verwijderen"
+  },
+  "byoKeyReplace": {
+    "message": "Vervangen"
+  },
+  "byoKeyCleared": {
+    "message": "De sleutel op deze machine is verwijderd."
+  },
+  "byoKeyClearedMoved": {
+    "message": "De sleutel op deze machine is verwijderd. Die was in gebruik, dus vertaling loopt nu via $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "opgeslagen ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Aangepast (OpenAI-compatibel)"
+  },
+  "byoTest": {
+    "message": "Opslaan en testen"
+  },
+  "byoTesting": {
+    "message": "Testen…"
+  },
+  "byoTestOk": {
+    "message": "Verbonden. Voorbeeld: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Sleutel ophalen"
+  },
+  "byoGuide": {
+    "message": "Hulp nodig bij het instellen?"
+  },
+  "byoLocalHint": {
+    "message": "De sleutel blijft in deze browser, op deze machine — hij wordt nooit geüpload. Ondertiteltekst gaat alleen naar de aanbieder die jij koos."
+  },
+  "byoErrNoProvider": {
+    "message": "Kies eerst een aanbieder."
+  },
+  "byoErrNoKey": {
+    "message": "Voer eerst een API-sleutel in, en druk dan op Opslaan en testen."
+  },
+  "byoErrNoModel": {
+    "message": "Kies eerst een model — pak er een uit de lijst, of druk op “Modellen met mijn sleutel ophalen”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Deze aanbieder levert geen lijst. Haal eerst de beschikbare modellen op, of typ de modelnaam zelf."
+  },
+  "byoErrNotApi": {
+    "message": "Dat adres antwoordde met een webpagina, niet met de API — meestal een inlogmuur of een netwerk dat verzoeken onderschept. Check het adres, of probeer een ander netwerk."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "De API-basis-URL moet een volledig https://-adres zijn."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Er zit een sleutel in het adres. Haal hem uit het adres en plak hem in het veld API-sleutel — het adres wordt met je browseraccount gesynchroniseerd, het sleutelveld niet."
+  },
+  "byoErrNoPerm": {
+    "message": "Zonder toestemming om die API-host te bereiken kan de extensie niet verbinden. Druk opnieuw op “Opslaan en testen” en sta het toe."
+  },
+  "byoErrAuth": {
+    "message": "De sleutel is geweigerd (401) — check of hij volledig is gekopieerd en nog actief is."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "De server op deze machine weigerde de aanroep (403). Waarschijnlijk mag de extensie er nog niet bij: OLLAMA_ORIGINS voor Ollama, de CORS-schakelaar in LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "De aanbieder weigerde deze aanroep (403). Meestal is de sleutel in orde en mag het account het niet — een openstaand saldo, een identiteitscheck die nog loopt, een model dat niet aanstaat, of de regio. Check het account in de console van de aanbieder."
+  },
+  "byoErrListAuth": {
+    "message": "Deze sleutel mag de lijst niet lezen. Geef hem die rechten in het dashboard van de aanbieder, en haal opnieuw op.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "De aanbieder beperkt de verzoeken — tempo omlaag en automatisch opnieuw proberen."
+  },
+  "byoErrLimitedTest": {
+    "message": "De aanbieder beperkt de verzoeken. Wacht even en druk opnieuw."
+  },
+  "byoErrQuota": {
+    "message": "Dit account heeft voor deze periode geen tegoed of quotum meer — vul het bij in de console van de aanbieder om verder te gaan."
+  },
+  "byoErrBadRequest": {
+    "message": "Het eindpunt weigerde het verzoek — de modelnaam of basis-URL kan fout zijn."
+  },
+  "byoErrBadShape": {
+    "message": "Het model antwoordde niet regel voor regel zoals gevraagd, en kleinere herhalingen faalden ook — probeer een ander model."
+  },
+  "byoErrReasoning": {
+    "message": "Dat model gaf alleen zijn denkketen terug en geen vertaling — kies een model zonder denkmodus."
+  },
+  "byoErrNetfail": {
+    "message": "Kan dat eindpunt niet bereiken (netwerk of regionale beperking)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Kan dat adres niet bereiken: of de server draait niet, of hij mag de extensie nog niet binnen (OLLAMA_ORIGINS voor Ollama, de CORS-schakelaar in LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Deze aanbieder kan niet naar je gekozen taal vertalen — verander de taal of de engine."
+  },
+  "byoErrFailed": {
+    "message": "Verbinding mislukt. Probeer het zo meteen opnieuw."
+  },
+  "optTitle": {
+    "message": "Vertaaldienst instellen"
+  },
+  "optIntro": {
+    "message": "Kies een aanbieder en plak je eigen API-sleutel."
+  },
+  "optPricingLink": {
+    "message": "Prijzen & gratis tier"
+  },
+  "optFetchModels": {
+    "message": "Modellen met mijn sleutel ophalen"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Beschikbare modellen ophalen"
+  },
+  "optFetching": {
+    "message": "Ophalen…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ modellen gevonden",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” staat niet meer op de lijst van deze aanbieder — kies hierboven een andere.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Kon geen modellen ophalen — typ de modelnaam zelf."
+  },
+  "optModelCustom": {
+    "message": "Aangepast…"
+  },
+  "optNoModelsYet": {
+    "message": "Nog geen modellijst — haal er een op met je sleutel, of typ de naam."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Nog geen modellijst — haal er een op, of typ de naam."
+  },
+  "optShowKey": {
+    "message": "Tonen"
+  },
+  "optRecommended": {
+    "message": "aanbevolen"
+  },
+  "optConfigured": {
+    "message": "Ingesteld"
+  },
+  "optInUse": {
+    "message": "in gebruik"
+  },
+  "optAfterSetup": {
+    "message": "Als je hier klaar bent, open je de popup van de extensie en zet je Engine op \"Je eigen sleutel\"."
+  },
+  "optTrademark": {
+    "message": "Alle namen en logo's van aanbieders zijn merken van hun respectieve eigenaren. Deze extensie is niet verbonden met, aanbevolen of gesponsord door een van hen; de merken staan er alleen om de API aan te wijzen die jij koos."
+  },
+  "optSections": {
+    "message": "Onderdelen"
+  },
+  "optNavSetup": {
+    "message": "Vertaaldienst"
+  },
+  "optNavStart": {
+    "message": "Aan de slag"
+  },
+  "optNavAbout": {
+    "message": "Over"
+  },
+  "startIntro": {
+    "message": "Vier dingen. Je hoeft niets in te stellen om het te gebruiken."
+  },
+  "startS1Title": {
+    "message": "Open een video — dat is het"
+  },
+  "startS1Body": {
+    "message": "Elke YouTube-video met ondertitels: de twee regels verschijnen vanzelf."
+  },
+  "startS2Title": {
+    "message": "Zet ze waar je wilt"
+  },
+  "startS2Body": {
+    "message": "Houd de greep linksboven op het ondertitelvak vast en sleep hem overal naartoe. Dubbelklik op de greep om hem terug te zetten."
+  },
+  "startS2Alt": {
+    "message": "Spelerdiagram: een greep van zes puntjes in de linkerbovenhoek van het ondertitelvak, die naar een andere plek wordt gesleept"
+  },
+  "startS3Title": {
+    "message": "Betere vertalingen"
+  },
+  "startS3Body": {
+    "message": "Voeg je eigen API-sleutel toe: vertaling van hele zinnen, en van de hele video bij het exporteren."
+  },
+  "startGoSetup": {
+    "message": "Vertaaldienst instellen"
+  },
+  "aboutIntro": {
+    "message": "Wat dit is, en waar je tekst naartoe gaat."
+  },
+  "aboutVersion": {
+    "message": "Versie"
+  },
+  "uiLocaleLabel": {
+    "message": "Taal van de interface"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — volg de browser"
+  },
+  "uiLocaleHint": {
+    "message": "De taal van de menu's en instellingen van deze extensie. Een paar labels die op de video zelf staan volgen nog de taal van de browser. De vertaaltaal kies je in de popup; het paneel “Vertaaltalen” bepaalt alleen welke talen de popup toont."
+  },
+  "cmdToggleSubs": {
+    "message": "Ondertitels aan of uit"
+  },
+  "cmdToggleTts": {
+    "message": "Voorlezen aan of uit"
+  },
+  "cmdToggleTransLine": {
+    "message": "Vertaalregel tonen of verbergen"
+  },
+  "optShortcutsLabel": {
+    "message": "Sneltoetsen"
+  },
+  "optShortcutsOpen": {
+    "message": "Sneltoetsen instellen"
+  },
+  "optShortcutsHint": {
+    "message": "Chrome houdt deze toetsen bij, niet de extensie. In het begin is er niets gekoppeld; drie dingen kunnen dat: ondertitels aan/uit, voorlezen aan/uit, en de vertaalregel tonen of verbergen."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome opende die pagina hier niet — plak chrome://extensions/shortcuts in de adresbalk."
+  },
+  "startTargetLabel": {
+    "message": "Vertaaltaal"
+  },
+  "startTargetHint": {
+    "message": "Geraden uit de taalvoorkeuren van je browser toen de extensie werd geïnstalleerd. Verander het hier als de gok fout is — de popup kan het altijd wijzigen."
+  },
+  "aboutBlurb": {
+    "message": "Een tweede ondertitelregel voor YouTube: het origineel op de ene regel, de vertaling op de andere, met lettertype, kleur en positie naar jouw keuze. Open source, gratis, zonder reclame."
+  },
+  "aboutPrivacy": {
+    "message": "De extensie heeft geen server van ons en verzamelt geen statistieken. Ondertiteltekst gaat alleen naar diensten die jij koos: de vertaaldienst die je kiest en, als je ze aanzet, de spraakaanbieder voor voorlezen en de aanbieder die je voor samenvattingen hebt ingesteld. Met je eigen sleutel blijft die alleen op deze computer."
+  },
+  "aboutChangelog": {
+    "message": "Wijzigingslog"
+  },
+  "aboutRoadmap": {
+    "message": "Roadmap"
+  },
+  "optFeedbackLink": {
+    "message": "Een probleem melden"
+  },
+  "popupByoConfigure": {
+    "message": "Instellen…"
+  },
+  "popupSummarize": {
+    "message": "Vat deze video samen",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "niet ingesteld"
+  },
+  "popupByoPick": {
+    "message": "Vertaalaanbieder"
+  },
+  "popupByoUntested": {
+    "message": "niet getest"
+  },
+  "popupModelPick": {
+    "message": "Vertaalmodel"
+  },
+  "popupModelMore": {
+    "message": "Meer modellen…"
+  },
+  "popupModelFetch": {
+    "message": "Modellen ophalen in instellingen"
+  },
+  "popupModelSwitched": {
+    "message": "Vanaf nu: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Geen model gekozen"
+  },
+  "exportUsesYouTube": {
+    "message": "De download gebruikt YouTubes eigen vertaling van het hele spoor — gratis, en het gebruikt je API-sleutel niet."
+  },
+  "exportUseByo": {
+    "message": "Vertalen met mijn eigen sleutel (dichterbij, verbruikt quotum)"
+  },
+  "exportByoNote": {
+    "message": "Het hele spoor wordt door je aanbieder met je sleutel vertaald. Je ziet een schatting voordat er iets wordt verstuurd."
+  },
+  "exportConfirm": {
+    "message": "Vertaal $N$ ondertitelregels met $NAME$ — ongeveer $REQ$ verzoeken op je eigen quotum. Het hele spoor verlaat je browser naar die aanbieder; tijdens het afspelen worden alleen de stukken die je echt kijkt verstuurd.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Vertalen en downloaden"
+  },
+  "exportConfirmBack": {
+    "message": "Annuleren"
+  },
+  "exportStop": {
+    "message": "Stop"
+  },
+  "exportStopping": {
+    "message": "Stoppen…"
+  },
+  "exportProgress": {
+    "message": "Vertalen… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ stuk(s) teruggevallen op YouTubes vertaling",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Download geannuleerd."
+  },
+  "ftSite": {
+    "message": "Website"
+  },
+  "ftSiteLabel": {
+    "message": "Site"
+  },
+  "ftFeedbackLabel": {
+    "message": "Feedback"
+  },
+  "ftReviewLabel": {
+    "message": "Beoordelen"
+  },
+  "ftGithub": {
+    "message": "Broncode op GitHub"
+  },
+  "ftFeedback": {
+    "message": "Stuur feedback of meld een bug"
+  },
+  "ftReview": {
+    "message": "Beoordeel in de Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Nog geen sleutel — deze aanbieder kan pas als je er een toevoegt."
+  },
+  "optNeedBase": {
+    "message": "Nog geen eindpuntadres — deze aanbieder kan pas als je er een invoert."
+  },
+  "optBaseHint": {
+    "message": "Een basis-URL of een volledig eindpunt, beide werken, bijv. https://example.com/v1 of https://example.com/v1/chat/completions. Voor Ollama of LM Studio op deze machine is http://localhost:11434/v1 de juiste vorm. De sleutel mag leeg blijven; gewoon http werkt alleen voor loopback-adressen."
+  },
+  "startS1Alt": {
+    "message": "Spelerdiagram: een originele regel en een vertaalde regel zitten onder in beeld"
+  },
+  "startS3Alt": {
+    "message": "Vergelijking: de gratis engine vertaalt één zin in stukken, je eigen sleutel begrijpt hem in z'n geheel en splitst hem weer"
+  },
+  "startPicFree": {
+    "message": "Gratis engine"
+  },
+  "startPicFreeNote": {
+    "message": "één zin, in stukken"
+  },
+  "startPicByo": {
+    "message": "Je eigen sleutel"
+  },
+  "startPicByoNote": {
+    "message": "als geheel begrepen, weer gesplitst"
+  },
+  "startS4Title": {
+    "message": "Er zit een klein menu in de speler"
+  },
+  "startS4Body": {
+    "message": "Het pijltje naast de ondertitelknop opent een menu: ondertitels, voorlezen, tekst selecteren, videosamenvatting en instellingen — zonder de speler te verlaten."
+  },
+  "startS4Alt": {
+    "message": "Spelerillustratie: een klein pijltje naast de ondertitelknop, rechtsonder, opent een klein menu"
+  },
+  "menuHintBubble": {
+    "message": "Voorlezen, videosamenvatting, tekst selecteren — allemaal achter dit pijltje"
+  },
+  "troubleTitle": {
+    "message": "Iets mis"
+  },
+  "troubleStep1": {
+    "message": "Check eerst de schakelaar in de popup — als die uit staat, blijft de hele ondertitellaag weg."
+  },
+  "troubleStep2": {
+    "message": "Heeft deze video überhaupt ondertitels? Probeer de CC-knop in de speler: zonder origineel is er niets te vertalen."
+  },
+  "troubleStep3": {
+    "message": "Probeer een populaire video. Als de rest werkt en alleen deze niet, ligt het meestal aan het ondertitelspoor van deze video."
+  },
+  "troubleDiagHint": {
+    "message": "Nog vast? Plak de diagnostiek in je e-mail of issue — er staan de versie, de staat van de engine en wat het huidige tabblad doet, dat scheelt een heen-en-weer."
+  },
+  "langManage": {
+    "message": "Talen beheren…"
+  },
+  "optNavLangs": {
+    "message": "Vertaaltalen"
+  },
+  "optNavReadaloud": {
+    "message": "Voorlezen"
+  },
+  "ttsIntro": {
+    "message": "Lees de vertaalde regel hardop voor. De eigen stemmen van je browser hebben helemaal geen sleutel nodig; de cloudaanbieders zet je hier klaar en test je hier."
+  },
+  "ttsVoiceLabel": {
+    "message": "Stem"
+  },
+  "ttsPreview": {
+    "message": "Voorbeeld"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Speelt…"
+  },
+  "ttsPreviewFail": {
+    "message": "Kon niet afspelen — check de sleutel en probeer Opslaan en testen"
+  },
+  "ttsFetchVoices": {
+    "message": "Haal de volledige lijst van deze taal op met je sleutel"
+  },
+  "ttsFetching": {
+    "message": "Ophalen…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Dit zijn alle $N$ stemmen die je sleutel heeft voor de huidige taal, inclusief oudere Standard / Wavenet-lagen. Ze gelden alleen voor deze taal; klik op de regel hierboven om terug te gaan naar de alledaagse stemmen, die met je meegaan over talen. Je kunt deze lijst altijd opnieuw ophalen.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Terug naar de alledaagse stemmen (die volgen de taal)"
+  },
+  "ttsVoicesNone": {
+    "message": "Deze aanbieder heeft geen extra stemmen voor deze taal — de ingebouwde blijven werken."
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$ stemmen opgehaald — het zijn suggesties onder het veld hierboven.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Vrouw"
+  },
+  "ttsVoiceMale": {
+    "message": "Man"
+  },
+  "ttsTestOk": {
+    "message": "Verbonden: testaudio $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "De meeste eigen stemmen van je browser staan op deze computer en spreken de regel hier uit. Een paar niet: Chrome biedt ook online stemmen — die waarvan de naam met \"Google\" begint — en voor die stuurt de browser de regel naar de maker. Bij een cloudaanbieder gaat de voor te lezen tekst alleen naar de aanbieder die jij koos, en blijft de sleutel op deze machine."
+  },
+  "ttsEnableLabel": {
+    "message": "Lees de vertaling voor in de video"
+  },
+  "ttsEnableHint": {
+    "message": "Als dit aan staat, wordt de vertaling van elke ondertitel uitgesproken zodra die verschijnt; een regel waarvan de vertaling niet op tijd klaar is, wordt overgeslagen in plaats van later ingehaald. Terwijl een regel spreekt, zakt het eigen geluid van de video naar het niveau hieronder. Een te lange regel vertraagt het beeld een beetje en leent de pauze erna — bij cloudstemmen en bij die van de browser; de schakelaar eronder blijft vertragen tot elke regel klaar is."
+  },
+  "langsIntro": {
+    "message": "Welke vertaaltalen de popup aanbiedt."
+  },
+  "langsKept": {
+    "message": "Getoond in de popup"
+  },
+  "langsKeptHint": {
+    "message": "Deze staan in het vertaaltaalmenu van de popup. Houd er minstens één."
+  },
+  "langsMore": {
+    "message": "Andere talen"
+  },
+  "langsMoreHint": {
+    "message": "Druk op + om er een toe te voegen. De lijst volgt de vertaaltalen die de gratis engines en DeepL ondersteunen."
+  },
+  "langsReset": {
+    "message": "Standaard herstellen"
+  },
+  "langsResetDone": {
+    "message": "Terug naar de standaardlijst."
+  },
+  "langsAddAria": {
+    "message": "Toevoegen"
+  },
+  "langsRemoveAria": {
+    "message": "Verwijderen"
+  },
+  "langsLastOne": {
+    "message": "Houd er minstens één"
+  },
+  "langsAllAdded": {
+    "message": "Elke taal staat al in je lijst."
+  },
+  "langsAdded": {
+    "message": "$NAME$ toegevoegd",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Die was in gebruik, dus de vertaaltaal is nu $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Chinees schreef"
+  },
+  "fontCjkRound": {
+    "message": "Chinees afgerond"
+  },
+  "ttsVolLabel": {
+    "message": "Voorleesvolume"
+  },
+  "ttsGroupPlayback": {
+    "message": "Afspelen"
+  },
+  "ttsDuckLabel": {
+    "message": "Origineel geluid tijdens voorlezen"
+  },
+  "ttsDuckShort": {
+    "message": "Origineel geluid"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Spreekt"
+  },
+  "ttsStatusOn": {
+    "message": "Voorlezen aan"
+  },
+  "ttsOpenSettings": {
+    "message": "Voorleesinstellingen"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ regels deze video · $M$ overgeslagen",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ regels hier · $M$ overgeslagen ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "vertaling niet op tijd klaar"
+  },
+  "ttsSkipSilent": {
+    "message": "er kwam geen geluid"
+  },
+  "ttsRegionLabel": {
+    "message": "Serviceregio"
+  },
+  "ttsErrNoRegion": {
+    "message": "Voer eerst de serviceregio van je Azure-sleutel in (bijv. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Deze computer heeft geen stemmen om mee te spreken."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Deze computer heeft geen stem die $NAME$ voorleest. De lijst hieronder is van andere talen — kies er een en de regel wordt met het accent van die taal voorgelezen.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Stemmen van deze computer zoeken…"
+  },
+  "ttsErrRefused": {
+    "message": "De aanbieder weigerde dit verzoek — probeer een andere stem."
+  },
+  "ttsErrNoAudio": {
+    "message": "Het geluid kwam niet door — probeer opnieuw, of kies een andere stem."
+  },
+  "startPicChop1": {
+    "message": "er zijn twee grote",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "redenen een is",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Er zijn twee grote redenen,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "de eerste is…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Meer stemmen…"
+  },
+  "popupVoiceNone": {
+    "message": "Geen stem gekozen"
+  },
+  "ttsRobotVoices": {
+    "message": "Robotachtig",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Laat me ondertiteltekst selecteren en kopiëren",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Tekst selecteren",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Samenvatting",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Videosamenvatting",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Sluiten",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Deze video heeft geen bruikbaar ondertitelspoor.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Zet de ondertitels weer aan om samen te vatten — de samenvatting komt uit het ondertitelspoor."
+  },
+  "sumNeedKey": {
+    "message": "Samenvattingen hebben een dienst van jezelf nodig: een aanbieder met je sleutel in het vertaalpaneel, of een lokaal model op deze machine. De gratis engines vertalen alleen. Ze vatten niet samen.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Vertaaldienst instellen",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Samenvatten",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Opnieuw samenvatten"
+  },
+  "sumFail": {
+    "message": "De samenvatting is mislukt. Probeer het later opnieuw.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Dit stuurt het hele ondertitelspoor naar $PROVIDER$, in $PARTS$ deel/delen, op je eigen quotum.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Samenvatten… deel $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ deel/delen kon niet worden samengevat; de rest staat hierboven.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Ondertitels",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTubes eigen vertaling wordt nu beperkt; slimme zinnen (Google) vullen aan. Het probeert later zelf opnieuw.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Het vertaaleindpunt beperkt de verzoeken — verder over ongeveer $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Een basis-URL of een volledig eindpunt, beide werken, bijv. http://localhost:8880/v1 of http://localhost:8880/v1/audio/speech (lokale spraakservers zoals Kokoro of openai-edge-tts). De sleutel mag leeg blijven; gewoon http werkt alleen voor loopback-adressen."
+  },
+  "optTtsNeedUrl": {
+    "message": "Nog geen eindpuntadres — deze aanbieder kan pas als je er een toevoegt."
+  },
+  "ttsSkipRefused": {
+    "message": "de aanbieder weigerde die verzoeken"
+  },
+  "ttsSkipNotSet": {
+    "message": "niet ingesteld op deze computer"
+  },
+  "ttsSkipNoVoice": {
+    "message": "geen stem voor deze taal"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ kan nu niet spreken. Kies een andere in de rij hierboven — de eigen stemmen van je browser staan in die lijst.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Het ondertitelspoor is niet aangekomen — automatisch opnieuw proberen. Haast? Vernieuw de pagina om het nu opnieuw te proberen."
+  },
+  "ttsCompleteLabel": {
+    "message": "Elke regel afmaken (beeld trager in dichte stukken)"
+  },
+  "ttsCompleteHint": {
+    "message": "Bij hogere snelheid verliezen lange regels hun staart vaak aan de volgende. Met dit aan vertraagt het beeld zoveel als de regel nodig heeft — nooit onder een kwart van je gekozen snelheid — en haalt in de gaten weer in. Terwijl het beeld zó traag is, zakt het eigen geluid van de video verder dan het niveau dat jij zette, tot stilte."
+  },
+  "ttsCompleteHintText": {
+    "message": "Nogal wat regels worden op deze snelheid afgekapt. Zet het aan en het beeld vertraagt waar het moet, zodat er meer afkomen."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Aanzetten"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Niet meer tonen"
+  },
+  "provLocalSpeechShort": {
+    "message": "Browser"
+  },
+  "optNavFonts": {
+    "message": "Ondertitellettertypen"
+  },
+  "fontsIntro": {
+    "message": "Eén lijst voor beide ondertitelregels; de popup kiest per regel. Elk lettertype in de lijst staat op deze computer."
+  },
+  "fontsKept": {
+    "message": "Getoond in de popup"
+  },
+  "fontsMore": {
+    "message": "Andere lettertypen"
+  },
+  "fontsOnly": {
+    "message": "Alleen lettertypen die het kunnen tekenen"
+  },
+  "fontsCounting": {
+    "message": "Controleren…"
+  },
+  "fontsSearch": {
+    "message": "Lettertypenamen zoeken"
+  },
+  "fontsNoMatch": {
+    "message": "Geen lettertype gevonden."
+  },
+  "fontsKeptEmpty": {
+    "message": "Voor de popup blijft alleen Systeemstandaard over.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Elk lettertype staat al in de lijst."
+  },
+  "fontsReset": {
+    "message": "Standaard herstellen"
+  },
+  "fontsResetDone": {
+    "message": "Standaardlijst hersteld."
+  },
+  "fontsAdded": {
+    "message": "$NAME$ toegevoegd",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Voorbeeld: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Voorbeeld"
+  },
+  "fontsUnavailable": {
+    "message": "Deze browser laat de extensie de geïnstalleerde lettertypen niet lezen, dus alleen Systeemstandaard kan worden gekozen."
+  },
+  "fontNoGlyphs": {
+    "message": "kan deze regel niet tekenen"
+  },
+  "fontNotHere": {
+    "message": "niet op deze computer"
+  },
+  "fontsImport": {
+    "message": "Lettertype importeren…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; het bestand wordt naar de browser gekopieerd."
+  },
+  "fontsImported": {
+    "message": "$NAME$ geïmporteerd",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Kon het niet in de browser opslaan; probeer opnieuw.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "$NAME$ uit de popup gehaald.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Deze lijst overslaan",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Geïmporteerd lettertype",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Dat is geen lettertypebestand dat deze browser kan gebruiken."
+  },
+  "fontsImportTooBig": {
+    "message": "Het bestand is te groot (limiet $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Het geïmporteerde lettertype verwijderen"
+  },
+  "fontsLangLabel": {
+    "message": "Controleren op"
+  },
+  "fontsLangRecent": {
+    "message": "recent bekeken"
+  },
+  "fontMoreRow": {
+    "message": "Lettertypen…"
+  },
+  "fontHiddenRow": {
+    "message": "Nog $N$ kunnen deze regel niet tekenen",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

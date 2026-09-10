@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Kétnyelvű feliratok YouTube-hoz — eredeti és fordítás egyetlen, nem átfedő rétegben."
+  },
+  "headerSub": {
+    "message": "YouTube™ · egy réteg"
+  },
+  "disclaimer": {
+    "message": "Nem áll kapcsolatban a YouTube-bal vagy a Google-lel."
+  },
+  "enableTitle": {
+    "message": "Be / ki"
+  },
+  "openOptions": {
+    "message": "Beállítások"
+  },
+  "enableAria": {
+    "message": "Bővítmény bekapcsolása"
+  },
+  "previewTag": {
+    "message": "Előnézet"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "A gyors barna róka"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "kínaihoz a legjobb",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "A böngésződ saját hangjai (ingyenes)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (helyi)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Élő előnézet"
+  },
+  "secTranslation": {
+    "message": "Fordítás"
+  },
+  "targetLang": {
+    "message": "Fordítás nyelve"
+  },
+  "backendLabel": {
+    "message": "Motor"
+  },
+  "backendInfo": {
+    "message": "A motorról"
+  },
+  "backendAuto": {
+    "message": "Auto (ajánlott)"
+  },
+  "backendTlang": {
+    "message": "Teljes sáv (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Okos mondatok (Google)"
+  },
+  "backendByo": {
+    "message": "Saját kulcs (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b>: a YouTube teljes sávos fordítását használja, ha a videó támogatja, és okos mondatokra vált, ha nem.<br><b>Teljes sáv</b>: a YouTube saját fordítása; sorra igazítva. Erős használatnál a YouTube rövid ideig korlátozhatja — a bővítmény vár, és újra kérdez.<br><b>Okos mondatok</b>: a darabos feliratokat egész mondatokká rakja össze, majd a Google ingyenes végpontján fordítja — rendezetlen sávokon jobb szöveg, mint a teljes sáv, de ott is korlátozódhat az erős használat; a bővítmény lassít, és újra próbálja.<br><b>Saját kulcs</b>: az összerakott mondatot a beállított szolgáltatóhoz küldi."
+  },
+  "backendGtxHint": {
+    "message": "A Google ingyenes végpontját használja — erős használatnál rövid ideig korlátozódhat; a bővítmény igazítja a tempót, és magától újra próbálja."
+  },
+  "backendStatusTlang": {
+    "message": "Ez a videó: teljes sávos fordítás (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Ez a videó: okos mondatok (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "A fordító végpont korlátozza a tempót — lassít, és magától újra próbálja. A már lefordított sorok tovább működnek."
+  },
+  "diagCopy": {
+    "message": "Diagnosztika másolása"
+  },
+  "diagCopied": {
+    "message": "Másolva — illeszd be egy e-mailbe vagy ügybe"
+  },
+  "diagCopyFail": {
+    "message": "A másolás nem sikerült — inkább készíts képernyőképet"
+  },
+  "backendStatusSame": {
+    "message": "Ennek a videónak a felirata már a fordítás nyelvén van — nincs mit fordítani."
+  },
+  "backendStatusNoTrack": {
+    "message": "Ehhez a videóhoz nem található feliratsáv, így nincs mit megjeleníteni.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Nyiss meg egy YouTube videót, és a két sor megjelenik rajta. Ha már egy videónál vagy, frissítsd a lapot."
+  },
+  "secLayout": {
+    "message": "Elrendezés"
+  },
+  "secLineStyle": {
+    "message": "Sorstílus"
+  },
+  "secLineStyleHint": {
+    "message": "Betű · Szín · Méret"
+  },
+  "orderLabel": {
+    "message": "Sorrend"
+  },
+  "orderTransTop": {
+    "message": "Fordítás felül"
+  },
+  "orderOrigTop": {
+    "message": "Eredeti felül"
+  },
+  "positionLabel": {
+    "message": "Helyzet"
+  },
+  "posTop": {
+    "message": "Fent"
+  },
+  "posCenter": {
+    "message": "Középen"
+  },
+  "posBottom": {
+    "message": "Lent"
+  },
+  "posHint": {
+    "message": "A feliratdobozt a videón is húzhatod"
+  },
+  "posTryDrag": {
+    "message": "próbáld ki"
+  },
+  "posTryNoVideo": {
+    "message": "Először nyiss meg egy YouTube-videót"
+  },
+  "resetPos": {
+    "message": "Helyzet visszaállítása"
+  },
+  "rowGap": {
+    "message": "Sorköz"
+  },
+  "tabTrans": {
+    "message": "Fordítás"
+  },
+  "tabOrig": {
+    "message": "Eredeti"
+  },
+  "lineTabsAria": {
+    "message": "Feliratsor"
+  },
+  "lineShow": {
+    "message": "Ez a sor látszódjon"
+  },
+  "fontLabel": {
+    "message": "Betű"
+  },
+  "fontSystem": {
+    "message": "Rendszeré"
+  },
+  "fontMono": {
+    "message": "Monospace"
+  },
+  "fontCjk": {
+    "message": "CJK-barát"
+  },
+  "sizeLabel": {
+    "message": "Betűméret"
+  },
+  "colText": {
+    "message": "Szöveg"
+  },
+  "colBg": {
+    "message": "Háttér"
+  },
+  "colStroke": {
+    "message": "Körvonal"
+  },
+  "colTextAria": {
+    "message": "Szövegszín"
+  },
+  "colBgAria": {
+    "message": "Háttérszín"
+  },
+  "colStrokeAria": {
+    "message": "Körvonalszín"
+  },
+  "bgOpacity": {
+    "message": "Háttér fedettsége"
+  },
+  "strokeOpacity": {
+    "message": "Körvonal fedettsége"
+  },
+  "resetAll": {
+    "message": "Minden visszaállítása"
+  },
+  "resetConfirmText": {
+    "message": "Ez törli az összes beállítást, az ezen a számítógépen mentett API-kulcsokat, és az egyes szolgáltatókhoz megjegyzett modellt és hangot, és újra bekapcsolja az első indítás súgóit. A már engedélyezett szolgáltatói tartományok engedélyezve maradnak, ahogy a beimportált betűfájlok is.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Tartsd meg a beállításaimat",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Mindent visszaállít",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Kétnyelvű feliratok kikapcsolása"
+  },
+  "toggleTurnOn": {
+    "message": "Kétnyelvű feliratok bekapcsolása"
+  },
+  "handleTitle": {
+    "message": "Húzd · duplaklikk vissza"
+  },
+  "handleAria": {
+    "message": "Húzd a feliratok mozgatásához, dupla kattintás a visszaállításhoz"
+  },
+  "secExport": {
+    "message": "Export"
+  },
+  "exportContent": {
+    "message": "Tartalom"
+  },
+  "exportBi": {
+    "message": "Kétnyelvű"
+  },
+  "exportOrig": {
+    "message": "Eredeti"
+  },
+  "exportTrans": {
+    "message": "Fordítás"
+  },
+  "exportSrt": {
+    "message": "SRT letöltése"
+  },
+  "exportWorking": {
+    "message": "Készül…"
+  },
+  "exportDone": {
+    "message": "Feliratok letöltve"
+  },
+  "exportNoTrans": {
+    "message": "Ehhez a videóhoz nincs fordítás — próbáld a Teljes sáv motort vagy másik fordítási nyelvet."
+  },
+  "exportLimited": {
+    "message": "A YouTube most korlátozza a teljes sávos fordítást — próbáld újra egy perc múlva. Saját kulccsal az exportkártyán van egy pipa, ami kikerüli ezt."
+  },
+  "exportNoCues": {
+    "message": "Nincs letölthető felirat — játssz néhány másodpercet, hogy betöltődjenek, aztán próbáld újra."
+  },
+  "exportNotYoutube": {
+    "message": "Exportáláshoz nyiss meg egy YouTube-videóoldalt."
+  },
+  "exportFailed": {
+    "message": "Az exportálás nem sikerült — frissítsd az oldalt, és próbáld újra."
+  },
+  "updateNotesLabel": {
+    "message": "Kiadási jegyzetek megnyitása frissítés után"
+  },
+  "trackWarnDubOnly": {
+    "message": "Figyelem: ennek a videónak csak AI-szinkronos automatikus felirata van (nincs eredeti nyelvű sáv), ezért a kétnyelvű felirat elcsúszhat a hangtól."
+  },
+  "whatsNewRow": {
+    "message": "Újdonságok a v$VER$ verzióban →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Ez a videó: saját kulcs ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Szolgáltató"
+  },
+  "byoSiteLabel": {
+    "message": "Oldal"
+  },
+  "byoSiteHint": {
+    "message": "Válaszd azt az oldalt, ahol regisztráltál — a kettő külön platform, és az egyik kulcsát a másik nem fogadja el."
+  },
+  "byoSiteGlobal": {
+    "message": "Nemzetközi"
+  },
+  "byoSiteCn": {
+    "message": "Kínai szárazföld"
+  },
+  "byoBaseLabel": {
+    "message": "Végpont címe"
+  },
+  "byoModelLabel": {
+    "message": "Modell"
+  },
+  "byoModelRequired": {
+    "message": "Kötelező: modellnév"
+  },
+  "byoKeyLabel": {
+    "message": "API-kulcs"
+  },
+  "byoKeyClear": {
+    "message": "Törlés"
+  },
+  "byoKeyReplace": {
+    "message": "Csere"
+  },
+  "byoKeyCleared": {
+    "message": "Az ezen a gépen tárolt kulcs törölve."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Az ezen a gépen tárolt kulcs törölve. Az volt használatban, ezért a fordítás most a $NAME$ felé megy.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "mentve ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Egyéni (OpenAI-kompatibilis)"
+  },
+  "byoTest": {
+    "message": "Mentés és teszt"
+  },
+  "byoTesting": {
+    "message": "Tesztelés…"
+  },
+  "byoTestOk": {
+    "message": "Kapcsolódva. Minta: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Kulcs kérése"
+  },
+  "byoGuide": {
+    "message": "Segítség kell a beállításhoz?"
+  },
+  "byoLocalHint": {
+    "message": "A kulcs ebben a böngészőben marad, ezen a gépen — soha nem töltődik fel. A felirat szövege csak a választott szolgáltatóhoz megy."
+  },
+  "byoErrNoProvider": {
+    "message": "Először válassz szolgáltatót."
+  },
+  "byoErrNoKey": {
+    "message": "Először írj be egy API-kulcsot, aztán nyomd meg a „Mentés és teszt” gombot."
+  },
+  "byoErrNoModel": {
+    "message": "Először válassz modellt — vegyél egyet a listáról, vagy nyomd meg a „Modellek listázása a kulcsommal” gombot."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Ez a szolgáltató nem ad listát. Először hozd le az elérhető modelleket, vagy írd be magad a modellnevet."
+  },
+  "byoErrNotApi": {
+    "message": "Ez a cím weboldallal válaszolt, nem az API-val — általában bejelentkezési fal vagy a kéréseket elfogó hálózat. Ellenőrizd a címet, vagy próbálj másik hálózatot."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "Az API alap-URL-jének teljes https:// címnek kell lennie."
+  },
+  "byoErrUrlHasKey": {
+    "message": "A címben kulcs van. Vedd ki a címből, és illeszd az API-kulcs mezőbe — a cím szinkronizálódik a böngészőfiókoddal, a kulcsmező nem."
+  },
+  "byoErrNoPerm": {
+    "message": "Az API-gazda elérésének engedélye nélkül a bővítmény nem tud csatlakozni. Nyomd meg újra a „Mentés és teszt” gombot, és engedélyezd."
+  },
+  "byoErrAuth": {
+    "message": "A kulcsot elutasították (401) — ellenőrizd, hogy teljesen másoltad-e, és hogy még aktív-e."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "A gépen futó szerver elutasította a hívást (403). Valószínűleg nem mondták meg neki, hogy engedje a bővítményt: OLLAMA_ORIGINS az Ollama számára, a CORS-kapcsoló az LM Studio-ban."
+  },
+  "byoErrForbidden": {
+    "message": "A szolgáltató elutasította ezt a hívást (403). Általában a kulcs rendben van, a fiók viszont nem teheti meg — kifizetetlen egyenleg, függőben lévő azonosítás, be nem kapcsolt modell, vagy a régió. Nézd meg a fiókot a szolgáltató konzolján."
+  },
+  "byoErrListAuth": {
+    "message": "Ez a kulcs nem olvashatja a listát. Add meg neki ezt a jogot a szolgáltató irányítópultján, aztán hozd le újra.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "A szolgáltató korlátozza a tempót — lassít, és magától újra próbálja."
+  },
+  "byoErrLimitedTest": {
+    "message": "A szolgáltató korlátozza a tempót. Várj egy kicsit, és nyomd meg újra."
+  },
+  "byoErrQuota": {
+    "message": "Ennek a fióknak elfogyott a kredite vagy a kvótája a jelenlegi időszakra — töltsd fel a szolgáltató konzolján, hogy folytathasd."
+  },
+  "byoErrBadRequest": {
+    "message": "A végpont elutasította a kérést — a modellnév vagy az alap-URL lehet hibás."
+  },
+  "byoErrBadShape": {
+    "message": "A modell nem soronként válaszolt, ahogy kérve volt, és a kisebb újrapróbálkozások sem jöttek össze — próbálj másik modellt."
+  },
+  "byoErrReasoning": {
+    "message": "Az a modell csak a gondolatláncát adta vissza, fordítást nem — válassz nem gondolkodó modellt."
+  },
+  "byoErrNetfail": {
+    "message": "Nem érhető el az a végpont (hálózat vagy területi korlátozás)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Nem érhető el az a cím: vagy nem fut a szerver, vagy nem mondták meg neki, hogy engedje a bővítményt (OLLAMA_ORIGINS az Ollama számára, a CORS-kapcsoló az LM Studio-ban)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Ez a szolgáltató nem tud a választott nyelvedre fordítani — válts nyelvet vagy motort."
+  },
+  "byoErrFailed": {
+    "message": "A kapcsolat nem jött létre. Próbáld újra egy kicsit később."
+  },
+  "optTitle": {
+    "message": "Fordítószolgáltatás beállítása"
+  },
+  "optIntro": {
+    "message": "Válassz szolgáltatót, és illeszd be a saját API-kulcsodat."
+  },
+  "optPricingLink": {
+    "message": "Árak és ingyenes keret"
+  },
+  "optFetchModels": {
+    "message": "Modellek listázása a kulcsommal"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Elérhető modellek listázása"
+  },
+  "optFetching": {
+    "message": "Listázás…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ modell található",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "A(z) „$MODEL$” már nincs ennek a szolgáltatónak a listáján — válassz másikat fent.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Nem sikerült listázni a modelleket — írd be inkább a modellnevet."
+  },
+  "optModelCustom": {
+    "message": "Egyéni…"
+  },
+  "optNoModelsYet": {
+    "message": "Még nincs modellista — hozd le a kulcsoddal, vagy csak írd be a nevet."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Még nincs modellista — hozd le, vagy csak írd be a nevet."
+  },
+  "optShowKey": {
+    "message": "Mutasd"
+  },
+  "optRecommended": {
+    "message": "ajánlott"
+  },
+  "optConfigured": {
+    "message": "Beállítva"
+  },
+  "optInUse": {
+    "message": "használatban"
+  },
+  "optAfterSetup": {
+    "message": "Ha itt kész vagy, nyisd meg a bővítmény popupját, és állítsd a Motort „Saját kulcs”-ra."
+  },
+  "optTrademark": {
+    "message": "Minden szolgáltatói név és logó a mindenkori tulajdonos védjegye. Ez a bővítmény egyikükkel sem áll kapcsolatban, nem támogatják és nem szponzorálják; a jelek csak a választott API azonosítására szolgálnak."
+  },
+  "optSections": {
+    "message": "Szakaszok"
+  },
+  "optNavSetup": {
+    "message": "Fordítószolgáltatás"
+  },
+  "optNavStart": {
+    "message": "Első lépések"
+  },
+  "optNavAbout": {
+    "message": "Névjegy"
+  },
+  "startIntro": {
+    "message": "Négy dolog. Nem kell semmit beállítanod a használathoz."
+  },
+  "startS1Title": {
+    "message": "Nyiss meg egy videót — ennyi"
+  },
+  "startS1Body": {
+    "message": "Bármely YouTube-videón, amin van felirat: a két sor magától megjelenik."
+  },
+  "startS2Title": {
+    "message": "Tedd őket, ahova szeretnéd"
+  },
+  "startS2Body": {
+    "message": "Fogd meg a fogantyút a feliratdoboz bal felső sarkán, és húzd bárhova. Dupla kattintás a fogantyún visszateszi."
+  },
+  "startS2Alt": {
+    "message": "Lejátszó ábra: hatpontos fogantyú a feliratdoboz bal felső sarkán, másik helyre húzva"
+  },
+  "startS3Title": {
+    "message": "Jobb fordítást szeretnél"
+  },
+  "startS3Body": {
+    "message": "Add hozzá a saját API-kulcsodat: egész mondatos fordítás, és a teljes videó fordítása exportáláskor."
+  },
+  "startGoSetup": {
+    "message": "Fordítószolgáltatás beállítása"
+  },
+  "aboutIntro": {
+    "message": "Mi ez, és hova megy a szöveged."
+  },
+  "aboutVersion": {
+    "message": "Verzió"
+  },
+  "uiLocaleLabel": {
+    "message": "Felület nyelve"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — a böngészőt követi"
+  },
+  "uiLocaleHint": {
+    "message": "A bővítmény saját menüinek és beállításainak nyelve. Néhány, magára a videóra rajzolt címke továbbra is a böngésző nyelvét követi. A fordítás nyelvét a popupban választod; a „Fordítási nyelvek” panel csak azt dönti el, mely nyelveket listázza a popup."
+  },
+  "cmdToggleSubs": {
+    "message": "Felirat be vagy ki"
+  },
+  "cmdToggleTts": {
+    "message": "Felolvasás be vagy ki"
+  },
+  "cmdToggleTransLine": {
+    "message": "A fordítósor mutatása vagy elrejtése"
+  },
+  "optShortcutsLabel": {
+    "message": "Billentyűparancsok"
+  },
+  "optShortcutsOpen": {
+    "message": "Parancsok beállítása"
+  },
+  "optShortcutsHint": {
+    "message": "Ezeket a billentyűket a Chrome tartja, nem a bővítmény. Kezdetben semmi nincs kötve; három dolog lehet: felirat be/ki, felolvasás be/ki, és a fordítósor mutatása vagy elrejtése."
+  },
+  "optShortcutsFallback": {
+    "message": "A Chrome innen nem nyitotta meg azt az oldalt — illeszd a chrome://extensions/shortcuts címet a címsorba."
+  },
+  "startTargetLabel": {
+    "message": "Fordítás nyelve"
+  },
+  "startTargetHint": {
+    "message": "A bővítmény telepítésekor a böngésződ nyelvi beállításaiból tippelte. Itt módosítsd, ha a tipp hibás — a popup bármikor átállíthatja."
+  },
+  "aboutBlurb": {
+    "message": "Egy második feliratsor YouTube-hoz: az eredeti az egyik soron, a fordítás a másikon, betű, szín és helyzet a te döntésed. Nyílt forrású, ingyenes, reklám nélkül."
+  },
+  "aboutPrivacy": {
+    "message": "A bővítménynek nincs saját szerverünk, és nem gyűjt statisztikát. A felirat szövege csak a választott szolgáltatásokhoz megy: a fordítószolgáltatáshoz, amit kiválasztasz, és ha bekapcsolod őket, a felolvasás hangszolgáltatójához és az összefoglalóhoz beállított szolgáltatóhoz. Saját kulccsal a kulcs csak ezen a számítógépen tárolódik."
+  },
+  "aboutChangelog": {
+    "message": "Változásnapló"
+  },
+  "aboutRoadmap": {
+    "message": "Roadmap"
+  },
+  "optFeedbackLink": {
+    "message": "Probléma jelentése"
+  },
+  "popupByoConfigure": {
+    "message": "Beállítás…"
+  },
+  "popupSummarize": {
+    "message": "Videó összefoglalása",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "nincs beállítva"
+  },
+  "popupByoPick": {
+    "message": "Fordítószolgáltató"
+  },
+  "popupByoUntested": {
+    "message": "nincs tesztelve"
+  },
+  "popupModelPick": {
+    "message": "Fordítómodell"
+  },
+  "popupModelMore": {
+    "message": "További modellek…"
+  },
+  "popupModelFetch": {
+    "message": "Modellek lekérése a beállításokban"
+  },
+  "popupModelSwitched": {
+    "message": "Mostantól: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Nincs modell kiválasztva"
+  },
+  "exportUsesYouTube": {
+    "message": "A letöltés a YouTube saját teljes sávos fordítását használja — ingyenes, és nem költi az API-kulcsodat."
+  },
+  "exportUseByo": {
+    "message": "Fordítás a saját kulcsommal (pontosabb, kvótát fogyaszt)"
+  },
+  "exportByoNote": {
+    "message": "A teljes sávot a szolgáltatód fordítja a kulcsoddal. Küldés előtt látsz egy becslést."
+  },
+  "exportConfirm": {
+    "message": "$N$ feliratsor fordítása $NAME$ segítségével — kb. $REQ$ kérés a saját kvótádból. A teljes sáv elmegy a böngésződből ehhez a szolgáltatóhoz; lejátszáskor csak azokat a részeket küldi, amiket tényleg nézel.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Fordítás és letöltés"
+  },
+  "exportConfirmBack": {
+    "message": "Mégse"
+  },
+  "exportStop": {
+    "message": "Állj"
+  },
+  "exportStopping": {
+    "message": "Leállítás…"
+  },
+  "exportProgress": {
+    "message": "Fordítás… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ darab a YouTube fordítására esett vissza",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Letöltés megszakítva."
+  },
+  "ftSite": {
+    "message": "Webhely"
+  },
+  "ftSiteLabel": {
+    "message": "Oldal"
+  },
+  "ftFeedbackLabel": {
+    "message": "Visszajelzés"
+  },
+  "ftReviewLabel": {
+    "message": "Értékelés"
+  },
+  "ftGithub": {
+    "message": "Forráskód a GitHubon"
+  },
+  "ftFeedback": {
+    "message": "Visszajelzés küldése vagy hiba jelentése"
+  },
+  "ftReview": {
+    "message": "Értékeld a Chrome Web Store-ban"
+  },
+  "optNeedKey": {
+    "message": "Még nincs kulcs — ez a szolgáltató addig nem használható, amíg nem adsz hozzá egyet."
+  },
+  "optNeedBase": {
+    "message": "Még nincs végpontcím — ez a szolgáltató addig nem használható, amíg nem írsz be egyet."
+  },
+  "optBaseHint": {
+    "message": "Alap-URL és teljes végpont is jó, pl. https://example.com/v1 vagy https://example.com/v1/chat/completions. Az ezen a gépen futó Ollama vagy LM Studio esetén a http://localhost:11434/v1 a helyes forma. A kulcs üresen maradhat; sima http csak loopback-címeken működik."
+  },
+  "startS1Alt": {
+    "message": "Lejátszó ábra: egy eredeti sor és egy fordított sor a kép alján"
+  },
+  "startS3Alt": {
+    "message": "Összehasonlítás: az ingyenes motor egy mondatot darabokban fordít, a saját kulcsod egészben érti, és darabolja vissza"
+  },
+  "startPicFree": {
+    "message": "Ingyenes motor"
+  },
+  "startPicFreeNote": {
+    "message": "egy mondat, darabokra vágva"
+  },
+  "startPicByo": {
+    "message": "Saját kulcs"
+  },
+  "startPicByoNote": {
+    "message": "egészben értve, visszaosztva"
+  },
+  "startS4Title": {
+    "message": "Van egy kis menü a lejátszóban"
+  },
+  "startS4Body": {
+    "message": "A feliratgomb melletti kis nyíl menüt nyit: felirat, felolvasás, szövegkijelölés, videó-összefoglaló és beállítások — a lejátszó elhagyása nélkül."
+  },
+  "startS4Alt": {
+    "message": "Lejátszó ábra: kis nyíl a feliratgomb mellett, jobb lent, egy kis menüt nyit"
+  },
+  "menuHintBubble": {
+    "message": "Felolvasás, videó-összefoglaló, szövegkijelölés — mind e mögött a kis nyíl mögött"
+  },
+  "troubleTitle": {
+    "message": "Valami nem stimmel"
+  },
+  "troubleStep1": {
+    "message": "Először nézd meg a kapcsolót a popupban — ha ki van kapcsolva, az egész feliratréteg távol marad."
+  },
+  "troubleStep2": {
+    "message": "Van egyáltalán felirata ennek a videónak? Próbáld a CC gombot a lejátszóban: eredeti nélkül nincs mit fordítani."
+  },
+  "troubleStep3": {
+    "message": "Próbálj egy ismert videót. Ha minden más megy, és csak ez nem, általában ennek a videónak a feliratsávja a ludas."
+  },
+  "troubleDiagHint": {
+    "message": "Még mindig elakadtál? Illeszd a diagnosztikát az e-mailedbe vagy az ügybe — benne van a verzió, a motor állapota és hogy mit csinál a jelenlegi lap, ez megspórol egy-két kört."
+  },
+  "langManage": {
+    "message": "Nyelvek kezelése…"
+  },
+  "optNavLangs": {
+    "message": "Fordítási nyelvek"
+  },
+  "optNavReadaloud": {
+    "message": "Felolvasás"
+  },
+  "ttsIntro": {
+    "message": "Olvasd fel hangosan a lefordított sort. A böngésző saját hangjaihoz egyáltalán nem kell kulcs; a felhős szolgáltatókat itt állítod be és tesztelheted."
+  },
+  "ttsVoiceLabel": {
+    "message": "Hang"
+  },
+  "ttsPreview": {
+    "message": "Előnézet"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Lejátszás…"
+  },
+  "ttsPreviewFail": {
+    "message": "Nem sikerült lejátszani — ellenőrizd a kulcsot, és nyomd meg a „Mentés és teszt” gombot."
+  },
+  "ttsFetchVoices": {
+    "message": "Ennek a nyelvnek a teljes listája a kulcsoddal"
+  },
+  "ttsFetching": {
+    "message": "Lekérés…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Ez a kulcsod összes, $N$ hangja a jelenlegi nyelvhez, a régebbi Standard / Wavenet szintekkel együtt. Csak erre a nyelvre vonatkoznak; a fenti sorra kattintva visszaérsz a hétköznapi hangokhoz, amelyek nyelvről nyelvre követnek. A listát bármikor újra lehozhatod.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Vissza a hétköznapi hangokhoz (követik a nyelvet)"
+  },
+  "ttsVoicesNone": {
+    "message": "Ennek a szolgáltatónak nincs extra hangja ehhez a nyelvhez — a beépítettek továbbra is működnek."
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$ hang letöltve — javaslatként a fenti mező alatt vannak.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Női"
+  },
+  "ttsVoiceMale": {
+    "message": "Férfi"
+  },
+  "ttsTestOk": {
+    "message": "Kapcsolódva: teszt hang $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "A böngésző saját hangjainak nagy része ezen a számítógépen van telepítve, és itt olvassa a sort. Néhány nem: a Chrome online hangokat is kínál — azokét, amelyek neve „Google”-lel kezdődik —, és ezeknél a böngésző elküldi a sort a készítőnek. Felhős szolgáltatónál a felolvasandó szöveg csak a választott szolgáltatóhoz megy, a kulcs ezen a gépen marad."
+  },
+  "ttsEnableLabel": {
+    "message": "A fordítás felolvasása a videóban"
+  },
+  "ttsEnableHint": {
+    "message": "Ha be van kapcsolva, minden felirat fordítása elhangzik, ahogy megjelenik; az a sor, amelynek a fordítása nem készül el időben, kimarad, később nem hozza be. Amíg egy sor szól, a videó saját hangja a lent beállított szintre esik. A túl hosszú sor kicsit lassítja a képet, és kölcsönveszi utána a szünetet — felhős hanggal és a böngésző sajátjával is; a lenti kapcsoló addig lassít, amíg minden sor be nem fejeződik."
+  },
+  "langsIntro": {
+    "message": "Mely fordítási nyelveket kínálja a popup."
+  },
+  "langsKept": {
+    "message": "A popupban látszanak"
+  },
+  "langsKeptHint": {
+    "message": "Ezek jelennek meg a popup fordítási nyelvi menüjében. Legalább egyet tarts meg."
+  },
+  "langsMore": {
+    "message": "További nyelvek"
+  },
+  "langsMoreHint": {
+    "message": "A + gombbal adj hozzá egyet. A lista az ingyenes motorok és a DeepL által támogatott fordítási nyelveket követi."
+  },
+  "langsReset": {
+    "message": "Alapértelmezés vissza"
+  },
+  "langsResetDone": {
+    "message": "Vissza az alapértelmezett listához."
+  },
+  "langsAddAria": {
+    "message": "Hozzáadás"
+  },
+  "langsRemoveAria": {
+    "message": "Eltávolítás"
+  },
+  "langsLastOne": {
+    "message": "Legalább egyet tarts meg"
+  },
+  "langsAllAdded": {
+    "message": "Minden nyelv már a listádon van."
+  },
+  "langsAdded": {
+    "message": "$NAME$ hozzáadva",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Az volt használatban, ezért a fordítás nyelve most $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Kínai talpas"
+  },
+  "fontCjkRound": {
+    "message": "Kínai kerekített"
+  },
+  "ttsVolLabel": {
+    "message": "Felolvasás hangereje"
+  },
+  "ttsGroupPlayback": {
+    "message": "Lejátszás"
+  },
+  "ttsDuckLabel": {
+    "message": "Eredeti hang beszéd közben"
+  },
+  "ttsDuckShort": {
+    "message": "Eredeti hang"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Beszél"
+  },
+  "ttsStatusOn": {
+    "message": "Felolvasás be"
+  },
+  "ttsOpenSettings": {
+    "message": "Felolvasás beállításai"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ sor ebben a videóban · $M$ kihagyva",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ sor itt · $M$ kihagyva ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "a fordítás nem készült el időben"
+  },
+  "ttsSkipSilent": {
+    "message": "nem jött hang"
+  },
+  "ttsRegionLabel": {
+    "message": "Szolgáltatás régiója"
+  },
+  "ttsErrNoRegion": {
+    "message": "Először írd be az Azure-kulcsod szolgáltatásrégióját (pl. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Ezen a számítógépen nincs hang, amivel beszélni lehetne."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Ezen a számítógépen nincs hang, amely $NAME$ nyelven olvasna. A lenti lista más nyelvek hangjai — válassz egyet, és a sor annak a nyelvnek az akcentusával hangzik el.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "A számítógép hangjainak keresése…"
+  },
+  "ttsErrRefused": {
+    "message": "A szolgáltató elutasította ezt a kérést — próbálj másik hangot."
+  },
+  "ttsErrNoAudio": {
+    "message": "A hang nem jött át — próbáld újra, vagy válassz másik hangot."
+  },
+  "startPicChop1": {
+    "message": "van két nagy",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "ok egy az",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Két nagy ok van,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "az első az…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "További hangok…"
+  },
+  "popupVoiceNone": {
+    "message": "Nincs hang kiválasztva"
+  },
+  "ttsRobotVoices": {
+    "message": "Robotos",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Feliratszöveg kijelölése és másolása",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Szövegkijelölés",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Összefoglaló",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Videó-összefoglaló",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Bezárás",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Ennek a videónak nincs használható feliratsávja.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Kapcsold vissza a feliratokat az összefoglaláshoz — az összefoglaló a feliratsávból készül."
+  },
+  "sumNeedKey": {
+    "message": "Az összefoglalóhoz saját szolgáltatás kell: bármelyik szolgáltató a kulcsoddal a fordítás panelen, vagy egy helyi modell ezen a gépen. Az ingyenes motorok csak fordítanak. Nem foglalnak össze.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Fordítószolgáltatás beállítása",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Összefoglalás",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Újra összefoglalás"
+  },
+  "sumFail": {
+    "message": "Az összefoglaló nem sikerült. Próbáld később.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Ez elküldi a teljes feliratsávot a(z) $PROVIDER$ felé, $PARTS$ részben, a saját kvótádon.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Összefoglalás… $DONE$/$TOTAL$ rész",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ részt nem sikerült összefoglalni; a többi fent van.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Felirat",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "A YouTube saját fordítása most korlátozott; az okos mondatok (Google) ugrik be. Később magától újra próbálja.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "A fordító végpont korlátozza a tempót — folytatás kb. $SECONDS$ mp múlva.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Alap-URL és teljes végpont is jó, pl. http://localhost:8880/v1 vagy http://localhost:8880/v1/audio/speech (helyi beszédszerverek, mint a Kokoro vagy az openai-edge-tts). A kulcs üresen maradhat; sima http csak loopback-címeken működik."
+  },
+  "optTtsNeedUrl": {
+    "message": "Még nincs végpontcím — ez a szolgáltató addig nem használható, amíg nem adsz hozzá egyet."
+  },
+  "ttsSkipRefused": {
+    "message": "a szolgáltató elutasította azokat a kéréseket"
+  },
+  "ttsSkipNotSet": {
+    "message": "nincs beállítva ezen a számítógépen"
+  },
+  "ttsSkipNoVoice": {
+    "message": "nincs hang ehhez a nyelvhez"
+  },
+  "ttsProviderMute": {
+    "message": "A(z) $NAME$ most nem tud beszélni. Válassz másikat a fenti sorban — a böngésződ saját hangjai is abban a listában vannak.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "A feliratsáv még nem érkezett meg — magától újra próbálja. Sietős? Frissítsd az oldalt, hogy most próbáld újra."
+  },
+  "ttsCompleteLabel": {
+    "message": "Minden sor végig (sűrű részeken lassul a kép)"
+  },
+  "ttsCompleteHint": {
+    "message": "Nagyobb sebességnél a hosszú sorok végét gyakran elnyeli a következő. Ha ez be van kapcsolva, a kép annyit lassul, amennyit a sor kér — soha nem megy a választott sebességed negyede alá —, és a szünetekben behozza. Amíg a kép ennyire lassú, a videó saját hangja a beállított szintnél is lejjebb esik, csendig."
+  },
+  "ttsCompleteHintText": {
+    "message": "Ebben a sebességben jó néhány sor félbeszakad. Kapcsold be, és a kép ott lassul, ahol kell, hogy több befejeződjön."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Kapcsold be"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Ne mutasd többet"
+  },
+  "provLocalSpeechShort": {
+    "message": "Böngésző"
+  },
+  "optNavFonts": {
+    "message": "Feliratbetűk"
+  },
+  "fontsIntro": {
+    "message": "Egy lista szolgálja mindkét feliratsort; a popup soronként választ. Minden listázott betű telepítve van ezen a számítógépen."
+  },
+  "fontsKept": {
+    "message": "A popupban látszanak"
+  },
+  "fontsMore": {
+    "message": "További betűk"
+  },
+  "fontsOnly": {
+    "message": "Csak ami ki tudja rajzolni"
+  },
+  "fontsCounting": {
+    "message": "Ellenőrzés…"
+  },
+  "fontsSearch": {
+    "message": "Betűnevek keresése"
+  },
+  "fontsNoMatch": {
+    "message": "Nincs illeszkedő betű."
+  },
+  "fontsKeptEmpty": {
+    "message": "A popupnak csak a rendszer alapértelmezett maradt.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Minden betű már a listán van."
+  },
+  "fontsReset": {
+    "message": "Alapértelmezés vissza"
+  },
+  "fontsResetDone": {
+    "message": "Alapértelmezett lista visszaállítva."
+  },
+  "fontsAdded": {
+    "message": "$NAME$ hozzáadva",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Előnézet: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Előnézet"
+  },
+  "fontsUnavailable": {
+    "message": "Ez a böngésző nem engedi, hogy a bővítmény olvassa a telepített betűket, ezért csak a rendszer alapértelmezett választható."
+  },
+  "fontNoGlyphs": {
+    "message": "ezt a sort nem tudja kirajzolni"
+  },
+  "fontNotHere": {
+    "message": "nincs ezen a számítógépen"
+  },
+  "fontsImport": {
+    "message": "Betűfájl importálása…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; a fájl a böngészőbe másolódik."
+  },
+  "fontsImported": {
+    "message": "$NAME$ importálva",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Nem sikerült elmenteni a böngészőben; próbáld újra.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "$NAME$ eltávolítva a popupból.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Lista kihagyása",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Importált betű",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Ez nem olyan betűfájl, amit ez a böngésző tud használni."
+  },
+  "fontsImportTooBig": {
+    "message": "A fájl túl nagy (limit $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Az importált betű törlése"
+  },
+  "fontsLangLabel": {
+    "message": "Ellenőrzés ehhez"
+  },
+  "fontsLangRecent": {
+    "message": "nemrég nézett"
+  },
+  "fontMoreRow": {
+    "message": "Betűk kezelése…"
+  },
+  "fontHiddenRow": {
+    "message": "még $N$ nem tudja kirajzolni ezt a sort",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

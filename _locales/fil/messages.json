@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Mga bilingual na subtitle para sa YouTube — orihinal at pagsasalin sa iisang layer, hindi nagsasapawan."
+  },
+  "headerSub": {
+    "message": "YouTube™ · iisang layer"
+  },
+  "disclaimer": {
+    "message": "Hindi kaanib ng YouTube o Google."
+  },
+  "enableTitle": {
+    "message": "I-on / i-off"
+  },
+  "openOptions": {
+    "message": "Mga setting"
+  },
+  "enableAria": {
+    "message": "I-on ang extension"
+  },
+  "previewTag": {
+    "message": "Silip"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Ang mabilis na kayumangging soro"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "pinakamabuti sa Tsino",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Sariling boses ng browser mo (libre)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (lokal)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Live na silip"
+  },
+  "secTranslation": {
+    "message": "Pagsasalin"
+  },
+  "targetLang": {
+    "message": "Wika ng pagsasalin"
+  },
+  "backendLabel": {
+    "message": "Engine"
+  },
+  "backendInfo": {
+    "message": "Impormasyon ng engine"
+  },
+  "backendAuto": {
+    "message": "Auto (rekomendado)"
+  },
+  "backendTlang": {
+    "message": "Buong track (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Matalinong pangungusap (Google)"
+  },
+  "backendByo": {
+    "message": "Sarili mong key (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b>: ginagamit ang buong-track na pagsasalin ng YouTube kapag sinusuportahan ng video, at lumilipat sa matalinong pangungusap kapag hindi.<br><b>Buong track</b>: sariling pagsasalin ng YouTube; naka-align ang bawat cue. Sa mabigat na gamit, puwedeng pagbawalan ito sandali ng YouTube — maghihintay ang extension at tatanong ulit.<br><b>Matalinong pangungusap</b>: tinitipon ang pira-pirasong caption para maging buong pangungusap, tapos isinasalin sa libreng endpoint ng Google — mas maayos ang salita kaysa buong-track sa magulong track, pero sa mabigat na gamit puwede ring pagbawalan doon; bumabagal ang extension at sinusubukan ulit.<br><b>Sarili mong key</b>: ipinapadala ang nabuong pangungusap sa provider na naka-set mo."
+  },
+  "backendGtxHint": {
+    "message": "Ginagamit ang libreng endpoint ng Google — sa mabigat na gamit puwedeng pagbawalan sandali; inaayos ng extension ang bilis at sinusubukan ulit nang kusa."
+  },
+  "backendStatusTlang": {
+    "message": "Video na 'to: buong-track na pagsasalin (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Video na 'to: matalinong pangungusap (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Pinagbabawalan ng endpoint ng pagsasalin — bumabagal at sinusubukan ulit nang kusa. Patuloy ang mga linyang naisalin na."
+  },
+  "diagCopy": {
+    "message": "Kopyahin ang diagnostic info"
+  },
+  "diagCopied": {
+    "message": "Nakopya — i-paste sa email o issue"
+  },
+  "diagCopyFail": {
+    "message": "Hindi nakopya — mag-screenshot na lang"
+  },
+  "backendStatusSame": {
+    "message": "Naka-subtitle na ang video na 'to sa wika ng pagsasalin mo — walang isasalin."
+  },
+  "backendStatusNoTrack": {
+    "message": "Walang nakitang caption track sa video na 'to, kaya walang ipapakita.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Magbukas ng YouTube video at lalabas sa ibabaw ang dalawang linya. Kung nasa video ka na, i-reload ang tab."
+  },
+  "secLayout": {
+    "message": "Pagkakaayos"
+  },
+  "secLineStyle": {
+    "message": "Istilo ng linya"
+  },
+  "secLineStyleHint": {
+    "message": "Font · Kulay · Laki"
+  },
+  "orderLabel": {
+    "message": "Ayos"
+  },
+  "orderTransTop": {
+    "message": "Pagsasalin sa itaas"
+  },
+  "orderOrigTop": {
+    "message": "Orihinal sa itaas"
+  },
+  "positionLabel": {
+    "message": "Posisyon"
+  },
+  "posTop": {
+    "message": "Itaas"
+  },
+  "posCenter": {
+    "message": "Gitna"
+  },
+  "posBottom": {
+    "message": "Ibaba"
+  },
+  "posHint": {
+    "message": "Puwede mo ring i-drag ang kahon ng subtitle sa video"
+  },
+  "posTryDrag": {
+    "message": "subukan"
+  },
+  "posTryNoVideo": {
+    "message": "Magbukas muna ng YouTube video"
+  },
+  "resetPos": {
+    "message": "I-reset ang posisyon"
+  },
+  "rowGap": {
+    "message": "Agwat ng linya"
+  },
+  "tabTrans": {
+    "message": "Pagsasalin"
+  },
+  "tabOrig": {
+    "message": "Orihinal"
+  },
+  "lineTabsAria": {
+    "message": "Linya ng subtitle"
+  },
+  "lineShow": {
+    "message": "Ipakita ang linya"
+  },
+  "fontLabel": {
+    "message": "Font"
+  },
+  "fontSystem": {
+    "message": "Default ng system"
+  },
+  "fontMono": {
+    "message": "Monospace"
+  },
+  "fontCjk": {
+    "message": "Pang-CJK"
+  },
+  "sizeLabel": {
+    "message": "Laki ng font"
+  },
+  "colText": {
+    "message": "Teksto"
+  },
+  "colBg": {
+    "message": "Background"
+  },
+  "colStroke": {
+    "message": "Outline"
+  },
+  "colTextAria": {
+    "message": "Kulay ng teksto"
+  },
+  "colBgAria": {
+    "message": "Kulay ng background"
+  },
+  "colStrokeAria": {
+    "message": "Kulay ng outline"
+  },
+  "bgOpacity": {
+    "message": "Opacity ng background"
+  },
+  "strokeOpacity": {
+    "message": "Opacity ng outline"
+  },
+  "resetAll": {
+    "message": "I-reset ang mga setting"
+  },
+  "resetConfirmText": {
+    "message": "Binubura nito ang bawat setting, ang mga API key na naka-save sa computer na 'to, at ang modelo at boses na naalala para sa bawat provider, at ibinabalik ang mga hint sa unang paggamit. Ang mga domain ng provider na binigyan mo na ng permiso ay nananatili, pati ang mga font file na ini-import mo.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Iwan ang settings ko",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "I-reset ang lahat",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "I-off ang dobleng subtitle"
+  },
+  "toggleTurnOn": {
+    "message": "I-on ang dobleng subtitle"
+  },
+  "handleTitle": {
+    "message": "I-drag · double-click i-reset"
+  },
+  "handleAria": {
+    "message": "I-drag para ilipat ang mga subtitle, i-double-click para i-reset"
+  },
+  "secExport": {
+    "message": "I-export"
+  },
+  "exportContent": {
+    "message": "Nilalaman"
+  },
+  "exportBi": {
+    "message": "Dalawang wika"
+  },
+  "exportOrig": {
+    "message": "Orihinal"
+  },
+  "exportTrans": {
+    "message": "Pagsasalin"
+  },
+  "exportSrt": {
+    "message": "I-download SRT"
+  },
+  "exportWorking": {
+    "message": "Ginagawa…"
+  },
+  "exportDone": {
+    "message": "Na-download na ang mga subtitle"
+  },
+  "exportNoTrans": {
+    "message": "Walang pagsasalin para sa video na 'to — subukan ang Buong-track na engine o ibang wika ng pagsasalin."
+  },
+  "exportLimited": {
+    "message": "Pinagbabawalan muna ng YouTube ang buong-track na pagsasalin ngayon — subukan ulit sa loob ng isang minuto. Kung naka-set ang sarili mong key, may tsek sa export card na umiiwas dito."
+  },
+  "exportNoCues": {
+    "message": "Walang ma-download na subtitle — i-play ng ilang segundo para mag-load ang mga caption, tapos subukan ulit."
+  },
+  "exportNotYoutube": {
+    "message": "Magbukas ng page ng YouTube video para mag-export."
+  },
+  "exportFailed": {
+    "message": "Bigo ang export — i-refresh ang page at subukan ulit."
+  },
+  "updateNotesLabel": {
+    "message": "Buksan ang release notes pagkatapos ng update"
+  },
+  "trackWarnDubOnly": {
+    "message": "Paalala: AI-dubbed auto caption lang ang meron ang video na 'to (walang track sa orihinal na wika), kaya puwedeng hindi tumugma ang dual subtitle sa audio."
+  },
+  "whatsNewRow": {
+    "message": "Tingnan kung ano'ng bago sa v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Video na 'to: sarili mong key ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Provider"
+  },
+  "byoSiteLabel": {
+    "message": "Site"
+  },
+  "byoSiteHint": {
+    "message": "Piliin ang site kung saan ka nag-sign up — magkahiwalay na platform ang dalawa at hindi tinatanggap ng isa ang key ng isa."
+  },
+  "byoSiteGlobal": {
+    "message": "Internasyonal"
+  },
+  "byoSiteCn": {
+    "message": "Kalupaan ng Tsina"
+  },
+  "byoBaseLabel": {
+    "message": "Address ng endpoint"
+  },
+  "byoModelLabel": {
+    "message": "Modelo"
+  },
+  "byoModelRequired": {
+    "message": "Kailangan: pangalan ng modelo"
+  },
+  "byoKeyLabel": {
+    "message": "API key"
+  },
+  "byoKeyClear": {
+    "message": "Burahin"
+  },
+  "byoKeyReplace": {
+    "message": "Palitan"
+  },
+  "byoKeyCleared": {
+    "message": "Nabura na ang key na naka-store sa machine na 'to."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Nabura na ang key na naka-store sa machine na 'to. Ginagamit 'yon, kaya dumadaan na ngayon ang pagsasalin sa $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "naka-save ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Custom (tugma sa OpenAI)"
+  },
+  "byoTest": {
+    "message": "I-save at i-test"
+  },
+  "byoTesting": {
+    "message": "Tine-test…"
+  },
+  "byoTestOk": {
+    "message": "Nakakonekta. Sample: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Kumuha ng key"
+  },
+  "byoGuide": {
+    "message": "Kailangan ng tulong sa pag-set up nito?"
+  },
+  "byoLocalHint": {
+    "message": "Nanatili ang key sa browser na 'to, sa machine na 'to — hindi ito kailanman ina-upload. Ang teksto ng subtitle ay pumupunta lang sa provider na pinili mo."
+  },
+  "byoErrNoProvider": {
+    "message": "Pumili muna ng provider."
+  },
+  "byoErrNoKey": {
+    "message": "Maglagay muna ng API key, tapos pindutin ang I-save at i-test."
+  },
+  "byoErrNoModel": {
+    "message": "Pumili muna ng modelo — pumili sa listahan, o pindutin ang “Ilista ang mga modelo gamit ang key ko”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Walang listahan ang provider na 'to. Kunin muna ang mga available na modelo, o i-type mismo ang pangalan."
+  },
+  "byoErrNotApi": {
+    "message": "Web page ang isinagot ng address na 'yon, hindi API — kadalasan login wall o network na humaharang ng request. Tingnan ang address, o subukan ang ibang network."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "Dapat buong https:// address ang API base URL."
+  },
+  "byoErrUrlHasKey": {
+    "message": "May key sa address. Alisin doon at i-paste sa field ng API key — sine-sync ang address sa browser account mo, hindi ang field ng key."
+  },
+  "byoErrNoPerm": {
+    "message": "Kung walang permiso na maabot ang API host na 'yon, hindi makakakonekta ang extension. Pindutin ulit ang “I-save at i-test” at payagan ito."
+  },
+  "byoErrAuth": {
+    "message": "Tinanggihan ang key (401) — tingnan kung buo ang nakopya at aktibo pa."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Tinanggihan ng server sa machine na 'to ang tawag (403). Malamang hindi pa sinabihan na payagan ang extension: OLLAMA_ORIGINS para sa Ollama, ang CORS switch sa LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Tinanggihan ng provider ang tawag na 'to (403). Kadalasan ayos ang key at hindi pinapayagan ng account — hindi pa bayad, pending pa ang identity check, hindi naka-on ang modelo, o ang rehiyon. Tingnan ang account sa console ng provider."
+  },
+  "byoErrListAuth": {
+    "message": "Hindi puwedeng basahin ng key na 'to ang listahan. Bigyan ng permiso sa dashboard ng provider, tapos kunin ulit.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Pinagbabawalan muna ng provider — bumabagal at sinusubukan ulit nang kusa."
+  },
+  "byoErrLimitedTest": {
+    "message": "Pinagbabawalan muna ng provider. Sandali, tapos pindutin ulit."
+  },
+  "byoErrQuota": {
+    "message": "Wala nang credit o quota ang account na 'to para sa kasalukuyang panahon — mag-top up sa console ng provider para magpatuloy."
+  },
+  "byoErrBadRequest": {
+    "message": "Tinanggihan ng endpoint ang request — puwedeng mali ang pangalan ng modelo o base URL."
+  },
+  "byoErrBadShape": {
+    "message": "Hindi sumagot ang modelo nang linya-linya gaya ng hinihingi, at bigo rin ang mas maliliit na retry — subukan ang ibang modelo."
+  },
+  "byoErrReasoning": {
+    "message": "Chain of thought lang ang ibinalik ng modelong 'yon, walang pagsasalin — pumili ng non-thinking na modelo."
+  },
+  "byoErrNetfail": {
+    "message": "Hindi maabot ang endpoint na 'yon (network o restriksyon sa rehiyon)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Hindi maabot ang address na 'yon: hindi tumatakbo ang server, o hindi pa sinabihan na payagan ang extension (OLLAMA_ORIGINS para sa Ollama, ang CORS switch sa LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Hindi maisalin ng provider na 'to sa wikang pinili mo — palitan ang wika o ang engine."
+  },
+  "byoErrFailed": {
+    "message": "Bigo ang koneksyon. Subukan ulit sandali."
+  },
+  "optTitle": {
+    "message": "Setup ng serbisyo ng pagsasalin"
+  },
+  "optIntro": {
+    "message": "Pumili ng provider at i-paste ang sarili mong API key."
+  },
+  "optPricingLink": {
+    "message": "Presyo at libreng antas"
+  },
+  "optFetchModels": {
+    "message": "Ilista ang mga modelo gamit ang key ko"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Ilista ang available na modelo"
+  },
+  "optFetching": {
+    "message": "Inililista…"
+  },
+  "optModelsFetched": {
+    "message": "Nakakita ng $N$ modelo",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "Wala na ang “$MODEL$” sa listahan ng provider na 'to — pumili ng iba sa itaas.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Hindi nailista ang mga modelo — i-type na lang ang pangalan."
+  },
+  "optModelCustom": {
+    "message": "Custom…"
+  },
+  "optNoModelsYet": {
+    "message": "Wala pang listahan ng modelo — kunin gamit ang key mo, o i-type ang pangalan."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Wala pang listahan ng modelo — kunin, o i-type ang pangalan."
+  },
+  "optShowKey": {
+    "message": "Ipakita"
+  },
+  "optRecommended": {
+    "message": "rekomendado"
+  },
+  "optConfigured": {
+    "message": "Naka-set"
+  },
+  "optInUse": {
+    "message": "ginagamit"
+  },
+  "optAfterSetup": {
+    "message": "Pagkatapos dito, buksan ang popup ng extension at i-set ang Engine sa “Sarili mong key”."
+  },
+  "optTrademark": {
+    "message": "Ang lahat ng pangalan at logo ng provider ay trademark ng kani-kanilang may-ari. Hindi kaanib, hindi endorsed, at hindi sponsored ng kahit sino sa kanila ang extension na 'to; ipinapakita ang marka para lang makilala ang API na pinili mo."
+  },
+  "optSections": {
+    "message": "Mga seksyon"
+  },
+  "optNavSetup": {
+    "message": "Serbisyo ng pagsasalin"
+  },
+  "optNavStart": {
+    "message": "Pagsisimula"
+  },
+  "optNavAbout": {
+    "message": "Tungkol"
+  },
+  "startIntro": {
+    "message": "Apat na bagay. Hindi mo kailangang mag-set ng kahit ano para magamit."
+  },
+  "startS1Title": {
+    "message": "Magbukas ng video — 'yon lang"
+  },
+  "startS1Body": {
+    "message": "Anumang YouTube video na may subtitle: lumilitaw mag-isa ang dalawang linya."
+  },
+  "startS2Title": {
+    "message": "Ilagay kung saan mo gusto"
+  },
+  "startS2Body": {
+    "message": "Hawakan ang hawakan sa kaliwang itaas ng kahon ng subtitle at i-drag kahit saan. I-double-click ang hawakan para ibalik."
+  },
+  "startS2Alt": {
+    "message": "Diagram ng player: hawakang may anim na tuldok sa kaliwang-itaas na sulok ng kahon ng subtitle, dinadala sa ibang posisyon"
+  },
+  "startS3Title": {
+    "message": "Gusto ng mas magandang pagsasalin"
+  },
+  "startS3Body": {
+    "message": "Magdagdag ng sarili mong API key: pagsasalin ng buong pangungusap, at pagsasalin ng buong video kapag nag-export ka."
+  },
+  "startGoSetup": {
+    "message": "Mag-set up ng serbisyo ng pagsasalin"
+  },
+  "aboutIntro": {
+    "message": "Ano 'to, at saan pupunta ang teksto mo."
+  },
+  "aboutVersion": {
+    "message": "Bersyon"
+  },
+  "uiLocaleLabel": {
+    "message": "Wika ng interface"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — sundan ang browser"
+  },
+  "uiLocaleHint": {
+    "message": "Ang wika ng sariling menu at setting ng extension na 'to. Ilang label na iginuhit sa video mismo ay sumusunod pa rin sa wika ng browser. Pinipili ang wika ng pagsasalin sa popup; ang panel na “Mga wika ng pagsasalin” ang nagpapasya lang kung aling wika ang ililista ng popup."
+  },
+  "cmdToggleSubs": {
+    "message": "I-on o i-off ang mga subtitle"
+  },
+  "cmdToggleTts": {
+    "message": "I-on/i-off ang pagbasa"
+  },
+  "cmdToggleTransLine": {
+    "message": "Ipakita o itago ang linya ng pagsasalin"
+  },
+  "optShortcutsLabel": {
+    "message": "Mga keyboard shortcut"
+  },
+  "optShortcutsOpen": {
+    "message": "I-set ang mga shortcut"
+  },
+  "optShortcutsHint": {
+    "message": "Chrome ang may hawak ng mga key na 'to, hindi ang extension. Walang naka-bind sa simula; tatlo ang puwede: subtitle on/off, basahin nang malakas on/off, at ipakita o itago ang linya ng pagsasalin."
+  },
+  "optShortcutsFallback": {
+    "message": "Ayaw buksan ng Chrome ang page na 'yon mula rito — i-paste ang chrome://extensions/shortcuts sa address bar."
+  },
+  "startTargetLabel": {
+    "message": "Wika ng pagsasalin"
+  },
+  "startTargetHint": {
+    "message": "Hinulaan mula sa language preferences ng browser mo nang i-install ang extension. Palitan dito kung mali ang hula — puwedeng palitan anumang oras sa popup."
+  },
+  "aboutBlurb": {
+    "message": "Pangalawang linya ng subtitle para sa YouTube: orihinal sa isang linya, pagsasalin sa kabila, font, kulay at posisyon ay sa'yo. Open source, libre, walang ads."
+  },
+  "aboutPrivacy": {
+    "message": "Walang sariling server ang extension at walang kinokolektang istatistika. Pumupunta lang ang teksto ng subtitle sa mga serbisyong pinili mo: ang serbisyo ng pagsasalin na pinili mo at, kung i-on mo, ang speech provider para sa pagbasa nang malakas at ang provider na naka-set mo para sa mga buod. Sa sarili mong key, sa computer na 'to lang naka-store ang key."
+  },
+  "aboutChangelog": {
+    "message": "Talaan ng pagbabago"
+  },
+  "aboutRoadmap": {
+    "message": "Plano sa hinaharap"
+  },
+  "optFeedbackLink": {
+    "message": "Mag-ulat ng problema"
+  },
+  "popupByoConfigure": {
+    "message": "I-set up…"
+  },
+  "popupSummarize": {
+    "message": "I-buod ang video na 'to",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "hindi pa naka-set"
+  },
+  "popupByoPick": {
+    "message": "Provider ng pagsasalin"
+  },
+  "popupByoUntested": {
+    "message": "hindi pa na-test"
+  },
+  "popupModelPick": {
+    "message": "Modelo ng pagsasalin"
+  },
+  "popupModelMore": {
+    "message": "Mas maraming modelo…"
+  },
+  "popupModelFetch": {
+    "message": "Kumuha ng modelo sa mga setting"
+  },
+  "popupModelSwitched": {
+    "message": "Mula rito: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Walang napiling modelo"
+  },
+  "exportUsesYouTube": {
+    "message": "Ginagamit ng download ang sariling buong-track na pagsasalin ng YouTube — libre, at hindi ginagastos ang API key mo."
+  },
+  "exportUseByo": {
+    "message": "Isalin gamit ang sarili kong key (mas malapit, gumagastos ng quota)"
+  },
+  "exportByoNote": {
+    "message": "Isasalin ng provider mo ang buong track gamit ang key mo. Makikita mo ang taya bago magpadala ng kahit ano."
+  },
+  "exportConfirm": {
+    "message": "Isalin ang $N$ linya ng subtitle gamit ang $NAME$ — humigit-kumulang $REQ$ request sa sarili mong quota. Lumabas ang buong track mula sa browser mo papunta sa provider na 'yon; habang nagpe-playback, ang mga parteng pinapanood mo lang ang ipinapadala.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Isalin at i-download"
+  },
+  "exportConfirmBack": {
+    "message": "Kanselahin"
+  },
+  "exportStop": {
+    "message": "Itigil"
+  },
+  "exportStopping": {
+    "message": "Itinitigil…"
+  },
+  "exportProgress": {
+    "message": "Nagsasalin… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ chunk ang bumalik sa pagsasalin ng YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Kinansela ang download."
+  },
+  "ftSite": {
+    "message": "Website"
+  },
+  "ftSiteLabel": {
+    "message": "Site"
+  },
+  "ftFeedbackLabel": {
+    "message": "Tugon"
+  },
+  "ftReviewLabel": {
+    "message": "I-rate"
+  },
+  "ftGithub": {
+    "message": "Source code sa GitHub"
+  },
+  "ftFeedback": {
+    "message": "Magpadala ng tugon o mag-ulat ng bug"
+  },
+  "ftReview": {
+    "message": "I-rate sa Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Wala pang key — hindi magagamit ang provider na 'to hanggang magdagdag ka."
+  },
+  "optNeedBase": {
+    "message": "Wala pang address ng endpoint — hindi magagamit ang provider na 'to hanggang maglagay ka."
+  },
+  "optBaseHint": {
+    "message": "Puwede ang base URL o buong endpoint, hal. https://example.com/v1 o https://example.com/v1/chat/completions. Para sa Ollama o LM Studio sa machine na 'to, http://localhost:11434/v1 ang tamang hugis. Puwedeng walang laman ang key; plain http lang para sa loopback address."
+  },
+  "startS1Alt": {
+    "message": "Diagram ng player: may orihinal na linya at isinaling linya malapit sa ibaba ng larawan"
+  },
+  "startS3Alt": {
+    "message": "Paghahambing: pira-piraso ang pagsasalin ng libreng engine sa isang pangungusap, naiintindihan ng sarili mong key nang buo at pinaghihiwalay ulit"
+  },
+  "startPicFree": {
+    "message": "Libreng engine"
+  },
+  "startPicFreeNote": {
+    "message": "isang pangungusap, tinadtad"
+  },
+  "startPicByo": {
+    "message": "Sarili mong key"
+  },
+  "startPicByoNote": {
+    "message": "naintindihan nang buo, pinaghiwalay ulit"
+  },
+  "startS4Title": {
+    "message": "May maliit na menu sa player"
+  },
+  "startS4Body": {
+    "message": "Ang maliit na arrow sa tabi ng subtitle button ay nagbubukas ng menu: mga subtitle, basahin nang malakas, pumili ng teksto, buod ng video at mga setting — nang hindi umaalis sa player."
+  },
+  "startS4Alt": {
+    "message": "Ilustrasyon ng player: maliit na arrow sa tabi ng subtitle button, kanang ibaba, nagbubukas ng maliit na menu"
+  },
+  "menuHintBubble": {
+    "message": "Basahin nang malakas, buod ng video, pumili ng teksto — lahat sa likod ng maliit na arrow na 'to"
+  },
+  "troubleTitle": {
+    "message": "May mali"
+  },
+  "troubleStep1": {
+    "message": "Tingnan muna ang switch sa popup — kung naka-off, hindi lilitaw ang buong layer ng subtitle."
+  },
+  "troubleStep2": {
+    "message": "May subtitle ba talaga ang video na 'to? Subukan ang CC button sa player: kung walang orihinal, walang isasalin."
+  },
+  "troubleStep3": {
+    "message": "Subukan ang popular na video. Kung gumagana ang iba at 'to lang ang hindi, kadalasan ang subtitle track ng video na 'to."
+  },
+  "troubleDiagHint": {
+    "message": "Hindi pa rin? I-paste ang diagnostic info sa email o issue mo — nandiyan ang bersyon, estado ng engine, at ginagawa ng kasalukuyang tab, na nakakatipid ng isa o dalawang round trip."
+  },
+  "langManage": {
+    "message": "I-manage ang mga wika…"
+  },
+  "optNavLangs": {
+    "message": "Mga wika ng pagsasalin"
+  },
+  "optNavReadaloud": {
+    "message": "Basahin nang malakas"
+  },
+  "ttsIntro": {
+    "message": "Basahin nang malakas ang isinaling linya. Hindi kailangan ng key ang sariling boses ng browser mo; dito ise-set at tine-test ang mga cloud provider."
+  },
+  "ttsVoiceLabel": {
+    "message": "Boses"
+  },
+  "ttsPreview": {
+    "message": "Silip"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Tumatugtog…"
+  },
+  "ttsPreviewFail": {
+    "message": "Hindi napatugtog — tingnan ang key at subukan ang I-save at i-test"
+  },
+  "ttsFetchVoices": {
+    "message": "Kunin ang buong listahan ng wikang 'to gamit ang key mo"
+  },
+  "ttsFetching": {
+    "message": "Kinukuha…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Ito ang lahat ng $N$ boses ng key mo para sa kasalukuyang wika, kasama ang mas lumang Standard / Wavenet. Para lang sa wikang 'to ang mga 'yan; i-click ang linya sa itaas para bumalik sa pang-araw-araw na boses, na sumusunod sa'yo sa iba't ibang wika. Puwede mong kunin ulit ang listahan na 'to anumang oras.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Bumalik sa pang-araw-araw na boses (sumusunod sa wika)"
+  },
+  "ttsVoicesNone": {
+    "message": "Walang dagdag na boses ang provider na 'to para sa wikang 'to — gumagana pa rin ang built-in."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Nakakuha ng $N$ boses — suhestiyon ang mga 'yan sa ilalim ng field sa itaas.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Babae"
+  },
+  "ttsVoiceMale": {
+    "message": "Lalaki"
+  },
+  "ttsTestOk": {
+    "message": "Nakakonekta: test audio $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Karamihan sa sariling boses ng browser mo ay naka-install sa computer na 'to at dito binibigkas ang linya. Ilan ang hindi: may online na boses din ang Chrome — 'yung nagsisimula ang pangalan sa \"Google\" — at para sa mga 'yon, ipinapadala ng browser ang linya sa gumawa nito. Sa cloud provider, ang tekstong bibigkasin ay pumupunta lang sa provider na pinili mo, at nananatili ang key sa machine na 'to."
+  },
+  "ttsEnableLabel": {
+    "message": "Basahin nang malakas ang pagsasalin sa video"
+  },
+  "ttsEnableHint": {
+    "message": "Kapag naka-on, binibigkas ang pagsasalin ng bawat subtitle paglitaw nito; ang linyang hindi pa handa ang pagsasalin sa oras ay nilalaktawan, hindi hinahabol mamaya. Habang may linya na nagsasalita, bumababa ang sariling audio ng video sa antas na naka-set sa ibaba. Ang mahabang linya ay medyo binabagal ang larawan at humihiram sa agwat pagkatapos — sa cloud na boses at sa sarili ng browser; pinapanatili ng switch sa ibaba ang pagbagal hanggang matapos ang bawat linya."
+  },
+  "langsIntro": {
+    "message": "Aling wika ng pagsasalin ang inaalok ng popup."
+  },
+  "langsKept": {
+    "message": "Ipinapakita sa popup"
+  },
+  "langsKeptHint": {
+    "message": "Lumilitaw ang mga 'to sa menu ng wika-ng-pagsasalin ng popup. Mag-iwan ng kahit isa."
+  },
+  "langsMore": {
+    "message": "Iba pang wika"
+  },
+  "langsMoreHint": {
+    "message": "Pindutin ang + para magdagdag. Sumusunod ang listahan sa mga wika ng pagsasalin na sinusuportahan ng libreng engine at DeepL."
+  },
+  "langsReset": {
+    "message": "Ibalik ang default"
+  },
+  "langsResetDone": {
+    "message": "Bumalik sa default na listahan."
+  },
+  "langsAddAria": {
+    "message": "Idagdag"
+  },
+  "langsRemoveAria": {
+    "message": "Alisin"
+  },
+  "langsLastOne": {
+    "message": "Mag-iwan ng kahit isa"
+  },
+  "langsAllAdded": {
+    "message": "Nandiyan na ang bawat wika sa listahan mo."
+  },
+  "langsAdded": {
+    "message": "Idinagdag ang $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Ginagamit 'yon, kaya $NAME$ na ngayon ang wika ng pagsasalin",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Serif na Tsino"
+  },
+  "fontCjkRound": {
+    "message": "Bilog na Tsino"
+  },
+  "ttsVolLabel": {
+    "message": "Volume ng pagbasa nang malakas"
+  },
+  "ttsGroupPlayback": {
+    "message": "Pag-playback"
+  },
+  "ttsDuckLabel": {
+    "message": "Orihinal na audio habang nagsasalita"
+  },
+  "ttsDuckShort": {
+    "message": "Orihinal na audio"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Nagsasalita"
+  },
+  "ttsStatusOn": {
+    "message": "Pagbasa: on"
+  },
+  "ttsOpenSettings": {
+    "message": "Setting ng pagbasa"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ linya sa video na 'to · $M$ nilaktawan",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ linya dito · $M$ nilaktawan ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "hindi naabutan ang pagsasalin"
+  },
+  "ttsSkipSilent": {
+    "message": "walang lumabas na tunog"
+  },
+  "ttsRegionLabel": {
+    "message": "Rehiyon ng serbisyo"
+  },
+  "ttsErrNoRegion": {
+    "message": "Ilagay muna ang rehiyon ng serbisyo ng Azure key mo (hal. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Walang boses na pambigkas ang computer na 'to."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Walang boses ang computer na 'to na magbabasa ng $NAME$. Ang listahan sa ibaba ay boses ng ibang wika — pumili at babasahin ang linya sa accent ng wikang 'yon.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Hinahanap ang mga boses ng computer na 'to…"
+  },
+  "ttsErrRefused": {
+    "message": "Tinanggihan ng provider ang request na 'to — subukan ang ibang boses."
+  },
+  "ttsErrNoAudio": {
+    "message": "Hindi dumating ang audio — subukan ulit, o pumili ng ibang boses."
+  },
+  "startPicChop1": {
+    "message": "merong dalawang malaki",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "dahilan isa ay",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "May dalawang malaking dahilan,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "ang una ay…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Mas maraming boses…"
+  },
+  "popupVoiceNone": {
+    "message": "Walang napiling boses"
+  },
+  "ttsRobotVoices": {
+    "message": "Robotiko",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Hayaan akong pumili at kumopya ng teksto ng subtitle",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Pumili ng teksto",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Buod",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Buod ng video",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Isara",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Walang magamit na subtitle track ang video na 'to.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "I-on ulit ang mga subtitle para makapag-buod — ang buod ay galing sa subtitle track."
+  },
+  "sumNeedKey": {
+    "message": "Kailangan ng buod ng sarili mong serbisyo: anumang provider na may key mo sa panel ng pagsasalin, o lokal na modelo sa machine na 'to. Nagsasalin lang ang libreng engine. Hindi sila nagbu-buod.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Mag-set up ng serbisyo ng pagsasalin",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "I-buod",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "I-buod ulit"
+  },
+  "sumFail": {
+    "message": "Bigo ang buod. Subukan ulit mamaya.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Ipapadala nito ang buong subtitle track sa $PROVIDER$, sa $PARTS$ parte, sa sarili mong quota.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Binubuod… parte $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ parte ang hindi nabuo; ang natitira ay sa itaas.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Mga subtitle",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Pinagbabawalan muna ngayon ang sariling pagsasalin ng YouTube; pumupuno ang matalinong pangungusap (Google). Sinusubukan ulit nang kusa mamaya.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Pinagbabawalan muna ng endpoint ng pagsasalin — magpapatuloy sa mga $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Puwede ang base URL o buong endpoint, hal. http://localhost:8880/v1 o http://localhost:8880/v1/audio/speech (mga lokal na speech server tulad ng Kokoro o openai-edge-tts). Puwedeng walang laman ang key; plain http lang para sa loopback address."
+  },
+  "optTtsNeedUrl": {
+    "message": "Wala pang address ng endpoint — hindi magagamit ang provider na 'to hanggang magdagdag ka."
+  },
+  "ttsSkipRefused": {
+    "message": "tinanggihan ng provider ang mga request na 'yon"
+  },
+  "ttsSkipNotSet": {
+    "message": "hindi naka-set sa computer na 'to"
+  },
+  "ttsSkipNoVoice": {
+    "message": "walang boses para sa wikang 'to"
+  },
+  "ttsProviderMute": {
+    "message": "Hindi makapagsalita ang $NAME$ ngayon. Pumili ng iba sa linya sa itaas — nandiyan sa listahan ang sariling boses ng browser mo.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Hindi pa dumarating ang subtitle track — sinusubukan ulit nang kusa. Nagmamadali? I-refresh ang page para subukan ngayon."
+  },
+  "ttsCompleteLabel": {
+    "message": "Tapusin ang bawat linya (bumabagal ang larawan sa mga siksik na parte)"
+  },
+  "ttsCompleteHint": {
+    "message": "Sa mas mabilis na bilis, madalas mawala ang dulo ng mahahabang linya sa susunod. Kapag naka-on 'to, bumabagal ang larawan nang kailangan ng linya — hindi kailanman mas mababa sa isang-kapat ng bilis na pinili mo — at nahuhabol ulit sa mga agwat. Habang ganoon kabagal ang larawan, bumababa pa ang sariling audio ng video kaysa sa antas na naka-set mo, hanggang katahimikan."
+  },
+  "ttsCompleteHintText": {
+    "message": "Medyo maraming linya ang napuputol sa bilis na 'to. I-on mo at bumabagal ang larawan kung saan kailangan, para mas marami ang matapos."
+  },
+  "ttsCompleteHintOn": {
+    "message": "I-on"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Huwag nang ipakita"
+  },
+  "provLocalSpeechShort": {
+    "message": "Browser"
+  },
+  "optNavFonts": {
+    "message": "Mga font ng subtitle"
+  },
+  "fontsIntro": {
+    "message": "Isang listahan para sa dalawang linya ng subtitle; pumipili ang popup per linya. Naka-install sa computer na 'to ang bawat font na naka-lista."
+  },
+  "fontsKept": {
+    "message": "Ipinapakita sa popup"
+  },
+  "fontsMore": {
+    "message": "Iba pang font"
+  },
+  "fontsOnly": {
+    "message": "Font lang na makakaguhit nito"
+  },
+  "fontsCounting": {
+    "message": "Tinitingnan…"
+  },
+  "fontsSearch": {
+    "message": "Maghanap ng pangalan ng font"
+  },
+  "fontsNoMatch": {
+    "message": "Walang tumutugmang font."
+  },
+  "fontsKeptEmpty": {
+    "message": "Default ng system na lang ang natira para sa popup.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Nandiyan na ang bawat font sa listahan."
+  },
+  "fontsReset": {
+    "message": "Ibalik ang default"
+  },
+  "fontsResetDone": {
+    "message": "Naibalik ang default na listahan."
+  },
+  "fontsAdded": {
+    "message": "Idinagdag ang $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Silip: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Silip"
+  },
+  "fontsUnavailable": {
+    "message": "Hindi pinapayagan ng browser na 'to na basahin ng extension ang naka-install na font, kaya Default ng system lang ang puwedeng piliin."
+  },
+  "fontNoGlyphs": {
+    "message": "hindi maguhit ang linyang 'to"
+  },
+  "fontNotHere": {
+    "message": "wala sa computer na 'to"
+  },
+  "fontsImport": {
+    "message": "Mag-import ng font file…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; kinokopya ang file sa browser."
+  },
+  "fontsImported": {
+    "message": "Na-import ang $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Hindi nai-save sa browser; subukan ulit.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Inalis ang $NAME$ sa popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Laktawan ang listahan na 'to",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Na-import na font",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Hindi font file na magagamit ng browser na 'to."
+  },
+  "fontsImportTooBig": {
+    "message": "Masyadong malaki ang file (limit $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Burahin ang na-import na font"
+  },
+  "fontsLangLabel": {
+    "message": "Tingnan para sa"
+  },
+  "fontsLangRecent": {
+    "message": "kamakailang napanood"
+  },
+  "fontMoreRow": {
+    "message": "I-manage ang font…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ pa ang hindi maguhit ng linyang 'to",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Dvikalbiai subtitrai YouTube — originalas ir vertimas viename sluoksnyje, be persidengimo."
+  },
+  "headerSub": {
+    "message": "YouTube™ · vienas sluoksnis"
+  },
+  "disclaimer": {
+    "message": "Nesusiję su YouTube ar Google."
+  },
+  "enableTitle": {
+    "message": "Įjungti / išjungti"
+  },
+  "openOptions": {
+    "message": "Nustatymai"
+  },
+  "enableAria": {
+    "message": "Įjungti plėtinį"
+  },
+  "previewTag": {
+    "message": "Peržiūra"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Greita ruda lapė"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "geriausia kinų kalbai",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Pačios naršyklės balsai (nemokamai)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (vietinis)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Peržiūra gyvai"
+  },
+  "secTranslation": {
+    "message": "Vertimas"
+  },
+  "targetLang": {
+    "message": "Vertimo kalba"
+  },
+  "backendLabel": {
+    "message": "Engine"
+  },
+  "backendInfo": {
+    "message": "Apie Engine"
+  },
+  "backendAuto": {
+    "message": "Automatinis (rekomenduojama)"
+  },
+  "backendTlang": {
+    "message": "Visas takelis (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Išmanūs sakiniai (Google)"
+  },
+  "backendByo": {
+    "message": "Savas raktas (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Automatinis</b>: naudoja YouTube viso takelio vertimą, kai vaizdo įrašas tai palaiko, o kai ne — persijungia į išmaniuosius sakinius.<br><b>Visas takelis</b>: paties YouTube vertimas; sulygiuotas subtitras po subtitru. Intensyviai naudojant YouTube gali trumpam apriboti — plėtinys palaukia ir klausia vėl.<br><b>Išmanūs sakiniai</b>: iš fragmentuotų subtitrų sudėlioja ištisus sakinius ir išverčia per nemokamą Google endpointą — tvarkingesnė kalba nei viso takelio, kai takelis padrikas, bet ir čia intensyvus naudojimas gali būti apribotas; plėtinys sulėtina ir bando iš naujo.<br><b>Savas raktas</b>: sudėtą sakinį siunčia teikėjui, kurį pasirinkai."
+  },
+  "backendGtxHint": {
+    "message": "Naudoja nemokamą Google endpointą — intensyviai naudojant gali trumpam apriboti užklausas; plėtinys pats sulėtina tempą ir bando iš naujo."
+  },
+  "backendStatusTlang": {
+    "message": "Šis vaizdo įrašas: viso takelio vertimas (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Šis vaizdo įrašas: išmanūs sakiniai (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Vertimo endpointas riboja užklausas — lėtinu ir automatiškai bandau iš naujo. Jau išverstos eilutės veikia toliau."
+  },
+  "diagCopy": {
+    "message": "Kopijuoti diagnostiką"
+  },
+  "diagCopied": {
+    "message": "Nukopijuota — įklijuok į el. laišką ar pranešimą"
+  },
+  "diagCopyFail": {
+    "message": "Kopijuoti nepavyko — nufotografuok ekraną"
+  },
+  "backendStatusSame": {
+    "message": "Šio vaizdo įrašo subtitrai jau yra vertimo kalba — versti nėra ko."
+  },
+  "backendStatusNoTrack": {
+    "message": "Šiam vaizdo įrašui subtitrų takelio nerasta, tad nėra ką rodyti.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Atidaryk YouTube vaizdo įrašą ir ant jo atsiras dvi eilutės. Jei jau esi viename, įkelk kortelę iš naujo."
+  },
+  "secLayout": {
+    "message": "Išdėstymas"
+  },
+  "secLineStyle": {
+    "message": "Eilutės stilius"
+  },
+  "secLineStyleHint": {
+    "message": "Šriftas · Spalva · Dydis"
+  },
+  "orderLabel": {
+    "message": "Tvarka"
+  },
+  "orderTransTop": {
+    "message": "Vertimas viršuje"
+  },
+  "orderOrigTop": {
+    "message": "Originalas viršuje"
+  },
+  "positionLabel": {
+    "message": "Vieta"
+  },
+  "posTop": {
+    "message": "Viršuje"
+  },
+  "posCenter": {
+    "message": "Viduryje"
+  },
+  "posBottom": {
+    "message": "Apačioje"
+  },
+  "posHint": {
+    "message": "Subtitrų rėmelį gali ir tempti pačiame vaizdo įraše"
+  },
+  "posTryDrag": {
+    "message": "išbandyk"
+  },
+  "posTryNoVideo": {
+    "message": "Pirmiau atidaryk YouTube vaizdo įrašą"
+  },
+  "resetPos": {
+    "message": "Atkurti vietą"
+  },
+  "rowGap": {
+    "message": "Eilučių tarpas"
+  },
+  "tabTrans": {
+    "message": "Vertimas"
+  },
+  "tabOrig": {
+    "message": "Originalas"
+  },
+  "lineTabsAria": {
+    "message": "Subtitrų eilutė"
+  },
+  "lineShow": {
+    "message": "Rodyti šią eilutę"
+  },
+  "fontLabel": {
+    "message": "Šriftas"
+  },
+  "fontSystem": {
+    "message": "Sistemos numatytasis"
+  },
+  "fontMono": {
+    "message": "Lygiaplotis"
+  },
+  "fontCjk": {
+    "message": "Pritaikytas CJK"
+  },
+  "sizeLabel": {
+    "message": "Šrifto dydis"
+  },
+  "colText": {
+    "message": "Tekstas"
+  },
+  "colBg": {
+    "message": "Fonas"
+  },
+  "colStroke": {
+    "message": "Kontūras"
+  },
+  "colTextAria": {
+    "message": "Teksto spalva"
+  },
+  "colBgAria": {
+    "message": "Fono spalva"
+  },
+  "colStrokeAria": {
+    "message": "Kontūro spalva"
+  },
+  "bgOpacity": {
+    "message": "Fono nepermatomumas"
+  },
+  "strokeOpacity": {
+    "message": "Kontūro nepermatomumas"
+  },
+  "resetAll": {
+    "message": "Atkurti visus nustatymus"
+  },
+  "resetConfirmText": {
+    "message": "Tai išvalo visus nustatymus, šiame kompiuteryje išsaugotus API raktus ir kiekvienam teikėjui įsimintą modelį bei balsą, ir vėl įjungia pirmo paleidimo patarimus. Teikėjų domenai, kuriems jau davei leidimą, lieka suteikti, kaip ir importuoti šriftų failai.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Palikti nustatymus",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Atkurti viską",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Išjungti dvikalbius subtitrus"
+  },
+  "toggleTurnOn": {
+    "message": "Įjungti dvikalbius subtitrus"
+  },
+  "handleTitle": {
+    "message": "Vilk · dukart spustelėk"
+  },
+  "handleAria": {
+    "message": "Tempk, kad perkeltum subtitrus, dukart spustelėk, kad atkurtum"
+  },
+  "secExport": {
+    "message": "Eksportas"
+  },
+  "exportContent": {
+    "message": "Turinys"
+  },
+  "exportBi": {
+    "message": "Dvikalbiai"
+  },
+  "exportOrig": {
+    "message": "Originalas"
+  },
+  "exportTrans": {
+    "message": "Vertimas"
+  },
+  "exportSrt": {
+    "message": "Atsisiųsti SRT"
+  },
+  "exportWorking": {
+    "message": "Kuriama…"
+  },
+  "exportDone": {
+    "message": "Subtitrai atsisiųsti"
+  },
+  "exportNoTrans": {
+    "message": "Šiam vaizdo įrašui vertimo nėra — pabandyk viso takelio Engine arba kitą vertimo kalbą."
+  },
+  "exportLimited": {
+    "message": "YouTube dabar riboja viso takelio vertimą — pabandyk po minutės. Su nustatytu savu raktu eksporto kortelė siūlo varnelę, kuri tai apeina."
+  },
+  "exportNoCues": {
+    "message": "Nėra subtitrų atsisiuntimui — paleisk kelias sekundes, kad subtitrai įsikeltų, tada bandyk vėl."
+  },
+  "exportNotYoutube": {
+    "message": "Eksportui atidaryk YouTube vaizdo įrašo puslapį."
+  },
+  "exportFailed": {
+    "message": "Eksportuoti nepavyko — atnaujink puslapį ir bandyk vėl."
+  },
+  "updateNotesLabel": {
+    "message": "Po naujinimų atverti laidos pastabas"
+  },
+  "trackWarnDubOnly": {
+    "message": "Dėmesio: šis vaizdo įrašas turi tik automatinius subtitrus iš AI įgarsinimo (nėra originalo kalbos takelio), tad dvikalbiai subtitrai gali nesutapti su garsu."
+  },
+  "whatsNewRow": {
+    "message": "Kas naujo v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Šis vaizdo įrašas: savas raktas ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Teikėjas"
+  },
+  "byoSiteLabel": {
+    "message": "Svetainė"
+  },
+  "byoSiteHint": {
+    "message": "Pasirink svetainę, kurioje registravaisi — tai dvi atskiros platformos ir vienos raktas kitos nepriima."
+  },
+  "byoSiteGlobal": {
+    "message": "Tarptautinė"
+  },
+  "byoSiteCn": {
+    "message": "Žemyninė Kinija"
+  },
+  "byoBaseLabel": {
+    "message": "Endpointo adresas"
+  },
+  "byoModelLabel": {
+    "message": "Modelis"
+  },
+  "byoModelRequired": {
+    "message": "Būtina: modelio pavadinimas"
+  },
+  "byoKeyLabel": {
+    "message": "API raktas"
+  },
+  "byoKeyClear": {
+    "message": "Ištrinti"
+  },
+  "byoKeyReplace": {
+    "message": "Pakeisti"
+  },
+  "byoKeyCleared": {
+    "message": "Šiame kompiuteryje saugotas raktas ištrintas."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Šiame kompiuteryje saugotas raktas ištrintas. Jis buvo naudojamas, tad vertimas dabar eina per $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "išsaugota ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Pasirinktinis (suderinamas su OpenAI)"
+  },
+  "byoTest": {
+    "message": "Išsaugoti ir išbandyti"
+  },
+  "byoTesting": {
+    "message": "Bandoma…"
+  },
+  "byoTestOk": {
+    "message": "Prisijungta. Pavyzdys: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Gauti raktą"
+  },
+  "byoGuide": {
+    "message": "Reikia pagalbos nustatant?"
+  },
+  "byoLocalHint": {
+    "message": "Raktas lieka šioje naršyklėje, šiame kompiuteryje — niekada nesiunčiamas. Subtitrų tekstas eina tik tam teikėjui, kurį pasirinkai."
+  },
+  "byoErrNoProvider": {
+    "message": "Pirmiau pasirink teikėją."
+  },
+  "byoErrNoKey": {
+    "message": "Pirmiau įvesk API raktą, tada spustelėk Išsaugoti ir išbandyti."
+  },
+  "byoErrNoModel": {
+    "message": "Pirmiau pasirink modelį — imk vieną iš sąrašo arba spustelėk „Išvardyti modelius mano raktu“."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Šis teikėjas sąrašo neduoda. Pirmiau parsiųsk turimus modelius arba pats įrašyk modelio pavadinimą."
+  },
+  "byoErrNotApi": {
+    "message": "Tas adresas atsakė tinklalapiu, ne API — paprastai prisijungimo siena arba tinklas, kuris perima užklausas. Patikrink adresą arba bandyk kitą tinklą."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API bazinis URL turi būti visas https:// adresas."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adrese yra raktas. Išimk jį iš adreso ir įklijuok į API rakto lauką — adresas sinchronizuojamas su naršyklės paskyra, rakto laukas ne."
+  },
+  "byoErrNoPerm": {
+    "message": "Be leidimo pasiekti tą API serverį plėtinys negali prisijungti. Spustelėk „Išsaugoti ir išbandyti“ dar kartą ir leisk."
+  },
+  "byoErrAuth": {
+    "message": "Raktas atmestas (401) — patikrink, kad nukopijuotas visas ir vis dar aktyvus."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Serveris šiame kompiuteryje atmetė kvietimą (403). Greičiausiai jam nepasakyta leisti plėtinį: OLLAMA_ORIGINS Ollama, CORS jungiklis LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Teikėjas atmetė šį kvietimą (403). Raktas paprastai geras, o paskyra neturi leidimo — neapmokėtas likutis, tapatybės patikra dar vyksta, modelis neįjungtas arba regionas. Patikrink paskyrą teikėjo konsolėje."
+  },
+  "byoErrListAuth": {
+    "message": "Šis raktas neturi teisės skaityti sąrašo. Suteik ją teikėjo skydelyje ir parsiųsk vėl.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Teikėjas riboja užklausas — lėtinu ir automatiškai bandau iš naujo."
+  },
+  "byoErrLimitedTest": {
+    "message": "Teikėjas riboja užklausas. Palauk akimirką ir spustelėk dar kartą."
+  },
+  "byoErrQuota": {
+    "message": "Šiai paskyrai šiam laikotarpiui baigėsi kreditas arba kvota — papildyk teikėjo konsolėje, kad tęstum."
+  },
+  "byoErrBadRequest": {
+    "message": "Endpointas atmetė užklausą — modelio pavadinimas arba bazinis URL gali būti neteisingi."
+  },
+  "byoErrBadShape": {
+    "message": "Modelis neatsakė eilute po eilutės, kaip prašyta, ir mažesni pakartojimai irgi nepavyko — bandyk kitą modelį."
+  },
+  "byoErrReasoning": {
+    "message": "Tas modelis grąžino tik minčių grandinę, be vertimo — pasirink modelį be mąstymo."
+  },
+  "byoErrNetfail": {
+    "message": "Nepavyksta pasiekti to endpointo (tinklas arba regioninis apribojimas)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Nepavyksta pasiekti to adreso: serveris neveikia arba jam nepasakyta leisti plėtinį (OLLAMA_ORIGINS Ollama, CORS jungiklis LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Šis teikėjas negali versti į pasirinktą kalbą — pakeisk kalbą arba Engine."
+  },
+  "byoErrFailed": {
+    "message": "Ryšys nepavyko. Pabandyk po akimirkos."
+  },
+  "optTitle": {
+    "message": "Vertimo paslaugos nustatymas"
+  },
+  "optIntro": {
+    "message": "Pasirink teikėją ir įklijuok savą API raktą."
+  },
+  "optPricingLink": {
+    "message": "Kainos ir nemokamas planas"
+  },
+  "optFetchModels": {
+    "message": "Išvardyti modelius mano raktu"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Išvardyti turimus modelius"
+  },
+  "optFetching": {
+    "message": "Išvardijama…"
+  },
+  "optModelsFetched": {
+    "message": "Rasta $N$ modelių",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$“ jau nėra šio teikėjo sąraše — pasirink kitą aukščiau.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Modelių išvardyti nepavyko — įrašyk modelio pavadinimą pats."
+  },
+  "optModelCustom": {
+    "message": "Pasirinktinis…"
+  },
+  "optNoModelsYet": {
+    "message": "Modelių sąrašo dar nėra — parsiųsk jį raktu arba tiesiog įrašyk pavadinimą."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Modelių sąrašo dar nėra — parsiųsk jį arba tiesiog įrašyk pavadinimą."
+  },
+  "optShowKey": {
+    "message": "Rodyti"
+  },
+  "optRecommended": {
+    "message": "rekomenduojama"
+  },
+  "optConfigured": {
+    "message": "Nustatyta"
+  },
+  "optInUse": {
+    "message": "naudojama"
+  },
+  "optAfterSetup": {
+    "message": "Kai čia baigsi, atidaryk plėtinio langelį ir nustatyk Variklį į „Savas raktas“."
+  },
+  "optTrademark": {
+    "message": "Visi teikėjų pavadinimai ir logotipai yra jų savininkų prekių ženklai. Šis plėtinys su jais nesusijęs, jų nepatvirtintas ir nerėmimas; ženklai rodomi tik tam, kad atpažintum pasirinktą API."
+  },
+  "optSections": {
+    "message": "Skyriai"
+  },
+  "optNavSetup": {
+    "message": "Vertimo paslauga"
+  },
+  "optNavStart": {
+    "message": "Pradžia"
+  },
+  "optNavAbout": {
+    "message": "Apie"
+  },
+  "startIntro": {
+    "message": "Keturi dalykai. Naudoti nieko nustatyti nereikia."
+  },
+  "startS1Title": {
+    "message": "Atidaryk vaizdo įrašą — ir viskas"
+  },
+  "startS1Body": {
+    "message": "Bet kuris YouTube vaizdo įrašas su subtitrais: abi eilutės atsiranda pačios."
+  },
+  "startS2Title": {
+    "message": "Padėk juos kur nori"
+  },
+  "startS2Body": {
+    "message": "Laikyk rankenėlę subtitrų rėmelio viršutiniame kairiajame kampe ir tempk kur nori. Dukart spustelėk rankenėlę, kad grąžintum atgal."
+  },
+  "startS2Alt": {
+    "message": "Grotuvo schema: šešių taškų rankenėlė subtitrų rėmelio viršutiniame kairiajame kampe, tempiama į kitą vietą"
+  },
+  "startS3Title": {
+    "message": "Nori geresnių vertimų"
+  },
+  "startS3Body": {
+    "message": "Pridėk savą API raktą: visų sakinių vertimas ir viso vaizdo įrašo vertimas eksportuojant."
+  },
+  "startGoSetup": {
+    "message": "Nustatyti vertimo paslaugą"
+  },
+  "aboutIntro": {
+    "message": "Kas tai ir kur eina tavo tekstas."
+  },
+  "aboutVersion": {
+    "message": "Versija"
+  },
+  "uiLocaleLabel": {
+    "message": "Sąsajos kalba"
+  },
+  "uiLocaleAuto": {
+    "message": "Automatinė — pagal naršyklę"
+  },
+  "uiLocaleHint": {
+    "message": "Šio plėtinio meniu ir nustatymų kalba. Keletas etikečių, piešiamų pačiame vaizdo įraše, vis dar seka naršyklės kalbą. Vertimo kalba renkama langelyje; sritis „Vertimo kalbos“ tik nusprendžia, kurias kalbas langelis siūlo."
+  },
+  "cmdToggleSubs": {
+    "message": "Subtitrai įj./išj."
+  },
+  "cmdToggleTts": {
+    "message": "Skaityti garsiai įj./išj."
+  },
+  "cmdToggleTransLine": {
+    "message": "Rodyti arba slėpti vertimo eilutę"
+  },
+  "optShortcutsLabel": {
+    "message": "Spartieji klavišai"
+  },
+  "optShortcutsOpen": {
+    "message": "Nustatyti sparčiuosius"
+  },
+  "optShortcutsHint": {
+    "message": "Šiuos klavišus laiko Chrome, ne plėtinys. Iš pradžių niekas nepriskirta; galima susieti tris dalykus: subtitrus įj./išj., skaitymą garsiai įj./išj. ir vertimo eilutės rodymą arba slėpimą."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome to puslapio iš čia neatidarė — įklijuok chrome://extensions/shortcuts į adreso juostą."
+  },
+  "startTargetLabel": {
+    "message": "Vertimo kalba"
+  },
+  "startTargetHint": {
+    "message": "Atspėta iš naršyklės kalbos nuostatų, kai plėtinys buvo įdiegtas. Pakeisk čia, jei spėjimas netiko — langelyje gali keisti bet kada."
+  },
+  "aboutBlurb": {
+    "message": "Antra subtitrų eilutė YouTube: originalas vienoje, vertimas kitoje, o šriftas, spalva ir vieta — tavo. Atviras kodas, nemokama, be reklamų."
+  },
+  "aboutPrivacy": {
+    "message": "Plėtinys neturi mūsų serverio ir nerenka statistikos. Subtitrų tekstas eina tik paslaugoms, kurias pasirinkai: vertimo paslaugai ir, jei jas įjungi, skaitymo balsu teikėjui ir santraukų teikėjui, kurį nustatėi. Su savu raktu raktas saugomas tik šiame kompiuteryje."
+  },
+  "aboutChangelog": {
+    "message": "Pakeitimų žurnalas"
+  },
+  "aboutRoadmap": {
+    "message": "Planas"
+  },
+  "optFeedbackLink": {
+    "message": "Pranešti apie problemą"
+  },
+  "popupByoConfigure": {
+    "message": "Nustatyti…"
+  },
+  "popupSummarize": {
+    "message": "Apibendrinti šį vaizdo įrašą",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "nenustatyta"
+  },
+  "popupByoPick": {
+    "message": "Vertimo teikėjas"
+  },
+  "popupByoUntested": {
+    "message": "neišbandyta"
+  },
+  "popupModelPick": {
+    "message": "Vertimo modelis"
+  },
+  "popupModelMore": {
+    "message": "Daugiau modelių…"
+  },
+  "popupModelFetch": {
+    "message": "Parsiųsti modelius nustatymuose"
+  },
+  "popupModelSwitched": {
+    "message": "Nuo šiol: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Modelis nepasirinktas"
+  },
+  "exportUsesYouTube": {
+    "message": "Atsisiuntimas naudoja paties YouTube viso takelio vertimą — nemokamai ir neeikvoja tavo API rakto."
+  },
+  "exportUseByo": {
+    "message": "Versti savu raktu (tiksliau, eikvoja kvotą)"
+  },
+  "exportByoNote": {
+    "message": "Visą takelį išvers tavo teikėjas tavo raktu. Prieš siunčiant ką nors pamatysi įvertį."
+  },
+  "exportConfirm": {
+    "message": "Išversti $N$ subtitrų eilučių su $NAME$ — maždaug $REQ$ užklausų iš tavo kvotos. Visas takelis palieka naršyklę tam teikėjui; atkūrimo metu siunčiamos tik tos dalys, kurias tikrai žiūri.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Išversti ir atsisiųsti"
+  },
+  "exportConfirmBack": {
+    "message": "Atšaukti"
+  },
+  "exportStop": {
+    "message": "Stabdyti"
+  },
+  "exportStopping": {
+    "message": "Stabdoma…"
+  },
+  "exportProgress": {
+    "message": "Verčiama… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ gabalų krito ant YouTube vertimo",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Atsisiuntimas atšauktas."
+  },
+  "ftSite": {
+    "message": "Svetainė"
+  },
+  "ftSiteLabel": {
+    "message": "Svetainė"
+  },
+  "ftFeedbackLabel": {
+    "message": "Atsiliepimai"
+  },
+  "ftReviewLabel": {
+    "message": "Įvertinti"
+  },
+  "ftGithub": {
+    "message": "Išeities kodas GitHub"
+  },
+  "ftFeedback": {
+    "message": "Siųsti atsiliepimą arba pranešti apie klaidą"
+  },
+  "ftReview": {
+    "message": "Įvertinti Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Rakto dar nėra — šio teikėjo negalima naudoti, kol jo nepridėsi."
+  },
+  "optNeedBase": {
+    "message": "Endpointo adreso dar nėra — šio teikėjo negalima naudoti, kol jo neįvesi."
+  },
+  "optBaseHint": {
+    "message": "Tinka ir bazinis URL, ir visas endpointas, pvz. https://example.com/v1 arba https://example.com/v1/chat/completions. Ollama arba LM Studio šiame kompiuteryje tinkama forma yra http://localhost:11434/v1. Raktas gali likti tuščias; paprastas http veikia tik loopback adresams."
+  },
+  "startS1Alt": {
+    "message": "Grotuvo schema: originalo eilutė ir vertimo eilutė prie apatinio kadro krašto"
+  },
+  "startS3Alt": {
+    "message": "Palyginimas: nemokamas Engine verčia vieną sakinį gabalais, savas raktas jį supranta visą ir vėl išskaido"
+  },
+  "startPicFree": {
+    "message": "Nemokamas Engine"
+  },
+  "startPicFreeNote": {
+    "message": "vienas sakinys, sukapotas"
+  },
+  "startPicByo": {
+    "message": "Savas raktas"
+  },
+  "startPicByoNote": {
+    "message": "suprastas visas, vėl išskaidytas"
+  },
+  "startS4Title": {
+    "message": "Grotuve yra mažas meniu"
+  },
+  "startS4Body": {
+    "message": "Maža rodyklė šalia subtitrų mygtuko atidaro meniu: subtitrai, skaitymas garsiai, teksto žymėjimas, vaizdo įrašo santrauka ir nustatymai — neišeinant iš grotuvo."
+  },
+  "startS4Alt": {
+    "message": "Grotuvo iliustracija: maža rodyklė šalia subtitrų mygtuko, apačioje dešinėje, atidaro mažą meniu"
+  },
+  "menuHintBubble": {
+    "message": "Skaitymas garsiai, vaizdo įrašo santrauka, teksto žymėjimas — viskas už šios mažos rodyklės"
+  },
+  "troubleTitle": {
+    "message": "Kažkas ne taip"
+  },
+  "troubleStep1": {
+    "message": "Pirmiau patikrink jungiklį langelyje — jam esant išjungtam visas subtitrų sluoksnis lieka paslėptas."
+  },
+  "troubleStep2": {
+    "message": "Ar šis vaizdo įrašas išvis turi subtitrų? Pabandyk CC mygtuką grotuve: be originalo nėra ko versti."
+  },
+  "troubleStep3": {
+    "message": "Pabandyk populiarų vaizdo įrašą. Jei visa kita veikia, o tik šis ne, paprastai kaltas šio vaizdo įrašo subtitrų takelis."
+  },
+  "troubleDiagHint": {
+    "message": "Vis dar stringa? Įklijuok diagnostiką į el. laišką ar pranešimą — joje versija, Engine būsena ir ką daro dabartinis skirtukas, tad sutaupai vieną kitą laiškų ratą."
+  },
+  "langManage": {
+    "message": "Tvarkyti kalbas…"
+  },
+  "optNavLangs": {
+    "message": "Vertimo kalbos"
+  },
+  "optNavReadaloud": {
+    "message": "Skaityti garsiai"
+  },
+  "ttsIntro": {
+    "message": "Perskaityk išverstą eilutę garsiai. Pačios naršyklės balsams rakto visai nereikia; debesijos teikėjus nustatai ir išbandai čia."
+  },
+  "ttsVoiceLabel": {
+    "message": "Balsas"
+  },
+  "ttsPreview": {
+    "message": "Peržiūra"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Grojama…"
+  },
+  "ttsPreviewFail": {
+    "message": "Groti nepavyko — patikrink raktą ir bandyk Išsaugoti ir išbandyti"
+  },
+  "ttsFetchVoices": {
+    "message": "Parsiųsti visą šios kalbos sąrašą savo raktu"
+  },
+  "ttsFetching": {
+    "message": "Siunčiama…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Tai visi $N$ balsai, kuriuos tavo raktas turi dabartinei kalbai, įskaitant senesnius Standard / Wavenet lygius. Jie galioja tik šiai kalbai; spustelėk eilutę viršuje, kad grįžtum prie kasdienių balsų, kurie seka paskui kalbą. Šį sąrašą gali parsiųsti vėl bet kada.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Atgal prie kasdienių balsų (seka kalbą)"
+  },
+  "ttsVoicesNone": {
+    "message": "Šis teikėjas neturi papildomų balsų šiai kalbai — įtaisyti vis dar veikia."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Parsiųsta $N$ balsų — tai pasiūlymai po lauku viršuje.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Moteriškas"
+  },
+  "ttsVoiceMale": {
+    "message": "Vyriškas"
+  },
+  "ttsTestOk": {
+    "message": "Prisijungta: bandomasis garsas $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Dauguma pačios naršyklės balsų įdiegti šiame kompiuteryje ir taria eilutę čia. Keletas ne: Chrome siūlo ir internetinius balsus — tuos, kurių pavadinimai prasideda „Google“ — ir jiems naršyklė siunčia eilutę gamintojui. Debesijos teikėjui sakomas tekstas eina tik tam teikėjui, kurį pasirinkai, o raktas lieka šiame kompiuteryje."
+  },
+  "ttsEnableLabel": {
+    "message": "Skaityti vertimą garsiai vaizdo įraše"
+  },
+  "ttsEnableHint": {
+    "message": "Įjungus kiekvieno subtitros vertimas ištariamas vos pasirodžius; eilutė, kurios vertimas nespėja, praleidžiama, o ne vejasi vėliau. Kol eilutė sakoma, paties vaizdo įrašo garsas krenta iki žemiau nustatytos ribos. Per ilga eilutė truputį sulėtina vaizdą ir pasiskolina tarpą po savęs — ir debesijos balsams, ir pačios naršyklės; jungiklis žemiau laiko lėtinimą, kol baigia kiekviena eilutė."
+  },
+  "langsIntro": {
+    "message": "Kurias vertimo kalbas siūlo langelis."
+  },
+  "langsKept": {
+    "message": "Rodomos langelyje"
+  },
+  "langsKeptHint": {
+    "message": "Jos atsiranda langelio vertimo kalbos meniu. Palik bent vieną."
+  },
+  "langsMore": {
+    "message": "Kitos kalbos"
+  },
+  "langsMoreHint": {
+    "message": "Spustelėk +, kad pridėtum. Sąrašas seka vertimo kalbas, kurias palaiko nemokami Engine ir DeepL."
+  },
+  "langsReset": {
+    "message": "Atkurti numatytąsias"
+  },
+  "langsResetDone": {
+    "message": "Grąžintas numatytasis sąrašas."
+  },
+  "langsAddAria": {
+    "message": "Pridėti"
+  },
+  "langsRemoveAria": {
+    "message": "Pašalinti"
+  },
+  "langsLastOne": {
+    "message": "Palik bent vieną"
+  },
+  "langsAllAdded": {
+    "message": "Visos kalbos jau tavo sąraše."
+  },
+  "langsAdded": {
+    "message": "Pridėta $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Ta buvo naudojama, tad vertimo kalba dabar $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Kinų serifinis"
+  },
+  "fontCjkRound": {
+    "message": "Kinų apvalintas"
+  },
+  "ttsVolLabel": {
+    "message": "Skaitymo garsiai garsumas"
+  },
+  "ttsGroupPlayback": {
+    "message": "Atkūrimas"
+  },
+  "ttsDuckLabel": {
+    "message": "Originalus garsas kalbant"
+  },
+  "ttsDuckShort": {
+    "message": "Originalus garsas"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Kalba"
+  },
+  "ttsStatusOn": {
+    "message": "Garsiai įjungta"
+  },
+  "ttsOpenSettings": {
+    "message": "Skaitymo garsiai nustatymai"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ eilučių šis vaizdo įrašas · $M$ praleista",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ eilučių čia · $M$ praleista ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "vertimas nespėjo laiku"
+  },
+  "ttsSkipSilent": {
+    "message": "garsas neišėjo"
+  },
+  "ttsRegionLabel": {
+    "message": "Paslaugos regionas"
+  },
+  "ttsErrNoRegion": {
+    "message": "Pirmiau įvesk savo Azure rakto paslaugos regioną (pvz. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Šis kompiuteris neturi balsų kalbėjimui."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Šis kompiuteris neturi balso, kuris skaitytų $NAME$. Sąrašas žemiau — kitų kalbų balsai; pasirink vieną ir eilutė bus skaitoma tos kalbos kirčiu.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Ieškau šio kompiuterio balsų…"
+  },
+  "ttsErrRefused": {
+    "message": "Teikėjas atmetė šią užklausą — bandyk kitą balsą."
+  },
+  "ttsErrNoAudio": {
+    "message": "Garsas neatėjo — bandyk vėl arba rinkis kitą balsą."
+  },
+  "startPicChop1": {
+    "message": "yra dvi didelės",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "priežastys viena yra",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Yra dvi didelės priežastys,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "pirmoji yra…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Daugiau balsų…"
+  },
+  "popupVoiceNone": {
+    "message": "Balsas nepasirinktas"
+  },
+  "ttsRobotVoices": {
+    "message": "Robotinis",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Leisti žymėti ir kopijuoti subtitrų tekstą",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Žymėti tekstą",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Santrauka",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Vaizdo įrašo santrauka",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Uždaryti",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Šis vaizdo įrašas neturi tinkamo subtitrų takelio.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Įjunk subtitrus, kad apibendrintum — santrauka daroma iš subtitrų takelio."
+  },
+  "sumNeedKey": {
+    "message": "Santraukoms reikia tavo paslaugos: bet kurio teikėjo su raktu vertimo srityje arba vietinio modelio šiame kompiuteryje. Nemokami Engine tik verčia. Jie nedaro santraukų.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Nustatyti vertimo paslaugą",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Apibendrinti",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Apibendrinti iš naujo"
+  },
+  "sumFail": {
+    "message": "Santrauka nepavyko. Pabandyk vėliau.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Tai nusiųs visą subtitrų takelį teikėjui $PROVIDER$, $PARTS$ dalimis, iš tavo kvotos.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Rašoma santrauka… dalis $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ dalių santraukos nepavyko; likusi dalis aukščiau.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Subtitrai",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Paties YouTube vertimas dabar ribojamas; išmanūs sakiniai (Google) užpildo. Vėliau pats bandys iš naujo.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Vertimo endpointas riboja užklausas — tęsiama po maždaug $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Tinka ir bazinis URL, ir visas endpointas, pvz. http://localhost:8880/v1 arba http://localhost:8880/v1/audio/speech (vietiniai kalbos serveriai kaip Kokoro ar openai-edge-tts). Raktas gali likti tuščias; paprastas http veikia tik loopback adresams."
+  },
+  "optTtsNeedUrl": {
+    "message": "Endpointo adreso dar nėra — šio teikėjo negalima naudoti, kol jo nepridėsi."
+  },
+  "ttsSkipRefused": {
+    "message": "teikėjas atmetė tas užklausas"
+  },
+  "ttsSkipNotSet": {
+    "message": "nenustatyta šiame kompiuteryje"
+  },
+  "ttsSkipNoVoice": {
+    "message": "nėra balso šiai kalbai"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ dabar negali kalbėti. Pasirink kitą eilutėje viršuje — pačios naršyklės balsai yra tame sąraše.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Subtitrų takelis neatėjo — automatiškai bandau iš naujo. Skubi? Atnaujink puslapį, kad bandytum dabar."
+  },
+  "ttsCompleteLabel": {
+    "message": "Baigti kiekvieną eilutę (vaizdas lėtėja tankiose vietose)"
+  },
+  "ttsCompleteHint": {
+    "message": "Didesniu greičiu ilgos eilutės dažnai praranda uodegą kitai. Tai įjungus vaizdas lėtėja tiek, kiek eilutei reikia — niekada ne žemiau ketvirtadalio pasirinkto greičio — ir tarpų metu pasiveja. Kol vaizdas tiek sulėtintas, paties vaizdo įrašo garsas krenta žemiau tavo nustatytos ribos, iki tylos."
+  },
+  "ttsCompleteHintText": {
+    "message": "Šiuo greičiu nemažai eilučių nukerpama. Įjunk ir vaizdas lėtės ten, kur reikia, tad daugiau jų pasibaigs."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Įjungti"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Daugiau nerodyti"
+  },
+  "provLocalSpeechShort": {
+    "message": "Naršyklė"
+  },
+  "optNavFonts": {
+    "message": "Subtitrų šriftai"
+  },
+  "fontsIntro": {
+    "message": "Vienas sąrašas abiem subtitrų eilutėms; langelis parenka kiekvienai atskirai. Kiekvienas išvardytas šriftas įdiegtas šiame kompiuteryje."
+  },
+  "fontsKept": {
+    "message": "Rodomi langelyje"
+  },
+  "fontsMore": {
+    "message": "Kiti šriftai"
+  },
+  "fontsOnly": {
+    "message": "Tik šriftai, kurie tai nupieš"
+  },
+  "fontsCounting": {
+    "message": "Tikrinama…"
+  },
+  "fontsSearch": {
+    "message": "Ieškoti šriftų pavadinimų"
+  },
+  "fontsNoMatch": {
+    "message": "Nėra tinkančio šrifto."
+  },
+  "fontsKeptEmpty": {
+    "message": "Langelyje liko tik sistemos numatytasis.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Visi šriftai jau sąraše."
+  },
+  "fontsReset": {
+    "message": "Atkurti numatytąsias"
+  },
+  "fontsResetDone": {
+    "message": "Numatytasis sąrašas atkurtas."
+  },
+  "fontsAdded": {
+    "message": "Pridėta $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Peržiūra: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Peržiūra"
+  },
+  "fontsUnavailable": {
+    "message": "Ši naršyklė neleidžia plėtiniui skaityti įdiegtų šriftų, tad galima rinktis tik sistemos numatytąjį."
+  },
+  "fontNoGlyphs": {
+    "message": "negali nupiešti šios eilutės"
+  },
+  "fontNotHere": {
+    "message": "nėra šiame kompiuteryje"
+  },
+  "fontsImport": {
+    "message": "Importuoti šrifto failą…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; failas nukopijuojamas į naršyklę."
+  },
+  "fontsImported": {
+    "message": "Importuota $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Nepavyko išsaugoti naršyklėje; bandyk vėl.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Pašalinta $NAME$ iš langelio.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Praleisti šį sąrašą",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Importuotas šriftas",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Tai ne šrifto failas, kurį ši naršyklė gali naudoti."
+  },
+  "fontsImportTooBig": {
+    "message": "Failas per didelis (riba $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Ištrinti importuotą šriftą"
+  },
+  "fontsLangLabel": {
+    "message": "Tikrinti"
+  },
+  "fontsLangRecent": {
+    "message": "neseniai žiūrėti"
+  },
+  "fontMoreRow": {
+    "message": "Tvarkyti šriftus…"
+  },
+  "fontHiddenRow": {
+    "message": "Dar $N$ negali nupiešti šios eilutės",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

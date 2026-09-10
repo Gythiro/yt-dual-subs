@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "YouTube కోసం ద్విభాషా ఉపశీర్షికలు — అసలు, అనువాదం ఒకే లేయర్‌లో, ఒకదానిపై ఒకటి పడకుండా."
+  },
+  "headerSub": {
+    "message": "YouTube™ · ఒక లేయర్"
+  },
+  "disclaimer": {
+    "message": "YouTube లేదా Google తో సంబంధం లేదు."
+  },
+  "enableTitle": {
+    "message": "ఆన్ చెయ్యి / ఆఫ్ చెయ్యి"
+  },
+  "openOptions": {
+    "message": "అమరికలు"
+  },
+  "enableAria": {
+    "message": "పొడిగింపు ఆన్ చెయ్యి"
+  },
+  "previewTag": {
+    "message": "ముందుచూపు"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "వేగమైన గోధుమ నక్క"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "చైనీస్‌కు మంచిది",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "నీ బ్రౌజర్ సొంత వాయిస్‌లు (ఉచితం)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (లోకల్)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "లైవ్ ముందుచూపు"
+  },
+  "secTranslation": {
+    "message": "అనువాదం"
+  },
+  "targetLang": {
+    "message": "అనువాద భాష"
+  },
+  "backendLabel": {
+    "message": "ఇంజిన్"
+  },
+  "backendInfo": {
+    "message": "ఇంజిన్ సమాచారం"
+  },
+  "backendAuto": {
+    "message": "ఆటో (సిఫార్సు)"
+  },
+  "backendTlang": {
+    "message": "పూర్తి ట్రాక్ (YouTube)"
+  },
+  "backendGtx": {
+    "message": "స్మార్ట్ వాక్యాలు (Google)"
+  },
+  "backendByo": {
+    "message": "సొంత కీ (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>ఆటో</b>: వీడియో సపోర్ట్ చేస్తే YouTube పూర్తి-ట్రాక్ అనువాదం వాడుతుంది, లేకపోతే స్మార్ట్ వాక్యాలకు మారుతుంది.<br><b>పూర్తి ట్రాక్</b>: YouTube సొంత అనువాదం; లైన్‌కు లైన్ సరిపోలుస్తుంది. ఎక్కువ వాడితే YouTube కాసేపు రేట్-లిమిట్ చేయవచ్చు — ఎక్స్‌టెన్షన్ వేచి మళ్లీ అడుగుతుంది.<br><b>స్మార్ట్ వాక్యాలు</b>: ముక్కలు ముక్కలైన ఉపశీర్షికలను పూర్తి వాక్యాలుగా కలిపి, Google ఉచిత ఎండ్‌పాయింట్‌లో అనువదిస్తుంది — చిందరవందర ట్రాక్‌ల్లో పూర్తి ట్రాక్ కంటే మంచి మాటలు, కానీ ఎక్కువ వాడకం ఇక్కడా రేట్-లిమిట్ కావచ్చు; ఎక్స్‌టెన్షన్ నెమ్మదిస్తూ మళ్లీ ప్రయత్నిస్తుంది.<br><b>సొంత కీ</b>: కలిపిన వాక్యాన్ని నువ్వు సెట్ చేసిన ప్రొవైడర్‌కు పంపుతుంది."
+  },
+  "backendGtxHint": {
+    "message": "Google ఉచిత ఎండ్‌పాయింట్ వాడుతుంది — ఎక్కువ వాడకం కాసేపు రేట్-లిమిట్ కావచ్చు; ఎక్స్‌టెన్షన్ గతి తగ్గించి తనంతట తానే మళ్లీ ప్రయత్నిస్తుంది."
+  },
+  "backendStatusTlang": {
+    "message": "ఈ వీడియో: పూర్తి-ట్రాక్ అనువాదం (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "ఈ వీడియో: స్మార్ట్ వాక్యాలు (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "అనువాద ఎండ్‌పాయింట్ రేట్-లిమిట్ చేస్తోంది — గతి తగ్గించి తనంతట తానే మళ్లీ ప్రయత్నిస్తోంది. ఇప్పటికే అనువదించిన లైన్లు పని చేస్తాయి."
+  },
+  "diagCopy": {
+    "message": "డయగ్నాస్టిక్ కాపీ చేయి"
+  },
+  "diagCopied": {
+    "message": "కాపీ అయింది — ఈమెయిల్ లేదా ఇష్యూలో పేస్ట్ చేయి"
+  },
+  "diagCopyFail": {
+    "message": "కాపీ కాలేదు — స్క్రీన్‌షాట్ తీయి"
+  },
+  "backendStatusSame": {
+    "message": "ఈ వీడియో ఉపశీర్షికలు ఇప్పటికే నీ అనువాద భాషలో ఉన్నాయి — అనువదించేది ఏమీ లేదు."
+  },
+  "backendStatusNoTrack": {
+    "message": "ఈ వీడియోకు క్యాప్షన్ ట్రాక్ దొరకలేదు, కాబట్టి చూపించేది ఏమీ లేదు.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "ఒక YouTube వీడియోను తెరువు, దానిపై రెండు లైన్లు కనిపిస్తాయి. నువ్వు అప్పటికే ఒక వీడియోలో ఉంటే, ట్యాబ్‌ను రీలోడ్ చెయ్."
+  },
+  "secLayout": {
+    "message": "లేఅవుట్"
+  },
+  "secLineStyle": {
+    "message": "లైన్ స్టైల్"
+  },
+  "secLineStyleHint": {
+    "message": "ఫాంట్ · రంగు · సైజు"
+  },
+  "orderLabel": {
+    "message": "క్రమం"
+  },
+  "orderTransTop": {
+    "message": "అనువాదం పైన"
+  },
+  "orderOrigTop": {
+    "message": "అసలు పైన"
+  },
+  "positionLabel": {
+    "message": "స్థానం"
+  },
+  "posTop": {
+    "message": "పైన"
+  },
+  "posCenter": {
+    "message": "మధ్య"
+  },
+  "posBottom": {
+    "message": "కింద"
+  },
+  "posHint": {
+    "message": "వీడియోలో ఉపశీర్షిక బాక్స్‌ను లాగి కూడా తరలించవచ్చు"
+  },
+  "posTryDrag": {
+    "message": "ప్రయత్నించు"
+  },
+  "posTryNoVideo": {
+    "message": "ముందు ఒక YouTube వీడియో తెరువు"
+  },
+  "resetPos": {
+    "message": "స్థానం ఉపసంహరణ"
+  },
+  "rowGap": {
+    "message": "లైన్ ఖాళీ"
+  },
+  "tabTrans": {
+    "message": "అనువాదం"
+  },
+  "tabOrig": {
+    "message": "అసలు"
+  },
+  "lineTabsAria": {
+    "message": "ఉపశీర్షిక లైన్"
+  },
+  "lineShow": {
+    "message": "ఈ లైన్ చూపించు"
+  },
+  "fontLabel": {
+    "message": "ఫాంట్"
+  },
+  "fontSystem": {
+    "message": "వ్యవస్థ అప్రమేయం"
+  },
+  "fontMono": {
+    "message": "మోనోస్పేస్"
+  },
+  "fontCjk": {
+    "message": "CJK-ఫ్రెండ్లీ"
+  },
+  "sizeLabel": {
+    "message": "ఫాంట్ సైజు"
+  },
+  "colText": {
+    "message": "టెక్స్ట్"
+  },
+  "colBg": {
+    "message": "బ్యాక్‌గ్రౌండ్"
+  },
+  "colStroke": {
+    "message": "అవుట్‌లైన్"
+  },
+  "colTextAria": {
+    "message": "టెక్స్ట్ రంగు"
+  },
+  "colBgAria": {
+    "message": "బ్యాక్‌గ్రౌండ్ రంగు"
+  },
+  "colStrokeAria": {
+    "message": "అవుట్‌లైన్ రంగు"
+  },
+  "bgOpacity": {
+    "message": "బ్యాక్‌గ్రౌండ్ ఒపాసిటీ"
+  },
+  "strokeOpacity": {
+    "message": "అవుట్‌లైన్ ఒపాసిటీ"
+  },
+  "resetAll": {
+    "message": "అన్ని అమరికలు ఉపసంహరణ"
+  },
+  "resetConfirmText": {
+    "message": "ఇది అన్ని అమరికలను తుడుస్తుంది, ఈ కంప్యూటర్‌లో భద్రపరచిన API కీలను, ప్రతి ప్రొవైడర్‌కు గుర్తుంచుకున్న మోడల్, వాయిస్‌ను, మొదటి-రన్ హింట్‌లను మళ్లీ ఆన్ చేస్తుంది. ఇప్పటికే అనుమతించిన ప్రొవైడర్ డొమైన్లు అలాగే ఉంటాయి, దిగుమతి చేసిన ఫాంట్ ఫైళ్లు కూడా.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "అమరికలు ఉంచు",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "అన్నీ ఉపసంహరణ",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "ద్విభాషా ఉపశీర్షికలు ఆఫ్ చెయ్యి"
+  },
+  "toggleTurnOn": {
+    "message": "ద్విభాషా ఉపశీర్షికలు ఆన్ చెయ్యి"
+  },
+  "handleTitle": {
+    "message": "లాగు · రెండుసార్లు నొక్కితే ఉపసంహరణ"
+  },
+  "handleAria": {
+    "message": "లాగి ఉపశీర్షికలు తరలించు, రెండుసార్లు నొక్కితే ఉపసంహరణ"
+  },
+  "secExport": {
+    "message": "ఎగుమతి"
+  },
+  "exportContent": {
+    "message": "కంటెంట్"
+  },
+  "exportBi": {
+    "message": "ద్విభాష"
+  },
+  "exportOrig": {
+    "message": "అసలు"
+  },
+  "exportTrans": {
+    "message": "అనువాదం"
+  },
+  "exportSrt": {
+    "message": "SRT డౌన్‌లోడ్"
+  },
+  "exportWorking": {
+    "message": "తయారవుతోంది…"
+  },
+  "exportDone": {
+    "message": "ఉపశీర్షికలు డౌన్‌లోడ్ అయ్యాయి"
+  },
+  "exportNoTrans": {
+    "message": "ఈ వీడియోకు అనువాదం లేదు — పూర్తి-ట్రాక్ ఇంజిన్ లేదా మరో అనువాద భాష ప్రయత్నించు."
+  },
+  "exportLimited": {
+    "message": "YouTube ఇప్పుడు పూర్తి-ట్రాక్ అనువాదాన్ని రేట్-లిమిట్ చేస్తోంది — ఒక నిమిషం తర్వాత మళ్లీ ప్రయత్నించు. సొంత కీ సెట్ ఉంటే, ఎగుమతి కార్డ్‌లో దాన్ని తప్పించే టిక్ ఉంటుంది."
+  },
+  "exportNoCues": {
+    "message": "డౌన్‌లోడ్ చేసే ఉపశీర్షికలు లేవు — క్యాప్షన్లు లోడ్ కావడానికి కొన్ని సెకన్లు ప్లే చేసి, మళ్లీ ప్రయత్నించు."
+  },
+  "exportNotYoutube": {
+    "message": "ఎగుమతి చేయడానికి ఒక YouTube వీడియో పేజీ తెరువు."
+  },
+  "exportFailed": {
+    "message": "ఎగుమతి కాలేదు — పేజీ రిఫ్రెష్ చేసి మళ్లీ ప్రయత్నించు."
+  },
+  "updateNotesLabel": {
+    "message": "అప్‌డేట్ తర్వాత రిలీజ్ నోట్స్ తెరువు"
+  },
+  "trackWarnDubOnly": {
+    "message": "ఒక మాట: ఈ వీడియోలో AI-డబ్ ఆటో క్యాప్షన్లు మాత్రమే ఉన్నాయి (అసలు-భాష ట్రాక్ లేదు), కాబట్టి ద్విభాషా ఉపశీర్షికలు ఆడియోతో సరిపోలకపోవచ్చు."
+  },
+  "whatsNewRow": {
+    "message": "v$VER$లో కొత్తది ఏమిటి →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "ఈ వీడియో: సొంత కీ ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "ప్రొవైడర్"
+  },
+  "byoSiteLabel": {
+    "message": "సైట్"
+  },
+  "byoSiteHint": {
+    "message": "నువ్వు సైన్ అప్ చేసిన సైట్ ఎంచుకో — ఇవి రెండు వేర్వేరు ప్లాట్‌ఫారమ్‌లు, ఒకదాని కీని మరొకటి తీసుకోదు."
+  },
+  "byoSiteGlobal": {
+    "message": "అంతర్జాతీయం"
+  },
+  "byoSiteCn": {
+    "message": "మెయిన్‌లాండ్ చైనా"
+  },
+  "byoBaseLabel": {
+    "message": "ఎండ్‌పాయింట్ అడ్రస్"
+  },
+  "byoModelLabel": {
+    "message": "మోడల్"
+  },
+  "byoModelRequired": {
+    "message": "అవసరం: మోడల్ పేరు"
+  },
+  "byoKeyLabel": {
+    "message": "API కీ"
+  },
+  "byoKeyClear": {
+    "message": "తొలగించు"
+  },
+  "byoKeyReplace": {
+    "message": "మార్చు"
+  },
+  "byoKeyCleared": {
+    "message": "ఈ మెషీన్‌లో ఉన్న కీ తొలగించబడింది."
+  },
+  "byoKeyClearedMoved": {
+    "message": "ఈ మెషీన్‌లో ఉన్న కీ తొలగించబడింది. అదే వాడుతూ ఉంది, కాబట్టి అనువాదం ఇప్పుడు $NAME$ ద్వారా వెళ్తోంది.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "భద్రం ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "అనుకూల (OpenAI-కంపాటబుల్)"
+  },
+  "byoTest": {
+    "message": "భద్రపరచి పరీక్షించు"
+  },
+  "byoTesting": {
+    "message": "పరీక్షిస్తోంది…"
+  },
+  "byoTestOk": {
+    "message": "కనెక్ట్ అయింది. నమూనా: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "కీ తీసుకో"
+  },
+  "byoGuide": {
+    "message": "సెటప్‌లో సాయం కావాలా?"
+  },
+  "byoLocalHint": {
+    "message": "కీ ఈ బ్రౌజర్‌లో, ఈ మెషీన్‌లోనే ఉంటుంది — ఎప్పుడూ అప్‌లోడ్ కాదు. ఉపశీర్షిక టెక్స్ట్ నువ్వు ఎంచుకున్న ప్రొవైడర్‌కు మాత్రమే వెళ్తుంది."
+  },
+  "byoErrNoProvider": {
+    "message": "ముందు ఒక ప్రొవైడర్ ఎంచుకో."
+  },
+  "byoErrNoKey": {
+    "message": "ముందు API కీ రాసి, తర్వాత «భద్రపరచి పరీక్షించు» నొక్కు."
+  },
+  "byoErrNoModel": {
+    "message": "ముందు ఒక మోడల్ ఎంచుకో — జాబితా నుంచి తీసుకో, లేదా «నా కీతో మోడల్ జాబితా» నొక్కు."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "ఈ ప్రొవైడర్ జాబితా ఇవ్వదు. ముందు అందుబాటులో ఉన్న మోడల్స్ తెచ్చుకో, లేదా మోడల్ పేరు నువ్వే టైప్ చేయి."
+  },
+  "byoErrNotApi": {
+    "message": "ఆ అడ్రస్ API కాదు, ఒక వెబ్ పేజీ పంపింది — సాధారణంగా సైన్-ఇన్ వాల్ లేదా రిక్వెస్ట్‌లను ఆపే నెట్‌వర్క్. అడ్రస్ చూడు, లేదా మరో నెట్‌వర్క్ ప్రయత్నించు."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API బేస్ URL పూర్తి https:// అడ్రస్ అయి ఉండాలి."
+  },
+  "byoErrUrlHasKey": {
+    "message": "అడ్రస్‌లో ఒక కీ ఉంది. అడ్రస్ నుంచి తీసి API కీ ఫీల్డ్‌లో పేస్ట్ చేయి — అడ్రస్ నీ బ్రౌజర్ అకౌంట్‌కు సింక్ అవుతుంది, కీ ఫీల్డ్ కాదు."
+  },
+  "byoErrNoPerm": {
+    "message": "ఆ API హోస్ట్‌కు వెళ్లే అనుమతి లేకుండా ఎక్స్‌టెన్షన్ కనెక్ట్ కాలేదు. మళ్లీ «భద్రపరచి పరీక్షించు» నొక్కి అనుమతి ఇవ్వు."
+  },
+  "byoErrAuth": {
+    "message": "కీ రిజెక్ట్ అయింది (401) — పూర్తిగా కాపీ అయిందా, ఇంకా యాక్టివ్‌గా ఉందా చూడు."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "ఈ మెషీన్‌లోని సర్వర్ కాల్‌ను తిరస్కరించింది (403). బహుశా ఎక్స్‌టెన్షన్‌ను అనుమతించమని చెప్పలేదు: Ollama కి OLLAMA_ORIGINS, LM Studio లో CORS స్విచ్."
+  },
+  "byoErrForbidden": {
+    "message": "ప్రొవైడర్ ఈ కాల్‌ను తిరస్కరించింది (403). సాధారణంగా కీ సరే, అకౌంట్ చేయలేకపోతోంది — బకాయి బ్యాలెన్స్, గుర్తింపు చెక్ పెండింగ్, మోడల్ ఆన్ లేదు, లేదా రీజియన్. ప్రొవైడర్ కన్సోల్‌లో అకౌంట్ చూడు."
+  },
+  "byoErrListAuth": {
+    "message": "ఈ కీతో జాబితా చదవడానికి అనుమతి లేదు. ప్రొవైడర్ డాష్‌బోర్డ్‌లో ఆ అనుమతి ఇచ్చి, మళ్లీ తెచ్చుకో.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "ప్రొవైడర్ రేట్-లిమిట్ చేస్తోంది — గతి తగ్గించి తనంతట తానే మళ్లీ ప్రయత్నిస్తోంది."
+  },
+  "byoErrLimitedTest": {
+    "message": "ప్రొవైడర్ రేట్-లిమిట్ చేస్తోంది. కాసేపు ఆగి మళ్లీ నొక్కు."
+  },
+  "byoErrQuota": {
+    "message": "ఈ అకౌంట్ ఈ పీరియడ్ క్రెడిట్ లేదా కోటా అయిపోయింది — కొనసాగించాలంటే ప్రొవైడర్ కన్సోల్‌లో టాప్ అప్ చేయి."
+  },
+  "byoErrBadRequest": {
+    "message": "ఎండ్‌పాయింట్ రిక్వెస్ట్‌ను తిరస్కరించింది — మోడల్ పేరు లేదా బేస్ URL తప్పు కావచ్చు."
+  },
+  "byoErrBadShape": {
+    "message": "మోడల్ అడిగినట్టు లైన్ లైన్‌గా సమాధానం ఇవ్వలేదు, చిన్న ప్రయత్నాలు కూడా ఫెయిల్ — మరో మోడల్ ప్రయత్నించు."
+  },
+  "byoErrReasoning": {
+    "message": "ఆ మోడల్ ఆలోచన గొలుసు మాత్రమే పంపింది, అనువాదం కాదు — థింకింగ్ కాని మోడల్ ఎంచుకో."
+  },
+  "byoErrNetfail": {
+    "message": "ఆ ఎండ్‌పాయింట్‌కు చేరలేకపోతున్నాం (నెట్‌వర్క్ లేదా రీజియన్ పరిమితి)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "ఆ అడ్రస్‌కు చేరలేకపోతున్నాం: సర్వర్ నడవడం లేదు, లేదా ఎక్స్‌టెన్షన్‌ను అనుమతించమని చెప్పలేదు (Ollama కి OLLAMA_ORIGINS, LM Studio లో CORS స్విచ్)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "ఈ ప్రొవైడర్ నువ్వు ఎంచుకున్న భాషలోకి అనువదించలేదు — భాష లేదా ఇంజిన్ మార్చు."
+  },
+  "byoErrFailed": {
+    "message": "కనెక్షన్ కాలేదు. కాసేపు తర్వాత మళ్లీ ప్రయత్నించు."
+  },
+  "optTitle": {
+    "message": "అనువాద సర్వీస్ సెటప్"
+  },
+  "optIntro": {
+    "message": "ఒక ప్రొవైడర్ ఎంచుకుని నీ API కీ పేస్ట్ చేయి."
+  },
+  "optPricingLink": {
+    "message": "ధర & ఉచిత టియర్"
+  },
+  "optFetchModels": {
+    "message": "నా కీతో మోడల్ జాబితా"
+  },
+  "optFetchModelsNoKey": {
+    "message": "అందుబాటులో ఉన్న మోడల్స్ జాబితా"
+  },
+  "optFetching": {
+    "message": "జాబితా తెస్తోంది…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ మోడల్స్ దొరికాయి",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” ఈ ప్రొవైడర్ జాబితాలో ఇక లేదు — పైన మరొకటి ఎంచుకో.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "మోడల్స్ జాబితా కాలేదు — మోడల్ పేరు టైప్ చేయి."
+  },
+  "optModelCustom": {
+    "message": "అనుకూల…"
+  },
+  "optNoModelsYet": {
+    "message": "ఇంకా మోడల్ జాబితా లేదు — నీ కీతో తెచ్చుకో, లేదా పేరు టైప్ చేయి."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "ఇంకా మోడల్ జాబితా లేదు — తెచ్చుకో, లేదా పేరు టైప్ చేయి."
+  },
+  "optShowKey": {
+    "message": "చూపించు"
+  },
+  "optRecommended": {
+    "message": "సిఫార్సు"
+  },
+  "optConfigured": {
+    "message": "సెటప్ అయింది"
+  },
+  "optInUse": {
+    "message": "వాడుతున్నాం"
+  },
+  "optAfterSetup": {
+    "message": "ఇక్కడ అయిపోయాక ఎక్స్‌టెన్షన్ పాపప్ తెరిచి ఇంజిన్‌ను «సొంత కీ»గా పెట్టు."
+  },
+  "optTrademark": {
+    "message": "అన్ని ప్రొవైడర్ పేర్లు, లోగోలు వాటి యజమానుల ట్రేడ్‌మార్క్‌లు. ఈ ఎక్స్‌టెన్షన్ వాటితో సంబంధం లేదు, ఎండార్స్ లేదా స్పాన్సర్ కాదు; మార్క్‌లు నువ్వు ఎంచుకున్న APIని గుర్తించడానికే."
+  },
+  "optSections": {
+    "message": "విభాగాలు"
+  },
+  "optNavSetup": {
+    "message": "అనువాద సర్వీస్"
+  },
+  "optNavStart": {
+    "message": "మొదలు పెట్టడం"
+  },
+  "optNavAbout": {
+    "message": "గురించి"
+  },
+  "startIntro": {
+    "message": "నాలుగు విషయాలు. వాడటానికి ఏమీ సెటప్ చేయాల్సిన పని లేదు."
+  },
+  "startS1Title": {
+    "message": "వీడియో తెరువు — అంతే"
+  },
+  "startS1Body": {
+    "message": "ఉపశీర్షికలున్న ఏ YouTube వీడియో అయినా: రెండు లైన్లు తమంతట తామే వస్తాయి."
+  },
+  "startS2Title": {
+    "message": "నచ్చిన చోట పెట్టు"
+  },
+  "startS2Body": {
+    "message": "ఉపశీర్షిక బాక్స్ పై-ఎడమ గ్రిప్ పట్టుకుని ఎక్కడైనా లాగు. తిరిగి పెట్టాలంటే గ్రిప్‌పై రెండుసార్లు నొక్కు చేయి."
+  },
+  "startS2Alt": {
+    "message": "ప్లేయర్ డయాగ్రామ్: ఉపశీర్షిక బాక్స్ పై-ఎడమ మూలలో ఆరు-చుక్కల గ్రిప్, మరో చోటికి లాగబడుతోంది"
+  },
+  "startS3Title": {
+    "message": "మంచి అనువాదం కావాలంటే"
+  },
+  "startS3Body": {
+    "message": "నీ API కీ జోడించు: పూర్తి వాక్య అనువాదం, ఎగుమతి‌లో పూర్తి వీడియో అనువాదం."
+  },
+  "startGoSetup": {
+    "message": "అనువాద సర్వీస్ సెటప్"
+  },
+  "aboutIntro": {
+    "message": "ఇది ఏమిటి, నీ టెక్స్ట్ ఎక్కడికి వెళ్తుంది."
+  },
+  "aboutVersion": {
+    "message": "వెర్షన్"
+  },
+  "uiLocaleLabel": {
+    "message": "ఇంటర్‌ఫేస్ భాష"
+  },
+  "uiLocaleAuto": {
+    "message": "ఆటో — బ్రౌజర్‌ను అనుసరించు"
+  },
+  "uiLocaleHint": {
+    "message": "ఈ ఎక్స్‌టెన్షన్ సొంత మెనూలు, అమరికల భాష. వీడియోపై వేసే కొన్ని లేబుల్స్ ఇంకా బ్రౌజర్ భాషను అనుసరిస్తాయి. అనువాద భాష పాపప్‌లో ఎంచుకో; «అనువాద భాషలు» పేన్ పాపప్‌లో ఏ భాషలు ఉంటాయో మాత్రమే నిర్ణయిస్తుంది."
+  },
+  "cmdToggleSubs": {
+    "message": "ఉపశీర్షికలు ఆన్/ఆఫ్"
+  },
+  "cmdToggleTts": {
+    "message": "బిగ్గరగా చదువు ఆన్/ఆఫ్"
+  },
+  "cmdToggleTransLine": {
+    "message": "అనువాద లైన్ చూపించు లేదా దాచు"
+  },
+  "optShortcutsLabel": {
+    "message": "కీబోర్డ్ షార్ట్‌కట్‌లు"
+  },
+  "optShortcutsOpen": {
+    "message": "షార్ట్‌కట్‌లు సెట్ చేయి"
+  },
+  "optShortcutsHint": {
+    "message": "ఈ కీలు Chrome దగ్గర ఉంటాయి, ఎక్స్‌టెన్షన్ దగ్గర కాదు. మొదట్లో ఏమీ బైండ్ కాలేదు; మూడు విషయాలు బైండ్ చేయవచ్చు: ఉపశీర్షికలు ఆన్/ఆఫ్, బిగ్గరగా చదవడం ఆన్/ఆఫ్, అనువాద లైన్ చూపించు లేదా దాచు."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome ఆ పేజీని ఇక్కడి నుంచి తెరవలేదు — అడ్రస్ బార్‌లో chrome://extensions/shortcuts పేస్ట్ చేయి."
+  },
+  "startTargetLabel": {
+    "message": "అనువాద భాష"
+  },
+  "startTargetHint": {
+    "message": "ఎక్స్‌టెన్షన్ ఇన్‌స్టాల్ అయినప్పుడు నీ బ్రౌజర్ భాష అభిరుచుల నుంచి ఊహించింది. ఊహ తప్పు అయితే ఇక్కడ మార్చు — పాపప్ నుంచి ఎప్పుడైనా మార్చవచ్చు."
+  },
+  "aboutBlurb": {
+    "message": "YouTube కోసం రెండో ఉపశీర్షిక లైన్: ఒక లైన్‌లో అసలు, మరోదానిలో అనువాదం, ఫాంట్ రంగు స్థానం నీ ఇష్టం. ఓపెన్ సోర్స్, ఉచితం, యాడ్స్ లేవు."
+  },
+  "aboutPrivacy": {
+    "message": "ఈ ఎక్స్‌టెన్షన్‌కు మా సర్వర్ లేదు, స్టాటిస్టిక్స్ తీసుకోదు. ఉపశీర్షిక టెక్స్ట్ నువ్వు ఎంచుకున్న సర్వీస్‌లకు మాత్రమే వెళ్తుంది: ఎంచుకున్న అనువాద సర్వీస్, ఆన్ చేస్తే బిగ్గరగా చదివే స్పీచ్ ప్రొవైడర్, సారాంశాలకు సెట్ చేసిన ప్రొవైడర్. సొంత కీ ఉంటే అది ఈ కంప్యూటర్‌లో మాత్రమే నిలుస్తుంది."
+  },
+  "aboutChangelog": {
+    "message": "చేంజ్‌లాగ్"
+  },
+  "aboutRoadmap": {
+    "message": "రోడ్‌మ్యాప్"
+  },
+  "optFeedbackLink": {
+    "message": "సమస్య చెప్పు"
+  },
+  "popupByoConfigure": {
+    "message": "సెటప్…"
+  },
+  "popupSummarize": {
+    "message": "ఈ వీడియో సారాంశం",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "సెటప్ లేదు"
+  },
+  "popupByoPick": {
+    "message": "అనువాద ప్రొవైడర్"
+  },
+  "popupByoUntested": {
+    "message": "పరీక్ష కాలేదు"
+  },
+  "popupModelPick": {
+    "message": "అనువాద మోడల్"
+  },
+  "popupModelMore": {
+    "message": "మరిన్ని మోడల్స్…"
+  },
+  "popupModelFetch": {
+    "message": "అమరికల్లో మోడల్స్ తెచ్చుకో"
+  },
+  "popupModelSwitched": {
+    "message": "ఇప్పటి నుంచి: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "మోడల్ ఎంచుకోలేదు"
+  },
+  "exportUsesYouTube": {
+    "message": "డౌన్‌లోడ్ YouTube సొంత పూర్తి-ట్రాక్ అనువాదం వాడుతుంది — ఉచితం, నీ API కీ ఖర్చు కాదు."
+  },
+  "exportUseByo": {
+    "message": "నా కీతో అనువదించు (దగ్గర పోలిక, కోటా ఖర్చు)"
+  },
+  "exportByoNote": {
+    "message": "పూర్తి ట్రాక్‌ను నీ ప్రొవైడర్ నీ కీతో అనువదిస్తుంది. ఏమీ పంపే ముందు ఒక అంచనా చూపిస్తుంది."
+  },
+  "exportConfirm": {
+    "message": "$NAME$ తో $N$ ఉపశీర్షిక లైన్లు అనువదించు — నీ కోటాపై సుమారు $REQ$ రిక్వెస్ట్‌లు. పూర్తి ట్రాక్ ఆ ప్రొవైడర్‌కు నీ బ్రౌజర్ వదిలి వెళ్తుంది; ప్లేబ్యాక్‌లో నువ్వు నిజంగా చూసే భాగాలు మాత్రమే పంపబడతాయి.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "అనువదించి డౌన్‌లోడ్"
+  },
+  "exportConfirmBack": {
+    "message": "రద్దు"
+  },
+  "exportStop": {
+    "message": "ఆపు"
+  },
+  "exportStopping": {
+    "message": "ఆపుతోంది…"
+  },
+  "exportProgress": {
+    "message": "అనువదిస్తోంది… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ చంక్‌లు YouTube అనువాదానికి తిరిగాయి",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "డౌన్‌లోడ్ రద్దు."
+  },
+  "ftSite": {
+    "message": "వెబ్‌సైట్"
+  },
+  "ftSiteLabel": {
+    "message": "సైట్"
+  },
+  "ftFeedbackLabel": {
+    "message": "ఫీడ్‌బ్యాక్"
+  },
+  "ftReviewLabel": {
+    "message": "రేట్"
+  },
+  "ftGithub": {
+    "message": "GitHubలో సోర్స్ కోడ్"
+  },
+  "ftFeedback": {
+    "message": "ఫీడ్‌బ్యాక్ పంపు లేదా బగ్ చెప్పు"
+  },
+  "ftReview": {
+    "message": "Chrome Web Storeలో రేట్ చేయి"
+  },
+  "optNeedKey": {
+    "message": "ఇంకా కీ లేదు — ఒకటి జోడించే వరకు ఈ ప్రొవైడర్ వాడలేము."
+  },
+  "optNeedBase": {
+    "message": "ఇంకా ఎండ్‌పాయింట్ అడ్రస్ లేదు — ఒకటి రాసే వరకు ఈ ప్రొవైడర్ వాడలేము."
+  },
+  "optBaseHint": {
+    "message": "బేస్ URL లేదా పూర్తి ఎండ్‌పాయింట్ రెండూ పని చేస్తాయి, ఉదా. https://example.com/v1 లేదా https://example.com/v1/chat/completions. ఈ మెషీన్‌లో Ollama లేదా LM Studio కి http://localhost:11434/v1 సరైన ఆకారం. కీ ఖాళీగా ఉండవచ్చు; సాధారణ http లూప్‌బ్యాక్ అడ్రస్‌లకు మాత్రమే పని చేస్తుంది."
+  },
+  "startS1Alt": {
+    "message": "ప్లేయర్ డయాగ్రామ్: చిత్రం దిగువన ఒక అసలు లైన్, ఒక అనువాద లైన్"
+  },
+  "startS3Alt": {
+    "message": "పోలిక: ఉచిత ఇంజిన్ ఒక వాక్యాన్ని ముక్కలుగా అనువదిస్తుంది, సొంత కీ పూర్తిగా అర్థం చేసుకుని మళ్లీ విడగొడుతుంది"
+  },
+  "startPicFree": {
+    "message": "ఉచిత ఇంజిన్"
+  },
+  "startPicFreeNote": {
+    "message": "ఒక వాక్యం, ముక్కలు చేసి"
+  },
+  "startPicByo": {
+    "message": "సొంత కీ"
+  },
+  "startPicByoNote": {
+    "message": "పూర్తిగా అర్థం, మళ్లీ విడగొట్టి"
+  },
+  "startS4Title": {
+    "message": "ప్లేయర్‌లో ఒక చిన్న మెనూ ఉంది"
+  },
+  "startS4Body": {
+    "message": "ఉపశీర్షిక బటన్ పక్కన చిన్న బాణం ఒక మెనూ తెరుస్తుంది: ఉపశీర్షికలు, బిగ్గరగా చదువు, పాఠ్యం ఎంపిక, వీడియో సారాంశం, అమరికలు — ప్లేయర్ వదలకుండా."
+  },
+  "startS4Alt": {
+    "message": "ప్లేయర్ చిత్రం: కింది కుడి ఉపశీర్షిక బటన్ పక్కన చిన్న బాణం, ఒక చిన్న మెనూ తెరుస్తుంది"
+  },
+  "menuHintBubble": {
+    "message": "బిగ్గరగా చదువు, వీడియో సారాంశం, పాఠ్యం ఎంపిక — అన్నీ ఈ చిన్న బాణం వెనుక"
+  },
+  "troubleTitle": {
+    "message": "ఏదో తప్పు"
+  },
+  "troubleStep1": {
+    "message": "ముందు పాపప్ స్విచ్ చూడు — అది ఆఫ్ ఉంటే మొత్తం ఉపశీర్షిక లేయర్ రాదు."
+  },
+  "troubleStep2": {
+    "message": "ఈ వీడియోకు ఉపశీర్షికలు ఉన్నాయా? ప్లేయర్‌లో CC బటన్ ప్రయత్నించు: అసలు లేకపోతే అనువదించేది ఏమీ లేదు."
+  },
+  "troubleStep3": {
+    "message": "ఒక పాపులర్ వీడియో ప్రయత్నించు. మిగతా అన్నీ పని చేసి ఇది మాత్రం కాకపోతే, సాధారణంగా ఈ వీడియో ఉపశీర్షిక ట్రాక్."
+  },
+  "troubleDiagHint": {
+    "message": "ఇంకా ఇరుక్కున్నావా? డయగ్నాస్టిక్‌ను ఈమెయిల్ లేదా ఇష్యూలో పేస్ట్ చేయి — వెర్షన్, ఇంజిన్ స్థితి, ఈ ట్యాబ్ ఏం చేస్తోంది ఉంటాయి, ఒక-రెండు రౌండ్లు ఆదా."
+  },
+  "langManage": {
+    "message": "భాషలు మేనేజ్…"
+  },
+  "optNavLangs": {
+    "message": "అనువాద భాషలు"
+  },
+  "optNavReadaloud": {
+    "message": "బిగ్గరగా చదువు"
+  },
+  "ttsIntro": {
+    "message": "అనువాద లైన్‌ను బిగ్గరగా చదువు. నీ బ్రౌజర్ సొంత వాయిస్‌లకు కీ అసలు అక్కర్లేదు; క్లౌడ్ ప్రొవైడర్లు ఇక్కడ సెటప్, పరీక్ష అవుతాయి."
+  },
+  "ttsVoiceLabel": {
+    "message": "వాయిస్"
+  },
+  "ttsPreview": {
+    "message": "ముందుచూపు"
+  },
+  "ttsPreviewPlaying": {
+    "message": "ప్లే అవుతోంది…"
+  },
+  "ttsPreviewFail": {
+    "message": "ప్లే కాలేదు — కీ చూసి «భద్రపరచి పరీక్షించు» నొక్కు"
+  },
+  "ttsFetchVoices": {
+    "message": "నీ కీతో ఈ భాష పూర్తి జాబితా తెచ్చుకో"
+  },
+  "ttsFetching": {
+    "message": "తెస్తోంది…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "ఇవే ప్రస్తుత భాషకు నీ కీకి ఉన్న $N$ వాయిస్‌లు, పాత Standard / Wavenet టియర్లతో సహా. ఈ భాషకు మాత్రమే; రోజువారీ వాయిస్‌లకు పై లైన్ క్లిక్ చేయి, అవి భాష మారినా వెంట వస్తాయి. ఈ జాబితా ఎప్పుడైనా మళ్లీ తెచ్చుకోవచ్చు.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "రోజువారీ వాయిస్‌లకు తిరిగి (భాషను అనుసరిస్తాయి)"
+  },
+  "ttsVoicesNone": {
+    "message": "ఈ ప్రొవైడర్‌కు ఈ భాషకు అదనపు వాయిస్‌లు లేవు — బిల్ట్-ఇన్‌లు ఇంకా పని చేస్తాయి."
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$ వాయిస్‌లు వచ్చాయి — పై ఫీల్డ్ కింద సూచనలు.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "స్త్రీ"
+  },
+  "ttsVoiceMale": {
+    "message": "పురుష"
+  },
+  "ttsTestOk": {
+    "message": "కనెక్ట్: పరీక్ష ఆడియో $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "నీ బ్రౌజర్ సొంత వాయిస్‌ల్లో చాలా ఈ కంప్యూటర్‌లో ఇన్‌స్టాల్, లైన్‌ను ఇక్కడే చెబుతాయి. కొన్ని కావు: Chrome ఆన్‌లైన్ వాయిస్‌లు కూడా ఇస్తుంది — పేరు \"Google\" తో మొదలయ్యేవి — వాటికి బ్రౌజర్ లైన్‌ను తయారీదారుకు పంపుతుంది. క్లౌడ్ ప్రొవైడర్‌తో, చెప్పాల్సిన టెక్స్ట్ నువ్వు ఎంచుకున్న ప్రొవైడర్‌కు మాత్రమే వెళ్తుంది, కీ ఈ మెషీన్‌లోనే ఉంటుంది."
+  },
+  "ttsEnableLabel": {
+    "message": "వీడియోలో అనువాదం బిగ్గరగా చదువు"
+  },
+  "ttsEnableHint": {
+    "message": "ఆన్ ఉంటే ప్రతి ఉపశీర్షిక అనువాదం కనిపించినప్పుడే చదవబడుతుంది; సమయానికి అనువాదం సిద్ధం కాని లైన్ స్కిప్ అవుతుంది, తర్వాత పట్టుకోదు. ఒక లైన్ చదువుతున్నప్పుడు వీడియో సొంత ఆడియో కింద సెట్ చేసిన స్థాయికి దిగుతుంది. పొడవైన లైన్ చిత్రాన్ని కొంచెం నెమ్మదిస్తుంది, తర్వాతి ఖాళీని అరువు తెచ్చుకుంటుంది — క్లౌడ్ వాయిస్‌లతోనూ, బ్రౌజర్ సొంత వాయిస్‌లతోనూ; కింది స్విచ్ ప్రతి లైన్ అయ్యే వరకు నెమ్మదిగానే ఉంచుతుంది."
+  },
+  "langsIntro": {
+    "message": "పాపప్ ఏ అనువాద భాషలు చూపిస్తుంది."
+  },
+  "langsKept": {
+    "message": "పాపప్‌లో కనిపించేవి"
+  },
+  "langsKeptHint": {
+    "message": "ఇవి పాపప్ అనువాద-భాష మెనూలో వస్తాయి. కనీసం ఒకటి ఉంచు."
+  },
+  "langsMore": {
+    "message": "ఇతర భాషలు"
+  },
+  "langsMoreHint": {
+    "message": "+ నొక్కి ఒకటి జోడించు. జాబితా ఉచిత ఇంజిన్లు, DeepL సపోర్ట్ చేసే భాషలను అనుసరిస్తుంది."
+  },
+  "langsReset": {
+    "message": "అప్రమేయం తిప్పు"
+  },
+  "langsResetDone": {
+    "message": "అప్రమేయం జాబితా‌కు తిరిగింది."
+  },
+  "langsAddAria": {
+    "message": "జోడించు"
+  },
+  "langsRemoveAria": {
+    "message": "తీసివేయి"
+  },
+  "langsLastOne": {
+    "message": "కనీసం ఒకటి ఉంచు"
+  },
+  "langsAllAdded": {
+    "message": "ప్రతి భాష ఇప్పటికే నీ జాబితాలో ఉంది."
+  },
+  "langsAdded": {
+    "message": "$NAME$ జోడించబడింది",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "అదే వాడుతూ ఉంది, కాబట్టి అనువాద భాష ఇప్పుడు $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "చైనీస్ సెరిఫ్"
+  },
+  "fontCjkRound": {
+    "message": "చైనీస్ గుండ్రం"
+  },
+  "ttsVolLabel": {
+    "message": "బిగ్గరగా చదివే వాల్యూమ్"
+  },
+  "ttsGroupPlayback": {
+    "message": "ప్లేబ్యాక్"
+  },
+  "ttsDuckLabel": {
+    "message": "చదువుతున్నప్పుడు అసలు ఆడియో"
+  },
+  "ttsDuckShort": {
+    "message": "అసలు ఆడియో"
+  },
+  "ttsStatusSpeaking": {
+    "message": "చదువుతోంది"
+  },
+  "ttsStatusOn": {
+    "message": "బిగ్గరగా చదువు ఆన్"
+  },
+  "ttsOpenSettings": {
+    "message": "బిగ్గరగా చదివే అమరికలు"
+  },
+  "ttsStatusCounts": {
+    "message": "ఈ వీడియో $N$ లైన్లు · $M$ స్కిప్",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "ఇక్కడ $N$ లైన్లు · $M$ స్కిప్ ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "అనువాదం సమయానికి సిద్ధం కాలేదు"
+  },
+  "ttsSkipSilent": {
+    "message": "సౌండ్ రాలేదు"
+  },
+  "ttsRegionLabel": {
+    "message": "సర్వీస్ రీజియన్"
+  },
+  "ttsErrNoRegion": {
+    "message": "ముందు నీ Azure కీ సర్వీస్ రీజియన్ రాయి (ఉదా. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "ఈ కంప్యూటర్‌లో మాట్లాడే వాయిస్ లేదు."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "ఈ కంప్యూటర్‌లో $NAME$ చదివే వాయిస్ లేదు. కింది జాబితా ఇతర భాషల వాయిస్‌లు — ఒకటి ఎంచుకుంటే ఆ భాష ఉచ్చారణతో చదువుతుంది.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "ఈ కంప్యూటర్ వాయిస్‌లు వెతుకుతోంది…"
+  },
+  "ttsErrRefused": {
+    "message": "ప్రొవైడర్ ఈ రిక్వెస్ట్‌ను తిరస్కరించింది — మరో వాయిస్ ప్రయత్నించు."
+  },
+  "ttsErrNoAudio": {
+    "message": "ఆడియో రాలేదు — మళ్లీ ప్రయత్నించు, లేదా మరో వాయిస్ ఎంచుకో."
+  },
+  "startPicChop1": {
+    "message": "ఉన్నాయి రెండు పెద్ద",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "కారణాలు ఒకటి",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "రెండు పెద్ద కారణాలున్నాయి,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "మొదటిది…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "మరిన్ని వాయిస్‌లు…"
+  },
+  "popupVoiceNone": {
+    "message": "వాయిస్ ఎంచుకోలేదు"
+  },
+  "ttsRobotVoices": {
+    "message": "రోబోటిక్",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "ఉపశీర్షిక పాఠ్యం ఎంచుకుని కాపీ చేయనివ్వు",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "పాఠ్యం ఎంచుకో",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "సారాంశం",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "వీడియో సారాంశం",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "మూసివేయి",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "ఈ వీడియోకు పనికొచ్చే ఉపశీర్షిక ట్రాక్ లేదు.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "సారాంశం చేయడానికి ఉపశీర్షికలను మళ్లీ ఆన్ చెయ్యి — సారాంశం ఉపశీర్షిక ట్రాక్ నుంచి తయారవుతుంది."
+  },
+  "sumNeedKey": {
+    "message": "సారాంశాలకు నీ సొంత సర్వీస్ కావాలి: అనువాద పేన్‌లో కీ ఉన్న ఏ ప్రొవైడర్ అయినా, లేదా ఈ మెషీన్‌లో లోకల్ మోడల్. ఉచిత ఇంజిన్లు అనువాదం మాత్రమే చేస్తాయి. సారాంశం చేయవు.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "అనువాద సర్వీస్ సెటప్",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "సారాంశం చెయ్యి",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "మళ్లీ సారాంశం"
+  },
+  "sumFail": {
+    "message": "సారాంశం కాలేదు. తర్వాత మళ్లీ ప్రయత్నించు.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "పూర్తి ఉపశీర్షిక ట్రాక్ $PROVIDER$కు వెళ్తుంది, $PARTS$ భాగాలుగా, నీ కోటాపై.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "సారాంశం అవుతోంది… భాగం $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ భాగాల సారాంశం కాలేదు; మిగతాది పైన.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "ఉపశీర్షికలు",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube సొంత అనువాదం ఇప్పుడు రేట్-లిమిట్; స్మార్ట్ వాక్యాలు (Google) నింపుతున్నాయి. తర్వాత తనంతట తానే మళ్లీ ప్రయత్నిస్తుంది.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "అనువాద ఎండ్‌పాయింట్ రేట్-లిమిట్ చేస్తోంది — సుమారు $SECONDS$ సె. తర్వాత మళ్లీ మొదలు.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "బేస్ URL లేదా పూర్తి ఎండ్‌పాయింట్ రెండూ పని చేస్తాయి, ఉదా. http://localhost:8880/v1 లేదా http://localhost:8880/v1/audio/speech (Kokoro లేదా openai-edge-tts లాంటి లోకల్ స్పీచ్ సర్వర్లు). కీ ఖాళీగా ఉండవచ్చు; సాధారణ http లూప్‌బ్యాక్ అడ్రస్‌లకు మాత్రమే పని చేస్తుంది."
+  },
+  "optTtsNeedUrl": {
+    "message": "ఇంకా ఎండ్‌పాయింట్ అడ్రస్ లేదు — ఒకటి జోడించే వరకు ఈ ప్రొవైడర్ వాడలేము."
+  },
+  "ttsSkipRefused": {
+    "message": "ప్రొవైడర్ ఆ రిక్వెస్ట్‌లను తిరస్కరించింది"
+  },
+  "ttsSkipNotSet": {
+    "message": "ఈ కంప్యూటర్‌లో సెటప్ లేదు"
+  },
+  "ttsSkipNoVoice": {
+    "message": "ఈ భాషకు వాయిస్ లేదు"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ ఇప్పుడు మాట్లాడలేదు. పై వరుసలో మరొకటి ఎంచుకో — నీ బ్రౌజర్ సొంత వాయిస్‌లు ఆ జాబితాలో ఉన్నాయి.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "ఉపశీర్షిక ట్రాక్ ఇంకా రాలేదు — తనంతట తానే మళ్లీ ప్రయత్నిస్తోంది. తొందరా? పేజీ రిఫ్రెష్ చేసి ఇప్పుడే ప్రయత్నించు."
+  },
+  "ttsCompleteLabel": {
+    "message": "ప్రతి లైన్ పూర్తి చేయి (దట్టమైన చోట్ల చిత్రం నెమ్మది)"
+  },
+  "ttsCompleteHint": {
+    "message": "ఎక్కువ వేగంలో పొడవైన లైన్లు తరచూ చివరను తర్వాతి దానికి పోగొట్టుకుంటాయి. ఇది ఆన్ ఉంటే, చిత్రం లైన్‌కు కావాల్సినంత నెమ్మదిస్తుంది — నీ వేగంలో పావు వంతు కంటే కిందికి వెళ్లదు — ఖాళీల్లో మళ్లీ పట్టుకుంటుంది. చిత్రం అంత నెమ్మదిగా ఉన్నప్పుడు, వీడియో సొంత ఆడియో నువ్వు సెట్ చేసిన స్థాయి కంటే కిందికి, నిశ్శబ్దం వరకు దిగుతుంది."
+  },
+  "ttsCompleteHintText": {
+    "message": "ఈ వేగంలో చాలా లైన్లు కోస్తున్నాయి. ఆన్ చేస్తే అవసరమైన చోట చిత్రం నెమ్మదిస్తుంది, ఎక్కువ లైన్లు పూర్తవుతాయి."
+  },
+  "ttsCompleteHintOn": {
+    "message": "ఆన్ చేయి"
+  },
+  "ttsCompleteHintNever": {
+    "message": "మళ్లీ చూపించకు"
+  },
+  "provLocalSpeechShort": {
+    "message": "బ్రౌజర్"
+  },
+  "optNavFonts": {
+    "message": "ఉపశీర్షిక ఫాంట్లు"
+  },
+  "fontsIntro": {
+    "message": "ఒక జాబితా రెండు ఉపశీర్షిక లైన్లకు; పాపప్ లైన్‌కు లైన్ ఎంచుకుంటుంది. జాబితాలోని ప్రతి ఫాంట్ ఈ కంప్యూటర్‌లో ఇన్‌స్టాల్."
+  },
+  "fontsKept": {
+    "message": "పాపప్‌లో కనిపించేవి"
+  },
+  "fontsMore": {
+    "message": "ఇతర ఫాంట్లు"
+  },
+  "fontsOnly": {
+    "message": "గీయగల ఫాంట్లు మాత్రమే"
+  },
+  "fontsCounting": {
+    "message": "చూస్తోంది…"
+  },
+  "fontsSearch": {
+    "message": "ఫాంట్ పేర్లు వెతుకు"
+  },
+  "fontsNoMatch": {
+    "message": "ఏ ఫాంట్ సరిపోలలేదు."
+  },
+  "fontsKeptEmpty": {
+    "message": "పాపప్‌కు వ్యవస్థ అప్రమేయం మాత్రమే మిగిలింది.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "ప్రతి ఫాంట్ ఇప్పటికే జాబితాలో ఉంది."
+  },
+  "fontsReset": {
+    "message": "అప్రమేయం తిప్పు"
+  },
+  "fontsResetDone": {
+    "message": "అప్రమేయం జాబితా తిరిగింది."
+  },
+  "fontsAdded": {
+    "message": "$NAME$ జోడించబడింది",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "ముందుచూపు: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "ముందుచూపు"
+  },
+  "fontsUnavailable": {
+    "message": "ఈ బ్రౌజర్ ఎక్స్‌టెన్షన్‌ను ఇన్‌స్టాల్ ఫాంట్లు చదవనివ్వదు, కాబట్టి వ్యవస్థ అప్రమేయం మాత్రమే ఎంచుకోవచ్చు."
+  },
+  "fontNoGlyphs": {
+    "message": "ఈ లైన్ గీయలేదు"
+  },
+  "fontNotHere": {
+    "message": "ఈ కంప్యూటర్‌లో లేదు"
+  },
+  "fontsImport": {
+    "message": "ఫాంట్ ఫైల్ దిగుమతి…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; ఫైల్ బ్రౌజర్‌లోకి కాపీ అవుతుంది."
+  },
+  "fontsImported": {
+    "message": "$NAME$ దిగుమతి అయింది",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "బ్రౌజర్‌లో భద్రం కాలేదు; మళ్లీ ప్రయత్నించు.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "పాపప్ నుంచి $NAME$ తీసివేయబడింది.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "ఈ జాబితా దాటవేయి",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "దిగుమతి ఫాంట్",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "ఈ బ్రౌజర్ వాడగల ఫాంట్ ఫైల్ కాదు."
+  },
+  "fontsImportTooBig": {
+    "message": "ఫైల్ చాలా పెద్దది (పరిమితి $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "దిగుమతి ఫాంట్ తొలగించు"
+  },
+  "fontsLangLabel": {
+    "message": "చెక్"
+  },
+  "fontsLangRecent": {
+    "message": "ఇటీవల చూసినవి"
+  },
+  "fontMoreRow": {
+    "message": "ఫాంట్లు మేనేజ్…"
+  },
+  "fontHiddenRow": {
+    "message": "ఇంకా $N$ ఈ లైన్ గీయలేవు",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

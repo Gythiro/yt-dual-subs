@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "YouTube-க்கு இருமொழி வசனங்கள் — அசலும் மொழிபெயர்ப்பும் ஒரே அடுக்கில், மேல்மீது விழாமல்."
+  },
+  "headerSub": {
+    "message": "YouTube™ · ஒரே அடுக்கு"
+  },
+  "disclaimer": {
+    "message": "YouTube அல்லது Google-உடன் தொடர்பு இல்லை."
+  },
+  "enableTitle": {
+    "message": "இயக்கு / அணை"
+  },
+  "openOptions": {
+    "message": "அமைப்புகள்"
+  },
+  "enableAria": {
+    "message": "நீட்டிப்பை இயக்கு"
+  },
+  "previewTag": {
+    "message": "முன்னோட்டம்"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "வேகமான பழுப்பு நரி"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "சீனத்துக்கு நல்லது",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "உன் உலாவியின் சொந்த குரல்கள் (இலவசம்)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (உள்ளக)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "நேரடி முன்னோட்டம்"
+  },
+  "secTranslation": {
+    "message": "மொழிபெயர்ப்பு"
+  },
+  "targetLang": {
+    "message": "மொழிபெயர்ப்பு மொழி"
+  },
+  "backendLabel": {
+    "message": "பொறி"
+  },
+  "backendInfo": {
+    "message": "பொறி தகவல்"
+  },
+  "backendAuto": {
+    "message": "தானியங்கு (பரிந்துரை)"
+  },
+  "backendTlang": {
+    "message": "முழுத் தடம் (YouTube)"
+  },
+  "backendGtx": {
+    "message": "நுண் வாக்கியம் (Google)"
+  },
+  "backendByo": {
+    "message": "சொந்த விசை (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>தானியங்கு</b>: வீடியோ ஆதரித்தால் YouTube-ன் முழு-தடம் மொழிபெயர்ப்பைப் பயன்படுத்துகிறது, இல்லையென்றால் நுண் வாக்கியத்துக்கு மாறுகிறது.<br><b>முழு தடம்</b>: YouTube-ன் சொந்த மொழிபெயர்ப்பு; வரிக்கு வரி இணைக்கும். அதிகம் பயன்படுத்தினால் YouTube சிறிது நேரம் வீதவரம்பு செய்யலாம் — நீட்டிப்பு காத்திருந்து மீண்டும் கேட்கும்.<br><b>நுண் வாக்கியம்</b>: துண்டு வசனங்களை முழு வாக்கியமாக்கி, Google-ன் இலவச முனையத்தில் மொழிபெயர்க்கிறது — சிதறிய தடத்தில் முழு தடத்தை விட நல்ல வார்த்தை, ஆனால் அதிகப் பயன்பாடு இங்கேயும் வீதவரம்பு ஆகலாம்; நீட்டிப்பு மெதுவாக்கி மீண்டும் முயலும்.<br><b>சொந்த விசை</b>: சேர்த்த வாக்கியத்தை நீ அமைத்த வழங்குநருக்கு அனுப்புகிறது."
+  },
+  "backendGtxHint": {
+    "message": "Google-ன் இலவச முனையத்தைப் பயன்படுத்துகிறது — அதிகப் பயன்பாடு சிறிது நேரம் வீதவரம்பு ஆகலாம்; நீட்டிப்பு வேகத்தைக் கட்டி மீண்டும் தானே முயலும்."
+  },
+  "backendStatusTlang": {
+    "message": "இந்த வீடியோ: முழு-தடம் மொழிபெயர்ப்பு (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "இந்த வீடியோ: நுண் வாக்கியம் (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "மொழிபெயர்ப்பு முனையம் வீதவரம்பு செய்கிறது — மெதுவாக்கி தானே மீண்டும் முயல்கிறது. ஏற்கெனவே மொழிபெயர்த்த வரிகள் வேலை செய்யும்."
+  },
+  "diagCopy": {
+    "message": "கண்டறிதல் நகலெடு"
+  },
+  "diagCopied": {
+    "message": "நகலானது — மின்னஞ்சல் அல்லது சிக்கலில் ஒட்டு"
+  },
+  "diagCopyFail": {
+    "message": "நகல் ஆகவில்லை — திரைப்பிடிப்பு எடு"
+  },
+  "backendStatusSame": {
+    "message": "இந்த வீடியோவின் வசனங்கள் ஏற்கெனவே உன் மொழிபெயர்ப்பு மொழியில் — மொழிபெயர்க்க ஒன்றுமில்லை."
+  },
+  "backendStatusNoTrack": {
+    "message": "இந்த வீடியோவுக்கு கேப்ஷன் தடம் கிடைக்கவில்லை, அதனால் காட்ட ஒன்றுமில்லை.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "ஒரு YouTube வீடியோவைத் திற, இரண்டு வரிகள் அதன் மேல் தோன்றும். நீ ஏற்கெனவே வீடியோவில் இருந்தால், டேப்பை ரீலோட் செய்."
+  },
+  "secLayout": {
+    "message": "தளவமைப்பு"
+  },
+  "secLineStyle": {
+    "message": "வரி பாணி"
+  },
+  "secLineStyleHint": {
+    "message": "எழுத்துரு · நிறம் · அளவு"
+  },
+  "orderLabel": {
+    "message": "வரிசை"
+  },
+  "orderTransTop": {
+    "message": "மொழிபெயர்ப்பு மேலே"
+  },
+  "orderOrigTop": {
+    "message": "அசல் மேலே"
+  },
+  "positionLabel": {
+    "message": "இடம்"
+  },
+  "posTop": {
+    "message": "மேல்"
+  },
+  "posCenter": {
+    "message": "நடு"
+  },
+  "posBottom": {
+    "message": "கீழ்"
+  },
+  "posHint": {
+    "message": "வீடியோவில் வசனப் பெட்டியை இழுத்தும் நகர்த்தலாம்"
+  },
+  "posTryDrag": {
+    "message": "முயலு"
+  },
+  "posTryNoVideo": {
+    "message": "முதலில் ஒரு YouTube வீடியோவைத் திற"
+  },
+  "resetPos": {
+    "message": "இடத்தை மீட்டமை"
+  },
+  "rowGap": {
+    "message": "வரி இடைவெளி"
+  },
+  "tabTrans": {
+    "message": "மொழிபெயர்ப்பு"
+  },
+  "tabOrig": {
+    "message": "அசல்"
+  },
+  "lineTabsAria": {
+    "message": "வசன வரி"
+  },
+  "lineShow": {
+    "message": "இந்த வரியைக் காட்டு"
+  },
+  "fontLabel": {
+    "message": "எழுத்துரு"
+  },
+  "fontSystem": {
+    "message": "கணினி இயல்பு"
+  },
+  "fontMono": {
+    "message": "ஒருபடி"
+  },
+  "fontCjk": {
+    "message": "CJK-ஏற்ற"
+  },
+  "sizeLabel": {
+    "message": "எழுத்து அளவு"
+  },
+  "colText": {
+    "message": "உரை"
+  },
+  "colBg": {
+    "message": "பின்னணி"
+  },
+  "colStroke": {
+    "message": "வெளிக்கோடு"
+  },
+  "colTextAria": {
+    "message": "உரை நிறம்"
+  },
+  "colBgAria": {
+    "message": "பின்னணி நிறம்"
+  },
+  "colStrokeAria": {
+    "message": "வெளிக்கோடு நிறம்"
+  },
+  "bgOpacity": {
+    "message": "பின்னணி ஒளிபுகாமை"
+  },
+  "strokeOpacity": {
+    "message": "வெளிக்கோடு ஒளிபுகாமை"
+  },
+  "resetAll": {
+    "message": "எல்லா அமைப்பையும் மீட்டமை"
+  },
+  "resetConfirmText": {
+    "message": "இது எல்லா அமைப்பையும் அழிக்கும், இந்த கணினியில் சேமித்த API விசைகளையும், ஒவ்வொரு வழங்குநருக்கும் நினைவில் வைத்த மாதிரி மற்றும் குரலையும், முதல்-ரன் ஹிண்டுகளையும் மீண்டும் ஆன் செய்யும். ஏற்கெனவே அனுமதித்த வழங்குநர் டொமைன்கள் அனுமதியில் இருக்கும், இறக்குமதி செய்த எழுத்துரு கோப்புகளும்.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "அமைப்பை வைத்துக்கோ",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "எல்லாம் மீட்டமை",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "இருமொழி வசனத்தை அணை"
+  },
+  "toggleTurnOn": {
+    "message": "இருமொழி வசனத்தை இயக்கு"
+  },
+  "handleTitle": {
+    "message": "இழு · இருமுறை சொடுக்கு மீட்டமை"
+  },
+  "handleAria": {
+    "message": "இழுத்து வசனத்தை நகர்த்து, இருமுறை சொடுக்கில் மீட்டமை"
+  },
+  "secExport": {
+    "message": "ஏற்றுமதி"
+  },
+  "exportContent": {
+    "message": "உள்ளடக்கம்"
+  },
+  "exportBi": {
+    "message": "இருமொழி"
+  },
+  "exportOrig": {
+    "message": "அசல்"
+  },
+  "exportTrans": {
+    "message": "மொழிபெயர்ப்பு"
+  },
+  "exportSrt": {
+    "message": "SRT பதிவிறக்கு"
+  },
+  "exportWorking": {
+    "message": "உருவாக்குகிறது…"
+  },
+  "exportDone": {
+    "message": "வசனம் பதிவிறங்கியது"
+  },
+  "exportNoTrans": {
+    "message": "இந்த வீடியோவுக்கு மொழிபெயர்ப்பு இல்லை — முழு-தடம் பொறி அல்லது வேறு மொழிபெயர்ப்பு மொழியை முயலு."
+  },
+  "exportLimited": {
+    "message": "YouTube இப்போது முழு-தடம் மொழிபெயர்ப்பை வீதவரம்பு செய்கிறது — ஒரு நிமிடம் கழித்து மீண்டும் முயலு. சொந்த விசை அமைத்திருந்தால், ஏற்றுமதி கார்டில் அதைத் தவிர்க்கும் டிக் இருக்கும்."
+  },
+  "exportNoCues": {
+    "message": "பதிவிறக்க வசனம் இல்லை — கேப்ஷன் ஏற சில வினாடிகள் ஓட்டிவிட்டு மீண்டும் முயலு."
+  },
+  "exportNotYoutube": {
+    "message": "ஏற்றுமதி செய்ய ஒரு YouTube வீடியோ பக்கத்தைத் திற."
+  },
+  "exportFailed": {
+    "message": "ஏற்றுமதி ஆகவில்லை — பக்கத்தை புதுப்பி செய்து மீண்டும் முயலு."
+  },
+  "updateNotesLabel": {
+    "message": "புதுப்பிப்புக்குப் பின் வெளியீட்டுக் குறிப்பைத் திற"
+  },
+  "trackWarnDubOnly": {
+    "message": "ஒரு விஷயம்: இந்த வீடியோவில் AI-டப் தானியங்கு கேப்ஷன் மட்டுமே உள்ளது (அசல்-மொழி தடம் இல்லை), அதனால் இருமொழி வசனம் ஆடியோவுடன் பொருந்தாமல் போகலாம்."
+  },
+  "whatsNewRow": {
+    "message": "v$VER$-ல் புதிதாக என்ன →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "இந்த வீடியோ: சொந்த விசை ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "வழங்குநர்"
+  },
+  "byoSiteLabel": {
+    "message": "தளம்"
+  },
+  "byoSiteHint": {
+    "message": "நீ சைன் அப் செய்த தளம்டைத் தேர் — இரண்டும் தனி தளம், ஒன்றின் விசையை மற்றது ஏற்காது."
+  },
+  "byoSiteGlobal": {
+    "message": "சர்வதேசம்"
+  },
+  "byoSiteCn": {
+    "message": "சீன மெயின்லாந்து"
+  },
+  "byoBaseLabel": {
+    "message": "முனையம் முகவரி"
+  },
+  "byoModelLabel": {
+    "message": "மாதிரி"
+  },
+  "byoModelRequired": {
+    "message": "வேண்டும்: மாதிரி பெயர்"
+  },
+  "byoKeyLabel": {
+    "message": "API விசை"
+  },
+  "byoKeyClear": {
+    "message": "நீக்கு"
+  },
+  "byoKeyReplace": {
+    "message": "மாற்று"
+  },
+  "byoKeyCleared": {
+    "message": "இந்த கணினியில் வைத்திருந்த விசை நீக்கப்பட்டது."
+  },
+  "byoKeyClearedMoved": {
+    "message": "இந்த கணினியில் வைத்திருந்த விசை நீக்கப்பட்டது. அதுதான் பயன்பாட்டில் இருந்தது, அதனால் மொழிபெயர்ப்பு இப்போது $NAME$ வழியாகப் போகிறது.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "சேமி ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "தனிப்பயன் (OpenAI-இணக்கமான)"
+  },
+  "byoTest": {
+    "message": "சேமித்து சோதி"
+  },
+  "byoTesting": {
+    "message": "சோதிக்கிறது…"
+  },
+  "byoTestOk": {
+    "message": "இணைப்பு ஆனது. மாதிரி: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "விசை வாங்கு"
+  },
+  "byoGuide": {
+    "message": "செட்டப் உதவி வேண்டுமா?"
+  },
+  "byoLocalHint": {
+    "message": "விசை இந்த உலாவியில், இந்த கணினியிலேயே இருக்கும் — ஒருபோதும் அப்லோட் ஆகாது. வசன உரை நீ தேர்ந்த வழங்குநருக்கு மட்டுமே போகும்."
+  },
+  "byoErrNoProvider": {
+    "message": "முதலில் ஒரு புராவைடரைத் தேர்."
+  },
+  "byoErrNoKey": {
+    "message": "முதலில் API விசையை உள்ளிட்டு, பிறகு «சேமித்து சோதி» அழுத்து."
+  },
+  "byoErrNoModel": {
+    "message": "முதலில் ஒரு மாதிரியைத் தேர் — பட்டியலில் இருந்து எடு, அல்லது «என் விசையால் மாதிரி பட்டியல்» அழுத்து."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "இந்த வழங்குநர் பட்டியல் தராது. முதலில் கிடைக்கும் மாதிரிகளை வாங்கு, அல்லது மாதிரி பெயரை நீயே தட்டச்சு செய்."
+  },
+  "byoErrNotApi": {
+    "message": "அந்த முகவரி API இல்லை, ஒரு வலைப் பக்கத்தை அனுப்பியது — பொதுவாக சைன்-இன் வால் அல்லது ரిక్వெஸ்டைத் தடுக்கும் நெட்வொர்க். முகவரியைப் பார், அல்லது வேறு நெட்வொர்க் முயலு."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API பேஸ் URL முழு https:// முகவரியாக இருக்க வேண்டும்."
+  },
+  "byoErrUrlHasKey": {
+    "message": "முகவரியில் ஒரு விசை இருக்கிறது. முகவரியிலிருந்து எடுத்து API விசை புலத்தில் ஒட்டு — முகவரி உன் உலாவி அக்கவுண்டுக்கு சின்க் ஆகும், விசைப் புலம் ஆகாது."
+  },
+  "byoErrNoPerm": {
+    "message": "அந்த API ஹோஸ்டை அடைய அனுமதி இல்லாமல் நீட்டிப்பு இணைப்பு ஆகாது. மீண்டும் «சேமித்து சோதி» அழுத்தி அனுமதி கொடு."
+  },
+  "byoErrAuth": {
+    "message": "விசை நிராகரிக்கப்பட்டது (401) — முழுசா நகலானதா, இன்னும் ஆக்டிவா என்று பார்."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "இந்த மெஷினின் சர்வர் காலை மறுத்தது (403). பெரும்பாலும் நீட்டிப்பை அனுமதிக்கச் சொல்லவில்லை: Ollama-க்கு OLLAMA_ORIGINS, LM Studio-ல் CORS சுவிட்ச்."
+  },
+  "byoErrForbidden": {
+    "message": "வழங்குநர் இந்த காலை மறுத்தது (403). பொதுவாக விசை சரி, அக்கவுண்ட்தான் செய்ய முடியவில்லை — பாக்கி பேலன்ஸ், அடையாளச் சோதனை நிலுவை, மாதிரி ஆன் இல்லை, அல்லது ரீஜியன். வழங்குநர் கன்சோலில் அக்கவுண்டைப் பார்."
+  },
+  "byoErrListAuth": {
+    "message": "இந்த விசை பட்டியலைப் படிக்க அனுமதி இல்லை. வழங்குநர் டாஷ்போர்டில் அந்த அனுமதியைக் கொடுத்து, மீண்டும் வாங்கு.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "வழங்குநர் வீதவரம்பு செய்கிறது — மெதுவாக்கி தானே மீண்டும் முயல்கிறது."
+  },
+  "byoErrLimitedTest": {
+    "message": "வழங்குநர் வீதவரம்பு செய்கிறது. கொஞ்சம் காத்திருந்து மீண்டும் அழுத்து."
+  },
+  "byoErrQuota": {
+    "message": "இந்த அக்கவுண்டின் இந்த கால கிரெடிட் அல்லது கோட்டா முடிந்தது — தொடர வழங்குநர் கன்சோலில் டாப் அப் பண்ணு."
+  },
+  "byoErrBadRequest": {
+    "message": "முனையம் கோரிக்கையை மறுத்தது — மாதிரி பெயர் அல்லது பேஸ் URL தவறாக இருக்கலாம்."
+  },
+  "byoErrBadShape": {
+    "message": "மாதிரி கேட்டபடி வரி வரியாகப் பதில் தரவில்லை, சிறிய முயற்சிகளும் தோல்வி — வேறு மாதிரி முயலு."
+  },
+  "byoErrReasoning": {
+    "message": "அந்த மாதிரி சிந்தனை வரிசையை மட்டும் கொடுத்தது, மொழிபெயர்ப்பு இல்லை — சிந்திக்காத மாதிரியைத் தேர்."
+  },
+  "byoErrNetfail": {
+    "message": "அந்த எண்ட்பாயிண்டை அடைய முடியவில்லை (நெட்வொர்க் அல்லது ரீஜியன் தடை)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "அந்த முகவரியை அடைய முடியவில்லை: சர்வர் ஓடவில்லை, அல்லது நீட்டிப்பை அனுமதிக்கச் சொல்லவில்லை (Ollama-க்கு OLLAMA_ORIGINS, LM Studio-ல் CORS சுவிட்ச்)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "இந்த வழங்குநர் நீ தேர்ந்த மொழிக்கு மொழிபெயர்க்க முடியாது — மொழியை அல்லது பொறியை மாற்று."
+  },
+  "byoErrFailed": {
+    "message": "கனெக்ஷன் ஆகவில்லை. கொஞ்சம் கழித்து மீண்டும் முயலு."
+  },
+  "optTitle": {
+    "message": "மொழிபெயர்ப்பு சேவை செட்டப்"
+  },
+  "optIntro": {
+    "message": "ஒரு புராவைடரைத் தேர்ந்து உன் API விசையை ஒட்டு."
+  },
+  "optPricingLink": {
+    "message": "விலை & இலவச டியர்"
+  },
+  "optFetchModels": {
+    "message": "என் விசையால் மாதிரி பட்டியல்"
+  },
+  "optFetchModelsNoKey": {
+    "message": "கிடைக்கும் மாதிரிகளை பட்டியல்"
+  },
+  "optFetching": {
+    "message": "பட்டியலிடுகிறது…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ மாதிரிகள் கிடைத்தன",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” இந்த வழங்குநரின் பட்டியலில் இனி இல்லை — மேலே வேறொன்றைத் தேர்.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "மாதிரி பட்டியல் ஆகவில்லை — மாதிரி பெயரை தட்டச்சு செய்."
+  },
+  "optModelCustom": {
+    "message": "தனிப்பயன்…"
+  },
+  "optNoModelsYet": {
+    "message": "இன்னும் மாதிரி பட்டியல் இல்லை — உன் விசையால் வாங்கு, அல்லது பெயரை தட்டச்சு செய்."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "இன்னும் மாதிரி பட்டியல் இல்லை — வாங்கு, அல்லது பெயரை தட்டச்சு செய்."
+  },
+  "optShowKey": {
+    "message": "காட்டு"
+  },
+  "optRecommended": {
+    "message": "பரிந்துரை"
+  },
+  "optConfigured": {
+    "message": "செட்டப் ஆனது"
+  },
+  "optInUse": {
+    "message": "பயன்பாட்டில்"
+  },
+  "optAfterSetup": {
+    "message": "இங்கே முடிந்ததும் நீட்டிப்பு மேல்தோன்றலைத் திறந்து பொறியை «சொந்த விசை» ஆக்கு."
+  },
+  "optTrademark": {
+    "message": "எல்லா வழங்குநர் பெயர்களும் லோகோக்களும் அந்தந்த உரிமையாளர்களின் டிரேட்மார்க். இந்த நீட்டிப்பு அவற்றில் எதனுடனும் இணைந்ததல்ல, ஆதரவோ ஸ்பான்சரோ இல்லை; மார்க்குகள் நீ தேர்ந்த API-ஐ அடையாளம் காட்ட மட்டுமே."
+  },
+  "optSections": {
+    "message": "பிரிவுகள்"
+  },
+  "optNavSetup": {
+    "message": "மொழிபெயர்ப்பு சேவை"
+  },
+  "optNavStart": {
+    "message": "தொடங்குதல்"
+  },
+  "optNavAbout": {
+    "message": "பற்றி"
+  },
+  "startIntro": {
+    "message": "நாலு விஷயம். பயன்படுத்த எதையும் செட்டப் செய்ய வேண்டாம்."
+  },
+  "startS1Title": {
+    "message": "ஒரு வீடியோவைத் திற — அவ்வளவுதான்"
+  },
+  "startS1Body": {
+    "message": "வசனம் உள்ள எந்த YouTube வீடியோவும்: இரண்டு வரிகளும் தாமாக வரும்."
+  },
+  "startS2Title": {
+    "message": "விரும்பும் இடத்தில் வை"
+  },
+  "startS2Body": {
+    "message": "வசனப் பெட்டியின் மேல்-இடது கிரிப்பைப் பிடித்து எங்கே வேண்டுமானாலும் இழு. மீண்டும் வைக்க கிரிப்பை இருமுறை சொடுக்கு பண்ணு."
+  },
+  "startS2Alt": {
+    "message": "பிளேயர் வரைபடம்: வசனப் பெட்டியின் மேல்-இடது மூலையில் ஆறு-புள்ளி கிரிப், வேறு இடத்துக்கு இழுக்கப்படுகிறது"
+  },
+  "startS3Title": {
+    "message": "நல்ல மொழிபெயர்ப்பு வேண்டுமா"
+  },
+  "startS3Body": {
+    "message": "உன் API விசையைச் சேர்: முழு வாக்கிய மொழிபெயர்ப்பு, ஏற்றுமதியில் முழு வீடியோ மொழிபெயர்ப்பும்."
+  },
+  "startGoSetup": {
+    "message": "மொழிபெயர்ப்பு சேவை செட்டப்"
+  },
+  "aboutIntro": {
+    "message": "இது என்ன, உன் உரை எங்கே போகிறது."
+  },
+  "aboutVersion": {
+    "message": "பதிப்பு"
+  },
+  "uiLocaleLabel": {
+    "message": "இடைமுக மொழி"
+  },
+  "uiLocaleAuto": {
+    "message": "தானியங்கு — உலாவியைப் பின்பற்று"
+  },
+  "uiLocaleHint": {
+    "message": "இந்த நீட்டிப்பின் சொந்த மெனுக்கள் மற்றும் அமைப்புகளின் மொழி. வீடியோவிலேயே வரையப்படும் சில சிட்டைகள் இன்னும் உலாவி மொழியைப் பின்பற்றும். மொழிபெயர்ப்பு மொழி மேல்தோன்றலில் தேர்ந்தெடுக்கப்படுகிறது; «மொழிபெயர்ப்பு மொழிகள்» பேன் மேல்தோன்றலில் எந்த மொழிகள் வரும் என்பதை மட்டுமே முடிவு செய்கிறது."
+  },
+  "cmdToggleSubs": {
+    "message": "வசனம் இயக்கு/அணை"
+  },
+  "cmdToggleTts": {
+    "message": "உரக்கப் படி இயக்கு/அணை"
+  },
+  "cmdToggleTransLine": {
+    "message": "மொழிபெயர்ப்பு வரியைக் காட்டு அல்லது மறை"
+  },
+  "optShortcutsLabel": {
+    "message": "விசைப்பலகை குறுக்குவழி"
+  },
+  "optShortcutsOpen": {
+    "message": "குறுக்குவழி அமை"
+  },
+  "optShortcutsHint": {
+    "message": "இந்த கீகளை Chrome வைத்திருக்கிறது, நீட்டிப்பு அல்ல. ஆரம்பத்தில் எதுவும் பிணைக்கப்படவில்லை; மூன்று விஷயம் பிணைக்கலாம்: வசனம் ஆன்/ஆஃப், உரக்கப் படி ஆன்/ஆஃப், மொழிபெயர்ப்பு வரியைக் காட்டு அல்லது மறை."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome அந்தப் பக்கத்தை இங்கிருந்து திறக்கவில்லை — முகவரிப் பட்டியில் chrome://extensions/shortcuts ஒட்டு."
+  },
+  "startTargetLabel": {
+    "message": "மொழிபெயர்ப்பு மொழி"
+  },
+  "startTargetHint": {
+    "message": "நீட்டிப்பு நிறுவியபோது உன் உலாவியின் மொழி விருப்பத்திலிருந்து ஊகிக்கப்பட்டது. ஊகம் தவறென்றால் இங்கே மாற்று — மேல்தோன்றலில் எப்போதும் மாற்றலாம்."
+  },
+  "aboutBlurb": {
+    "message": "YouTube-க்கு இரண்டாவது வசன வரி: ஒரு வரியில் அசல், மற்றதில் மொழிபெயர்ப்பு, எழுத்துரு நிறம் இடம் உன் இஷ்டம். ஓப்பன் சோர்ஸ், இலவசம், விளம்பரம் இல்லை."
+  },
+  "aboutPrivacy": {
+    "message": "இந்த நீட்டிப்புக்கு எங்களுடைய சர்வர் இல்லை, புள்ளிவிவரம் எதுவும் சேகரிக்காது. வசன உரை நீ தேர்ந்த சேவைகளுக்கு மட்டுமே போகும்: நீ தேர்ந்த மொழிபெயர்ப்பு சேவை, ஆன் செய்தால் உரக்கப் படிக்கும் பேச்சு வழங்குநர், சுருக்கத்துக்கு அமைத்த வழங்குநர். சொந்த விசை இந்த கணினியில் மட்டுமே சேமிக்கப்படும்."
+  },
+  "aboutChangelog": {
+    "message": "மாற்றப் பதிவு"
+  },
+  "aboutRoadmap": {
+    "message": "ரோட்மேப்"
+  },
+  "optFeedbackLink": {
+    "message": "பிரச்சனை சொல்"
+  },
+  "popupByoConfigure": {
+    "message": "செட்டப்…"
+  },
+  "popupSummarize": {
+    "message": "இந்த வீடியோவைச் சுருக்கு",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "செட்டப் இல்லை"
+  },
+  "popupByoPick": {
+    "message": "மொழிபெயர்ப்பு வழங்குநர்"
+  },
+  "popupByoUntested": {
+    "message": "சோதனை இல்லை"
+  },
+  "popupModelPick": {
+    "message": "மொழிபெயர்ப்பு மாதிரி"
+  },
+  "popupModelMore": {
+    "message": "மேலும் மாதிரிகள்…"
+  },
+  "popupModelFetch": {
+    "message": "அமைப்பில் மாதிரி வாங்கு"
+  },
+  "popupModelSwitched": {
+    "message": "இனிமேல்: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "மாதிரி தேரவில்லை"
+  },
+  "exportUsesYouTube": {
+    "message": "பதிவிறக்கம் YouTube-ன் சொந்த முழு-தடம் மொழிபெயர்ப்பைப் பயன்படுத்துகிறது — இலவசம், உன் API விசையைச் செலவழிக்காது."
+  },
+  "exportUseByo": {
+    "message": "என் விசையால் மொழிபெயர் (நெருக்கமான பொருத்தம், கோட்டா செலவு)"
+  },
+  "exportByoNote": {
+    "message": "முழு தடத்தையும் உன் வழங்குநர் உன் விசையால் மொழிபெயர்க்கும். எதையும் அனுப்பும் முன் ஒரு மதிப்பீடு காட்டும்."
+  },
+  "exportConfirm": {
+    "message": "$NAME$ மூலம் $N$ வசன வரிகளை மொழிபெயர் — உன் ஒதுக்கீட்டில் ஏறக்குறைய $REQ$ கோரிக்கைகள். முழு தடமும் அந்த வழங்குநருக்கு உன் உலாவியை விட்டுப் போகும்; பிளேபேக்கில் நீ பார்க்கும் பகுதிகள் மட்டுமே அனுப்பப்படும்.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "மொழிபெயர்த்து பதிவிறக்கு"
+  },
+  "exportConfirmBack": {
+    "message": "ரத்து"
+  },
+  "exportStop": {
+    "message": "நிறுத்து"
+  },
+  "exportStopping": {
+    "message": "நிறுத்துகிறது…"
+  },
+  "exportProgress": {
+    "message": "மொழிபெயர்க்கிறது… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ சங்க் YouTube மொழிபெயர்ப்புக்குத் திரும்பியது",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "பதிவிறக்கம் ரத்து."
+  },
+  "ftSite": {
+    "message": "வலைத்தளம்"
+  },
+  "ftSiteLabel": {
+    "message": "தளம்"
+  },
+  "ftFeedbackLabel": {
+    "message": "கருத்து"
+  },
+  "ftReviewLabel": {
+    "message": "ரேட்"
+  },
+  "ftGithub": {
+    "message": "GitHub-ல் சோர்ஸ் கோடு"
+  },
+  "ftFeedback": {
+    "message": "கருத்து அனுப்பு அல்லது பேக் சொல்"
+  },
+  "ftReview": {
+    "message": "Chrome Web Store-ல் ரேட் பண்ணு"
+  },
+  "optNeedKey": {
+    "message": "இன்னும் விசை இல்லை — ஒன்றைச் சேர்க்கும் வரை இந்த புராவைடரைப் பயன்படுத்த முடியாது."
+  },
+  "optNeedBase": {
+    "message": "இன்னும் முனையம் முகவரி இல்லை — ஒன்றை உள்ளிடும் வரை இந்த புராவைடரைப் பயன்படுத்த முடியாது."
+  },
+  "optBaseHint": {
+    "message": "பேஸ் URL அல்லது முழு முனையம் இரண்டும் ஆகும், எ.கா. https://example.com/v1 அல்லது https://example.com/v1/chat/completions. இந்த கணினியில் Ollama அல்லது LM Studio-க்கு http://localhost:11434/v1 சரியான வடிவம். விசை காலியாக இருக்கலாம்; சாதாரண http லூப்பேக் முகவரிகளுக்கு மட்டுமே ஆகும்."
+  },
+  "startS1Alt": {
+    "message": "பிளேயர் வரைபடம்: படத்தின் கீழே ஒரு அசல் வரி மற்றும் ஒரு மொழிபெயர்ப்பு வரி"
+  },
+  "startS3Alt": {
+    "message": "ஒப்பீடு: இலவசப் பொறி ஒரு வாக்கியத்தைத் துண்டாக்கி மொழிபெயர்க்கிறது, சொந்த விசை முழுசா புரிந்து மீண்டும் பிரிக்கிறது"
+  },
+  "startPicFree": {
+    "message": "இலவசப் பொறி"
+  },
+  "startPicFreeNote": {
+    "message": "ஒரு வாக்கியம், துண்டாக்கப்பட்டது"
+  },
+  "startPicByo": {
+    "message": "சொந்த விசை"
+  },
+  "startPicByoNote": {
+    "message": "முழுசா புரிந்து, மீண்டும் பிரித்து"
+  },
+  "startS4Title": {
+    "message": "பிளேயரில் ஒரு சின்ன மெனு இருக்கு"
+  },
+  "startS4Body": {
+    "message": "வசன பட்டனுக்கு அடுத்த சின்ன அம்பு ஒரு மெனுவைத் திறக்கும்: வசனம், உரக்கப் படி, உரையைத் தேர், வீடியோ சுருக்கம், அமைப்புகள் — பிளேயரை விடாமல்."
+  },
+  "startS4Alt": {
+    "message": "பிளேயர் படம்: கீழ் வலது வசன பட்டனுக்கு அடுத்த சின்ன அம்பு, ஒரு சின்ன மெனுவைத் திறக்கிறது"
+  },
+  "menuHintBubble": {
+    "message": "உரக்கப் படி, வீடியோ சுருக்கம், உரையைத் தேர் — எல்லாம் இந்த சின்ன அம்புக்குப் பின்னால்"
+  },
+  "troubleTitle": {
+    "message": "ஏதோ தவறு"
+  },
+  "troubleStep1": {
+    "message": "முதலில் மேல்தோன்றல் சுவிட்சைப் பார் — அது அணைந்தால் முழு வசன அடுக்கும் வராது."
+  },
+  "troubleStep2": {
+    "message": "இந்த வீடியோவுக்கு வசனமே உள்ளதா? பிளேயரில் CC பட்டனை முயலு: அசல் இல்லாவிட்டால் மொழிபெயர்க்க ஒன்றுமில்லை."
+  },
+  "troubleStep3": {
+    "message": "ஒரு பிரபல வீடியோவை முயலு. மற்றதெல்லாம் வேலை செய்து இது மட்டும் இல்லையென்றால், பொதுவாக இந்த வீடியோவின் வசன தடம்."
+  },
+  "troubleDiagHint": {
+    "message": "இன்னும் சிக்கலா? கண்டறிதலை மின்னஞ்சல் அல்லது சிக்கலில் ஒட்டு — பதிப்பு, பொறி நிலை, இந்த டேப் என்ன செய்கிறது என்பது இருக்கும், ஒரு-இரண்டு சுற்று மிச்சம்."
+  },
+  "langManage": {
+    "message": "மொழிகளை நிர்வகி…"
+  },
+  "optNavLangs": {
+    "message": "மொழிபெயர்ப்பு மொழிகள்"
+  },
+  "optNavReadaloud": {
+    "message": "உரக்கப் படி"
+  },
+  "ttsIntro": {
+    "message": "மொழிபெயர்ப்பு வரியை உரக்கப் படி. உன் உலாவியின் சொந்த குரலுக்கு விசையே வேண்டாம்; கிளவுட் வழங்குநர்கள் இங்கே செட்டப் செய்து சோதிக்கப்படும்."
+  },
+  "ttsVoiceLabel": {
+    "message": "குரல்"
+  },
+  "ttsPreview": {
+    "message": "முன்னோட்டம்"
+  },
+  "ttsPreviewPlaying": {
+    "message": "இயங்குகிறது…"
+  },
+  "ttsPreviewFail": {
+    "message": "இயங்கவில்லை — விசையைப் பார்த்து «சேமித்து சோதி» அழுத்து"
+  },
+  "ttsFetchVoices": {
+    "message": "உன் விசையால் இந்த மொழியின் முழு பட்டியல்டை வாங்கு"
+  },
+  "ttsFetching": {
+    "message": "வாங்குகிறது…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "இவைதான் தற்போதைய மொழிக்கு உன் விசையின் எல்லா $N$ குரல்கள், பழைய Standard / Wavenet அடுக்குகளும் உட்பட. இந்த மொழிக்கு மட்டுமே; அன்றாட குரலுக்கு மேலே உள்ள வரியைக் கிளிக் பண்ணு, அவை மொழி மாறினாலும் உன்னைப் பின்தொடரும். இந்த பட்டியல்டை எப்போதும் மீண்டும் வாங்கலாம்.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "அன்றாட குரலுக்குத் திரும்பு (மொழியைப் பின்தொடரும்)"
+  },
+  "ttsVoicesNone": {
+    "message": "இந்த வழங்குநருக்கு இந்த மொழியில் கூடுதல் குரல் இல்லை — உள்ளமைந்தவை இன்னும் வேலை செய்யும்."
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$ குரல்கள் வந்தன — மேலே உள்ள புலத்துக்குக் கீழ் பரிந்துரை.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "பெண்"
+  },
+  "ttsVoiceMale": {
+    "message": "ஆண்"
+  },
+  "ttsTestOk": {
+    "message": "இணைப்பு: சோதனை ஆடியோ $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "உன் உலாவியின் சொந்த குரல்களில் பெரும்பாலானவை இந்த கணினியில் நிறுவியவை, வரியை இங்கேயே பேசும். சில இல்லை: Chrome ஆன்லைன் குரல்களையும் தரும் — பெயர் \"Google\"-ல் தொடங்குபவை — அவைக்கு உலாவி வரியை தயாரிப்பாளருக்கு அனுப்பும். கிளவுட் வழங்குநரில், பேச வேண்டிய உரை நீ தேர்ந்த வழங்குநருக்கு மட்டுமே போகும், விசை இந்த கணினியிலேயே இருக்கும்."
+  },
+  "ttsEnableLabel": {
+    "message": "வீடியோவில் மொழிபெயர்ப்பை உரக்கப் படி"
+  },
+  "ttsEnableHint": {
+    "message": "இயக்கினால், ஒவ்வொரு வசனத்தின் மொழிபெயர்ப்பும் தோன்றும்போதே பேசப்படும்; மொழிபெயர்ப்பு நேரத்துக்குத் தயாராகாத வரி ஸ்கிப் ஆகும், பிறகு பிடிக்காது. ஒரு வரி பேசும்போது வீடியோவின் சொந்த ஆடியோ கீழே அமைத்த அளவுக்கு இறங்கும். நீளமான வரி படத்தைச் சற்று மெதுவாக்கி அடுத்த இடைவெளியை இழுக்கும் — கிளவுட் குரலிலும் உலாவியின் சொந்த குரலிலும்; கீழே உள்ள சுவிட்ச் எல்லா வரியும் முடியும் வரை மெதுவாகவே வைக்கும்."
+  },
+  "langsIntro": {
+    "message": "மேல்தோன்றலில் எந்த மொழிபெயர்ப்பு மொழிகள் வரும்."
+  },
+  "langsKept": {
+    "message": "மேல்தோன்றலில் காட்டும்"
+  },
+  "langsKeptHint": {
+    "message": "இவை மேல்தோன்றலின் மொழிபெயர்ப்பு-மொழி மெனுவில் வரும். குறைந்தது ஒன்றை வைத்துக்கோ."
+  },
+  "langsMore": {
+    "message": "பிற மொழிகள்"
+  },
+  "langsMoreHint": {
+    "message": "+ அழுத்தி ஒன்றைச் சேர். பட்டியல் இலவசப் பொறிகளும் DeepL-ம் ஆதரிக்கும் மொழிகளைப் பின்பற்றும்."
+  },
+  "langsReset": {
+    "message": "இயல்பை மீட்டு"
+  },
+  "langsResetDone": {
+    "message": "இயல்பு பட்டியலுக்குத் திரும்பியது."
+  },
+  "langsAddAria": {
+    "message": "சேர்"
+  },
+  "langsRemoveAria": {
+    "message": "நீக்கு"
+  },
+  "langsLastOne": {
+    "message": "குறைந்தது ஒன்றை வைத்துக்கோ"
+  },
+  "langsAllAdded": {
+    "message": "எல்லா மொழியும் ஏற்கெனவே உன் பட்டியலில் உள்ளன."
+  },
+  "langsAdded": {
+    "message": "$NAME$ சேர்க்கப்பட்டது",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "அதுதான் பயன்பாட்டில் இருந்தது, அதனால் மொழிபெயர்ப்பு மொழி இப்போது $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "சீன செரிஃப்"
+  },
+  "fontCjkRound": {
+    "message": "சீன வட்டம்"
+  },
+  "ttsVolLabel": {
+    "message": "உரக்கப் படிக்கும் ஒலி"
+  },
+  "ttsGroupPlayback": {
+    "message": "பிளேபேக்"
+  },
+  "ttsDuckLabel": {
+    "message": "பேசும்போது அசல் ஆடியோ"
+  },
+  "ttsDuckShort": {
+    "message": "அசல் ஆடியோ"
+  },
+  "ttsStatusSpeaking": {
+    "message": "பேசுகிறது"
+  },
+  "ttsStatusOn": {
+    "message": "உரக்க இயக்கம்"
+  },
+  "ttsOpenSettings": {
+    "message": "உரக்கப் படி அமைப்புகள்"
+  },
+  "ttsStatusCounts": {
+    "message": "இந்த வீடியோ $N$ வரி · $M$ ஸ்கிப்",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "இங்கே $N$ வரி · $M$ ஸ்கிப் ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "மொழிபெயர்ப்பு நேரத்துக்குத் தயார் இல்லை"
+  },
+  "ttsSkipSilent": {
+    "message": "சத்தம் வரவில்லை"
+  },
+  "ttsRegionLabel": {
+    "message": "சேவை ரீஜியன்"
+  },
+  "ttsErrNoRegion": {
+    "message": "முதலில் உன் Azure விசையின் சேவை ரீஜியனை உள்ளிடு (எ.கா. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "இந்த கணினியில் பேசும் குரல் இல்லை."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "இந்த கணினியில் $NAME$ படிக்கும் குரல் இல்லை. கீழே உள்ள பட்டியல் பிற மொழி குரல்கள் — ஒன்றைத் தேர்ந்தால் அந்த மொழியின் உச்சரிப்பில் படிக்கும்.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "இந்த கணினியின் குரல்களைத் தேடுகிறது…"
+  },
+  "ttsErrRefused": {
+    "message": "வழங்குநர் இந்த கோரிக்கையை மறுத்தது — வேறு குரல் முயலு."
+  },
+  "ttsErrNoAudio": {
+    "message": "ஆடியோ வரவில்லை — மீண்டும் முயலு, அல்லது வேறு குரல் தேர்."
+  },
+  "startPicChop1": {
+    "message": "ரெண்டு பெரிய",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "காரணம் ஒன்னு",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "ரெண்டு பெரிய காரணங்கள் இருக்கு,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "முதல்லது…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "மேலும் குரல்கள்…"
+  },
+  "popupVoiceNone": {
+    "message": "குரல் தேரவில்லை"
+  },
+  "ttsRobotVoices": {
+    "message": "ரோபோடிக்",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "வசன உரையைத் தேர்ந்து நகலெடுக்க விடு",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "உரையைத் தேர்",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "சுருக்கம்",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "வீடியோ சுருக்கம்",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "மூடு",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "இந்த வீடியோவுக்குப் பயன்படுத்தக்கூடிய வசன தடம் இல்லை.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "சுருக்குவதற்கு வசனத்தை மீண்டும் இயக்கு — சுருக்கம் வசன தடத்திலிருந்து உருவாகும்."
+  },
+  "sumNeedKey": {
+    "message": "சுருக்கத்துக்கு உன் சொந்த சேவை வேண்டும்: மொழிபெயர்ப்பு பலகத்தில் விசை உள்ள எந்த புராவைடரும், அல்லது இந்த கணினியில் ஒரு உள்ளக மாதிரி. இலவசப் பொறிகள் மொழிபெயர்ப்பு மட்டுமே. சுருக்கம் செய்யாது.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "மொழிபெயர்ப்பு சேவை செட்டப்",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "சுருக்கு",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "மீண்டும் சுருக்கு"
+  },
+  "sumFail": {
+    "message": "சுருக்கம் ஆகவில்லை. பிறகு மீண்டும் முயலு.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "முழு வசன தடமும் $PROVIDER$-க்குப் போகும், $PARTS$ பகுதியாக, உன் ஒதுக்கீட்டில்.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "சுருக்குகிறது… பகுதி $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ பகுதியைச் சுருக்க முடியவில்லை; மீதி மேலே.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "வசனம்",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube-ன் சொந்த மொழிபெயர்ப்பு இப்போது வீதவரம்பு; நுண் வாக்கியம் (Google) நிரப்புகிறது. பிறகு தானே மீண்டும் முயலும்.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "மொழிபெயர்ப்பு முனையம் வீதவரம்பு செய்கிறது — சுமார் $SECONDS$ வி. கழித்து மீண்டும் தொடங்கும்.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "பேஸ் URL அல்லது முழு முனையம் இரண்டும் ஆகும், எ.கா. http://localhost:8880/v1 அல்லது http://localhost:8880/v1/audio/speech (Kokoro அல்லது openai-edge-tts போன்ற உள்ளக பேச்சு சர்வர்கள்). விசை காலியாக இருக்கலாம்; சாதாரண http லூப்பேக் முகவரிகளுக்கு மட்டுமே ஆகும்."
+  },
+  "optTtsNeedUrl": {
+    "message": "இன்னும் முனையம் முகவரி இல்லை — ஒன்றைச் சேர்க்கும் வரை இந்த புராவைடரைப் பயன்படுத்த முடியாது."
+  },
+  "ttsSkipRefused": {
+    "message": "வழங்குநர் அந்தக் கோரிக்கைகளை மறுத்தது"
+  },
+  "ttsSkipNotSet": {
+    "message": "இந்த கணினியில் செட்டப் இல்லை"
+  },
+  "ttsSkipNoVoice": {
+    "message": "இந்த மொழிக்கு குரல் இல்லை"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ இப்போது பேச முடியவில்லை. மேலே உள்ள வரிசையில் வேறொன்றைத் தேர் — உன் உலாவியின் சொந்த குரல்கள் அந்த பட்டியலில் உள்ளன.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "வசன தடம் இன்னும் வரவில்லை — தானே மீண்டும் முயல்கிறது. அவசரமா? பக்கத்தை புதுப்பி செய்து இப்போதே முயலு."
+  },
+  "ttsCompleteLabel": {
+    "message": "ஒவ்வொரு வரியையும் முடி (அடர்த்தியான இடத்தில் படம் மெதுவாகும்)"
+  },
+  "ttsCompleteHint": {
+    "message": "அதிக வேகத்தில் நீண்ட வரிகள் பெரும்பாலும் முடிவை அடுத்த வரிக்கு இழக்கும். இது இயக்கினால், படம் வரிக்கு வேண்டிய அளவு மெதுவாகும் — நீ தேர்ந்த வேகத்தின் கால் பங்கிற்குக் கீழே போகாது — இடைவெளிகளில் மீண்டும் முந்தும். படம் அவ்வளவு மெதுவாக இருக்கும்போது, வீடியோவின் சொந்த ஆடியோ நீ அமைத்த அளவை விடவும் இறங்கி, அமைதி வரை போகும்."
+  },
+  "ttsCompleteHintText": {
+    "message": "இந்த வேகத்தில் பல வரிகள் அறுபடுகின்றன. இயக்கினால் தேவையான இடத்தில் படம் மெதுவாகும், அதிக வரிகள் முடியும்."
+  },
+  "ttsCompleteHintOn": {
+    "message": "இயக்கு"
+  },
+  "ttsCompleteHintNever": {
+    "message": "மீண்டும் காட்டாதே"
+  },
+  "provLocalSpeechShort": {
+    "message": "உலாவி"
+  },
+  "optNavFonts": {
+    "message": "வசன எழுத்துரு"
+  },
+  "fontsIntro": {
+    "message": "ஒரு பட்டியல் இரண்டு வசன வரிகளுக்கும்; மேல்தோன்றல் வரிக்கு வரி தேர்ந்தெடுக்கும். பட்டியலில் உள்ள ஒவ்வொரு எழுத்துருவும் இந்த கணினியில் நிறுவியவை."
+  },
+  "fontsKept": {
+    "message": "மேல்தோன்றலில் காட்டும்"
+  },
+  "fontsMore": {
+    "message": "பிற எழுத்துரு"
+  },
+  "fontsOnly": {
+    "message": "வரையக்கூடிய எழுத்துரு மட்டும்"
+  },
+  "fontsCounting": {
+    "message": "பார்க்கிறது…"
+  },
+  "fontsSearch": {
+    "message": "எழுத்துரு பெயரைத் தேடு"
+  },
+  "fontsNoMatch": {
+    "message": "எந்த எழுத்துருவும் பொருந்தவில்லை."
+  },
+  "fontsKeptEmpty": {
+    "message": "மேல்தோன்றலுக்கு கணினி இயல்பு மட்டுமே மீதி.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "எல்லா எழுத்துருவும் ஏற்கெனவே பட்டியலில் உள்ளன."
+  },
+  "fontsReset": {
+    "message": "இயல்பை மீட்டு"
+  },
+  "fontsResetDone": {
+    "message": "இயல்பு பட்டியல் மீண்டது."
+  },
+  "fontsAdded": {
+    "message": "$NAME$ சேர்க்கப்பட்டது",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "முன்னோட்டம்: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "முன்னோட்டம்"
+  },
+  "fontsUnavailable": {
+    "message": "இந்த உலாவி நீட்டிப்பை நிறுவிய எழுத்துரு படிக்க விடாது, அதனால் கணினி இயல்பு மட்டுமே தேர்ந்தெடுக்கலாம்."
+  },
+  "fontNoGlyphs": {
+    "message": "இந்த வரியை வரைய முடியாது"
+  },
+  "fontNotHere": {
+    "message": "இந்த கணினியில் இல்லை"
+  },
+  "fontsImport": {
+    "message": "எழுத்துரு இறக்குமதி…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; கோப்பு உலாவிக்குள் நகலெடுக்கப்படும்."
+  },
+  "fontsImported": {
+    "message": "$NAME$ இறக்குமதி ஆனது",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "உலாவியில் சேமிக்க முடியவில்லை; மீண்டும் முயலு.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "மேல்தோன்றலில் இருந்து $NAME$ நீக்கப்பட்டது.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "இந்த பட்டியல்டைத் தவிர்",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "இறக்குமதி எழுத்துரு",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "இந்த உலாவி பயன்படுத்தக்கூடிய எழுத்துரு கோப்பு அல்ல."
+  },
+  "fontsImportTooBig": {
+    "message": "கோப்பு மிகப் பெரியது (வரம்பு $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "இறக்குமதி எழுத்துருவை நீக்கு"
+  },
+  "fontsLangLabel": {
+    "message": "சோதி"
+  },
+  "fontsLangRecent": {
+    "message": "சமீபத்தில் பார்த்தது"
+  },
+  "fontMoreRow": {
+    "message": "எழுத்துரு நிர்வகி…"
+  },
+  "fontHiddenRow": {
+    "message": "இன்னும் $N$ இந்த வரியை வரைய முடியாது",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Divvalodu subtitri YouTube — oriģināls un tulkojums vienā slānī, bez pārklāšanās."
+  },
+  "headerSub": {
+    "message": "YouTube™ · viens slānis"
+  },
+  "disclaimer": {
+    "message": "Nav saistīts ar YouTube vai Google."
+  },
+  "enableTitle": {
+    "message": "Ieslēgt / izslēgt"
+  },
+  "openOptions": {
+    "message": "Iestatījumi"
+  },
+  "enableAria": {
+    "message": "Ieslēgt paplašinājumu"
+  },
+  "previewTag": {
+    "message": "Skats"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Ātrā brūnā lapsa"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "labākais ķīniešu valodai",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Paša pārlūka balsis (bez maksas)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (vietējais)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Priekšskatījums dzīvajā"
+  },
+  "secTranslation": {
+    "message": "Tulkojums"
+  },
+  "targetLang": {
+    "message": "Tulkojuma valoda"
+  },
+  "backendLabel": {
+    "message": "Engine"
+  },
+  "backendInfo": {
+    "message": "Par Engine"
+  },
+  "backendAuto": {
+    "message": "Automātiski (ieteicams)"
+  },
+  "backendTlang": {
+    "message": "Viss celiņš (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Gudrie teikumi (Google)"
+  },
+  "backendByo": {
+    "message": "Sava atslēga (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Automātiski</b>: izmanto YouTube visa celiņa tulkojumu, kad video to atbalsta, un pārslēdzas uz gudrajiem teikumiem, kad neatbalsta.<br><b>Viss celiņš</b>: paša YouTube tulkojums; izlīdzināts subtitrs pēc subtitra. Intensīvi lietojot YouTube to var uz īsu brīdi ierobežot — paplašinājums pagaida un prasa vēlreiz.<br><b>Gudrie teikumi</b>: no sadrumstalotiem subtitriem saliek veselus teikumus un tulko caur Google bezmaksas endpointu — skaidrāks teksts nekā visa celiņa, kad celiņš ir juku jukām, bet arī tur intensīva lietošana var tikt ierobežota; paplašinājums palēnina un mēģina vēlreiz.<br><b>Sava atslēga</b>: sastādīto teikumu sūta sniedzējam, ko izvēlies."
+  },
+  "backendGtxHint": {
+    "message": "Izmanto Google bezmaksas endpointu — intensīvi lietojot var uz īsu brīdi ierobežot vaicājumus; paplašinājums pats palēnina tempu un mēģina vēlreiz."
+  },
+  "backendStatusTlang": {
+    "message": "Šis video: visa celiņa tulkojums (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Šis video: gudrie teikumi (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Tulkojuma endpoints ierobežo vaicājumus — palēninu un automātiski mēģinu vēlreiz. Jau iztulkotās rindas turpina darboties."
+  },
+  "diagCopy": {
+    "message": "Kopēt diagnostiku"
+  },
+  "diagCopied": {
+    "message": "Nokopēts — ielīmē e-pastā vai ziņojumā"
+  },
+  "diagCopyFail": {
+    "message": "Kopēšana neizdevās — tā vietā uzņem ekrānuzņēmumu"
+  },
+  "backendStatusSame": {
+    "message": "Šī video subtitri jau ir tulkojuma valodā — nav ko tulkot."
+  },
+  "backendStatusNoTrack": {
+    "message": "Šim video subtitru celiņš nav atrasts, tāpēc nav ko rādīt.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Atver YouTube video, un abas rindiņas parādīsies uz tā. Ja jau esi video lapā, pārlādē cilni."
+  },
+  "secLayout": {
+    "message": "Izkārtojums"
+  },
+  "secLineStyle": {
+    "message": "Rindas stils"
+  },
+  "secLineStyleHint": {
+    "message": "Fonts · Krāsa · Izmērs"
+  },
+  "orderLabel": {
+    "message": "Secība"
+  },
+  "orderTransTop": {
+    "message": "Tulkojums augšā"
+  },
+  "orderOrigTop": {
+    "message": "Oriģināls augšā"
+  },
+  "positionLabel": {
+    "message": "Vieta"
+  },
+  "posTop": {
+    "message": "Augšā"
+  },
+  "posCenter": {
+    "message": "Vidū"
+  },
+  "posBottom": {
+    "message": "Apakšā"
+  },
+  "posHint": {
+    "message": "Subtitru rāmīti vari arī vilkt pa video"
+  },
+  "posTryDrag": {
+    "message": "pamēģini"
+  },
+  "posTryNoVideo": {
+    "message": "Vispirms atver YouTube video"
+  },
+  "resetPos": {
+    "message": "Atiestatīt vietu"
+  },
+  "rowGap": {
+    "message": "Rindu atstarpe"
+  },
+  "tabTrans": {
+    "message": "Tulkojums"
+  },
+  "tabOrig": {
+    "message": "Oriģināls"
+  },
+  "lineTabsAria": {
+    "message": "Subtitru rinda"
+  },
+  "lineShow": {
+    "message": "Rādīt šo rindu"
+  },
+  "fontLabel": {
+    "message": "Fonts"
+  },
+  "fontSystem": {
+    "message": "Sistēmas noklusējuma"
+  },
+  "fontMono": {
+    "message": "Fiksēta platuma"
+  },
+  "fontCjk": {
+    "message": "Piemērots CJK"
+  },
+  "sizeLabel": {
+    "message": "Fonta izmērs"
+  },
+  "colText": {
+    "message": "Teksts"
+  },
+  "colBg": {
+    "message": "Fons"
+  },
+  "colStroke": {
+    "message": "Kontūra"
+  },
+  "colTextAria": {
+    "message": "Teksta krāsa"
+  },
+  "colBgAria": {
+    "message": "Fona krāsa"
+  },
+  "colStrokeAria": {
+    "message": "Kontūras krāsa"
+  },
+  "bgOpacity": {
+    "message": "Fona necaurspīdīgums"
+  },
+  "strokeOpacity": {
+    "message": "Kontūras necaurspīdīgums"
+  },
+  "resetAll": {
+    "message": "Atiestatīt iestatījumus"
+  },
+  "resetConfirmText": {
+    "message": "Tas notīra visus iestatījumus, šajā datorā saglabātās API atslēgas un katram sniedzējam atcerēto modeli un balsi, un atkal ieslēdz pirmās palaišanas padomus. Sniedzēju domēni, kuriem atļauja jau ir dota, paliek piešķirti, tāpat kā importētie fontu faili.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Paturēt iestatījumus",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Atiestatīt visu",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Izslēgt divvalodu subtitrus"
+  },
+  "toggleTurnOn": {
+    "message": "Ieslēgt divvalodu subtitrus"
+  },
+  "handleTitle": {
+    "message": "Velc · dubultklikšķis"
+  },
+  "handleAria": {
+    "message": "Velc, lai pārvietotu subtitrus, dubultklikšķis, lai atiestatītu"
+  },
+  "secExport": {
+    "message": "Eksports"
+  },
+  "exportContent": {
+    "message": "Saturs"
+  },
+  "exportBi": {
+    "message": "Divvalodu"
+  },
+  "exportOrig": {
+    "message": "Oriģināls"
+  },
+  "exportTrans": {
+    "message": "Tulkojums"
+  },
+  "exportSrt": {
+    "message": "Lejupielādēt SRT"
+  },
+  "exportWorking": {
+    "message": "Veido…"
+  },
+  "exportDone": {
+    "message": "Subtitri lejupielādēti"
+  },
+  "exportNoTrans": {
+    "message": "Šim video nav tulkojuma — pamēģini visa celiņa Engine vai citu tulkojuma valodu."
+  },
+  "exportLimited": {
+    "message": "YouTube pašlaik ierobežo visa celiņa tulkojumu — pamēģini pēc minūtes. Ar iestatītu savu atslēgu eksporta karte piedāvā ķeksīti, kas to apej."
+  },
+  "exportNoCues": {
+    "message": "Nav subtitru lejupielādei — atskaņo dažas sekundes, lai subtitri ielādētos, tad mēģini vēlreiz."
+  },
+  "exportNotYoutube": {
+    "message": "Eksportam atver YouTube video lapu."
+  },
+  "exportFailed": {
+    "message": "Eksports neizdevās — atsvaidzini lapu un mēģini vēlreiz."
+  },
+  "updateNotesLabel": {
+    "message": "Pēc atjauninājumiem atvērt laidiena piezīmes"
+  },
+  "trackWarnDubOnly": {
+    "message": "Uzmanību: šim video ir tikai automātiskie subtitri no AI dublēšanas (nav oriģinālvalodas celiņa), tāpēc divvalodu subtitri var nesakrist ar skaņu."
+  },
+  "whatsNewRow": {
+    "message": "Kas jauns v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Šis video: sava atslēga ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Sniedzējs"
+  },
+  "byoSiteLabel": {
+    "message": "Vietne"
+  },
+  "byoSiteHint": {
+    "message": "Izvēlies vietni, kurā tev ir konts — tās ir divas atsevišķas platformas un vienas atslēgu otra nepieņem."
+  },
+  "byoSiteGlobal": {
+    "message": "Starptautiskā"
+  },
+  "byoSiteCn": {
+    "message": "Kontinentālā Ķīna"
+  },
+  "byoBaseLabel": {
+    "message": "Endpointa adrese"
+  },
+  "byoModelLabel": {
+    "message": "Modelis"
+  },
+  "byoModelRequired": {
+    "message": "Obligāti: modeļa nosaukums"
+  },
+  "byoKeyLabel": {
+    "message": "API atslēga"
+  },
+  "byoKeyClear": {
+    "message": "Dzēst"
+  },
+  "byoKeyReplace": {
+    "message": "Aizstāt"
+  },
+  "byoKeyCleared": {
+    "message": "Šajā datorā saglabātā atslēga ir dzēsta."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Šajā datorā saglabātā atslēga ir dzēsta. Tā bija lietošanā, tāpēc tulkojums tagad iet caur $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "saglabāts ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Pielāgots (saderīgs ar OpenAI)"
+  },
+  "byoTest": {
+    "message": "Saglabāt un pārbaudīt"
+  },
+  "byoTesting": {
+    "message": "Pārbauda…"
+  },
+  "byoTestOk": {
+    "message": "Savienots. Paraugs: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Iegūt atslēgu"
+  },
+  "byoGuide": {
+    "message": "Vajag palīdzību ar iestatīšanu?"
+  },
+  "byoLocalHint": {
+    "message": "Atslēga paliek šajā pārlūkā, šajā datorā — nekad netiek augšupielādēta. Subtitru teksts iet tikai tam sniedzējam, ko izvēlies."
+  },
+  "byoErrNoProvider": {
+    "message": "Vispirms izvēlies sniedzēju."
+  },
+  "byoErrNoKey": {
+    "message": "Vispirms ievadi API atslēgu, tad nospied Saglabāt un pārbaudīt."
+  },
+  "byoErrNoModel": {
+    "message": "Vispirms izvēlies modeli — ņem vienu no saraksta vai nospied „Rādīt modeļus ar manu atslēgu“."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Šis sniedzējs sarakstu nepiedāvā. Vispirms ielādē pieejamos modeļus vai pats ieraksti modeļa nosaukumu."
+  },
+  "byoErrNotApi": {
+    "message": "Tā adrese atbildēja ar tīmekļa lapu, ne API — parasti pieteikšanās siena vai tīkls, kas pārtver vaicājumus. Pārbaudi adresi vai mēģini citu tīklu."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API bāzes URL jābūt pilnai https:// adresei."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adresē ir atslēga. Izņem to no adreses un ielīmē API atslēgas laukā — adrese sinhronizējas ar pārlūka kontu, atslēgas lauks ne."
+  },
+  "byoErrNoPerm": {
+    "message": "Bez atļaujas sasniegt to API resursdatoru paplašinājums nevar savienoties. Nospied „Saglabāt un pārbaudīt“ vēlreiz un atļauj."
+  },
+  "byoErrAuth": {
+    "message": "Atslēga tika noraidīta (401) — pārbaudi, ka tā ir nokopēta visa un joprojām aktīva."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Serveris šajā datorā noraidīja izsaukumu (403). Visticamāk tam nav pateikts atļaut paplašinājumu: OLLAMA_ORIGINS Ollama, CORS slēdzis LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Sniedzējs noraidīja šo izsaukumu (403). Atslēga parasti ir kārtībā, bet kontam nav atļaujas — neapmaksāts atlikums, identitātes pārbaude vēl gaida, modelis nav ieslēgts vai reģions. Pārbaudi kontu sniedzēja konsolē."
+  },
+  "byoErrListAuth": {
+    "message": "Šai atslēgai nav atļaujas lasīt sarakstu. Dod to sniedzēja panelī un ielādē vēlreiz.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Sniedzējs ierobežo vaicājumus — palēninu un automātiski mēģinu vēlreiz."
+  },
+  "byoErrLimitedTest": {
+    "message": "Sniedzējs ierobežo vaicājumus. Uzgaidi mirkli un nospied vēlreiz."
+  },
+  "byoErrQuota": {
+    "message": "Šim kontam šajā periodā beidzies kredīts vai kvota — papildini to sniedzēja konsolē, lai turpinātu."
+  },
+  "byoErrBadRequest": {
+    "message": "Endpoints noraidīja vaicājumu — modeļa nosaukums vai bāzes URL var būt nepareizs."
+  },
+  "byoErrBadShape": {
+    "message": "Modelis neatbildēja rindu pēc rindas, kā lūgts, un arī mazāki atkārtojumi neizdevās — mēģini citu modeli."
+  },
+  "byoErrReasoning": {
+    "message": "Tas modelis atgrieza tikai domu ķēdi, bez tulkojuma — izvēlies modeli bez domāšanas."
+  },
+  "byoErrNetfail": {
+    "message": "Nevar sasniegt to endpointu (tīkls vai reģionāls ierobežojums)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Nevar sasniegt to adresi: serveris nav palaists vai tam nav pateikts atļaut paplašinājumu (OLLAMA_ORIGINS Ollama, CORS slēdzis LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Šis sniedzējs nevar tulkot izvēlētajā valodā — maini valodu vai Engine."
+  },
+  "byoErrFailed": {
+    "message": "Savienojums neizdevās. Pamēģini pēc mirkļa."
+  },
+  "optTitle": {
+    "message": "Tulkošanas pakalpojuma iestatīšana"
+  },
+  "optIntro": {
+    "message": "Izvēlies sniedzēju un ielīmē savu API atslēgu."
+  },
+  "optPricingLink": {
+    "message": "Cenas un bezmaksas plāns"
+  },
+  "optFetchModels": {
+    "message": "Rādīt modeļus ar manu atslēgu"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Rādīt pieejamos modeļus"
+  },
+  "optFetching": {
+    "message": "Ielādē…"
+  },
+  "optModelsFetched": {
+    "message": "Atrasti $N$ modeļi",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$“ vairs nav šī sniedzēja sarakstā — izvēlies citu augstāk.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Modeļus neizdevās izlistēt — ieraksti modeļa nosaukumu pats."
+  },
+  "optModelCustom": {
+    "message": "Pielāgots…"
+  },
+  "optNoModelsYet": {
+    "message": "Modeļu saraksta vēl nav — ielādē to ar atslēgu vai vienkārši ieraksti nosaukumu."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Modeļu saraksta vēl nav — ielādē to vai vienkārši ieraksti nosaukumu."
+  },
+  "optShowKey": {
+    "message": "Rādīt"
+  },
+  "optRecommended": {
+    "message": "ieteicams"
+  },
+  "optConfigured": {
+    "message": "Iestatīts"
+  },
+  "optInUse": {
+    "message": "lietošanā"
+  },
+  "optAfterSetup": {
+    "message": "Kad šeit esi gatavs, atver paplašinājuma lodziņu un iestati Dzinēju uz „Sava atslēga“."
+  },
+  "optTrademark": {
+    "message": "Visi sniedzēju nosaukumi un logotipi ir to īpašnieku preču zīmes. Šis paplašinājums nav ar tiem saistīts, nav to apstiprināts vai sponsorēts; zīmes rāda tikai, lai atpazītu API, ko izvēlies."
+  },
+  "optSections": {
+    "message": "Sadaļas"
+  },
+  "optNavSetup": {
+    "message": "Tulkošanas pakalpojums"
+  },
+  "optNavStart": {
+    "message": "Sākums"
+  },
+  "optNavAbout": {
+    "message": "Par"
+  },
+  "startIntro": {
+    "message": "Četras lietas. Lai lietotu, nekas nav jāiestata."
+  },
+  "startS1Title": {
+    "message": "Atver video — tas arī viss"
+  },
+  "startS1Body": {
+    "message": "Jebkurš YouTube video ar subtitriem: abas rindas parādās pašas."
+  },
+  "startS2Title": {
+    "message": "Liec tos, kur gribi"
+  },
+  "startS2Body": {
+    "message": "Turi rokturi subtitru rāmīša augšējā kreisajā stūrī un velc, kur vien gribi. Dubultklikšķis uz roktura to noliek atpakaļ."
+  },
+  "startS2Alt": {
+    "message": "Atskaņotāja shēma: sešu punktu rokturis subtitru rāmīša augšējā kreisajā stūrī, vilkta uz citu vietu"
+  },
+  "startS3Title": {
+    "message": "Gribi labākus tulkojumus"
+  },
+  "startS3Body": {
+    "message": "Pievieno savu API atslēgu: veselu teikumu tulkojums un visa video tulkojums eksportējot."
+  },
+  "startGoSetup": {
+    "message": "Iestatīt tulkošanas pakalpojumu"
+  },
+  "aboutIntro": {
+    "message": "Kas tas ir un kur paliek tavs teksts."
+  },
+  "aboutVersion": {
+    "message": "Versija"
+  },
+  "uiLocaleLabel": {
+    "message": "Saskarnes valoda"
+  },
+  "uiLocaleAuto": {
+    "message": "Automātiski — pēc pārlūka"
+  },
+  "uiLocaleHint": {
+    "message": "Šī paplašinājuma izvēļņu un iestatījumu valoda. Dažas etiķetes, kas zīmētas pašā video, joprojām seko pārlūka valodai. Tulkojuma valodu izvēlas lodziņā; rūts „Tulkojuma valodas“ tikai izlemj, kuras valodas lodziņš piedāvā."
+  },
+  "cmdToggleSubs": {
+    "message": "Subtitri ieslēgti vai izslēgti"
+  },
+  "cmdToggleTts": {
+    "message": "Skaļa lasīšana iesl./izsl."
+  },
+  "cmdToggleTransLine": {
+    "message": "Rādīt vai slēpt tulkojuma rindu"
+  },
+  "optShortcutsLabel": {
+    "message": "Īsinājumtaustiņi"
+  },
+  "optShortcutsOpen": {
+    "message": "Iestatīt īsinājumus"
+  },
+  "optShortcutsHint": {
+    "message": "Šos taustiņus tur Chrome, ne paplašinājums. Sākumā nekas nav piesaistīts; var piesaistīt trīs lietas: subtitrus iesl./izsl., skaļu lasīšanu iesl./izsl. un tulkojuma rindas rādīšanu vai slēpšanu."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome to lapu no šejienes neatvēra — ielīmē chrome://extensions/shortcuts adreses joslā."
+  },
+  "startTargetLabel": {
+    "message": "Tulkojuma valoda"
+  },
+  "startTargetHint": {
+    "message": "Uzminēta no pārlūka valodas iestatījumiem, kad paplašinājums tika instalēts. Maini šeit, ja minējums nebija trāpīgs — lodziņā to vari mainīt jebkurā brīdī."
+  },
+  "aboutBlurb": {
+    "message": "Otra subtitru rinda YouTube: oriģināls vienā, tulkojums otrā, bet fonts, krāsa un vieta ir tavi. Atvērtais kods, bez maksas, bez reklāmām."
+  },
+  "aboutPrivacy": {
+    "message": "Paplašinājumam nav mūsu servera un tas nevāc statistiku. Subtitru teksts iet tikai pakalpojumiem, ko izvēlies: tulkošanas pakalpojumam un, ja tos ieslēdz, skaļās lasīšanas runas sniedzējam un kopsavilkumu sniedzējam, ko iestati. Ar savu atslēgu atslēga tiek glabāta tikai šajā datorā."
+  },
+  "aboutChangelog": {
+    "message": "Izmaiņu žurnāls"
+  },
+  "aboutRoadmap": {
+    "message": "Plāns"
+  },
+  "optFeedbackLink": {
+    "message": "Ziņot par problēmu"
+  },
+  "popupByoConfigure": {
+    "message": "Iestatīt…"
+  },
+  "popupSummarize": {
+    "message": "Apkopot šo video",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "nav iestatīts"
+  },
+  "popupByoPick": {
+    "message": "Tulkojuma sniedzējs"
+  },
+  "popupByoUntested": {
+    "message": "nav pārbaudīts"
+  },
+  "popupModelPick": {
+    "message": "Tulkojuma modelis"
+  },
+  "popupModelMore": {
+    "message": "Vairāk modeļu…"
+  },
+  "popupModelFetch": {
+    "message": "Ielādēt modeļus iestatījumos"
+  },
+  "popupModelSwitched": {
+    "message": "Turpmāk: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Modelis nav izvēlēts"
+  },
+  "exportUsesYouTube": {
+    "message": "Lejupielāde izmanto paša YouTube visa celiņa tulkojumu — bez maksas un netērē tavu API atslēgu."
+  },
+  "exportUseByo": {
+    "message": "Tulkot ar savu atslēgu (precīzāk, tērē kvotu)"
+  },
+  "exportByoNote": {
+    "message": "Visu celiņu iztulkos tavs sniedzējs ar tavu atslēgu. Pirms kaut ko sūta, redzēsi novērtējumu."
+  },
+  "exportConfirm": {
+    "message": "Iztulkot $N$ subtitru rindas ar $NAME$ — aptuveni $REQ$ vaicājumi no tavas kvotas. Vesels celiņš atstāj pārlūku pie tā sniedzēja; atskaņošanas laikā sūta tikai tās daļas, ko tiešām skaties.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Tulkot un lejupielādēt"
+  },
+  "exportConfirmBack": {
+    "message": "Atcelt"
+  },
+  "exportStop": {
+    "message": "Apturēt"
+  },
+  "exportStopping": {
+    "message": "Aptur…"
+  },
+  "exportProgress": {
+    "message": "Tulko… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ gabali nokrita uz YouTube tulkojumu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Lejupielāde atcelta."
+  },
+  "ftSite": {
+    "message": "Tīmekļa vietne"
+  },
+  "ftSiteLabel": {
+    "message": "Vietne"
+  },
+  "ftFeedbackLabel": {
+    "message": "Atsauksmes"
+  },
+  "ftReviewLabel": {
+    "message": "Novērtēt"
+  },
+  "ftGithub": {
+    "message": "Pirmkods GitHub"
+  },
+  "ftFeedback": {
+    "message": "Sūtīt atsauksmi vai ziņot par kļūdu"
+  },
+  "ftReview": {
+    "message": "Novērtēt Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Atslēgas vēl nav — šo sniedzēju nevar lietot, kamēr to nepievienosi."
+  },
+  "optNeedBase": {
+    "message": "Endpointa adreses vēl nav — šo sniedzēju nevar lietot, kamēr to neievadīsi."
+  },
+  "optBaseHint": {
+    "message": "Der gan bāzes URL, gan pilns endpoints, piem. https://example.com/v1 vai https://example.com/v1/chat/completions. Ollama vai LM Studio šajā datorā pareizā forma ir http://localhost:11434/v1. Atslēga var palikt tukša; parastais http darbojas tikai loopback adresēm."
+  },
+  "startS1Alt": {
+    "message": "Atskaņotāja shēma: oriģināla rinda un tulkojuma rinda pie kadra apakšas"
+  },
+  "startS3Alt": {
+    "message": "Salīdzinājums: bezmaksas Engine tulko vienu teikumu gabalos, sava atslēga to saprot veselu un atkal sadala"
+  },
+  "startPicFree": {
+    "message": "Bezmaksas Engine"
+  },
+  "startPicFreeNote": {
+    "message": "viens teikums, sakapāts"
+  },
+  "startPicByo": {
+    "message": "Sava atslēga"
+  },
+  "startPicByoNote": {
+    "message": "saprasts vesels, atkal sadalīts"
+  },
+  "startS4Title": {
+    "message": "Atskaņotājā ir maza izvēlne"
+  },
+  "startS4Body": {
+    "message": "Mazā bultiņa pie subtitru pogas atver izvēlni: subtitri, skaļa lasīšana, teksta atlase, video kopsavilkums un iestatījumi — neizejot no atskaņotāja."
+  },
+  "startS4Alt": {
+    "message": "Atskaņotāja ilustrācija: maza bultiņa pie subtitru pogas, apakšā pa labi, atver mazu izvēlni"
+  },
+  "menuHintBubble": {
+    "message": "Skaļa lasīšana, video kopsavilkums, teksta atlase — viss aiz šīs mazās bultiņas"
+  },
+  "troubleTitle": {
+    "message": "Kaut kas nav kārtībā"
+  },
+  "troubleStep1": {
+    "message": "Vispirms pārbaudi slēdzi lodziņā — kad tas ir izslēgts, viss subtitru slānis paliek paslēpts."
+  },
+  "troubleStep2": {
+    "message": "Vai šim video vispār ir subtitri? Pamēģini CC pogu atskaņotājā: bez oriģināla nav ko tulkot."
+  },
+  "troubleStep3": {
+    "message": "Pamēģini populāru video. Ja viss cits strādā un tikai šis nestrādā, parasti vainīgs ir šī video subtitru celiņš."
+  },
+  "troubleDiagHint": {
+    "message": "Joprojām iestrēdzis? Ielīmē diagnostiku e-pastā vai ziņojumā — tajā ir versija, Engine stāvoklis un ko dara pašreizējā cilne, tāpēc ietaupi vienu otru vēstuļu apli."
+  },
+  "langManage": {
+    "message": "Pārvaldīt valodas…"
+  },
+  "optNavLangs": {
+    "message": "Tulkojuma valodas"
+  },
+  "optNavReadaloud": {
+    "message": "Lasīt skaļi"
+  },
+  "ttsIntro": {
+    "message": "Izlasi iztulkoto rindu skaļi. Paša pārlūka balsīm atslēga vispār nav vajadzīga; mākoņa sniedzējus iestati un pārbaudi šeit."
+  },
+  "ttsVoiceLabel": {
+    "message": "Balss"
+  },
+  "ttsPreview": {
+    "message": "Skats"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Atskaņo…"
+  },
+  "ttsPreviewFail": {
+    "message": "Neizdevās atskaņot — pārbaudi atslēgu un mēģini Saglabāt un pārbaudīt"
+  },
+  "ttsFetchVoices": {
+    "message": "Ielādēt šīs valodas pilno sarakstu ar savu atslēgu"
+  },
+  "ttsFetching": {
+    "message": "Ielādē…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Tās ir visas $N$ balsis, kas tavai atslēgai ir pašreizējai valodai, ieskaitot vecākos Standard / Wavenet līmeņus. Tie der tikai šai valodai; klikšķini rindu augšā, lai atgrieztos pie ikdienas balsīm, kas seko valodai. Šo sarakstu vari ielādēt vēlreiz jebkurā brīdī.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Atpakaļ pie ikdienas balsīm (seko valodai)"
+  },
+  "ttsVoicesNone": {
+    "message": "Šim sniedzējam nav papildu balsu šai valodai — iebūvētās joprojām darbojas."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Ielādētas $N$ balsis — tās ir ieteikumi zem lauka augšā.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Sieviešu"
+  },
+  "ttsVoiceMale": {
+    "message": "Vīriešu"
+  },
+  "ttsTestOk": {
+    "message": "Savienots: testa audio $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Lielākā daļa paša pārlūka balsu ir instalētas šajā datorā un saka rindu šeit. Dažas nav: Chrome piedāvā arī tiešsaistes balsis — tās, kuru nosaukumi sākas ar „Google“ — un tām pārlūks sūta rindu ražotājam. Pie mākoņa sniedzēja teksts runāšanai iet tikai tam sniedzējam, ko izvēlies, un atslēga paliek šajā datorā."
+  },
+  "ttsEnableLabel": {
+    "message": "Lasīt tulkojumu skaļi video"
+  },
+  "ttsEnableHint": {
+    "message": "Kad ieslēgts, katra subtitra tulkojums tiek izrunāts, tiklīdz parādās; rinda, kuras tulkojums nav gatavs laikā, tiek izlaista, nevis panākta vēlāk. Kamēr rinda runā, paša video skaņa krīt līdz zemāk iestatītajam līmenim. Pārāk gara rinda nedaudz palēnina attēlu un aizņemas atstarpi aiz sevis — gan mākoņa balsīm, gan paša pārlūka; slēdzis zemāk tur palēninājumu, līdz katra rinda beidzas."
+  },
+  "langsIntro": {
+    "message": "Kuras tulkojuma valodas piedāvā lodziņš."
+  },
+  "langsKept": {
+    "message": "Rādītas lodziņā"
+  },
+  "langsKeptHint": {
+    "message": "Tās parādās lodziņa tulkojuma valodas izvēlnē. Atstāj vismaz vienu."
+  },
+  "langsMore": {
+    "message": "Citas valodas"
+  },
+  "langsMoreHint": {
+    "message": "Nospied +, lai pievienotu. Saraksts seko tulkojuma valodām, ko atbalsta bezmaksas Engine un DeepL."
+  },
+  "langsReset": {
+    "message": "Atjaunot noklusējumu"
+  },
+  "langsResetDone": {
+    "message": "Atpakaļ pie noklusējuma saraksta."
+  },
+  "langsAddAria": {
+    "message": "Pievienot"
+  },
+  "langsRemoveAria": {
+    "message": "Noņemt"
+  },
+  "langsLastOne": {
+    "message": "Atstāj vismaz vienu"
+  },
+  "langsAllAdded": {
+    "message": "Visas valodas jau ir tavā sarakstā."
+  },
+  "langsAdded": {
+    "message": "Pievienots: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Tas bija lietošanā, tāpēc tulkojuma valoda tagad ir $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Ķīniešu serifs"
+  },
+  "fontCjkRound": {
+    "message": "Ķīniešu noapaļots"
+  },
+  "ttsVolLabel": {
+    "message": "Skaļās lasīšanas skaļums"
+  },
+  "ttsGroupPlayback": {
+    "message": "Atskaņošana"
+  },
+  "ttsDuckLabel": {
+    "message": "Oriģinālā skaņa runājot"
+  },
+  "ttsDuckShort": {
+    "message": "Oriģinālā skaņa"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Runā"
+  },
+  "ttsStatusOn": {
+    "message": "Skaļa lasīšana iesl."
+  },
+  "ttsOpenSettings": {
+    "message": "Skaļās lasīšanas iestatījumi"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ rindas šis video · $M$ izlaistas",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ rindas šeit · $M$ izlaistas ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "tulkojums nebija gatavs laikā"
+  },
+  "ttsSkipSilent": {
+    "message": "skaņa neiznāca"
+  },
+  "ttsRegionLabel": {
+    "message": "Pakalpojuma reģions"
+  },
+  "ttsErrNoRegion": {
+    "message": "Vispirms ievadi savas Azure atslēgas pakalpojuma reģionu (piem. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Šim datoram nav balsu, ar ko runāt."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Šim datoram nav balss, kas lasa $NAME$. Saraksts zemāk ir citu valodu balsis — izvēlies vienu un rinda tiks lasīta ar tās valodas akcentu.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Meklēju šī datora balsis…"
+  },
+  "ttsErrRefused": {
+    "message": "Sniedzējs noraidīja šo vaicājumu — mēģini citu balsi."
+  },
+  "ttsErrNoAudio": {
+    "message": "Skaņa neatnāca — mēģini vēlreiz vai izvēlies citu balsi."
+  },
+  "startPicChop1": {
+    "message": "ir divi lieli",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "iemesli viens ir",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Ir divi lieli iemesli,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "pirmais ir…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Vairāk balsu…"
+  },
+  "popupVoiceNone": {
+    "message": "Balss nav izvēlēta"
+  },
+  "ttsRobotVoices": {
+    "message": "Robotisks",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Ļaut atlasīt un kopēt subtitru tekstu",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Atlasīt tekstu",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Kopsavilkums",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Video kopsavilkums",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Aizvērt",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Šim video nav lietojama subtitru celiņa.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Ieslēdz subtitrus, lai veidotu kopsavilkumu — kopsavilkums tiek būvēts no subtitru celiņa."
+  },
+  "sumNeedKey": {
+    "message": "Kopsavilkumiem vajag tavu pakalpojumu: jebkuru sniedzēju ar atslēgu tulkošanas sadaļā vai vietējo modeli šajā datorā. Bezmaksas Engine tikai tulko. Tie neveido kopsavilkumus.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Iestatīt tulkošanas pakalpojumu",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Apkopot",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Apkopot vēlreiz"
+  },
+  "sumFail": {
+    "message": "Kopsavilkums neizdevās. Pamēģini vēlāk.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Tas nosūtīs visu subtitru celiņu sniedzējam $PROVIDER$, $PARTS$ daļā(-s), no tavas kvotas.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Veido kopsavilkumu… daļa $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ daļu neizdevās apkopot; pārējais ir augstāk.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Subtitri",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Paša YouTube tulkojums pašlaik ir ierobežots; gudrie teikumi (Google) aizpilda. Vēlāk tas pats mēģinās vēlreiz.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Tulkojuma endpoints ierobežo vaicājumus — turpinās pēc aptuveni $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Der gan bāzes URL, gan pilns endpoints, piem. http://localhost:8880/v1 vai http://localhost:8880/v1/audio/speech (vietējie runas serveri kā Kokoro vai openai-edge-tts). Atslēga var palikt tukša; parastais http darbojas tikai loopback adresēm."
+  },
+  "optTtsNeedUrl": {
+    "message": "Endpointa adreses vēl nav — šo sniedzēju nevar lietot, kamēr to nepievienosi."
+  },
+  "ttsSkipRefused": {
+    "message": "sniedzējs noraidīja tos vaicājumus"
+  },
+  "ttsSkipNotSet": {
+    "message": "nav iestatīts šajā datorā"
+  },
+  "ttsSkipNoVoice": {
+    "message": "nav balss šai valodai"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ pašlaik nevar runāt. Izvēlies citu rindā augšā — paša pārlūka balsis ir tajā sarakstā.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Subtitru celiņš nav atnācis — automātiski mēģinu vēlreiz. Steidzies? Atsvaidzini lapu, lai mēģinātu tagad."
+  },
+  "ttsCompleteLabel": {
+    "message": "Pabeigt katru rindu (attēls palēninās blīvās vietās)"
+  },
+  "ttsCompleteHint": {
+    "message": "Lielākā ātrumā garas rindas bieži zaudē asti nākamajai. Kad tas ir ieslēgts, attēls palēninās tik, cik rindai vajag — nekad zem ceturtdaļas no izvēlētā ātruma — un atstarpēs atgūst. Kamēr attēls ir tik palēnināts, paša video skaņa krīt zemāk par līmeni, ko iestati, līdz klusumam."
+  },
+  "ttsCompleteHintText": {
+    "message": "Šajā ātrumā diezgan daudz rindu tiek nocirstas. Ieslēdz to un attēls palēninās tur, kur vajag, lai vairāk no tām beigtos."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Ieslēgt"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Vairs nerādīt"
+  },
+  "provLocalSpeechShort": {
+    "message": "Pārlūks"
+  },
+  "optNavFonts": {
+    "message": "Subtitru fonti"
+  },
+  "fontsIntro": {
+    "message": "Viens saraksts abām subtitru rindām; lodziņš izvēlas katrai atsevišķi. Katrs uzskaitītais fonts ir instalēts šajā datorā."
+  },
+  "fontsKept": {
+    "message": "Rādīti lodziņā"
+  },
+  "fontsMore": {
+    "message": "Citi fonti"
+  },
+  "fontsOnly": {
+    "message": "Tikai fonti, kas to var uzzīmēt"
+  },
+  "fontsCounting": {
+    "message": "Pārbauda…"
+  },
+  "fontsSearch": {
+    "message": "Meklēt fontu nosaukumus"
+  },
+  "fontsNoMatch": {
+    "message": "Neviens fonts neatbilst."
+  },
+  "fontsKeptEmpty": {
+    "message": "Lodziņā palicis tikai sistēmas noklusējuma.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Visi fonti jau ir sarakstā."
+  },
+  "fontsReset": {
+    "message": "Atjaunot noklusējumu"
+  },
+  "fontsResetDone": {
+    "message": "Noklusējuma saraksts atjaunots."
+  },
+  "fontsAdded": {
+    "message": "Pievienots: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Skats: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Skats"
+  },
+  "fontsUnavailable": {
+    "message": "Šis pārlūks neļauj paplašinājumam lasīt instalētos fontus, tāpēc var izvēlēties tikai sistēmas noklusējuma."
+  },
+  "fontNoGlyphs": {
+    "message": "nevar uzzīmēt šo rindu"
+  },
+  "fontNotHere": {
+    "message": "nav šajā datorā"
+  },
+  "fontsImport": {
+    "message": "Importēt fonta failu…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; fails tiek iekopēts pārlūkā."
+  },
+  "fontsImported": {
+    "message": "Importēts $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Neizdevās saglabāt pārlūkā; mēģini vēlreiz.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Noņemts $NAME$ no lodziņa.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Izlaist šo sarakstu",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Importēts fonts",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Tas nav fonta fails, ko šis pārlūks var izmantot."
+  },
+  "fontsImportTooBig": {
+    "message": "Fails ir pārāk liels (limits $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Dzēst importēto fontu"
+  },
+  "fontsLangLabel": {
+    "message": "Pārbaudīt"
+  },
+  "fontsLangRecent": {
+    "message": "nesen skatītie"
+  },
+  "fontMoreRow": {
+    "message": "Pārvaldīt fontus…"
+  },
+  "fontHiddenRow": {
+    "message": "Vēl $N$ nevar uzzīmēt šo rindu",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

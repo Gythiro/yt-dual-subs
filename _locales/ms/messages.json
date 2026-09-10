@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Sari kata dwibahasa untuk YouTube — asal dan terjemahan dalam satu lapisan yang tak bertindih."
+  },
+  "headerSub": {
+    "message": "YouTube™ · satu lapisan"
+  },
+  "disclaimer": {
+    "message": "Tidak berkaitan dengan YouTube atau Google."
+  },
+  "enableTitle": {
+    "message": "Hidup / mati"
+  },
+  "openOptions": {
+    "message": "Tetapan"
+  },
+  "enableAria": {
+    "message": "Hidupkan sambungan"
+  },
+  "previewTag": {
+    "message": "Pratonton"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Musang perang yang laju"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "terbaik untuk Cina",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Suara sendiri pelayar kamu (percuma)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (tempatan)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Pratonton langsung"
+  },
+  "secTranslation": {
+    "message": "Terjemahan"
+  },
+  "targetLang": {
+    "message": "Bahasa terjemahan"
+  },
+  "backendLabel": {
+    "message": "Enjin"
+  },
+  "backendInfo": {
+    "message": "Maklumat enjin"
+  },
+  "backendAuto": {
+    "message": "Auto (disyorkan)"
+  },
+  "backendTlang": {
+    "message": "Trek penuh (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Ayat pintar (Google)"
+  },
+  "backendByo": {
+    "message": "Kunci sendiri (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b>: guna terjemahan trek penuh YouTube bila video menyokongnya, dan tukar ke ayat pintar bila tak menyokong.<br><b>Trek penuh</b>: terjemahan YouTube sendiri; selari petik demi petik. Penggunaan berat boleh buat YouTube hadkan sekejap — sambungan tunggu dan tanya lagi.<br><b>Ayat pintar</b>: susun semula kapsyen tercicir jadi ayat penuh, kemudian terjemah melalui hujung percuma Google — ayat lebih kemas daripada trek penuh pada trek kucar-kacir, tapi penggunaan berat boleh dihadkan di situ juga; sambungan perlahan dan cuba semula.<br><b>Kunci sendiri</b>: hantar ayat yang sudah disusun kepada penyedia yang kamu setkan."
+  },
+  "backendGtxHint": {
+    "message": "Guna endpoint percuma Google — penggunaan berat mungkin dihadkan sekejap; sambungan atur irama sendiri dan cuba semula secara automatik."
+  },
+  "backendStatusTlang": {
+    "message": "Video ni: terjemahan trek penuh (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Video ni: ayat pintar (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Dihadkan oleh endpoint terjemahan — perlahan dan cuba semula secara automatik. Baris yang sudah diterjemah terus jalan."
+  },
+  "diagCopy": {
+    "message": "Salin maklumat diagnostik"
+  },
+  "diagCopied": {
+    "message": "Sudah disalin — tampal ke e-mel atau isu"
+  },
+  "diagCopyFail": {
+    "message": "Gagal salin — ambil tangkapan skrin sahaja"
+  },
+  "backendStatusSame": {
+    "message": "Sari kata video ni dah dalam bahasa terjemahan kamu — tak ada apa nak diterjemah."
+  },
+  "backendStatusNoTrack": {
+    "message": "Tiada trek kapsyen dijumpai untuk video ni, jadi tiada apa nak ditunjukkan.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Buka video YouTube dan dua baris tu akan muncul. Kalau kamu dah ada di video, muat semula tab tu."
+  },
+  "secLayout": {
+    "message": "Susun atur"
+  },
+  "secLineStyle": {
+    "message": "Gaya baris"
+  },
+  "secLineStyleHint": {
+    "message": "Fon · Warna · Saiz"
+  },
+  "orderLabel": {
+    "message": "Tertib"
+  },
+  "orderTransTop": {
+    "message": "Terjemahan di atas"
+  },
+  "orderOrigTop": {
+    "message": "Asal di atas"
+  },
+  "positionLabel": {
+    "message": "Kedudukan"
+  },
+  "posTop": {
+    "message": "Atas"
+  },
+  "posCenter": {
+    "message": "Tengah"
+  },
+  "posBottom": {
+    "message": "Bawah"
+  },
+  "posHint": {
+    "message": "Kamu juga boleh seret kotak sari kata pada video"
+  },
+  "posTryDrag": {
+    "message": "cubalah"
+  },
+  "posTryNoVideo": {
+    "message": "Buka video YouTube dulu"
+  },
+  "resetPos": {
+    "message": "Set semula kedudukan"
+  },
+  "rowGap": {
+    "message": "Jarak baris"
+  },
+  "tabTrans": {
+    "message": "Terjemahan"
+  },
+  "tabOrig": {
+    "message": "Asal"
+  },
+  "lineTabsAria": {
+    "message": "Baris sari kata"
+  },
+  "lineShow": {
+    "message": "Tunjuk baris ni"
+  },
+  "fontLabel": {
+    "message": "Fon"
+  },
+  "fontSystem": {
+    "message": "Lalai sistem"
+  },
+  "fontMono": {
+    "message": "Monospace"
+  },
+  "fontCjk": {
+    "message": "Mesra CJK"
+  },
+  "sizeLabel": {
+    "message": "Saiz fon"
+  },
+  "colText": {
+    "message": "Teks"
+  },
+  "colBg": {
+    "message": "Latar"
+  },
+  "colStroke": {
+    "message": "Garis luar"
+  },
+  "colTextAria": {
+    "message": "Warna teks"
+  },
+  "colBgAria": {
+    "message": "Warna latar"
+  },
+  "colStrokeAria": {
+    "message": "Warna garis luar"
+  },
+  "bgOpacity": {
+    "message": "Kelegapan latar"
+  },
+  "strokeOpacity": {
+    "message": "Kelegapan garis luar"
+  },
+  "resetAll": {
+    "message": "Set semula semua tetapan"
+  },
+  "resetConfirmText": {
+    "message": "Ni padam setiap tetapan, kunci API yang disimpan pada komputer ni, serta model dan suara yang diingati untuk setiap penyedia, dan hidupkan semula petunjuk kali pertama. Domain penyedia yang kamu dah benarkan kekal dibenarkan, begitu juga fail fon yang kamu import.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Kekalkan tetapan aku",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Set semula semua",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Matikan sari kata dwibahasa"
+  },
+  "toggleTurnOn": {
+    "message": "Hidupkan sari kata dwibahasa"
+  },
+  "handleTitle": {
+    "message": "Seret · dwi-klik set semula"
+  },
+  "handleAria": {
+    "message": "Seret untuk alih sari kata, dwi-klik untuk set semula"
+  },
+  "secExport": {
+    "message": "Eksport"
+  },
+  "exportContent": {
+    "message": "Kandungan"
+  },
+  "exportBi": {
+    "message": "Dwibahasa"
+  },
+  "exportOrig": {
+    "message": "Asal"
+  },
+  "exportTrans": {
+    "message": "Terjemahan"
+  },
+  "exportSrt": {
+    "message": "Muat turun SRT"
+  },
+  "exportWorking": {
+    "message": "Sedang jana…"
+  },
+  "exportDone": {
+    "message": "Sari kata dimuat turun"
+  },
+  "exportNoTrans": {
+    "message": "Tiada terjemahan untuk video ni — cuba enjin Trek penuh atau bahasa terjemahan lain."
+  },
+  "exportLimited": {
+    "message": "YouTube sedang hadkan terjemahan trek penuh sekarang — cuba lagi dalam seminit. Kalau kunci sendiri dah diset, kad eksport ada tanda centang yang pintas hal ni."
+  },
+  "exportNoCues": {
+    "message": "Tiada sari kata untuk dimuat turun — main beberapa saat supaya kapsyen dimuat, kemudian cuba lagi."
+  },
+  "exportNotYoutube": {
+    "message": "Buka halaman video YouTube untuk eksport."
+  },
+  "exportFailed": {
+    "message": "Eksport gagal — muat semula halaman dan cuba lagi."
+  },
+  "updateNotesLabel": {
+    "message": "Buka nota keluaran selepas kemas kini"
+  },
+  "trackWarnDubOnly": {
+    "message": "Perhatian: video ni hanya ada kapsyen auto alih suara AI (tiada trek bahasa asal), jadi sari kata dwibahasa mungkin tak sepadan dengan audio."
+  },
+  "whatsNewRow": {
+    "message": "Lihat apa yang baharu dalam v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Video ni: kunci sendiri ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Penyedia"
+  },
+  "byoSiteLabel": {
+    "message": "Tapak"
+  },
+  "byoSiteHint": {
+    "message": "Pilih tapak tempat kamu daftar — dua ni platform berasingan dan kunci dari satu tak diterima oleh yang lain."
+  },
+  "byoSiteGlobal": {
+    "message": "Antarabangsa"
+  },
+  "byoSiteCn": {
+    "message": "Tanah Besar China"
+  },
+  "byoBaseLabel": {
+    "message": "Alamat endpoint"
+  },
+  "byoModelLabel": {
+    "message": "Model"
+  },
+  "byoModelRequired": {
+    "message": "Wajib: nama model"
+  },
+  "byoKeyLabel": {
+    "message": "Kunci API"
+  },
+  "byoKeyClear": {
+    "message": "Padam"
+  },
+  "byoKeyReplace": {
+    "message": "Ganti"
+  },
+  "byoKeyCleared": {
+    "message": "Kunci yang disimpan pada mesin ni dah dipadam."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Kunci yang disimpan pada mesin ni dah dipadam. Yang tu sedang digunakan, jadi terjemahan kini melalui $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "disimpan ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Tersuai (serasi OpenAI)"
+  },
+  "byoTest": {
+    "message": "Simpan dan uji"
+  },
+  "byoTesting": {
+    "message": "Sedang uji…"
+  },
+  "byoTestOk": {
+    "message": "Tersambung. Sampel: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Dapatkan kunci"
+  },
+  "byoGuide": {
+    "message": "Perlukan bantuan setkan ni?"
+  },
+  "byoLocalHint": {
+    "message": "Kunci kekal dalam pelayar ni, pada mesin ni — ia tak pernah dimuat naik. Teks sari kata hanya pergi ke penyedia yang kamu pilih."
+  },
+  "byoErrNoProvider": {
+    "message": "Pilih penyedia dulu."
+  },
+  "byoErrNoKey": {
+    "message": "Masukkan kunci API dulu, kemudian tekan Simpan dan uji."
+  },
+  "byoErrNoModel": {
+    "message": "Pilih model dulu — pilih satu dari senarai, atau tekan “Senaraikan model dengan kunci aku”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Penyedia ni tak hantar senarai. Ambil model yang ada dulu, atau taip nama model sendiri."
+  },
+  "byoErrNotApi": {
+    "message": "Alamat tu jawab dengan halaman web, bukan API — biasanya dinding log masuk atau rangkaian yang potong permintaan. Semak alamat, atau cuba rangkaian lain."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "URL asas API mestilah alamat https:// yang penuh."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Alamat ada kunci dalamnya. Keluarkan dari alamat dan tampal ke medan kunci API — alamat disegerakkan ke akaun pelayar kamu, medan kunci tidak."
+  },
+  "byoErrNoPerm": {
+    "message": "Tanpa kebenaran sampai ke hos API tu sambungan tak boleh sambung. Tekan “Simpan dan uji” lagi dan benarkan."
+  },
+  "byoErrAuth": {
+    "message": "Kunci ditolak (401) — semak ia disalin penuh dan masih aktif."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Pelayan pada mesin ni menolak panggilan (403). Selalunya belum diberitahu untuk benarkan sambungan: OLLAMA_ORIGINS untuk Ollama, suis CORS dalam LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Penyedia menolak panggilan ni (403). Biasanya kunci elok dan akaun tak dibenarkan buat — baki tak berbayar, semakan identiti masih tertangguh, model belum dihidupkan, atau rantau. Semak akaun dalam konsol penyedia."
+  },
+  "byoErrListAuth": {
+    "message": "Kunci ni tak dibenarkan baca senarai. Beri kebenaran tu dalam papan pemuka penyedia, kemudian ambil semula.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Penyedia sedang hadkan — perlahan dan cuba semula secara automatik."
+  },
+  "byoErrLimitedTest": {
+    "message": "Penyedia sedang hadkan. Tunggu sekejap dan tekan lagi."
+  },
+  "byoErrQuota": {
+    "message": "Akaun ni kehabisan kredit atau kuota untuk tempoh semasa — top up dalam konsol penyedia untuk teruskan."
+  },
+  "byoErrBadRequest": {
+    "message": "Hujung menolak permintaan — nama model atau URL asas mungkin salah."
+  },
+  "byoErrBadShape": {
+    "message": "Model tak jawab baris demi baris seperti diminta, dan cubaan lebih kecil pun gagal — cuba model lain."
+  },
+  "byoErrReasoning": {
+    "message": "Model tu pulangkan rantaian fikirannya sahaja, tiada terjemahan — pilih model bukan-berfikir."
+  },
+  "byoErrNetfail": {
+    "message": "Tak sampai ke endpoint tu (rangkaian atau sekatan rantau)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Tak sampai ke alamat tu: sama ada pelayan tak berjalan, atau belum diberitahu untuk benarkan sambungan (OLLAMA_ORIGINS untuk Ollama, suis CORS dalam LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Penyedia ni tak boleh terjemah ke bahasa yang kamu pilih — tukar bahasa atau enjin."
+  },
+  "byoErrFailed": {
+    "message": "Sambungan gagal. Cuba lagi sekejap."
+  },
+  "optTitle": {
+    "message": "Persediaan perkhidmatan terjemahan"
+  },
+  "optIntro": {
+    "message": "Pilih penyedia dan tampal kunci API kamu."
+  },
+  "optPricingLink": {
+    "message": "Harga & peringkat percuma"
+  },
+  "optFetchModels": {
+    "message": "Senaraikan model dengan kunci aku"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Senaraikan model yang ada"
+  },
+  "optFetching": {
+    "message": "Sedang senarai…"
+  },
+  "optModelsFetched": {
+    "message": "Jumpa $N$ model",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” dah tiada dalam senarai penyedia ni — pilih yang lain di atas.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Tak dapat senaraikan model — taip nama model sahaja."
+  },
+  "optModelCustom": {
+    "message": "Tersuai…"
+  },
+  "optNoModelsYet": {
+    "message": "Belum ada senarai model — ambil dengan kunci kamu, atau taip namanya."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Belum ada senarai model — ambil satu, atau taip namanya."
+  },
+  "optShowKey": {
+    "message": "Tunjuk"
+  },
+  "optRecommended": {
+    "message": "disyorkan"
+  },
+  "optConfigured": {
+    "message": "Diset"
+  },
+  "optInUse": {
+    "message": "digunakan"
+  },
+  "optAfterSetup": {
+    "message": "Bila dah siap sini, buka pop timbul sambungan dan set Enjin ke “Kunci sendiri”."
+  },
+  "optTrademark": {
+    "message": "Semua nama dan logo penyedia ialah tanda dagangan pemilik masing-masing. Sambungan ni tidak berkaitan, diluluskan atau ditaja oleh mana-mana mereka; tanda tu ditunjukkan hanya untuk kenal API yang kamu pilih."
+  },
+  "optSections": {
+    "message": "Bahagian"
+  },
+  "optNavSetup": {
+    "message": "Perkhidmatan terjemahan"
+  },
+  "optNavStart": {
+    "message": "Bermula"
+  },
+  "optNavAbout": {
+    "message": "Perihal"
+  },
+  "startIntro": {
+    "message": "Empat perkara. Kamu tak perlu set apa-apa untuk guna."
+  },
+  "startS1Title": {
+    "message": "Buka video — tu je"
+  },
+  "startS1Body": {
+    "message": "Mana-mana video YouTube yang ada sari kata: dua baris muncul sendiri."
+  },
+  "startS2Title": {
+    "message": "Letak di mana kamu suka"
+  },
+  "startS2Body": {
+    "message": "Pegang pemegang di kiri atas kotak sari kata dan seret ke mana-mana. Dwi-klik pemegang untuk letak balik."
+  },
+  "startS2Alt": {
+    "message": "Gambar rajah pemain: pemegang enam titik di sudut kiri atas kotak sari kata, diseret ke kedudukan lain"
+  },
+  "startS3Title": {
+    "message": "Nak terjemahan lebih baik"
+  },
+  "startS3Body": {
+    "message": "Tambah kunci API sendiri: terjemahan ayat penuh, dan terjemahan seluruh video bila kamu eksport."
+  },
+  "startGoSetup": {
+    "message": "Setkan perkhidmatan terjemahan"
+  },
+  "aboutIntro": {
+    "message": "Apa ni, dan ke mana teks kamu pergi."
+  },
+  "aboutVersion": {
+    "message": "Versi"
+  },
+  "uiLocaleLabel": {
+    "message": "Bahasa antara muka"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — ikut pelayar"
+  },
+  "uiLocaleHint": {
+    "message": "Bahasa menu dan tetapan sambungan ni sendiri. Beberapa label yang dilukis pada video masih ikut bahasa pelayar. Bahasa terjemahan dipilih dalam pop timbul; panel “Bahasa terjemahan” hanya tentukan bahasa mana yang pop timbul senaraikan."
+  },
+  "cmdToggleSubs": {
+    "message": "Sari kata hidup atau mati"
+  },
+  "cmdToggleTts": {
+    "message": "Baca kuat on/off"
+  },
+  "cmdToggleTransLine": {
+    "message": "Tunjuk atau sorok baris terjemahan"
+  },
+  "optShortcutsLabel": {
+    "message": "Pintasan papan kekunci"
+  },
+  "optShortcutsOpen": {
+    "message": "Set pintasan"
+  },
+  "optShortcutsHint": {
+    "message": "Chrome yang pegang kekunci ni, bukan sambungan. Tiada yang diikat pada mulanya; tiga benda boleh: sari kata hidup/mati, baca kuat hidup/mati, dan tunjuk atau sorok baris terjemahan."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome tak buka halaman tu dari sini — tampal chrome://extensions/shortcuts ke bar alamat."
+  },
+  "startTargetLabel": {
+    "message": "Bahasa terjemahan"
+  },
+  "startTargetHint": {
+    "message": "Diteka dari keutamaan bahasa pelayar kamu bila sambungan dipasang. Tukar di sini kalau tekaan salah — pop timbul boleh tukar bila-bila masa."
+  },
+  "aboutBlurb": {
+    "message": "Baris sari kata kedua untuk YouTube: asal pada satu baris, terjemahan pada yang lain, dengan fon, warna dan kedudukan ikut kamu. Sumber terbuka, percuma, tiada iklan."
+  },
+  "aboutPrivacy": {
+    "message": "Sambungan ni tiada pelayan kami dan tak kumpul statistik. Teks sari kata hanya pergi ke perkhidmatan yang kamu pilih: perkhidmatan terjemahan yang kamu pilih dan, kalau kamu hidupkan, penyedia pertuturan untuk baca kuat dan penyedia yang kamu set untuk rumusan. Dengan kunci sendiri, kunci disimpan pada komputer ni sahaja."
+  },
+  "aboutChangelog": {
+    "message": "Log perubahan"
+  },
+  "aboutRoadmap": {
+    "message": "Peta jalan"
+  },
+  "optFeedbackLink": {
+    "message": "Laporkan masalah"
+  },
+  "popupByoConfigure": {
+    "message": "Konfigurasi…"
+  },
+  "popupSummarize": {
+    "message": "Rumuskan video ni",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "belum diset"
+  },
+  "popupByoPick": {
+    "message": "Penyedia terjemahan"
+  },
+  "popupByoUntested": {
+    "message": "belum diuji"
+  },
+  "popupModelPick": {
+    "message": "Model terjemahan"
+  },
+  "popupModelMore": {
+    "message": "Lagi model…"
+  },
+  "popupModelFetch": {
+    "message": "Ambil model dalam tetapan"
+  },
+  "popupModelSwitched": {
+    "message": "Mulai sekarang: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Tiada model dipilih"
+  },
+  "exportUsesYouTube": {
+    "message": "Muat turun guna terjemahan trek penuh YouTube sendiri — percuma, dan tak belanja kunci API kamu."
+  },
+  "exportUseByo": {
+    "message": "Terjemah dengan kunci sendiri (lebih rapat, belanja kuota)"
+  },
+  "exportByoNote": {
+    "message": "Seluruh trek akan diterjemah oleh penyedia kamu dengan kunci kamu. Kamu akan nampak anggaran sebelum apa-apa dihantar."
+  },
+  "exportConfirm": {
+    "message": "Terjemah $N$ baris sari kata dengan $NAME$ — lebih kurang $REQ$ permintaan terhadap kuota sendiri. Seluruh trek keluar dari pelayar kamu ke penyedia tu; semasa main balik hanya bahagian yang kamu benar-benar tonton yang dihantar.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Terjemah dan muat turun"
+  },
+  "exportConfirmBack": {
+    "message": "Batal"
+  },
+  "exportStop": {
+    "message": "Berhenti"
+  },
+  "exportStopping": {
+    "message": "Sedang berhenti…"
+  },
+  "exportProgress": {
+    "message": "Sedang terjemah… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ ketulan jatuh balik ke terjemahan YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Muat turun dibatalkan."
+  },
+  "ftSite": {
+    "message": "Laman web"
+  },
+  "ftSiteLabel": {
+    "message": "Tapak"
+  },
+  "ftFeedbackLabel": {
+    "message": "Maklum balas"
+  },
+  "ftReviewLabel": {
+    "message": "Nilaikan"
+  },
+  "ftGithub": {
+    "message": "Kod sumber di GitHub"
+  },
+  "ftFeedback": {
+    "message": "Hantar maklum balas atau laporkan pepijat"
+  },
+  "ftReview": {
+    "message": "Nilaikan di Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Belum ada kunci — penyedia ni tak boleh digunakan sampai kamu tambah satu."
+  },
+  "optNeedBase": {
+    "message": "Belum ada alamat endpoint — penyedia ni tak boleh digunakan sampai kamu masukkan satu."
+  },
+  "optBaseHint": {
+    "message": "URL asas atau endpoint penuh kedua-duanya boleh, cth. https://example.com/v1 atau https://example.com/v1/chat/completions. Untuk Ollama atau LM Studio pada mesin ni, http://localhost:11434/v1 bentuk yang betul. Kunci boleh dibiarkan kosong; http biasa hanya untuk alamat gelung balik."
+  },
+  "startS1Alt": {
+    "message": "Gambar rajah pemain: baris asal dan baris terjemahan duduk dekat bahagian bawah gambar"
+  },
+  "startS3Alt": {
+    "message": "Perbandingan: enjin percuma terjemah satu ayat berkeping-keping, kunci sendiri faham keseluruhan dan pecah balik"
+  },
+  "startPicFree": {
+    "message": "Enjin percuma"
+  },
+  "startPicFreeNote": {
+    "message": "satu ayat, dicincang"
+  },
+  "startPicByo": {
+    "message": "Kunci sendiri"
+  },
+  "startPicByoNote": {
+    "message": "difahami keseluruhan, dipecah balik"
+  },
+  "startS4Title": {
+    "message": "Ada menu kecil dalam pemain"
+  },
+  "startS4Body": {
+    "message": "Anak panah kecil di sebelah butang sari kata buka menu: sari kata, baca kuat, pilih teks, rumusan video dan tetapan — tanpa keluar dari pemain."
+  },
+  "startS4Alt": {
+    "message": "Ilustrasi pemain: anak panah kecil di sebelah butang sari kata, kanan bawah, buka menu kecil"
+  },
+  "menuHintBubble": {
+    "message": "Baca kuat, rumusan video, pilih teks — semua di belakang anak panah kecil ni"
+  },
+  "troubleTitle": {
+    "message": "Ada yang tak kena"
+  },
+  "troubleStep1": {
+    "message": "Semak suis dalam pop timbul dulu — kalau mati, seluruh lapisan sari kata tak muncul."
+  },
+  "troubleStep2": {
+    "message": "Video ni ada sari kata langsung? Cuba butang CC dalam pemain: tanpa yang asal, tiada apa nak diterjemah."
+  },
+  "troubleStep3": {
+    "message": "Cuba video popular. Kalau yang lain semua jalan dan yang ni je tak, biasanya trek sari kata video ni."
+  },
+  "troubleDiagHint": {
+    "message": "Masih tersekat? Tampal maklumat diagnostik ke e-mel atau isu kamu — ia bawa versi, keadaan enjin dan apa yang tab semasa buat, yang jimat satu dua pusingan."
+  },
+  "langManage": {
+    "message": "Urus bahasa…"
+  },
+  "optNavLangs": {
+    "message": "Bahasa terjemahan"
+  },
+  "optNavReadaloud": {
+    "message": "Baca kuat"
+  },
+  "ttsIntro": {
+    "message": "Baca baris terjemahan dengan kuat. Suara sendiri pelayar kamu tak perlukan kunci langsung; penyedia awan diset dan diuji di sini."
+  },
+  "ttsVoiceLabel": {
+    "message": "Suara"
+  },
+  "ttsPreview": {
+    "message": "Pratonton"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Sedang main…"
+  },
+  "ttsPreviewFail": {
+    "message": "Tak dapat main — semak kunci dan cuba Simpan dan uji"
+  },
+  "ttsFetchVoices": {
+    "message": "Ambil senarai penuh bahasa ni dengan kunci kamu"
+  },
+  "ttsFetching": {
+    "message": "Sedang ambil…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Ni semua $N$ suara yang kunci kamu ada untuk bahasa semasa, termasuk peringkat Standard / Wavenet yang lebih lama. Ia hanya untuk bahasa ni; klik baris di atas untuk balik ke suara harian, yang ikut kamu merentas bahasa. Kamu boleh ambil senarai ni lagi bila-bila masa.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Balik ke suara harian (ia ikut bahasa)"
+  },
+  "ttsVoicesNone": {
+    "message": "Penyedia ni tiada suara tambahan untuk bahasa ni — yang terbina masih jalan."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Ambil $N$ suara — ia cadangan di bawah medan di atas.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Perempuan"
+  },
+  "ttsVoiceMale": {
+    "message": "Lelaki"
+  },
+  "ttsTestOk": {
+    "message": "Tersambung: audio ujian $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Kebanyakan suara sendiri pelayar kamu dipasang pada komputer ni dan sebut baris di sini. Beberapa tidak: Chrome juga tawarkan suara dalam talian — yang namanya bermula dengan \"Google\" — dan untuk yang tu pelayar hantar baris ke pembuatnya. Dengan penyedia awan, teks yang nak disebut hanya pergi ke penyedia yang kamu pilih, dan kunci kekal pada mesin ni."
+  },
+  "ttsEnableLabel": {
+    "message": "Baca terjemahan dengan kuat dalam video"
+  },
+  "ttsEnableHint": {
+    "message": "Bila hidup, terjemahan setiap sari kata disebut bila ia muncul; baris yang terjemahannya tak siap sempat dilangkau, bukan dikejar kemudian. Semasa baris disebut, audio sendiri video turun ke aras yang diset di bawah. Baris yang panjang perlahan gambar sikit dan pinjam jurang selepasnya — dengan suara awan dan dengan suara sendiri pelayar; suis di bawah kekalkan perlahan sampai setiap baris siap."
+  },
+  "langsIntro": {
+    "message": "Bahasa terjemahan mana yang pop timbul tawarkan."
+  },
+  "langsKept": {
+    "message": "Ditunjukkan dalam pop timbul"
+  },
+  "langsKeptHint": {
+    "message": "Ni muncul dalam menu bahasa-terjemahan pop timbul. Kekalkan sekurang-kurangnya satu."
+  },
+  "langsMore": {
+    "message": "Bahasa lain"
+  },
+  "langsMoreHint": {
+    "message": "Tekan + untuk tambah satu. Senarai ikut bahasa terjemahan yang enjin percuma dan DeepL sokong."
+  },
+  "langsReset": {
+    "message": "Pulihkan lalai"
+  },
+  "langsResetDone": {
+    "message": "Balik ke senarai lalai."
+  },
+  "langsAddAria": {
+    "message": "Tambah"
+  },
+  "langsRemoveAria": {
+    "message": "Buang"
+  },
+  "langsLastOne": {
+    "message": "Kekal sekurang-kurangnya satu"
+  },
+  "langsAllAdded": {
+    "message": "Setiap bahasa dah ada dalam senarai kamu."
+  },
+  "langsAdded": {
+    "message": "Ditambah $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Yang tu sedang digunakan, jadi bahasa terjemahan kini $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Serif Cina"
+  },
+  "fontCjkRound": {
+    "message": "Bulat Cina"
+  },
+  "ttsVolLabel": {
+    "message": "Kelantangan baca kuat"
+  },
+  "ttsGroupPlayback": {
+    "message": "Main balik"
+  },
+  "ttsDuckLabel": {
+    "message": "Audio asal semasa menyebut"
+  },
+  "ttsDuckShort": {
+    "message": "Audio asal"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Sedang sebut"
+  },
+  "ttsStatusOn": {
+    "message": "Baca kuat hidup"
+  },
+  "ttsOpenSettings": {
+    "message": "Tetapan baca kuat"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ baris video ni · $M$ dilangkau",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ baris di sini · $M$ dilangkau ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "terjemahan tak siap sempat"
+  },
+  "ttsSkipSilent": {
+    "message": "tiada bunyi keluar"
+  },
+  "ttsRegionLabel": {
+    "message": "Rantau perkhidmatan"
+  },
+  "ttsErrNoRegion": {
+    "message": "Masukkan rantau perkhidmatan kunci Azure kamu dulu (cth. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Komputer ni tiada suara untuk menyebut."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Komputer ni tiada suara yang baca $NAME$. Senarai di bawah ialah suara bahasa lain — pilih satu dan baris akan dibaca dengan loghat bahasa tu.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Mencari suara komputer ni…"
+  },
+  "ttsErrRefused": {
+    "message": "Penyedia menolak permintaan ni — cuba suara lain."
+  },
+  "ttsErrNoAudio": {
+    "message": "Audio tak sampai — cuba lagi, atau pilih suara lain."
+  },
+  "startPicChop1": {
+    "message": "ada dua besar",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "sebab satu ialah",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Ada dua sebab besar,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "yang pertama ialah…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Lagi suara…"
+  },
+  "popupVoiceNone": {
+    "message": "Tiada suara dipilih"
+  },
+  "ttsRobotVoices": {
+    "message": "Robotik",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Benarkan aku pilih dan salin teks sari kata",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Pilih teks",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Rumusan",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Rumusan video",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Tutup",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Video ni tiada trek sari kata yang boleh digunakan.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Hidupkan semula sari kata untuk rumuskan — rumusan dibuat daripada trek sari kata."
+  },
+  "sumNeedKey": {
+    "message": "Rumusan perlukan perkhidmatan sendiri: mana-mana penyedia dengan kunci kamu dalam panel terjemahan, atau model tempatan pada mesin ni. Enjin percuma hanya terjemah. Mereka tak rumuskan.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Setkan perkhidmatan terjemahan",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Rumuskan",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Rumuskan lagi"
+  },
+  "sumFail": {
+    "message": "Rumusan gagal. Cuba lagi nanti.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Ni akan hantar seluruh trek sari kata ke $PROVIDER$, dalam $PARTS$ bahagian, atas kuota sendiri.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Sedang rumuskan… bahagian $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ bahagian tak dapat dirumuskan; selebihnya di atas.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Sari kata",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Terjemahan YouTube sendiri dihadkan sekarang; ayat pintar (Google) mengisi. Ia cuba semula sendiri kemudian.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Hujung terjemahan sedang hadkan — sambung semula dalam lebih kurang $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "URL asas atau endpoint penuh kedua-duanya boleh, cth. http://localhost:8880/v1 atau http://localhost:8880/v1/audio/speech (pelayan pertuturan tempatan seperti Kokoro atau openai-edge-tts). Kunci boleh dibiarkan kosong; http biasa hanya untuk alamat gelung balik."
+  },
+  "optTtsNeedUrl": {
+    "message": "Belum ada alamat endpoint — penyedia ni tak boleh digunakan sampai kamu tambah satu."
+  },
+  "ttsSkipRefused": {
+    "message": "penyedia menolak permintaan tu"
+  },
+  "ttsSkipNotSet": {
+    "message": "belum diset pada komputer ni"
+  },
+  "ttsSkipNoVoice": {
+    "message": "tiada suara untuk bahasa ni"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ tak boleh sebut sekarang. Pilih yang lain dalam baris di atas — suara sendiri pelayar kamu ada dalam senarai tu.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Trek sari kata belum sampai — cuba semula secara automatik. Tergegas? Muat semula halaman untuk cuba sekarang."
+  },
+  "ttsCompleteLabel": {
+    "message": "Siapkan setiap baris (gambar perlahan di bahagian padat)"
+  },
+  "ttsCompleteHint": {
+    "message": "Pada kelajuan lebih tinggi baris panjang sering hilang hujungnya kepada yang seterusnya. Dengan ni hidup, gambar perlahan sebanyak yang baris perlukan — tidak pernah di bawah suku kelajuan yang kamu pilih — dan kejar semula dalam jurang. Semasa gambar diperlankan sedalam tu, audio sendiri video turun lebih daripada aras yang kamu set, sampai senyap."
+  },
+  "ttsCompleteHintText": {
+    "message": "Agak ramai baris dipotong pendek pada kelajuan ni. Hidupkan dan gambar perlahan di mana perlu, supaya lebih banyak yang siap."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Hidupkan"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Jangan tunjuk lagi"
+  },
+  "provLocalSpeechShort": {
+    "message": "Pelayar"
+  },
+  "optNavFonts": {
+    "message": "Fon sari kata"
+  },
+  "fontsIntro": {
+    "message": "Satu senarai untuk kedua-dua baris sari kata; pop timbul pilih setiap baris. Setiap fon tersenarai dipasang pada komputer ni."
+  },
+  "fontsKept": {
+    "message": "Ditunjukkan dalam pop timbul"
+  },
+  "fontsMore": {
+    "message": "Fon lain"
+  },
+  "fontsOnly": {
+    "message": "Hanya fon yang boleh lukisnya"
+  },
+  "fontsCounting": {
+    "message": "Sedang semak…"
+  },
+  "fontsSearch": {
+    "message": "Cari nama fon"
+  },
+  "fontsNoMatch": {
+    "message": "Tiada fon sepadan."
+  },
+  "fontsKeptEmpty": {
+    "message": "Hanya Lalai sistem tinggal untuk pop timbul.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Setiap fon dah ada dalam senarai."
+  },
+  "fontsReset": {
+    "message": "Pulihkan lalai"
+  },
+  "fontsResetDone": {
+    "message": "Senarai lalai dipulihkan."
+  },
+  "fontsAdded": {
+    "message": "Ditambah $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Pratonton: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Pratonton"
+  },
+  "fontsUnavailable": {
+    "message": "Pelayar ni tak benarkan sambungan baca fon yang dipasang, jadi hanya Lalai sistem boleh dipilih."
+  },
+  "fontNoGlyphs": {
+    "message": "tak boleh lukis baris ni"
+  },
+  "fontNotHere": {
+    "message": "tiada pada komputer ni"
+  },
+  "fontsImport": {
+    "message": "Import fail fon…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; fail disalin ke dalam pelayar."
+  },
+  "fontsImported": {
+    "message": "Diimport $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Tak dapat simpan dalam pelayar; cuba lagi.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Dibuang $NAME$ dari pop timbul.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Langkau senarai ni",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Fon diimport",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Tu bukan fail fon yang pelayar ni boleh guna."
+  },
+  "fontsImportTooBig": {
+    "message": "Fail terlalu besar (had $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Padam fon yang diimport"
+  },
+  "fontsLangLabel": {
+    "message": "Semak untuk"
+  },
+  "fontsLangRecent": {
+    "message": "ditonton baru-baru ni"
+  },
+  "fontMoreRow": {
+    "message": "Urus fon…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ lagi tak boleh lukis baris ni",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

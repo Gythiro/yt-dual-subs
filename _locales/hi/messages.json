@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "YouTube के लिए द्विभाषी उपशीर्षक — मूल और अनुवाद एक ही परत में, एक-दूसरे पर चढ़े बिना।"
+  },
+  "headerSub": {
+    "message": "YouTube™ · एक परत"
+  },
+  "disclaimer": {
+    "message": "YouTube या Google से जुड़ा नहीं।"
+  },
+  "enableTitle": {
+    "message": "चालू / बंद"
+  },
+  "openOptions": {
+    "message": "सेटिंग"
+  },
+  "enableAria": {
+    "message": "एक्सटेंशन चालू करो"
+  },
+  "previewTag": {
+    "message": "झलक"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "तेज़ भूरी लोमड़ी"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "चीनी के लिए बढ़िया",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "तुम्हारे ब्राउज़र की अपनी आवाज़ें (मुफ्त)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (लोकल)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "लाइव झलक"
+  },
+  "secTranslation": {
+    "message": "अनुवाद"
+  },
+  "targetLang": {
+    "message": "अनुवाद की भाषा"
+  },
+  "backendLabel": {
+    "message": "इंजन"
+  },
+  "backendInfo": {
+    "message": "इंजन जानकारी"
+  },
+  "backendAuto": {
+    "message": "ऑटो (सुझाया)"
+  },
+  "backendTlang": {
+    "message": "पूरा ट्रैक (YouTube)"
+  },
+  "backendGtx": {
+    "message": "स्मार्ट वाक्य (Google)"
+  },
+  "backendByo": {
+    "message": "तुम्हारी कुंजी (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>ऑटो</b>: वीडियो सहारा दे तो YouTube का पूरा-ट्रैक अनुवाद चलता है, नहीं तो स्मार्ट वाक्य पर चला जाता है।<br><b>पूरा ट्रैक</b>: YouTube का अपना अनुवाद; क्यू से क्यू मिलाकर। ज़्यादा इस्तेमाल पर YouTube थोड़ी देर अनुरोध सीमित कर सकता है — एक्सटेंशन इंतज़ार करके फिर पूछता है।<br><b>स्मार्ट वाक्य</b>: टुकड़ों वाले कैप्शन को पूरे वाक्य बनाकर Google के मुफ्त एंडपॉइंट से अनुवाद करता है — गंदे ट्रैक पर पूरे ट्रैक से बेहतर शब्द, लेकिन वहाँ भी ज़्यादा इस्तेमाल पर अनुरोध सीमित हो सकते हैं; एक्सटेंशन धीमा होकर फिर कोशिश करता है।<br><b>तुम्हारी कुंजी</b>: जोड़े गए वाक्य को उस प्रदाता के पास भेजता है जिसे तुमने सेट किया।"
+  },
+  "backendGtxHint": {
+    "message": "Google के मुफ्त एंडपॉइंट से चलता है — ज़्यादा इस्तेमाल पर थोड़ी देर अनुरोध सीमित हो सकते हैं; एक्सटेंशन खुद रफ्तार घटाकर फिर कोशिश करता है।"
+  },
+  "backendStatusTlang": {
+    "message": "यह वीडियो: पूरा ट्रैक (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "यह वीडियो: स्मार्ट वाक्य (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "अनुवाद एंडपॉइंट ने अनुरोध सीमित किए — रफ्तार घटाकर अपने आप फिर कोशिश हो रही है। जो पंक्तियाँ पहले अनुवाद हो चुकी हैं, वे चलती रहती हैं।"
+  },
+  "diagCopy": {
+    "message": "डायग्नोस्टिक कॉपी करो"
+  },
+  "diagCopied": {
+    "message": "कॉपी हो गया — ईमेल या इश्यू में चिपका दो"
+  },
+  "diagCopyFail": {
+    "message": "कॉपी नहीं हुआ — स्क्रीनशॉट ले लो"
+  },
+  "backendStatusSame": {
+    "message": "इस वीडियो के उपशीर्षक पहले से तुम्हारी अनुवाद भाषा में हैं — अनुवाद की ज़रूरत नहीं।"
+  },
+  "backendStatusNoTrack": {
+    "message": "इस वीडियो का कोई कैप्शन ट्रैक नहीं मिला, इसलिए दिखाने को कुछ नहीं।",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "कोई YouTube वीडियो खोलो और उस पर दो लाइनें दिखाई देंगी। अगर तुम पहले से ही किसी वीडियो पर हो, तो टैब को रीलोड करो।"
+  },
+  "secLayout": {
+    "message": "लेआउट"
+  },
+  "secLineStyle": {
+    "message": "पंक्ति शैली"
+  },
+  "secLineStyleHint": {
+    "message": "फ़ॉन्ट · रंग · आकार"
+  },
+  "orderLabel": {
+    "message": "क्रम"
+  },
+  "orderTransTop": {
+    "message": "अनुवाद ऊपर"
+  },
+  "orderOrigTop": {
+    "message": "मूल ऊपर"
+  },
+  "positionLabel": {
+    "message": "जगह"
+  },
+  "posTop": {
+    "message": "ऊपर"
+  },
+  "posCenter": {
+    "message": "बीच"
+  },
+  "posBottom": {
+    "message": "नीचे"
+  },
+  "posHint": {
+    "message": "उपशीर्षक बॉक्स को वीडियो पर खींच भी सकते हो"
+  },
+  "posTryDrag": {
+    "message": "आज़माओ"
+  },
+  "posTryNoVideo": {
+    "message": "पहले कोई YouTube वीडियो खोलो"
+  },
+  "resetPos": {
+    "message": "जगह रीसेट"
+  },
+  "rowGap": {
+    "message": "पंक्ति गैप"
+  },
+  "tabTrans": {
+    "message": "अनुवाद"
+  },
+  "tabOrig": {
+    "message": "मूल"
+  },
+  "lineTabsAria": {
+    "message": "उपशीर्षक पंक्ति"
+  },
+  "lineShow": {
+    "message": "यह पंक्ति दिखाओ"
+  },
+  "fontLabel": {
+    "message": "फ़ॉन्ट"
+  },
+  "fontSystem": {
+    "message": "सिस्टम डिफ़ॉल्ट"
+  },
+  "fontMono": {
+    "message": "मोनोस्पेस"
+  },
+  "fontCjk": {
+    "message": "CJK-अनुकूल"
+  },
+  "sizeLabel": {
+    "message": "फ़ॉन्ट आकार"
+  },
+  "colText": {
+    "message": "टेक्स्ट"
+  },
+  "colBg": {
+    "message": "पृष्ठभूमि"
+  },
+  "colStroke": {
+    "message": "आउटलाइन"
+  },
+  "colTextAria": {
+    "message": "टेक्स्ट रंग"
+  },
+  "colBgAria": {
+    "message": "पृष्ठभूमि रंग"
+  },
+  "colStrokeAria": {
+    "message": "आउटलाइन रंग"
+  },
+  "bgOpacity": {
+    "message": "पृष्ठभूमि पारदर्शिता"
+  },
+  "strokeOpacity": {
+    "message": "आउटलाइन पारदर्शिता"
+  },
+  "resetAll": {
+    "message": "सारी सेटिंग रीसेट"
+  },
+  "resetConfirmText": {
+    "message": "इससे हर सेटिंग मिटती है, इस कंप्यूटर पर सहेजी API कुंजियाँ, और हर प्रदाता के लिए याद मॉडल व आवाज़ भी, और पहली बार की हिंट फिर चालू हो जाती हैं। जिन प्रदाता डोमेन को तुमने पहले अनुमति दी है वे वैसी ही रहती हैं, इम्पोर्ट किए फ़ॉन्ट फ़ाइल भी।",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "सेटिंग रखो",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "सब रीसेट करो",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "दोहरे उपशीर्षक बंद करो"
+  },
+  "toggleTurnOn": {
+    "message": "दोहरे उपशीर्षक चालू करो"
+  },
+  "handleTitle": {
+    "message": "खींचो · डबल-क्लिक रीसेट"
+  },
+  "handleAria": {
+    "message": "उपशीर्षक खींचकर सरकाओ, डबल-क्लिक से रीसेट"
+  },
+  "secExport": {
+    "message": "निर्यात"
+  },
+  "exportContent": {
+    "message": "सामग्री"
+  },
+  "exportBi": {
+    "message": "द्विभाषी"
+  },
+  "exportOrig": {
+    "message": "मूल"
+  },
+  "exportTrans": {
+    "message": "अनुवाद"
+  },
+  "exportSrt": {
+    "message": "SRT डाउनलोड"
+  },
+  "exportWorking": {
+    "message": "बन रहा है…"
+  },
+  "exportDone": {
+    "message": "उपशीर्षक डाउनलोड हो गए"
+  },
+  "exportNoTrans": {
+    "message": "इस वीडियो का अनुवाद नहीं है — पूरा-ट्रैक इंजन या दूसरी अनुवाद भाषा आज़माओ।"
+  },
+  "exportLimited": {
+    "message": "YouTube अभी पूरे ट्रैक का अनुवाद सीमित कर रहा है — एक मिनट बाद फिर कोशिश करो। तुम्हारी अपनी कुंजी सेट हो तो निर्यात कार्ड पर एक टिक है जो इसे बाईपास करता है।"
+  },
+  "exportNoCues": {
+    "message": "डाउनलोड करने को उपशीर्षक नहीं — कुछ सेकंड चलाओ ताकि कैप्शन लोड हों, फिर कोशिश करो।"
+  },
+  "exportNotYoutube": {
+    "message": "निर्यात के लिए कोई YouTube वीडियो पेज खोलो।"
+  },
+  "exportFailed": {
+    "message": "निर्यात नहीं हुआ — पेज रीफ़्रेश करके फिर कोशिश करो।"
+  },
+  "updateNotesLabel": {
+    "message": "अपडेट के बाद रिलीज़ नोट खोलो"
+  },
+  "trackWarnDubOnly": {
+    "message": "ध्यान: इस वीडियो में सिर्फ़ AI-डब की ऑटो कैप्शन हैं (मूल भाषा का ट्रैक नहीं), इसलिए द्विभाषी उपशीर्षक आवाज़ से न मिलें।"
+  },
+  "whatsNewRow": {
+    "message": "v$VER$ में क्या नया है →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "यह वीडियो: तुम्हारी कुंजी ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "प्रदाता"
+  },
+  "byoSiteLabel": {
+    "message": "साइट"
+  },
+  "byoSiteHint": {
+    "message": "जिस साइट पर तुमने साइन अप किया वही चुनो — दोनों अलग प्लेटफ़ॉर्म हैं, एक की कुंजी दूसरी नहीं लेती।"
+  },
+  "byoSiteGlobal": {
+    "message": "अंतरराष्ट्रीय"
+  },
+  "byoSiteCn": {
+    "message": "मुख्यभूमि चीन"
+  },
+  "byoBaseLabel": {
+    "message": "एंडपॉइंट पता"
+  },
+  "byoModelLabel": {
+    "message": "मॉडल"
+  },
+  "byoModelRequired": {
+    "message": "ज़रूरी: मॉडल नाम"
+  },
+  "byoKeyLabel": {
+    "message": "API कुंजी"
+  },
+  "byoKeyClear": {
+    "message": "हटाओ"
+  },
+  "byoKeyReplace": {
+    "message": "बदलो"
+  },
+  "byoKeyCleared": {
+    "message": "इस मशीन पर रखी कुंजी हटा दी गई।"
+  },
+  "byoKeyClearedMoved": {
+    "message": "इस मशीन पर रखी कुंजी हटा दी गई। वही चल रही थी, इसलिए अनुवाद अब $NAME$ से हो रहा है।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "सहेजी ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "कस्टम (OpenAI-संगत)"
+  },
+  "byoTest": {
+    "message": "सहेजो और टेस्ट करो"
+  },
+  "byoTesting": {
+    "message": "टेस्ट हो रहा…"
+  },
+  "byoTestOk": {
+    "message": "जुड़ गया। सैंपल: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "कुंजी लो"
+  },
+  "byoGuide": {
+    "message": "सेट करने में मदद चाहिए?"
+  },
+  "byoLocalHint": {
+    "message": "कुंजी इसी ब्राउज़र में, इसी मशीन पर रहती है — कभी अपलोड नहीं होती। उपशीर्षक टेक्स्ट सिर्फ़ उसी प्रदाता के पास जाता है जिसे तुमने चुना।"
+  },
+  "byoErrNoProvider": {
+    "message": "पहले कोई प्रदाता चुनो।"
+  },
+  "byoErrNoKey": {
+    "message": "पहले API कुंजी डालो, फिर «सहेजो और टेस्ट करो» दबाओ।"
+  },
+  "byoErrNoModel": {
+    "message": "पहले कोई मॉडल चुनो — सूची में से लो, या «मेरी कुंजी से मॉडल सूची» दबाओ।"
+  },
+  "byoErrNoModelEmpty": {
+    "message": "यह प्रदाता सूची नहीं देता। पहले उपलब्ध मॉडल लाओ, या मॉडल नाम खुद लिखो।"
+  },
+  "byoErrNotApi": {
+    "message": "उस पते ने वेब पेज दिया, API नहीं — अक्सर लॉगिन दीवार या अनुरोध काटने वाला नेटवर्क। पता जाँचो, या दूसरा नेटवर्क आज़माओ।"
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API बेस URL पूरा https:// पता होना चाहिए।"
+  },
+  "byoErrUrlHasKey": {
+    "message": "पते में कुंजी पड़ी है। उसे पते से निकालकर API कुंजी वाले फ़ील्ड में चिपकाओ — पता तुम्हारे ब्राउज़र खाते से सिंक होता है, कुंजी वाला फ़ील्ड नहीं।"
+  },
+  "byoErrNoPerm": {
+    "message": "उस API होस्ट तक पहुँच की अनुमति के बिना एक्सटेंशन जुड़ नहीं पा रहा। फिर «सहेजो और टेस्ट करो» दबाओ और अनुमति दो।"
+  },
+  "byoErrAuth": {
+    "message": "कुंजी खारिज हुई (401) — पूरा कॉपी हुआ है और अभी चालू है, यह जाँचो।"
+  },
+  "byoErrForbiddenLocal": {
+    "message": "इस मशीन के सर्वर ने कॉल रोक दी (403)। ज़्यादातर बात यह है कि एक्सटेंशन को इजाज़त नहीं दी गई: Ollama के लिए OLLAMA_ORIGINS, LM Studio में CORS स्विच।"
+  },
+  "byoErrForbidden": {
+    "message": "प्रदाता ने यह कॉल रोक दी (403)। अक्सर कुंजी ठीक होती है और खाते को इजाज़त नहीं — बकाया, अधूरी पहचान जाँच, मॉडल चालू नहीं, या क्षेत्र। प्रदाता के कंसोल में खाता देखो।"
+  },
+  "byoErrListAuth": {
+    "message": "यह कुंजी सूची पढ़ नहीं सकती। प्रदाता के डैशबोर्ड में वह अनुमति दो, फिर फिर से लाओ।",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "प्रदाता अनुरोध सीमित कर रहा है — रफ्तार घटाकर अपने आप फिर कोशिश हो रही है।"
+  },
+  "byoErrLimitedTest": {
+    "message": "प्रदाता अनुरोध सीमित कर रहा है। थोड़ा रुको और फिर दबाओ।"
+  },
+  "byoErrQuota": {
+    "message": "इस खाते का इस अवधि का क्रेडिट या कोटा खत्म है — आगे बढ़ने के लिए प्रदाता के कंसोल में टॉप अप करो।"
+  },
+  "byoErrBadRequest": {
+    "message": "एंडपॉइंट ने अनुरोध रोक दिया — मॉडल नाम या बेस URL गलत हो सकता है।"
+  },
+  "byoErrBadShape": {
+    "message": "मॉडल ने पंक्ति-दर-पंक्ति जवाब नहीं दिया, छोटी फिर-कोशिश भी फेल हुई — दूसरा मॉडल आज़माओ।"
+  },
+  "byoErrReasoning": {
+    "message": "उस मॉडल ने सिर्फ़ सोच की कड़ी दी, अनुवाद नहीं — बिना सोच-मोड वाला मॉडल चुनो।"
+  },
+  "byoErrNetfail": {
+    "message": "उस एंडपॉइंट तक पहुँच नहीं (नेटवर्क या क्षेत्र पाबंदी)।"
+  },
+  "byoErrNetfailLocal": {
+    "message": "उस पते तक पहुँच नहीं: या सर्वर चल नहीं रहा, या एक्सटेंशन को इजाज़त नहीं दी गई (Ollama के लिए OLLAMA_ORIGINS, LM Studio में CORS स्विच)।"
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "यह प्रदाता चुनी भाषा में अनुवाद नहीं कर पा रहा — भाषा या इंजन बदलो।"
+  },
+  "byoErrFailed": {
+    "message": "कनेक्शन नहीं जुड़ा। थोड़ी देर बाद फिर कोशिश करो।"
+  },
+  "optTitle": {
+    "message": "अनुवाद सेवा सेटअप"
+  },
+  "optIntro": {
+    "message": "कोई प्रदाता चुनो और तुम्हारी API कुंजी चिपकाओ।"
+  },
+  "optPricingLink": {
+    "message": "कीमत और मुफ्त टियर"
+  },
+  "optFetchModels": {
+    "message": "मेरी कुंजी से मॉडल सूची"
+  },
+  "optFetchModelsNoKey": {
+    "message": "उपलब्ध मॉडल सूची"
+  },
+  "optFetching": {
+    "message": "सूची बन रही…"
+  },
+  "optModelsFetched": {
+    "message": "$N$ मॉडल मिले",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” अब इस प्रदाता की सूची में नहीं — ऊपर कोई और चुनो।",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "मॉडल सूची नहीं मिली — मॉडल नाम खुद लिखो।"
+  },
+  "optModelCustom": {
+    "message": "कस्टम…"
+  },
+  "optNoModelsYet": {
+    "message": "अभी मॉडल सूची नहीं — कुंजी से लाओ, या नाम लिख दो।"
+  },
+  "optNoModelsYetNoKey": {
+    "message": "अभी मॉडल सूची नहीं — लाओ, या नाम लिख दो।"
+  },
+  "optShowKey": {
+    "message": "दिखाओ"
+  },
+  "optRecommended": {
+    "message": "सुझाया"
+  },
+  "optConfigured": {
+    "message": "सेट है"
+  },
+  "optInUse": {
+    "message": "चल रहा"
+  },
+  "optAfterSetup": {
+    "message": "यहाँ काम पूरा हो तो एक्सटेंशन पॉपअप खोलो और इंजन «तुम्हारी कुंजी» पर लगाओ।"
+  },
+  "optTrademark": {
+    "message": "सभी प्रदाता नाम और लोगो उनके मालिकों के ट्रेडमार्क हैं। यह एक्सटेंशन उनमें से किसी से जुड़ा नहीं, न उनके समर्थन या स्पॉन्सर से; निशान सिर्फ़ यह बताने के लिए हैं कि तुमने कौन-सी API चुनी।"
+  },
+  "optSections": {
+    "message": "खंड"
+  },
+  "optNavSetup": {
+    "message": "अनुवाद सेवा"
+  },
+  "optNavStart": {
+    "message": "शुरुआत"
+  },
+  "optNavAbout": {
+    "message": "जानकारी"
+  },
+  "startIntro": {
+    "message": "चार बातें। इस्तेमाल के लिए कुछ सेट करना ज़रूरी नहीं।"
+  },
+  "startS1Title": {
+    "message": "वीडियो खोलो — बस इतना"
+  },
+  "startS1Body": {
+    "message": "जिस YouTube वीडियो में उपशीर्षक हों: दोनों पंक्तियाँ अपने आप आ जाती हैं।"
+  },
+  "startS2Title": {
+    "message": "जिधर चाहो उधर रखो"
+  },
+  "startS2Body": {
+    "message": "उपशीर्षक बॉक्स के ऊपर-बाएँ पकड़ को पकड़कर कहीं भी खींचो। पकड़ पर डबल-क्लिक से वापस जगह पर आ जाता है।"
+  },
+  "startS2Alt": {
+    "message": "प्लेयर चित्र: उपशीर्षक बॉक्स के ऊपर-बाएँ कोने पर छह-बिंदु वाली पकड़, उसे दूसरी जगह खींचा जा रहा है"
+  },
+  "startS3Title": {
+    "message": "बेहतर अनुवाद चाहिए"
+  },
+  "startS3Body": {
+    "message": "तुम्हारी API कुंजी जोड़ो: पूरे वाक्य का अनुवाद, और निर्यात पर पूरे वीडियो का अनुवाद।"
+  },
+  "startGoSetup": {
+    "message": "अनुवाद सेवा सेट करो"
+  },
+  "aboutIntro": {
+    "message": "यह क्या है, और तुम्हारा टेक्स्ट कहाँ जाता है।"
+  },
+  "aboutVersion": {
+    "message": "वर्शन"
+  },
+  "uiLocaleLabel": {
+    "message": "इंटरफ़ेस भाषा"
+  },
+  "uiLocaleAuto": {
+    "message": "ऑटो — ब्राउज़र के साथ"
+  },
+  "uiLocaleHint": {
+    "message": "इस एक्सटेंशन के अपने मेनू और सेटिंग की भाषा। वीडियो पर ही लिखी कुछ लेबल अब भी ब्राउज़र की भाषा चलती हैं। अनुवाद भाषा पॉपअप में चुनी जाती है; «अनुवाद भाषाएँ» पैन सिर्फ़ तय करता है पॉपअप कौन-सी भाषाएँ दिखाए।"
+  },
+  "cmdToggleSubs": {
+    "message": "उपशीर्षक चालू या बंद"
+  },
+  "cmdToggleTts": {
+    "message": "ज़ोर से पढ़ना चालू/बंद"
+  },
+  "cmdToggleTransLine": {
+    "message": "अनुवाद पंक्ति दिखाओ या छुपाओ"
+  },
+  "optShortcutsLabel": {
+    "message": "कीबोर्ड शॉर्टकट"
+  },
+  "optShortcutsOpen": {
+    "message": "शॉर्टकट सेट करो"
+  },
+  "optShortcutsHint": {
+    "message": "ये कुंजियाँ Chrome रखता है, एक्सटेंशन नहीं। शुरुआत में कुछ बंधा नहीं; तीन चीज़ें बाँध सकते हो: उपशीर्षक चालू/बंद, ज़ोर से पढ़ना चालू/बंद, और अनुवाद पंक्ति दिखाना या छुपाना।"
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome ने वह पेज यहाँ से नहीं खोला — पता बार में chrome://extensions/shortcuts चिपका दो।"
+  },
+  "startTargetLabel": {
+    "message": "अनुवाद की भाषा"
+  },
+  "startTargetHint": {
+    "message": "एक्सटेंशन इंस्टॉल होते समय तुम्हारी ब्राउज़र भाषा से अनुमान लगाया गया। गलत हो तो यहाँ बदलो — पॉपअप कभी भी बदल सकता है।"
+  },
+  "aboutBlurb": {
+    "message": "YouTube के लिए दूसरी उपशीर्षक पंक्ति: एक पर मूल, दूसरी पर अनुवाद, फ़ॉन्ट, रंग और जगह तुम्हारी मर्ज़ी। ओपन सोर्स, मुफ्त, बिना विज्ञापन।"
+  },
+  "aboutPrivacy": {
+    "message": "इस एक्सटेंशन का हमारा कोई सर्वर नहीं और आँकड़े नहीं जमा करता। उपशीर्षक टेक्स्ट सिर्फ़ उन्हीं सेवाओं के पास जाता है जिन्हें तुमने चुना: जो अनुवाद सेवा तुम चुनो, और चालू करो तो ज़ोर से पढ़ने वाला स्पीच प्रदाता और सारांश के लिए सेट प्रदाता। तुम्हारी अपनी कुंजी सिर्फ़ इसी कंप्यूटर पर रखी जाती है।"
+  },
+  "aboutChangelog": {
+    "message": "बदलाव सूची"
+  },
+  "aboutRoadmap": {
+    "message": "रोडमैप"
+  },
+  "optFeedbackLink": {
+    "message": "समस्या बताओ"
+  },
+  "popupByoConfigure": {
+    "message": "सेट करो…"
+  },
+  "popupSummarize": {
+    "message": "इस वीडियो का सारांश",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "सेट नहीं"
+  },
+  "popupByoPick": {
+    "message": "अनुवाद प्रदाता"
+  },
+  "popupByoUntested": {
+    "message": "टेस्ट नहीं"
+  },
+  "popupModelPick": {
+    "message": "अनुवाद मॉडल"
+  },
+  "popupModelMore": {
+    "message": "और मॉडल…"
+  },
+  "popupModelFetch": {
+    "message": "सेटिंग में मॉडल लाओ"
+  },
+  "popupModelSwitched": {
+    "message": "अब से: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "कोई मॉडल नहीं चुना"
+  },
+  "exportUsesYouTube": {
+    "message": "डाउनलोड YouTube के अपने पूरे-ट्रैक अनुवाद से चलता है — मुफ्त, और तुम्हारी API कुंजी खर्च नहीं होती।"
+  },
+  "exportUseByo": {
+    "message": "मेरी कुंजी से अनुवाद (ज़्यादा मेल, कोटा खर्च)"
+  },
+  "exportByoNote": {
+    "message": "पूरा ट्रैक तुम्हारे प्रदाता तुम्हारी कुंजी से अनुवाद करेगा। कुछ भेजने से पहले एक अनुमान दिखेगा।"
+  },
+  "exportConfirm": {
+    "message": "$NAME$ से $N$ उपशीर्षक पंक्तियाँ अनुवाद — करीब $REQ$ अनुरोध तुम्हारे कोटे पर। पूरा ट्रैक उस प्रदाता के पास तुम्हारे ब्राउज़र से जाता है; चलते समय सिर्फ़ वही हिस्से भेजे जाते हैं जिन्हें तुम सचमुच देखते हो।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "अनुवाद करो और डाउनलोड"
+  },
+  "exportConfirmBack": {
+    "message": "रद्द"
+  },
+  "exportStop": {
+    "message": "रोको"
+  },
+  "exportStopping": {
+    "message": "रुक रहा…"
+  },
+  "exportProgress": {
+    "message": "अनुवाद… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ टुकड़ा YouTube के अनुवाद पर लौटा",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "डाउनलोड रद्द।"
+  },
+  "ftSite": {
+    "message": "वेबसाइट"
+  },
+  "ftSiteLabel": {
+    "message": "साइट"
+  },
+  "ftFeedbackLabel": {
+    "message": "फ़ीडबैक"
+  },
+  "ftReviewLabel": {
+    "message": "रेट"
+  },
+  "ftGithub": {
+    "message": "GitHub पर सोर्स कोड"
+  },
+  "ftFeedback": {
+    "message": "फ़ीडबैक भेजो या बग बताओ"
+  },
+  "ftReview": {
+    "message": "Chrome Web Store पर रेट करो"
+  },
+  "optNeedKey": {
+    "message": "अभी कुंजी नहीं — एक जोड़ने तक यह प्रदाता चल नहीं पा रहा।"
+  },
+  "optNeedBase": {
+    "message": "अभी एंडपॉइंट पता नहीं — एक डालने तक यह प्रदाता चल नहीं पा रहा।"
+  },
+  "optBaseHint": {
+    "message": "बेस URL या पूरा एंडपॉइंट दोनों चलते हैं, जैसे https://example.com/v1 या https://example.com/v1/chat/completions। इस मशीन पर Ollama या LM Studio के लिए http://localhost:11434/v1 सही आकार है। कुंजी खाली रह सकती है; सादा http सिर्फ़ लूपबैक पतों पर चलता है।"
+  },
+  "startS1Alt": {
+    "message": "प्लेयर चित्र: एक मूल पंक्ति और एक अनुवाद पंक्ति तस्वीर के नीचे बैठे हैं"
+  },
+  "startS3Alt": {
+    "message": "तुलना: मुफ्त इंजन एक वाक्य को टुकड़ों में अनुवाद करता है, तुम्हारी कुंजी उसे पूरा समझकर फिर बाँटती है"
+  },
+  "startPicFree": {
+    "message": "मुफ्त इंजन"
+  },
+  "startPicFreeNote": {
+    "message": "एक वाक्य, टुकड़ों में"
+  },
+  "startPicByo": {
+    "message": "तुम्हारी कुंजी"
+  },
+  "startPicByoNote": {
+    "message": "पूरा समझा, फिर बाँटा"
+  },
+  "startS4Title": {
+    "message": "प्लेयर में एक छोटा मेनू है"
+  },
+  "startS4Body": {
+    "message": "उपशीर्षक बटन के पास छोटा तीर एक मेनू खोलता है: उपशीर्षक, ज़ोर से पढ़ो, टेक्स्ट चुनो, वीडियो सारांश और सेटिंग — प्लेयर छोड़े बिना।"
+  },
+  "startS4Alt": {
+    "message": "प्लेयर चित्र: उपशीर्षक बटन के पास नीचे-दाएँ छोटा तीर, एक छोटा मेनू खोलता है"
+  },
+  "menuHintBubble": {
+    "message": "ज़ोर से पढ़ो, वीडियो सारांश, टेक्स्ट चुनो — सब इस छोटे तीर के पीछे"
+  },
+  "troubleTitle": {
+    "message": "कुछ गड़बड़"
+  },
+  "troubleStep1": {
+    "message": "पहले पॉपअप का स्विच देखो — बंद हो तो पूरी उपशीर्षक परत दूर रहती है।"
+  },
+  "troubleStep2": {
+    "message": "इस वीडियो में उपशीर्षक हैं भी? प्लेयर का CC बटन आज़माओ: मूल न हो तो अनुवाद को कुछ नहीं।"
+  },
+  "troubleStep3": {
+    "message": "कोई लोकप्रिय वीडियो आज़माओ। बाकी सब चल रहा हो और सिर्फ़ यह न चले, तो अक्सर इसी वीडियो का उपशीर्षक ट्रैक है।"
+  },
+  "troubleDiagHint": {
+    "message": "फिर भी अटक गए? डायग्नोस्टिक जानकारी ईमेल या इश्यू में चिपका दो — उसमें वर्शन, इंजन की हालत और मौजूदा टैब क्या कर रहा है, दो-एक चक्कर बच जाते हैं।"
+  },
+  "langManage": {
+    "message": "भाषाएँ संभालो…"
+  },
+  "optNavLangs": {
+    "message": "अनुवाद भाषाएँ"
+  },
+  "optNavReadaloud": {
+    "message": "ज़ोर से पढ़ो"
+  },
+  "ttsIntro": {
+    "message": "अनुवाद पंक्ति ज़ोर से पढ़ो। तुम्हारे ब्राउज़र की अपनी आवाज़ों को कुंजी नहीं चाहिए; क्लाउड प्रदाता यहीं सेट और टेस्ट होते हैं।"
+  },
+  "ttsVoiceLabel": {
+    "message": "आवाज़"
+  },
+  "ttsPreview": {
+    "message": "झलक"
+  },
+  "ttsPreviewPlaying": {
+    "message": "चल रहा…"
+  },
+  "ttsPreviewFail": {
+    "message": "चला नहीं — कुंजी जाँचो और «सहेजो और टेस्ट करो» आज़माओ"
+  },
+  "ttsFetchVoices": {
+    "message": "तुम्हारी कुंजी से इस भाषा की पूरी सूची लाओ"
+  },
+  "ttsFetching": {
+    "message": "लाया जा रहा…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "ये तुम्हारी कुंजी की इस भाषा की सारी $N$ आवाज़ें हैं, पुराने Standard / Wavenet स्तर समेत। ये सिर्फ़ इसी भाषा पर लगती हैं; रोज़मर्रा की आवाज़ों पर वापस जाने के लिए ऊपर वाली पंक्ति दबाओ, वे भाषा के साथ चलती हैं। यह सूची कभी भी फिर ला सकते हो।",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "रोज़मर्रा की आवाज़ों पर वापस (भाषा के साथ चलती हैं)"
+  },
+  "ttsVoicesNone": {
+    "message": "इस प्रदाता के पास इस भाषा की अतिरिक्त आवाज़ें नहीं — बिल्ट-इन चलती रहती हैं।"
+  },
+  "ttsVoicesSuggested": {
+    "message": "$N$ आवाज़ें आईं — ऊपर वाले फ़ील्ड के नीचे सुझाव हैं।",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "महिला"
+  },
+  "ttsVoiceMale": {
+    "message": "पुरुष"
+  },
+  "ttsTestOk": {
+    "message": "जुड़ गया: टेस्ट ऑडियो $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "तुम्हारे ब्राउज़र की ज़्यादातर अपनी आवाज़ें इसी कंप्यूटर पर लगी हैं और पंक्ति यहीं बोलती हैं। कुछ नहीं: Chrome ऑनलाइन आवाज़ें भी देता है — जिनके नाम \"Google\" से शुरू होते हैं — और उनके लिए ब्राउज़र पंक्ति उसके बनाने वाले के पास भेजता है। क्लाउड प्रदाता पर बोलने वाला टेक्स्ट सिर्फ़ उसी प्रदाता के पास जाता है जिसे तुमने चुना, और कुंजी इसी मशीन पर रहती है।"
+  },
+  "ttsEnableLabel": {
+    "message": "वीडियो में अनुवाद ज़ोर से पढ़ो"
+  },
+  "ttsEnableHint": {
+    "message": "चालू हो तो हर उपशीर्षक का अनुवाद दिखते ही बोला जाता है; जिस पंक्ति का अनुवाद समय पर तैयार न हो, उसे बाद में पकड़ने की बजाय छोड़ दिया जाता है। पंक्ति बोलते समय वीडियो की अपनी आवाज़ नीचे सेट स्तर तक गिरती है। लंबी पंक्ति तस्वीर थोड़ी धीमी करती है और उसके बाद की खाली जगह उधार लेती है — क्लाउड आवाज़ और ब्राउज़र की अपनी, दोनों पर; नीचे वाला स्विच हर पंक्ति खत्म होने तक धीमा रखता है।"
+  },
+  "langsIntro": {
+    "message": "पॉपअप कौन-सी अनुवाद भाषाएँ दिखाए।"
+  },
+  "langsKept": {
+    "message": "पॉपअप में दिखें"
+  },
+  "langsKeptHint": {
+    "message": "ये पॉपअप के अनुवाद-भाषा मेनू में आती हैं। कम से कम एक रखो।"
+  },
+  "langsMore": {
+    "message": "और भाषाएँ"
+  },
+  "langsMoreHint": {
+    "message": "जोड़ने के लिए + दबाओ। सूची उन्हीं अनुवाद भाषाओं की है जो मुफ्त इंजन और DeepL चलाते हैं।"
+  },
+  "langsReset": {
+    "message": "डिफ़ॉल्ट वापस"
+  },
+  "langsResetDone": {
+    "message": "डिफ़ॉल्ट सूची पर वापस।"
+  },
+  "langsAddAria": {
+    "message": "जोड़ो"
+  },
+  "langsRemoveAria": {
+    "message": "हटाओ"
+  },
+  "langsLastOne": {
+    "message": "कम से कम एक रखो"
+  },
+  "langsAllAdded": {
+    "message": "हर भाषा पहले से तुम्हारी सूची में है।"
+  },
+  "langsAdded": {
+    "message": "$NAME$ जुड़ गई",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "वही चल रही थी, इसलिए अनुवाद भाषा अब $NAME$ है",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "चीनी सेरिफ़"
+  },
+  "fontCjkRound": {
+    "message": "चीनी गोल"
+  },
+  "ttsVolLabel": {
+    "message": "ज़ोर से पढ़ने का वॉल्यूम"
+  },
+  "ttsGroupPlayback": {
+    "message": "प्लेबैक"
+  },
+  "ttsDuckLabel": {
+    "message": "बोलते समय मूल ऑडियो"
+  },
+  "ttsDuckShort": {
+    "message": "मूल ऑडियो"
+  },
+  "ttsStatusSpeaking": {
+    "message": "बोल रहा"
+  },
+  "ttsStatusOn": {
+    "message": "ज़ोर से पढ़ना चालू"
+  },
+  "ttsOpenSettings": {
+    "message": "ज़ोर से पढ़ने की सेटिंग"
+  },
+  "ttsStatusCounts": {
+    "message": "इस वीडियो में $N$ पंक्तियाँ · $M$ छोड़ी",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "यहाँ $N$ पंक्तियाँ · $M$ छोड़ी ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "अनुवाद समय पर तैयार नहीं"
+  },
+  "ttsSkipSilent": {
+    "message": "आवाज़ निकली नहीं"
+  },
+  "ttsRegionLabel": {
+    "message": "सेवा क्षेत्र"
+  },
+  "ttsErrNoRegion": {
+    "message": "पहले तुम्हारी Azure कुंजी का सेवा क्षेत्र डालो (जैसे eastus)।"
+  },
+  "ttsNoSynth": {
+    "message": "इस कंप्यूटर पर बोलने की कोई आवाज़ नहीं।"
+  },
+  "ttsNoVoiceForLang": {
+    "message": "इस कंप्यूटर पर $NAME$ पढ़ने वाली आवाज़ नहीं। नीचे दूसरी भाषाओं की आवाज़ें हैं — एक चुनो तो पंक्ति उसी भाषा के लहजे में पढ़ी जाएगी।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "इस कंप्यूटर की आवाज़ें ढूँढी जा रही हैं…"
+  },
+  "ttsErrRefused": {
+    "message": "प्रदाता ने यह अनुरोध रोक दिया — दूसरी आवाज़ आज़माओ।"
+  },
+  "ttsErrNoAudio": {
+    "message": "ऑडियो आया नहीं — फिर कोशिश करो, या दूसरी आवाज़ चुनो।"
+  },
+  "startPicChop1": {
+    "message": "हैं दो बड़े",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "कारण एक है",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "दो बड़ी वजहें हैं,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "पहली यह है…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "और आवाज़ें…"
+  },
+  "popupVoiceNone": {
+    "message": "कोई आवाज़ नहीं चुनी"
+  },
+  "ttsRobotVoices": {
+    "message": "रोबोट जैसी",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "उपशीर्षक टेक्स्ट चुनने और कॉपी करने दो",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "टेक्स्ट चुनो",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "सारांश",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "वीडियो सारांश",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "बंद करो",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "इस वीडियो का कोई काम का उपशीर्षक ट्रैक नहीं।",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "सारांश बनाने के लिए उपशीर्षक फिर से चालू करो — सारांश उपशीर्षक ट्रैक से बनता है।"
+  },
+  "sumNeedKey": {
+    "message": "सारांश के लिए तुम्हारी अपनी सेवा चाहिए: अनुवाद पैन में कुंजी वाला कोई प्रदाता, या इस मशीन पर लोकल मॉडल। मुफ्त इंजन सिर्फ़ अनुवाद करते हैं। सारांश नहीं।",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "अनुवाद सेवा सेट करो",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "सारांश बनाओ",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "फिर सारांश"
+  },
+  "sumFail": {
+    "message": "सारांश नहीं बना। बाद में फिर कोशिश करो।",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "पूरा उपशीर्षक ट्रैक $PROVIDER$ को जाएगा, $PARTS$ हिस्से में, तुम्हारे कोटे पर।",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "सारांश… हिस्सा $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ हिस्से का सारांश नहीं बना; बाकी ऊपर है।",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "उपशीर्षक",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube का अपना अनुवाद अभी अनुरोध सीमित है; स्मार्ट वाक्य (Google) भर रहा है। बाद में अपने आप फिर कोशिश करता है।",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "अनुवाद एंडपॉइंट अनुरोध सीमित कर रहा है — करीब $SECONDS$ सेकंड में फिर चलेगा।",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "बेस URL या पूरा एंडपॉइंट दोनों चलते हैं, जैसे http://localhost:8880/v1 या http://localhost:8880/v1/audio/speech (लोकल स्पीच सर्वर जैसे Kokoro या openai-edge-tts)। कुंजी खाली रह सकती है; सादा http सिर्फ़ लूपबैक पतों पर चलता है।"
+  },
+  "optTtsNeedUrl": {
+    "message": "अभी एंडपॉइंट पता नहीं — एक जोड़ने तक यह प्रदाता चल नहीं पा रहा।"
+  },
+  "ttsSkipRefused": {
+    "message": "प्रदाता ने वे अनुरोध रोक दिए"
+  },
+  "ttsSkipNotSet": {
+    "message": "इस कंप्यूटर पर सेट नहीं"
+  },
+  "ttsSkipNoVoice": {
+    "message": "इस भाषा की आवाज़ नहीं"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ अभी बोल नहीं पा रहा। ऊपर वाली पंक्ति में कोई और चुनो — तुम्हारे ब्राउज़र की अपनी आवाज़ें उस सूची में हैं।",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "उपशीर्षक ट्रैक अभी आया नहीं — अपने आप फिर कोशिश हो रही है। जल्दी है? पेज रीफ़्रेश करो, अभी फिर आज़माओ।"
+  },
+  "ttsCompleteLabel": {
+    "message": "हर पंक्ति पूरी करो (घने हिस्सों में तस्वीर धीमी)"
+  },
+  "ttsCompleteHint": {
+    "message": "ज़्यादा स्पीड पर लंबी पंक्तियाँ अक्सर अपनी पूँछ अगली को दे देती हैं। यह चालू हो तो तस्वीर उतनी धीमी होती है जितनी पंक्ति को चाहिए — तुम्हारी चुनी स्पीड के चौथाई से कभी कम नहीं — और खाली जगह में फिर पकड़ लेती है। तस्वीर इतनी धीमी हो तो वीडियो की अपनी आवाज़ तुम्हारे सेट स्तर से और गिरकर खामोशी तक आ जाती है।"
+  },
+  "ttsCompleteHintText": {
+    "message": "इस स्पीड पर काफी पंक्तियाँ बीच में कट रही हैं। चालू करो तो तस्वीर जहाँ चाहिए वहाँ धीमी होती है, ज़्यादा पंक्तियाँ पूरी होती हैं।"
+  },
+  "ttsCompleteHintOn": {
+    "message": "चालू करो"
+  },
+  "ttsCompleteHintNever": {
+    "message": "फिर मत दिखाओ"
+  },
+  "provLocalSpeechShort": {
+    "message": "ब्राउज़र"
+  },
+  "optNavFonts": {
+    "message": "उपशीर्षक फ़ॉन्ट"
+  },
+  "fontsIntro": {
+    "message": "एक सूची दोनों उपशीर्षक पंक्तियों के लिए है; पॉपअप हर पंक्ति पर चुनता है। सूची का हर फ़ॉन्ट इसी कंप्यूटर पर लगा है।"
+  },
+  "fontsKept": {
+    "message": "पॉपअप में दिखें"
+  },
+  "fontsMore": {
+    "message": "और फ़ॉन्ट"
+  },
+  "fontsOnly": {
+    "message": "सिर्फ़ जो इसे बना सकें"
+  },
+  "fontsCounting": {
+    "message": "जाँच हो रही…"
+  },
+  "fontsSearch": {
+    "message": "फ़ॉन्ट नाम खोजो"
+  },
+  "fontsNoMatch": {
+    "message": "कोई फ़ॉन्ट नहीं मिला।"
+  },
+  "fontsKeptEmpty": {
+    "message": "पॉपअप के लिए सिर्फ़ सिस्टम डिफ़ॉल्ट बचा है।",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "हर फ़ॉन्ट पहले से सूची में है।"
+  },
+  "fontsReset": {
+    "message": "डिफ़ॉल्ट वापस"
+  },
+  "fontsResetDone": {
+    "message": "डिफ़ॉल्ट सूची वापस आ गई।"
+  },
+  "fontsAdded": {
+    "message": "$NAME$ जुड़ गया",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "झलक: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "झलक"
+  },
+  "fontsUnavailable": {
+    "message": "यह ब्राउज़र एक्सटेंशन को लगे फ़ॉन्ट पढ़ने नहीं देता, इसलिए सिर्फ़ सिस्टम डिफ़ॉल्ट चुना जा सकता है।"
+  },
+  "fontNoGlyphs": {
+    "message": "यह पंक्ति बना नहीं सकता"
+  },
+  "fontNotHere": {
+    "message": "इस कंप्यूटर पर नहीं"
+  },
+  "fontsImport": {
+    "message": "फ़ॉन्ट फ़ाइल इम्पोर्ट…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; फ़ाइल ब्राउज़र में कॉपी होती है।"
+  },
+  "fontsImported": {
+    "message": "$NAME$ इम्पोर्ट हुआ",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "ब्राउज़र में सहेज नहीं पाया; फिर कोशिश करो।",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "$NAME$ पॉपअप से हटा दिया।",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "यह सूची छोड़ो",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "इम्पोर्ट किया फ़ॉन्ट",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "यह ऐसी फ़ॉन्ट फ़ाइल नहीं जिसे यह ब्राउज़र चला सके।"
+  },
+  "fontsImportTooBig": {
+    "message": "फ़ाइल बहुत बड़ी है (सीमा $MB$ MB)।",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "इम्पोर्ट किया फ़ॉन्ट हटाओ"
+  },
+  "fontsLangLabel": {
+    "message": "जाँच:"
+  },
+  "fontsLangRecent": {
+    "message": "हाल में देखे"
+  },
+  "fontMoreRow": {
+    "message": "फ़ॉन्ट संभालो…"
+  },
+  "fontHiddenRow": {
+    "message": "और $N$ यह पंक्ति बना नहीं सकते",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

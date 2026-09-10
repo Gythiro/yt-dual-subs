@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Двојезични титлови за YouTube — оригинал и превод у једном слоју, без преклапања."
+  },
+  "headerSub": {
+    "message": "YouTube™ · један слој"
+  },
+  "disclaimer": {
+    "message": "Није повезано са YouTube-ом ни Google-ом."
+  },
+  "enableTitle": {
+    "message": "Укључи / искључи"
+  },
+  "openOptions": {
+    "message": "Подешавања"
+  },
+  "enableAria": {
+    "message": "Укључи проширење"
+  },
+  "previewTag": {
+    "message": "Преглед"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Брза смеђа лисица"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "најбоље за кинески",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Сопствени гласови прегледача (бесплатно)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (локално)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Преглед уживо"
+  },
+  "secTranslation": {
+    "message": "Превод"
+  },
+  "targetLang": {
+    "message": "Језик превода"
+  },
+  "backendLabel": {
+    "message": "Механизам"
+  },
+  "backendInfo": {
+    "message": "О механизму"
+  },
+  "backendAuto": {
+    "message": "Аутоматски (препоручено)"
+  },
+  "backendTlang": {
+    "message": "Цела трака (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Паметне реченице (Google)"
+  },
+  "backendByo": {
+    "message": "Сопствени кључ (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Аутоматски</b>: користи YouTube-ов превод целе траке кад видео то подржава, а кад не, пребацује се на паметне реченице.<br><b>Цела трака</b>: YouTube-ов сопствени превод; поравнат титл по титл. При честом коришћењу YouTube то може накратко да ограничи — проширење сачека и пита поново.<br><b>Паметне реченице</b>: од исецканих титлова слаже целе реченице па их преводи преко Google-овог бесплатног endpointа — јаснији текст од целе траке на разбацаним записима, али и ту често коришћење може да наиђе на ограничење; проширење успори и покуша поново.<br><b>Сопствени кључ</b>: састављену реченицу шаље провајдеру ког изабереш."
+  },
+  "backendGtxHint": {
+    "message": "Користи Google-ов бесплатни endpoint — при честом коришћењу може накратко да ограничи захтеве; проширење само успори темпо и покуша поново."
+  },
+  "backendStatusTlang": {
+    "message": "Овај видео: превод целе траке (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Овај видео: паметне реченице (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Endpoint за превод ограничава захтеве — успоравам и аутоматски покушавам поново. Већ преведени редови и даље раде."
+  },
+  "diagCopy": {
+    "message": "Копирај дијагностику"
+  },
+  "diagCopied": {
+    "message": "Копирано — налепи у имејл или пријаву"
+  },
+  "diagCopyFail": {
+    "message": "Копирање није успело — уместо тога сними екран"
+  },
+  "backendStatusSame": {
+    "message": "Титлови овог видеа већ су на језику превода — нема шта преводити."
+  },
+  "backendStatusNoTrack": {
+    "message": "За овај видео није пронађена трака титлова, па нема шта приказати.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Отвори YouTube видео и две линије ће се појавити на њему. Ако си већ на једном, поново учитај картицу."
+  },
+  "secLayout": {
+    "message": "Распоред"
+  },
+  "secLineStyle": {
+    "message": "Стил реда"
+  },
+  "secLineStyleHint": {
+    "message": "Фонт · Боја · Величина"
+  },
+  "orderLabel": {
+    "message": "Редослед"
+  },
+  "orderTransTop": {
+    "message": "Превод горе"
+  },
+  "orderOrigTop": {
+    "message": "Оригинал горе"
+  },
+  "positionLabel": {
+    "message": "Положај"
+  },
+  "posTop": {
+    "message": "Горе"
+  },
+  "posCenter": {
+    "message": "Средина"
+  },
+  "posBottom": {
+    "message": "Доле"
+  },
+  "posHint": {
+    "message": "Оквир са титловима можеш и да превучеш по видеу"
+  },
+  "posTryDrag": {
+    "message": "пробај"
+  },
+  "posTryNoVideo": {
+    "message": "Прво отвори YouTube видео"
+  },
+  "resetPos": {
+    "message": "Врати положај"
+  },
+  "rowGap": {
+    "message": "Размак редова"
+  },
+  "tabTrans": {
+    "message": "Превод"
+  },
+  "tabOrig": {
+    "message": "Оригинал"
+  },
+  "lineTabsAria": {
+    "message": "Ред титлова"
+  },
+  "lineShow": {
+    "message": "Прикажи овај ред"
+  },
+  "fontLabel": {
+    "message": "Фонт"
+  },
+  "fontSystem": {
+    "message": "Подразумевано системско"
+  },
+  "fontMono": {
+    "message": "Непропорционално"
+  },
+  "fontCjk": {
+    "message": "Прилагођено CJK"
+  },
+  "sizeLabel": {
+    "message": "Величина фонта"
+  },
+  "colText": {
+    "message": "Текст"
+  },
+  "colBg": {
+    "message": "Позадина"
+  },
+  "colStroke": {
+    "message": "Контура"
+  },
+  "colTextAria": {
+    "message": "Боја текста"
+  },
+  "colBgAria": {
+    "message": "Боја позадине"
+  },
+  "colStrokeAria": {
+    "message": "Боја контуре"
+  },
+  "bgOpacity": {
+    "message": "Непровидност позадине"
+  },
+  "strokeOpacity": {
+    "message": "Непровидност контуре"
+  },
+  "resetAll": {
+    "message": "Врати сва подешавања"
+  },
+  "resetConfirmText": {
+    "message": "Ово брише сва подешавања, API кључеве сачуване на овом рачунару и модел и глас запамћене за сваког провајдера, и поново укључује савете при првом покретању. Домени провајдера којима је дозвола већ дата остају одобрени, исто као и увезени фонтови.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Задржи подешавања",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Врати све",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Искључи двојезичне титлове"
+  },
+  "toggleTurnOn": {
+    "message": "Укључи двојезичне титлове"
+  },
+  "handleTitle": {
+    "message": "Превуци · двоклик враћа"
+  },
+  "handleAria": {
+    "message": "Превуци да помериш титлове, двоклик за враћање"
+  },
+  "secExport": {
+    "message": "Извоз"
+  },
+  "exportContent": {
+    "message": "Садржај"
+  },
+  "exportBi": {
+    "message": "Двојезично"
+  },
+  "exportOrig": {
+    "message": "Оригинал"
+  },
+  "exportTrans": {
+    "message": "Превод"
+  },
+  "exportSrt": {
+    "message": "Преузми SRT"
+  },
+  "exportWorking": {
+    "message": "Прављење…"
+  },
+  "exportDone": {
+    "message": "Титлови преузети"
+  },
+  "exportNoTrans": {
+    "message": "За овај видео нема превода — пробај механизам Цела трака или други језик превода."
+  },
+  "exportLimited": {
+    "message": "YouTube тренутно ограничава превод целе траке — пробај за минут. Са подешеним сопственим кључем картица извоза нуди квачицу која то заобилази."
+  },
+  "exportNoCues": {
+    "message": "Нема титлова за преузимање — пусти пар секунди да се титлови учитају, па пробај поново."
+  },
+  "exportNotYoutube": {
+    "message": "За извоз отвори страницу YouTube видеа."
+  },
+  "exportFailed": {
+    "message": "Извоз није успео — освежи страницу и пробај поново."
+  },
+  "updateNotesLabel": {
+    "message": "После ажурирања отвори белешке о издању"
+  },
+  "trackWarnDubOnly": {
+    "message": "Упозорење: овај видео има само аутоматске титлове из AI синхронизације (нема траке на изворном језику), па двојезични титлови можда неће одговарати звуку."
+  },
+  "whatsNewRow": {
+    "message": "Шта је ново у v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Овај видео: сопствени кључ ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Провајдер"
+  },
+  "byoSiteLabel": {
+    "message": "Сајт"
+  },
+  "byoSiteHint": {
+    "message": "Изабери сајт на ком имаш налог — то су две одвојене платформе и кључ са једне друга не прима."
+  },
+  "byoSiteGlobal": {
+    "message": "Међународно"
+  },
+  "byoSiteCn": {
+    "message": "Копнена Кина"
+  },
+  "byoBaseLabel": {
+    "message": "Адреса endpointа"
+  },
+  "byoModelLabel": {
+    "message": "Модел"
+  },
+  "byoModelRequired": {
+    "message": "Обавезно: назив модела"
+  },
+  "byoKeyLabel": {
+    "message": "API кључ"
+  },
+  "byoKeyClear": {
+    "message": "Обриши"
+  },
+  "byoKeyReplace": {
+    "message": "Замени"
+  },
+  "byoKeyCleared": {
+    "message": "Кључ сачуван на овом рачунару је обрисан."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Кључ сачуван на овом рачунару је обрисан. Тај је био у употреби, па превод сада иде преко $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "сачувано ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Прилагођено (компатибилно са OpenAI)"
+  },
+  "byoTest": {
+    "message": "Сачувај и тестирај"
+  },
+  "byoTesting": {
+    "message": "Тестирање…"
+  },
+  "byoTestOk": {
+    "message": "Повезано. Узорак: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Набави кључ"
+  },
+  "byoGuide": {
+    "message": "Треба ти помоћ око подешавања?"
+  },
+  "byoLocalHint": {
+    "message": "Кључ остаје у овом прегледачу, на овом рачунару — никад се не шаље. Текст титлова иде само провајдеру ког изабереш."
+  },
+  "byoErrNoProvider": {
+    "message": "Прво изабери провајдера."
+  },
+  "byoErrNoKey": {
+    "message": "Прво унеси API кључ, па притисни Сачувај и тестирај."
+  },
+  "byoErrNoModel": {
+    "message": "Прво изабери модел — узми један са листе или притисни „Излистај моделе мојим кључем“."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Овај провајдер не нуди листу. Прво учитај доступне моделе или сам упиши назив модела."
+  },
+  "byoErrNotApi": {
+    "message": "Та адреса је одговорила веб-страницом, не API-јем — обично зид за пријаву или мрежа која пресреће захтеве. Провери адресу или пробај другу мрежу."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "Основни URL API-ја мора бити пуна адреса https://."
+  },
+  "byoErrUrlHasKey": {
+    "message": "У адреси је кључ. Извади га из адресе и налепи у поље API кључа — адреса се синхронизује са налогом прегледача, поље кључа не."
+  },
+  "byoErrNoPerm": {
+    "message": "Без дозволе за тај API хост проширење не може да се повеже. Поново притисни „Сачувај и тестирај“ и дозволи приступ."
+  },
+  "byoErrAuth": {
+    "message": "Кључ је одбијен (401) — провери да је копиран цео и да је још активан."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Сервер на овом рачунару одбио је позив (403). Вероватно му није речено да дозволи проширење: OLLAMA_ORIGINS за Ollama, прекидач CORS у LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Провајдер је одбио овај позив (403). Кључ је обично у реду, а налог нема дозволу — неплаћени салдо, провера идентитета на чекању, модел који није укључен или регион. Провери налог у конзоли провајдера."
+  },
+  "byoErrListAuth": {
+    "message": "Овај кључ нема дозволу да чита листу. Дај му је на контролној табли провајдера, па учитај поново.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Провајдер ограничава захтеве — успоравам и аутоматски покушавам поново."
+  },
+  "byoErrLimitedTest": {
+    "message": "Провајдер ограничава захтеве. Сачекај тренутак и притисни поново."
+  },
+  "byoErrQuota": {
+    "message": "Овом налогу је понестало кредита или квоте за текући период — допуни га у конзоли провајдера да наставиш."
+  },
+  "byoErrBadRequest": {
+    "message": "Endpoint је одбио захтев — назив модела или основни URL можда нису тачни."
+  },
+  "byoErrBadShape": {
+    "message": "Модел није одговорио ред по ред како је тражено, а ни мањи поновни покушаји нису успели — пробај други модел."
+  },
+  "byoErrReasoning": {
+    "message": "Тај модел је вратио само ланац размишљања, без превода — изабери модел без размишљања."
+  },
+  "byoErrNetfail": {
+    "message": "Не могу да дохватим тај endpoint (мрежа или регионално ограничење)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Не могу да дохватим ту адресу: сервер није покренут или му није речено да дозволи проширење (OLLAMA_ORIGINS за Ollama, прекидач CORS у LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Овај провајдер не може да преведе на изабрани језик — промени језик или механизам."
+  },
+  "byoErrFailed": {
+    "message": "Веза није успела. Пробај за тренутак поново."
+  },
+  "optTitle": {
+    "message": "Подешавање услуге превода"
+  },
+  "optIntro": {
+    "message": "Изабери провајдера и налепи сопствени API кључ."
+  },
+  "optPricingLink": {
+    "message": "Цене и бесплатни пакет"
+  },
+  "optFetchModels": {
+    "message": "Излистај моделе мојим кључем"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Излистај доступне моделе"
+  },
+  "optFetching": {
+    "message": "Излиставање…"
+  },
+  "optModelsFetched": {
+    "message": "Пронађено $N$ модела",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$“ више није на листи овог провајдера — изабери други изнад.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Моделе није било могуће излистати — упиши назив модела ручно."
+  },
+  "optModelCustom": {
+    "message": "Прилагођено…"
+  },
+  "optNoModelsYet": {
+    "message": "Још нема листе модела — учитај је кључем или само упиши назив."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Још нема листе модела — учитај је или само упиши назив."
+  },
+  "optShowKey": {
+    "message": "Прикажи"
+  },
+  "optRecommended": {
+    "message": "препоручено"
+  },
+  "optConfigured": {
+    "message": "Подешено"
+  },
+  "optInUse": {
+    "message": "у употреби"
+  },
+  "optAfterSetup": {
+    "message": "Кад овде завршиш, отвори прозорче проширења и постави Механизам на „Сопствени кључ“."
+  },
+  "optTrademark": {
+    "message": "Сви називи и логотипи провајдера заштитни су знаци њихових власника. Ово проширење није повезано са њима, није одобрено ни спонзорисано од њих; ознаке служе само да препознаш API који изабереш."
+  },
+  "optSections": {
+    "message": "Одељци"
+  },
+  "optNavSetup": {
+    "message": "Услуга превода"
+  },
+  "optNavStart": {
+    "message": "Први кораци"
+  },
+  "optNavAbout": {
+    "message": "О"
+  },
+  "startIntro": {
+    "message": "Четири ствари. За коришћење не мораш ништа да подешаваш."
+  },
+  "startS1Title": {
+    "message": "Отвори видео — то је то"
+  },
+  "startS1Body": {
+    "message": "Било који YouTube видео који има титлове: оба реда се појаве сама."
+  },
+  "startS2Title": {
+    "message": "Стави их где хоћеш"
+  },
+  "startS2Body": {
+    "message": "Држи хватаљку у горњем левом углу оквира са титловима и превуци куда год желиш. Двоклик на хватаљку враћа је назад."
+  },
+  "startS2Alt": {
+    "message": "Шема плејера: хватаљка од шест тачака у горњем левом углу оквира са титловима, превлачи се на други положај"
+  },
+  "startS3Title": {
+    "message": "Желиш боље преводе"
+  },
+  "startS3Body": {
+    "message": "Додај сопствени API кључ: превод целих реченица и превод целог видеа при извозу."
+  },
+  "startGoSetup": {
+    "message": "Подеси услугу превода"
+  },
+  "aboutIntro": {
+    "message": "Шта је ово и куда иде твој текст."
+  },
+  "aboutVersion": {
+    "message": "Верзија"
+  },
+  "uiLocaleLabel": {
+    "message": "Језик интерфејса"
+  },
+  "uiLocaleAuto": {
+    "message": "Аутоматски — према прегледачу"
+  },
+  "uiLocaleHint": {
+    "message": "Језик менија и подешавања овог проширења. Понека ознака нацртана на самом видеу и даље прати језик прегледача. Језик превода бира се у прозорчету; табла „Језици превода“ само одлучује које језике прозорче нуди."
+  },
+  "cmdToggleSubs": {
+    "message": "Титлови укљ. или искљ."
+  },
+  "cmdToggleTts": {
+    "message": "Читање наглас укљ./искљ."
+  },
+  "cmdToggleTransLine": {
+    "message": "Прикажи или сакриј ред превода"
+  },
+  "optShortcutsLabel": {
+    "message": "Пречице на тастатури"
+  },
+  "optShortcutsOpen": {
+    "message": "Подеси пречице"
+  },
+  "optShortcutsHint": {
+    "message": "Ове тастере држи Chrome, не проширење. На почетку ништа није додељено; могу да се вежу три ствари: титлови укљ./искљ., читање наглас укљ./искљ. и приказ или сакривање реда превода."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome ту страницу одавде није отворио — налепи chrome://extensions/shortcuts у адресну траку."
+  },
+  "startTargetLabel": {
+    "message": "Језик превода"
+  },
+  "startTargetHint": {
+    "message": "Погођен из језичких подешавања прегледача при инсталацији проширења. Промени овде ако погодак није тачан — у прозорчету га можеш мењати било када."
+  },
+  "aboutBlurb": {
+    "message": "Други ред титлова за YouTube: оригинал у једном, превод у другом, а фонт, боја и положај по теби. Отворени код, бесплатно, без реклама."
+  },
+  "aboutPrivacy": {
+    "message": "Проширење нема наш сервер и не прикупља статистику. Текст титлова иде само услугама које изабереш: услузи превода коју одабереш и, ако их укључиш, провајдеру говора за читање наглас и провајдеру ког подесиш за резимее. Са сопственим кључем, кључ се чува само на овом рачунару."
+  },
+  "aboutChangelog": {
+    "message": "Списак измена"
+  },
+  "aboutRoadmap": {
+    "message": "План развоја"
+  },
+  "optFeedbackLink": {
+    "message": "Пријави проблем"
+  },
+  "popupByoConfigure": {
+    "message": "Подеси…"
+  },
+  "popupSummarize": {
+    "message": "Резимирај овај видео",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "није подешено"
+  },
+  "popupByoPick": {
+    "message": "Провајдер превода"
+  },
+  "popupByoUntested": {
+    "message": "није тестирано"
+  },
+  "popupModelPick": {
+    "message": "Модел превода"
+  },
+  "popupModelMore": {
+    "message": "Више модела…"
+  },
+  "popupModelFetch": {
+    "message": "Учитај моделе у подешавањима"
+  },
+  "popupModelSwitched": {
+    "message": "Од сада: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Модел није изабран"
+  },
+  "exportUsesYouTube": {
+    "message": "Преузимање користи YouTube-ов сопствени превод целе траке — бесплатно и не троши твој API кључ."
+  },
+  "exportUseByo": {
+    "message": "Преведи сопственим кључем (верније, троши квоту)"
+  },
+  "exportByoNote": {
+    "message": "Целу траку превешће твој провајдер твојим кључем. Пре слања ичега видећеш процену."
+  },
+  "exportConfirm": {
+    "message": "Превести $N$ редова титлова са $NAME$ — отприлике $REQ$ захтева на твоју квоту. Цела трака напушта прегледач ка том провајдеру; током репродукције шаљу се само делови које стварно гледаш.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Преведи и преузми"
+  },
+  "exportConfirmBack": {
+    "message": "Одустани"
+  },
+  "exportStop": {
+    "message": "Заустави"
+  },
+  "exportStopping": {
+    "message": "Заустављање…"
+  },
+  "exportProgress": {
+    "message": "Превођење… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ одсечака пало је на YouTube-ов превод",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Преузимање отказано."
+  },
+  "ftSite": {
+    "message": "Веб-сајт"
+  },
+  "ftSiteLabel": {
+    "message": "Сајт"
+  },
+  "ftFeedbackLabel": {
+    "message": "Повратне информације"
+  },
+  "ftReviewLabel": {
+    "message": "Оцени"
+  },
+  "ftGithub": {
+    "message": "Изворни код на GitHub-у"
+  },
+  "ftFeedback": {
+    "message": "Пошаљи повратне информације или пријави грешку"
+  },
+  "ftReview": {
+    "message": "Оцени у Chrome Web Store-у"
+  },
+  "optNeedKey": {
+    "message": "Још нема кључа — овог провајдера не можеш да користиш док га не додаш."
+  },
+  "optNeedBase": {
+    "message": "Још нема адресе endpointа — овог провајдера не можеш да користиш док је не унесеш."
+  },
+  "optBaseHint": {
+    "message": "Ради и основни URL и пуни endpoint, нпр. https://example.com/v1 или https://example.com/v1/chat/completions. За Ollama или LM Studio на овом рачунару прави облик је http://localhost:11434/v1. Кључ може да остане празан; обичан http ради само за loopback адресе."
+  },
+  "startS1Alt": {
+    "message": "Шема плејера: оригинални ред и преведени ред при дну слике"
+  },
+  "startS3Alt": {
+    "message": "Поређење: бесплатни механизам преводи једну реченицу у комадићима, сопствени кључ је схвати целу и опет растави"
+  },
+  "startPicFree": {
+    "message": "Бесплатни механизам"
+  },
+  "startPicFreeNote": {
+    "message": "једна реченица, исецкана"
+  },
+  "startPicByo": {
+    "message": "Сопствени кључ"
+  },
+  "startPicByoNote": {
+    "message": "схваћена цела, опет растављена"
+  },
+  "startS4Title": {
+    "message": "У плејеру је мали мени"
+  },
+  "startS4Body": {
+    "message": "Мала стрелица поред дугмета за титлове отвара мени: титлови, читање наглас, избор текста, резиме видеа и подешавања — без изласка из плејера."
+  },
+  "startS4Alt": {
+    "message": "Илустрација плејера: мала стрелица поред дугмета за титлове, доле десно, отвара мали мени"
+  },
+  "menuHintBubble": {
+    "message": "Читање наглас, резиме видеа, избор текста — све иза ове мале стрелице"
+  },
+  "troubleTitle": {
+    "message": "Нешто није у реду"
+  },
+  "troubleStep1": {
+    "message": "Прво провери прекидач у прозорчету — кад је искључен, цео слој титлова остаје сакривен."
+  },
+  "troubleStep2": {
+    "message": "Има ли овај видео уопште титлове? Пробај дугме CC у плејеру: без оригинала нема шта преводити."
+  },
+  "troubleStep3": {
+    "message": "Пробај популаран видео. Ако све остало ради, а само овај не, обично је у питању трака титлова овог видеа."
+  },
+  "troubleDiagHint": {
+    "message": "Још запело? Налепи дијагностичке податке у имејл или пријаву — носе верзију, стање механизма и шта тренутна картица ради, па уштедиш круг-два дописивања."
+  },
+  "langManage": {
+    "message": "Управљај језицима…"
+  },
+  "optNavLangs": {
+    "message": "Језици превода"
+  },
+  "optNavReadaloud": {
+    "message": "Читај наглас"
+  },
+  "ttsIntro": {
+    "message": "Прочитај преведени ред наглас. Сопствени гласови прегледача не требају никакав кључ; услуге у облаку подешаваш и тестираш овде."
+  },
+  "ttsVoiceLabel": {
+    "message": "Глас"
+  },
+  "ttsPreview": {
+    "message": "Преглед"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Репродукција…"
+  },
+  "ttsPreviewFail": {
+    "message": "Репродукција није успела — провери кључ и пробај Сачувај и тестирај"
+  },
+  "ttsFetchVoices": {
+    "message": "Учитај пуну листу овог језика својим кључем"
+  },
+  "ttsFetching": {
+    "message": "Учитавање…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "То су свих $N$ гласова које твој кључ има за тренутни језик, укључујући старије нивое Standard / Wavenet. Важе само за овај језик; кликни ред изнад за повратак на свакодневне гласове, који те прате кроз језике. Ову листу можеш да учиташ поново било када.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Назад на свакодневне гласове (прате језик)"
+  },
+  "ttsVoicesNone": {
+    "message": "Овај провајдер нема додатних гласова за овај језик — уграђени и даље раде."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Учитано $N$ гласова — то су предлози испод поља изнад.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Женски"
+  },
+  "ttsVoiceMale": {
+    "message": "Мушки"
+  },
+  "ttsTestOk": {
+    "message": "Повезано: тестни звук $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Већина сопствених гласова прегледача инсталирана је на овом рачунару и изговара ред овде. Понеки нису: Chrome нуди и мрежне гласове — оне чија имена почињу са „Google“ — и за њих прегледач шаље ред произвођачу. Код провајдера у облаку текст за изговор иде само провајдеру ког изабереш, а кључ остаје на овом рачунару."
+  },
+  "ttsEnableLabel": {
+    "message": "Читај превод наглас у видеу"
+  },
+  "ttsEnableHint": {
+    "message": "Кад је укључено, превод сваког титла изговара се чим се појави; ред чији превод није стигао на време прескаче се, а не надокнађује касније. Док се ред изговара, сопствени звук видеа падне на ниво постављен испод. Ред који траје предуго мало успори слику и позајми празнину иза себе — и са гласовима у облаку и са сопственим гласовима прегледача; прекидач испод држи успоравање док сваки ред не заврши."
+  },
+  "langsIntro": {
+    "message": "Које језике превода нуди прозорче."
+  },
+  "langsKept": {
+    "message": "Приказани у прозорчету"
+  },
+  "langsKeptHint": {
+    "message": "Појављују се у менију језика превода у прозорчету. Остави бар један."
+  },
+  "langsMore": {
+    "message": "Остали језици"
+  },
+  "langsMoreHint": {
+    "message": "Притисни + да додаш. Листа прати језике превода које подржавају бесплатни механизми и DeepL."
+  },
+  "langsReset": {
+    "message": "Врати подразумевано"
+  },
+  "langsResetDone": {
+    "message": "Назад на подразумевану листу."
+  },
+  "langsAddAria": {
+    "message": "Додај"
+  },
+  "langsRemoveAria": {
+    "message": "Уклони"
+  },
+  "langsLastOne": {
+    "message": "Остави бар један"
+  },
+  "langsAllAdded": {
+    "message": "Сви језици су већ на твојој листи."
+  },
+  "langsAdded": {
+    "message": "Додато $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Тај је био у употреби, па је језик превода сада $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Кинески сериф"
+  },
+  "fontCjkRound": {
+    "message": "Кинески заобљени"
+  },
+  "ttsVolLabel": {
+    "message": "Јачина читања наглас"
+  },
+  "ttsGroupPlayback": {
+    "message": "Репродукција"
+  },
+  "ttsDuckLabel": {
+    "message": "Изворни звук док говори"
+  },
+  "ttsDuckShort": {
+    "message": "Изворни звук"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Говори"
+  },
+  "ttsStatusOn": {
+    "message": "Читање наглас укљ."
+  },
+  "ttsOpenSettings": {
+    "message": "Подешавања читања наглас"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ редова овај видео · $M$ прескочено",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ редова овде · $M$ прескочено ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "превод није стигао на време"
+  },
+  "ttsSkipSilent": {
+    "message": "звук није изашао"
+  },
+  "ttsRegionLabel": {
+    "message": "Регион услуге"
+  },
+  "ttsErrNoRegion": {
+    "message": "Прво унеси регион услуге свог Azure кључа (нпр. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Овај рачунар нема гласова за говор."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Овај рачунар нема глас који чита $NAME$. Листа испод су гласови других језика — изабери један и ред ће се прочитати са акцентом тог језика.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Тражим гласове овог рачунара…"
+  },
+  "ttsErrRefused": {
+    "message": "Провајдер је одбио овај захтев — пробај други глас."
+  },
+  "ttsErrNoAudio": {
+    "message": "Звук није стигао — пробај поново или изабери други глас."
+  },
+  "startPicChop1": {
+    "message": "има два велика",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "разлога један је",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Има два велика разлога,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "први је…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Више гласова…"
+  },
+  "popupVoiceNone": {
+    "message": "Глас није изабран"
+  },
+  "ttsRobotVoices": {
+    "message": "Роботски",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Дозволи избор и копирање текста титлова",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Изабери текст",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Резиме",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Резиме видеа",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Затвори",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Овај видео нема употребљиву траку титлова.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Укључи титлове па резимирај — резиме се прави по траци титлова."
+  },
+  "sumNeedKey": {
+    "message": "Резимеи требају твоју услугу: било ког провајдера са твојим кључем у одељку превода или локални модел на овом рачунару. Бесплатни механизми само преводе. Не праве резиме.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Подеси услугу превода",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Резимирај",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Резимирај поново"
+  },
+  "sumFail": {
+    "message": "Резиме није успео. Пробај касније.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Ово ће послати целу траку титлова провајдеру $PROVIDER$, у $PARTS$ делова, на твоју квоту.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Резимирање… део $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ делова није се могло резимирати; остатак је изнад.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Титлови",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTube-ов сопствени превод тренутно је ограничен; паметне реченице (Google) попуњавају. Касније ће само покушати поново.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Endpoint за превод ограничава захтеве — наставак за отприлике $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Ради и основни URL и пуни endpoint, нпр. http://localhost:8880/v1 или http://localhost:8880/v1/audio/speech (локални говорни сервери као Kokoro или openai-edge-tts). Кључ може да остане празан; обичан http ради само за loopback адресе."
+  },
+  "optTtsNeedUrl": {
+    "message": "Још нема адресе endpointа — овог провајдера не можеш да користиш док је не додаш."
+  },
+  "ttsSkipRefused": {
+    "message": "провајдер је одбио те захтеве"
+  },
+  "ttsSkipNotSet": {
+    "message": "није подешено на овом рачунару"
+  },
+  "ttsSkipNoVoice": {
+    "message": "нема гласа за овај језик"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ тренутно не може да говори. Изабери други у реду изнад — сопствени гласови прегледача су на тој листи.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Трака титлова није стигла — аутоматски покушавам поново. Журиш? Освежи страницу да пробаш одмах."
+  },
+  "ttsCompleteLabel": {
+    "message": "Доврши сваки ред (слика успори у густим деловима)"
+  },
+  "ttsCompleteHint": {
+    "message": "На већим брзинама дуги редови често изгубе крај због следећег. Кад је ово укључено, слика успори колико реду треба — никад испод четвртине изабране брзине — и у празнинама се стигне. Док је слика толико успорена, сопствени звук видеа падне ниже од нивоа који изабереш, све до тишине."
+  },
+  "ttsCompleteHintText": {
+    "message": "На овој брзини се прилично редова скраћује. Укључи то и слика успори где треба, па их више стигне до краја."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Укључи"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Не приказуј више"
+  },
+  "provLocalSpeechShort": {
+    "message": "Прегледач"
+  },
+  "optNavFonts": {
+    "message": "Фонтови титлова"
+  },
+  "fontsIntro": {
+    "message": "Једна листа служи оба реда титлова; прозорче бира по реду. Сваки наведени фонт инсталиран је на овом рачунару."
+  },
+  "fontsKept": {
+    "message": "Приказани у прозорчету"
+  },
+  "fontsMore": {
+    "message": "Остали фонтови"
+  },
+  "fontsOnly": {
+    "message": "Само фонтови који то могу да исцртају"
+  },
+  "fontsCounting": {
+    "message": "Проверавам…"
+  },
+  "fontsSearch": {
+    "message": "Тражи називе фонтова"
+  },
+  "fontsNoMatch": {
+    "message": "Ниједан фонт не одговара."
+  },
+  "fontsKeptEmpty": {
+    "message": "У прозорчету је остао само подразумевани системски.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Сви фонтови су већ на листи."
+  },
+  "fontsReset": {
+    "message": "Врати подразумевано"
+  },
+  "fontsResetDone": {
+    "message": "Подразумевана листа враћена."
+  },
+  "fontsAdded": {
+    "message": "Додато $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Преглед: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Преглед"
+  },
+  "fontsUnavailable": {
+    "message": "Овај прегледач не дозвољава проширењу да чита инсталиране фонтове, па се може изабрати само подразумевано системско."
+  },
+  "fontNoGlyphs": {
+    "message": "не може да исцрта овај ред"
+  },
+  "fontNotHere": {
+    "message": "није на овом рачунару"
+  },
+  "fontsImport": {
+    "message": "Увези датотеку фонта…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; датотека се копира у прегледач."
+  },
+  "fontsImported": {
+    "message": "Увезено $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Није се могло сачувати у прегледачу; пробај поново.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Уклоњено $NAME$ из прозорчета.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Прескочи ову листу",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Увезени фонт",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "То није датотека фонта коју овај прегледач може да користи."
+  },
+  "fontsImportTooBig": {
+    "message": "Датотека је превелика (ограничење $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Обриши увезени фонт"
+  },
+  "fontsLangLabel": {
+    "message": "Провери за"
+  },
+  "fontsLangRecent": {
+    "message": "недавно гледано"
+  },
+  "fontMoreRow": {
+    "message": "Управљај фонтовима…"
+  },
+  "fontHiddenRow": {
+    "message": "Још $N$ не може да исцрта овај ред",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

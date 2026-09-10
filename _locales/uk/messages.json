@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Двомовні субтитри для YouTube — оригінал і переклад в одному шарі без перекриття."
+  },
+  "headerSub": {
+    "message": "YouTube™ · один шар"
+  },
+  "disclaimer": {
+    "message": "Не пов'язано з YouTube чи Google."
+  },
+  "enableTitle": {
+    "message": "Увімкнути / вимкнути"
+  },
+  "openOptions": {
+    "message": "Налаштування"
+  },
+  "enableAria": {
+    "message": "Увімкнути розширення"
+  },
+  "previewTag": {
+    "message": "Перегляд"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Прудкий коричневий лис"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "найкращий для китайської",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Голоси браузера (безкоштовно)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (локально)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Живий перегляд"
+  },
+  "secTranslation": {
+    "message": "Переклад"
+  },
+  "targetLang": {
+    "message": "Мова перекладу"
+  },
+  "backendLabel": {
+    "message": "Рушій"
+  },
+  "backendInfo": {
+    "message": "Про рушій"
+  },
+  "backendAuto": {
+    "message": "Авто (рекомендовано)"
+  },
+  "backendTlang": {
+    "message": "Весь трек (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Розумні речення (Google)"
+  },
+  "backendByo": {
+    "message": "Свій ключ (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Авто</b>: бере переклад усього треку YouTube, коли відео його підтримує, і перемикається на розумні речення, коли ні.<br><b>Весь трек</b>: власний переклад YouTube; репліка до репліки. За активного користування YouTube може ненадовго обмежити частоту запитів — розширення зачекає й запитає знову.<br><b>Розумні речення</b>: збирає уривки субтитрів у цілі речення й перекладає їх через безкоштовний ендпоінт Google — на рваних доріжках формулювання кращі, ніж у всього треку, але й тут можливі обмеження; розширення сповільнюється й повторює спробу.<br><b>Свій ключ</b>: надсилає зібране речення обраному тобою провайдеру."
+  },
+  "backendGtxHint": {
+    "message": "Користується безкоштовним ендпоінтом Google — за активного користування можливі короткі обмеження; розширення саме знижує темп і повторює запити."
+  },
+  "backendStatusTlang": {
+    "message": "Це відео: переклад усього треку (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Це відео: розумні речення (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Ендпоінт перекладу обмежив частоту запитів — знижуємо темп і повторюємо автоматично. Вже перекладені рядки працюють далі."
+  },
+  "diagCopy": {
+    "message": "Копіювати діагностику"
+  },
+  "diagCopied": {
+    "message": "Скопійовано — встав у лист або звернення"
+  },
+  "diagCopyFail": {
+    "message": "Не вдалося скопіювати — зроби знімок екрана"
+  },
+  "backendStatusSame": {
+    "message": "Субтитри цього відео вже мовою перекладу — перекладати нічого."
+  },
+  "backendStatusNoTrack": {
+    "message": "Для цього відео не знайдено доріжки субтитрів — показувати нічого.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Відкрий YouTube відео, і два рядки з'являться на ньому. Якщо ти вже на відео, онови вкладку."
+  },
+  "secLayout": {
+    "message": "Розміщення"
+  },
+  "secLineStyle": {
+    "message": "Стиль рядка"
+  },
+  "secLineStyleHint": {
+    "message": "Шрифт · Колір · Розмір"
+  },
+  "orderLabel": {
+    "message": "Порядок"
+  },
+  "orderTransTop": {
+    "message": "Переклад зверху"
+  },
+  "orderOrigTop": {
+    "message": "Оригінал зверху"
+  },
+  "positionLabel": {
+    "message": "Положення"
+  },
+  "posTop": {
+    "message": "Зверху"
+  },
+  "posCenter": {
+    "message": "По центру"
+  },
+  "posBottom": {
+    "message": "Знизу"
+  },
+  "posHint": {
+    "message": "Блок субтитрів можна перетягнути на відео"
+  },
+  "posTryDrag": {
+    "message": "спробувати"
+  },
+  "posTryNoVideo": {
+    "message": "Спочатку відкрий відео на YouTube"
+  },
+  "resetPos": {
+    "message": "Скинути положення"
+  },
+  "rowGap": {
+    "message": "Інтервал рядків"
+  },
+  "tabTrans": {
+    "message": "Переклад"
+  },
+  "tabOrig": {
+    "message": "Оригінал"
+  },
+  "lineTabsAria": {
+    "message": "Рядок субтитрів"
+  },
+  "lineShow": {
+    "message": "Показувати цей рядок"
+  },
+  "fontLabel": {
+    "message": "Шрифт"
+  },
+  "fontSystem": {
+    "message": "Системний"
+  },
+  "fontMono": {
+    "message": "Моноширинний"
+  },
+  "fontCjk": {
+    "message": "Для CJK"
+  },
+  "sizeLabel": {
+    "message": "Розмір"
+  },
+  "colText": {
+    "message": "Текст"
+  },
+  "colBg": {
+    "message": "Тло"
+  },
+  "colStroke": {
+    "message": "Контур"
+  },
+  "colTextAria": {
+    "message": "Колір тексту"
+  },
+  "colBgAria": {
+    "message": "Колір тла"
+  },
+  "colStrokeAria": {
+    "message": "Колір контуру"
+  },
+  "bgOpacity": {
+    "message": "Непрозорість тла"
+  },
+  "strokeOpacity": {
+    "message": "Непрозорість контуру"
+  },
+  "resetAll": {
+    "message": "Скинути всі налаштування"
+  },
+  "resetConfirmText": {
+    "message": "Це скидає всі налаштування, API-ключі, збережені на цьому комп'ютері, а також модель і голос, запам'ятовані для кожного провайдера, і знову вмикає підказки першого запуску. Домени провайдерів, яким вже надано доступ, лишаються дозволеними — як і імпортовані файли шрифтів.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Залишити налаштування",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Скинути все",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Вимкнути подвійні субтитри"
+  },
+  "toggleTurnOn": {
+    "message": "Увімкнути подвійні субтитри"
+  },
+  "handleTitle": {
+    "message": "Перетягни · подвійний клік скидає"
+  },
+  "handleAria": {
+    "message": "Перетягни субтитри, подвійний клік скидає положення"
+  },
+  "secExport": {
+    "message": "Експорт"
+  },
+  "exportContent": {
+    "message": "Вміст"
+  },
+  "exportBi": {
+    "message": "Двомовні"
+  },
+  "exportOrig": {
+    "message": "Оригінал"
+  },
+  "exportTrans": {
+    "message": "Переклад"
+  },
+  "exportSrt": {
+    "message": "Завантажити SRT"
+  },
+  "exportWorking": {
+    "message": "Створюю…"
+  },
+  "exportDone": {
+    "message": "Субтитри завантажено"
+  },
+  "exportNoTrans": {
+    "message": "Для цього відео немає перекладу — спробуй рушій «Весь трек» або іншу мову перекладу."
+  },
+  "exportLimited": {
+    "message": "YouTube зараз обмежує переклад усього треку — спробуй за хвилину. Якщо свій ключ вже налаштовано, на картці експорту є галочка, яка це обходить."
+  },
+  "exportNoCues": {
+    "message": "Немає субтитрів для завантаження — відтвори кілька секунд, щоб вони підвантажились, і спробуй знову."
+  },
+  "exportNotYoutube": {
+    "message": "Відкрий сторінку відео YouTube, щоб експортувати."
+  },
+  "exportFailed": {
+    "message": "Експорт не вдався — онови сторінку й спробуй знову."
+  },
+  "updateNotesLabel": {
+    "message": "Відкривати нотатки про випуск після оновлень"
+  },
+  "trackWarnDubOnly": {
+    "message": "Увага: у цього відео лише автосубтитри ШІ-дубляжу (без доріжки мовою оригіналу), тож двомовні субтитри можуть не збігатися зі звуком."
+  },
+  "whatsNewRow": {
+    "message": "Що нового у v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Це відео: свій ключ ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Провайдер"
+  },
+  "byoSiteLabel": {
+    "message": "Сайт"
+  },
+  "byoSiteHint": {
+    "message": "Обери сайт реєстрації — це різні платформи, і ключ від однієї інша не приймає."
+  },
+  "byoSiteGlobal": {
+    "message": "Міжнародний"
+  },
+  "byoSiteCn": {
+    "message": "Материковий Китай"
+  },
+  "byoBaseLabel": {
+    "message": "Адреса ендпоінта"
+  },
+  "byoModelLabel": {
+    "message": "Модель"
+  },
+  "byoModelRequired": {
+    "message": "Обов'язково: назва моделі"
+  },
+  "byoKeyLabel": {
+    "message": "API-ключ"
+  },
+  "byoKeyClear": {
+    "message": "Видалити"
+  },
+  "byoKeyReplace": {
+    "message": "Замінити"
+  },
+  "byoKeyCleared": {
+    "message": "Ключ, збережений на цьому комп'ютері, видалено."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Ключ, збережений на цьому комп'ютері, видалено. Він був у користуванні, тож переклад тепер іде через $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "збережено ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Свій (сумісний з OpenAI)"
+  },
+  "byoTest": {
+    "message": "Зберегти й перевірити"
+  },
+  "byoTesting": {
+    "message": "Перевірка…"
+  },
+  "byoTestOk": {
+    "message": "Підключено. Приклад: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Отримати ключ"
+  },
+  "byoGuide": {
+    "message": "Потрібна допомога з налаштуванням?"
+  },
+  "byoLocalHint": {
+    "message": "Ключ лишається в цьому браузері, на цьому комп'ютері — його ніколи не вивантажують. Текст субтитрів іде лише до обраного тобою провайдера."
+  },
+  "byoErrNoProvider": {
+    "message": "Спочатку обери провайдера."
+  },
+  "byoErrNoKey": {
+    "message": "Спочатку введи API-ключ, потім натисни «Зберегти й перевірити»."
+  },
+  "byoErrNoModel": {
+    "message": "Спочатку обери модель — зі списку або натисни «Список моделей з моїм ключем»."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Цей провайдер не віддає список. Спочатку завантаж доступні моделі або введи назву моделі самостійно."
+  },
+  "byoErrNotApi": {
+    "message": "Ця адреса відповіла вебсторінкою, а не API — зазвичай це стіна входу або мережа, що перехоплює запити. Перевір адресу або спробуй іншу мережу."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "Базовий URL API має бути повною адресою https://."
+  },
+  "byoErrUrlHasKey": {
+    "message": "В адресі є ключ. Прибери його з адреси й встав у поле API-ключа — адреса синхронізується з обліковкою браузера, поле ключа — ні."
+  },
+  "byoErrNoPerm": {
+    "message": "Без дозволу достукатися до цього хоста API розширення не підключиться. Натисни «Зберегти й перевірити» ще раз і дозволь доступ."
+  },
+  "byoErrAuth": {
+    "message": "Ключ відхилено (401) — перевір, що його скопійовано повністю і він ще діє."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Сервер на цьому комп'ютері відхилив запит (403). Скоріш за все, розширенню ще не дозволили доступ: OLLAMA_ORIGINS для Ollama, перемикач CORS у LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Провайдер відхилив цей запит (403). Зазвичай ключ у порядку, а обліковому запису не дозволено його виконувати — неоплачений баланс, незавершена перевірка особи, модель не ввімкнена або регіон. Перевір обліковий запис у консолі провайдера."
+  },
+  "byoErrListAuth": {
+    "message": "Цьому ключу не дозволено читати список. Надай це право в панелі провайдера й завантаж знову.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Провайдер обмежує частоту запитів — знижуємо темп і повторюємо автоматично."
+  },
+  "byoErrLimitedTest": {
+    "message": "Провайдер обмежує частоту запитів. Зачекай трохи й натисни знову."
+  },
+  "byoErrQuota": {
+    "message": "На цьому обліковому записі скінчилися кошти або квота за поточний період — поповни в консолі провайдера, щоб продовжити."
+  },
+  "byoErrBadRequest": {
+    "message": "Ендпоінт відхилив запит — можливо, хибна назва моделі або базовий URL."
+  },
+  "byoErrBadShape": {
+    "message": "Модель не відповіла рядок за рядком, як просили, і менші повтори теж не допомогли — спробуй іншу модель."
+  },
+  "byoErrReasoning": {
+    "message": "Модель повернула лише ланцюжок міркувань без перекладу — обери модель без режиму роздумів."
+  },
+  "byoErrNetfail": {
+    "message": "Не вдається достукатися до ендпоінта (мережа або регіональні обмеження)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Не вдається достукатися до цієї адреси: сервер не запущено або він ще не дозволяє доступ розширенню (OLLAMA_ORIGINS для Ollama, перемикач CORS у LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Цей провайдер не вміє перекладати обраною мовою — зміни мову або рушій."
+  },
+  "byoErrFailed": {
+    "message": "Підключення не вдалося. Спробуй ще раз трохи згодом."
+  },
+  "optTitle": {
+    "message": "Налаштування сервісу перекладу"
+  },
+  "optIntro": {
+    "message": "Обери провайдера й встав свій API-ключ."
+  },
+  "optPricingLink": {
+    "message": "Ціни та безкоштовний тариф"
+  },
+  "optFetchModels": {
+    "message": "Список моделей з моїм ключем"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Список доступних моделей"
+  },
+  "optFetching": {
+    "message": "Список…"
+  },
+  "optModelsFetched": {
+    "message": "Знайдено $N$ моделей",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "«$MODEL$» більше немає в списку цього провайдера — обери іншу вище.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Не вдалося отримати список моделей — введи назву моделі вручну."
+  },
+  "optModelCustom": {
+    "message": "Своя…"
+  },
+  "optNoModelsYet": {
+    "message": "Списку моделей ще немає — завантаж його ключем або просто введи назву."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Списку моделей ще немає — завантаж його або просто введи назву."
+  },
+  "optShowKey": {
+    "message": "Показати"
+  },
+  "optRecommended": {
+    "message": "рекомендовано"
+  },
+  "optConfigured": {
+    "message": "Налаштовано"
+  },
+  "optInUse": {
+    "message": "у користуванні"
+  },
+  "optAfterSetup": {
+    "message": "Коли закінчиш тут, відкрий спливне вікно розширення й постав рушій на «Свій ключ»."
+  },
+  "optTrademark": {
+    "message": "Усі назви та логотипи провайдерів — торговельні марки їхніх власників. Це розширення не пов'язане з ними, не схвалене й не спонсороване жодним із них; знаки показано лише щоб указати обраний API."
+  },
+  "optSections": {
+    "message": "Розділи"
+  },
+  "optNavSetup": {
+    "message": "Сервіс перекладу"
+  },
+  "optNavStart": {
+    "message": "З чого почати"
+  },
+  "optNavAbout": {
+    "message": "Про"
+  },
+  "startIntro": {
+    "message": "Чотири речі. Нічого налаштовувати не обов'язково."
+  },
+  "startS1Title": {
+    "message": "Відкрий відео — і все"
+  },
+  "startS1Body": {
+    "message": "Будь-яке відео YouTube із субтитрами: два рядки з'являться самі."
+  },
+  "startS2Title": {
+    "message": "Постав їх куди завгодно"
+  },
+  "startS2Body": {
+    "message": "Затисни ручку в лівому верхньому куті блоку субтитрів і перетягни куди хочеш. Подвійний клік по ручці поверне блок на місце."
+  },
+  "startS2Alt": {
+    "message": "Схема плеєра: шестикрапкова ручка в лівому верхньому куті блоку субтитрів, перетягування в інше місце"
+  },
+  "startS3Title": {
+    "message": "Хочеш кращий переклад"
+  },
+  "startS3Body": {
+    "message": "Додай свій API-ключ: переклад цілих речень і всього відео під час експорту."
+  },
+  "startGoSetup": {
+    "message": "Налаштувати сервіс перекладу"
+  },
+  "aboutIntro": {
+    "message": "Що це і куди йде твій текст."
+  },
+  "aboutVersion": {
+    "message": "Версія"
+  },
+  "uiLocaleLabel": {
+    "message": "Мова інтерфейсу"
+  },
+  "uiLocaleAuto": {
+    "message": "Авто — як у браузері"
+  },
+  "uiLocaleHint": {
+    "message": "Мова меню й налаштувань самого розширення. Деякі підписи на відео й далі йдуть за мовою браузера. Мову перекладу обирають у спливному вікні; розділ «Мови перекладу» лише вирішує, які мови там перелічені."
+  },
+  "cmdToggleSubs": {
+    "message": "Субтитри ввімк. / вимк."
+  },
+  "cmdToggleTts": {
+    "message": "Читання вголос ввімк. / вимк."
+  },
+  "cmdToggleTransLine": {
+    "message": "Показати або сховати рядок перекладу"
+  },
+  "optShortcutsLabel": {
+    "message": "Сполучення клавіш"
+  },
+  "optShortcutsOpen": {
+    "message": "Призначити клавіші"
+  },
+  "optShortcutsHint": {
+    "message": "Ці клавіші зберігає Chrome, а не розширення. Спочатку нічого не призначено; можна прив'язати три дії: субтитри ввімк/вимк, читання вголос ввімк/вимк і показ або приховування рядка перекладу."
+  },
+  "optShortcutsFallback": {
+    "message": "Звідси ця сторінка не відкрилася — встав chrome://extensions/shortcuts у адресний рядок."
+  },
+  "startTargetLabel": {
+    "message": "Мова перекладу"
+  },
+  "startTargetHint": {
+    "message": "Визначена з мовних налаштувань браузера під час встановлення розширення. Якщо вгадали неправильно — зміни її тут. У спливному вікні мову можна змінювати будь-коли."
+  },
+  "aboutBlurb": {
+    "message": "Другий рядок субтитрів для YouTube: оригінал на одному, переклад на іншому. Шрифт, колір і положення — на твій вибір. Відкритий код, безкоштовно, без реклами."
+  },
+  "aboutPrivacy": {
+    "message": "У розширення немає нашого сервера, статистику не збираємо. Текст субтитрів іде лише до обраних тобою сервісів: служби перекладу та, якщо їх увімкнено, провайдера озвучення й провайдера короткого змісту. Свій ключ зберігається лише на цьому комп'ютері."
+  },
+  "aboutChangelog": {
+    "message": "Журнал змін"
+  },
+  "aboutRoadmap": {
+    "message": "Плани"
+  },
+  "optFeedbackLink": {
+    "message": "Повідомити про проблему"
+  },
+  "popupByoConfigure": {
+    "message": "Налаштувати…"
+  },
+  "popupSummarize": {
+    "message": "Підсумувати це відео",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "не налаштовано"
+  },
+  "popupByoPick": {
+    "message": "Провайдер перекладу"
+  },
+  "popupByoUntested": {
+    "message": "не перевірено"
+  },
+  "popupModelPick": {
+    "message": "Модель перекладу"
+  },
+  "popupModelMore": {
+    "message": "Інші моделі…"
+  },
+  "popupModelFetch": {
+    "message": "Завантажити моделі в налаштуваннях"
+  },
+  "popupModelSwitched": {
+    "message": "Далі: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Модель не обрано"
+  },
+  "exportUsesYouTube": {
+    "message": "Завантаження використовує власний переклад усього треку YouTube — безкоштовно й не витрачає твій API-ключ."
+  },
+  "exportUseByo": {
+    "message": "Перекласти своїм ключем (точніше, витрачає квоту)"
+  },
+  "exportByoNote": {
+    "message": "Увесь трек перекладе твій провайдер твоїм ключем. Перед відправленням побачиш оцінку."
+  },
+  "exportConfirm": {
+    "message": "Перекласти $N$ рядків субтитрів через $NAME$ — приблизно $REQ$ запитів із твоєї квоти. Весь трек піде з браузера до цього провайдера; під час перегляду надсилаються лише ті фрагменти, які ти справді дивишся.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Перекласти й завантажити"
+  },
+  "exportConfirmBack": {
+    "message": "Скасувати"
+  },
+  "exportStop": {
+    "message": "Стоп"
+  },
+  "exportStopping": {
+    "message": "Зупиняю…"
+  },
+  "exportProgress": {
+    "message": "Переклад… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ фрагмент(ів) відкотилися на переклад YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Завантаження скасовано."
+  },
+  "ftSite": {
+    "message": "Сайт"
+  },
+  "ftSiteLabel": {
+    "message": "Сайт"
+  },
+  "ftFeedbackLabel": {
+    "message": "Відгук"
+  },
+  "ftReviewLabel": {
+    "message": "Оцінити"
+  },
+  "ftGithub": {
+    "message": "Код на GitHub"
+  },
+  "ftFeedback": {
+    "message": "Надіслати відгук або повідомити про помилку"
+  },
+  "ftReview": {
+    "message": "Оцінити в Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Ключа ще немає — цим провайдером не скористаєшся, поки його не додаси."
+  },
+  "optNeedBase": {
+    "message": "Адреси ендпоінта ще немає — цим провайдером не скористаєшся, поки її не вкажеш."
+  },
+  "optBaseHint": {
+    "message": "Підійде і базовий URL, і повний ендпоінт, напр. https://example.com/v1 або https://example.com/v1/chat/completions. Для Ollama чи LM Studio на цьому комп'ютері — http://localhost:11434/v1. Ключ можна лишити порожнім; звичайний http працює лише для loopback-адрес."
+  },
+  "startS1Alt": {
+    "message": "Схема плеєра: рядок оригіналу й рядок перекладу внизу кадру"
+  },
+  "startS3Alt": {
+    "message": "Порівняння: безкоштовний рушій перекладає речення шматками, свій ключ розуміє його цілком і ділить назад"
+  },
+  "startPicFree": {
+    "message": "Безкоштовний рушій"
+  },
+  "startPicFreeNote": {
+    "message": "одне речення, нарізане"
+  },
+  "startPicByo": {
+    "message": "Свій ключ"
+  },
+  "startPicByoNote": {
+    "message": "зрозуміло цілком, поділено"
+  },
+  "startS4Title": {
+    "message": "У плеєрі є маленьке меню"
+  },
+  "startS4Body": {
+    "message": "Маленька стрілка біля кнопки субтитрів відкриває меню: субтитри, читання вголос, виділення тексту, короткий зміст відео й налаштування — не виходячи з плеєра."
+  },
+  "startS4Alt": {
+    "message": "Ілюстрація плеєра: маленька стрілка біля кнопки субтитрів, внизу справа, відкриває невелике меню"
+  },
+  "menuHintBubble": {
+    "message": "Читання вголос, короткий зміст, виділення тексту — усе за цією маленькою стрілкою"
+  },
+  "troubleTitle": {
+    "message": "Щось не так"
+  },
+  "troubleStep1": {
+    "message": "Спочатку перевір перемикач у спливному вікні — якщо він вимкнений, шар субтитрів не з'явиться."
+  },
+  "troubleStep2": {
+    "message": "Чи є в цього відео субтитри взагалі? Спробуй кнопку CC у плеєрі: без оригіналу перекладати нічого."
+  },
+  "troubleStep3": {
+    "message": "Спробуй популярне відео. Якщо все інше працює, а це ні — зазвичай річ у доріжці субтитрів самого відео."
+  },
+  "troubleDiagHint": {
+    "message": "Усе ще не виходить? Встав діагностику в лист або issue — там версія, стан рушія і що робить поточна вкладка, це заощадить одне-два кола листування."
+  },
+  "langManage": {
+    "message": "Керувати мовами…"
+  },
+  "optNavLangs": {
+    "message": "Мови перекладу"
+  },
+  "optNavReadaloud": {
+    "message": "Читати вголос"
+  },
+  "ttsIntro": {
+    "message": "Озвучує перекладений рядок. Голоси твого браузера ключа взагалі не потребують; хмарні провайдери налаштовуються й перевіряються тут."
+  },
+  "ttsVoiceLabel": {
+    "message": "Голос"
+  },
+  "ttsPreview": {
+    "message": "Прослухати"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Грає…"
+  },
+  "ttsPreviewFail": {
+    "message": "Не вдалося відтворити — перевір ключ і натисни «Зберегти й перевірити»"
+  },
+  "ttsFetchVoices": {
+    "message": "Завантажити повний список цієї мови ключем"
+  },
+  "ttsFetching": {
+    "message": "Завантаження…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Це всі $N$ голосів твого ключа для поточної мови, включно зі старими лінійками Standard / Wavenet. Вони діють лише для цієї мови; рядок вище повертає до повсякденних голосів, які йдуть за зміною мови. Список можна отримати знову будь-коли.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Назад до звичайних голосів (вони йдуть за мовою)"
+  },
+  "ttsVoicesNone": {
+    "message": "У цього провайдера немає додаткових голосів для цієї мови — вбудовані й далі працюють."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Завантажено $N$ голосів — це пропозиції під полем вище.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Жіночий"
+  },
+  "ttsVoiceMale": {
+    "message": "Чоловічий"
+  },
+  "ttsTestOk": {
+    "message": "Підключено: тестове аудіо $KB$ КБ ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Більшість власних голосів браузера встановлені на цьому комп'ютері й вимовляють рядок тут. Деякі — ні: Chrome також пропонує онлайн-голоси — ті, чиї імена починаються з «Google» — і для них браузер надсилає рядок виробнику. З хмарним провайдером текст для озвучення йде лише до обраного тобою провайдера, а ключ лишається на цьому комп'ютері."
+  },
+  "ttsEnableLabel": {
+    "message": "Озвучувати переклад у відео"
+  },
+  "ttsEnableHint": {
+    "message": "Коли ввімкнено, переклад кожного субтитра озвучується щойно з'являється; рядок, чий переклад не встиг, пропускається, а не надолужується пізніше. Поки рядок звучить, власний звук відео падає до рівня, заданого нижче. Довгий рядок трохи сповільнює картинку й позичає паузу після себе — і з хмарними голосами, і з голосом браузера; перемикач нижче тримає сповільнення, доки не закінчиться кожен рядок."
+  },
+  "langsIntro": {
+    "message": "Які мови перекладу пропонує спливне вікно."
+  },
+  "langsKept": {
+    "message": "У спливному вікні"
+  },
+  "langsKeptHint": {
+    "message": "Вони з'являються в меню мови перекладу спливного вікна. Залиш хоча б одну."
+  },
+  "langsMore": {
+    "message": "Інші мови"
+  },
+  "langsMoreHint": {
+    "message": "Натисни +, щоб додати. Список відповідає мовам перекладу, які підтримують безкоштовні рушії та DeepL."
+  },
+  "langsReset": {
+    "message": "Відновити типові"
+  },
+  "langsResetDone": {
+    "message": "Повернули типовий список."
+  },
+  "langsAddAria": {
+    "message": "Додати"
+  },
+  "langsRemoveAria": {
+    "message": "Прибрати"
+  },
+  "langsLastOne": {
+    "message": "Залиш хоча б одну"
+  },
+  "langsAllAdded": {
+    "message": "Усі мови вже в твоєму списку."
+  },
+  "langsAdded": {
+    "message": "Додано $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Вона була в користуванні, тож мова перекладу тепер $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Китайський із засічками"
+  },
+  "fontCjkRound": {
+    "message": "Китайський округлий"
+  },
+  "ttsVolLabel": {
+    "message": "Гучність озвучення"
+  },
+  "ttsGroupPlayback": {
+    "message": "Відтворення"
+  },
+  "ttsDuckLabel": {
+    "message": "Оригінальний звук під час озвучення"
+  },
+  "ttsDuckShort": {
+    "message": "Оригінальний звук"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Озвучується"
+  },
+  "ttsStatusOn": {
+    "message": "Озвучення ввімкнено"
+  },
+  "ttsOpenSettings": {
+    "message": "Налаштування озвучення"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ рядків у цьому відео · $M$ пропущено",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ рядків тут · $M$ пропущено ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "переклад не встиг"
+  },
+  "ttsSkipSilent": {
+    "message": "звук не прозвучав"
+  },
+  "ttsRegionLabel": {
+    "message": "Регіон служби"
+  },
+  "ttsErrNoRegion": {
+    "message": "Спочатку введи регіон служби свого ключа Azure (наприклад, eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "На цьому комп'ютері немає голосів для читання вголос."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "На цьому комп'ютері немає голосу, який читає $NAME$. Нижче — голоси інших мов: обери один, і рядок прочитають з акцентом цієї мови.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Шукаємо голоси цього комп'ютера…"
+  },
+  "ttsErrRefused": {
+    "message": "Провайдер відхилив цей запит — спробуй інший голос."
+  },
+  "ttsErrNoAudio": {
+    "message": "Звук не дійшов — спробуй ще раз або обери інший голос."
+  },
+  "startPicChop1": {
+    "message": "є дві великі",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "причини одна з",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Є дві великі причини,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "перша з них —…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Інші голоси…"
+  },
+  "popupVoiceNone": {
+    "message": "Голос не обрано"
+  },
+  "ttsRobotVoices": {
+    "message": "Роботи",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Виділяти й копіювати субтитри",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Виділити текст",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Короткий зміст",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Короткий зміст відео",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Закрити",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "У цього відео немає придатної доріжки субтитрів.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Увімкни субтитри знову, щоб зробити короткий зміст — він будується з доріжки субтитрів."
+  },
+  "sumNeedKey": {
+    "message": "Для короткого змісту потрібен власний сервіс: будь-який провайдер із твоїм ключем у розділі перекладу або локальна модель на цьому комп'ютері. Безкоштовні рушії лише перекладають. Короткого змісту вони не складають.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Налаштувати сервіс перекладу",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Підсумувати",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Підсумувати знову"
+  },
+  "sumFail": {
+    "message": "Короткий зміст не вдався. Спробуй пізніше.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Це надішле всю доріжку субтитрів до $PROVIDER$, частинами: $PARTS$, з твоєї квоти.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Підсумовую… частина $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ частин(и) не вдалося підсумувати; решта вище.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Субтитри",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Власний переклад YouTube зараз обмежено за частотою; розумні речення (Google) підхоплюють. Пізніше повтор відбудеться сам.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Ендпоінт перекладу обмежує частоту запитів — продовжимо приблизно через $SECONDS$ с.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Підійде і базовий URL, і повний ендпоінт, напр. http://localhost:8880/v1 або http://localhost:8880/v1/audio/speech (локальні сервери озвучення на кшталт Kokoro чи openai-edge-tts). Ключ можна лишити порожнім; звичайний http працює лише для loopback-адрес."
+  },
+  "optTtsNeedUrl": {
+    "message": "Адреси ендпоінта ще немає — цим провайдером не скористаєшся, поки її не додаси."
+  },
+  "ttsSkipRefused": {
+    "message": "провайдер відхилив ті запити"
+  },
+  "ttsSkipNotSet": {
+    "message": "не налаштовано на цьому комп'ютері"
+  },
+  "ttsSkipNoVoice": {
+    "message": "немає голосу для цієї мови"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ зараз не може говорити. Обери інший варіант у рядку вище — голоси браузера є в цьому списку.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Доріжка субтитрів не прийшла — повторюємо автоматично. Поспішаєш? Онови сторінку, щоб спробувати зараз."
+  },
+  "ttsCompleteLabel": {
+    "message": "Дочитувати кожен рядок (картинка сповільнюється в щільних місцях)"
+  },
+  "ttsCompleteHint": {
+    "message": "На вищій швидкості довгі рядки часто втрачають хвіст — його перехоплює наступний. Якщо ввімкнено, картинка сповільнюється настільки, скільки треба рядку — ніколи не нижче чверті обраної тобою швидкості — і наздоганяє в паузах. Поки картинка так сильно сповільнена, власний звук відео падає нижче заданого рівня, аж до тиші."
+  },
+  "ttsCompleteHintText": {
+    "message": "На цій швидкості чимало рядків обривається. Якщо ввімкнути, картинка сповільнюється там, де треба, тож більше рядків дочитується."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Увімкнути"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Більше не показувати"
+  },
+  "provLocalSpeechShort": {
+    "message": "Браузер"
+  },
+  "optNavFonts": {
+    "message": "Шрифти субтитрів"
+  },
+  "fontsIntro": {
+    "message": "Один список для обох рядків субтитрів; шрифт для кожного обирають у спливному вікні. Усі шрифти в списку встановлені на цьому комп'ютері."
+  },
+  "fontsKept": {
+    "message": "У спливному вікні"
+  },
+  "fontsMore": {
+    "message": "Інші шрифти"
+  },
+  "fontsOnly": {
+    "message": "Лише шрифти, які це малюють"
+  },
+  "fontsCounting": {
+    "message": "Перевірка…"
+  },
+  "fontsSearch": {
+    "message": "Пошук шрифтів"
+  },
+  "fontsNoMatch": {
+    "message": "Немає збігів."
+  },
+  "fontsKeptEmpty": {
+    "message": "Для спливного вікна лишився лише системний шрифт.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Усі шрифти вже в списку."
+  },
+  "fontsReset": {
+    "message": "Відновити типові"
+  },
+  "fontsResetDone": {
+    "message": "Типовий список відновлено."
+  },
+  "fontsAdded": {
+    "message": "Додано $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Перегляд: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Перегляд"
+  },
+  "fontsUnavailable": {
+    "message": "Цей браузер не дає розширенню читати встановлені шрифти, тож можна обрати лише системний."
+  },
+  "fontNoGlyphs": {
+    "message": "не малює цей рядок"
+  },
+  "fontNotHere": {
+    "message": "немає на цьому комп'ютері"
+  },
+  "fontsImport": {
+    "message": "Імпортувати файл шрифту…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; файл копіюється в браузер."
+  },
+  "fontsImported": {
+    "message": "Імпортовано $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Не вдалося зберегти в браузері; спробуй ще раз.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Прибрано $NAME$ зі спливного вікна.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Пропустити цей список",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Імпортований шрифт",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Це не файл шрифту, який цей браузер може використати."
+  },
+  "fontsImportTooBig": {
+    "message": "Файл завеликий (ліміт $MB$ МБ).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Видалити імпортований шрифт"
+  },
+  "fontsLangLabel": {
+    "message": "Перевірити для"
+  },
+  "fontsLangRecent": {
+    "message": "недавно переглянуті"
+  },
+  "fontMoreRow": {
+    "message": "Керувати шрифтами…"
+  },
+  "fontHiddenRow": {
+    "message": "ще $N$ не малюють цей рядок",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Tosprogede undertekster til YouTube — original og oversættelse i ét lag uden overlap."
+  },
+  "headerSub": {
+    "message": "YouTube™ · ét lag"
+  },
+  "disclaimer": {
+    "message": "Ikke tilknyttet YouTube eller Google."
+  },
+  "enableTitle": {
+    "message": "Slå til / fra"
+  },
+  "openOptions": {
+    "message": "Indstillinger"
+  },
+  "enableAria": {
+    "message": "Slå udvidelsen til"
+  },
+  "previewTag": {
+    "message": "Visning"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Den hurtige brune ræv"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "bedst til kinesisk",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Browserens egne stemmer (gratis)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (lokal)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Live-forhåndsvisning"
+  },
+  "secTranslation": {
+    "message": "Oversættelse"
+  },
+  "targetLang": {
+    "message": "Oversættelsessprog"
+  },
+  "backendLabel": {
+    "message": "Motor"
+  },
+  "backendInfo": {
+    "message": "Om motoren"
+  },
+  "backendAuto": {
+    "message": "Auto (anbefalet)"
+  },
+  "backendTlang": {
+    "message": "Helspor (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Smarte sætninger (Google)"
+  },
+  "backendByo": {
+    "message": "Egen nøgle (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b>: bruger YouTubes oversættelse af hele sporet, når videoen understøtter det, og skifter til smarte sætninger, når den ikke gør.<br><b>Helspor</b>: YouTubes egen oversættelse; undertekst for undertekst. Kraftig brug kan få YouTube til at begrænse den et øjeblik — udvidelsen venter og spørger igen.<br><b>Smarte sætninger</b>: samler fragmenterede undertekster til hele sætninger og oversætter dem via Googles gratis-slutpunkt — bedre formulering end helspor på rodede spor, men kraftig brug kan også begrænses der; udvidelsen sænker farten og prøver igen.<br><b>Egen nøgle</b>: sender den samlede sætning til den udbyder, du har sat op."
+  },
+  "backendGtxHint": {
+    "message": "Bruger Googles gratis-slutpunkt — kraftig brug kan begrænses et øjeblik; udvidelsen sænker tempoet og prøver igen af sig selv."
+  },
+  "backendStatusTlang": {
+    "message": "Denne video: helspor (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Denne video: smarte sætninger (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Oversættelsesslutpunktet begrænser tempoet — sænker farten og prøver igen automatisk. Allerede oversatte linjer virker videre."
+  },
+  "diagCopy": {
+    "message": "Kopiér diagnostik"
+  },
+  "diagCopied": {
+    "message": "Kopieret — sæt det ind i en mail eller et issue"
+  },
+  "diagCopyFail": {
+    "message": "Kopiering mislykkedes — tag et skærmbillede i stedet"
+  },
+  "backendStatusSame": {
+    "message": "Denne videos undertekster er allerede på dit oversættelsessprog — intet at oversætte."
+  },
+  "backendStatusNoTrack": {
+    "message": "Intet undertekstspor blev fundet til denne video, så der er intet at vise.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Åbn en YouTube-video, så vises de to linjer på den. Hvis du allerede er på en, så genindlæs fanen."
+  },
+  "secLayout": {
+    "message": "Opstilling"
+  },
+  "secLineStyle": {
+    "message": "Linjestil"
+  },
+  "secLineStyleHint": {
+    "message": "Skrifttype · Farve · Størrelse"
+  },
+  "orderLabel": {
+    "message": "Rækkefølge"
+  },
+  "orderTransTop": {
+    "message": "Oversættelse øverst"
+  },
+  "orderOrigTop": {
+    "message": "Original øverst"
+  },
+  "positionLabel": {
+    "message": "Placering"
+  },
+  "posTop": {
+    "message": "Øverst"
+  },
+  "posCenter": {
+    "message": "Midten"
+  },
+  "posBottom": {
+    "message": "Nederst"
+  },
+  "posHint": {
+    "message": "Du kan også trække undertekstfeltet på videoen"
+  },
+  "posTryDrag": {
+    "message": "prøv"
+  },
+  "posTryNoVideo": {
+    "message": "Åbn en YouTube-video først"
+  },
+  "resetPos": {
+    "message": "Nulstil placering"
+  },
+  "rowGap": {
+    "message": "Linjeafstand"
+  },
+  "tabTrans": {
+    "message": "Oversættelse"
+  },
+  "tabOrig": {
+    "message": "Original"
+  },
+  "lineTabsAria": {
+    "message": "Undertekstlinje"
+  },
+  "lineShow": {
+    "message": "Vis denne linje"
+  },
+  "fontLabel": {
+    "message": "Skrifttype"
+  },
+  "fontSystem": {
+    "message": "Systemstandard"
+  },
+  "fontMono": {
+    "message": "Monospace"
+  },
+  "fontCjk": {
+    "message": "CJK-venlig"
+  },
+  "sizeLabel": {
+    "message": "Størrelse"
+  },
+  "colText": {
+    "message": "Tekst"
+  },
+  "colBg": {
+    "message": "Baggrund"
+  },
+  "colStroke": {
+    "message": "Kontur"
+  },
+  "colTextAria": {
+    "message": "Tekstfarve"
+  },
+  "colBgAria": {
+    "message": "Baggrundsfarve"
+  },
+  "colStrokeAria": {
+    "message": "Konturfarve"
+  },
+  "bgOpacity": {
+    "message": "Baggrundens dækning"
+  },
+  "strokeOpacity": {
+    "message": "Konturens dækning"
+  },
+  "resetAll": {
+    "message": "Nulstil alle indstillinger"
+  },
+  "resetConfirmText": {
+    "message": "Det rydder hver indstilling, API-nøglerne gemt på denne computer og den model og stemme, der huskes for hver udbyder, og slår tipsene fra første kørsel til igen. Udbyderdomæner, du allerede har givet adgang til, bliver ved med at have adgang, og det gør de skrifttypefiler, du har importeret, også.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Behold mine indstillinger",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Nulstil alt",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Slå tosprogede undertekster fra"
+  },
+  "toggleTurnOn": {
+    "message": "Slå tosprogede undertekster til"
+  },
+  "handleTitle": {
+    "message": "Træk · dobbeltklik nulstil"
+  },
+  "handleAria": {
+    "message": "Træk for at flytte underteksterne, dobbeltklik for at nulstille"
+  },
+  "secExport": {
+    "message": "Eksport"
+  },
+  "exportContent": {
+    "message": "Indhold"
+  },
+  "exportBi": {
+    "message": "Tosproget"
+  },
+  "exportOrig": {
+    "message": "Original"
+  },
+  "exportTrans": {
+    "message": "Oversættelse"
+  },
+  "exportSrt": {
+    "message": "Hent SRT"
+  },
+  "exportWorking": {
+    "message": "Opretter…"
+  },
+  "exportDone": {
+    "message": "Undertekster hentet"
+  },
+  "exportNoTrans": {
+    "message": "Ingen oversættelse til denne video — prøv motoren Helspor eller et andet oversættelsessprog."
+  },
+  "exportLimited": {
+    "message": "YouTube begrænser lige nu oversættelse af hele spor — prøv igen om et minut. Med en egen nøgle sat op har eksportkortet et flueben, der går uden om det."
+  },
+  "exportNoCues": {
+    "message": "Ingen undertekster at hente — afspil et par sekunder, så de indlæses, og prøv så igen."
+  },
+  "exportNotYoutube": {
+    "message": "Åbn en YouTube-videoside for at eksportere."
+  },
+  "exportFailed": {
+    "message": "Eksport mislykkedes — opdater siden og prøv igen."
+  },
+  "updateNotesLabel": {
+    "message": "Åbn udgivelsesnoter efter opdateringer"
+  },
+  "trackWarnDubOnly": {
+    "message": "Bemærk: denne video har kun AI-dubbede auto-undertekster (intet spor på originalsproget), så de tosprogede undertekster måske ikke passer til lyden."
+  },
+  "whatsNewRow": {
+    "message": "Nyt i v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Denne video: din egen nøgle ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Udbyder"
+  },
+  "byoSiteLabel": {
+    "message": "Websted"
+  },
+  "byoSiteHint": {
+    "message": "Vælg det site, du tilmeldte dig på — de to er separate platforme, og en nøgle fra den ene tages ikke imod af den anden."
+  },
+  "byoSiteGlobal": {
+    "message": "International"
+  },
+  "byoSiteCn": {
+    "message": "Fastlandskina"
+  },
+  "byoBaseLabel": {
+    "message": "Slutpunktsadresse"
+  },
+  "byoModelLabel": {
+    "message": "Model"
+  },
+  "byoModelRequired": {
+    "message": "Påkrævet: modelnavn"
+  },
+  "byoKeyLabel": {
+    "message": "API-nøgle"
+  },
+  "byoKeyClear": {
+    "message": "Slet"
+  },
+  "byoKeyReplace": {
+    "message": "Erstat"
+  },
+  "byoKeyCleared": {
+    "message": "Nøglen gemt på denne computer er slettet."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Nøglen gemt på denne computer er slettet. Den var i brug, så oversættelsen går nu via $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "gemt ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Tilpasset (OpenAI-kompatibel)"
+  },
+  "byoTest": {
+    "message": "Gem og test"
+  },
+  "byoTesting": {
+    "message": "Tester…"
+  },
+  "byoTestOk": {
+    "message": "Forbundet. Eksempel: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Få en nøgle"
+  },
+  "byoGuide": {
+    "message": "Brug for hjælp til at sætte det op?"
+  },
+  "byoLocalHint": {
+    "message": "Nøglen bliver i denne browser, på denne computer — den uploades aldrig. Underteksten går kun til den udbyder, du valgte."
+  },
+  "byoErrNoProvider": {
+    "message": "Vælg en udbyder først."
+  },
+  "byoErrNoKey": {
+    "message": "Indtast en API-nøgle først, og tryk så på Gem og test."
+  },
+  "byoErrNoModel": {
+    "message": "Vælg en model først — tag en fra listen, eller tryk på ”List modeller med min nøgle”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Denne udbyder sender ingen liste. Hent de tilgængelige modeller først, eller skriv modelnavnet selv."
+  },
+  "byoErrNotApi": {
+    "message": "Den adresse svarede med en webside, ikke API’et — oftest en loginmur eller et netværk, der opsnapper kald. Tjek adressen, eller prøv et andet netværk."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "API-basen skal være en fuld https://-adresse."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adressen har en nøgle i sig. Tag den ud af adressen og sæt den ind i feltet til API-nøgle — adressen synkes til din browserkonto, nøglefeltet gør ikke."
+  },
+  "byoErrNoPerm": {
+    "message": "Uden tilladelse til at nå den API-vært kan udvidelsen ikke forbinde. Tryk på ”Gem og test” igen og tillad det."
+  },
+  "byoErrAuth": {
+    "message": "Nøglen blev afvist (401) — tjek at den er kopieret fuldt ud og stadig er aktiv."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Serveren på denne computer afviste kaldet (403). Den er højst sandsynligt ikke blevet bedt om at slippe udvidelsen ind: OLLAMA_ORIGINS til Ollama, CORS-kontakten i LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Udbyderen afviste dette kald (403). Som regel er nøglen i orden, og kontoen må bare ikke udføre det — ubetalt saldo, et identitetstjek der venter, en model der ikke er slået til, eller regionen. Tjek kontoen i udbyderens konsol."
+  },
+  "byoErrListAuth": {
+    "message": "Denne nøgle må ikke læse listen. Giv den den tilladelse i udbyderens panel, og hent så igen.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Udbyderen begrænser tempoet — sænker farten og prøver igen automatisk."
+  },
+  "byoErrLimitedTest": {
+    "message": "Udbyderen begrænser tempoet. Vent et øjeblik og tryk igen."
+  },
+  "byoErrQuota": {
+    "message": "Denne konto er løbet tør for kredit eller kvote i den aktuelle periode — fyld op i udbyderens konsol for at fortsætte."
+  },
+  "byoErrBadRequest": {
+    "message": "Slutpunktet afviste anmodningen — modelnavnet eller basis-URL’en kan være forkert."
+  },
+  "byoErrBadShape": {
+    "message": "Modellen svarede ikke linje for linje som bedt, og mindre forsøg mislykkedes også — prøv en anden model."
+  },
+  "byoErrReasoning": {
+    "message": "Den model returnerede kun sin tankekæde og ingen oversættelse — vælg en model uden tænke-tilstand."
+  },
+  "byoErrNetfail": {
+    "message": "Kan ikke nå det slutpunkt (netværk eller regional begrænsning)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "Kan ikke nå den adresse: enten kører serveren ikke, eller den er ikke blevet bedt om at slippe udvidelsen ind (OLLAMA_ORIGINS til Ollama, CORS-kontakten i LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Denne udbyder kan ikke oversætte til det sprog, du har valgt — skift sprog eller motor."
+  },
+  "byoErrFailed": {
+    "message": "Forbindelsen mislykkedes. Prøv igen om et øjeblik."
+  },
+  "optTitle": {
+    "message": "Opsætning af oversættelsestjeneste"
+  },
+  "optIntro": {
+    "message": "Vælg en udbyder og indsæt din egen API-nøgle."
+  },
+  "optPricingLink": {
+    "message": "Priser og gratiskvote"
+  },
+  "optFetchModels": {
+    "message": "List modeller med min nøgle"
+  },
+  "optFetchModelsNoKey": {
+    "message": "List tilgængelige modeller"
+  },
+  "optFetching": {
+    "message": "Lister…"
+  },
+  "optModelsFetched": {
+    "message": "Fandt $N$ modeller",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "”$MODEL$” står ikke længere på denne udbyders liste — vælg en anden ovenfor.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Kunne ikke liste modeller — skriv modelnavnet i stedet."
+  },
+  "optModelCustom": {
+    "message": "Tilpasset…"
+  },
+  "optNoModelsYet": {
+    "message": "Ingen modelliste endnu — hent en med din nøgle, eller skriv bare navnet."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Ingen modelliste endnu — hent en, eller skriv bare navnet."
+  },
+  "optShowKey": {
+    "message": "Vis"
+  },
+  "optRecommended": {
+    "message": "anbefalet"
+  },
+  "optConfigured": {
+    "message": "Sat op"
+  },
+  "optInUse": {
+    "message": "i brug"
+  },
+  "optAfterSetup": {
+    "message": "Når du er færdig her, så åbn udvidelsens popup og sæt Motor til ”Egen nøgle”."
+  },
+  "optTrademark": {
+    "message": "Alle udbydernavne og logoer er varemærker tilhørende deres respektive ejere. Denne udvidelse er ikke tilknyttet, godkendt eller sponsoreret af nogen af dem; mærkerne vises kun for at pege på det API, du valgte."
+  },
+  "optSections": {
+    "message": "Afsnit"
+  },
+  "optNavSetup": {
+    "message": "Oversættelsestjeneste"
+  },
+  "optNavStart": {
+    "message": "Kom i gang"
+  },
+  "optNavAbout": {
+    "message": "Om"
+  },
+  "startIntro": {
+    "message": "Fire ting. Du behøver ikke at sætte noget op for at bruge det."
+  },
+  "startS1Title": {
+    "message": "Åbn en video — det er det"
+  },
+  "startS1Body": {
+    "message": "Enhver YouTube-video med undertekster: de to linjer kommer af sig selv."
+  },
+  "startS2Title": {
+    "message": "Læg dem, hvor du vil"
+  },
+  "startS2Body": {
+    "message": "Hold i grebet øverst til venstre på undertekstfeltet og træk det hen, hvor du vil. Dobbeltklik på grebet for at lægge det tilbage."
+  },
+  "startS2Alt": {
+    "message": "Afspillerdiagram: et sekspunktsgreb i øverste venstre hjørne af undertekstfeltet, som trækkes til en anden plads"
+  },
+  "startS3Title": {
+    "message": "Vil du have bedre oversættelser"
+  },
+  "startS3Body": {
+    "message": "Tilføj din egen API-nøgle: oversættelse af hele sætninger, og hele videoen når du eksporterer."
+  },
+  "startGoSetup": {
+    "message": "Sæt en oversættelsestjeneste op"
+  },
+  "aboutIntro": {
+    "message": "Hvad det her er, og hvor din tekst tager hen."
+  },
+  "aboutVersion": {
+    "message": "Version"
+  },
+  "uiLocaleLabel": {
+    "message": "Sprog i grænsefladen"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — følg browseren"
+  },
+  "uiLocaleHint": {
+    "message": "Sproget i udvidelsens egne menuer og indstillinger. Nogle etiketter tegnet oven på selve videoen følger stadig browserens sprog. Oversættelsessproget vælges i popuppen; ruden ”Oversættelsessprog” bestemmer kun, hvilke sprog popuppen viser."
+  },
+  "cmdToggleSubs": {
+    "message": "Undertekster til eller fra"
+  },
+  "cmdToggleTts": {
+    "message": "Oplæsning til eller fra"
+  },
+  "cmdToggleTransLine": {
+    "message": "Vis eller skjul oversættelseslinjen"
+  },
+  "optShortcutsLabel": {
+    "message": "Tastaturgenveje"
+  },
+  "optShortcutsOpen": {
+    "message": "Angiv genveje"
+  },
+  "optShortcutsHint": {
+    "message": "Chrome holder de her taster, ikke udvidelsen. Ingenting er bundet fra start; tre ting kan være det: undertekster til/fra, oplæsning til/fra og vis eller skjul oversættelseslinjen."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome ville ikke åbne den side herfra — sæt chrome://extensions/shortcuts ind i adresselinjen."
+  },
+  "startTargetLabel": {
+    "message": "Oversættelsessprog"
+  },
+  "startTargetHint": {
+    "message": "Gættet ud fra browserens sprogindstillinger, da udvidelsen blev installeret. Skift det her, hvis gættet er forkert — popuppen kan skifte det når som helst."
+  },
+  "aboutBlurb": {
+    "message": "En anden undertekstlinje til YouTube: originalet på den ene, oversættelsen på den anden, med skrifttype, farve og placering, som du vil. Åben kildekode, gratis, ingen reklamer."
+  },
+  "aboutPrivacy": {
+    "message": "Udvidelsen har ingen server hos os og indsamler ingen statistik. Underteksten går kun til tjenester, du har valgt: den oversættelsestjeneste, du vælger, og, hvis du slår dem til, stemmeudbyderen til oplæsning og den, du har sat op til resuméer. Med din egen nøgle gemmes nøglen kun på denne computer."
+  },
+  "aboutChangelog": {
+    "message": "Ændringslog"
+  },
+  "aboutRoadmap": {
+    "message": "Roadmap"
+  },
+  "optFeedbackLink": {
+    "message": "Rapportér et problem"
+  },
+  "popupByoConfigure": {
+    "message": "Sæt op…"
+  },
+  "popupSummarize": {
+    "message": "Opsummer denne video",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "ikke sat op"
+  },
+  "popupByoPick": {
+    "message": "Oversættelsesudbyder"
+  },
+  "popupByoUntested": {
+    "message": "ikke testet"
+  },
+  "popupModelPick": {
+    "message": "Oversættelsesmodel"
+  },
+  "popupModelMore": {
+    "message": "Flere modeller…"
+  },
+  "popupModelFetch": {
+    "message": "Hent modeller i indstillinger"
+  },
+  "popupModelSwitched": {
+    "message": "Fra nu af: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Ingen model valgt"
+  },
+  "exportUsesYouTube": {
+    "message": "Hentningen bruger YouTubes egen oversættelse af hele sporet — gratis, og den bruger ikke din API-nøgle."
+  },
+  "exportUseByo": {
+    "message": "Oversæt med min egen nøgle (tættere, bruger kvote)"
+  },
+  "exportByoNote": {
+    "message": "Hele sporet oversættes af din udbyder med din nøgle. Du får et skøn, før noget sendes."
+  },
+  "exportConfirm": {
+    "message": "Oversæt $N$ undertekstlinjer med $NAME$ — cirka $REQ$ kald mod din egen kvote. Hele sporet forlader browseren til den udbyder; under afspilning sendes kun de dele, du faktisk ser.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Oversæt og hent"
+  },
+  "exportConfirmBack": {
+    "message": "Annuller"
+  },
+  "exportStop": {
+    "message": "Stop"
+  },
+  "exportStopping": {
+    "message": "Stopper…"
+  },
+  "exportProgress": {
+    "message": "Oversætter… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ stykke(r) faldt tilbage på YouTubes oversættelse",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Download annulleret."
+  },
+  "ftSite": {
+    "message": "Websted"
+  },
+  "ftSiteLabel": {
+    "message": "Websted"
+  },
+  "ftFeedbackLabel": {
+    "message": "Tilbagemelding"
+  },
+  "ftReviewLabel": {
+    "message": "Bedøm"
+  },
+  "ftGithub": {
+    "message": "Kildekode på GitHub"
+  },
+  "ftFeedback": {
+    "message": "Send feedback eller rapportér en fejl"
+  },
+  "ftReview": {
+    "message": "Bedøm den i Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Ingen nøgle endnu — denne udbyder kan ikke bruges, før du tilføjer en."
+  },
+  "optNeedBase": {
+    "message": "Ingen slutpunktsadresse endnu — denne udbyder kan ikke bruges, før du angiver en."
+  },
+  "optBaseHint": {
+    "message": "En basis-URL eller et fuldt slutpunkt virker begge, f.eks. https://example.com/v1 eller https://example.com/v1/chat/completions. Til Ollama eller LM Studio på denne computer er http://localhost:11434/v1 den rigtige form. Nøglen kan stå tom; almindelig http virker kun til loopback-adresser."
+  },
+  "startS1Alt": {
+    "message": "Afspillerdiagram: en originallinje og en oversat linje sidder nederst i billedet"
+  },
+  "startS3Alt": {
+    "message": "Sammenligning: den gratis motor oversætter én sætning i stykker, din egen nøgle forstår den hel og deler den tilbage"
+  },
+  "startPicFree": {
+    "message": "Gratis motor"
+  },
+  "startPicFreeNote": {
+    "message": "én sætning, hakket op"
+  },
+  "startPicByo": {
+    "message": "Din egen nøgle"
+  },
+  "startPicByoNote": {
+    "message": "forstået hel, delt tilbage"
+  },
+  "startS4Title": {
+    "message": "Der er en lille menu i afspilleren"
+  },
+  "startS4Body": {
+    "message": "Den lille pil ved siden af undertekstknappen åbner en menu: undertekster, oplæsning, markér tekst, videoresumé og indstillinger — uden at forlade afspilleren."
+  },
+  "startS4Alt": {
+    "message": "Afspillerillustration: en lille pil ved siden af undertekstknappen, nederst til højre, åbner en lille menu"
+  },
+  "menuHintBubble": {
+    "message": "Oplæsning, videoresumé, markér tekst — det hele bag den her lille pil"
+  },
+  "troubleTitle": {
+    "message": "Noget er galt"
+  },
+  "troubleStep1": {
+    "message": "Tjek kontakten i popuppen først — med den slået fra bliver hele undertekstlaget væk."
+  },
+  "troubleStep2": {
+    "message": "Har denne video overhovedet undertekster? Prøv CC-knappen i afspilleren: uden original er der intet at oversætte."
+  },
+  "troubleStep3": {
+    "message": "Prøv en populær video. Hvis alt andet virker, og kun denne ikke gør, er det som regel denne videos undertekstspor."
+  },
+  "troubleDiagHint": {
+    "message": "Stadig kørt fast? Sæt diagnostikken ind i din mail eller dit issue — den bærer version, motorstatus og hvad den aktuelle fane laver, så du sparer en runde eller to."
+  },
+  "langManage": {
+    "message": "Administrer sprog…"
+  },
+  "optNavLangs": {
+    "message": "Oversættelsessprog"
+  },
+  "optNavReadaloud": {
+    "message": "Læs op"
+  },
+  "ttsIntro": {
+    "message": "Læs den oversatte linje højt. Browserens egne stemmer kræver slet ingen nøgle; cloud-udbyderne sættes op og testes her."
+  },
+  "ttsVoiceLabel": {
+    "message": "Stemme"
+  },
+  "ttsPreview": {
+    "message": "Prøv"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Afspiller…"
+  },
+  "ttsPreviewFail": {
+    "message": "Kunne ikke afspille — tjek nøglen og prøv Gem og test"
+  },
+  "ttsFetchVoices": {
+    "message": "Hent sprogets fulde liste med din nøgle"
+  },
+  "ttsFetching": {
+    "message": "Henter…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Det her er alle $N$ stemmer, din nøgle har til det aktuelle sprog, ældre Standard / Wavenet-trin medregnet. Stemmerne gælder kun dette sprog; klik på linjen ovenfor for at gå tilbage til hverdagsstemmerne, som følger med, når du skifter sprog. Du kan hente listen igen når som helst.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Tilbage til hverdagsstemmerne (de følger sproget)"
+  },
+  "ttsVoicesNone": {
+    "message": "Denne udbyder har ingen ekstra stemmer til dette sprog — de indbyggede virker stadig."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Hentede $N$ stemmer — de ligger som forslag under feltet ovenfor.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Kvinde"
+  },
+  "ttsVoiceMale": {
+    "message": "Mand"
+  },
+  "ttsTestOk": {
+    "message": "Forbundet: testlyd $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Størstedelen af browserens egne stemmer er installeret på denne computer og siger linjen her. Nogle er det ikke: Chrome tilbyder også onlinestemmer — dem, hvis navne begynder med ”Google” — og for dem sender browseren linjen til producenten. Med en cloud-udbyder går teksten, der skal læses op, kun til den udbyder, du valgte, og nøglen bliver på denne computer."
+  },
+  "ttsEnableLabel": {
+    "message": "Læs oversættelsen op i videoen"
+  },
+  "ttsEnableHint": {
+    "message": "Når det er slået til, læses hver underteksts oversættelse op, når den kommer frem; en linje, hvis oversættelse ikke er klar i tide, springes over i stedet for at blive indhentet senere. Mens en linje taler, falder videoens egen lyd til det niveau, der er sat nedenfor. En linje, der trækker ud, sænker billedet lidt og låner hullet efter den — både med cloud-stemmer og med browserens egne; kontakten nedenfor holder nedsætningen, indtil hver linje er færdig."
+  },
+  "langsIntro": {
+    "message": "Hvilke oversættelsessprog popuppen tilbyder."
+  },
+  "langsKept": {
+    "message": "Vises i popuppen"
+  },
+  "langsKeptHint": {
+    "message": "Sprogene vises i popuppens menu til oversættelsessprog. Behold mindst ét."
+  },
+  "langsMore": {
+    "message": "Andre sprog"
+  },
+  "langsMoreHint": {
+    "message": "Tryk på + for at tilføje ét. Listen følger de oversættelsessprog, de gratis motorer og DeepL understøtter."
+  },
+  "langsReset": {
+    "message": "Gendan standard"
+  },
+  "langsResetDone": {
+    "message": "Tilbage til standardlisten."
+  },
+  "langsAddAria": {
+    "message": "Tilføj"
+  },
+  "langsRemoveAria": {
+    "message": "Fjern"
+  },
+  "langsLastOne": {
+    "message": "Behold mindst ét"
+  },
+  "langsAllAdded": {
+    "message": "Hvert sprog er allerede på din liste."
+  },
+  "langsAdded": {
+    "message": "Tilføjede $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Den var i brug, så oversættelsessproget er nu $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Kinesisk med seriffer"
+  },
+  "fontCjkRound": {
+    "message": "Kinesisk afrundet"
+  },
+  "ttsVolLabel": {
+    "message": "Oplæsningslydstyrke"
+  },
+  "ttsGroupPlayback": {
+    "message": "Afspilning"
+  },
+  "ttsDuckLabel": {
+    "message": "Originallyd mens der tales"
+  },
+  "ttsDuckShort": {
+    "message": "Originallyd"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Taler"
+  },
+  "ttsStatusOn": {
+    "message": "Oplæsning til"
+  },
+  "ttsOpenSettings": {
+    "message": "Indstillinger for oplæsning"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ linjer denne video · $M$ sprunget over",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ linjer her · $M$ sprunget over ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "oversættelsen nåede ikke frem"
+  },
+  "ttsSkipSilent": {
+    "message": "der kom ingen lyd"
+  },
+  "ttsRegionLabel": {
+    "message": "Tjenesteregion"
+  },
+  "ttsErrNoRegion": {
+    "message": "Angiv tjenesteregionen for din Azure-nøgle først (f.eks. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Denne computer har ingen stemmer at tale med."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Denne computer har ingen stemme, der læser $NAME$. Listen nedenfor er andre sprogs stemmer — vælg én, så læses linjen med det sprogs accent.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Leder efter denne computers stemmer…"
+  },
+  "ttsErrRefused": {
+    "message": "Udbyderen afviste denne anmodning — prøv en anden stemme."
+  },
+  "ttsErrNoAudio": {
+    "message": "Lyden kom ikke igennem — prøv igen, eller vælg en anden stemme."
+  },
+  "startPicChop1": {
+    "message": "der er to store",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "grunde en er",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Der er to store grunde,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "den første er…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Flere stemmer…"
+  },
+  "popupVoiceNone": {
+    "message": "Ingen stemme valgt"
+  },
+  "ttsRobotVoices": {
+    "message": "Robot",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Lad mig markere og kopiere undertekst",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Markér tekst",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Resumé",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Videoresumé",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Luk",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Denne video har intet brugbart undertekstspor.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Slå underteksterne til igen for at opsummere — resuméet bygges ud fra undertekstsporet."
+  },
+  "sumNeedKey": {
+    "message": "Resuméer kræver en tjeneste af din egen: en hvilken som helst udbyder med din nøgle i oversættelsesruden, eller en lokal model på denne computer. Gratis-motorerne oversætter kun og laver ikke resumé.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Sæt en oversættelsestjeneste op",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Opsummer",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Opsummer igen"
+  },
+  "sumFail": {
+    "message": "Resuméet mislykkedes. Prøv igen senere.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Det her sender hele undertekstsporet til $PROVIDER$, i $PARTS$ del(e), på din egen kvote.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Opsummerer… del $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ del(e) kunne ikke opsummeres; resten står ovenfor.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Undertekster",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "YouTubes egen oversættelse bliver begrænset lige nu; smarte sætninger (Google) fylder ind. Den prøver selv igen senere.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Oversættelsesslutpunktet begrænser tempoet — fortsætter om cirka $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "En basis-URL eller et fuldt slutpunkt virker begge, f.eks. http://localhost:8880/v1 eller http://localhost:8880/v1/audio/speech (lokale taleservere som Kokoro eller openai-edge-tts). Nøglen må stå tom; almindelig http virker kun til loopback-adresser."
+  },
+  "optTtsNeedUrl": {
+    "message": "Ingen slutpunktsadresse endnu — denne udbyder kan ikke bruges, før du tilføjer en."
+  },
+  "ttsSkipRefused": {
+    "message": "udbyderen afviste de kald"
+  },
+  "ttsSkipNotSet": {
+    "message": "ikke sat op på denne computer"
+  },
+  "ttsSkipNoVoice": {
+    "message": "ingen stemme til dette sprog"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ kan ikke tale lige nu. Vælg en anden i rækken ovenfor — browserens egne stemmer står på den liste.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Undertekstsporet er ikke kommet — prøver igen automatisk. Har du travlt? Opdater siden for at prøve nu."
+  },
+  "ttsCompleteLabel": {
+    "message": "Læs hver linje færdig (billedet sænkes i tætte partier)"
+  },
+  "ttsCompleteHint": {
+    "message": "Ved højere hastighed mister lange linjer ofte halen til den næste. Med dette slået til sænkes billedet så meget, linjen har brug for — aldrig under en fjerdedel af den hastighed, du har valgt — og indhenter det i hullerne. Mens billedet er sænket så dybt, falder videoens egen lyd længere ned end det niveau, du har sat, ned til stilhed."
+  },
+  "ttsCompleteHintText": {
+    "message": "En del linjer bliver skåret af ved denne hastighed. Slå det til, så sænkes billedet der, hvor det skal, så flere bliver færdige."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Slå til"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Vis ikke igen"
+  },
+  "provLocalSpeechShort": {
+    "message": "Browser"
+  },
+  "optNavFonts": {
+    "message": "Undertekstskrifttyper"
+  },
+  "fontsIntro": {
+    "message": "Én liste gælder begge undertekstlinjer; popuppen vælger pr. linje. Hver skrifttype på listen er installeret på denne computer."
+  },
+  "fontsKept": {
+    "message": "Vises i popuppen"
+  },
+  "fontsMore": {
+    "message": "Andre skrifttyper"
+  },
+  "fontsOnly": {
+    "message": "Kun skrifttyper, der kan tegne det"
+  },
+  "fontsCounting": {
+    "message": "Tjekker…"
+  },
+  "fontsSearch": {
+    "message": "Søg skrifttypenavne"
+  },
+  "fontsNoMatch": {
+    "message": "Ingen skrifttype matcher."
+  },
+  "fontsKeptEmpty": {
+    "message": "Kun Systemstandard er tilbage til popuppen.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Hver skrifttype er allerede på listen."
+  },
+  "fontsReset": {
+    "message": "Gendan standard"
+  },
+  "fontsResetDone": {
+    "message": "Standardlisten gendannet."
+  },
+  "fontsAdded": {
+    "message": "Tilføjede $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Visning: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Visning"
+  },
+  "fontsUnavailable": {
+    "message": "Denne browser lader ikke udvidelsen læse de installerede skrifttyper, så kun Systemstandard kan vælges."
+  },
+  "fontNoGlyphs": {
+    "message": "kan ikke tegne denne linje"
+  },
+  "fontNotHere": {
+    "message": "ikke på denne computer"
+  },
+  "fontsImport": {
+    "message": "Importér skrifttypefil…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; filen kopieres ind i browseren."
+  },
+  "fontsImported": {
+    "message": "Importerede $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Kunne ikke gemme den i browseren; prøv igen.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Fjernede $NAME$ fra popuppen.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Spring denne liste over",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Importeret skrifttype",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Det er ikke en skrifttypefil, denne browser kan bruge."
+  },
+  "fontsImportTooBig": {
+    "message": "Filen er for stor (grænse $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Slet den importerede skrifttype"
+  },
+  "fontsLangLabel": {
+    "message": "Tjek for"
+  },
+  "fontsLangRecent": {
+    "message": "set for nylig"
+  },
+  "fontMoreRow": {
+    "message": "Skrifttyper…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ mere kan ikke tegne denne linje",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

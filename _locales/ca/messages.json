@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Subtítols bilingües per a YouTube — original i traducció en una sola capa, sense solapar-se."
+  },
+  "headerSub": {
+    "message": "YouTube™ · una sola capa"
+  },
+  "disclaimer": {
+    "message": "No està afiliada a YouTube ni a Google."
+  },
+  "enableTitle": {
+    "message": "Activa / desactiva"
+  },
+  "openOptions": {
+    "message": "Configuració"
+  },
+  "enableAria": {
+    "message": "Activa l'extensió"
+  },
+  "previewTag": {
+    "message": "Vista"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "La ràpida guineu marró"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "ideal per al xinès",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Les veus del teu navegador (de franc)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (local)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Vista prèvia en directe"
+  },
+  "secTranslation": {
+    "message": "Traducció"
+  },
+  "targetLang": {
+    "message": "Llengua de traducció"
+  },
+  "backendLabel": {
+    "message": "Motor"
+  },
+  "backendInfo": {
+    "message": "Info del motor"
+  },
+  "backendAuto": {
+    "message": "Auto (recomanat)"
+  },
+  "backendTlang": {
+    "message": "Pista completa (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Frases intel·ligents (Google)"
+  },
+  "backendByo": {
+    "message": "Clau pròpia (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b>: fa servir la traducció de pista completa de YouTube sempre que el vídeo ho admet, i passa a frases intel·ligents quan no.<br><b>Pista completa</b>: la traducció del mateix YouTube; alineada fragment a fragment. Un ús intensiu pot fer que YouTube la limiti una estona — l'extensió espera i ho torna a demanar.<br><b>Frases intel·ligents</b>: reconstitueix els subtítols fragmentats en frases senceres i les tradueix per l'endpoint gratuït de Google — millor redacció que la pista completa en pistes desordenades, però un ús intensiu també s'hi pot limitar; l'extensió alenteix el ritme i ho torna a provar.<br><b>Clau pròpia</b>: envia la frase muntada al proveïdor que has configurat."
+  },
+  "backendGtxHint": {
+    "message": "Fa servir l'endpoint gratuït de Google — un ús intensiu pot limitar-se una estona; l'extensió regula el ritme i ho torna a provar automàticament."
+  },
+  "backendStatusTlang": {
+    "message": "Aquest vídeo: traducció de pista completa (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Aquest vídeo: frases intel·ligents (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "L'endpoint de traducció ha limitat el ritme — s'alenteix i es reintenta automàticament. Les línies ja traduïdes continuen funcionant."
+  },
+  "diagCopy": {
+    "message": "Copia el diagnòstic"
+  },
+  "diagCopied": {
+    "message": "Copiat — enganxa-ho a un correu o a una incidència"
+  },
+  "diagCopyFail": {
+    "message": "No s'ha pogut copiar — fes una captura de pantalla"
+  },
+  "backendStatusSame": {
+    "message": "Els subtítols d'aquest vídeo ja són en la teva llengua de traducció — no hi ha res a traduir."
+  },
+  "backendStatusNoTrack": {
+    "message": "No s'ha trobat cap pista de subtítols per a aquest vídeo, així que no hi ha res a mostrar.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Obre un vídeo de YouTube i les dues línies hi apareixeran. Si ja hi ets, torna a carregar la pestanya."
+  },
+  "secLayout": {
+    "message": "Disposició"
+  },
+  "secLineStyle": {
+    "message": "Estil de línia"
+  },
+  "secLineStyleHint": {
+    "message": "Lletra · Color · Mida"
+  },
+  "orderLabel": {
+    "message": "Ordre"
+  },
+  "orderTransTop": {
+    "message": "Traducció a dalt"
+  },
+  "orderOrigTop": {
+    "message": "Original a dalt"
+  },
+  "positionLabel": {
+    "message": "Posició"
+  },
+  "posTop": {
+    "message": "Dalt"
+  },
+  "posCenter": {
+    "message": "Centre"
+  },
+  "posBottom": {
+    "message": "Baix"
+  },
+  "posHint": {
+    "message": "També pots arrossegar la caixa de subtítols al vídeo"
+  },
+  "posTryDrag": {
+    "message": "prova-ho"
+  },
+  "posTryNoVideo": {
+    "message": "Obre primer un vídeo de YouTube"
+  },
+  "resetPos": {
+    "message": "Restableix la posició"
+  },
+  "rowGap": {
+    "message": "Interlineat"
+  },
+  "tabTrans": {
+    "message": "Traducció"
+  },
+  "tabOrig": {
+    "message": "Original"
+  },
+  "lineTabsAria": {
+    "message": "Línia de subtítols"
+  },
+  "lineShow": {
+    "message": "Mostra aquesta línia"
+  },
+  "fontLabel": {
+    "message": "Lletra"
+  },
+  "fontSystem": {
+    "message": "La del sistema"
+  },
+  "fontMono": {
+    "message": "Monoespaiada"
+  },
+  "fontCjk": {
+    "message": "Compatible amb CJK"
+  },
+  "sizeLabel": {
+    "message": "Mida"
+  },
+  "colText": {
+    "message": "Text"
+  },
+  "colBg": {
+    "message": "Fons"
+  },
+  "colStroke": {
+    "message": "Contorn"
+  },
+  "colTextAria": {
+    "message": "Color del text"
+  },
+  "colBgAria": {
+    "message": "Color de fons"
+  },
+  "colStrokeAria": {
+    "message": "Color del contorn"
+  },
+  "bgOpacity": {
+    "message": "Opacitat del fons"
+  },
+  "strokeOpacity": {
+    "message": "Opacitat del contorn"
+  },
+  "resetAll": {
+    "message": "Restableix la config."
+  },
+  "resetConfirmText": {
+    "message": "Això esborra tota la configuració, les claus de l'API desades en aquest ordinador i el model i la veu recordats de cada proveïdor, i torna a activar els consells de la primera execució. Els dominis de proveïdor que ja has autoritzat continuen autoritzats, i també els fitxers de lletra que has importat.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Deixa la meva configuració",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Restableix-ho tot",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Desactiva els subtítols bilingües"
+  },
+  "toggleTurnOn": {
+    "message": "Activa els subtítols bilingües"
+  },
+  "handleTitle": {
+    "message": "Arrossega · doble clic"
+  },
+  "handleAria": {
+    "message": "Arrossega per moure els subtítols, doble clic per restablir"
+  },
+  "secExport": {
+    "message": "Exportació"
+  },
+  "exportContent": {
+    "message": "Contingut"
+  },
+  "exportBi": {
+    "message": "Bilingüe"
+  },
+  "exportOrig": {
+    "message": "Original"
+  },
+  "exportTrans": {
+    "message": "Traducció"
+  },
+  "exportSrt": {
+    "message": "Descarrega SRT"
+  },
+  "exportWorking": {
+    "message": "S'està generant…"
+  },
+  "exportDone": {
+    "message": "Subtítols descarregats"
+  },
+  "exportNoTrans": {
+    "message": "No hi ha traducció per a aquest vídeo — prova el motor de pista completa o una altra llengua de traducció."
+  },
+  "exportLimited": {
+    "message": "YouTube està limitant ara la traducció de pista completa — torna-ho a provar d'aquí a un minut. Amb la teva clau configurada, la targeta d'exportació ofereix una casella que ho evita."
+  },
+  "exportNoCues": {
+    "message": "No hi ha subtítols per descarregar — reprodueix uns quants segons perquè es carreguin i torna-ho a provar."
+  },
+  "exportNotYoutube": {
+    "message": "Obre una pàgina de vídeo de YouTube per exportar."
+  },
+  "exportFailed": {
+    "message": "Ha fallat l'exportació — actualitza la pàgina i torna-ho a provar."
+  },
+  "updateNotesLabel": {
+    "message": "Obre les notes de la versió després de les actualitzacions"
+  },
+  "trackWarnDubOnly": {
+    "message": "Compte: aquest vídeo només té subtítols automàtics d'un doblatge per IA (sense pista en la llengua original), així que els bilingües poden no coincidir amb l'àudio."
+  },
+  "whatsNewRow": {
+    "message": "Novetats de la v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Aquest vídeo: la teva clau ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Proveïdor"
+  },
+  "byoSiteLabel": {
+    "message": "Lloc"
+  },
+  "byoSiteHint": {
+    "message": "Tria el lloc on et vas registrar — són dues plataformes diferents i una clau de l'una no l'accepta l'altra."
+  },
+  "byoSiteGlobal": {
+    "message": "Internacional"
+  },
+  "byoSiteCn": {
+    "message": "Xina continental"
+  },
+  "byoBaseLabel": {
+    "message": "Adreça de l'endpoint"
+  },
+  "byoModelLabel": {
+    "message": "Model"
+  },
+  "byoModelRequired": {
+    "message": "Obligatori: nom del model"
+  },
+  "byoKeyLabel": {
+    "message": "Clau de l'API"
+  },
+  "byoKeyClear": {
+    "message": "Suprimeix"
+  },
+  "byoKeyReplace": {
+    "message": "Substitueix"
+  },
+  "byoKeyCleared": {
+    "message": "S'ha suprimit la clau desada en aquest ordinador."
+  },
+  "byoKeyClearedMoved": {
+    "message": "S'ha suprimit la clau desada en aquest ordinador. Era la que s'estava fent servir, així que ara la traducció passa per $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "desada ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Personalitzat (compatible amb OpenAI)"
+  },
+  "byoTest": {
+    "message": "Desa i prova"
+  },
+  "byoTesting": {
+    "message": "S'està provant…"
+  },
+  "byoTestOk": {
+    "message": "Connectat. Mostra: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Obtén una clau"
+  },
+  "byoGuide": {
+    "message": "Necessites ajuda per configurar-ho?"
+  },
+  "byoLocalHint": {
+    "message": "La clau es queda en aquest navegador, en aquest ordinador — no es puja mai. El text dels subtítols només va al proveïdor que has triat."
+  },
+  "byoErrNoProvider": {
+    "message": "Tria primer un proveïdor."
+  },
+  "byoErrNoKey": {
+    "message": "Introdueix primer una clau de l'API i després prem Desa i prova."
+  },
+  "byoErrNoModel": {
+    "message": "Tria primer un model — n'escull un de la llista, o prem “Llista els models amb la meva clau”."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Aquest proveïdor no porta cap llista. Obtén primer els models disponibles, o escriu tu el nom del model."
+  },
+  "byoErrNotApi": {
+    "message": "Aquesta adreça ha respost amb una pàgina web, no amb l'API — sol ser una pantalla d'inici de sessió o una xarxa que intercepta les peticions. Comprova l'adreça, o prova una altra xarxa."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "L'URL base de l'API ha de ser una adreça https:// completa."
+  },
+  "byoErrUrlHasKey": {
+    "message": "L'adreça porta una clau a dins. Treu-la de l'adreça i enganxa-la al camp de la clau de l'API — l'adreça se sincronitza amb el compte del navegador, el camp de la clau no."
+  },
+  "byoErrNoPerm": {
+    "message": "Sense permís per arribar a aquest amfitrió de l'API, l'extensió no es pot connectar. Prem “Desa i prova” una altra vegada i concedeix-lo."
+  },
+  "byoErrAuth": {
+    "message": "La clau ha estat rebutjada (401) — comprova que s'ha copiat sencera i que encara és activa."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "El servidor d'aquest ordinador ha rebutjat la crida (403). El més probable és que no estigui configurat per permetre l'extensió: OLLAMA_ORIGINS per a Ollama, l'interruptor CORS a LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "El proveïdor ha rebutjat aquesta crida (403). De normal la clau està bé i el compte no té permís per fer-la — un saldo pendent, una verificació d'identitat encara pendent, un model no activat, o la regió. Revisa el compte a la consola del proveïdor."
+  },
+  "byoErrListAuth": {
+    "message": "Aquesta clau no té permís per llegir la llista. Dona-li aquest permís al tauler del proveïdor i torna a obtenir-la.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "El proveïdor està limitant el ritme — s'alenteix i es reintenta automàticament."
+  },
+  "byoErrLimitedTest": {
+    "message": "El proveïdor està limitant les peticions. Espera un moment i torna-ho a prémer."
+  },
+  "byoErrQuota": {
+    "message": "Aquest compte s'ha quedat sense crèdit o quota del període actual — recarrega'l a la consola del proveïdor per continuar."
+  },
+  "byoErrBadRequest": {
+    "message": "L'endpoint ha rebutjat la petició — el nom del model o l'URL base poden ser incorrectes."
+  },
+  "byoErrBadShape": {
+    "message": "El model no ha respost línia a línia com se li ha demanat, i els reintents més curts també han fallat — prova un altre model."
+  },
+  "byoErrReasoning": {
+    "message": "Aquest model només ha tornat la cadena de pensament i cap traducció — tria un model que no sigui de raonament."
+  },
+  "byoErrNetfail": {
+    "message": "No s'arriba a aquest endpoint (xarxa o restricció regional)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "No s'arriba a aquesta adreça: o el servidor no està en marxa, o encara no s'ha dit que permeti l'extensió (OLLAMA_ORIGINS per a Ollama, l'interruptor CORS a LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Aquest proveïdor no pot traduir a la llengua que has triat — canvia la llengua o el motor."
+  },
+  "byoErrFailed": {
+    "message": "Ha fallat la connexió. Torna-ho a provar d'aquí a un moment."
+  },
+  "optTitle": {
+    "message": "Configuració del servei de traducció"
+  },
+  "optIntro": {
+    "message": "Tria un proveïdor i enganxa la teva clau de l'API."
+  },
+  "optPricingLink": {
+    "message": "Preus i pla gratuït"
+  },
+  "optFetchModels": {
+    "message": "Llista els models amb la meva clau"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Llista els models disponibles"
+  },
+  "optFetching": {
+    "message": "S'està llistant…"
+  },
+  "optModelsFetched": {
+    "message": "S'han trobat $N$ models",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "“$MODEL$” ja no és a la llista d'aquest proveïdor — tria'n un altre a dalt.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "No s'han pogut llistar els models — escriu el nom del model."
+  },
+  "optModelCustom": {
+    "message": "Personalitzat…"
+  },
+  "optNoModelsYet": {
+    "message": "Encara no hi ha llista de models — obtén-ne una amb la teva clau, o escriu el nom."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Encara no hi ha llista de models — obtén-ne una, o escriu el nom."
+  },
+  "optShowKey": {
+    "message": "Mostra"
+  },
+  "optRecommended": {
+    "message": "recomanat"
+  },
+  "optConfigured": {
+    "message": "Configurat"
+  },
+  "optInUse": {
+    "message": "en ús"
+  },
+  "optAfterSetup": {
+    "message": "Quan acabis aquí, obre el popup de l'extensió i posa Motor a \"Clau pròpia\"."
+  },
+  "optTrademark": {
+    "message": "Tots els noms i logotips dels proveïdors són marques dels seus respectius propietaris. Aquesta extensió no està afiliada, avalada ni patrocinada per cap d'ells; les marques es mostren només per identificar l'API que has triat."
+  },
+  "optSections": {
+    "message": "Seccions"
+  },
+  "optNavSetup": {
+    "message": "Servei de traducció"
+  },
+  "optNavStart": {
+    "message": "Primers passos"
+  },
+  "optNavAbout": {
+    "message": "Quant a"
+  },
+  "startIntro": {
+    "message": "Quatre coses. No cal configurar res per fer-lo servir."
+  },
+  "startS1Title": {
+    "message": "Obre un vídeo — i ja està"
+  },
+  "startS1Body": {
+    "message": "Qualsevol vídeo de YouTube que tingui subtítols: les dues línies apareixen soles."
+  },
+  "startS2Title": {
+    "message": "Posa'ls on vulguis"
+  },
+  "startS2Body": {
+    "message": "Mantén premut l'agafador de l'angle superior esquerre de la caixa de subtítols i arrossega'l on vulguis. Fes doble clic a l'agafador per tornar-lo al lloc."
+  },
+  "startS2Alt": {
+    "message": "Diagrama del reproductor: un agafador de sis punts a l'angle superior esquerre de la caixa de subtítols, arrossegant-la a una altra posició"
+  },
+  "startS3Title": {
+    "message": "Vols millors traduccions"
+  },
+  "startS3Body": {
+    "message": "Afegeix la teva clau de l'API: traducció de frases senceres, i de tot el vídeo quan exportes."
+  },
+  "startGoSetup": {
+    "message": "Configura un servei de traducció"
+  },
+  "aboutIntro": {
+    "message": "Què és això, i on va el teu text."
+  },
+  "aboutVersion": {
+    "message": "Versió"
+  },
+  "uiLocaleLabel": {
+    "message": "Llengua de la interfície"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — segueix el navegador"
+  },
+  "uiLocaleHint": {
+    "message": "La llengua dels menús i de la configuració d'aquesta extensió. Unes quantes etiquetes dibuixades sobre el vídeo encara segueixen la llengua del navegador. La llengua de traducció es tria al popup; el panell “Llengües de traducció” només decideix quines llengües hi llista el popup."
+  },
+  "cmdToggleSubs": {
+    "message": "Subtítols on/off"
+  },
+  "cmdToggleTts": {
+    "message": "Lectura en veu alta on/off"
+  },
+  "cmdToggleTransLine": {
+    "message": "Mostra o amaga la línia de traducció"
+  },
+  "optShortcutsLabel": {
+    "message": "Dreceres de teclat"
+  },
+  "optShortcutsOpen": {
+    "message": "Defineix les dreceres"
+  },
+  "optShortcutsHint": {
+    "message": "Chrome es reserva aquestes tecles, no l'extensió. De bon començament no n'hi ha cap d'assignada; se'n poden vincular tres: subtítols sí/no, lectura en veu alta sí/no, i mostrar o amagar la línia de traducció."
+  },
+  "optShortcutsFallback": {
+    "message": "Chrome no ha obert aquesta pàgina des d'aquí — enganxa chrome://extensions/shortcuts a la barra d'adreces."
+  },
+  "startTargetLabel": {
+    "message": "Llengua de traducció"
+  },
+  "startTargetHint": {
+    "message": "Es va endevinar a partir de les preferències de llengua del teu navegador quan es va instal·lar l'extensió. Canvia-la aquí si l'endevinalla no és correcta — el popup la pot canviar en qualsevol moment."
+  },
+  "aboutBlurb": {
+    "message": "Una segona línia de subtítols per a YouTube: l'original en una línia, la traducció en l'altra, amb la lletra, el color i la posició al teu gust. Codi obert, de franc, sense anuncis."
+  },
+  "aboutPrivacy": {
+    "message": "L'extensió no té cap servidor nostre i no recull estadístiques. El text dels subtítols només va als serveis que has triat: el servei de traducció que triïs i, si els actives, el proveïdor de veu per a la lectura en veu alta i el que has configurat per als resums. Amb la teva clau, la clau es desa només en aquest ordinador."
+  },
+  "aboutChangelog": {
+    "message": "Registre de canvis"
+  },
+  "aboutRoadmap": {
+    "message": "Full de ruta"
+  },
+  "optFeedbackLink": {
+    "message": "Informa d'un problema"
+  },
+  "popupByoConfigure": {
+    "message": "Configura…"
+  },
+  "popupSummarize": {
+    "message": "Resumeix aquest vídeo",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "sense configurar"
+  },
+  "popupByoPick": {
+    "message": "Proveïdor de traducció"
+  },
+  "popupByoUntested": {
+    "message": "sense provar"
+  },
+  "popupModelPick": {
+    "message": "Model de traducció"
+  },
+  "popupModelMore": {
+    "message": "Més models…"
+  },
+  "popupModelFetch": {
+    "message": "Obtén models a la configuració"
+  },
+  "popupModelSwitched": {
+    "message": "A partir d'ara: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Cap model triat"
+  },
+  "exportUsesYouTube": {
+    "message": "La descàrrega fa servir la traducció de pista completa del mateix YouTube — és de franc, i no gasta la teva clau de l'API."
+  },
+  "exportUseByo": {
+    "message": "Tradueix amb la meva clau (més fidel, gasta quota)"
+  },
+  "exportByoNote": {
+    "message": "El teu proveïdor traduirà tota la pista amb la teva clau. Veuràs una estimació abans d'enviar res."
+  },
+  "exportConfirm": {
+    "message": "Tradueix $N$ línies de subtítols amb $NAME$ — unes $REQ$ peticions contra la teva quota. Tota la pista surt del teu navegador cap a aquest proveïdor; durant la reproducció només s'envien les parts que realment mires.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Tradueix i descarrega"
+  },
+  "exportConfirmBack": {
+    "message": "Cancel·la"
+  },
+  "exportStop": {
+    "message": "Atura"
+  },
+  "exportStopping": {
+    "message": "S'està aturant…"
+  },
+  "exportProgress": {
+    "message": "S'està traduint… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ fragment(s) han passat a la traducció de YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "S'ha cancel·lat la descàrrega."
+  },
+  "ftSite": {
+    "message": "Lloc web"
+  },
+  "ftSiteLabel": {
+    "message": "Lloc"
+  },
+  "ftFeedbackLabel": {
+    "message": "Comentaris"
+  },
+  "ftReviewLabel": {
+    "message": "Valora"
+  },
+  "ftGithub": {
+    "message": "Codi font a GitHub"
+  },
+  "ftFeedback": {
+    "message": "Envia comentaris o informa d'un error"
+  },
+  "ftReview": {
+    "message": "Valora-ho al Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Encara no hi ha clau — aquest proveïdor no es pot fer servir fins que n'afegeixis una."
+  },
+  "optNeedBase": {
+    "message": "Encara no hi ha adreça d'endpoint — aquest proveïdor no es pot fer servir fins que n'introdueixis una."
+  },
+  "optBaseHint": {
+    "message": "Una URL base o un endpoint complet serveixen tots dos, p. ex. https://example.com/v1 o https://example.com/v1/chat/completions. Per a Ollama o LM Studio en aquest ordinador, http://localhost:11434/v1 és la forma correcta. La clau pot quedar buida; l'http simple només funciona amb adreces de loopback."
+  },
+  "startS1Alt": {
+    "message": "Diagrama del reproductor: una línia original i una de traduïda a prop de la part inferior de la imatge"
+  },
+  "startS3Alt": {
+    "message": "Comparació: el motor gratuït tradueix una frase a trossos; la teva clau l'entén sencera i la torna a partir"
+  },
+  "startPicFree": {
+    "message": "Motor gratuït"
+  },
+  "startPicFreeNote": {
+    "message": "una frase, trossejada"
+  },
+  "startPicByo": {
+    "message": "La teva clau"
+  },
+  "startPicByoNote": {
+    "message": "entesa sencera, partida de nou"
+  },
+  "startS4Title": {
+    "message": "Hi ha un menú petit al reproductor"
+  },
+  "startS4Body": {
+    "message": "La fletxeta del costat del botó de subtítols obre un menú: subtítols, lectura en veu alta, seleccionar text, resum del vídeo i configuració — sense sortir del reproductor."
+  },
+  "startS4Alt": {
+    "message": "Il·lustració del reproductor: una fletxeta al costat del botó de subtítols, a baix a la dreta, obre un menú petit"
+  },
+  "menuHintBubble": {
+    "message": "Lectura en veu alta, resum del vídeo, seleccionar text — tot darrere d'aquesta fletxeta"
+  },
+  "troubleTitle": {
+    "message": "Alguna cosa no va bé"
+  },
+  "troubleStep1": {
+    "message": "Comprova primer l'interruptor del popup — si està desactivat, tota la capa de subtítols es queda amagada."
+  },
+  "troubleStep2": {
+    "message": "Aquest vídeo té subtítols? Prova el botó CC del reproductor: sense un original no hi ha res a traduir."
+  },
+  "troubleStep3": {
+    "message": "Prova un vídeo popular. Si la resta funciona i només aquest no, sol ser la pista de subtítols d'aquest vídeo."
+  },
+  "troubleDiagHint": {
+    "message": "Encara encallat? Enganxa la informació de diagnòstic al correu o a la incidència — porta la versió, l'estat del motor i el que fa la pestanya actual, i t'estalvia una anada i tornada o dues."
+  },
+  "langManage": {
+    "message": "Gestiona les llengües…"
+  },
+  "optNavLangs": {
+    "message": "Llengües de traducció"
+  },
+  "optNavReadaloud": {
+    "message": "Lectura en veu alta"
+  },
+  "ttsIntro": {
+    "message": "Llegeix en veu alta la línia traduïda. Les veus del teu navegador no necessiten cap clau; els proveïdors al núvol es configuren i es proven aquí."
+  },
+  "ttsVoiceLabel": {
+    "message": "Veu"
+  },
+  "ttsPreview": {
+    "message": "Vista"
+  },
+  "ttsPreviewPlaying": {
+    "message": "S'està reproduint…"
+  },
+  "ttsPreviewFail": {
+    "message": "No s'ha pogut reproduir — comprova la clau i prova Desa i prova"
+  },
+  "ttsFetchVoices": {
+    "message": "Obtén la llista completa d'aquesta llengua amb la teva clau"
+  },
+  "ttsFetching": {
+    "message": "S'està obtenint…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Aquestes són totes les $N$ veus que la teva clau té per a la llengua actual, incloses les gammes antigues Standard / Wavenet. Només valen per a aquesta llengua; fes clic a la línia de dalt per tornar a les veus de cada dia, que et segueixen d'una llengua a l'altra. Pots tornar a obtenir aquesta llista quan vulguis.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Torna a les veus de cada dia (segueixen la llengua)"
+  },
+  "ttsVoicesNone": {
+    "message": "Aquest proveïdor no té veus extra per a aquesta llengua — les integrades continuen funcionant."
+  },
+  "ttsVoicesSuggested": {
+    "message": "S'han obtingut $N$ veus — són suggeriments sota el camp de dalt.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "Femenina"
+  },
+  "ttsVoiceMale": {
+    "message": "Masculina"
+  },
+  "ttsTestOk": {
+    "message": "Connectat: àudio de prova $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "La majoria de les veus del teu navegador estan instal·lades en aquest ordinador i pronuncien la línia aquí. Unes quantes no: Chrome també ofereix veus en línia — les que el nom comença per \"Google\" — i, per a aquestes, el navegador envia la línia al fabricant. Amb un proveïdor al núvol, el text que s'ha de dir només va al proveïdor que has triat, i la clau es queda en aquest ordinador."
+  },
+  "ttsEnableLabel": {
+    "message": "Llegeix la traducció en veu alta al vídeo"
+  },
+  "ttsEnableHint": {
+    "message": "Quan està activat, es pronuncia la traducció de cada subtítol a mesura que apareix; una línia la traducció de la qual no és a punt a temps s'omet en lloc de recuperar-la després. Mentre sona una línia, l'àudio del vídeo baixa al nivell indicat a sota. Una línia llarga alenteix una mica la imatge i aprofita el buit de després — amb veus al núvol i amb les del navegador; l'interruptor de sota continua alentint fins que acaba cada línia."
+  },
+  "langsIntro": {
+    "message": "Quines llengües de traducció ofereix el popup."
+  },
+  "langsKept": {
+    "message": "Es mostren al popup"
+  },
+  "langsKeptHint": {
+    "message": "Aquestes apareixen al menú de llengua de traducció del popup. Deixa'n com a mínim una."
+  },
+  "langsMore": {
+    "message": "Altres llengües"
+  },
+  "langsMoreHint": {
+    "message": "Prem + per afegir-ne una. La llista segueix les llengües de traducció que admeten els motors gratuïts i DeepL."
+  },
+  "langsReset": {
+    "message": "Restaura valors"
+  },
+  "langsResetDone": {
+    "message": "Has tornat a la llista per defecte."
+  },
+  "langsAddAria": {
+    "message": "Afegeix"
+  },
+  "langsRemoveAria": {
+    "message": "Treu"
+  },
+  "langsLastOne": {
+    "message": "Deixa'n com a mínim una"
+  },
+  "langsAllAdded": {
+    "message": "Totes les llengües ja són a la teva llista."
+  },
+  "langsAdded": {
+    "message": "S'ha afegit $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Aquella s'estava fent servir, així que la llengua de traducció ara és $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Serif xinès"
+  },
+  "fontCjkRound": {
+    "message": "Arrodonit xinès"
+  },
+  "ttsVolLabel": {
+    "message": "Volum de la lectura"
+  },
+  "ttsGroupPlayback": {
+    "message": "Reproducció"
+  },
+  "ttsDuckLabel": {
+    "message": "Àudio original mentre parla"
+  },
+  "ttsDuckShort": {
+    "message": "Àudio original"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Parlant"
+  },
+  "ttsStatusOn": {
+    "message": "Lectura activada"
+  },
+  "ttsOpenSettings": {
+    "message": "Configuració de la lectura"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ línies en aquest vídeo · $M$ omeses",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ línies aquí · $M$ omeses ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "la traducció no era a punt a temps"
+  },
+  "ttsSkipSilent": {
+    "message": "no n'ha sortit so"
+  },
+  "ttsRegionLabel": {
+    "message": "Regió del servei"
+  },
+  "ttsErrNoRegion": {
+    "message": "Introdueix primer la regió del servei de la teva clau d'Azure (p. ex. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Aquest ordinador no té veus per parlar."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Aquest ordinador no té cap veu que llegeixi $NAME$. La llista de sota són veus d'altres llengües — tria'n una i la línia es llegirà amb l'accent d'aquella llengua.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "S'estan cercant les veus d'aquest ordinador…"
+  },
+  "ttsErrRefused": {
+    "message": "El proveïdor ha rebutjat aquesta petició — prova una altra veu."
+  },
+  "ttsErrNoAudio": {
+    "message": "L'àudio no ha arribat — torna-ho a provar, o tria una altra veu."
+  },
+  "startPicChop1": {
+    "message": "hi ha dues grans",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "raons una és",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Hi ha dues grans raons,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "la primera és…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Més veus…"
+  },
+  "popupVoiceNone": {
+    "message": "Cap veu triada"
+  },
+  "ttsRobotVoices": {
+    "message": "Robòtica",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Seleccionar i copiar subtítols",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Selecciona text",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Resum",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Resum del vídeo",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Tanca",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Aquest vídeo no té una pista de subtítols aprofitable.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Torna a activar els subtítols per resumir — el resum es fa a partir de la pista de subtítols."
+  },
+  "sumNeedKey": {
+    "message": "Els resums necessiten un servei teu: qualsevol proveïdor amb la teva clau al panell de traducció, o un model local en aquest ordinador. Els motors gratuïts només tradueixen. No resumeixen.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Configura un servei de traducció",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Resumeix",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Torna a resumir"
+  },
+  "sumFail": {
+    "message": "El resum ha fallat. Torna-ho a provar més tard.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Això enviarà tota la pista de subtítols a $PROVIDER$, en $PARTS$ part(s), amb la teva quota.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "S'està resumint… part $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "$N$ part(s) no s'han pogut resumir; la resta és a dalt.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Subtítols",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "La traducció del mateix YouTube està limitada ara; les frases intel·ligents (Google) tapen el forat. Ho tornarà a provar sola més tard.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "L'endpoint de traducció està limitant el ritme — es reprèn d'aquí a uns $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Una URL base o un endpoint complet serveixen tots dos, p. ex. http://localhost:8880/v1 o http://localhost:8880/v1/audio/speech (servidors de veu locals com Kokoro o openai-edge-tts). La clau pot quedar buida; l'http simple només funciona amb adreces de loopback."
+  },
+  "optTtsNeedUrl": {
+    "message": "Encara no hi ha adreça d'endpoint — aquest proveïdor no es pot fer servir fins que n'afegeixis una."
+  },
+  "ttsSkipRefused": {
+    "message": "el proveïdor ha rebutjat aquestes peticions"
+  },
+  "ttsSkipNotSet": {
+    "message": "no està configurat en aquest ordinador"
+  },
+  "ttsSkipNoVoice": {
+    "message": "no hi ha veu per a aquesta llengua"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ no pot parlar ara. Tria'n un altre a la fila de dalt — les veus del teu navegador són en aquesta llista.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "La pista de subtítols no ha arribat — es reintenta automàticament. Tens pressa? Actualitza la pàgina per provar-ho ara."
+  },
+  "ttsCompleteLabel": {
+    "message": "Acaba cada línia (la imatge s'alenteix a les parts denses)"
+  },
+  "ttsCompleteHint": {
+    "message": "A velocitats altes, les línies llargues sovint perden la cua en la següent. Amb això activat, la imatge s'alenteix tant com necessita la línia — mai per sota d'un quart de la velocitat que has triat — i recupera el ritme als buits. Mentre la imatge va tan lenta, l'àudio del vídeo baixa més que el nivell que has indicat, fins al silenci."
+  },
+  "ttsCompleteHintText": {
+    "message": "A aquesta velocitat es tallen bastantes línies. Activa-ho i la imatge s'alenteix on cal, perquè se'n puguin acabar més."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Activa"
+  },
+  "ttsCompleteHintNever": {
+    "message": "No ho tornis a mostrar"
+  },
+  "provLocalSpeechShort": {
+    "message": "Navegador"
+  },
+  "optNavFonts": {
+    "message": "Lletres dels subtítols"
+  },
+  "fontsIntro": {
+    "message": "Una sola llista serveix les dues línies de subtítols; el popup tria per línia. Totes les lletres llistades estan instal·lades en aquest ordinador."
+  },
+  "fontsKept": {
+    "message": "Es mostren al popup"
+  },
+  "fontsMore": {
+    "message": "Altres lletres"
+  },
+  "fontsOnly": {
+    "message": "Només les lletres que ho poden dibuixar"
+  },
+  "fontsCounting": {
+    "message": "S'està comprovant…"
+  },
+  "fontsSearch": {
+    "message": "Cerca noms de lletra"
+  },
+  "fontsNoMatch": {
+    "message": "Cap lletra no hi coincideix."
+  },
+  "fontsKeptEmpty": {
+    "message": "Al popup només queda la predeterminada del sistema.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Totes les lletres ja són a la llista."
+  },
+  "fontsReset": {
+    "message": "Restaura valors"
+  },
+  "fontsResetDone": {
+    "message": "S'ha restaurat la llista per defecte."
+  },
+  "fontsAdded": {
+    "message": "S'ha afegit $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Vista: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Vista"
+  },
+  "fontsUnavailable": {
+    "message": "Aquest navegador no deixa que l'extensió llegeixi les lletres instal·lades, així que només es pot triar la predeterminada del sistema."
+  },
+  "fontNoGlyphs": {
+    "message": "no pot dibuixar aquesta línia"
+  },
+  "fontNotHere": {
+    "message": "no és en aquest ordinador"
+  },
+  "fontsImport": {
+    "message": "Importa lletra…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; el fitxer es copia al navegador."
+  },
+  "fontsImported": {
+    "message": "S'ha importat $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "No s'ha pogut desar al navegador; torna-ho a provar.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "S'ha tret $NAME$ del popup.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Omet aquesta llista",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Lletra importada",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Això no és un fitxer de lletra que aquest navegador pugui fer servir."
+  },
+  "fontsImportTooBig": {
+    "message": "El fitxer és massa gran (límit $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Suprimeix la lletra importada"
+  },
+  "fontsLangLabel": {
+    "message": "Comprova per a"
+  },
+  "fontsLangRecent": {
+    "message": "vistes fa poc"
+  },
+  "fontMoreRow": {
+    "message": "Gestiona lletres…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ més no poden dibuixar aquesta línia",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}

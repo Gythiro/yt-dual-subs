@@ -1,0 +1,1294 @@
+{
+  "extName": {
+    "message": "Dual Subtitles for YouTube™"
+  },
+  "extDesc": {
+    "message": "Dvojjazyčné titulky pre YouTube — originál a preklad v jednej vrstve, bez prekrývania."
+  },
+  "headerSub": {
+    "message": "YouTube™ · jedna vrstva"
+  },
+  "disclaimer": {
+    "message": "Nesúvisí s YouTube ani Google."
+  },
+  "enableTitle": {
+    "message": "Zapnúť / vypnúť"
+  },
+  "openOptions": {
+    "message": "Nastavenia"
+  },
+  "enableAria": {
+    "message": "Zapnúť rozšírenie"
+  },
+  "previewTag": {
+    "message": "Náhľad"
+  },
+  "sampleOrig": {
+    "message": "The quick brown fox"
+  },
+  "sampleTrans": {
+    "message": "Rýchla hnedá líška"
+  },
+  "provQwen": {
+    "message": "Alibaba Cloud Model Studio (Qwen / DeepSeek)"
+  },
+  "provQwenTts": {
+    "message": "Alibaba Model Studio (Qwen-TTS)"
+  },
+  "provTtsZhReco": {
+    "message": "najlepší pre čínštinu",
+    "description": "Suffix chip on the Alibaba Qwen-TTS provider entry when the TARGET language is Chinese: its Mandarin/dialect voices are the reason to pick it."
+  },
+  "provElevenlabs": {
+    "message": "ElevenLabs"
+  },
+  "provLocalSpeech": {
+    "message": "Vlastné hlasy prehliadača (zadarmo)"
+  },
+  "provQwenShort": {
+    "message": "Model Studio"
+  },
+  "provGlm": {
+    "message": "Zhipu GLM"
+  },
+  "provDoubao": {
+    "message": "Doubao (Volcengine Ark)"
+  },
+  "provDoubaoShort": {
+    "message": "Doubao"
+  },
+  "provSiliconflow": {
+    "message": "SiliconFlow"
+  },
+  "provOllama": {
+    "message": "Ollama (lokálne)",
+    "description": "Provider list: the Ollama preset, a model server on the user's own machine. Keep \"Ollama\"; translate only the word in brackets."
+  },
+  "previewAria": {
+    "message": "Živý náhľad"
+  },
+  "secTranslation": {
+    "message": "Preklad"
+  },
+  "targetLang": {
+    "message": "Jazyk prekladu"
+  },
+  "backendLabel": {
+    "message": "Prekladač"
+  },
+  "backendInfo": {
+    "message": "O prekladači"
+  },
+  "backendAuto": {
+    "message": "Auto (odporúčané)"
+  },
+  "backendTlang": {
+    "message": "Celá stopa (YouTube)"
+  },
+  "backendGtx": {
+    "message": "Chytré vety (Google)"
+  },
+  "backendByo": {
+    "message": "Vlastný kľúč (LLM / DeepL)"
+  },
+  "backendTipHtml": {
+    "message": "<b>Auto</b>: použije preklad celej stopy od YouTube, keď to video podporuje, a prepne na chytré vety, keď nie.<br><b>Celá stopa</b>: vlastný preklad YouTube; zarovnaný titulok po titulku. Pri intenzívnom používaní môže YouTube na chvíľu obmedziť požiadavky — rozšírenie počká a spýta sa znova.<br><b>Chytré vety</b>: z útržkovitých titulkov zloží celé vety a preloží ich cez bezplatný endpoint Google — na rozbitých stopách zrozumiteľnejšie ako celá stopa, ale aj tu môže intenzívne používanie naraziť na obmedzenie; rozšírenie spomalí a skúsi to znova.<br><b>Vlastný kľúč</b>: zloženú vetu odošle poskytovateľovi, ktorého si nastavil."
+  },
+  "backendGtxHint": {
+    "message": "Používa bezplatný endpoint Google — pri intenzívnom používaní môže dôjsť ku krátkemu obmedzeniu; rozšírenie samo zvolní tempo a skúsi to znova."
+  },
+  "backendStatusTlang": {
+    "message": "Toto video: preklad celej stopy (YouTube)"
+  },
+  "backendStatusGtx": {
+    "message": "Toto video: chytré vety (Google)"
+  },
+  "backendStatusLimited": {
+    "message": "Prekladový endpoint obmedzil požiadavky — spomaľujem a skúšam znova automaticky. Už preložené riadky fungujú ďalej."
+  },
+  "diagCopy": {
+    "message": "Kopírovať diagnostiku"
+  },
+  "diagCopied": {
+    "message": "Skopírované — vlož to do e-mailu alebo issue"
+  },
+  "diagCopyFail": {
+    "message": "Kopírovanie zlyhalo — urob snímku obrazovky"
+  },
+  "backendStatusSame": {
+    "message": "Titulky tohto videa už sú v jazyku prekladu — nie je čo prekladať."
+  },
+  "backendStatusNoTrack": {
+    "message": "Pre toto video sa nenašla stopa titulkov, takže nie je čo ukázať.",
+    "description": "Popup: the engine status line when the page reported that the video has no caption track at all (the commonest support question)."
+  },
+  "backendStatusNoVideo": {
+    "message": "Otvor YouTube video a na ňom sa objavia dva riadky. Ak už na nejakom si, znova načítaj kartu."
+  },
+  "secLayout": {
+    "message": "Rozloženie"
+  },
+  "secLineStyle": {
+    "message": "Štýl riadka"
+  },
+  "secLineStyleHint": {
+    "message": "Písmo · Farba · Veľkosť"
+  },
+  "orderLabel": {
+    "message": "Poradie"
+  },
+  "orderTransTop": {
+    "message": "Preklad navrchu"
+  },
+  "orderOrigTop": {
+    "message": "Originál navrchu"
+  },
+  "positionLabel": {
+    "message": "Pozícia"
+  },
+  "posTop": {
+    "message": "Hore"
+  },
+  "posCenter": {
+    "message": "V strede"
+  },
+  "posBottom": {
+    "message": "Dole"
+  },
+  "posHint": {
+    "message": "Titulky môžeš na videu aj presunúť ťahaním"
+  },
+  "posTryDrag": {
+    "message": "vyskúšať"
+  },
+  "posTryNoVideo": {
+    "message": "Najprv otvor video na YouTube"
+  },
+  "resetPos": {
+    "message": "Obnoviť pozíciu"
+  },
+  "rowGap": {
+    "message": "Riadkovanie"
+  },
+  "tabTrans": {
+    "message": "Preklad"
+  },
+  "tabOrig": {
+    "message": "Originál"
+  },
+  "lineTabsAria": {
+    "message": "Riadok titulkov"
+  },
+  "lineShow": {
+    "message": "Zobraziť tento riadok"
+  },
+  "fontLabel": {
+    "message": "Písmo"
+  },
+  "fontSystem": {
+    "message": "Systémové"
+  },
+  "fontMono": {
+    "message": "Neproporcionálne"
+  },
+  "fontCjk": {
+    "message": "Pre CJK"
+  },
+  "sizeLabel": {
+    "message": "Veľkosť písma"
+  },
+  "colText": {
+    "message": "Text"
+  },
+  "colBg": {
+    "message": "Pozadie"
+  },
+  "colStroke": {
+    "message": "Obrys"
+  },
+  "colTextAria": {
+    "message": "Farba textu"
+  },
+  "colBgAria": {
+    "message": "Farba pozadia"
+  },
+  "colStrokeAria": {
+    "message": "Farba obrysu"
+  },
+  "bgOpacity": {
+    "message": "Krytie pozadia"
+  },
+  "strokeOpacity": {
+    "message": "Krytie obrysu"
+  },
+  "resetAll": {
+    "message": "Obnoviť všetky nastavenia"
+  },
+  "resetConfirmText": {
+    "message": "Tým sa vymažú všetky nastavenia, API kľúče uložené v tomto počítači aj zapamätaný model a hlas u každého poskytovateľa a znova sa zapnú nápovedy pri prvom spustení. Domény poskytovateľov, ktoré si už povolil, ostanú povolené, rovnako ako importované súbory písma.",
+    "description": "Popup: the inline panel that opens when 'Reset all settings' is pressed. Says exactly what a reset clears."
+  },
+  "resetConfirmBack": {
+    "message": "Nechať nastavenia",
+    "description": "Popup: the safe button on the reset panel — closes it, changes nothing."
+  },
+  "resetConfirmGo": {
+    "message": "Resetovať všetko",
+    "description": "Popup: the destructive button on the reset panel — performs the reset."
+  },
+  "toggleTurnOff": {
+    "message": "Vypnúť dvojjazyčné titulky"
+  },
+  "toggleTurnOn": {
+    "message": "Zapnúť dvojjazyčné titulky"
+  },
+  "handleTitle": {
+    "message": "Ťahaním presunúť · dvojklik obnoví"
+  },
+  "handleAria": {
+    "message": "Titulky presunieš ťahaním, dvojklik obnoví pozíciu"
+  },
+  "secExport": {
+    "message": "Export"
+  },
+  "exportContent": {
+    "message": "Obsah"
+  },
+  "exportBi": {
+    "message": "Dvojjazyčné"
+  },
+  "exportOrig": {
+    "message": "Originál"
+  },
+  "exportTrans": {
+    "message": "Preklad"
+  },
+  "exportSrt": {
+    "message": "Stiahnuť SRT"
+  },
+  "exportWorking": {
+    "message": "Generovanie…"
+  },
+  "exportDone": {
+    "message": "Titulky stiahnuté"
+  },
+  "exportNoTrans": {
+    "message": "Pre toto video nie je preklad — skús prekladač Celá stopa alebo iný jazyk prekladu."
+  },
+  "exportLimited": {
+    "message": "YouTube teraz obmedzuje preklad celej stopy — skús to o minútu znova. S nastaveným vlastným kľúčom ponúka karta exportu zaškrtnutie, ktoré to obíde."
+  },
+  "exportNoCues": {
+    "message": "Žiadne titulky na stiahnutie — prehraj pár sekúnd, nech sa titulky načítajú, a skús to znova."
+  },
+  "exportNotYoutube": {
+    "message": "Na export otvor stránku videa na YouTube."
+  },
+  "exportFailed": {
+    "message": "Export zlyhal — obnov stránku a skús to znova."
+  },
+  "updateNotesLabel": {
+    "message": "Po aktualizácii otvoriť poznámky k vydaniu"
+  },
+  "trackWarnDubOnly": {
+    "message": "Pozor: toto video má len automatické titulky z AI dabingu (bez stopy v pôvodnom jazyku), dvojjazyčné titulky preto nemusia sedieť so zvukom."
+  },
+  "whatsNewRow": {
+    "message": "Čo je nové vo v$VER$ →",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "backendStatusByo": {
+    "message": "Toto video: vlastný kľúč ($NAME$)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoProviderLabel": {
+    "message": "Poskytovateľ"
+  },
+  "byoSiteLabel": {
+    "message": "Web"
+  },
+  "byoSiteHint": {
+    "message": "Vyber web, na ktorom si sa zaregistroval — ide o dve samostatné platformy a kľúč z jednej druhá neprijme."
+  },
+  "byoSiteGlobal": {
+    "message": "Medzinárodný"
+  },
+  "byoSiteCn": {
+    "message": "Pevninská Čína"
+  },
+  "byoBaseLabel": {
+    "message": "Adresa endpointu"
+  },
+  "byoModelLabel": {
+    "message": "Model"
+  },
+  "byoModelRequired": {
+    "message": "Povinné: názov modelu"
+  },
+  "byoKeyLabel": {
+    "message": "API kľúč"
+  },
+  "byoKeyClear": {
+    "message": "Zmazať"
+  },
+  "byoKeyReplace": {
+    "message": "Nahradiť"
+  },
+  "byoKeyCleared": {
+    "message": "Kľúč uložený na tomto počítači bol zmazaný."
+  },
+  "byoKeyClearedMoved": {
+    "message": "Kľúč uložený na tomto počítači bol zmazaný. Používal sa, preto preklad teraz ide cez $NAME$.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoKeySaved": {
+    "message": "uložené ····$LAST4$",
+    "placeholders": {
+      "last4": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoCustom": {
+    "message": "Vlastný (kompatibilný s OpenAI)"
+  },
+  "byoTest": {
+    "message": "Uložiť a otestovať"
+  },
+  "byoTesting": {
+    "message": "Testujem…"
+  },
+  "byoTestOk": {
+    "message": "Pripojené. Ukážka: $SAMPLE$",
+    "placeholders": {
+      "sample": {
+        "content": "$1"
+      }
+    }
+  },
+  "byoGetKey": {
+    "message": "Získať kľúč"
+  },
+  "byoGuide": {
+    "message": "Treba ti pomoc s nastavením?"
+  },
+  "byoLocalHint": {
+    "message": "Kľúč ostáva v tomto prehliadači, na tomto počítači — nikdy sa neodosiela. Text titulkov ide len k poskytovateľovi, ktorého si vybral."
+  },
+  "byoErrNoProvider": {
+    "message": "Najprv vyber poskytovateľa."
+  },
+  "byoErrNoKey": {
+    "message": "Najprv zadaj API kľúč, potom stlač „Uložiť a otestovať“."
+  },
+  "byoErrNoModel": {
+    "message": "Najprv vyber model — zvoľ jeden zo zoznamu, alebo stlač „Vypísať modely mojím kľúčom“."
+  },
+  "byoErrNoModelEmpty": {
+    "message": "Tento poskytovateľ žiadny zoznam neponúka. Najprv načítaj dostupné modely, alebo napíš názov modelu sám."
+  },
+  "byoErrNotApi": {
+    "message": "Táto adresa odpovedala webovou stránkou, nie API — zvyčajne prihlasovacia stena alebo sieť, ktorá zachytáva požiadavky. Skontroluj adresu, alebo skús inú sieť."
+  },
+  "byoErrBadBaseUrl": {
+    "message": "Základná URL API musí byť úplná adresa https://."
+  },
+  "byoErrUrlHasKey": {
+    "message": "Adresa obsahuje kľúč. Vyber ho z adresy a vlož do poľa API kľúča — adresa sa synchronizuje s tvojím účtom prehliadača, pole kľúča nie."
+  },
+  "byoErrNoPerm": {
+    "message": "Bez povolenia k tomuto hostiteľovi API sa rozšírenie nevie pripojiť. Stlač znova „Uložiť a otestovať“ a prístup povoľ."
+  },
+  "byoErrAuth": {
+    "message": "Kľúč bol odmietnutý (401) — skontroluj, že je skopírovaný celý a stále aktívny."
+  },
+  "byoErrForbiddenLocal": {
+    "message": "Server na tomto počítači požiadavku odmietol (403). Pravdepodobne nemá povolené toto rozšírenie: OLLAMA_ORIGINS pri Ollama, prepínač CORS v LM Studio."
+  },
+  "byoErrForbidden": {
+    "message": "Poskytovateľ túto požiadavku odmietol (403). Kľúč je väčšinou v poriadku, účet ale požiadavku nesmie odoslať — nezaplatený zostatok, čakajúce overenie totožnosti, nezapnutý model alebo región. Skontroluj účet v konzole poskytovateľa."
+  },
+  "byoErrListAuth": {
+    "message": "Tento kľúč nemá oprávnenie čítať zoznam. Pridaj mu ho v paneli poskytovateľa a skús to znova.",
+    "description": "Shown when fetching a model/voice LIST is refused with 401/403. Different from byoErrAuth on purpose: the key already works for synthesis, so the refusal is about per-endpoint permissions (ElevenLabs keys can allow Text to Speech but not Voices)."
+  },
+  "byoErrLimited": {
+    "message": "Poskytovateľ obmedzuje počet požiadaviek — spomaľujem a skúšam znova automaticky."
+  },
+  "byoErrLimitedTest": {
+    "message": "Poskytovateľ obmedzuje počet požiadaviek. Chvíľu počkaj a stlač znova."
+  },
+  "byoErrQuota": {
+    "message": "Tento účet vyčerpal kredit alebo kvótu na aktuálne obdobie — dobi ho v konzole poskytovateľa a pokračuj."
+  },
+  "byoErrBadRequest": {
+    "message": "Endpoint požiadavku odmietol — názov modelu alebo základná URL môže byť zlá."
+  },
+  "byoErrBadShape": {
+    "message": "Model neodpovedal riadok po riadku, ako sme žiadali, a menšie opakované pokusy tiež zlyhali — skús iný model."
+  },
+  "byoErrReasoning": {
+    "message": "Tento model vrátil len reťazec úvah a žiadny preklad — vyber model bez uvažovania."
+  },
+  "byoErrNetfail": {
+    "message": "K tomuto endpointu sa neviem pripojiť (sieťové alebo regionálne obmedzenie)."
+  },
+  "byoErrNetfailLocal": {
+    "message": "K tejto adrese sa neviem pripojiť: server nebeží, alebo zatiaľ nepovoľuje prístup rozšíreniu (OLLAMA_ORIGINS pri Ollama, prepínač CORS v LM Studio)."
+  },
+  "byoErrUnsupportedTarget": {
+    "message": "Tento poskytovateľ nevie preložiť do zvoleného jazyka — zmeň jazyk alebo prekladač."
+  },
+  "byoErrFailed": {
+    "message": "Pripojenie zlyhalo. Skús to o chvíľu znova."
+  },
+  "optTitle": {
+    "message": "Nastavenie prekladovej služby"
+  },
+  "optIntro": {
+    "message": "Vyber poskytovateľa a vlož vlastný API kľúč."
+  },
+  "optPricingLink": {
+    "message": "Cenník a bezplatný plán"
+  },
+  "optFetchModels": {
+    "message": "Vypísať modely mojím kľúčom"
+  },
+  "optFetchModelsNoKey": {
+    "message": "Vypísať dostupné modely"
+  },
+  "optFetching": {
+    "message": "Načítavam…"
+  },
+  "optModelsFetched": {
+    "message": "Nájdených $N$ modelov",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelRetired": {
+    "message": "„$MODEL$“ už nie je v zozname tohto poskytovateľa — vyber iný vyššie.",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "optModelsFailed": {
+    "message": "Modely sa nepodarilo vypísať — zadaj názov modelu ručne."
+  },
+  "optModelCustom": {
+    "message": "Vlastný…"
+  },
+  "optNoModelsYet": {
+    "message": "Zoznam modelov zatiaľ chýba — načítaj ho kľúčom, alebo zadaj názov ručne."
+  },
+  "optNoModelsYetNoKey": {
+    "message": "Zoznam modelov zatiaľ chýba — načítaj ho, alebo zadaj názov ručne."
+  },
+  "optShowKey": {
+    "message": "Zobraziť"
+  },
+  "optRecommended": {
+    "message": "odporúčané"
+  },
+  "optConfigured": {
+    "message": "Nastavené"
+  },
+  "optInUse": {
+    "message": "používa sa"
+  },
+  "optAfterSetup": {
+    "message": "Keď tu budeš hotový, otvor vyskakovacie okno rozšírenia a nastav Prekladač na „Vlastný kľúč“."
+  },
+  "optTrademark": {
+    "message": "Všetky názvy a logá poskytovateľov sú ochrannými známkami ich vlastníkov. Toto rozšírenie s nimi nie je nijako spojené, nie je nimi schválené ani sponzorované; značky slúžia len na identifikáciu zvoleného API."
+  },
+  "optSections": {
+    "message": "Sekcie"
+  },
+  "optNavSetup": {
+    "message": "Prekladová služba"
+  },
+  "optNavStart": {
+    "message": "Začíname"
+  },
+  "optNavAbout": {
+    "message": "O"
+  },
+  "startIntro": {
+    "message": "Štyri veci. Na používanie nemusíš nič nastavovať."
+  },
+  "startS1Title": {
+    "message": "Otvor video — a hotovo"
+  },
+  "startS1Body": {
+    "message": "Pri akomkoľvek videu na YouTube s titulkami sa oba riadky zobrazia samy."
+  },
+  "startS2Title": {
+    "message": "Daj ich, kam chceš"
+  },
+  "startS2Body": {
+    "message": "Chyť úchyt v ľavom hornom rohu poľa s titulkami a pretiahni ho kamkoľvek. Dvojklik na úchyt ho vráti späť."
+  },
+  "startS2Alt": {
+    "message": "Schéma prehrávača: šesťbodový úchyt v ľavom hornom rohu poľa s titulkami, pretahovaný na iné miesto"
+  },
+  "startS3Title": {
+    "message": "Chceš lepšie preklady"
+  },
+  "startS3Body": {
+    "message": "Pridaj vlastný API kľúč: preklad celých viet a preklad celého videa pri exporte."
+  },
+  "startGoSetup": {
+    "message": "Nastaviť prekladovú službu"
+  },
+  "aboutIntro": {
+    "message": "O čo ide a kam mieri tvoj text."
+  },
+  "aboutVersion": {
+    "message": "Verzia"
+  },
+  "uiLocaleLabel": {
+    "message": "Jazyk rozhrania"
+  },
+  "uiLocaleAuto": {
+    "message": "Auto — podľa prehliadača"
+  },
+  "uiLocaleHint": {
+    "message": "Jazyk ponúk a nastavení tohto rozšírenia. Niekoľko popiskov vykreslených priamo vo videu sa stále riadi jazykom prehliadača. Jazyk prekladu titulkov sa vyberá vo vyskakovacom okne; panel „Jazyky prekladu“ len určuje, ktoré jazyky okno ponúka."
+  },
+  "cmdToggleSubs": {
+    "message": "Zapnúť alebo vypnúť titulky"
+  },
+  "cmdToggleTts": {
+    "message": "Čítanie nahlas zap/vyp"
+  },
+  "cmdToggleTransLine": {
+    "message": "Zobraziť alebo skryť riadok prekladu"
+  },
+  "optShortcutsLabel": {
+    "message": "Klávesové skratky"
+  },
+  "optShortcutsOpen": {
+    "message": "Nastaviť skratky"
+  },
+  "optShortcutsHint": {
+    "message": "Tieto klávesy si ponecháva Chrome, nie rozšírenie. Na začiatku nie je nič priradené; priradiť sa dajú tri veci: zapnutie/vypnutie titulkov, zapnutie/vypnutie čítania nahlas a zobrazenie alebo skrytie riadka prekladu."
+  },
+  "optShortcutsFallback": {
+    "message": "Odtiaľto sa stránka neotvorila — vlož chrome://extensions/shortcuts do adresného riadka."
+  },
+  "startTargetLabel": {
+    "message": "Jazyk prekladu"
+  },
+  "startTargetHint": {
+    "message": "Odhadnutý podľa jazykových preferencií prehliadača pri inštalácii rozšírenia. Ak odhad nesedí, zmeň ho tu — v okne ho môžeš zmeniť kedykoľvek."
+  },
+  "aboutBlurb": {
+    "message": "Druhý riadok titulkov na YouTube: originál na jednom, preklad na druhom, písmo, farba aj pozícia podľa teba. Open source, zadarmo, bez reklám."
+  },
+  "aboutPrivacy": {
+    "message": "Rozšírenie nemá žiadny náš server a nezbiera štatistiky. Text titulkov sa odosiela len službám, ktoré si zvolil: prekladovej službe, ktorú vyberieš, a ak ich zapneš, poskytovateľovi hlasu na čítanie nahlas a poskytovateľovi, ktorého nastavíš na zhrnutia. Vlastný kľúč sa ukladá len v tomto počítači."
+  },
+  "aboutChangelog": {
+    "message": "Zoznam zmien"
+  },
+  "aboutRoadmap": {
+    "message": "Plán vývoja"
+  },
+  "optFeedbackLink": {
+    "message": "Nahlásiť problém"
+  },
+  "popupByoConfigure": {
+    "message": "Nastaviť…"
+  },
+  "popupSummarize": {
+    "message": "Zhrnúť toto video",
+    "description": "Popup, under the provider row: opens the summary panel in the player. The panel says which provider it will use and what it will cost before anything is sent."
+  },
+  "popupByoNotSet": {
+    "message": "nenastavené"
+  },
+  "popupByoPick": {
+    "message": "Poskytovateľ prekladu"
+  },
+  "popupByoUntested": {
+    "message": "netestované"
+  },
+  "popupModelPick": {
+    "message": "Prekladový model"
+  },
+  "popupModelMore": {
+    "message": "Ďalšie modely…"
+  },
+  "popupModelFetch": {
+    "message": "Načítať modely v nastaveniach"
+  },
+  "popupModelSwitched": {
+    "message": "Odteraz: $MODEL$",
+    "placeholders": {
+      "model": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupModelNone": {
+    "message": "Model nevybraný"
+  },
+  "exportUsesYouTube": {
+    "message": "Sťahovanie používa vlastný preklad celej stopy od YouTube — zadarmo a nespotrebuje tvoj API kľúč."
+  },
+  "exportUseByo": {
+    "message": "Preložiť vlastným kľúčom (vernejšie, spotrebuje kvótu)"
+  },
+  "exportByoNote": {
+    "message": "Celú stopu preloží tvoj poskytovateľ tvojím kľúčom. Pred odoslaním čohokoľvek uvidíš odhad."
+  },
+  "exportConfirm": {
+    "message": "Preložiť $N$ riadkov titulkov pomocou $NAME$ — zhruba $REQ$ požiadaviek z tvojej kvóty. Celá stopa opustí prehliadač k tomuto poskytovateľovi; pri prehrávaní sa odosielajú len časti, ktoré naozaj sleduješ.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      },
+      "n": {
+        "content": "$2"
+      },
+      "req": {
+        "content": "$3"
+      }
+    }
+  },
+  "exportConfirmGo": {
+    "message": "Preložiť a stiahnuť"
+  },
+  "exportConfirmBack": {
+    "message": "Zrušiť"
+  },
+  "exportStop": {
+    "message": "Zastaviť"
+  },
+  "exportStopping": {
+    "message": "Zastavuje sa…"
+  },
+  "exportProgress": {
+    "message": "Prekladám… $DONE$/$TOTAL$",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "exportPartial": {
+    "message": "$N$ úsek(ov) spadlo na preklad YouTube",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportCancelled": {
+    "message": "Sťahovanie zrušené."
+  },
+  "ftSite": {
+    "message": "Webová stránka"
+  },
+  "ftSiteLabel": {
+    "message": "Web"
+  },
+  "ftFeedbackLabel": {
+    "message": "Spätná väzba"
+  },
+  "ftReviewLabel": {
+    "message": "Hodnotiť"
+  },
+  "ftGithub": {
+    "message": "Zdrojový kód na GitHube"
+  },
+  "ftFeedback": {
+    "message": "Poslať spätnú väzbu alebo nahlásiť chybu"
+  },
+  "ftReview": {
+    "message": "Ohodnotiť v Chrome Web Store"
+  },
+  "optNeedKey": {
+    "message": "Zatiaľ žiadny kľúč — tohto poskytovateľa nemôžeš použiť, kým ho nepridáš."
+  },
+  "optNeedBase": {
+    "message": "Zatiaľ žiadna adresa endpointu — tohto poskytovateľa nemôžeš použiť, kým ju nezadáš."
+  },
+  "optBaseHint": {
+    "message": "Funguje base URL aj úplný endpoint, napr. https://example.com/v1 alebo https://example.com/v1/chat/completions. Pre Ollama alebo LM Studio na tomto počítači je správny tvar http://localhost:11434/v1. Kľúč môže ostať prázdny; obyčajné http funguje len pre loopback adresy."
+  },
+  "startS1Alt": {
+    "message": "Schéma prehrávača: pôvodný a preložený riadok pri spodnom okraji obrazu"
+  },
+  "startS3Alt": {
+    "message": "Porovnanie: bezplatný prekladač prekladá jednu vetu po kúskoch, vlastný kľúč ju pochopí celú a zase rozdelí"
+  },
+  "startPicFree": {
+    "message": "Bezplatný prekladač"
+  },
+  "startPicFreeNote": {
+    "message": "jedna veta, rozsekaná"
+  },
+  "startPicByo": {
+    "message": "Vlastný kľúč"
+  },
+  "startPicByoNote": {
+    "message": "pochopená celá, zase rozdelená"
+  },
+  "startS4Title": {
+    "message": "V prehrávači je malé menu"
+  },
+  "startS4Body": {
+    "message": "Malá šípka vedľa tlačidla titulkov otvorí ponuku: titulky, čítanie nahlas, výber textu, zhrnutie videa a nastavenia — bez opustenia prehrávača."
+  },
+  "startS4Alt": {
+    "message": "Ilustrácia prehrávača: malá šípka vedľa tlačidla titulkov vpravo dole otvorí malé menu"
+  },
+  "menuHintBubble": {
+    "message": "Čítanie nahlas, zhrnutie videa, výber textu — všetko sa skrýva za touto šípkou"
+  },
+  "troubleTitle": {
+    "message": "Niečo je zle"
+  },
+  "troubleStep1": {
+    "message": "Najprv skontroluj prepínač v okne — keď je vypnutý, celá vrstva titulkov sa nezobrazí."
+  },
+  "troubleStep2": {
+    "message": "Má toto video vôbec titulky? Skús tlačidlo CC v prehrávači: bez originálu nie je čo prekladať."
+  },
+  "troubleStep3": {
+    "message": "Skús populárne video. Ak všetko ostatné funguje a len toto nie, ide zvyčajne o stopu titulkov tohto videa."
+  },
+  "troubleDiagHint": {
+    "message": "Stále to nejde? Vlož diagnostické informácie do e-mailu alebo hlásenia — nesú verziu, stav prekladača a čo práve robí aktuálna karta, čo ušetrí jedno alebo dve kolá."
+  },
+  "langManage": {
+    "message": "Spravovať jazyky…"
+  },
+  "optNavLangs": {
+    "message": "Jazyky prekladu"
+  },
+  "optNavReadaloud": {
+    "message": "Čítať nahlas"
+  },
+  "ttsIntro": {
+    "message": "Prečíta preložený riadok nahlas. Vlastné hlasy prehliadača nepotrebujú žiadny kľúč; cloudové služby sa nastavujú a testujú tu."
+  },
+  "ttsVoiceLabel": {
+    "message": "Hlas"
+  },
+  "ttsPreview": {
+    "message": "Náhľad"
+  },
+  "ttsPreviewPlaying": {
+    "message": "Prehráva sa…"
+  },
+  "ttsPreviewFail": {
+    "message": "Nedá sa prehrať — skontroluj kľúč a skús Uložiť a otestovať"
+  },
+  "ttsFetchVoices": {
+    "message": "Načítať úplný zoznam tohto jazyka kľúčom"
+  },
+  "ttsFetching": {
+    "message": "Načítavam…"
+  },
+  "ttsVoicesSwitched": {
+    "message": "Toto je všetkých $N$ hlasov tvojho kľúča pre aktuálny jazyk, vrátane starších radov Standard / Wavenet. Platia len pre tento jazyk; riadok vyššie vracia k bežným hlasom, ktoré sa držia zmeny jazyka. Zoznam si môžeš kedykoľvek stiahnuť znova.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsBackToFamily": {
+    "message": "Späť k bežným hlasom (sledujú jazyk)"
+  },
+  "ttsVoicesNone": {
+    "message": "Tento poskytovateľ nemá ďalšie hlasy pre tento jazyk — vstavané stále fungujú."
+  },
+  "ttsVoicesSuggested": {
+    "message": "Načítaných $N$ hlasov — sú to návrhy pod poľom vyššie.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoiceFemale": {
+    "message": "ženský"
+  },
+  "ttsVoiceMale": {
+    "message": "mužský"
+  },
+  "ttsTestOk": {
+    "message": "Pripojené: testovacie audio $KB$ KB ($VOICE$)",
+    "placeholders": {
+      "kb": {
+        "content": "$1"
+      },
+      "voice": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsPrivacyNote": {
+    "message": "Väčšina hlasov vstavaných v prehliadači je nainštalovaná v tomto počítači a číta riadok priamo tu. Niektoré nie: Chrome ponúka aj online hlasy — tie, ktorých názvy začínajú na „Google“ — a pri nich prehliadač odosiela riadok výrobcovi. Pri cloudovom poskytovateľovi ide text na prečítanie len k poskytovateľovi, ktorého si zvolil, a kľúč ostáva v tomto počítači."
+  },
+  "ttsEnableLabel": {
+    "message": "Čítať preklad nahlas vo videu"
+  },
+  "ttsEnableHint": {
+    "message": "Keď je zapnuté, preklad každého titulku sa vysloví, len čo sa objaví; riadok, ktorého preklad nie je včas pripravený, sa preskočí a neskôr sa nedobehne. Kým sa riadok vyslovuje, vlastný zvuk videa klesne na úroveň nastavenú nižšie. Riadok, ktorý trvá dlhšie, trochu spomalí obraz a využije medzeru za ním — pri cloudových hlasoch aj pri hlase prehliadača; prepínač nižšie spomaľuje, kým neskončí každý riadok."
+  },
+  "langsIntro": {
+    "message": "Ktoré jazyky ti vyskakovacie okno ponúka na preklad."
+  },
+  "langsKept": {
+    "message": "Vo vyskakovacom okne"
+  },
+  "langsKeptHint": {
+    "message": "Zobrazujú sa v ponuke jazyka prekladu vyskakovacieho okna. Nechaj aspoň jeden."
+  },
+  "langsMore": {
+    "message": "Ďalšie jazyky"
+  },
+  "langsMoreHint": {
+    "message": "Stlač +, aby si pridal. Zoznam vychádza z jazykov prekladu, ktoré podporujú bezplatné prekladače a DeepL."
+  },
+  "langsReset": {
+    "message": "Obnoviť predvolené"
+  },
+  "langsResetDone": {
+    "message": "Späť na predvolený zoznam."
+  },
+  "langsAddAria": {
+    "message": "Pridať"
+  },
+  "langsRemoveAria": {
+    "message": "Odobrať"
+  },
+  "langsLastOne": {
+    "message": "Nechaj aspoň jeden"
+  },
+  "langsAllAdded": {
+    "message": "Všetky jazyky už sú v tvojom zozname."
+  },
+  "langsAdded": {
+    "message": "Pridané $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "langsSwitched": {
+    "message": "Ten sa používal, jazyk prekladu je teraz $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontCjkSerif": {
+    "message": "Čínske pätkové"
+  },
+  "fontCjkRound": {
+    "message": "Čínske zaoblené"
+  },
+  "ttsVolLabel": {
+    "message": "Hlasitosť predčítania"
+  },
+  "ttsGroupPlayback": {
+    "message": "Prehrávanie"
+  },
+  "ttsDuckLabel": {
+    "message": "Pôvodný zvuk pri reči"
+  },
+  "ttsDuckShort": {
+    "message": "Pôvodný zvuk"
+  },
+  "ttsStatusSpeaking": {
+    "message": "Hovorí"
+  },
+  "ttsStatusOn": {
+    "message": "Predčítanie zapnuté"
+  },
+  "ttsOpenSettings": {
+    "message": "Nastavenia čítania nahlas"
+  },
+  "ttsStatusCounts": {
+    "message": "$N$ riadkov v tomto videu · $M$ preskočených",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      }
+    }
+  },
+  "ttsStatusCountsWhy": {
+    "message": "$N$ riadkov tu · $M$ preskočených ($W$)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      },
+      "m": {
+        "content": "$2"
+      },
+      "w": {
+        "content": "$3"
+      }
+    }
+  },
+  "ttsSkipLate": {
+    "message": "preklad nestihol prísť"
+  },
+  "ttsSkipSilent": {
+    "message": "hlas sa neozval"
+  },
+  "ttsRegionLabel": {
+    "message": "Oblasť služby"
+  },
+  "ttsErrNoRegion": {
+    "message": "Najprv zadaj oblasť služby svojho kľúča Azure (napr. eastus)."
+  },
+  "ttsNoSynth": {
+    "message": "Tento počítač nemá žiadne hlasy na predčítanie."
+  },
+  "ttsNoVoiceForLang": {
+    "message": "Tento počítač nemá hlas, ktorý číta $NAME$. Nižšie sú hlasy iných jazykov — vyber jeden a riadok sa prečíta s prízvukom daného jazyka.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "ttsVoicesLoading": {
+    "message": "Hľadám hlasy tohto počítača…"
+  },
+  "ttsErrRefused": {
+    "message": "Poskytovateľ túto požiadavku odmietol — skús iný hlas."
+  },
+  "ttsErrNoAudio": {
+    "message": "Zvuk nedorazil — skús to znova, alebo vyber iný hlas."
+  },
+  "startPicChop1": {
+    "message": "sú dva veľké",
+    "description": "Demo of a BAD chopped translation of 'there's two big' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicChop2": {
+    "message": "dôvody jeden je",
+    "description": "Demo of a BAD chopped translation of 'reasons one is' — keep it a broken half-sentence aligned to that English line. Never the fox demo."
+  },
+  "startPicWhole1": {
+    "message": "Sú dva veľké dôvody,",
+    "description": "First half of a GOOD whole-sentence translation of 'There are two big reasons,' — must connect into the next key. Never the fox demo."
+  },
+  "startPicWhole2": {
+    "message": "ten prvý je…",
+    "description": "Second half: 'the first one is…' — continues startPicWhole1. Never the fox demo."
+  },
+  "popupVoiceMore": {
+    "message": "Ďalšie hlasy…"
+  },
+  "popupVoiceNone": {
+    "message": "Hlas nevybraný"
+  },
+  "ttsRobotVoices": {
+    "message": "Robotické",
+    "description": "Heading over the OS's machine/novelty voice pack at the bottom of the local-voice picker. Keep it to one short word."
+  },
+  "selectTextLabel": {
+    "message": "Umožniť výber a kopírovanie textu titulkov",
+    "description": "Checkbox in the popup layout card. When on, the two subtitle lines accept the mouse so their text can be selected and copied; clicks on them then no longer pause the video."
+  },
+  "menuSelectText": {
+    "message": "Výber textu",
+    "description": "Player-menu row label (short NAME, not a sentence). Toggles whether subtitle lines can be selected; clicking it copies nothing."
+  },
+  "menuSummary": {
+    "message": "Zhrnutie",
+    "description": "Player-menu action row: opens the in-player video summary panel."
+  },
+  "sumPanelTitle": {
+    "message": "Zhrnutie videa",
+    "description": "Title of the in-player summary panel."
+  },
+  "sumClose": {
+    "message": "Zavrieť",
+    "description": "aria-label of the summary panel's close button."
+  },
+  "sumEmpty": {
+    "message": "Toto video nemá použiteľnú stopu titulkov.",
+    "description": "Summary panel: the video has no subtitle track to summarize."
+  },
+  "sumNeedSubs": {
+    "message": "Znova zapni titulky, aby sa dalo zhrnúť — zhrnutie sa tvorí zo stopy titulkov."
+  },
+  "sumNeedKey": {
+    "message": "Zhrnutie potrebuje tvoju vlastnú službu: poskytovateľa s tvojím kľúčom v paneli prekladu, alebo lokálny model na tomto počítači. Bezplatné prekladače len prekladajú. Nezhrňujú.",
+    "description": "Summary panel empty state: summaries need a BYO-key or local-endpoint provider."
+  },
+  "sumConfigure": {
+    "message": "Nastaviť prekladovú službu",
+    "description": "Summary panel empty state: the primary button that opens the settings page. Same wording as startGoSetup (a primary action, no ellipsis), kept as its own key so the onboarding step and this panel can drift apart on purpose."
+  },
+  "sumStart": {
+    "message": "Zhrnúť",
+    "description": "Summary panel: the button that starts the (quota-burning) run."
+  },
+  "sumAgain": {
+    "message": "Zhrnúť znova"
+  },
+  "sumFail": {
+    "message": "Zhrnutie zlyhalo. Skús to neskôr.",
+    "description": "Summary panel: generic failure line."
+  },
+  "sumConfirm": {
+    "message": "Tým sa celá stopa titulkov pošle službe $PROVIDER$ (častí: $PARTS$), na tvoj vlastný limit.",
+    "description": "Summary panel confirm line before anything is sent. $PROVIDER$ = provider name, $PARTS$ = chunk count.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "parts": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumWorking": {
+    "message": "Zhrňujem… časť $DONE$/$TOTAL$",
+    "description": "Summary panel progress line. $DONE$/$TOTAL$ = chunk counters.",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "sumFailedPart": {
+    "message": "Nepodarilo sa zhrnúť častí: $N$; vyššie je zvyšok.",
+    "description": "Summary panel: some chunks failed. $N$ = how many.",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "menuSubtitles": {
+    "message": "Titulky",
+    "description": "Row label in the small in-player menu. One word."
+  },
+  "tlangLimitedNote": {
+    "message": "Vlastný preklad YouTube je teraz obmedzený limitom; chytré vety (Google) to dopĺňajú. Neskôr to skúsi znova samo.",
+    "description": "Status line under the engine picker when auto fell back to gtx because YouTube's own translation endpoint is rate-limiting. Explains WHY, promises the automatic retry. No absolute claims."
+  },
+  "exportWaiting": {
+    "message": "Prekladový endpoint obmedzuje počet požiadaviek — pokračovanie o približne $SECONDS$ s.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "28"
+      }
+    }
+  },
+  "optTtsBaseHint": {
+    "message": "Funguje základná URL aj úplný endpoint, napr. http://localhost:8880/v1 alebo http://localhost:8880/v1/audio/speech (miestne hlasové servery ako Kokoro alebo openai-edge-tts). Kľúč môže ostať prázdny; obyčajné http funguje len pre loopback adresy."
+  },
+  "optTtsNeedUrl": {
+    "message": "Zatiaľ žiadna adresa endpointu — tohto poskytovateľa nemôžeš používať, kým ju nepridáš."
+  },
+  "ttsSkipRefused": {
+    "message": "poskytovateľ tieto požiadavky odmietol"
+  },
+  "ttsSkipNotSet": {
+    "message": "nenastavené na tomto počítači"
+  },
+  "ttsSkipNoVoice": {
+    "message": "pre tento jazyk nie je hlas"
+  },
+  "ttsProviderMute": {
+    "message": "$NAME$ teraz nemôže hovoriť. Vyber iné v riadku vyššie — hlasy tvojho prehliadača sú v tom zozname.",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "statusTrackRetry": {
+    "message": "Stopa titulkov nedorazila — skúša sa to automaticky znova. Ponáhľaš sa? Obnov stránku a skús to hneď."
+  },
+  "ttsCompleteLabel": {
+    "message": "Dokončiť každý riadok (obraz v hustých častiach spomalí)"
+  },
+  "ttsCompleteHint": {
+    "message": "Pri vyšších rýchlostiach dlhé riadky často prídu o koniec v prospech nasledujúceho. Keď je to zapnuté, obraz spomalí, ako riadok potrebuje — nikdy pod štvrtinu zvolenej rýchlosti — a v medzerách sa zase dobehne. Kým je obraz takto silno spomalený, vlastný zvuk videa klesne nižšie ako úroveň, ktorú si nastavil, až k tichu."
+  },
+  "ttsCompleteHintText": {
+    "message": "Pri tejto rýchlosti sa dosť riadkov usekáva. Keď to zapneš, obraz podľa potreby spomalí, aby sa ich dočítalo čo najviac."
+  },
+  "ttsCompleteHintOn": {
+    "message": "Zapnúť"
+  },
+  "ttsCompleteHintNever": {
+    "message": "Už nezobrazovať"
+  },
+  "provLocalSpeechShort": {
+    "message": "Prehliadač"
+  },
+  "optNavFonts": {
+    "message": "Písma titulkov"
+  },
+  "fontsIntro": {
+    "message": "Jeden zoznam slúži obom riadkom titulkov; vyskakovacie okno vyberá písmo pre každý riadok zvlášť. Každé uvedené písmo je nainštalované v tomto počítači."
+  },
+  "fontsKept": {
+    "message": "Zobrazené vo vyskakovacom okne"
+  },
+  "fontsMore": {
+    "message": "Ostatné písma"
+  },
+  "fontsOnly": {
+    "message": "Len písma, ktoré to dokážu vykresliť"
+  },
+  "fontsCounting": {
+    "message": "Kontrolujem…"
+  },
+  "fontsSearch": {
+    "message": "Hľadať názvy písiem"
+  },
+  "fontsNoMatch": {
+    "message": "Žiadne písmo nezodpovedá."
+  },
+  "fontsKeptEmpty": {
+    "message": "Pre vyskakovacie okno ostalo len Systémové.",
+    "description": "Shown in the kept column of the fonts page when every font was removed from it."
+  },
+  "fontsAllAdded": {
+    "message": "Všetky písma už sú v zozname."
+  },
+  "fontsReset": {
+    "message": "Obnoviť predvolené"
+  },
+  "fontsResetDone": {
+    "message": "Predvolený zoznam obnovený."
+  },
+  "fontsAdded": {
+    "message": "Pridané $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsPreview": {
+    "message": "Náhľad: $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsTryAria": {
+    "message": "Náhľad"
+  },
+  "fontsUnavailable": {
+    "message": "Tento prehliadač neumožňuje rozšíreniu čítať nainštalované písma, takže sa dá vybrať len Systémové."
+  },
+  "fontNoGlyphs": {
+    "message": "tento riadok nezobrazí"
+  },
+  "fontNotHere": {
+    "message": "nie je v tomto počítači"
+  },
+  "fontsImport": {
+    "message": "Importovať súbor písma…"
+  },
+  "fontsImportHint": {
+    "message": ".ttf / .otf / .woff / .woff2; súbor sa skopíruje do prehliadača."
+  },
+  "fontsImported": {
+    "message": "Importované $NAME$",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportStore": {
+    "message": "Nepodarilo sa to uložiť v prehliadači; skús to znova.",
+    "description": "Settings page: the font file was read but the browser refused to store the copy (IndexedDB quota or failure)."
+  },
+  "fontsRemoved": {
+    "message": "Položka $NAME$ bola odobratá z vyskakovacieho okna.",
+    "description": "Settings page, fonts: status after pressing × on a kept font. $NAME$ = the font name.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Verdana"
+      }
+    }
+  },
+  "fontsSkipList": {
+    "message": "Preskočiť tento zoznam",
+    "description": "Settings page, fonts: a keyboard-only link before each long font list that jumps past it."
+  },
+  "fontImported": {
+    "message": "Importované písmo",
+    "description": "Name shown for an imported font whose record is not on this computer (synced from another machine, or deleted)."
+  },
+  "fontsImportBad": {
+    "message": "Tento súbor písma prehliadač nevie použiť."
+  },
+  "fontsImportTooBig": {
+    "message": "Súbor je príliš veľký (limit $MB$ MB).",
+    "placeholders": {
+      "mb": {
+        "content": "$1"
+      }
+    }
+  },
+  "fontsImportDelete": {
+    "message": "Zmazať importované písmo"
+  },
+  "fontsLangLabel": {
+    "message": "Kontrolovať"
+  },
+  "fontsLangRecent": {
+    "message": "nedávno sledované"
+  },
+  "fontMoreRow": {
+    "message": "Spravovať písma…"
+  },
+  "fontHiddenRow": {
+    "message": "$N$ ďalších tento riadok nezobrazí",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  }
+}
