@@ -1734,6 +1734,34 @@
     // Presses inside the menu are the menu's business — they must neither
     // close it (the document listener below) nor pause the player.
     menuEl.addEventListener("mousedown", (e) => e.stopPropagation());
+    // Arrow keys walk the rows, Home/End jump to the ends, and both wrap. The
+    // popup's two menus have done this since they were written; this one was
+    // reachable only by Tab, which also walks straight out of the menu and
+    // leaves it open behind you. Every key here is swallowed before the player
+    // sees it — arrows are seek and volume out there.
+    menuEl.addEventListener("keydown", (e) => {
+      const keys = ["ArrowDown", "ArrowUp", "Down", "Up", "Home", "End", "Tab"];
+      if (keys.indexOf(e.key) < 0) return;
+      const rows = [...menuEl.querySelectorAll(".ytds-mi")];
+      if (!rows.length) return;
+      const at = rows.indexOf(document.activeElement);
+      if (e.key === "Tab") {
+        // Leaving by Tab closes it: an open menu the keyboard has walked out of
+        // is a panel floating over the video with nothing to dismiss it.
+        closeMenu();
+        try { if (toggleBtn) toggleBtn.focus(); } catch (_e) { /* ignore */ }
+        return;                       // let Tab itself move on from the button
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      const last = rows.length - 1;
+      let next = 0;
+      if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = last;
+      else if (e.key === "ArrowUp" || e.key === "Up") next = at <= 0 ? last : at - 1;
+      else next = at >= last ? 0 : at + 1;
+      try { rows[next].focus(); } catch (_e) { /* ignore */ }
+    });
     for (const row of MENU_ROWS) {
       // The switches and the actions live apart: ONE visible seam before the
       // first action row is what tells a row that flips from a row that does.
