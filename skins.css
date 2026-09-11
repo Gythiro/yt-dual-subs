@@ -46,7 +46,9 @@ html[data-skin="ember"] {
   --muted: #b9a89a;
   --muted-2: #8e8073;
   --scroll: #4a382c;
-  --scroll-hi: #5e4838;
+  --line-hi: #5e4838;
+  --screen-lo: #0a0705;
+  --screen-hi: #2a1f16;
   --accent: #ec9e5d;
   --accent-dim: rgba(236, 158, 93, .14);
   --hot: #e06b4f;
@@ -68,7 +70,9 @@ html[data-skin="mocha"] {
   --muted: #a5998e;
   --muted-2: #978c82;
   --scroll: #574d45;
-  --scroll-hi: #6b5f55;
+  --line-hi: #6b5f55;
+  --screen-lo: #0f0d0b;
+  --screen-hi: #332c26;
   --accent: #8ba876;
   --accent-dim: rgba(139, 168, 118, .16);
 }
@@ -86,7 +90,9 @@ html[data-skin="ink"] {
   --muted: #9a9aa8;
   --muted-2: #79798f;
   --scroll: #26262e;
-  --scroll-hi: #3a3a45;
+  --line-hi: #3a3a45;
+  --screen-lo: #000000;
+  --screen-hi: #16161a;
   --accent: #8ba3c7;
   --accent-dim: rgba(139, 163, 199, .16);
 }
@@ -103,7 +109,9 @@ html[data-skin="dusk"] {
   --muted: #a89bb8;
   --muted-2: #897ca4;
   --scroll: #3b3550;
-  --scroll-hi: #4e4668;
+  --line-hi: #4e4668;
+  --screen-lo: #08070c;
+  --screen-hi: #251f33;
   --accent: #b794f6;
   --accent-dim: rgba(183, 148, 246, .16);
   --hot: #e089c0;
@@ -135,7 +143,9 @@ html[data-skin="neon"] {
   --hot-dim: rgba(255, 77, 141, .14);
   --muted-2: #737c94;
   --scroll: #232a3d;
-  --scroll-hi: #33405c;
+  --line-hi: #33405c;
+  --screen-lo: #04050a;
+  --screen-hi: #141826;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
@@ -224,30 +234,51 @@ html[data-skin="neon"] .sum-btn:hover {
   background: var(--accent-dim); box-shadow: 0 0 22px -6px var(--accent);
 }
 
-/* ---- magenta: this is happening right now ---- */
+/* ---- the second signal: this is happening right now ----
+ * Three skins carry a --hot (neon's magenta, ember's copper, dusk's dusty
+ * rose), so these rules list all three. They used to say "neon" only, which
+ * left the other two declaring a colour that no rule ever read: it appeared
+ * nowhere on screen, while the swatch beside their name showed it as one of
+ * the three blocks. A swatch that paints a colour the skin never uses is the
+ * picker lying about what you are choosing.
+ * A skin with only one accent simply has no --hot, and none of this applies. */
 /* The master switch on = these subtitles are on the video this second. */
-html[data-skin="neon"] .switch input:checked + .switch-track {
+html[data-skin="neon"] .switch input:checked + .switch-track,
+html[data-skin="ember"] .switch input:checked + .switch-track,
+html[data-skin="dusk"] .switch input:checked + .switch-track {
   background: var(--hot);
   box-shadow: 0 0 16px -2px var(--hot);
 }
 /* …and the thumb goes dark against it. Lit track plus lit thumb is one solid
    pill with no thumb in it, which is what the first draft shipped. */
-html[data-skin="neon"] .switch input:checked + .switch-track .switch-thumb {
-  background: #07080c;
+html[data-skin="neon"] .switch input:checked + .switch-track .switch-thumb,
+html[data-skin="ember"] .switch input:checked + .switch-track .switch-thumb,
+html[data-skin="dusk"] .switch input:checked + .switch-track .switch-thumb {
+  background: var(--bg);            /* 各自的页底色，不是写死的那一支近黑 */
 }
-html[data-skin="neon"] .pitem-inuse {
+html[data-skin="neon"] .pitem-inuse,
+html[data-skin="ember"] .pitem-inuse,
+html[data-skin="dusk"] .pitem-inuse {
   background: var(--hot-dim); color: var(--hot);
-  box-shadow: inset 0 0 0 1px rgba(255, 77, 141, .45);   /* 底子上没边框，inset 才不撑高这一行 */
 }
 /* On the SELECTED row the base sheet washes this badge white with a more
    specific rule; matched here or the badge loses its colour exactly where the
    reader is looking. Measured on the rendered pixels: 7.7:1. */
-html[data-skin="neon"] .pitem.on .pitem-inuse {
-  background: rgba(255, 77, 141, .16); color: #ff9dbf;
+html[data-skin="neon"] .pitem.on .pitem-inuse,
+html[data-skin="ember"] .pitem.on .pitem-inuse,
+html[data-skin="dusk"] .pitem.on .pitem-inuse {
+  /* 选中那一行，基表用更具体的规则把徽章洗成白的；这里对上同样的具体度，
+     否则徽章正好在读者看着的地方丢掉颜色。用 --hot-dim 和 --hot 自己的两支，
+     不再写死品红 —— 写死就等于「只有霓虹对」。 */
+  background: var(--hot-dim); color: var(--hot);
 }
 html[data-skin="neon"] .engine-msg:not([hidden]),
-html[data-skin="neon"] .tts-status {
-  border-left: 1px solid rgba(255, 77, 141, .55);
+html[data-skin="ember"] .engine-msg:not([hidden]),
+html[data-skin="dusk"] .engine-msg:not([hidden]),
+html[data-skin="neon"] .tts-status,
+html[data-skin="ember"] .tts-status,
+html[data-skin="dusk"] .tts-status {
+  box-shadow: inset 1px 0 0 var(--hot);   /* inset 才不占位置（皮肤只准上漆） */
   padding-left: 8px;
 }
 /* The hairline under the header follows the master switch: on is magenta, off
@@ -268,9 +299,10 @@ html[data-skin="neon"] .omsg.err { color: #ff8a8a; }
 /* The preview is a simulation of the overlay, not something running, so it
    stays neutral — and it is the largest block on the panel, which is the other
    reason not to light it up. */
+/* 扫描线是霓虹自己的形态（CRT 的意思），留着；底色交给 --screen-*，
+   否则又变成「只有这一套改得到」。 */
 html[data-skin="neon"] .preview-frame {
   background:
     repeating-linear-gradient(0deg, rgba(255, 255, 255, .03) 0 1px, transparent 1px 4px),
-    #04050a;
-  border: 1px solid var(--line);
+    radial-gradient(130% 150% at 50% 0%, var(--screen-hi) 0%, var(--screen-lo) 72%);
 }

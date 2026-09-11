@@ -16,7 +16,11 @@
      默认皮肤不该因为这次收拢而动一个像素。 */
   --muted-2: #8c9095;          /* 比 --muted 再暗一档：小体量的全大写标签 */
   --scroll: #3a3d41;           /* 滚动条滑块 */
-  --scroll-hi: #4a4e53;        /* 滑块被指着的时候 */
+  --line-hi: #4a4e53;          /* 被指着的时候亮一档：滑块、控件边框 */
+  /* 字幕预览那块「屏幕」。它比页面更深，像一块关着的屏 —— 这两个值以前是
+     写死的，于是换了暖色皮肤，整页暖了、这块还是冷灰。 */
+  --screen-lo: #0a0b0d;        /* 屏幕的底 */
+  --screen-hi: #26282c;        /* 顶上那点光 */
   --accent-dim: rgba(62, 166, 255, 0.16);
   --radius: 10px;
   font-size: 14px;
@@ -48,7 +52,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 ::selection { background: var(--accent-dim); color: var(--txt); }
 body::-webkit-scrollbar, .olang-list::-webkit-scrollbar { width: 10px; }
 body::-webkit-scrollbar-thumb, .olang-list::-webkit-scrollbar-thumb { background: var(--scroll); border-radius: 8px; }
-body::-webkit-scrollbar-thumb:hover, .olang-list::-webkit-scrollbar-thumb:hover { background: var(--scroll-hi); }
+body::-webkit-scrollbar-thumb:hover, .olang-list::-webkit-scrollbar-thumb:hover { background: var(--line-hi); }
 body::-webkit-scrollbar-track, .olang-list::-webkit-scrollbar-track { background: transparent; }
 input[type="range"], input[type="checkbox"] { accent-color: var(--accent); }
 a { text-underline-offset: 3px; }
@@ -259,7 +263,7 @@ a { text-underline-offset: 3px; }
 .ofont-frame {
   height: 100px; margin: 0 0 10px;
   border-radius: var(--radius);
-  background: radial-gradient(130% 150% at 50% 0%, #26282c 0%, #0a0b0d 72%);
+  background: radial-gradient(130% 150% at 50% 0%, var(--screen-hi) 0%, var(--screen-lo) 72%);
   border: 1px solid var(--line);
   overflow: hidden;
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
@@ -318,7 +322,7 @@ a { text-underline-offset: 3px; }
   background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
   padding: 7px 10px;
 }
-.ofont-hd input[type="search"]:hover { border-color: #454545; }
+.ofont-hd input[type="search"]:hover { border-color: var(--line-hi); }
 /* The accent border is the resting cue; the ring is the keyboard's. This rule
    used to carry `outline: none`, and being three classes deep it beat the
    page-wide `input:focus-visible` — so Tab landed in this box with nothing but
@@ -535,7 +539,7 @@ input[type="text"], input[type="url"], input[type="password"], select {
    pointer, and a focused one that says so in the accent rather than only
    through the focus ring. */
 input[type="text"]:hover, input[type="url"]:hover,
-input[type="password"]:hover, select:hover { border-color: #454545; }
+input[type="password"]:hover, select:hover { border-color: var(--line-hi); }
 input[type="text"]:focus, input[type="url"]:focus,
 input[type="password"]:focus, select:focus { border-color: var(--accent); }
 input::placeholder { color: #8c9095; }   /* token-table grey, 5.0:1 on surface-2 (spec §2) */
@@ -706,5 +710,5 @@ input[hidden] { display: none; }
 .oft[data-sec="readaloud"] .oft-tm { display: block; }
 /* About answers "how do I reach you" inside its trouble card. */
 .oft[data-sec="about"] .oft-fb { display: none; }
-.odim { color: #82868c; font-size: 11.5px; text-wrap: pretty; }   /* tinted, 5.2:1 on bg (spec §2) */
+.odim { color: var(--muted-2); font-size: 11.5px; text-wrap: pretty; }
 .oft a { color: var(--accent); }

@@ -12,7 +12,11 @@
      默认皮肤不该因为这次收拢而动一个像素。 */
   --muted-2: #8c9095;          /* 比 --muted 再暗一档：小体量的全大写标签 */
   --scroll: #3a3d41;           /* 滚动条滑块 */
-  --scroll-hi: #4a4e53;        /* 滑块被指着的时候 */
+  --line-hi: #4a4e53;          /* 被指着的时候亮一档：滑块、控件边框 */
+  /* 字幕预览那块「屏幕」。它比页面更深，像一块关着的屏 —— 这两个值以前是
+     写死的，于是换了暖色皮肤，整页暖了、这块还是冷灰。 */
+  --screen-lo: #0a0b0d;        /* 屏幕的底 */
+  --screen-hi: #26282c;        /* 顶上那点光 */
   --accent-dim: rgba(62, 166, 255, 0.16);
   --radius: 10px;
   font-size: 15px;
@@ -38,7 +42,7 @@ button { font-family: inherit; }
 /* scrollbar */
 body::-webkit-scrollbar { width: 8px; }
 body::-webkit-scrollbar-thumb { background: var(--scroll); border-radius: 8px; }
-body::-webkit-scrollbar-thumb:hover { background: var(--scroll-hi); }
+body::-webkit-scrollbar-thumb:hover { background: var(--line-hi); }
 body::-webkit-scrollbar-track { background: transparent; }
 
 /* Option C: browser-default surfaces come from OUR palette. */
@@ -135,7 +139,7 @@ a:focus-visible,
   position: relative;
   height: 92px;
   border-radius: var(--radius);
-  background: radial-gradient(130% 150% at 50% 0%, #26282c 0%, #0a0b0d 72%);
+  background: radial-gradient(130% 150% at 50% 0%, var(--screen-hi) 0%, var(--screen-lo) 72%);
   border: 1px solid var(--line);
   overflow: hidden;
   display: flex;
@@ -214,7 +218,7 @@ select {
   padding: 9px 10px; font-size: 14px; outline: none;
   cursor: pointer;
 }
-select:hover { border-color: #454545; }
+select:hover { border-color: var(--line-hi); }
 select:focus { border-color: var(--accent); }
 
 /* segmented control */
@@ -434,7 +438,7 @@ select:focus { border-color: var(--accent); }
    palette as the body's bar (设计规范 §一). */
 .pmenu::-webkit-scrollbar { width: 8px; }
 .pmenu::-webkit-scrollbar-thumb { background: var(--scroll); border-radius: 8px; }
-.pmenu::-webkit-scrollbar-thumb:hover { background: var(--scroll-hi); }
+.pmenu::-webkit-scrollbar-thumb:hover { background: var(--line-hi); }
 .pmenu::-webkit-scrollbar-track { background: transparent; }
 .pmenu[hidden] { display: none; }
 .pmenu-item {
@@ -556,7 +560,7 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 .chk input {
   appearance: none; -webkit-appearance: none; margin: 0;
   width: 16px; height: 16px; cursor: pointer;
-  background: var(--surface-2); border: 1px solid var(--scroll-hi); border-radius: 4px;
+  background: var(--surface-2); border: 1px solid var(--line-hi); border-radius: 4px;
   display: inline-grid; place-items: center; flex: none;
 }
 .chk:hover input:not(:checked) { border-color: var(--muted); }
