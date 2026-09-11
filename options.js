@@ -3101,8 +3101,8 @@ function initCrossPageSync() {
           // wiring function, not reachable from this listener. Calling it
           // here threw a ReferenceError that the listener swallowed, the
           // repaint below never ran, and the voided catalogue stayed on
-          // screen looking exactly as if this branch did not exist. (The
-          // worklog's "node --check passes ≠ the scope is right", again.)
+          // screen looking exactly as if this branch did not exist. (The local
+          // review notes' "node --check passes ≠ the scope is right", again.)
           const vm = $("ttsVoiceMsg");
           if (vm) { vm.textContent = ""; vm.hidden = true; }
         }
