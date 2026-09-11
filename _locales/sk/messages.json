@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Jazyk ponúk a nastavení tohto rozšírenia. Niekoľko popiskov vykreslených priamo vo videu sa stále riadi jazykom prehliadača. Jazyk prekladu titulkov sa vyberá vo vyskakovacom okne; panel „Jazyky prekladu“ len určuje, ktoré jazyky okno ponúka."
   },
+  "uiSkinLabel": {
+    "message": "Vzhľad rozhrania"
+  },
+  "uiSkinHint": {
+    "message": "Platí len pre vyskakovacie okno a nastavenia tohto rozšírenia. Písmo, farba a veľkosť samotných titulkov sa upravuje na karte „Štýl riadka“ vo vyskakovacom okne."
+  },
+  "skinDefault": {
+    "message": "Predvolené"
+  },
+  "skinNeon": {
+    "message": "Neónový terminál"
+  },
   "cmdToggleSubs": {
     "message": "Zapnúť alebo vypnúť titulky"
   },

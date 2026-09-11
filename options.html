@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="options.css" />
+  <!-- 可选皮肤。样式表跟在自家样式表后面（它要压得过），脚本在**所有脚本之前**跑：
+       它同步读一次上次选的皮肤、把 <html> 上的属性定下来。少了这一下，每次打开
+       都会先画默认皮肤再跳成选中的那一套——chrome.storage 是异步的，那一跳看得见。
+       默认皮肤不带任何属性，所以这两行加载失败的后果是「看起来没换皮肤」，
+       而不是半套界面。 -->
+  <link rel="stylesheet" href="skins.css" />
+  <script src="skins.js"></script>
   <title>Dual Subtitles for YouTube — setup</title>
 </head>
 <body>
@@ -607,6 +614,18 @@
         <select id="uiLocaleSel"></select>
       </div>
       <p class="ohint" data-i18n="uiLocaleHint">只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文语言在弹窗里选；「译文语言列表」那一面只决定弹窗里列出哪些语言。</p>
+      <div class="orow">
+        <!-- span, not label: it labels no control of its own — the radiogroup
+             takes its name from it through aria-labelledby. .orow styles no
+             label specially, so this renders identically. -->
+        <span id="uiSkinLabel" data-i18n="uiSkinLabel">界面外观</span>
+        <!-- 单选，不是下拉：两项，而且挑的是「看起来怎么样」。每行左边三块色
+             是辨认（哪三块由 skins.js 的名单定：底、强调，再加那一套自己的第三个
+             颜色），右边的名字才是名字——光色块读屏念不出来，长词语言也没有落点。
+             选中即生效，不要「应用」按钮。 -->
+        <div class="oskins" id="uiSkinList" role="radiogroup" aria-labelledby="uiSkinLabel"></div>
+      </div>
+      <p class="ohint" data-i18n="uiSkinHint">只影响这个扩展自己的弹窗和设置页。视频上那两行字幕的字体、颜色、字号，在弹窗的「行样式」里调。</p>
       <!-- Keyboard shortcuts live here and not in the popup: they are bound
            once and never touched again (design spec §5, the two-layer rule).
            The keys themselves belong to Chrome — this row is a door to its

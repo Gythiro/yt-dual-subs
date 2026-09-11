@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Bu eklentinin kendi menü ve ayarlarının dili. Videonun üzerine çizilen birkaç etiket hâlâ tarayıcının dilini izler. Altyazıların çeviri dili açılır pencerede seçilir; “Çeviri dilleri” bölümü yalnızca açılır pencerede hangi dillerin listeleneceğini belirler."
   },
+  "uiSkinLabel": {
+    "message": "Arayüz görünümü"
+  },
+  "uiSkinHint": {
+    "message": "Yalnızca bu eklentinin kendi açılır penceresini ve ayarlar sayfasını etkiler. Videodaki altyazıların yazı tipi, rengi ve boyutu açılır penceredeki “Satır stili” kartından ayarlanır."
+  },
+  "skinDefault": {
+    "message": "Varsayılan"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Altyazıları aç veya kapat"
   },

@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Jazyk nabídek a nastavení tohoto rozšíření. Několik popisků vykreslených přímo ve videu se stále řídí jazykem prohlížeče. Jazyk překladu titulků se vybírá ve vyskakovacím okně; panel „Jazyky překladu“ jen určuje, které jazyky okno nabízí."
   },
+  "uiSkinLabel": {
+    "message": "Vzhled rozhraní"
+  },
+  "uiSkinHint": {
+    "message": "Platí jen pro vyskakovací okno a nastavení tohoto rozšíření. Písmo, barva a velikost samotných titulků se upravuje na kartě „Styl řádku“ ve vyskakovacím okně."
+  },
+  "skinDefault": {
+    "message": "Výchozí"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Zapnout nebo vypnout titulky"
   },

@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Bahasa menu dan setelan milik ekstensi ini. Beberapa label yang digambar di video sendiri masih mengikuti bahasa browser. Bahasa terjemahan dipilih di popup; panel “Bahasa terjemahan” hanya memutuskan bahasa mana yang didaftar popup."
   },
+  "uiSkinLabel": {
+    "message": "Tampilan antarmuka"
+  },
+  "uiSkinHint": {
+    "message": "Hanya memengaruhi popup dan halaman setelan milik ekstensi ini. Font, warna, dan ukuran subtitle itu sendiri diatur dalam kartu “Gaya baris” di popup."
+  },
+  "skinDefault": {
+    "message": "Default"
+  },
+  "skinNeon": {
+    "message": "Terminal Neon"
+  },
   "cmdToggleSubs": {
     "message": "Subtitle nyala atau mati"
   },

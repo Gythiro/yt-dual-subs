@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "La llengua dels menús i de la configuració d'aquesta extensió. Unes quantes etiquetes dibuixades sobre el vídeo encara segueixen la llengua del navegador. La llengua de traducció es tria al popup; el panell “Llengües de traducció” només decideix quines llengües hi llista el popup."
   },
+  "uiSkinLabel": {
+    "message": "Aparença de la interfície"
+  },
+  "uiSkinHint": {
+    "message": "Només per al popup i la configuració de l'extensió. El tipus de lletra, color i mida dels subtítols es trien a la targeta “Estil de línia” del popup."
+  },
+  "skinDefault": {
+    "message": "Per defecte"
+  },
+  "skinNeon": {
+    "message": "Terminal de neó"
+  },
   "cmdToggleSubs": {
     "message": "Subtítols on/off"
   },

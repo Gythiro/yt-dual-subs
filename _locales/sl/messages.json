@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Jezik menijev in nastavitev te razširitve. Nekaj oznak, narisanih na samem videu, še vedno sledi jeziku brskalnika. Jezik prevoda izbereš v pojavnem oknu; podokno „Jeziki prevoda“ odloča samo, katere jezike okno našteva."
   },
+  "uiSkinLabel": {
+    "message": "Videz vmesnika"
+  },
+  "uiSkinHint": {
+    "message": "Velja samo za pojavno okno in nastavitve te razširitve. Pisavo, barvo in velikost samih podnapisov prilagodiš na kartici „Slog vrstice“ v pojavnem oknu."
+  },
+  "skinDefault": {
+    "message": "Privzeto"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Podnapisi vklop ali izklop"
   },

@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Lugha ya menyu na mipangilio ya kiendelezi hiki. Lebo chache zinazochorwa kwenye video yenyewe bado zinafuata lugha ya kivinjari. Lugha ya tafsiri huchaguliwa kwenye ibukizi; paneli ya “Lugha za tafsiri” inaamua tu ni lugha zipi ibukizi inaorodhesha."
   },
+  "uiSkinLabel": {
+    "message": "Mwonekano wa kiolesura"
+  },
+  "uiSkinHint": {
+    "message": "Ni kwa ibukizi na ukurasa wa mipangilio wa kiendelezi hiki pekee. Fonti, rangi na ukubwa wa manukuu yenyewe hurekebishwa kwenye kadi ya “Mtindo wa mstari” kwenye ibukizi."
+  },
+  "skinDefault": {
+    "message": "Chaguo-msingi"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Washa au zima manukuu"
   },

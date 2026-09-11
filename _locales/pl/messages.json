@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Język menu i ustawień samego rozszerzenia. Kilka etykiet rysowanych na filmie nadal podąża za językiem przeglądarki. Język tłumaczenia napisów wybiera się w okienku rozszerzenia; panel „Języki tłumaczenia” decyduje tylko o tym, które języki są w nim wypisane."
   },
+  "uiSkinLabel": {
+    "message": "Wygląd interfejsu"
+  },
+  "uiSkinHint": {
+    "message": "Dotyczy tylko okienka i ustawień tego rozszerzenia. Czcionkę, kolor i rozmiar samych napisów zmienia się w sekcji „Styl wiersza” w okienku."
+  },
+  "skinDefault": {
+    "message": "Domyślny"
+  },
+  "skinNeon": {
+    "message": "Neonowy Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Włącz lub wyłącz napisy"
   },

@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Språket i utvidelsens egne menyer og innstillinger. Noen etiketter som tegnes rett på videoen, følger fortsatt nettleserens språk. Oversettelsesspråket velges i popupen; ruten «Oversettelsesspråk» bestemmer bare hvilke språk popupen viser."
   },
+  "uiSkinLabel": {
+    "message": "Grensesnittsutseende"
+  },
+  "uiSkinHint": {
+    "message": "Gjelder bare for utvidelsens egen popup og innstillinger. Skrifttype, farge og størrelse på selve undertekstene justeres i kortet «Linjestil» i popupen."
+  },
+  "skinDefault": {
+    "message": "Standard"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Undertekster på/av"
   },

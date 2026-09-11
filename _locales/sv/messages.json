@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Språket för tilläggets egna menyer och inställningar. Några etiketter som ritas på själva videon följer fortfarande webbläsarens språk. Översättningsspråket väljs i popupen; rutan ”Översättningsspråk” avgör bara vilka språk popupen listar."
   },
+  "uiSkinLabel": {
+    "message": "Gränssnittsutseende"
+  },
+  "uiSkinHint": {
+    "message": "Gäller bara tilläggets egen popup och inställningar. Själva undertexternas typsnitt, färg och storlek ändras i kortet ”Radstil” i popupen."
+  },
+  "skinDefault": {
+    "message": "Standard"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Undertexter på eller av"
   },

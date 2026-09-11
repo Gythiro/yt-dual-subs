@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "El idioma de los menús y ajustes de la extensión. Algunas etiquetas dibujadas sobre el vídeo siguen el idioma del navegador. El idioma de traducción de los subtítulos se elige en la ventana de la extensión; el panel «Idiomas de traducción» solo decide qué idiomas aparecen allí."
   },
+  "uiSkinLabel": {
+    "message": "Aspecto de la interfaz"
+  },
+  "uiSkinHint": {
+    "message": "Solo afecta a la ventana emergente y los ajustes de la extensión. La fuente, color y tamaño de los subtítulos se configuran en la tarjeta «Estilo de línea» de la ventana."
+  },
+  "skinDefault": {
+    "message": "Predeterminado"
+  },
+  "skinNeon": {
+    "message": "Terminal Neón"
+  },
   "cmdToggleSubs": {
     "message": "Activar o desactivar los subtítulos"
   },

@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="popup.css" />
+  <!-- 可选皮肤。样式表跟在自家样式表后面（它要压得过），脚本在**所有脚本之前**跑：
+       它同步读一次上次选的皮肤、把 <html> 上的属性定下来。少了这一下，每次打开
+       都会先画默认皮肤再跳成选中的那一套——chrome.storage 是异步的，那一跳看得见。
+       默认皮肤不带任何属性，所以这两行加载失败的后果是「看起来没换皮肤」，
+       而不是半套界面。 -->
+  <link rel="stylesheet" href="skins.css" />
+  <script src="skins.js"></script>
 </head>
 <body>
   <!-- ============================ HEADER ============================ -->

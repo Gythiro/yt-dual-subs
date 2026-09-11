@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Šī paplašinājuma izvēļņu un iestatījumu valoda. Dažas etiķetes, kas zīmētas pašā video, joprojām seko pārlūka valodai. Tulkojuma valodu izvēlas lodziņā; rūts „Tulkojuma valodas“ tikai izlemj, kuras valodas lodziņš piedāvā."
   },
+  "uiSkinLabel": {
+    "message": "Saskarnes izskats"
+  },
+  "uiSkinHint": {
+    "message": "Maina tikai šī paplašinājuma lodziņu un iestatījumus. Pašu subtitru fonts, krāsa un izmērs tiek iestatīti lodziņa kartītē „Rindas stils“."
+  },
+  "skinDefault": {
+    "message": "Noklusējums"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Subtitri ieslēgti vai izslēgti"
   },

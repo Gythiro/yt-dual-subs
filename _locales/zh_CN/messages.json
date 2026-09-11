@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "只影响这个扩展自己的菜单和设置。画在视频上的少数几个标签仍然跟随浏览器语言。译文语言在弹窗里选；「译文语言列表」那一面只决定弹窗里列出哪些语言。"
   },
+  "uiSkinLabel": {
+    "message": "界面外观"
+  },
+  "uiSkinHint": {
+    "message": "只影响这个扩展自己的弹窗和设置页。视频上那两行字幕的字体、颜色、字号，在弹窗的「行样式」里调。"
+  },
+  "skinDefault": {
+    "message": "默认"
+  },
+  "skinNeon": {
+    "message": "霓虹终端"
+  },
   "cmdToggleSubs": {
     "message": "开关字幕"
   },

@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "The language of this extension's own menus and settings. A few labels drawn on the video itself still follow the browser's language. The translation language is chosen in the popup; the “Translation languages” pane only decides which languages the popup lists."
   },
+  "uiSkinLabel": {
+    "message": "Interface appearance"
+  },
+  "uiSkinHint": {
+    "message": "Only this extension's own popup and settings page. How the subtitles themselves look — font, colour, size — is set in the popup's Line style card."
+  },
+  "skinDefault": {
+    "message": "Default"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Subtitles on or off"
   },

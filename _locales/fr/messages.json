@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "La langue des menus et réglages de l’extension. Quelques libellés affichés sur la vidéo suivent encore la langue du navigateur. La langue de traduction des sous-titres se choisit dans la fenêtre de l’extension ; le volet « Langues de traduction » décide seulement des langues qu’elle propose."
   },
+  "uiSkinLabel": {
+    "message": "Apparence de l’interface"
+  },
+  "uiSkinHint": {
+    "message": "Uniquement pour la fenêtre et les réglages de l’extension. La police, couleur et taille des sous-titres eux-mêmes se règlent dans la carte « Style de ligne » de la fenêtre."
+  },
+  "skinDefault": {
+    "message": "Par défaut"
+  },
+  "skinNeon": {
+    "message": "Terminal Néon"
+  },
   "cmdToggleSubs": {
     "message": "Activer ou désactiver les sous-titres"
   },

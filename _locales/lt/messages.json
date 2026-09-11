@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Šio plėtinio meniu ir nustatymų kalba. Keletas etikečių, piešiamų pačiame vaizdo įraše, vis dar seka naršyklės kalbą. Vertimo kalba renkama langelyje; sritis „Vertimo kalbos“ tik nusprendžia, kurias kalbas langelis siūlo."
   },
+  "uiSkinLabel": {
+    "message": "Sąsajos išvaizda"
+  },
+  "uiSkinHint": {
+    "message": "Veikia tik šio plėtinio iššokantįjį langelį ir nustatymus. Pačių subtitrų šriftas, spalva ir dydis nustatomi langelio kortelėje „Eilutės stilius“."
+  },
+  "skinDefault": {
+    "message": "Numatytoji"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Subtitrai įj./išj."
   },

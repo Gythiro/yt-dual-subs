@@ -1,0 +1,183 @@
+/* skins.css — optional looks for the extension's own two pages.
+ *
+ * Loaded by popup.html and options.html AFTER their own stylesheet, and inert
+ * until skins.js puts `data-skin="<id>"` on <html>. The shipped default wears
+ * no attribute at all, so nothing in here can affect it.
+ *
+ * ADDING A SKIN: one block below, one line in skins.js's SKINS list, and a
+ * name key in _locales. Nothing else. Two rules for the block:
+ *
+ *   · Every selector starts `html[data-skin="<id>"]`. That is what keeps a
+ *     skin from leaking into the default, and it also wins the specificity
+ *     fight against popup.css / options.css without a single !important.
+ *   · Colours come from the block's own token overrides, not from literals
+ *     sprinkled through the rules — a skin that redefines --bg/--accent and
+ *     nothing else is a skin someone can read.
+ *
+ * WHAT A SKIN MAY NOT DO: change any geometry that the layout gate measures
+ * (widths, the 360px popup, click-target sizes). A skin is paint. If a look
+ * needs different spacing to work, that is a product change and belongs in
+ * popup.css where every locale gets measured.
+ */
+
+/* ===========================================================================
+ * neon — "Neon Terminal" / 霓虹终端
+ *
+ * Near-black instrument panel. Two accents with one job each:
+ *   cyan   #38e8ff — you can operate this (focusable, selected, pressable)
+ *   magenta #ff4d8d — this is happening right now (the master switch is on,
+ *                     this provider is the one in use, this line is reporting)
+ * Section titles are NOT cyan: they are not operable, and colouring them was
+ * what made "cyan means you can touch it" untrue in the first draft.
+ * Readouts are monospace and tabular so a dragged slider stops jittering.
+ * =========================================================================== */
+
+html[data-skin="neon"] {
+  --bg: #07080c;
+  --surface: #0d0f16;
+  --surface-2: #141826;
+  --line: #1e2333;
+  --txt: #e8ecf1;
+  --muted: #8f97ad;
+  --accent: #38e8ff;
+  --accent-dim: rgba(56, 232, 255, .12);
+  --hot: #ff4d8d;
+  --hot-dim: rgba(255, 77, 141, .14);
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html[data-skin="neon"] body {
+  background:
+    linear-gradient(180deg, rgba(255, 77, 141, .045), transparent 200px),
+    var(--bg);
+}
+
+/* Only the inner highlight. The card's fill and its hairline are deliberately
+   NOT restated here: the base sheets already say background: var(--surface)
+   and border: 1px solid var(--line), var() resolves against whatever this skin
+   set those tokens to, and both follow on their own. Restating them is also
+   where the trap is — the first draft wrote `border: 1px` in this block and
+   framed the getting-started pane, which the base sheet deliberately gives
+   border: 0, pushing that entire pane down a pixel. A skin overrides tokens;
+   it does not re-copy the rules that read them. */
+html[data-skin="neon"] .card,
+html[data-skin="neon"] .odetail,
+html[data-skin="neon"] .oplain > .odetail {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
+}
+
+/* Section titles: silkscreen, not a control. The ▍ carries the instrument
+   feel; the monospace does not — that font stack has no CJK, so a Chinese
+   heading just drops to whatever the system picks and stops matching the body
+   text. Latin keeps the tracking, everyone keeps the mark. */
+html[data-skin="neon"] .card-title,
+html[data-skin="neon"] .olabel {
+  color: var(--muted); opacity: .8; letter-spacing: 1.6px;
+}
+html[data-skin="neon"] .card-title::before,
+html[data-skin="neon"] .olabel::before { content: "▍"; margin-right: 5px; opacity: .35; }
+
+/* Readouts — and only readouts. The version number is a signature, not a
+   number you are adjusting, so it stays in the body face. */
+html[data-skin="neon"] label b {
+  font-family: var(--mono); color: var(--accent); font-variant-numeric: tabular-nums;
+}
+
+/* ---- cyan: you can operate this ---- */
+html[data-skin="neon"] button:focus-visible,
+html[data-skin="neon"] select:focus-visible,
+html[data-skin="neon"] input:focus-visible,
+html[data-skin="neon"] a:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 18px -4px var(--accent);
+}
+html[data-skin="neon"] .seg button.on,
+html[data-skin="neon"] .pitem.on {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--txt);
+  box-shadow: inset 0 0 22px -10px var(--accent);
+}
+/* A tab is a place, not the deed — so it gets a wash and a hairline, and the
+   solid fill is left for the one button that actually does something. */
+html[data-skin="neon"] .tab.on {
+  background: var(--accent-dim); color: var(--txt);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+/* 空心描边的主按钮。分成两组不是啰嗦：
+   .confirm-go 和 .sum-btn 底子上就有 1px 边框（一个 transparent、一个
+   accent），换颜色就行；.export-btn 和 .obtn.primary 底子上是 border: 0 的
+   实心按钮，给它们加真边框会让每颗各胖 2px —— 描边改用 inset 阴影画，
+   同一条线，不占位置。 */
+html[data-skin="neon"] .export-btn,
+html[data-skin="neon"] .obtn.primary,
+html[data-skin="neon"] .confirm-go,
+html[data-skin="neon"] .sum-btn {
+  background: transparent; color: var(--accent);
+  font-family: var(--mono); letter-spacing: .6px;
+  box-shadow: inset 0 0 24px -14px var(--accent);
+}
+html[data-skin="neon"] .confirm-go,
+html[data-skin="neon"] .sum-btn { border-color: var(--accent); }
+html[data-skin="neon"] .export-btn,
+html[data-skin="neon"] .obtn.primary {
+  box-shadow: inset 0 0 0 1px var(--accent), inset 0 0 24px -14px var(--accent);
+}
+html[data-skin="neon"] .export-btn:hover,
+html[data-skin="neon"] .obtn.primary:hover,
+html[data-skin="neon"] .confirm-go:hover,
+html[data-skin="neon"] .sum-btn:hover {
+  background: var(--accent-dim); box-shadow: 0 0 22px -6px var(--accent);
+}
+
+/* ---- magenta: this is happening right now ---- */
+/* The master switch on = these subtitles are on the video this second. */
+html[data-skin="neon"] .switch input:checked + .switch-track {
+  background: var(--hot);
+  box-shadow: 0 0 16px -2px var(--hot);
+}
+/* …and the thumb goes dark against it. Lit track plus lit thumb is one solid
+   pill with no thumb in it, which is what the first draft shipped. */
+html[data-skin="neon"] .switch input:checked + .switch-track .switch-thumb {
+  background: #07080c;
+}
+html[data-skin="neon"] .pitem-inuse {
+  background: var(--hot-dim); color: var(--hot);
+  box-shadow: inset 0 0 0 1px rgba(255, 77, 141, .45);   /* 底子上没边框，inset 才不撑高这一行 */
+}
+/* On the SELECTED row the base sheet washes this badge white with a more
+   specific rule; matched here or the badge loses its colour exactly where the
+   reader is looking. Measured on the rendered pixels: 7.7:1. */
+html[data-skin="neon"] .pitem.on .pitem-inuse {
+  background: rgba(255, 77, 141, .16); color: #ff9dbf;
+}
+html[data-skin="neon"] .engine-msg:not([hidden]),
+html[data-skin="neon"] .tts-status {
+  border-left: 1px solid rgba(255, 77, 141, .55);
+  padding-left: 8px;
+}
+/* The hairline under the header follows the master switch: on is magenta, off
+   is the ordinary line. Whether the extension is doing anything, without
+   reading a word. */
+html[data-skin="neon"] header { box-shadow: inset 0 -1px 0 var(--line); }
+html[data-skin="neon"] body:has(#enabled:checked) header {
+  box-shadow: inset 0 -1px 0 rgba(255, 77, 141, .5);
+}
+
+/* "In use" and "broken" must never share a colour. Warning and error keep the
+   palette's own amber and red. */
+html[data-skin="neon"] .engine-msg.warn,
+html[data-skin="neon"] .omsg.warn { color: #ffc24b; }
+html[data-skin="neon"] .engine-msg.err,
+html[data-skin="neon"] .omsg.err { color: #ff8a8a; }
+
+/* The preview is a simulation of the overlay, not something running, so it
+   stays neutral — and it is the largest block on the panel, which is the other
+   reason not to light it up. */
+html[data-skin="neon"] .preview-frame {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .03) 0 1px, transparent 1px 4px),
+    #04050a;
+  border: 1px solid var(--line);
+}

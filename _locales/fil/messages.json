@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Ang wika ng sariling menu at setting ng extension na 'to. Ilang label na iginuhit sa video mismo ay sumusunod pa rin sa wika ng browser. Pinipili ang wika ng pagsasalin sa popup; ang panel na “Mga wika ng pagsasalin” ang nagpapasya lang kung aling wika ang ililista ng popup."
   },
+  "uiSkinLabel": {
+    "message": "Hitsura ng interface"
+  },
+  "uiSkinHint": {
+    "message": "Para lang sa sariling popup at setting ng extension na 'to. Inaayos ang font, kulay, at laki ng mga subtitle sa card na “Istilo ng linya” ng popup."
+  },
+  "skinDefault": {
+    "message": "Default"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "I-on o i-off ang mga subtitle"
   },

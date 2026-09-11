@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "La lingua dei menu e delle impostazioni dell'estensione. Alcune etichette disegnate sul video seguono ancora la lingua del browser. La lingua di traduzione dei sottotitoli si sceglie nel popup; il pannello «Lingue di traduzione» decide solo quali lingue il popup elenca."
   },
+  "uiSkinLabel": {
+    "message": "Aspetto dell'interfaccia"
+  },
+  "uiSkinHint": {
+    "message": "Riguarda solo il popup e le impostazioni dell'estensione. Il font, il colore e le dimensioni dei sottotitoli si impostano nella scheda «Stile riga» del popup."
+  },
+  "skinDefault": {
+    "message": "Predefinito"
+  },
+  "skinNeon": {
+    "message": "Terminale Neon"
+  },
   "cmdToggleSubs": {
     "message": "Attivare o disattivare i sottotitoli"
   },

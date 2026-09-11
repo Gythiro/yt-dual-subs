@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Die Sprache der Menüs und Einstellungen dieser Erweiterung. Einige direkt auf dem Video eingeblendete Beschriftungen folgen weiterhin der Browsersprache. Die Übersetzungssprache der Untertitel wird im Popup gewählt; der Bereich „Übersetzungssprachen“ legt nur fest, welche Sprachen das Popup anbietet."
   },
+  "uiSkinLabel": {
+    "message": "Oberflächendesign"
+  },
+  "uiSkinHint": {
+    "message": "Gilt nur für das Popup und die Einstellungen dieser Erweiterung. Schriftart, Farbe und Größe der Untertitel selbst werden im Bereich „Zeilenstil“ im Popup angepasst."
+  },
+  "skinDefault": {
+    "message": "Standard"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Untertitel ein/aus"
   },

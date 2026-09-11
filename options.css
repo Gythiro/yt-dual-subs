@@ -319,6 +319,30 @@ a { text-underline-offset: 3px; }
    a border tint to say so. Measured: outline-style computed to `none` while
    :focus-visible matched. Same fault the sliders had, in another file. */
 .ofont-hd input[type="search"]:focus { border-color: var(--accent); }
+/* 皮肤单选。和这张卡上另外两行（下拉、按钮）混用控件类型没问题——
+   它们回答的是三个不同的问题。色块是三竖条，不是一个圆点：一套皮肤是
+   「底 + 强调 + 第二色」，一个圆点说不出这件事。 */
+.oskins { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+/* The group's name lines up with its FIRST row. .orow centres its children,
+   which is right for a row with one control in it and wrong for a stack of
+   two: centred, the name sits beside the second row and reads as though it
+   belonged to it. The 8px matches .oskin's own top padding, so the two pieces
+   of text start on the same line. */
+.orow:has(> .oskins) { align-items: flex-start; }
+.orow:has(> .oskins) > :first-child { padding-top: 8px; }
+.oskin {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  border: 1px solid transparent; min-height: 34px;
+}
+.oskin:hover { background: var(--surface-2); }
+.oskin input { margin: 0; flex: none; }
+.oskin.on { border-color: var(--accent); background: rgba(62, 166, 255, 0.10); }
+.oskin-sw { display: flex; flex: none; border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--line); }
+.oskin-sw i { display: block; width: 12px; height: 18px; }
+.oskin-name { color: var(--txt); font-size: 14px; }
+
 .olabel-n { margin-left: .3em; color: var(--muted); font-weight: 500; letter-spacing: 0; text-transform: none; }
 /* A long name in a wide face must not push the column: the grid stays 1fr
    1fr and the name wraps to two lines at most. */

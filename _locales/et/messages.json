@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Selle laienduse enda menüüde ja seadete keel. Mõni otse videole joonistatud silt järgib endiselt brauseri keelt. Subtiitrite tõlkekeel valitakse hüpikaknas; „Tõlkekeeled“ paneel otsustab ainult selle, millised keeled hüpikaknas loetletakse."
   },
+  "uiSkinLabel": {
+    "message": "Liidese välimus"
+  },
+  "uiSkinHint": {
+    "message": "Mõjutab ainult selle laienduse hüpikakent ja seadeid. Subtiitrite fonti, värvi ja suurust saab muuta hüpikakna kaardil „Rea stiil“."
+  },
+  "skinDefault": {
+    "message": "Vaikimisi"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Subtiitrid sisse või välja"
   },

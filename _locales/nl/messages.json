@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "De taal van de menu's en instellingen van deze extensie. Een paar labels die op de video zelf staan volgen nog de taal van de browser. De vertaaltaal kies je in de popup; het paneel “Vertaaltalen” bepaalt alleen welke talen de popup toont."
   },
+  "uiSkinLabel": {
+    "message": "Uiterlijk van de interface"
+  },
+  "uiSkinHint": {
+    "message": "Alleen voor de popup en instellingen van deze extensie. Het lettertype, de kleur en de grootte van de ondertitels zelf stel je in bij de kaart “Regelstijl” in de popup."
+  },
+  "skinDefault": {
+    "message": "Standaard"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Ondertitels aan of uit"
   },

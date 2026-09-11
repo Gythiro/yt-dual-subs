@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "A bővítmény saját menüinek és beállításainak nyelve. Néhány, magára a videóra rajzolt címke továbbra is a böngésző nyelvét követi. A fordítás nyelvét a popupban választod; a „Fordítási nyelvek” panel csak azt dönti el, mely nyelveket listázza a popup."
   },
+  "uiSkinLabel": {
+    "message": "Felület megjelenése"
+  },
+  "uiSkinHint": {
+    "message": "Csak a bővítmény saját popupjára és beállításaira vonatkozik. Maguknak a feliratoknak a betűtípusát, színét és méretét a popup „Sorstílus” kártyáján állíthatod be."
+  },
+  "skinDefault": {
+    "message": "Alapértelmezett"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Felirat be vagy ki"
   },

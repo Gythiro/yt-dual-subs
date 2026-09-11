@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Bahasa menu dan tetapan sambungan ni sendiri. Beberapa label yang dilukis pada video masih ikut bahasa pelayar. Bahasa terjemahan dipilih dalam pop timbul; panel “Bahasa terjemahan” hanya tentukan bahasa mana yang pop timbul senaraikan."
   },
+  "uiSkinLabel": {
+    "message": "Penampilan antara muka"
+  },
+  "uiSkinHint": {
+    "message": "Hanya untuk pop timbul dan halaman tetapan sambungan ni. Fon, warna dan saiz sari kata tu sendiri ditetapkan dalam kad “Gaya baris” pada pop timbul."
+  },
+  "skinDefault": {
+    "message": "Lalai"
+  },
+  "skinNeon": {
+    "message": "Terminal Neon"
+  },
   "cmdToggleSubs": {
     "message": "Sari kata hidup atau mati"
   },

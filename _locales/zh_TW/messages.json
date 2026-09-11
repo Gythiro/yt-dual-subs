@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "只影響這個擴充功能自己的選單和設定。畫在影片上的少數幾個標籤仍然跟隨瀏覽器語言。譯文語言在彈出視窗裡選；「譯文語言列表」那一面只決定彈出視窗裡列出哪些語言。"
   },
+  "uiSkinLabel": {
+    "message": "介面外觀"
+  },
+  "uiSkinHint": {
+    "message": "只影響這個擴充功能自己的彈出視窗和設定頁。影片上那兩行字幕的字型、顏色、大小，是在彈出視窗的「行樣式」裡調整。"
+  },
+  "skinDefault": {
+    "message": "預設"
+  },
+  "skinNeon": {
+    "message": "霓虹終端"
+  },
   "cmdToggleSubs": {
     "message": "開關字幕"
   },

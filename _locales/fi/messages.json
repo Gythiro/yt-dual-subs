@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Tämän laajennuksen omien valikoiden ja asetusten kieli. Muutama suoraan videolle piirretty teksti seuraa yhä selaimen kieltä. Tekstitysten käännöskieli valitaan ponnahdusikkunassa; ”Käännöskielet”-näkymä päättää vain, mitkä kielet siellä näkyvät."
   },
+  "uiSkinLabel": {
+    "message": "Käyttöliittymän ulkoasu"
+  },
+  "uiSkinHint": {
+    "message": "Vaikuttaa vain tämän laajennuksen ponnahdusikkunaan ja asetuksiin. Tekstitysten fontti, väri ja koko säädetään ponnahdusikkunan ”Rivityyli”-kohdassa."
+  },
+  "skinDefault": {
+    "message": "Oletus"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Tekstitys päälle tai pois"
   },

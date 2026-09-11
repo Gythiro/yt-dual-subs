@@ -1852,6 +1852,7 @@ function initAbout() {
   try { ver = chrome.runtime.getManifest().version; } catch (_e) { /* ignore */ }
   $("aboutVer").textContent = ver || "—";
   initUiLocale();
+  initUiSkin();
   const set = (id, href) => { const el = $(id); if (el) el.href = href; };
   set("aboutSite", SITE_URL + "?src=options&lang=" + lang);
   set("aboutGithub", "https://github.com/Gythiro/yt-dual-subs");
@@ -3168,6 +3169,80 @@ function initStartTarget() {
 // names each language in itself (Deutsch, 日本語…) so someone stranded in the
 // wrong language can still find their own. Applying a change re-reads every
 // string on the page — a reload is the one honest way to do that everywhere.
+// The skin picker. Same card as the interface language, for the same reason
+// (design spec §5: a setting nobody touches twice a year does not belong in the
+// popup) — but unlike the language it does NOT reload. Skins are paint: the
+// attribute changes and this page repaints under you, which is the only preview
+// worth having. A drawn-to-scale fake popup would be a second model of a
+// surface that has nine states and twenty locales, and it would go stale.
+//
+// The popup is not repainted alongside it because by then it is gone: the gear
+// that brought you here called window.close() on it. Next time it opens it
+// wears the new skin — skins.js sets the attribute before the first paint.
+function initUiSkin() {
+  const box = $("uiSkinList");
+  const S = self.YTDS_SKINS;
+  if (!box || !S) return;
+  const label = (sk) => (sk.nameKey ? t(sk.nameKey, sk.name) : sk.name);
+
+  // Which row is current, without touching the DOM. The cross-page path at the
+  // bottom used to call paint() and rebuild the list, which throws the focused
+  // radio away: with two settings tabs open, changing the skin in one pulled
+  // the control out from under anyone standing on it in the other.
+  const mark = (cur) => {
+    for (const row of box.querySelectorAll(".oskin")) {
+      const input = row.querySelector("input");
+      const on = !!input && input.value === cur;
+      row.classList.toggle("on", on);
+      if (input) input.checked = on;
+    }
+  };
+
+  const paint = (cur) => {
+    box.textContent = "";
+    for (const sk of S.list) {
+      const row = document.createElement("label");
+      row.className = "oskin" + (sk.id === cur ? " on" : "");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "uiSkin";
+      input.value = sk.id;
+      input.checked = sk.id === cur;
+      const sw = document.createElement("span");
+      sw.className = "oskin-sw";
+      sw.setAttribute("aria-hidden", "true");    // the name beside it is the name
+      for (const c of (sk.swatch || [])) {
+        const i = document.createElement("i");
+        i.style.background = c;
+        sw.appendChild(i);
+      }
+      const name = document.createElement("span");
+      name.className = "oskin-name";
+      name.textContent = label(sk);
+      row.appendChild(input);
+      row.appendChild(sw);
+      row.appendChild(name);
+      input.addEventListener("change", () => {
+        if (!input.checked) return;
+        S.set(sk.id);
+        mark(sk.id);
+      });
+      box.appendChild(row);
+    }
+  };
+
+  chrome.storage.sync.get({ [S.KEY]: S.DEFAULT }, (got) => paint(S.get(got && got[S.KEY]).id));
+  // Changed elsewhere (a second settings tab, or a reset from the popup):
+  // skins.js has already repainted the page — this only keeps the radio from
+  // disagreeing with what the reader is looking at.
+  try {
+    chrome.storage.onChanged.addListener((ch, area) => {
+      if (area !== "sync" || !ch[S.KEY]) return;
+      mark(S.get(ch[S.KEY].newValue).id);
+    });
+  } catch (_e) { /* ignore */ }
+}
+
 function initUiLocale() {
   const sel = $("uiLocaleSel");
   if (!sel) return;

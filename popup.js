@@ -14,6 +14,7 @@ const DEFAULTS = {
   enabled: true,
   targetLang: "zh-CN",
   uiLocale: "auto",            // interface language; "auto" = follow the browser
+  uiSkin: "default",           // optional skin; "default" = the stylesheets as written
   ttsEnabled: false,           // read the translation line aloud (own key)
   ttsVolume: 100,              // spoken line's own loudness, 0-100 (Audio.volume)
   ttsDuckPct: 25,              // original audio while a line speaks, as % of the

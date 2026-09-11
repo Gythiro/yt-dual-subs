@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Ngôn ngữ menu và cài đặt của tiện ích này. Một số nhãn hiện trên video vẫn theo ngôn ngữ trình duyệt. Ngôn ngữ dịch của phụ đề chọn trong cửa sổ pop-up; mục “Danh sách ngôn ngữ dịch” chỉ quyết định pop-up liệt kê những ngôn ngữ nào."
   },
+  "uiSkinLabel": {
+    "message": "Diện mạo giao diện"
+  },
+  "uiSkinHint": {
+    "message": "Chỉ áp dụng cho cửa sổ pop-up và trang cài đặt của tiện ích này. Phông chữ, màu sắc và kích thước của chính phụ đề được chỉnh trong thẻ “Kiểu dòng” ở pop-up."
+  },
+  "skinDefault": {
+    "message": "Mặc định"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Bật hoặc tắt phụ đề"
   },

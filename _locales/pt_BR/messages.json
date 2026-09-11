@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "O idioma dos menus e das configurações da extensão. Alguns rótulos desenhados sobre o vídeo ainda seguem o idioma do navegador. O idioma da tradução das legendas é escolhido no popup; o painel “Idiomas de tradução” só decide quais idiomas o popup lista."
   },
+  "uiSkinLabel": {
+    "message": "Aparência da interface"
+  },
+  "uiSkinHint": {
+    "message": "Apenas para o popup e a página de configurações da extensão. A fonte, cor e tamanho das legendas em si são ajustados no cartão “Estilo da linha” no popup."
+  },
+  "skinDefault": {
+    "message": "Padrão"
+  },
+  "skinNeon": {
+    "message": "Terminal Neon"
+  },
   "cmdToggleSubs": {
     "message": "Ativar ou desativar as legendas"
   },

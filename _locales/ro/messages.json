@@ -767,6 +767,18 @@
   "uiLocaleHint": {
     "message": "Limba meniurilor și a setărilor extensiei. Câteva etichete desenate pe video urmează în continuare limba browserului. Limba de traducere a subtitrărilor se alege în fereastra extensiei; panoul „Limbi de traducere” decide doar ce limbi apar acolo."
   },
+  "uiSkinLabel": {
+    "message": "Aspectul interfeței"
+  },
+  "uiSkinHint": {
+    "message": "Doar pentru fereastra și setările acestei extensii. Fontul, culoarea și dimensiunea subtitrărilor în sine se setează în secțiunea „Stil linie” din fereastră."
+  },
+  "skinDefault": {
+    "message": "Implicit"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Activează sau dezactivează subtitrările"
   },

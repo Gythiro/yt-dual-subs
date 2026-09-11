@@ -578,6 +578,18 @@
   "uiLocaleHint": {
     "message": "Jezik izbornika i postavki ovog proširenja. Poneka oznaka nacrtana na samom videu i dalje prati jezik preglednika. Jezik prijevoda bira se u prozorčiću; ploča „Jezici prijevoda“ samo odlučuje koje jezike prozorčić nudi."
   },
+  "uiSkinLabel": {
+    "message": "Izgled sučelja"
+  },
+  "uiSkinHint": {
+    "message": "Odnosi se samo na prozorčić i postavke ovog proširenja. Font, boja i veličina samih titlova podešavaju se na kartici „Stil retka“ u prozorčiću."
+  },
+  "skinDefault": {
+    "message": "Zadano"
+  },
+  "skinNeon": {
+    "message": "Neon Terminal"
+  },
   "cmdToggleSubs": {
     "message": "Titlovi uklj./isklj."
   },
