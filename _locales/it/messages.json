@@ -355,7 +355,7 @@
     "message": "Serve aiuto per configurarlo?"
   },
   "byoLocalHint": {
-    "message": "La chiave resta in questo browser, su questo computer — non viene mai caricata. Il testo dei sottotitoli va solo al provider scelto."
+    "message": "La chiave API resta in questo browser, su questo computer, e non viene sincronizzata con il tuo account. Va in un solo posto: al fornitore che hai scelto, come intestazione di autorizzazione in ogni richiesta — così come il testo dei sottotitoli."
   },
   "byoErrNoProvider": {
     "message": "Scegli prima un provider."

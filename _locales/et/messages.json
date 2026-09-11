@@ -355,7 +355,7 @@
     "message": "Vajad abi seadistamisel?"
   },
   "byoLocalHint": {
-    "message": "Võti jääb sellesse brauserisse, sellele arvutile — seda ei laadita kunagi üles. Subtiitrite tekst läheb ainult valitud teenusepakkujale."
+    "message": "API võti jääb sellesse brauserisse, sellele arvutile, ega sünkroonita sinu kontoga. See läheb ainult ühte kohta: sinu valitud teenusepakkujale iga päringu autoriseerimispäisena — ja samamoodi ka subtiitrite tekst."
   },
   "byoErrNoProvider": {
     "message": "Vali esmalt teenusepakkuja."

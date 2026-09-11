@@ -388,7 +388,7 @@
     "message": "Perlu bantuan menyetel ini?"
   },
   "byoLocalHint": {
-    "message": "Kuncinya tetap di browser ini, di mesin ini — tidak pernah diunggah. Teks subtitle hanya ke penyedia yang kamu pilih."
+    "message": "Kunci API tetap di browser ini, di mesin ini, dan tidak disinkronkan ke akunmu. Kunci ini hanya dikirim ke satu tempat: penyedia yang kamu pilih, sebagai header otorisasi pada setiap permintaan — begitu pula dengan teks subtitle."
   },
   "byoErrNoProvider": {
     "message": "Pilih penyedia dulu."

@@ -355,7 +355,7 @@
     "message": "Precisa de ajuda para configurar?"
   },
   "byoLocalHint": {
-    "message": "A chave fica neste navegador, neste computador — nunca é enviada. O texto das legendas vai apenas para o fornecedor que escolheu."
+    "message": "A chave da API fica neste navegador, neste computador, e não é sincronizada com a sua conta. Vai apenas para um lugar: o fornecedor que escolheu, como cabeçalho de autorização em cada pedido — assim como o texto das legendas."
   },
   "byoErrNoProvider": {
     "message": "Escolha primeiro um fornecedor."

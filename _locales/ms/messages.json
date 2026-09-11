@@ -388,7 +388,7 @@
     "message": "Perlukan bantuan setkan ni?"
   },
   "byoLocalHint": {
-    "message": "Kunci kekal dalam pelayar ni, pada mesin ni — ia tak pernah dimuat naik. Teks sari kata hanya pergi ke penyedia yang kamu pilih."
+    "message": "Kunci API kekal dalam pelayar ni, pada mesin ni, dan tak disegerakkan ke akaun kamu. Ia cuma pergi ke satu tempat: penyedia yang kamu pilih, sebagai pengepala kebenaran pada setiap permintaan — sama juga dengan teks sari kata."
   },
   "byoErrNoProvider": {
     "message": "Pilih penyedia dulu."
@@ -504,7 +504,7 @@
     "message": "Belum ada senarai model — ambil satu, atau taip namanya."
   },
   "optModelEndpointId": {
-    "message": "Penyedia ini perlukan ID titik akhir dari konsol dia sendiri — bentuk macam di atas — bukan nama model awam."
+    "message": "Penyedia ini perlukan ID endpoint dari konsol dia sendiri — bentuk macam di atas — bukan nama model awam."
   },
   "optShowKey": {
     "message": "Tunjuk"

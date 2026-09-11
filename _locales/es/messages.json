@@ -355,7 +355,7 @@
     "message": "¿Necesitas ayuda para configurarlo?"
   },
   "byoLocalHint": {
-    "message": "La clave se queda en este navegador, en este equipo — nunca se sube. El texto de los subtítulos solo va al proveedor que hayas elegido."
+    "message": "La clave de API se queda en este navegador, en este equipo, y no se sincroniza con tu cuenta. Solo va a un lugar: al proveedor que hayas elegido, como encabezado de autorización en cada petición, al igual que el texto de los subtítulos."
   },
   "byoErrNoProvider": {
     "message": "Elige primero un proveedor."

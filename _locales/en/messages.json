@@ -388,7 +388,7 @@
     "message": "Need help setting this up?"
   },
   "byoLocalHint": {
-    "message": "The key stays in this browser, on this machine — it is never uploaded. Subtitle text goes only to the provider you picked."
+    "message": "The key is kept in this browser, on this machine, and is not synced to your account. It goes to one place: the provider you picked, as the authorization header on each request — and so does the subtitle text."
   },
   "byoErrNoProvider": {
     "message": "Pick a provider first."

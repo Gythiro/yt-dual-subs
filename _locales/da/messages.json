@@ -388,7 +388,7 @@
     "message": "Brug for hjælp til at sætte det op?"
   },
   "byoLocalHint": {
-    "message": "Nøglen bliver i denne browser, på denne computer — den uploades aldrig. Underteksten går kun til den udbyder, du valgte."
+    "message": "API-nøglen bliver i denne browser, på denne computer, og synkroniseres ikke med din konto. Den går kun ét sted hen: til den udbyder, du har valgt, som godkendelseshoved på hver anmodning — og det samme gør underteksten."
   },
   "byoErrNoProvider": {
     "message": "Vælg en udbyder først."

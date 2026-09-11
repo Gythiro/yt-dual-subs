@@ -355,7 +355,7 @@
     "message": "Tarvitsetko apua asetuksissa?"
   },
   "byoLocalHint": {
-    "message": "Avain pysyy tässä selaimessa, tällä koneella — sitä ei koskaan lähetetä muualle. Tekstityksen teksti menee vain valitsemallesi palvelulle."
+    "message": "API-avain pysyy tässä selaimessa, tällä koneella, eikä sitä synkronoida tilillesi. Se menee vain yhteen paikkaan: valitsemallesi tarjoajalle valtuutusotsikkona jokaisessa pyynnössä — ja niin tekee myös tekstityksen teksti."
   },
   "byoErrNoProvider": {
     "message": "Valitse ensin palveluntarjoaja."

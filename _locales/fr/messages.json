@@ -355,7 +355,7 @@
     "message": "Besoin d’aide pour configurer ?"
   },
   "byoLocalHint": {
-    "message": "La clé reste dans ce navigateur, sur cet ordinateur — elle n’est jamais envoyée. Le texte des sous-titres va uniquement au fournisseur choisi."
+    "message": "La clé API reste dans ce navigateur, sur cet ordinateur, et n'est pas synchronisée avec votre compte. Elle ne va qu'à un seul endroit : le fournisseur que vous avez choisi, en tant qu'en-tête d'autorisation à chaque requête — tout comme le texte des sous-titres."
   },
   "byoErrNoProvider": {
     "message": "Choisissez d’abord un fournisseur."

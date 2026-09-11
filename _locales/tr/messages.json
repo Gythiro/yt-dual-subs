@@ -355,7 +355,7 @@
     "message": "Kurulumda yardıma mı ihtiyacın var?"
   },
   "byoLocalHint": {
-    "message": "Anahtar bu tarayıcıda, bu makinede kalır — asla karşıya yüklenmez. Altyazı metni yalnızca seçtiğin sağlayıcıya gider."
+    "message": "API anahtarı bu tarayıcıda ve makinede tutulur, hesabınızla senkronize edilmez. Sadece bir yere gider: seçtiğiniz sağlayıcıya, her istekte yetkilendirme başlığı olarak — altyazı metni de öyle."
   },
   "byoErrNoProvider": {
     "message": "Önce bir sağlayıcı seçin."

@@ -355,7 +355,7 @@
     "message": "Cần trợ giúp thiết lập?"
   },
   "byoLocalHint": {
-    "message": "Khóa chỉ lưu trong trình duyệt này, trên máy này — không bao giờ được tải lên. Văn bản phụ đề chỉ gửi đến nhà cung cấp bạn đã chọn."
+    "message": "Khóa API được giữ trong trình duyệt này, trên máy này và không đồng bộ hóa với tài khoản của bạn. Khóa chỉ đi đến một nơi: nhà cung cấp bạn đã chọn, dưới dạng tiêu đề uỷ quyền trên mỗi yêu cầu — và văn bản phụ đề cũng vậy."
   },
   "byoErrNoProvider": {
     "message": "Hãy chọn nhà cung cấp trước."
@@ -468,7 +468,7 @@
     "message": "Chưa có danh sách mô hình — lấy danh sách, hoặc nhập tên."
   },
   "optModelEndpointId": {
-    "message": "Nhà cung cấp này yêu cầu ID điểm cuối từ bảng điều khiển của riêng họ — giống định dạng hiển thị ở trên — chứ không phải tên mô hình công khai."
+    "message": "Nhà cung cấp này yêu cầu ID endpoint từ bảng điều khiển của riêng họ — giống định dạng hiển thị ở trên — chứ không phải tên mô hình công khai."
   },
   "optShowKey": {
     "message": "Hiện"

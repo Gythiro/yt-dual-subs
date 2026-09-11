@@ -355,7 +355,7 @@
     "message": "Potrzebujesz pomocy przy konfiguracji?"
   },
   "byoLocalHint": {
-    "message": "Klucz zostaje w tej przeglądarce, na tym komputerze — nigdy nie jest wysyłany. Tekst napisów trafia wyłącznie do wybranego dostawcy."
+    "message": "Klucz API zostaje w tej przeglądarce, na tym komputerze, i nie jest synchronizowany z Twoim kontem. Trafia tylko w jedno miejsce: do wybranego dostawcy, jako nagłówek autoryzacji w każdym żądaniu — tak samo jak tekst napisów."
   },
   "byoErrNoProvider": {
     "message": "Najpierw wybierz dostawcę."

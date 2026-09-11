@@ -388,7 +388,7 @@
     "message": "Reikia pagalbos nustatant?"
   },
   "byoLocalHint": {
-    "message": "Raktas lieka šioje naršyklėje, šiame kompiuteryje — niekada nesiunčiamas. Subtitrų tekstas eina tik tam teikėjui, kurį pasirinkai."
+    "message": "API raktas lieka šioje naršyklėje, šiame kompiuteryje, ir nėra sinchronizuojamas su tavo paskyra. Jis eina tik į vieną vietą: tavo pasirinktam teikėjui, kaip autorizacijos antraštė kiekvienoje užklausoje — kaip ir subtitrų tekstas."
   },
   "byoErrNoProvider": {
     "message": "Pirmiau pasirink teikėją."
@@ -504,7 +504,7 @@
     "message": "Modelių sąrašo dar nėra — parsiųsk jį arba tiesiog įrašyk pavadinimą."
   },
   "optModelEndpointId": {
-    "message": "Šis teikėjas reikalauja galinio punkto ID iš savo konsolės — tokio formato, kaip parodyta aukščiau — o ne viešo modelio pavadinimo."
+    "message": "Šis teikėjas reikalauja endpointo ID iš savo konsolės — tokio formato, kaip parodyta aukščiau — o ne viešo modelio pavadinimo."
   },
   "optShowKey": {
     "message": "Rodyti"

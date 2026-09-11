@@ -355,7 +355,7 @@
     "message": "Hilfe beim Einrichten?"
   },
   "byoLocalHint": {
-    "message": "Der Schlüssel bleibt in diesem Browser, auf diesem Rechner — er wird nie hochgeladen. Untertiteltext geht nur an den von dir gewählten Anbieter."
+    "message": "Der API-Schlüssel bleibt in diesem Browser, auf diesem Rechner, und wird nicht mit deinem Konto synchronisiert. Er wird nur an einen Ort gesendet: an den von dir gewählten Anbieter, als Autorisierungs-Header bei jeder Anfrage — genau wie der Untertiteltext."
   },
   "byoErrNoProvider": {
     "message": "Zuerst einen Anbieter wählen."

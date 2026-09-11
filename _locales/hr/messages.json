@@ -388,7 +388,7 @@
     "message": "Trebaš pomoć pri postavljanju?"
   },
   "byoLocalHint": {
-    "message": "Ključ ostaje u ovom pregledniku, na ovom računalu — nikad se ne šalje. Tekst titlova ide samo pružatelju kojeg odabereš."
+    "message": "API ključ ostaje u ovom pregledniku, na ovom računalu, i ne sinkronizira se s tvojim računom. Ide samo na jedno mjesto: pružatelju kojeg odabereš, kao autorizacijsko zaglavlje u svakom zahtjevu — baš kao i tekst titlova."
   },
   "byoErrNoProvider": {
     "message": "Prvo odaberi pružatelja."

@@ -388,7 +388,7 @@
     "message": "Necessites ajuda per configurar-ho?"
   },
   "byoLocalHint": {
-    "message": "La clau es queda en aquest navegador, en aquest ordinador — no es puja mai. El text dels subtítols només va al proveïdor que has triat."
+    "message": "La clau de l'API es desa en aquest navegador, en aquest ordinador, i no se sincronitza amb el teu compte. Només va a un lloc: al proveïdor que has triat, com a capçalera d'autorització en cada petició; igual que el text dels subtítols."
   },
   "byoErrNoProvider": {
     "message": "Tria primer un proveïdor."

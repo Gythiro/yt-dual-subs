@@ -388,7 +388,7 @@
     "message": "Behöver du hjälp att ställa in det här?"
   },
   "byoLocalHint": {
-    "message": "Nyckeln stannar i den här webbläsaren, på den här datorn — den laddas aldrig upp. Undertexten går bara till leverantören du valde."
+    "message": "API-nyckeln stannar i den här webbläsaren, på den här datorn, och synkroniseras inte med ditt konto. Den går bara till ett ställe: leverantören du valde, som ett auktoriseringshuvud vid varje förfrågan — precis som undertexten."
   },
   "byoErrNoProvider": {
     "message": "Välj en leverantör först."

@@ -388,7 +388,7 @@
     "message": "Segítség kell a beállításhoz?"
   },
   "byoLocalHint": {
-    "message": "A kulcs ebben a böngészőben marad, ezen a gépen — soha nem töltődik fel. A felirat szövege csak a választott szolgáltatóhoz megy."
+    "message": "Az API-kulcs ebben a böngészőben marad, ezen a gépen, és nem szinkronizálódik a fiókoddal. Csak egy helyre megy: az általad választott szolgáltatóhoz, minden kérés engedélyezési fejléceként — és a felirat szövege is."
   },
   "byoErrNoProvider": {
     "message": "Először válassz szolgáltatót."

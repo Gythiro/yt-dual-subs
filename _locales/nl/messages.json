@@ -388,7 +388,7 @@
     "message": "Hulp nodig bij het instellen?"
   },
   "byoLocalHint": {
-    "message": "De sleutel blijft in deze browser, op deze machine — hij wordt nooit geüpload. Ondertiteltekst gaat alleen naar de aanbieder die jij koos."
+    "message": "De API-sleutel blijft in deze browser, op deze machine, en wordt niet gesynchroniseerd met je account. Hij gaat maar naar één plek: de aanbieder die jij koos, als autorisatie-header bij elk verzoek — net als de ondertiteltekst."
   },
   "byoErrNoProvider": {
     "message": "Kies eerst een aanbieder."

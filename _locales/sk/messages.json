@@ -388,7 +388,7 @@
     "message": "Treba ti pomoc s nastavením?"
   },
   "byoLocalHint": {
-    "message": "Kľúč ostáva v tomto prehliadači, na tomto počítači — nikdy sa neodosiela. Text titulkov ide len k poskytovateľovi, ktorého si vybral."
+    "message": "API kľúč ostáva v tomto prehliadači, na tomto počítači, a nesynchronizuje sa s tvojím účtom. Odosiela sa len na jedno miesto: poskytovateľovi, ktorého si si vybral, ako autorizačná hlavička pri každej požiadavke — a rovnako aj text titulkov."
   },
   "byoErrNoProvider": {
     "message": "Najprv vyber poskytovateľa."

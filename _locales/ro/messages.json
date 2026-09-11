@@ -355,7 +355,7 @@
     "message": "Ai nevoie de ajutor la configurare?"
   },
   "byoLocalHint": {
-    "message": "Cheia rămâne în acest browser, pe acest computer — nu este încărcată nicăieri. Textul subtitrărilor ajunge doar la furnizorul ales."
+    "message": "Cheia API rămâne în acest browser, pe acest computer, și nu este sincronizată cu contul tău. Merge într-un singur loc: la furnizorul pe care l-ai ales, ca antet de autorizare la fiecare cerere — la fel ca textul subtitrărilor."
   },
   "byoErrNoProvider": {
     "message": "Alege mai întâi un furnizor."

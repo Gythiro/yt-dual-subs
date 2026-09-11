@@ -528,31 +528,6 @@ async function paintEngineStatus() {
     return;
   }
 
-  // Own-key is chosen and there is nothing behind it yet. The panel below says
-  // "DeepSeek — not set up · Configure…", which reads as a label on a setting;
-  // what it does not say is that the setting is in force right now and nothing
-  // will be translated while it stands. Own-key mode is not auto mode, so every
-  // sentence below this point was skipped and the line simply went quiet on a
-  // video — three real-machine walks picked this out of the dropdown to see
-  // what it was and went back to the video waiting for subtitles.
-  // Before the checks below it, because this is true of the SETTING, whatever
-  // tab is in front; and not a warning, because an empty field the reader fills
-  // in one click is not a fault to file diagnostics about.
-  if (onByo) {
-    let keys = {}, okMap = {};
-    try {
-      const got = await chrome.storage.local.get({ byoKeys: {}, byoOk: {} });
-      keys = (got && got.byoKeys) || {};
-      okMap = (got && got.byoOk) || {};
-    } catch (_e) { /* unreadable storage: fall through and stay quiet */ }
-    if (!isByoSetUp(activeProvider(), keys, okMap)) {
-      el.textContent = t("backendStatusByoUnset",
-        "自带 Key 还没配置好，所以现在不会翻译。点下面的「配置…」把它设起来。");
-      el.hidden = false;
-      return;
-    }
-  }
-
   if (!tab || tab.id == null) return;
   // Nothing answered, or a YouTube page with no player: the home page, search
   // results, a channel — and, right after an installation, a video tab that
@@ -570,6 +545,34 @@ async function paintEngineStatus() {
     el.hidden = false;
     return;
   }
+
+  // Own-key is chosen and there is nothing behind it yet. The panel below says
+  // "DeepSeek — not set up · Configure…", which reads as a label on a setting;
+  // what it does not say is that the setting is in force right now and nothing
+  // will be translated while it stands. Own-key mode is not auto mode, so every
+  // sentence below this point was skipped and the line simply went quiet on a
+  // video — three real-machine walks picked this out of the dropdown to see
+  // what it was and went back to the video waiting for subtitles.
+  // After the wrong-tab sentence and before everything about THIS video:
+  // someone standing on a channel page needs to be told where the subtitles
+  // live first, and after that nothing below is true anyway while the engine
+  // has nothing behind it. Not a warning, either — an empty field the reader
+  // fills in one click is not a fault to file diagnostics about.
+  if (onByo) {
+    let keys = {}, okMap = {};
+    try {
+      const got = await chrome.storage.local.get({ byoKeys: {}, byoOk: {} });
+      keys = (got && got.byoKeys) || {};
+      okMap = (got && got.byoOk) || {};
+    } catch (_e) { /* unreadable storage: fall through and stay quiet */ }
+    if (!isByoSetUp(activeProvider(), keys, okMap)) {
+      el.textContent = t("backendStatusByoUnset",
+        "自带 Key 还没配置好，所以现在不会翻译。点下面的「配置…」把它设起来。");
+      el.hidden = false;
+      return;
+    }
+  }
+
 
   // The caption track itself is missing and the recovery loop is on it. This
   // outranks every note below: nothing about engines or languages is true of
@@ -2722,6 +2725,11 @@ function wire() {
       // defaults and the which-font-draws-which-language cache is rebuilt on demand. fontImports
       // stays: those are files the reader put in, not settings, and the dialog says they stay.
         "fontLangsSeen",                 // the last five videos' original languages: what was watched
+        // The five most recent models and voices, which the menus offer at the
+        // top. The dialog promises "the model and voice remembered for each
+        // provider" — these are remembered models and voices, so a reset that
+        // left them re-opened the menu with the old choices still listed.
+        "byoModelRecents", "ttsVoiceRecents",
         "uiLineOpen"]);                  // the line-style card's open/closed memory
       // "Back to how it was when first installed" — so the first-run hints come
       // back too: the drag grip's and the corner arrow's budgets are re-seeded

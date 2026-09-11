@@ -388,7 +388,7 @@
     "message": "Vajag palīdzību ar iestatīšanu?"
   },
   "byoLocalHint": {
-    "message": "Atslēga paliek šajā pārlūkā, šajā datorā — nekad netiek augšupielādēta. Subtitru teksts iet tikai tam sniedzējam, ko izvēlies."
+    "message": "API atslēga paliek šajā pārlūkā, šajā datorā, un netiek sinhronizēta ar tavu kontu. Tā iet tikai uz vienu vietu: tavam izvēlētajam sniedzējam kā autorizācijas galvene katrā pieprasījumā — un tāpat arī subtitru teksts."
   },
   "byoErrNoProvider": {
     "message": "Vispirms izvēlies sniedzēju."
@@ -504,7 +504,7 @@
     "message": "Modeļu saraksta vēl nav — ielādē to vai vienkārši ieraksti nosaukumu."
   },
   "optModelEndpointId": {
-    "message": "Šis sniedzējs pieprasa galapunkta ID no savas konsoles — iepriekš parādītajā formātā —, nevis publisku modeļa nosaukumu."
+    "message": "Šis sniedzējs pieprasa endpointa ID no savas konsoles — iepriekš parādītajā formātā —, nevis publisku modeļa nosaukumu."
   },
   "optShowKey": {
     "message": "Rādīt"

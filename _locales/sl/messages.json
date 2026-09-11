@@ -388,7 +388,7 @@
     "message": "Rabiš pomoč pri nastavitvi?"
   },
   "byoLocalHint": {
-    "message": "Ključ ostane v tem brskalniku, na tem računalniku — nikoli se ne naloži. Besedilo podnapisov gre samo k ponudniku, ki si ga izbral."
+    "message": "API ključ ostane v tem brskalniku, na tem računalniku, in se ne sinhronizira s tvojim računom. Gre samo na eno mesto: k ponudniku, ki si ga izbral, kot avtorizacijska glava v vsaki zahtevi — in tja gre tudi besedilo podnapisov."
   },
   "byoErrNoProvider": {
     "message": "Najprej izberi ponudnika."

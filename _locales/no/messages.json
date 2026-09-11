@@ -388,7 +388,7 @@
     "message": "Trenger du hjelp med oppsettet?"
   },
   "byoLocalHint": {
-    "message": "Nøkkelen blir i denne nettleseren, på denne maskinen — den lastes aldri opp. Undertekst går bare til leverandøren du valgte."
+    "message": "API-nøkkelen blir i denne nettleseren, på denne maskinen, og synkroniseres ikke med kontoen din. Den går bare ett sted: til leverandøren du valgte, som autorisasjonshode på hver forespørsel — og det samme gjør underteksten."
   },
   "byoErrNoProvider": {
     "message": "Velg en leverandør først."

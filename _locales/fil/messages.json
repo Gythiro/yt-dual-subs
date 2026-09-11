@@ -388,7 +388,7 @@
     "message": "Kailangan ng tulong sa pag-set up nito?"
   },
   "byoLocalHint": {
-    "message": "Nanatili ang key sa browser na 'to, sa machine na 'to — hindi ito kailanman ina-upload. Ang teksto ng subtitle ay pumupunta lang sa provider na pinili mo."
+    "message": "Nanatili ang API key sa browser na 'to, sa machine na 'to, at hindi naka-sync sa account mo. Pumupunta lang ito sa isang lugar: sa provider na pinili mo, bilang authorization header sa bawat request — at doon din pumupunta ang teksto ng subtitle."
   },
   "byoErrNoProvider": {
     "message": "Pumili muna ng provider."

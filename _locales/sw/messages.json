@@ -388,7 +388,7 @@
     "message": "Unahitaji msaada wa kusanidi?"
   },
   "byoLocalHint": {
-    "message": "Ufunguo unabaki kwenye kivinjari hiki, kwenye kompyuta hii — haupakiwi kamwe. Maandishi ya manukuu huenda tu kwa mtoa huduma uliyemchagua."
+    "message": "Ufunguo wa API unabaki kwenye kivinjari hiki, kwenye kompyuta hii, na hausawazishwi na akaunti yako. Huenda mahali pamoja tu: kwa mtoa huduma uliyemchagua, kama kichwa cha uidhinishaji kwenye kila ombi — na vivyo hivyo kwa maandishi ya manukuu."
   },
   "byoErrNoProvider": {
     "message": "Chagua mtoa huduma kwanza."
@@ -504,7 +504,7 @@
     "message": "Bado hakuna orodha ya modeli — leta moja, au andika jina tu."
   },
   "optModelEndpointId": {
-    "message": "Mtoa huduma huyu anahitaji kitambulisho cha mwisho kutoka kwenye dashibodi yake mwenyewe — kama inavyoonyeshwa hapo juu — na si jina la modeli la umma."
+    "message": "Mtoa huduma huyu anahitaji endpoint ID kutoka kwenye dashibodi yake mwenyewe — kama inavyoonyeshwa hapo juu — na si jina la modeli la umma."
   },
   "optShowKey": {
     "message": "Onyesha"
