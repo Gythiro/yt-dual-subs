@@ -780,7 +780,7 @@
     "message": "ネオンターミナル"
   },
   "skinEmber": {
-    "message": "エンバー"
+    "message": "残り火"
   },
   "skinMocha": {
     "message": "モカ"
@@ -789,7 +789,7 @@
     "message": "インク"
   },
   "skinDusk": {
-    "message": "ダスク"
+    "message": "黄昏"
   },
   "cmdToggleSubs": {
     "message": "字幕のオン/オフ"
