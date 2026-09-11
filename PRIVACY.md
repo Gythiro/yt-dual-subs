@@ -1,6 +1,6 @@
 # Privacy Policy — Dual Subtitles for YouTube™
 
-**Effective date:** 27 July 2026
+**Effective date:** 12 September 2026
 **Extension:** Dual Subtitles for YouTube™ (Chrome / Chromium browser extension)
 **Developer:** Gythiro · Source code: https://github.com/Gythiro/yt-dual-subs
 
