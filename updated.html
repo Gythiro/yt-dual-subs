@@ -1,11 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-title-en="Changelog — Dual Subtitles for YouTube™" data-title-zh="更新日志 — Dual Subtitles for YouTube™">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <title>Changelog — Dual Subtitles for YouTube™</title>
-<meta name="description" content="Release notes and version history for Dual Subtitles for YouTube™ — the free, open-source bilingual subtitle extension.">
+<link rel="canonical" href="https://gythiro.github.io/yt-dual-subs/updated.html">
+<link rel="alternate" hreflang="en" href="https://gythiro.github.io/yt-dual-subs/updated.html?lang=en">
+<link rel="alternate" hreflang="zh" href="https://gythiro.github.io/yt-dual-subs/updated.html?lang=zh">
+<link rel="alternate" hreflang="x-default" href="https://gythiro.github.io/yt-dual-subs/updated.html">
+<meta name="description" content="Release notes and version history for Dual Subtitles for YouTube™ — the free, open-source bilingual subtitle extension." data-desc-en="Release notes and version history for Dual Subtitles for YouTube™ — the free, open-source bilingual subtitle extension." data-desc-zh="Dual Subtitles for YouTube™ 的更新说明与版本历史——免费开源的双语字幕扩展。">
+<!-- Link preview. Title and description are this page's own, so there is one
+     place to change them. Card image is script-generated (site-shot.js og). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dual Subtitles for YouTube">
+<meta property="og:title" content="Changelog — Dual Subtitles for YouTube™">
+<meta property="og:description" content="Release notes and version history for Dual Subtitles for YouTube™ — the free, open-source bilingual subtitle extension.">
+<meta property="og:url" content="https://gythiro.github.io/yt-dual-subs/updated.html">
+<meta property="og:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A YouTube player showing one subtitle box with an English line above its Chinese translation.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Changelog — Dual Subtitles for YouTube™">
+<meta name="twitter:description" content="Release notes and version history for Dual Subtitles for YouTube™ — the free, open-source bilingual subtitle extension.">
+<meta name="twitter:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
 <style>
   :root{
     --bg:#0A0A0F;
@@ -13,14 +32,15 @@
     --card:#15151F;
     --ink:#FFFFFF;
     --muted:#A6A6B8;
-    --muted-2:#7C7C90;
+    --muted-2:#7F7F93;
     --line:rgba(255,255,255,0.10);
     --line-2:rgba(255,255,255,0.16);
-    --accent:#7B61FF;
+    --accent:#8571FF;
     --accent-2:#FF4D8D;
     --translation:#FFC24B;
     --ok:#4ade80;
     --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --grad-on:linear-gradient(105deg,#755CF2 0%,#8F53E7 45%,#CE3E72 100%);
     --radius:10px;
     --radius-lg:16px;
     --maxw:860px;
@@ -28,7 +48,7 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;overflow-y:scroll} /* scrollbar always on: no nav shift between pages */
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
   img{max-width:100%;height:auto;display:block}
   a{color:inherit;text-decoration:none}
   h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.12}
@@ -54,6 +74,11 @@
   body.mode-update .log-only{display:none !important}
 
   /* nav */
+  /* The nav is sticky, so an anchor jump lands underneath it. Nothing
+     was hiding today only because every section carries its own 78–103px
+     of padding — which is luck, not a decision, and stops being true the
+     moment a section is laid out more tightly. */
+  html{scroll-padding-top:76px}
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
   /* nav + footer span the same width as the homepage (1160px); only the
      reading column stays at --maxw so entries keep a comfortable measure */
@@ -67,13 +92,13 @@
      stretched anchor puts its text at the top of the box while the inline-flex
      button centres its own — 3px apart, which is visible in the bar. */
   .nav-links>a,.nav-links>.nav-drop{display:flex;align-items:center}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap;padding:5px 0}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
   .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
   .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
   .lang-toggle button:hover{color:var(--ink)}
-  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+  .lang-toggle button.active{color:#fff;background:var(--grad-on);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
   .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
   .btn.sm{height:40px;padding:0 18px;font-size:14px;white-space:nowrap}
@@ -91,7 +116,7 @@
   .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .sub{max-width:56ch;margin:18px auto 0;color:var(--muted);font-size:clamp(16px,2vw,18.5px)}
   .cta{display:flex;flex-wrap:wrap;gap:13px;justify-content:center;align-items:center;margin-top:30px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 24px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:15px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 22px rgba(123,97,255,0.38);transition:transform .12s ease,box-shadow .15s ease}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 24px;border-radius:var(--radius);background:var(--grad-on);color:#fff;font-size:15px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 22px rgba(123,97,255,0.38);transition:transform .12s ease,box-shadow .15s ease}
   .btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(123,97,255,0.5)}
   .microcopy{margin-top:14px;font-size:13.5px;color:var(--muted-2)}
 
@@ -105,7 +130,7 @@
   .entry .v{font-size:22px;font-weight:700;letter-spacing:-0.02em}
   .entry.current .v{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .entry .date{font-size:13px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
-  .youare{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad);padding:4px 10px;border-radius:999px;margin-left:auto;display:none}
+  .youare{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad-on);padding:4px 10px;border-radius:999px;margin-left:auto;display:none}
   .entry.current .youare{display:inline-flex}
   .entry ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:12px}
   .entry li{display:flex;gap:12px;align-items:flex-start;color:var(--muted);font-size:15.5px}
@@ -114,6 +139,7 @@
   .tag.new{background:rgba(123,97,255,0.16);color:#A78BFF}
   .tag.imp{background:rgba(255,194,75,0.14);color:var(--translation)}
   .tag.fix{background:rgba(74,222,128,0.12);color:var(--ok)}
+  .entry .lead{margin-top:14px;color:var(--muted);font-size:15.5px;border-left:3px solid var(--accent);padding:2px 0 2px 12px;line-height:1.55}
   .entry .more{margin-top:16px;font-size:14px}
   .entry .more a{color:var(--muted);font-weight:600;border-bottom:1px solid var(--line-2)}
   .entry .more a:hover{color:var(--ink)}
@@ -177,7 +203,7 @@
   /* help dropdown — holds every standalone page so the row stops growing */
   .nav-drop{position:relative}
   .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;line-height:inherit;
-    padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
+    padding:5px 0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
     cursor:pointer;white-space:nowrap;transition:color .15s}
   .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}
   .nav-drop-btn svg{transition:transform .18s}
@@ -190,6 +216,9 @@
   .nav-drop-menu a{display:block;padding:9px 12px;border-radius:8px;color:var(--muted);
     font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-drop-menu a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent, #8571FF); outline-offset: 3px; border-radius: 6px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+  .lang-toggle button:focus-visible { outline-offset: -2px; }
 </style>
 </head>
 <body class="mode-log">
@@ -204,22 +233,22 @@
       <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" id="helpBtn" aria-expanded="false"
-                aria-haspopup="true" aria-controls="helpMenu" onclick="toggleHelp()">
+                aria-controls="helpMenu" onclick="toggleHelp()">
           <span data-en>Help</span><span data-zh>帮助</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
-          <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
-          <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
-          <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+        <div class="nav-drop-menu" id="helpMenu">
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
+          <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+          <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+          <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
       </div>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
-        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
-        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+        <button type="button" id="lang-en" onclick="setLang('en', true)">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh', true)">中文</button>
       </div>
       <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
         <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -280,23 +309,129 @@
   <div class="wrap">
 
     <!-- ════════ RELEASE TEMPLATE (copy above v3.4.0 when shipping) ════════
-    <section class="entry" data-ver="3.5.0">
+        <section class="entry" data-ver="3.5.0" id="v3-5-0">
       <div class="head">
         <span class="v mono">v3.5.0</span>
         <span class="date">YYYY-MM-DD</span>
-        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
-      </div>
+              </div>
       <ul>
-        <li><span class="tag new">NEW</span>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>…</b> …</p>
           <p data-zh><b>…</b>…</p>
         </li>
       </ul>
-      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases/tag/v3.5.0" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
     </section>
     ═════════════════════════════════════════════════════════════════════ -->
 
-    <section class="entry" data-ver="3.6.0">
+    <section class="entry" data-ver="3.7.0" id="v3-7-0">
+      <div class="head">
+        <span class="v mono">v3.7.0</span>
+        <span class="date">2026-08-22</span>
+        <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
+      </div>
+      <!-- One line up top for the reader who only wants the headline; the
+           items below run new → improved → changed → fixed. -->
+      <p class="lead"><span data-en>The three big ones this time: the translation read out loud, a video summarized into chapters, and the models and fonts on your own computer. The 22 items below run new → improved → changed → fixed.</span><span data-zh>这一版的三件大事：把译文念出来、把视频总结成章节、用你自己电脑上的模型和字体。下面 22 条按新增 → 改进 → 变更 → 修复排。</span></p>
+
+      <ul>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>It can read the translation out loud.</b> Each line is spoken as it appears; the video's own audio ducks underneath, and a line that runs long slows the picture a touch and borrows the gap after it, so most lines get to finish; a switch in the settings (Try to finish every line) keeps slowing so more of them do. Your browser's own voices need no key at all — turn the switch on in the popup and it works. Five cloud providers are there for better ones, including Chinese regional voices and, on ElevenLabs, voices you cloned yourself. Press Preview to hear a voice speak your language before choosing it.</p>
+          <p data-zh><b>可以把译文念出来了。</b>每句字幕出现时就朗读它的译文，视频原声自动压低；句子长到读不完时，视频会稍微放慢、借用后面的空隙，大多数句子能读完；要句句都读完，设置里有「尽量每句读完」的开关。用浏览器自带音色<b>不需要 Key</b>——在弹窗里打开开关就能用。想要更好的声音，还有五家云服务商，含中文方言音色，ElevenLabs 上还能用你自己克隆的声音。选之前点「试听」，会用你的译文语言念一句给你听。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>Subtitles can be selected and copied</b> — off by default, since selecting would get in the way of click-to-pause; turn it on in the small menu behind the arrow on the player's subtitle button (the item is called Select text; the popup's Layout card has the same switch). That menu also reaches the switches you use while watching, without opening anything.</p>
+          <p data-zh><b>字幕可以选中复制了</b>——默认关着，因为选中会挡住点画面暂停；在播放器字幕按钮上的小箭头菜单里打开（那一项叫「选中复制」，弹窗「布局」卡里也有同一个开关）。那个小菜单也放着看视频时要动的几个开关，不用打开任何页面就能够到。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>The interface speaks 44 languages.</b> It follows your browser, and Settings → About → Interface language lets you set it by hand — separately from the language your subtitles are translated into.</p>
+          <p data-zh><b>界面支持 44 种语言。</b>自动跟随浏览器，也可以在设置页 →「关于」→「界面语言」里手动指定——它和「字幕翻译成什么语言」是两件事。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>Six looks to choose from.</b> Settings → About → Interface appearance offers Default, Neon Terminal, Ember, Mocha, Ink and Dusk. It repaints the popup and the settings page only — the subtitles on the video keep the font and colours you set in Line style. Default is still the default.</p>
+          <p data-zh><b>六套外观可选。</b>设置页 →「关于」→「界面外观」里有默认、霓虹终端、余烬、摩卡、墨、暮色。只影响这个扩展自己的弹窗和设置页——视频上那两行字幕的字体和颜色，照旧在「行样式」里调。默认那一套仍然是默认。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>A whole video, summarized into chapters.</b> One line of TL;DR plus timestamped chapters, written in your translation language; click a timestamp to jump there. It runs on a service of yours — the free engines translate but do not summarize — and nothing is sent until you press the button that says how much it will send and where.</p>
+          <p data-zh><b>一支视频，总结成带时间戳的章节。</b>一句摘要加上分章，用你的译文语言写；点时间戳就跳过去。它走你自己的服务——免费引擎只翻译，不总结——而且在你按下那颗写明「发多少、发给谁」的按钮之前，什么都不会发出去。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>A model on your own computer can do both.</b> Pick <b>Ollama (local)</b> from the provider list — nothing to type — or point the custom endpoint at LM Studio, and translation and summaries run locally: nothing per video, and the subtitles never leave the machine. The guide walks through it, including the one setting everybody misses.</p>
+          <p data-zh><b>你自己电脑上的模型也能干这两件事。</b>在服务商列表里选「Ollama（本机）」——什么都不用填——或者把自定义接口指向 LM Studio，翻译和总结就都在本地跑：看多少视频都不花钱，字幕也不会离开这台机器。教程里一步步写了，包括所有人都会漏掉的那个设置。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>The translation model changes from the popup.</b> The line that names the model is now the control for it: what you used lately, and what your key already fetched, are one click away — the whole list is one more. Lines already on screen keep the translation they were given; the new model starts with the next one. The voice menu works the same way, keeping the voice in use and the ones you used lately, with the full catalogue on the settings page.</p>
+          <p data-zh><b>换翻译模型不用离开视频了。</b>点弹窗里写着模型名的那一行就能换：最近用过的、你的 Key 拉过的都在里面，想看全部再点一下就到设置页。已经出来的句子保持原来的译文，新模型从下一句开始。音色单也是同一个做法——留你在用的和最近用过的，完整清单在设置页。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>Fonts from your own computer.</b> The font list used to be fifteen fixed names, some of them installed nowhere near you; choosing one quietly gave you something else. The popup now offers the fonts really installed on this computer, judged per line: a font that cannot draw Japanese is left off the Japanese line — one closing row says how many were left out, and the font in use stays, marked. Settings → Subtitle fonts shows every font on the computer, previews any of them at subtitle size in the language you pick, keeps the ones you want in the popup, and imports a font file of your own — copied into the browser, so the original can move afterwards. This needs the browser's font-list permission (fontSettings); Chrome shows no warning for it, so the privacy policy spells it out: read-only, used on your computer.</p>
+          <p data-zh><b>字体来自你自己的电脑。</b>以前字体下拉是写死的十五个名字，有几个在你机器上根本没装，选了会悄悄换成别的。弹窗里现在列的是这台电脑上真装了的字体，而且按行判断：显示不了日文的字体，在日文那一行里不再列出——末尾一行写着另有几个显示不了，正在用的那个留着并标明。设置 →「字幕字体」列出电脑上的全部字体，可以按你选的语言、按字幕大小预览任何一个，把想在弹窗里看到的留下，还能导入你自己的字体文件——拷一份存进浏览器，之后原文件挪走也不影响。这需要浏览器的字体清单权限（fontSettings）；Chrome 不会为它弹提示，所以隐私政策里专门写了一段：只读，只在你电脑上用。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>When something is wrong, one button explains it.</b> Settings → About → Something not working now carries a three-step checklist and a Copy diagnostic info button — and the popup shows the same button whenever something is wrong — so a bug report can start with facts instead of guesses.</p>
+          <p data-zh><b>出问题时，有一颗按钮替你说清楚。</b>设置 →「关于」→「遇到问题」里加了三步自检和「复制诊断信息」，弹窗出问题时也会露出同一颗按钮；报问题时可以直接贴事实，不用来回猜。</p>
+        </li>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
+          <p data-en><b>Three keyboard shortcuts, unbound until you bind them.</b> Subtitles on/off, read-aloud on/off, and show or hide the translation line — the last one for reading the original first and checking yourself afterwards. Each can be given a key in Chrome's shortcut settings (Settings → About → Set shortcuts). Nothing is bound out of the box, so nothing changes until you choose to. Suggested by <b>@LemuelCushing</b>.</p>
+          <p data-zh><b>三条键盘快捷键，不绑就不生效。</b>开关字幕、开关朗读，以及开关译文行——最后这条是给想先看原文、再对答案的人用的。每条都可以在 Chrome 的快捷键设置里绑一个键（设置 →「关于」→「设置快捷键」）。默认一个都没绑，所以不绑就什么都不变。由 <b>@LemuelCushing</b> 提议。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>A refusal now says which thing to go and fix.</b> "The key was rejected" used to cover both a key that is wrong and a key that is fine on an account that is not allowed to make the call — an unpaid balance, an identity check, a model not switched on. Those are different sentences now, an empty balance is no longer described as something to retry, and whatever the provider itself said is printed underneath.</p>
+          <p data-zh><b>被拒绝时，会说清该去修哪一头。</b>以前「Key 被拒绝」既指 Key 写错，也指 Key 没问题、只是这个账号不被允许这样调用——余额不足、实名没做、模型没开通。现在这两件事是两句话；余额用完不再被说成「稍后再试」；服务商自己说的那句原话也会显示在下面。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>A saved key says so, instead of leaving an empty box.</b> It now reads "saved ····1234" with <b>Replace</b> and <b>Delete</b> beside it. The old row showed an empty field and a link called "Clear", which two readers in a row took to mean "empty this box" rather than "delete the key".</p>
+          <p data-zh><b>存好的 Key 会明说，而不是留一个空框。</b>那一行现在写着「已保存 ····1234」，旁边是<b>「更换」</b>和<b>「删除」</b>。以前是一个空输入框加一个叫「清除」的链接，连着两位读者都把它理解成「清空这个框」而不是「删掉这把 Key」。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>The setup form now runs in the order you have to work in.</b> The API key comes before the model, because the model list is fetched with the key; with no key the model row says so by being unavailable rather than by refusing a click; and pressing "Save and test" with no model chosen says so at once instead of after a round trip that had already switched the extension over.</p>
+          <p data-zh><b>配置那一面改成了按实际操作顺序排。</b>API Key 排在模型之前——模型清单本来就是用 Key 拉的；没填 Key 时模型那一格直接不可用，而不是点了才拒绝；没选模型就按「保存并测通」，当场就说，而不是走完一轮网络请求、而那时扩展已经切过去了。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>Reset asks first.</b> "Reset all settings" now opens a small panel that says exactly what goes — every setting, the API keys on this computer, and the model and voice remembered for each provider; that the first-run hints come back; and that the domains you already allowed stay allowed — before it does anything.</p>
+          <p data-zh><b>重置前会先问一句。</b>「重置全部设置」现在会先弹一个小面板，说清会清掉什么——所有设置、这台电脑上的 API Key、各家记住的模型和音色；首次使用的提示会重新出现；已经授权过的域名保持授权——确认了才动手。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>A retired model no longer fails silently.</b> Once a key has tested successfully, the model list is fetched from the provider once, quietly; if the model you are using is no longer on it, the settings page says so and asks you to pick another, instead of every translation failing.</p>
+          <p data-zh><b>模型下架不再悄悄失败。</b>Key 测通之后，悄悄向服务商拉一次模型清单；你正在用的模型不在清单里了，设置页会说出来、请你另选一个，而不是每一句翻译都失败。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
+          <p data-en><b>An export through your own key waits out a rate limit instead of running into it.</b> When that provider has just rate-limited you, the download shows a countdown and starts the moment the gate opens; Stop still stops it, and a download you replaced with another no longer wakes up and spends your quota.</p>
+          <p data-zh><b>用自带 Key 导出时会等限流过去，不再一头撞上去。</b>那家服务商刚限流，下载就显示倒计时，门一开就开始；「停止」照样能停，被你换掉的那次下载也不会再醒过来花你的额度。</p>
+        </li>
+        <li><span class="tag imp"><span data-en>CHANGED</span><span data-zh>变更</span></span>
+          <p data-en><b>Needs Chromium 111 or newer</b> (it was 102). Chrome, Edge and the other Chromium browsers from March 2023 on; on an older browser this update does not arrive, and 3.6.0 keeps working as it was.</p>
+          <p data-zh><b>最低需要 Chromium 111</b>（原来是 102）。2023 年 3 月以后的 Chrome、Edge 和其他 Chromium 浏览器都够；更老的浏览器收不到这次更新，3.6.0 会照旧运行。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Japanese and Traditional Chinese subtitles were drawn in Simplified Chinese shapes.</b> 直 角 骨 社 are written differently in Japanese, Taiwan and mainland typography; the overlay had never told the browser which language a line was in, so the browser guessed. Each line now carries its language and the browser picks that language's glyphs, whichever font you chose. If Japanese subtitles look a little different after this update, that is why.</p>
+          <p data-zh><b>日语和繁体字幕一直被用简体中文的字形画出来。</b>直、角、骨、社这些字在日本、台湾和大陆的写法本来就不一样；叠加层从来没告诉浏览器这一行是什么语言，浏览器只好猜。现在每一行都带着自己的语言，浏览器会按那种语言选字形，不管你选的是哪个字体。更新后日语字幕看着有点不一样，原因就在这里。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>Read-aloud refused seventeen languages for no reason.</b> Google's voice list had grown and ours had not, so Swedish, Finnish, Danish, Norwegian, Czech, Greek, Hungarian, Romanian, Hebrew and eight more were told the provider could not speak them. It could.</p>
+          <p data-zh><b>朗读无理由拒绝了十七种语言。</b>Google 的音色支持范围扩大了而我们的表没跟上，导致瑞典语、芬兰语、丹麦语、挪威语、捷克语、希腊语、匈牙利语、罗马尼亚语、希伯来语和另外八种语言被告知「这家不支持你的语言」。其实是支持的。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>A key from a provider's international site was refused as if it were wrong.</b> SiliconFlow, Alibaba's 百炼, Kimi and GLM each run a mainland-China platform and an international one, on separate accounts whose keys are not interchangeable — and the address was hard-coded to one of them. Anyone holding the other kind of key was told the key had been rejected. The provider panel now has a <b>Site</b> row for those four and for the two read-aloud providers with the same split. Reported by <b>@LemuelCushing</b>.</p>
+          <p data-zh><b>在服务商海外站申请的 Key 被当成错的拒掉了。</b>硅基流动、阿里云百炼、Kimi、智谱 GLM 都是国内站和海外站两套独立平台，账号与 Key 不通用，而我们把地址写死成了其中一个。持另一边 Key 的人会被告知「Key 被拒绝」。现在这四家、以及同样有两套平台的两家朗读服务商，面板上都多了一行<b>「站点」</b>。由 <b>@LemuelCushing</b> 报告。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>A video already set to YouTube's own auto-translation showed no subtitles</b> until you changed the track by hand, with the retry notice up the whole time. The original track is now read straight off that selection, and later token rotations keep working — a language change or an SRT export mid-video no longer fetches with a stale token.</p>
+          <p data-zh><b>已经选了 YouTube 自动翻译轨的视频不出字幕</b>，得手动换一次轨才恢复，重试提示也一直不消。现在直接从那条轨读原文轨，后面的令牌轮换也跟得上——视频中途换语言或导出 SRT 不再用过期令牌。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>The translation line no longer ends with the first word of the next sentence.</b> YouTube translates scrolling captions fragment by fragment and cuts wherever a fragment ends; with your own key the translation line now shows whole sentences, while the original line keeps scrolling with what is being said.</p>
+          <p data-zh><b>译文行不再拖着下一句的第一个字。</b>YouTube 对滚动字幕逐段翻译、段尾就切；用自带 Key 时，译文行现在整句显示，原文行照旧跟着说话逐段滚动。</p>
+        </li>
+        <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
+          <p data-en><b>A caption feed that dies mid-video is retried for as long as the video plays.</b> Three quick retries used to be the whole budget, and a YouTube rate-limit window outlives all three; the retries now space out — 40 seconds, 80, up to five minutes apart — instead of giving up with the last line frozen on screen.</p>
+          <p data-zh><b>字幕流在视频中途断掉，现在会一直重试到视频结束。</b>以前只有三次快速重试，YouTube 的限流窗口比它们三个加起来都长；现在重试间隔逐步拉长——40 秒、80 秒，最长 5 分钟一次——不再放弃、不再把最后一行冻在屏幕上。</p>
+        </li>
+      </ul>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+    </section>
+
+    <section class="entry" data-ver="3.6.0" id="v3-6-0">
       <div class="head">
         <span class="v mono">v3.6.0</span>
         <span class="date">2026-07-27</span>
@@ -304,24 +439,24 @@
       </div>
       <ul>
         <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
-          <p data-en><b>Translate with your own API key.</b> Bring a key from DeepSeek, Gemini, DeepL, Alibaba Bailian and a dozen more. Each sentence is understood as a whole and then split back across the subtitles, so the translation line turns over with the original instead of standing still. The key is stored on this computer only and is sent to nobody but the provider you picked.</p>
-          <p data-zh><b>可以用你自己的 API Key 翻译了。</b>支持 DeepSeek、Gemini、DeepL、阿里百炼等十余家。译文会整句理解之后再按字幕切回来，不再一整句杵在那儿不动。Key 只存在这台电脑上，除了你选的那家服务商，不会发往任何地方。</p>
+          <p data-en><b>Translate with your own API key.</b> Bring a key from DeepSeek, Gemini, DeepL, Alibaba Bailian — twelve providers in all. Each sentence is understood as a whole and then split back across the subtitles, so the translation line turns over with the original instead of standing still. The key is stored on this computer only and is sent to nobody but the provider you picked.</p>
+          <p data-zh><b>可以用你自己的 API Key 翻译了。</b>支持 DeepSeek、Gemini、DeepL、阿里百炼，共 12 家。译文会整句理解之后再按字幕切回来，不再一整句杵在那儿不动。Key 只存在这台电脑上，除了你选的那家服务商，不会发往任何地方。</p>
         </li>
         <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>Export a whole video through your own engine.</b> The SRT download can go through your provider instead of YouTube™'s free translation. It says how many requests it will take before it starts, shows progress, and can be stopped — and it is off by default, because it spends your quota and sends the whole track.</p>
           <p data-zh><b>导出整片字幕也能走自带引擎。</b>下载 SRT 时可以用你自己的服务商翻译，而不是 YouTube™ 的免费整轨翻译。开始前会先告诉你大约几次请求，中途有进度、可以停；默认关闭，因为它会消耗你的额度、而且整片字幕会离开浏览器。</p>
         </li>
         <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
-          <p data-en><b>Fifty target languages, and you choose which ones show.</b> The popup menu lists the ones you keep; the rest are one click away in Settings → Subtitle languages.</p>
-          <p data-zh><b>目标语言增加到 50 种，显示哪些由你决定。</b>弹窗下拉只列你留下的，其余的在「设置 → 字幕语言」里随时加回来。</p>
+          <p data-en><b>Fifty translation languages, and you choose which ones show.</b> The popup menu lists the ones you keep; the rest are one click away in Settings → Translation languages.</p>
+          <p data-zh><b>译文语言增加到 50 种，显示哪些由你决定。</b>弹窗下拉只列你留下的，其余的在「设置 → 译文语言列表」里随时加回来。</p>
         </li>
         <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>A settings page, reachable from the gear.</b> Getting started, translation service setup and About now live there. Seven more fonts, including a Chinese serif and a rounded face.</p>
           <p data-zh><b>齿轮里有了独立设置页。</b>新手入门、翻译服务配置和「关于」都在里面。字体新增 7 种，含中文宋体与圆体。</p>
         </li>
         <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
-          <p data-en><b>Everything reads bigger.</b> The smallest text went from 10.5px to 13px and nothing is under 12px any more.</p>
-          <p data-zh><b>整体字号调大。</b>最小的一档从 10.5px 提到 13px，全部文字不再低于 12px。</p>
+          <p data-en><b>Everything reads bigger.</b> The settings text that used to be 10.5px is now 13px.</p>
+          <p data-zh><b>整体字号调大。</b>设置页原来 10.5px 的正文现在是 13px。</p>
         </li>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
           <p data-en><b>Subtitles dragged to the very bottom are no longer clipped</b>, and a tab restored after a browser restart shows subtitles again without touching the CC button.</p>
@@ -340,10 +475,10 @@
           <p data-zh><b>更新扩展后，已经开着的标签页不会再留下一个不再翻译的字幕框</b>——旧的会自己退场，刷新一下就是新的。</p>
         </li>
       </ul>
-      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases/tag/v3.6.0" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
     </section>
 
-    <section class="entry" data-ver="3.5.1">
+    <section class="entry" data-ver="3.5.1" id="v3-5-1">
       <div class="head">
         <span class="v mono">v3.5.1</span>
         <span class="date">2026-07-25</span>
@@ -351,33 +486,33 @@
       </div>
       <ul>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
-          <p data-en><b>No more twin lines on same-language videos.</b> When the caption track already speaks your target language (e.g. a Chinese video with a Chinese target), the overlay now shows a single line — the popup notes "already in your target language". Simplified ↔ Traditional conversion still translates as before.</p>
-          <p data-zh><b>同语言视频不再显示两行一样的字幕。</b>字幕轨本来就是目标语言时（比如中文视频+中文目标），只显示一行，弹窗会注明"已是目标语言，无需翻译"。简体↔繁体转换不受影响，照常工作。</p>
+          <p data-en><b>No more twin lines on same-language videos.</b> When the caption track already speaks your translation language (e.g. a Chinese video with Chinese as the translation language), the overlay now shows a single line — the popup notes "already in your translation language". Simplified ↔ Traditional conversion still translates as before.</p>
+          <p data-zh><b>同语言视频不再显示两行一样的字幕。</b>字幕轨本来就是译文语言时（比如中文视频、译文语言也是中文），只显示一行，弹窗会注明「已是译文语言，无需翻译」。简体↔繁体转换照常。</p>
         </li>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
           <p data-en><b>Echo-proof everywhere.</b> A "translation" identical to the original is never painted as a second line on any path — including exported SRT files, where identical pairs collapse to one line.</p>
-          <p data-zh><b>全链路防回声。</b>与原文完全相同的"译文"在任何路径下都不再重复显示，导出的 SRT 里相同的两行也会合并为一行。</p>
+          <p data-zh><b>全链路防回声。</b>与原文完全相同的「译文」在任何路径下都不再重复显示，导出的 SRT 里相同的两行也会合并为一行。</p>
         </li>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
           <p data-en><b>Cleaner caption-track switches.</b> Changing the CC language mid-video no longer reuses translations cached for the previous track.</p>
           <p data-zh><b>切换字幕轨更干净。</b>视频中途更换 CC 语言后，不再误用上一条字幕轨的翻译缓存。</p>
         </li>
       </ul>
-      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases/tag/v3.5.1" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
     </section>
 
-    <section class="entry" data-ver="3.5.0">
+    <section class="entry" data-ver="3.5.0" id="v3-5-0">
       <div class="head">
         <span class="v mono">v3.5.0</span>
         <span class="date">2026-07-18</span>
         <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
       </div>
       <ul>
-        <li><span class="tag new">NEW</span>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>YouTube Shorts support.</b> Bilingual subtitles now work on the vertical player too — swipe to the next Short and the captions keep up, positioned clear of the Shorts title area.</p>
           <p data-zh><b>支持 YouTube Shorts。</b>竖屏短视频也有双语字幕了——快速滑动切换下一条，字幕即时跟上，位置自动避开 Shorts 标题区。</p>
         </li>
-        <li><span class="tag new">NEW</span>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>Update notes, the polite way.</b> A small "NEW" badge on the icon after minor updates; this page opens only for feature releases — turn it off anytime in the popup.</p>
           <p data-zh><b>更新提醒（不打扰版）。</b>小更新只在图标上挂个 NEW 角标；只有功能版本才会打开这个页面，且可随时在弹窗里关掉。</p>
         </li>
@@ -390,64 +525,64 @@
           <p data-zh><b>AI 配音视频：</b>只有配音字幕（无原声轨）的视频会提示一次；存在原声字幕轨时自动切换过去。</p>
         </li>
       </ul>
-      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases/tag/v3.5.0" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
     </section>
 
-    <section class="entry" data-ver="3.4.0">
+    <section class="entry" data-ver="3.4.0" id="v3-4-0">
       <div class="head">
         <span class="v mono">v3.4.0</span>
         <span class="date">2026-07-10</span>
         <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
       </div>
       <ul>
-        <li><span class="tag new">NEW</span>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>Smart sentence mode.</b> When a track can't be translated by YouTube, fragmented auto-captions are first rebuilt into full sentences, then translated — much more natural results.</p>
           <p data-zh><b>智能整句翻译。</b>当整轨翻译不可用时，先把碎片化的自动字幕重组成完整句子再翻译，译文自然得多。</p>
         </li>
-        <li><span class="tag new">NEW</span>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>Auto engine.</b> Picks the best available engine per video and falls back gracefully; you can still pin one manually.</p>
           <p data-zh><b>自动引擎。</b>按视频自动选择最佳翻译方式并平滑降级，也可以手动固定某一种。</p>
         </li>
         <li><span class="tag imp"><span data-en>IMPROVED</span><span data-zh>改进</span></span>
           <p data-en><b>Sturdier under rate limits:</b> request queue with backoff, retry for half-translated lines, "…" placeholder instead of mismatched lines.</p>
-          <p data-zh><b>限流下更稳：</b>请求队列+退避重试、半翻句自动补翻、用"…"占位替代错位配对。</p>
+          <p data-zh><b>限流下更稳：</b>请求队列+退避重试、半翻句自动补翻、用「…」占位替代错位配对。</p>
         </li>
       </ul>
-      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
+      <p class="more"><a href="https://github.com/Gythiro/yt-dual-subs/releases/tag/v3.4.0" target="_blank" rel="noopener"><span data-en>Full release notes on GitHub →</span><span data-zh>GitHub 查看完整发布说明 →</span></a></p>
     </section>
 
-    <section class="entry" data-ver="3.3.0">
+    <section class="entry" data-ver="3.3.0" id="v3-3-0">
       <div class="head">
         <span class="v mono">v3.3.0</span>
         <span class="date">2026-07-05</span>
         <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
       </div>
       <ul>
-        <li><span class="tag new">NEW</span>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>New name: Dual Subtitles for YouTube™</b>, plus a full privacy policy and in-popup disclaimer.</p>
           <p data-zh><b>更名为 Dual Subtitles for YouTube™</b>，并新增完整隐私政策与弹窗免责声明。</p>
         </li>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
           <p data-en><b>Captions now auto-enable</b> when you open a video directly from the address bar (cold load).</p>
-          <p data-zh><b>冷加载不自动开字幕：</b>从地址栏直接打开视频时也会自动开启 CC。</p>
+          <p data-zh><b>冷加载也会自动开字幕：</b>从地址栏直接打开视频时，CC 同样会自动开启。</p>
         </li>
       </ul>
     </section>
 
-    <section class="entry" data-ver="3.2.0">
+    <section class="entry" data-ver="3.2.0" id="v3-2-0">
       <div class="head">
         <span class="v mono">v3.2.0</span>
         <span class="date">2026-06-21</span>
         <span class="youare"><span data-en>You are here</span><span data-zh>当前版本</span></span>
       </div>
       <ul>
-        <li><span class="tag new">NEW</span>
+        <li><span class="tag new"><span data-en>NEW</span><span data-zh>新增</span></span>
           <p data-en><b>SRT export</b> — save the original, the translation, or both as a subtitle file.</p>
           <p data-zh><b>SRT 字幕导出</b>——原文、译文或双语，一键存成字幕文件。</p>
         </li>
         <li><span class="tag fix"><span data-en>FIXED</span><span data-zh>修复</span></span>
           <p data-en><b>Drag handle</b> no longer lingers in fullscreen when player controls hide.</p>
-          <p data-zh><b>全屏拖动手柄</b>在播放器控件隐藏后不消失的问题。</p>
+          <p data-zh><b>全屏拖动手柄</b>在播放器控件隐藏后不再残留。</p>
         </li>
       </ul>
     </section>
@@ -482,7 +617,7 @@
       <div class="foot-brand">
         <a href="./" class="brand"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
         <p data-en>Bilingual subtitles for YouTube — the original language and your translation together in one clean, non-overlapping layer.</p>
-        <p data-zh>为 YouTube 打造的双语字幕——原文与你的译文同处一层，干净整洁、互不重叠。</p>
+        <p data-zh>YouTube 的双语字幕——原文和你的译文同处一层，不会叠在一起糊成一团。</p>
       </div>
       <div class="foot-links">
         <div class="foot-col">
@@ -499,13 +634,13 @@
         <div class="foot-col">
           <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
+          <a href="https://github.com/Gythiro/yt-dual-subs/blob/main/LICENSE" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.6.0 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.7.0 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
@@ -530,15 +665,27 @@
   var STORAGE_KEY = "dsfy-lang";
   var params = new URLSearchParams(location.search);
 
-  window.setLang = function (lang) {
+  window.setLang = function (lang, persist) {
     if (lang !== "zh") lang = "en";
     document.documentElement.setAttribute("lang", lang);
+    // The tab title follows the page language too; it used to stay English in Chinese mode.
+    var t = document.documentElement.getAttribute(lang === "zh" ? "data-title-zh" : "data-title-en");
+    if (t) document.title = t;
+    // The description and the image alts follow the page language too.
+    var d = document.querySelector('meta[name="description"]');
+    if (d) { var dv = d.getAttribute(lang === "zh" ? "data-desc-zh" : "data-desc-en"); if (dv) d.setAttribute("content", dv); }
+    document.querySelectorAll("img[data-alt-zh]").forEach(function (img) {
+      var av = img.getAttribute(lang === "zh" ? "data-alt-zh" : "data-alt-en"); if (av) img.setAttribute("alt", av);
+    });
     var enBtn = document.getElementById("lang-en");
     var zhBtn = document.getElementById("lang-zh");
     if (enBtn) enBtn.classList.toggle("active", lang === "en");
     if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    if (enBtn) enBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+    if (zhBtn) zhBtn.setAttribute("aria-pressed", lang === "zh" ? "true" : "false");
     setAria(lang);
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    if (persist) { try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {} }
+    try { var u = new URL(location.href); if (u.searchParams.get("lang") !== lang) { u.searchParams.set("lang", lang); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
   };
 
   window.toggleMenu = function () {
@@ -552,6 +699,10 @@
   var navMenuEl = document.getElementById("navMenu");
   if (navMenuEl) navMenuEl.addEventListener("click", function (e) {
     if (e.target && e.target.closest && e.target.closest("a")) window.toggleMenu();
+  });
+  document.addEventListener("click", function (e) {
+    var mm = document.getElementById("navMenu");
+    if (mm && mm.classList.contains("open") && e.target && e.target.closest && !e.target.closest("#navMenu, #navBurger")) window.toggleMenu();
   });
 
   // lang: URL param > saved > browser
@@ -567,6 +718,8 @@
   // mode: ?ver= matching a release entry -> "update" form; anything else -> plain changelog
   var ver = (params.get("ver") || "").replace(/[^0-9.]/g, "");
   var entry = ver && document.querySelector('.entry[data-ver="' + ver + '"]');
+  var newest = document.querySelector('.entry');
+  if (!entry && newest) newest.classList.add("current");   // no ?ver=: the newest entry is the current one, quietly
   if (entry) {
     document.body.className = "mode-update";
     entry.classList.add("current");
@@ -599,6 +752,10 @@
     if (!drop.contains(e.target)) window.toggleHelp();
   });
   document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      var mm = document.getElementById("navMenu");
+      if (mm && mm.classList.contains("open")) { window.toggleMenu(); var bb = document.getElementById("navBurger"); if (bb) bb.focus(); return; }
+    }
     if (e.key === "Escape" && drop && drop.classList.contains("open")) {
       window.toggleHelp();
       var b = document.getElementById("helpBtn");

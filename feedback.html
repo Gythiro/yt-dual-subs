@@ -1,11 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-title-en="Feedback &amp; Support — Dual Subtitles for YouTube™" data-title-zh="反馈与支持 — Dual Subtitles for YouTube™">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <title>Feedback &amp; Support — Dual Subtitles for YouTube™</title>
-<meta name="description" content="The easiest ways to get help or send feedback for Dual Subtitles for YouTube™ — email, GitHub, or a store review.">
+<link rel="canonical" href="https://gythiro.github.io/yt-dual-subs/feedback.html">
+<link rel="alternate" hreflang="en" href="https://gythiro.github.io/yt-dual-subs/feedback.html?lang=en">
+<link rel="alternate" hreflang="zh" href="https://gythiro.github.io/yt-dual-subs/feedback.html?lang=zh">
+<link rel="alternate" hreflang="x-default" href="https://gythiro.github.io/yt-dual-subs/feedback.html">
+<meta name="description" content="The easiest ways to get help or send feedback for Dual Subtitles for YouTube™ — email, GitHub, or a store review." data-desc-en="The easiest ways to get help or send feedback for Dual Subtitles for YouTube™ — email, GitHub, or a store review." data-desc-zh="获得帮助或反馈 Dual Subtitles for YouTube™ 问题最简单的几种方式——邮件、GitHub，或商店评价。">
+<!-- Link preview. Title and description are this page's own, so there is one
+     place to change them. Card image is script-generated (site-shot.js og). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dual Subtitles for YouTube">
+<meta property="og:title" content="Feedback &amp; Support — Dual Subtitles for YouTube™">
+<meta property="og:description" content="The easiest ways to get help or send feedback for Dual Subtitles for YouTube™ — email, GitHub, or a store review.">
+<meta property="og:url" content="https://gythiro.github.io/yt-dual-subs/feedback.html">
+<meta property="og:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A YouTube player showing one subtitle box with an English line above its Chinese translation.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Feedback &amp; Support — Dual Subtitles for YouTube™">
+<meta name="twitter:description" content="The easiest ways to get help or send feedback for Dual Subtitles for YouTube™ — email, GitHub, or a store review.">
+<meta name="twitter:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
 <style>
   :root{
     --bg:#0A0A0F;
@@ -13,14 +32,15 @@
     --card:#15151F;
     --ink:#FFFFFF;
     --muted:#A6A6B8;
-    --muted-2:#7C7C90;
+    --muted-2:#7F7F93;
     --line:rgba(255,255,255,0.10);
     --line-2:rgba(255,255,255,0.16);
-    --accent:#7B61FF;
+    --accent:#8571FF;
     --accent-2:#FF4D8D;
     --translation:#FFC24B;
     --ok:#4ade80;
     --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --grad-on:linear-gradient(105deg,#755CF2 0%,#8F53E7 45%,#CE3E72 100%);
     --radius:10px;
     --radius-lg:16px;
     --maxw:860px;
@@ -28,7 +48,7 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;overflow-y:scroll} /* scrollbar always on: no nav shift between pages */
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
   img{max-width:100%;height:auto;display:block}
   a{color:inherit;text-decoration:none}
   h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.12}
@@ -47,6 +67,16 @@
   html[lang="zh"] div[data-zh],
   html[lang="zh"] li[data-zh]{display:block}
 
+  /* The nav is sticky, so an anchor jump lands underneath it. Nothing
+
+     was hiding today only because every section carries its own 78–103px
+
+     of padding — which is luck, not a decision, and stops being true the
+
+     moment a section is laid out more tightly. */
+
+  html{scroll-padding-top:76px}
+
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
   /* nav + footer span the same width as the homepage (1160px); only the
      reading column stays at --maxw so cards keep a comfortable measure */
@@ -60,13 +90,13 @@
      stretched anchor puts its text at the top of the box while the inline-flex
      button centres its own — 3px apart, which is visible in the bar. */
   .nav-links>a,.nav-links>.nav-drop{display:flex;align-items:center}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap;padding:5px 0}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
   .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
   .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
   .lang-toggle button:hover{color:var(--ink)}
-  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+  .lang-toggle button.active{color:#fff;background:var(--grad-on);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
 
   .hero{position:relative;text-align:center;padding:60px 0 36px;overflow:hidden}
   .bloom{position:absolute;inset:0;pointer-events:none;z-index:0}
@@ -80,13 +110,15 @@
   .card{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--card);padding:24px 26px;margin-bottom:18px}
   .card.primary{border-color:transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box;border:1.5px solid transparent;box-shadow:0 10px 44px rgba(123,97,255,0.14)}
   .card .head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .card .emoji{font-size:22px}
+  /* The icons are inline SVG now, so font-size does nothing; they take the
+     brand accent and centre against the heading. */
+  .card .emoji{display:flex;align-items:center;color:var(--accent);flex:none}
   .card h2{font-size:19px;letter-spacing:-0.02em}
-  .badge{font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad);padding:4px 10px;border-radius:999px}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad-on);padding:4px 10px;border-radius:999px}
   .card p{color:var(--muted);font-size:15.5px;margin-top:10px}
   .card p b{color:var(--ink)}
   .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad-on);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease}
   .btn:hover{transform:translateY(-1px)}
   .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:42px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;background:transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
@@ -144,7 +176,7 @@
   /* help dropdown — holds every standalone page so the row stops growing */
   .nav-drop{position:relative}
   .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;line-height:inherit;
-    padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
+    padding:5px 0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
     cursor:pointer;white-space:nowrap;transition:color .15s}
   .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}
   .nav-drop-btn svg{transition:transform .18s}
@@ -157,6 +189,9 @@
   .nav-drop-menu a{display:block;padding:9px 12px;border-radius:8px;color:var(--muted);
     font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-drop-menu a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent, #8571FF); outline-offset: 3px; border-radius: 6px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+  .lang-toggle button:focus-visible { outline-offset: -2px; }
 </style>
 </head>
 <body>
@@ -171,22 +206,22 @@
       <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" id="helpBtn" aria-expanded="false"
-                aria-haspopup="true" aria-controls="helpMenu" onclick="toggleHelp()">
+                aria-controls="helpMenu" onclick="toggleHelp()">
           <span data-en>Help</span><span data-zh>帮助</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
-          <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
-          <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
-          <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+        <div class="nav-drop-menu" id="helpMenu">
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
+          <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+          <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+          <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
       </div>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
-        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
-        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+        <button type="button" id="lang-en" onclick="setLang('en', true)">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh', true)">中文</button>
       </div>
       <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
         <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -229,15 +264,15 @@
 
     <section class="card primary">
       <div class="head">
-        <span class="emoji">📧</span>
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
         <h2 data-en>Email — the easiest</h2>
         <h2 data-zh>邮箱——最简单</h2>
         <span class="badge" data-en>Recommended</span><span class="badge" data-zh>推荐</span>
       </div>
-      <p data-en>No account, no forms, no GitHub skills needed. Describe the problem in your own words (Chinese or English both fine), attach a screenshot and the video link if you can.</p>
-      <p data-zh>不用注册任何账号、不用懂 GitHub。用自己的话描述问题就行（中英文都可以），能附上截图和出问题的视频链接更好。</p>
+      <p data-en>No account, no forms, no GitHub skills needed. Describe the problem in your own words (Chinese or English both fine), attach a screenshot and the video link if you can. Best of all, paste the diagnostic info: Settings → About → <b>Copy diagnostic info</b> — it carries the version, the engine in use and what the current tab is doing.</p>
+      <p data-zh>不用注册任何账号、不用懂 GitHub。用自己的话描述问题就行（中英文都可以），能附上截图和出问题的视频链接更好。最有用的是诊断信息：设置 →「关于」→「<b>复制诊断信息</b>」，粘进来就行——里面有版本、引擎状态和当前标签页的运行状态。</p>
       <div>
-        <span class="mail" id="mail">gythiro.dev@gmail.com</span><span class="copied" id="copied" data-en>Copied!</span><span class="copied" id="copied-zh" data-zh>已复制!</span>
+        <span class="mail" id="mail">gythiro.dev@gmail.com</span><span class="copied" id="copied" data-en role="status">Copied!</span><span class="copied" id="copied-zh" data-zh role="status">已复制！</span>
       </div>
       <div class="actions">
         <a class="btn" href="mailto:gythiro.dev@gmail.com?subject=Dual%20Subtitles%20feedback"><span data-en>Write an email</span><span data-zh>写邮件</span></a>
@@ -247,7 +282,7 @@
 
     <section class="card">
       <div class="head">
-        <span class="emoji">🐛</span>
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6 6 4M16 6l2-2M8 12H3M21 12h-5M8 18l-2 2M16 18l2 2"/><circle cx="12" cy="12" r="5"/><path d="M12 7v10"/></svg></span>
         <h2 data-en>GitHub Issues — trackable</h2>
         <h2 data-zh>GitHub Issues——可追踪进度</h2>
       </div>
@@ -260,7 +295,7 @@
 
     <section class="card">
       <div class="head">
-        <span class="emoji">⭐</span>
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         <h2 data-en>Store reviews — for the love</h2>
         <h2 data-zh>商店评论——留个好评</h2>
       </div>
@@ -281,7 +316,7 @@
       <div class="foot-brand">
         <a href="./" class="brand"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
         <p data-en>Bilingual subtitles for YouTube — the original language and your translation together in one clean, non-overlapping layer.</p>
-        <p data-zh>为 YouTube 打造的双语字幕——原文与你的译文同处一层，干净整洁、互不重叠。</p>
+        <p data-zh>YouTube 的双语字幕——原文和你的译文同处一层，不会叠在一起糊成一团。</p>
       </div>
       <div class="foot-links">
         <div class="foot-col">
@@ -298,13 +333,13 @@
         <div class="foot-col">
           <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
+          <a href="https://github.com/Gythiro/yt-dual-subs/blob/main/LICENSE" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.6.0 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.7.0 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
@@ -329,15 +364,27 @@
   var STORAGE_KEY = "dsfy-lang";
   var params = new URLSearchParams(location.search);
 
-  window.setLang = function (lang) {
+  window.setLang = function (lang, persist) {
     if (lang !== "zh") lang = "en";
     document.documentElement.setAttribute("lang", lang);
+    // The tab title follows the page language too; it used to stay English in Chinese mode.
+    var t = document.documentElement.getAttribute(lang === "zh" ? "data-title-zh" : "data-title-en");
+    if (t) document.title = t;
+    // The description and the image alts follow the page language too.
+    var d = document.querySelector('meta[name="description"]');
+    if (d) { var dv = d.getAttribute(lang === "zh" ? "data-desc-zh" : "data-desc-en"); if (dv) d.setAttribute("content", dv); }
+    document.querySelectorAll("img[data-alt-zh]").forEach(function (img) {
+      var av = img.getAttribute(lang === "zh" ? "data-alt-zh" : "data-alt-en"); if (av) img.setAttribute("alt", av);
+    });
     var enBtn = document.getElementById("lang-en");
     var zhBtn = document.getElementById("lang-zh");
     if (enBtn) enBtn.classList.toggle("active", lang === "en");
     if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    if (enBtn) enBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+    if (zhBtn) zhBtn.setAttribute("aria-pressed", lang === "zh" ? "true" : "false");
     setAria(lang);
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    if (persist) { try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {} }
+    try { var u = new URL(location.href); if (u.searchParams.get("lang") !== lang) { u.searchParams.set("lang", lang); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
   };
 
   window.toggleMenu = function () {
@@ -351,6 +398,10 @@
   var navMenuEl = document.getElementById("navMenu");
   if (navMenuEl) navMenuEl.addEventListener("click", function (e) {
     if (e.target && e.target.closest && e.target.closest("a")) window.toggleMenu();
+  });
+  document.addEventListener("click", function (e) {
+    var mm = document.getElementById("navMenu");
+    if (mm && mm.classList.contains("open") && e.target && e.target.closest && !e.target.closest("#navMenu, #navBurger")) window.toggleMenu();
   });
 
   var lang = params.get("lang");
@@ -394,6 +445,10 @@
     if (!drop.contains(e.target)) window.toggleHelp();
   });
   document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      var mm = document.getElementById("navMenu");
+      if (mm && mm.classList.contains("open")) { window.toggleMenu(); var bb = document.getElementById("navBurger"); if (bb) bb.focus(); return; }
+    }
     if (e.key === "Escape" && drop && drop.classList.contains("open")) {
       window.toggleHelp();
       var b = document.getElementById("helpBtn");

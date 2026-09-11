@@ -1,11 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-title-en="Roadmap — Dual Subtitles for YouTube™" data-title-zh="开发计划 — Dual Subtitles for YouTube™">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <title>Roadmap — Dual Subtitles for YouTube™</title>
-<meta name="description" content="What is being built next for Dual Subtitles for YouTube™, what is planned, and what is deliberately not planned — with the reason for each.">
+<link rel="canonical" href="https://gythiro.github.io/yt-dual-subs/roadmap.html">
+<link rel="alternate" hreflang="en" href="https://gythiro.github.io/yt-dual-subs/roadmap.html?lang=en">
+<link rel="alternate" hreflang="zh" href="https://gythiro.github.io/yt-dual-subs/roadmap.html?lang=zh">
+<link rel="alternate" hreflang="x-default" href="https://gythiro.github.io/yt-dual-subs/roadmap.html">
+<meta name="description" content="What is being built next for Dual Subtitles for YouTube™, what is planned, and what is deliberately not planned — with the reason for each." data-desc-en="What is being built next for Dual Subtitles for YouTube™, what is planned, and what is deliberately not planned — with the reason for each." data-desc-zh="Dual Subtitles for YouTube™ 接下来做什么、计划做什么、明确不做什么——每一条都写了理由。">
+<!-- Link preview. Title and description are this page's own, so there is one
+     place to change them. Card image is script-generated (site-shot.js og). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dual Subtitles for YouTube">
+<meta property="og:title" content="Roadmap — Dual Subtitles for YouTube™">
+<meta property="og:description" content="What is being built next for Dual Subtitles for YouTube™, what is planned, and what is deliberately not planned — with the reason for each.">
+<meta property="og:url" content="https://gythiro.github.io/yt-dual-subs/roadmap.html">
+<meta property="og:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A YouTube player showing one subtitle box with an English line above its Chinese translation.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Roadmap — Dual Subtitles for YouTube™">
+<meta name="twitter:description" content="What is being built next for Dual Subtitles for YouTube™, what is planned, and what is deliberately not planned — with the reason for each.">
+<meta name="twitter:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
 <style>
   :root{
     --bg:#0A0A0F;
@@ -13,14 +32,15 @@
     --card:#15151F;
     --ink:#FFFFFF;
     --muted:#A6A6B8;
-    --muted-2:#7C7C90;
+    --muted-2:#7F7F93;
     --line:rgba(255,255,255,0.10);
     --line-2:rgba(255,255,255,0.16);
-    --accent:#7B61FF;
+    --accent:#8571FF;
     --accent-2:#FF4D8D;
     --translation:#FFC24B;
     --ok:#4ade80;
     --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --grad-on:linear-gradient(105deg,#755CF2 0%,#8F53E7 45%,#CE3E72 100%);
     --radius:10px;
     --radius-lg:16px;
     --maxw:860px;
@@ -28,7 +48,7 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;overflow-y:scroll} /* scrollbar always on: no nav shift between pages */
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
   img{max-width:100%;height:auto;display:block}
   a{color:inherit;text-decoration:none}
   h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.12}
@@ -52,6 +72,16 @@
   html[lang="zh"] li[data-zh]{display:block}
   html[lang="zh"] .src[data-zh]{display:inline-block}
 
+  /* The nav is sticky, so an anchor jump lands underneath it. Nothing
+
+     was hiding today only because every section carries its own 78–103px
+
+     of padding — which is luck, not a decision, and stops being true the
+
+     moment a section is laid out more tightly. */
+
+  html{scroll-padding-top:76px}
+
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
   /* nav + footer span the same width as the homepage (1160px); only the
      reading column stays at --maxw so cards keep a comfortable measure */
@@ -65,13 +95,13 @@
      stretched anchor puts its text at the top of the box while the inline-flex
      button centres its own — 3px apart, which is visible in the bar. */
   .nav-links>a,.nav-links>.nav-drop{display:flex;align-items:center}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap;padding:5px 0}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
   .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
   .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
   .lang-toggle button:hover{color:var(--ink)}
-  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+  .lang-toggle button.active{color:#fff;background:var(--grad-on);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
 
   .hero{position:relative;text-align:center;padding:60px 0 30px;overflow:hidden}
   .bloom{position:absolute;inset:0;pointer-events:none;z-index:0}
@@ -89,6 +119,10 @@
   .board .wrap{max-width:1160px}
   .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
   .col h2{font-size:15px;letter-spacing:-0.01em;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  /* One stroke weight across all four column heads. The tick these replace was
+     a full-colour emoji badge sitting next to monochrome glyphs. */
+  .col h2 .colico{display:flex;align-items:center;color:var(--muted-2);flex:none}
+  .col h2 .colico.done{color:var(--ok)}
   .col .count{font-size:12px;font-weight:600;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
   .col-note{color:var(--muted-2);font-size:13px;margin:0 0 14px}
   .item{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--card);padding:16px 17px;margin-bottom:12px}
@@ -107,7 +141,7 @@
   .askbar p{color:var(--muted);font-size:15px;max-width:62ch}
   .askbar b{color:var(--ink)}
 
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease;white-space:nowrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad-on);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease;white-space:nowrap}
   .btn:hover{transform:translateY(-1px)}
   .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:42px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;background:transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
@@ -167,7 +201,7 @@
   /* help dropdown — holds every standalone page so the row stops growing */
   .nav-drop{position:relative}
   .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;line-height:inherit;
-    padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
+    padding:5px 0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
     cursor:pointer;white-space:nowrap;transition:color .15s}
   .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}
   .nav-drop-btn svg{transition:transform .18s}
@@ -181,6 +215,35 @@
     font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-drop-menu a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
 
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent, #8571FF); outline-offset: 3px; border-radius: 6px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+  .lang-toggle button:focus-visible { outline-offset: -2px; }
+
+  /* ---- Done column: this release as cards, earlier releases folded by
+     version (one line each: title + source). The descriptions live in the
+     changelog only, so the two never drift apart. ---- */
+  .ver{border:1px solid var(--line);border-radius:var(--radius-lg);background:rgba(255,255,255,0.02);margin-bottom:10px}
+  .ver>summary{list-style:none;cursor:pointer;padding:12px 15px;display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--muted);flex-wrap:wrap}
+  .ver>summary::-webkit-details-marker{display:none}
+  .ver>summary:hover{color:var(--ink)}
+  .ver .vn{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--ok);font-size:13px}
+  .ver .vc{color:var(--muted-2);font-weight:500;font-size:13px}
+  .ver>summary .chev{margin-left:auto;color:var(--muted-2);transition:transform .18s;flex:none}
+  .ver[open]>summary .chev{transform:rotate(180deg)}
+  .ver .vbody{padding:0 8px 8px}
+  .row{display:flex;align-items:flex-start;gap:6px 10px;padding:9px 8px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .vbody .row:first-child{border-top:0}
+  .row .t{font-size:14px;font-weight:600;flex:1 1 150px;line-height:1.35}
+  .row .src{margin-top:1px;flex:none;font-size:10.5px;padding:2px 8px}
+  .more{display:block;margin-top:4px;font-size:13.5px;color:var(--muted-2)}
+  .more a{color:var(--accent);font-weight:600}
+  .more a:hover{text-decoration:underline}
+  /* One column on a phone: what is being built and planned first, the finished
+     evidence third, the reasons-not-to last. The desktop order is unchanged. */
+  @media (max-width:760px){
+    .cols .col:first-child{order:3}
+    .cols .col:last-child{order:4}
+  }
 </style>
 </head>
 <body>
@@ -195,22 +258,22 @@
       <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" id="helpBtn" aria-expanded="false"
-                aria-haspopup="true" aria-controls="helpMenu" onclick="toggleHelp()">
+                aria-controls="helpMenu" onclick="toggleHelp()">
           <span data-en>Help</span><span data-zh>帮助</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
-          <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
-          <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
-          <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+        <div class="nav-drop-menu" id="helpMenu">
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
+          <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+          <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+          <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
       </div>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
-        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
-        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+        <button type="button" id="lang-en" onclick="setLang('en', true)">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh', true)">中文</button>
       </div>
       <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
         <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -243,8 +306,8 @@
   <div class="wrap hero-in">
     <h1 data-en>What's <span class="g">next</span></h1>
     <h1 data-zh>接下来<span class="g">做什么</span></h1>
-    <p class="sub" data-en>An honest order of work, not a schedule. There are no dates here and no progress bars — both would be made up. Things move left to right, and finished ones stay in the first column.</p>
-    <p class="sub" data-zh>这是一个诚实的先后顺序，不是时间表。这里没有日期、也没有进度百分比——那两样都只能是编的。做完的会留在最左边那一栏。</p>
+    <p class="sub" data-en>An honest order of work, not a schedule. There are no dates here and no progress bars — both would be made up. Things move right to left, and finished ones stay in the Done column.</p>
+    <p class="sub" data-zh>这是一个诚实的先后顺序，不是时间表。这里没有日期、也没有进度百分比——那两样都只能是编的。事情从右往左推进，做完的留在「已经做完」那一栏。</p>
   </div>
 </header>
 
@@ -254,87 +317,101 @@
 
       <!-- ------------------------------- shipped ------------------------- -->
       <div class="col">
-        <h2><span>✅</span><span data-en>Done</span><span data-zh>已经做完</span></h2>
-        <p class="col-note" data-en>Asked for here, then built. Newest first.</p>
-        <p class="col-note" data-zh>在这块板子上被提出、然后做掉的。新的在上面。</p>
+        <h2><span class="colico done"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span data-en>Done</span><span data-zh>已经做完</span></h2>
+        <p class="col-note" data-en>Asked for here, then built. This release open; earlier ones folded by version, one line each.</p>
+        <p class="col-note" data-zh>在这块板子上被提出、然后做掉的。这一版展开，更早的按版本收着、一行一条。</p>
+
+        <div class="item done">
+          <h3 data-en>Spoken lines fit the picture</h3>
+          <h3 data-zh>念出来的话跟画面贴得更准</h3>
+          <p data-en>A line that runs long slows the picture a little and borrows the gap after it instead of losing its last words, and a switch keeps slowing until every line finishes. Listened to on real videos at 1× and 2× before it shipped.</p>
+          <p data-zh>句子长了会稍微放慢画面、借用后面的空隙，而不是丢掉最后几个字；还有一个开关能一直放慢到句句读完。发出之前在真视频上以 1 倍和 2 倍速听过。</p>
+          <span class="src" data-en>Our own plan · v3.7.0</span>
+          <span class="src" data-zh>开发者计划 · v3.7.0</span>
+        </div>
+        <div class="item done">
+          <h3 data-en>More interface languages</h3>
+          <h3 data-zh>更多界面语言</h3>
+          <p data-en>The extension's own menus in forty-four languages, following the browser or set by hand. The translation languages asked for alongside shipped in 3.6; the fonts were redone in 3.7 (below).</p>
+          <p data-zh>扩展自己的界面有了四十四种语言，跟随浏览器，也可以手动指定。同一条评论里提到的译文语言在 3.6 就做了；字体在 3.7 重做了一遍（见下一条）。</p>
+          <span class="src user" data-en>From a store review, July 2026 · v3.7.0</span>
+          <span class="src user" data-zh>来自商店评论，2026 年 7 月 · v3.7.0</span>
+        </div>
+        <div class="item done">
+          <h3 data-en>Fonts from your own computer</h3>
+          <h3 data-zh>用你自己电脑上的字体</h3>
+          <p data-en>The popup offers the fonts really installed on this computer, judged per subtitle line; a settings page previews any of them at subtitle size and imports a font file of your own. The fixed list of fifteen names is gone.</p>
+          <p data-zh>弹窗里列的是这台电脑上真装了的字体，按字幕行判断能不能显示；设置页可以按字幕大小预览任何一个，还能导入你自己的字体文件。写死的十五个名字没有了。</p>
+          <span class="src" data-en>Our own plan · v3.7.0</span>
+          <span class="src" data-zh>开发者计划 · v3.7.0</span>
+        </div>
 
 <div class="item done">
-          <h3 data-en>Use your own API key</h3>
-          <h3 data-zh>自带 Key 翻译</h3>
-          <p data-en>Bring a key from DeepSeek, Gemini, DeepL and a dozen others. Each sentence is understood as a whole and then split back across the subtitles, so the translation line stops standing still for a whole sentence — and a whole video can be exported as SRT through your own engine.</p>
-          <p data-zh>用你自己的 Key（DeepSeek、Gemini、DeepL 等十余家）。译文会整句理解之后再按字幕切回来，不再一整句杵在那儿不动；导出整片 SRT 也能走你自己的引擎。</p>
-          <span class="src user" data-en>Promised in a store review · v3.6.0</span>
-          <span class="src user" data-zh>商店评论里承诺过 · v3.6.0</span>
+          <h3 data-en>Read the translation out loud</h3>
+          <h3 data-zh>把译文念出来</h3>
+          <p data-en>Each line is spoken as it appears, in your translation language, with the video's own audio ducking underneath rather than being replaced. It starts on your browser's own voices — no key, nothing leaving the machine with the voices installed on it — and five services can be plugged in for better ones.</p>
+          <p data-zh>每句字幕出现时就用你的译文语言念出来，视频原声只是压低，不会被替换。默认用浏览器自带的音色——不用 Key，用本机装好的音色时什么都不离开这台机器；想要更好的声音，可以接五家服务。</p>
+          <span class="src user" data-en>Asked for by email · v3.7.0</span>
+          <span class="src user" data-zh>有人来信问过 · v3.7.0</span>
         </div>
-<div class="item done">
-          <h3 data-en>Setup guide &amp; first-run page</h3>
-          <h3 data-zh>教程页与新手入门</h3>
-          <p data-en>A per-provider walkthrough for getting a key, and a short first-run page inside the extension for everything you can do without one.</p>
-          <p data-zh>每家服务商怎么申请 Key 的分步说明，加上扩展内一页很短的入门——讲不配置也能用的那部分。</p>
-          <span class="src" data-en>Our own plan · v3.6.0</span>
-          <span class="src" data-zh>开发者计划 · v3.6.0</span>
-        </div>
-
         <div class="item done">
-          <h3 data-en>Fifty target languages, and a menu you choose</h3>
-          <h3 data-zh>50 种目标语言，显示哪些由你决定</h3>
-          <p data-en>The popup lists the languages you keep; the rest are one click away in the settings page. Seven more fonts too, including a Chinese serif.</p>
-          <p data-zh>弹窗只列你留下的，其余的在设置页里随时加回来。字体也多了 7 种，含中文宋体。</p>
-          <span class="src user" data-en>From a store review, July 2026 · v3.6.0</span>
-          <span class="src user" data-zh>来自商店评论，2026 年 7 月 · v3.6.0</span>
+          <h3 data-en>Summarize a video into chapters</h3>
+          <h3 data-zh>把视频总结成章节</h3>
+          <p data-en>One line of TL;DR plus timestamped chapters you can click to jump, written in your translation language. It runs on a service of yours, and nothing is sent until you press the button that says how much it will send and where.</p>
+          <p data-zh>一句摘要加上带时间戳的章节，点一下就跳过去，用你的译文语言写。它走你自己的服务；在你按下那颗写明「发多少、发给谁」的按钮之前，什么都不会发出去。</p>
+          <span class="src" data-en>v3.7.0</span>
+          <span class="src" data-zh>v3.7.0</span>
         </div>
-
         <div class="item done">
-          <h3 data-en>Subtitles stop repeating themselves</h3>
-          <h3 data-zh>同语言字幕不再重复翻译</h3>
-          <p data-en>On a video whose subtitles are already in your target language, the second line used to repeat the first. It now shows a single line instead.</p>
-          <p data-zh>字幕本来就是目标语言的视频，第二行会把第一行原样重复一遍。现在直接只显示一行。</p>
-          <span class="src user" data-en>Reported in use · v3.5.1</span>
-          <span class="src user" data-zh>使用中反馈 · v3.5.1</span>
+          <h3 data-en>Local models (Ollama, LM Studio)</h3>
+          <h3 data-zh>本地模型（Ollama / LM Studio）</h3>
+          <p data-en>This sat under "not doing" on the strength of a guess: that reaching localhost needed a permission the stores treat as high risk, asked of everyone to serve a few. It does not. Pick Ollama (local) from the list, or type an address into the custom endpoint; Chrome asks for that one host when you press Save and test, so anyone who never goes there is never asked for anything. Translation and summaries both run on it, and the guide walks through the one setting everybody misses.</p>
+          <p data-zh>这条原本挂在「暂时不做」，理由是个猜测：以为访问 localhost 要一项被商店视为高风险的权限，而且要向所有人申请。其实不用——在清单里选「Ollama（本机）」，或在自定义接口填一个地址；按「保存并测通」时 Chrome 才为那一个域名申请；没去过那里的人，不会被问任何事。翻译和总结都能走它，教程里一步步写了，包括所有人都会漏掉的那个设置。</p>
+          <span class="src user" data-en>Opened as issue #4 · v3.7.0</span>
+          <span class="src user" data-zh>issue #4 提的 · v3.7.0</span>
         </div>
-
-        <div class="item done">
-          <h3 data-en>Subtitles step over the progress bar</h3>
-          <h3 data-zh>字幕自动避开进度条</h3>
-          <p data-en>When the player controls appear, the subtitle box lifts above them instead of being cut in half.</p>
-          <p data-zh>播放控件一出现，字幕框会自动上移，不再被进度条切掉半行。</p>
-          <span class="src user" data-en>Reported in use · v3.5.0</span>
-          <span class="src user" data-zh>使用中反馈 · v3.5.0</span>
-        </div>
+        <details class="ver">
+          <summary><span class="vn">v3.6.0</span><span class="vc"><span data-en>· 3 items · 2 from users</span><span data-zh>· 3 项 · 2 条来自用户</span></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="vbody">
+          <div class="row"><span class="t"><span data-en>Use your own API key</span><span data-zh>自带 Key 翻译</span></span><span class="src user"><span data-en>Promised in a store review</span><span data-zh>商店评论里承诺过</span></span></div>
+          <div class="row"><span class="t"><span data-en>Setup guide &amp; first-run page</span><span data-zh>教程页与新手入门</span></span><span class="src"><span data-en>Our own plan</span><span data-zh>开发者计划</span></span></div>
+          <div class="row"><span class="t"><span data-en>Fifty translation languages, and a menu you choose</span><span data-zh>50 种译文语言，显示哪些由你决定</span></span><span class="src user"><span data-en>From a store review, July 2026</span><span data-zh>来自商店评论，2026 年 7 月</span></span></div>
+          </div>
+        </details>
+        <details class="ver">
+          <summary><span class="vn">v3.5.1</span><span class="vc"><span data-en>· 1 item · 1 from users</span><span data-zh>· 1 项 · 1 条来自用户</span></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="vbody">
+          <div class="row"><span class="t"><span data-en>Subtitles stop repeating themselves</span><span data-zh>同语言字幕不再重复翻译</span></span><span class="src user"><span data-en>Reported in use</span><span data-zh>使用中反馈</span></span></div>
+          </div>
+        </details>
+        <details class="ver">
+          <summary><span class="vn">v3.5.0</span><span class="vc"><span data-en>· 1 item · 1 from users</span><span data-zh>· 1 项 · 1 条来自用户</span></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="vbody">
+          <div class="row"><span class="t"><span data-en>Subtitles step over the progress bar</span><span data-zh>字幕自动避开进度条</span></span><span class="src user"><span data-en>Reported in use</span><span data-zh>使用中反馈</span></span></div>
+          </div>
+        </details>
+        <span class="more"><a href="updated.html"><span data-en>Every change, with the details, in the changelog →</span><span data-zh>每一条改动和细节，都在更新日志 →</span></a></span>
       </div>
 
-
-      <!-- ------------------------------ in progress ---------------------- -->
       <div class="col">
-        <h2><span>🔨</span><span data-en>Being built</span><span data-zh>正在做</span></h2>
-        <p class="col-note" data-en>Nothing right now — 3.6 just shipped. Next up is whatever is at the top of the middle column.</p>
-        <p class="col-note" data-zh>暂时没有——3.6 刚发布。接下来做的就是中间那栏最上面那条。</p>
+        <h2><span class="colico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 12-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M18 15l4-4"/><path d="M14 4h6v6"/></svg></span><span data-en>Being built</span><span data-zh>正在做</span></h2>
+        <p class="col-note" data-en>Read-aloud's default. A long line already slows the picture a little, but not as far as it takes, so a line is still cut now and then; the switch that keeps slowing until every line finishes is off by default. Whether that trade is right — or the switch should be the default — is being decided by ear on real videos.</p>
+        <p class="col-note" data-zh>朗读的默认值。句子长了现在已经会稍微放慢画面，但不放慢到读完为止，所以偶尔仍会切掉一句；「尽量每句读完」那个开关默认是关的。这个取舍对不对——还是该把开关设成默认——靠在真视频上用耳朵定。</p>
 
-        
-
-        
       </div>
 
       <!-- -------------------------------- planned ------------------------ -->
       <div class="col">
-        <h2><span>📋</span><span data-en>Planned</span><span data-zh>计划做</span></h2>
+        <h2><span class="colico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 10h8M8 14h8M8 18h5"/></svg></span><span data-en>Planned</span><span data-zh>计划做</span></h2>
         <p class="col-note" data-en>Roughly in this order. No dates.</p>
         <p class="col-note" data-zh>大致按这个顺序。不给日期。</p>
 
-        <div class="item">
-          <h3 data-en>More interface languages</h3>
-          <h3 data-zh>更多界面语言</h3>
-          <p data-en>The extension's own menus, in more than English and Chinese. The target languages and the fonts this was asked alongside shipped in 3.6; this part is waiting for a second person to ask, because every added language is a permanent commitment to keep translated.</p>
-          <p data-zh>扩展自己的界面，目前只有英文和中文。同一条评论里提到的目标语言和字体已经在 3.6 做了；界面语言这部分在等第二个人开口——每加一种语言都是一份要一直维护下去的承诺。</p>
-          <span class="src user" data-en>From a store review, July 2026</span>
-          <span class="src user" data-zh>来自商店评论，2026 年 7 月</span>
-        </div>
 
         <div class="item">
           <h3 data-en>Study mode</h3>
           <h3 data-zh>学习模式</h3>
           <p data-en>Blur the translation until you hover it, and pause the video while you read — so you get a chance to guess first. It will be a switch you can turn off: letting the mouse rest on the subtitles takes that small area away from the player's own clicks.</p>
-          <p data-zh>译文先模糊，鼠标悬上去才显示，同时自动暂停视频让你读完——这样才有"先自己猜一下"的机会。它会做成一个可以关掉的开关：让鼠标能停在字幕上，就会占掉那一小块区域的播放器点击。</p>
+          <p data-zh>译文先模糊，鼠标悬上去才显示，同时自动暂停视频让你读完——这样才有「先自己猜一下」的机会。它会做成一个可以关掉的开关：让鼠标能停在字幕上，就会占掉那一小块区域的播放器点击。</p>
           <span class="src user" data-en>From a store review, July 2026</span>
           <span class="src user" data-zh>来自商店评论，2026 年 7 月</span>
         </div>
@@ -342,8 +419,8 @@
         <div class="item">
           <h3 data-en>Usage panel</h3>
           <h3 data-zh>用量面板</h3>
-          <p data-en>For own-key users: how many tokens this video actually cost. Token counts come from the provider's own response, so they are exact. A money estimate is optional, off unless you enter a price, and always labelled an estimate — a wrong number is worse than no number.</p>
-          <p data-zh>给用自带 Key 的人：这个视频到底花了多少 token。token 数来自服务商自己的返回，是准的。花费估算是可选的，不填单价就只显示 token 数，而且一律标注"估算"——显示一个错的金额比不显示更糟。</p>
+          <p data-en>For own-key users: how many tokens this video actually cost. Token counts are the provider's own, not an estimate of ours. A money estimate is optional, off unless you enter a price, and always labelled an estimate — a wrong number is worse than no number.</p>
+          <p data-zh>给用自带 Key 的人：这个视频到底花了多少 token。token 数是服务商自己返回的，不是我们估的。花费估算是可选的，不填单价就只显示 token 数，而且一律标注「估算」——显示一个错的金额比不显示更糟。</p>
           <span class="src" data-en>Our own plan</span>
           <span class="src" data-zh>开发者计划</span>
         </div>
@@ -360,7 +437,7 @@
 
       <!-- ----------------------------- not planned ----------------------- -->
       <div class="col">
-        <h2><span>⏸</span><span data-en>Not planned</span><span data-zh>暂不计划</span></h2>
+        <h2><span class="colico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></span><span data-en>Not planned</span><span data-zh>暂不计划</span></h2>
         <p class="col-note" data-en>Asked for before, with the reason it is not happening yet.</p>
         <p class="col-note" data-zh>有人问过，这里写清楚为什么现在不做。</p>
 
@@ -369,13 +446,6 @@
           <h3 data-zh>Firefox，以及别的扩展商店</h3>
           <p class="why" data-en>A contributor showed Firefox needs almost no code changes, and the bring-your-own-key path works there. What is missing is not code: a Firefox add-on has to be signed through addons.mozilla.org before it will install at all, and none of the checks here run under Firefox. Edge and other Chromium browsers already work today — they install from the Chrome Web Store.</p>
           <p class="why" data-zh>有贡献者证明了 Firefox 几乎不用改代码就能支持，自带 Key 在那边也实测通过。缺的不是代码：Firefox 扩展必须经 addons.mozilla.org 签名才装得上，而这里的检查没有一道跑在 Firefox 上。Edge 和其他 Chromium 浏览器现在就能用——从 Chrome 应用商店安装。</p>
-        </div>
-
-        <div class="item off">
-          <h3 data-en>Local models (Ollama, localhost)</h3>
-          <h3 data-zh>本地模型（Ollama / localhost）</h3>
-          <p class="why" data-en>Reaching localhost needs a permission that browser stores treat as high risk, and it would apply to every user to serve a few. Any local server with an OpenAI-compatible HTTPS address already works through "custom endpoint".</p>
-          <p class="why" data-zh>访问 localhost 需要一项被应用商店视为高风险的权限，而且为了少数人要向所有人申请。本地服务只要能给出 OpenAI 兼容的 https 地址，走「自定义接口」就已经可以用。</p>
         </div>
 
         <div class="item off">
@@ -402,8 +472,6 @@
 
     </div>
 
-
-
     <div class="askbar">
       <p data-en>Missing something? <b>Just say so.</b> Every item above marked as coming from a user was somebody&#39;s message — that is genuinely how things get onto this list.</p>
       <p data-zh>有想要但没在上面的？<b>说一声就行。</b>上面标着来源的每一条，都是别人发过来的一句话——功能真的就是这么进这个列表的。</p>
@@ -418,7 +486,7 @@
       <div class="foot-brand">
         <a href="./" class="brand"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
         <p data-en>Bilingual subtitles for YouTube — the original language and your translation together in one clean, non-overlapping layer.</p>
-        <p data-zh>为 YouTube 打造的双语字幕——原文与你的译文同处一层，干净整洁、互不重叠。</p>
+        <p data-zh>YouTube 的双语字幕——原文和你的译文同处一层，不会叠在一起糊成一团。</p>
       </div>
       <div class="foot-links">
         <div class="foot-col">
@@ -435,13 +503,13 @@
         <div class="foot-col">
           <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
+          <a href="https://github.com/Gythiro/yt-dual-subs/blob/main/LICENSE" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.6.0 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.7.0 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
@@ -466,15 +534,27 @@
   var STORAGE_KEY = "dsfy-lang";
   var params = new URLSearchParams(location.search);
 
-  window.setLang = function (lang) {
+  window.setLang = function (lang, persist) {
     if (lang !== "zh") lang = "en";
     document.documentElement.setAttribute("lang", lang);
+    // The tab title follows the page language too; it used to stay English in Chinese mode.
+    var t = document.documentElement.getAttribute(lang === "zh" ? "data-title-zh" : "data-title-en");
+    if (t) document.title = t;
+    // The description and the image alts follow the page language too.
+    var d = document.querySelector('meta[name="description"]');
+    if (d) { var dv = d.getAttribute(lang === "zh" ? "data-desc-zh" : "data-desc-en"); if (dv) d.setAttribute("content", dv); }
+    document.querySelectorAll("img[data-alt-zh]").forEach(function (img) {
+      var av = img.getAttribute(lang === "zh" ? "data-alt-zh" : "data-alt-en"); if (av) img.setAttribute("alt", av);
+    });
     var enBtn = document.getElementById("lang-en");
     var zhBtn = document.getElementById("lang-zh");
     if (enBtn) enBtn.classList.toggle("active", lang === "en");
     if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    if (enBtn) enBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+    if (zhBtn) zhBtn.setAttribute("aria-pressed", lang === "zh" ? "true" : "false");
     setAria(lang);
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    if (persist) { try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {} }
+    try { var u = new URL(location.href); if (u.searchParams.get("lang") !== lang) { u.searchParams.set("lang", lang); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
   };
 
   window.toggleMenu = function () {
@@ -489,6 +569,10 @@
   if (navMenuEl) navMenuEl.addEventListener("click", function (e) {
     if (e.target && e.target.closest && e.target.closest("a")) window.toggleMenu();
   });
+  document.addEventListener("click", function (e) {
+    var mm = document.getElementById("navMenu");
+    if (mm && mm.classList.contains("open") && e.target && e.target.closest && !e.target.closest("#navMenu, #navBurger")) window.toggleMenu();
+  });
 
   var lang = params.get("lang");
   if (lang !== "zh" && lang !== "en") {
@@ -502,7 +586,6 @@
 </script>
 
 <!-- Cloudflare Web Analytics (cookieless, no personal data) --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9a291d0094db4643a7f4795a003e2419"}'></script><!-- End Cloudflare Web Analytics -->
-
 
 <script>
 // Dropdown kept out of the main IIFE on purpose: it is the only nav behaviour
@@ -521,6 +604,10 @@
     if (!drop.contains(e.target)) window.toggleHelp();
   });
   document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      var mm = document.getElementById("navMenu");
+      if (mm && mm.classList.contains("open")) { window.toggleMenu(); var bb = document.getElementById("navBurger"); if (bb) bb.focus(); return; }
+    }
     if (e.key === "Escape" && drop && drop.classList.contains("open")) {
       window.toggleHelp();
       var b = document.getElementById("helpBtn");

@@ -1,11 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-title-en="Use your own key — Dual Subtitles for YouTube™" data-title-zh="自带 Key 教程 — Dual Subtitles for YouTube™">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <title>Use your own key — Dual Subtitles for YouTube™</title>
-<meta name="description" content="How to plug your own LLM or DeepL API key into Dual Subtitles for YouTube™ — what it costs, where the key hides, and what to do when it fails.">
+<link rel="canonical" href="https://gythiro.github.io/yt-dual-subs/guide.html">
+<link rel="alternate" hreflang="en" href="https://gythiro.github.io/yt-dual-subs/guide.html?lang=en">
+<link rel="alternate" hreflang="zh" href="https://gythiro.github.io/yt-dual-subs/guide.html?lang=zh">
+<link rel="alternate" hreflang="x-default" href="https://gythiro.github.io/yt-dual-subs/guide.html">
+<meta name="description" content="How to plug your own LLM or DeepL API key into Dual Subtitles for YouTube™ — what it costs, where the key hides, and what to do when it fails." data-desc-en="How to plug your own LLM or DeepL API key into Dual Subtitles for YouTube™ — what it costs, where the key hides, and what to do when it fails." data-desc-zh="怎样把你自己的 LLM 或 DeepL API Key 接进 Dual Subtitles for YouTube™：要花多少钱、Key 存在哪里、出问题了怎么办。">
+<!-- Link preview. Title and description are this page's own, so there is one
+     place to change them. Card image is script-generated (site-shot.js og). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dual Subtitles for YouTube">
+<meta property="og:title" content="Use your own key — Dual Subtitles for YouTube™">
+<meta property="og:description" content="How to plug your own LLM or DeepL API key into Dual Subtitles for YouTube™ — what it costs, where the key hides, and what to do when it fails.">
+<meta property="og:url" content="https://gythiro.github.io/yt-dual-subs/guide.html">
+<meta property="og:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A YouTube player showing one subtitle box with an English line above its Chinese translation.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Use your own key — Dual Subtitles for YouTube™">
+<meta name="twitter:description" content="How to plug your own LLM or DeepL API key into Dual Subtitles for YouTube™ — what it costs, where the key hides, and what to do when it fails.">
+<meta name="twitter:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
 <style>
   :root{
     --bg:#0A0A0F;
@@ -13,15 +32,16 @@
     --card:#15151F;
     --ink:#FFFFFF;
     --muted:#A6A6B8;
-    --muted-2:#7C7C90;
+    --muted-2:#7F7F93;
     --line:rgba(255,255,255,0.10);
     --line-2:rgba(255,255,255,0.16);
-    --accent:#7B61FF;
+    --accent:#8571FF;
     --accent-2:#FF4D8D;
     --translation:#FFC24B;
     --ok:#4ade80;
     --warn:#FFB84D;
     --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --grad-on:linear-gradient(105deg,#755CF2 0%,#8F53E7 45%,#CE3E72 100%);
     --radius:10px;
     --radius-lg:16px;
     --maxw:860px;
@@ -29,7 +49,7 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;overflow-y:scroll} /* scrollbar always on: no nav shift between pages */
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
   img{max-width:100%;height:auto;display:block}
   a{color:inherit;text-decoration:none}
   h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.02em;line-height:1.12}
@@ -50,10 +70,48 @@
   html[lang="zh"] li[data-zh]{display:block}
   html[lang="zh"] td[data-zh]{display:table-cell}
 
+  /* The nav is sticky, so an anchor jump lands underneath it. Nothing
+
+     was hiding today only because every section carries its own 78–103px
+
+     of padding — which is luck, not a decision, and stops being true the
+
+     moment a section is laid out more tightly. */
+
+  html{scroll-padding-top:124px}
+
+  /* This page is nine sections long and had no map: you could not see where you
+     were, what was ahead, or jump to the one section you came for — the only
+     affordance a long reference page in reading mode really owes its visitor
+     (impeccable/layout: "navigable linearity"). A row of jumps, sticky under
+     the nav, is the smallest thing that gives all three. It scrolls sideways
+     rather than wrapping: two stacked rows of pills would push the content
+     itself below the fold on a phone. */
+  .toc{position:sticky;top:64px;z-index:40;background:rgba(10,10,15,0.86);
+    backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line)}
+  .toc-in{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+    padding:9px 0;max-width:1160px;margin:0 auto;-webkit-overflow-scrolling:touch}
+  .toc-in::-webkit-scrollbar{display:none}
+  .toc-in.can-scroll{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
+  /* On a wide screen every chip fits on two rows and nothing hides; on a
+     phone two rows would push the content below the fold, so it scrolls. */
+  @media (min-width:900px){.toc-in{flex-wrap:wrap;overflow-x:visible;-webkit-mask-image:none;mask-image:none}}
+  .toc a{flex:none;padding:5px 11px;border-radius:99px;font-size:13px;
+    color:var(--muted);text-decoration:none;border:1px solid transparent;
+    white-space:nowrap;transition:color .15s,background .15s,border-color .15s}
+  .toc a:hover{color:var(--ink);background:rgba(255,255,255,0.06)}
+  .toc a[aria-current="true"]{color:var(--ink);border-color:var(--line-2);
+    background:rgba(255,255,255,0.08)}
+  @media (max-width:700px){ .toc-in{padding-left:16px;padding-right:16px} }
+
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
   /* nav + footer span the same width as the homepage (1160px); only the
      reading column stays at --maxw so cards keep a comfortable measure */
-  .nav .wrap,footer .wrap{max-width:1160px}
+  /* The jump bar too. Its inner row already asks for 1160 and never got it:
+     the .wrap around it was the 860 reading column, so ten chips folded onto
+     a second row and two sticky bars ate a fifth of an 800px window. Now it
+     lines up with the nav above it and the footer below. */
+  .nav .wrap,footer .wrap,.toc .wrap{max-width:1160px}
   .nav-in{display:flex;align-items:center;gap:20px;height:64px}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
   .brand img{width:30px;height:30px;border-radius:8px}
@@ -63,13 +121,13 @@
      stretched anchor puts its text at the top of the box while the inline-flex
      button centres its own — 3px apart, which is visible in the bar. */
   .nav-links>a,.nav-links>.nav-drop{display:flex;align-items:center}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap;padding:5px 0}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
   .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
   .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
   .lang-toggle button:hover{color:var(--ink)}
-  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+  .lang-toggle button.active{color:#fff;background:var(--grad-on);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
 
   .hero{position:relative;text-align:center;padding:60px 0 30px;overflow:hidden}
   .bloom{position:absolute;inset:0;pointer-events:none;z-index:0}
@@ -83,12 +141,14 @@
   .card{position:relative;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--card);padding:24px 26px;margin-bottom:18px}
   .card.primary{border-color:transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box;border:1.5px solid transparent;box-shadow:0 10px 44px rgba(123,97,255,0.14)}
   .card .head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .card .emoji{font-size:22px}
+  /* The icons are inline SVG now, so font-size does nothing; they take the
+     brand accent and centre against the heading. */
+  .card .emoji{display:flex;align-items:center;color:var(--accent);flex:none}
   .card h2{font-size:19px;letter-spacing:-0.02em}
   .card h3{font-size:15px;margin-top:18px;color:var(--muted)}
   .card p{color:var(--muted);font-size:15.5px;margin-top:10px}
   .card p b{color:var(--ink)}
-  .badge{font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad);padding:4px 10px;border-radius:999px}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--grad-on);padding:4px 10px;border-radius:999px}
   .badge.q{background:rgba(255,255,255,0.10);color:var(--muted)}
   .links{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:14.5px}
   .links a{color:var(--accent);font-weight:600}
@@ -101,6 +161,24 @@
   ul.notes{margin:12px 0 0;padding-left:22px;color:var(--muted);font-size:15px}
   ul.notes li{margin-bottom:8px}
   code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:0.92em;background:rgba(255,255,255,0.07);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  /* The two commands on this page had no rule of their own, so they inherited
+     the browser default: pre, no wrap, no scroll — and the body clips sideways,
+     which put the second half of `OLLAMA_ORIGINS=... ollama serve` off a phone
+     screen with no way to reach it. Scroll rather than wrap: a wrapped shell
+     command is a command someone copies wrong. */
+  td.nw{white-space:nowrap}
+  pre.code{margin:14px 0;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,0.05);overflow-x:auto}
+  pre.code code{background:none;border:0;padding:0;font-size:14px;white-space:pre}
+  /* A command that has to be retyped by hand is a command that gets mistyped,
+     and on a phone the longer one only exists behind a sideways scroll. The
+     button rides inside the block's own padding so it cannot cover the text. */
+  .codewrap{position:relative}
+  .codewrap pre.code{padding-right:84px}
+  .copybtn{position:absolute;top:22px;right:10px;padding:4px 10px;border-radius:99px;
+    font-size:12px;font-weight:600;font-family:inherit;color:var(--muted);
+    background:rgba(255,255,255,0.06);border:1px solid var(--line);cursor:pointer}
+  .copybtn:hover{color:var(--ink);background:rgba(255,255,255,0.10)}
+  .copybtn.done{color:var(--ok);border-color:var(--line-2)}
   .tip{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:14.5px;color:var(--muted);background:rgba(255,184,77,0.07);border:1px solid rgba(255,184,77,0.24)}
   .tip b{color:var(--warn)}
 
@@ -109,16 +187,29 @@
   .pico-txt{font-size:11px;font-weight:800;letter-spacing:.3px}
   .pico-sm{width:20px;height:20px;border-radius:6px;margin-right:8px}
   .pico-sm .pico-txt{font-size:9px}
-  .tbl-wrap{overflow-x:auto;margin-top:16px}
+  .tbl-wrap{overflow-x:auto;margin-top:16px;position:relative}
+  /* While the table is wider than its box, its right edge fades: "there is
+     more to the right". The class is set by script when that is true. */
+  .tbl-wrap.can-scroll{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 36px),transparent)}
+  .tbl-wrap:focus-visible,pre.code:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
   table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:620px}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{color:var(--muted-2);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700}
+  /* nowrap: these are three short labels, and the last one was breaking after
+     its second character ("要注意" / "的") when the column got tight. */
+  th{color:var(--muted-2);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;white-space:nowrap}
+  /* Latin small-caps tracking scatters Chinese and Thai headings the same way
+     it does in the extension (设计规范 §2); those scripts have no capitals for
+     the uppercase to reach either. */
+  html[lang="zh"] th{text-transform:none;letter-spacing:0.02em}
   td{color:var(--muted)}
+  /* The links column is a pair of short labels with a separator; letting them
+     break put "资" on one line and "费" on the next. */
+  td a{white-space:nowrap}
   td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
   td a{color:var(--accent);font-weight:600}
   td a:hover{text-decoration:underline}
 
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:var(--radius);background:var(--grad-on);color:#fff;font-size:14px;font-weight:700;border:0;cursor:pointer;box-shadow:0 6px 20px rgba(123,97,255,0.32);transition:transform .12s ease}
   .btn:hover{transform:translateY(-1px)}
   .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:42px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;background:transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
@@ -149,8 +240,8 @@
 
   /* nav ladder — measured, not guessed: full EN nav ≈ 1085px content width.
      The guide is deliberately NOT in .nav-links: a seventh item would push the
-     measured ladder below and re-break the mobile fitting Lee already fixed
-     twice. It lives in the burger menu and the footer instead. */
+     measured ladder below and re-break the mobile fitting that was already
+     fixed twice. It lives in the burger menu and the footer instead. */
   @media (max-width:1199px){
     .nav-right .ghost{display:none}    /* GitHub stays reachable in the footer */
   }
@@ -177,7 +268,7 @@
   /* help dropdown — holds every standalone page so the row stops growing */
   .nav-drop{position:relative}
   .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;line-height:inherit;
-    padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
+    padding:5px 0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
     cursor:pointer;white-space:nowrap;transition:color .15s}
   .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}
   .nav-drop-btn svg{transition:transform .18s}
@@ -190,6 +281,9 @@
   .nav-drop-menu a{display:block;padding:9px 12px;border-radius:8px;color:var(--muted);
     font-size:14.5px;font-weight:500;white-space:nowrap}
   .nav-drop-menu a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent, #8571FF); outline-offset: 3px; border-radius: 6px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+  .lang-toggle button:focus-visible { outline-offset: -2px; }
 </style>
 </head>
 <body>
@@ -204,22 +298,22 @@
       <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" id="helpBtn" aria-expanded="false"
-                aria-haspopup="true" aria-controls="helpMenu" onclick="toggleHelp()">
+                aria-controls="helpMenu" onclick="toggleHelp()">
           <span data-en>Help</span><span data-zh>帮助</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
-          <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
-          <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
-          <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+        <div class="nav-drop-menu" id="helpMenu">
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
+          <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+          <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+          <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
       </div>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
-        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
-        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+        <button type="button" id="lang-en" onclick="setLang('en', true)">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh', true)">中文</button>
       </div>
       <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
         <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -246,14 +340,31 @@
     <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
+<!-- The map. Same order as the page, both languages in one cell per link so
+     the hidden half cannot hold a slot (the same mistake the provider table
+     made, 2026-08-31). -->
+<nav class="toc" id="toc" aria-label="Sections">
+  <div class="wrap"><div class="toc-in">
+    <a href="#before"><span data-en>Before you start</span><span data-zh>开始之前</span></a>
+    <a href="#steps"><span data-en>Three steps</span><span data-zh>三步</span></a>
+    <a href="#qwen"><span data-en>Model Studio</span><span data-zh>百炼</span></a>
+    <a href="#gemini">Gemini</a>
+    <a href="#deepl">DeepL</a>
+    <a href="#others"><span data-en>Other providers</span><span data-zh>其他服务商</span></a>
+    <a href="#local"><span data-en>Local model</span><span data-zh>本机模型</span></a>
+    <a href="#readaloud"><span data-en>Read aloud</span><span data-zh>朗读</span></a>
+    <a href="#summary"><span data-en>Summary</span><span data-zh>总结</span></a>
+    <a href="#troubleshooting"><span data-en>Trouble</span><span data-zh>出问题了</span></a>
+  </div></div>
+</nav>
 
 <header class="hero">
   <div class="bloom" aria-hidden="true"></div>
   <div class="wrap hero-in">
     <h1 data-en>Use <span class="g">your own key</span></h1>
     <h1 data-zh>用<span class="g">你自己的 Key</span></h1>
-    <p class="sub" data-en>The extension works with no setup at all. This page is only for people who want a better translation than the free engine gives — you bring an API key, the extension uses it, and nobody sits in between.</p>
-    <p class="sub" data-zh>扩展本身开箱即用，什么都不用配。这一页是给想要比免费引擎更好的译文的人看的——你自备一个 API Key，扩展直接用它，中间没有任何人经手。</p>
+    <p class="sub" data-en>The extension works with no setup at all. This page covers three optional things: a better translation than the free engines give (the first three choices in the popup's Engine list: Auto (recommended), Whole-track (YouTube), Smart sentences (Google)) with an API key of your own, having the translation read out loud, and summarizing a video into chapters. Read-aloud on your browser's own voices needs no key; for the other two you bring a key or a local model, the extension uses it, and nobody sits in between.</p>
+    <p class="sub" data-zh>扩展本身开箱即用，什么都不用配。这一页讲三件可选的事：用你自己的 API Key 把译文译得比免费引擎（弹窗「翻译引擎」下拉里的前三项：「自动（推荐）」「整轨翻译（YouTube）」「智能整句（Google）」）更好、让它把译文念出来、把视频总结成章节。用浏览器自带音色朗读不需要 Key；另外两件你自备 Key 或本机模型，扩展直接用它，中间没有任何人经手。</p>
   </div>
 </header>
 
@@ -261,12 +372,20 @@
   <div class="wrap">
 
     <!-- ---------------------------- three worries ---------------------------- -->
-    <section class="card primary">
+    <section class="card primary" id="before">
       <div class="head">
-        <span class="emoji">🧭</span>
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
         <h2 data-en>Three things before you start</h2>
         <h2 data-zh>开始之前，先说三件事</h2>
       </div>
+
+      <!-- The page opened on "what it costs", which is the first thing a
+           reader meets after installing something that already works. The
+           header says so, and then three headings about money, regions and
+           key safety bury it. Said once more, here, where the reading
+           actually starts. -->
+      <p class="tip" data-en><b>Only want the two lines of subtitles?</b> You are already done — install it, open a video with captions, and they are there. Everything on this page is optional, and nothing below is needed for that.</p>
+      <p class="tip" data-zh><b>只想要那两行字幕？</b>那你已经装完就能用了——打开一个有字幕的视频，字幕就在上面。这一页讲的全是可选的，下面没有一件是看双语字幕必须做的。</p>
 
       <h3 data-en>1. What it costs</h3>
       <h3 data-zh>1. 花多少钱</h3>
@@ -276,26 +395,28 @@
       <h3 data-en>2. Network and region</h3>
       <h3 data-zh>2. 网络与区域</h3>
       <p data-en>An API only works if your browser can reach it. Chinese endpoints can be slow or flaky from outside mainland China; Google's Gemini API is not available in every region. If a key tests fine one minute and fails the next, this is usually why — the extension retries a dropped connection once and then tells you.</p>
-      <p data-zh>接口能不能用，取决于你的浏览器能不能连上它。国内的接口从境外访问可能慢或不稳；Google Gemini 的接口在部分地区不可用。如果 Key 刚才测通、过一会儿又失败，通常就是这个原因——扩展会对掉线自动重试一次，再失败才提示你。</p>
+      <p data-zh>接口能不能用，取决于你的浏览器能不能连上它。国内的接口从境外访问可能慢或不稳；Google Gemini 的接口在部分地区不可用。如果 Key 填好、连接成功之后过一会儿又失败，通常就是这个原因——扩展会对掉线自动重试一次，再失败才提示你。</p>
 
       <h3 data-en>3. Is my key safe?</h3>
       <h3 data-zh>3. Key 安全吗</h3>
-      <p data-en>The key is stored in this browser on this computer only (<code>chrome.storage.local</code>). It is <b>never synced to your Google account and never sent anywhere except the provider you picked</b>, as the authorization header of the translation request. You can wipe it any time with <b>Clear</b> next to the key field, and “Reset all settings” wipes it too. Treat a key like a wallet anyway: don't paste it into random websites, and revoke it in the provider's console if you ever suspect it leaked.</p>
-      <p data-zh>Key 只保存在这台电脑的这个浏览器里（<code>chrome.storage.local</code>）。它<b>不会同步到你的 Google 账号，也不会发往除你所选服务商之外的任何地方</b>——只作为翻译请求的认证头。随时可以用 Key 输入框旁边的<b>「清除」</b>删掉，「重置全部设置」也会一并清掉。不过还是把 Key 当钱包看：别往来路不明的网站里粘，一旦怀疑泄露就去服务商后台吊销。</p>
+      <p data-en>The key is stored in this browser on this computer only (<code>chrome.storage.local</code>). It is <b>never synced to your Google account and never sent anywhere except the provider you picked</b>, as the authorization header of the translation request. When a key is saved the field shows <b>saved ····1234</b> with <b>Replace</b> and <b>Delete</b> beside it; Delete removes it from this computer, and “Reset all settings” clears it too. Treat a key like a wallet anyway: don't paste it into random websites, and revoke it in the provider's console if you ever suspect it leaked.</p>
+      <p data-zh>Key 只保存在这台电脑的这个浏览器里（<code>chrome.storage.local</code>）。它<b>不会同步到你的 Google 账号，也不会发往除你所选服务商之外的任何地方</b>——只作为翻译请求的认证头。存了 Key 之后那一行会显示<b>「已保存 ····1234」</b>，旁边是<b>「更换」</b>和<b>「删除」</b>；删除就是把它从这台电脑上抹掉，「重置全部设置」也会一并清掉。不过还是把 Key 当钱包看：别往来路不明的网站里粘，一旦怀疑泄露就去服务商后台吊销。</p>
     </section>
 
     <!-- ------------------------------- overview ------------------------------ -->
-    <section class="card">
+    <section class="card" id="steps">
       <div class="head">
-        <span class="emoji">⚡</span>
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
         <h2 data-en>The whole thing in three steps</h2>
         <h2 data-zh>整个流程就三步</h2>
       </div>
+      <p data-en>The popup opens from the extension's icon in the browser toolbar — if it isn't there, click the puzzle-piece icon and pin <b>Dual Subtitles</b>.</p>
+      <p data-zh>弹窗从浏览器工具栏里扩展的图标打开——没看到图标就点拼图图标，把 <b>Dual Subtitles</b> 钉上去。</p>
       <ol class="steps">
-        <li data-en>Open the extension popup → set <b>Engine</b> to <b>Your own key</b> → click <b>Configure…</b>.</li>
-        <li data-zh>打开扩展弹窗 → 把<b>「翻译引擎」</b>切到<b>「自带 Key」</b> → 点<b>「配置…」</b>。</li>
-        <li data-en>Pick a provider in the list, paste your API key, leave the model on the recommended one. Want a different one? Hit <b>List models with my key</b> and choose from what your key can actually reach — the list comes from the provider, so it is never out of date.</li>
-        <li data-zh>在列表里选一个服务商，粘贴你的 API Key，模型保持推荐值即可。想换别的？点<b>「用我的 Key 拉取模型」</b>，从你这把 Key 真正能用的模型里挑——列表是服务商现给的，不会过期。</li>
+        <li data-en>Open the extension popup → set <b>Engine</b> to <b>Your own key (LLM / DeepL)</b> → click <b>Configure…</b>.</li>
+        <li data-zh>打开扩展弹窗 → 把<b>「翻译引擎」</b>切到<b>「自带 Key（LLM / DeepL）」</b> → 点<b>「配置…」</b>。</li>
+        <li data-en>Pick a provider in the list on the left — fourteen of them, so the one this page starts with, Model Studio, is eighth; scroll. Paste your API key, leave the model on the recommended one. Want a different one? Hit <b>List models with my key</b> (<b>List available models</b> on a provider that needs none) and choose from what your key can actually reach — the list comes from the provider, so it says what that key reaches right now.</li>
+        <li data-zh>在左边列表里选一个服务商——一共十四家，这一页最先讲的「百炼」排在第八，往下翻。粘贴你的 API Key，模型保持推荐值即可。想换别的？点<b>「用我的 Key 拉取模型」</b>（免 Key 的服务商上叫<b>「拉取可用模型」</b>），从你这把 Key 真正能用的模型里挑——列表是服务商当场给的，反映这把 Key 现在够得着什么。</li>
         <li data-en>Click <b>Save and test</b>. Chrome asks once for permission to reach that provider's domain — allow it, and you should see “Connected”.</li>
         <li data-zh>点<b>「保存并测通」</b>。Chrome 会问一次是否允许访问该服务商的域名——同意后应该看到「连接成功」。</li>
       </ol>
@@ -329,7 +450,9 @@
       </ol>
       <ul class="notes">
         <li data-en><b>Recommended model:</b> <code>qwen-flash</code> — the default, and by far the quickest we measured. <code>deepseek-v4-flash</code> also works well if you prefer DeepSeek's wording.</li>
-        <li data-zh><b>推荐模型：</b><code>qwen-flash</code>——默认值，也是我们实测最快的。想要 DeepSeek 的语感就填 <code>deepseek-v4-flash</code>，一样能用。</li>
+        <li data-zh><b>推荐模型：</b><code>qwen-flash</code>——默认值，也是我们实测最快的。想要 DeepSeek 的语感，就在拉取的列表里选 <code>deepseek-v4-flash</code>（没拉列表也可以直接手填），一样能用。</li>
+        <li data-en><b>Registered outside mainland China?</b> Model Studio runs a separate international platform, and a key from one side is refused by the other. Pick <b>International</b> in the <b>Site</b> row before you press Save and test — the console and pricing links follow your choice.</li>
+        <li data-zh><b>账号不在中国大陆注册的：</b>百炼另有一套独立的国际站，两边的 Key 不通用。按「保存并测通」之前先在<b>「站点」</b>那一行选<b>「国际」</b>——控制台和资费链接会跟着你的选择走。</li>
         <li data-en><b>Keep the default endpoint.</b> A workspace-scoped key (one that starts <code>sk-ws-</code>) works fine on the standard endpoint, so you do not need the workspace-specific host — and the standard one proved more reliable in testing.</li>
         <li data-zh><b>接口地址保持默认。</b>工作空间级的 Key（以 <code>sk-ws-</code> 开头）在标准接口上照样能用，不需要填工作空间专属域名——而且实测标准接口更稳。</li>
         <li data-en><b>Avoid “thinking” models</b> for subtitles: they spend most of their time reasoning. The extension already turns that off for this provider where the API allows it.</li>
@@ -344,8 +467,8 @@
         <h2>Google Gemini</h2>
         <span class="badge" data-en>Tested</span><span class="badge" data-zh>已实测</span>
       </div>
-      <p data-en>Easiest key to obtain — a couple of clicks in Google AI Studio, no separate billing setup to get started.</p>
-      <p data-zh>最容易拿到 Key 的一家——在 Google AI Studio 点两下就有，开始用不需要另外配置付费。</p>
+      <p data-en>An easy key to obtain — a couple of clicks in Google AI Studio, no separate billing setup to get started.</p>
+      <p data-zh>Key 很容易拿——在 Google AI Studio 点两下就有，开始用不需要另外配置付费。</p>
       <div class="links">
         <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener"><span data-en>Get a key</span><span data-zh>去申请 Key</span></a>
         <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener"><span data-en>Pricing &amp; free tier</span><span data-zh>资费与免费额度</span></a>
@@ -392,23 +515,23 @@
         <li data-zh><b>最常见的错就这一条：</b><b>DeepL Pro</b>（网页版／客户端订阅）和 <b>DeepL API</b> 是两种不同的产品，Pro 账户里看到的密钥在这里用不了。报 401/403 基本都是这个原因。</li>
         <li data-en>A key ending in <code>:fx</code> is a Free-plan key. The extension reads that suffix and talks to the right endpoint automatically — you never pick one.</li>
         <li data-zh>以 <code>:fx</code> 结尾的是 Free 版 Key。扩展会读这个后缀自动选对应的接口地址——你不用管。</li>
-        <li data-en><b>Signing up needs a card.</b> The API Free plan (about 500,000 characters a month) still asks for a VISA/Mastercard issued in a region DeepL supports — cards issued in mainland China are generally not accepted, which is why many users here end up on an LLM instead.</li>
-        <li data-zh><b>注册要绑卡。</b>API Free 方案（每月约 50 万字符）仍然需要一张 DeepL 支持地区发行的 VISA／Mastercard——中国大陆发行的卡普遍不被接受，所以国内用户往往最后选大模型那条路。</li>
+        <li data-en><b>Signing up needs a card.</b> The API Free plan still asks for a VISA/Mastercard issued in a region DeepL supports — cards issued in mainland China are generally not accepted, which is why many users here end up on an LLM instead. DeepL's own pricing page has the current allowance.</li>
+        <li data-zh><b>注册要绑卡。</b>API Free 方案仍然需要一张 DeepL 支持地区发行的 VISA／Mastercard——中国大陆发行的卡普遍不被接受，所以国内用户往往最后选大模型那条路。额度以 DeepL 自己的定价页为准。</li>
         <li data-en>DeepL covers every language this extension offers. If that ever changes, you get a clear message asking you to change the language or the engine, and nothing is sent.</li>
-        <li data-zh>DeepL 支持的目标语言比大模型少。遇到不支持的语言，扩展会直接提示你换语言或换引擎，请求不会发出去。</li>
+        <li data-zh>DeepL 覆盖本扩展提供的全部译文语言。万一哪天不再覆盖，扩展会直接提示你换语言或换引擎，请求不会发出去。</li>
       </ul>
     </section>
 
     <!-- ------------------------------ the others ----------------------------- -->
-    <section class="card">
+    <section class="card" id="others">
       <div class="head">
-        <span class="emoji">🧩</span>
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
         <h2 data-en>The other providers</h2>
         <h2 data-zh>其他服务商</h2>
         <span class="badge q" data-en>Endpoint checked, no key on hand</span><span class="badge q" data-zh>接口已核，无 Key 实测</span>
       </div>
-      <p data-en>Every endpoint below was probed and answered — the host and path are right. What we could <b>not</b> check without a key is the model name and whether the provider lets a browser extension call it directly. So don't guess a model: press <b>List models with my key</b> in the settings page and pick from what your own account returns.</p>
-      <p data-zh>下面每一家的接口我们都探过、都有响应——域名和路径是对的。没有 Key 就<b>无法</b>验证的是模型名，以及服务商是否允许浏览器扩展直连。所以别猜模型名：在设置页点<b>「用我的 Key 拉取模型」</b>，从你自己账号返回的列表里选。</p>
+      <p data-en>Every endpoint below was probed and answered — the host and path are right. What we could <b>not</b> check without a key is the model name and whether the provider lets a browser extension call it directly. So don't guess a model: press <b>List models with my key</b> (<b>List available models</b> on a provider that needs none) in the settings page and pick from what your own account returns.</p>
+      <p data-zh>下面每一家的接口我们都探过、都有响应——域名和路径是对的。没有 Key，我们<b>验证不了</b>的是两件事：模型名，以及服务商允不允许浏览器扩展直连。所以别猜模型名：在设置页点<b>「用我的 Key 拉取模型」</b>（免 Key 的服务商上叫<b>「拉取可用模型」</b>），从你自己账号返回的列表里选。</p>
       <div class="tbl-wrap">
         <table>
           <thead>
@@ -422,7 +545,7 @@
             <tr id="openai">
               <td><span class="pico pico-sm" data-icon="openai" style="background:#10A37F"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg></span>OpenAI</td>
               <td><a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">API keys</a> · <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
-              <td><span data-en>Model line moves fast — fetch the list rather than typing a name.</span><span data-zh>模型更新很快——用「拉取模型」而不是手打名字。</span></td>
+              <td><span data-en>Model line moves fast — fetch the list rather than typing a name.</span><span data-zh>模型更新很快——用「用我的 Key 拉取模型」而不是手打名字。</span></td>
             </tr>
             <tr id="deepseek">
               <td><span class="pico pico-sm" data-icon="deepseek" style="background:#4D6BFE"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M23.748 4.651c-.254-.124-.364.113-.512.233-.051.04-.094.09-.137.137-.372.397-.806.657-1.373.626-.829-.046-1.537.214-2.163.848-.133-.782-.575-1.248-1.247-1.548-.352-.155-.708-.311-.955-.65-.172-.24-.219-.509-.305-.774-.055-.16-.11-.323-.293-.35-.2-.031-.278.136-.356.276-.313.572-.434 1.202-.422 1.84.027 1.436.633 2.58 1.838 3.393.137.094.172.187.129.323-.082.28-.18.553-.266.833-.055.179-.137.218-.328.14a5.5 5.5 0 0 1-1.737-1.179c-.857-.828-1.631-1.743-2.597-2.46a12 12 0 0 0-.689-.47c-.985-.957.13-1.743.387-1.836.27-.098.094-.433-.778-.428-.872.003-1.67.295-2.687.685a3 3 0 0 1-.465.136 9.6 9.6 0 0 0-2.883-.101c-1.885.21-3.39 1.1-4.497 2.622C.082 8.776-.231 10.854.152 13.02c.403 2.284 1.568 4.175 3.36 5.653 1.857 1.533 3.997 2.284 6.438 2.14 1.482-.085 3.132-.284 4.994-1.86.47.234.962.328 1.78.398.629.058 1.235-.031 1.705-.129.735-.155.684-.836.418-.961-2.155-1.004-1.682-.595-2.112-.926 1.095-1.295 2.768-3.598 3.284-6.733.05-.346.115-.834.108-1.114-.004-.171.035-.238.23-.257a4.2 4.2 0 0 0 1.545-.475c1.397-.763 1.96-2.016 2.093-3.517.02-.23-.004-.467-.247-.588M11.58 18.168c-2.088-1.642-3.101-2.183-3.52-2.16-.39.024-.32.472-.234.763.09.288.207.487.371.74.114.167.192.416-.113.603-.673.416-1.842-.14-1.897-.168-1.361-.801-2.5-1.86-3.301-3.306-.775-1.393-1.225-2.888-1.299-4.482-.02-.385.094-.522.477-.592a4.7 4.7 0 0 1 1.53-.038c2.131.311 3.946 1.264 5.467 2.774.868.86 1.525 1.887 2.202 2.89.72 1.066 1.494 2.082 2.48 2.915.348.291.626.513.892.677-.802.09-2.14.109-3.055-.615zm1.001-6.44a.306.306 0 0 1 .415-.287.3.3 0 0 1 .113.074.3.3 0 0 1 .086.214c0 .17-.136.307-.308.307a.303.303 0 0 1-.306-.307m3.11 1.596c-.2.081-.4.151-.591.16a1.25 1.25 0 0 1-.798-.254c-.274-.23-.47-.358-.551-.758a1.7 1.7 0 0 1 .015-.588c.07-.327-.007-.537-.238-.727-.188-.156-.426-.199-.689-.199a.6.6 0 0 1-.254-.078.253.253 0 0 1-.114-.358 1 1 0 0 1 .192-.21c.356-.202.767-.136 1.146.016.352.144.618.408 1.001.782.392.451.462.576.685.915.176.264.336.536.446.848.066.194-.02.353-.25.45"/></svg></span>DeepSeek</td>
@@ -442,22 +565,22 @@
             <tr id="kimi">
               <td><span class="pico pico-sm" data-icon="kimi" style="background:#1F2937"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M21.765.351C22.998.351 24 1.353 24 2.586S22.998 4.82 21.765 4.82h-1.974c-.15 0-.26-.12-.26-.26V2.586A2.237 2.237 0 0 1 21.765.35M9.41 13.388l8.447-8.377c.16-.16.07-.471-.14-.471h-4.55s-.1.02-.14.06l-9.099 9.029c-.14.14-.35.02-.35-.21V4.81c0-.15-.1-.27-.221-.27H.22c-.12 0-.22.12-.22.27v18.57c0 .15.1.27.22.27h3.137c.12 0 .22-.12.22-.27v-3.79c0-.08.03-.16.08-.21l2.826-2.796c.07-.07.16-.08.241-.03l7.546 5.551a8.9 8.9 0 0 0 4.018 1.493c.12.01.23-.11.23-.27V19.76c0-.14-.08-.25-.19-.26a5.8 5.8 0 0 1-2.355-.942l-6.533-4.73c-.14-.09-.15-.32-.03-.441"/></svg></span>Kimi (Moonshot)</td>
               <td><a href="https://platform.kimi.com/console/api-keys" target="_blank" rel="noopener">API keys</a> · <a href="https://platform.kimi.com/docs/pricing/chat" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
-              <td><span data-en>The console moved to kimi.com; the API host is still the moonshot.cn one filled in here.</span><span data-zh>控制台已迁到 kimi.com，但接口主机仍是这里预填的 moonshot.cn。</span></td>
+              <td><span data-en>The console moved to kimi.com; the API host is still the moonshot.cn one filled in here. Registered on the international site instead? Pick <b>International</b> in the <b>Site</b> row — the two are separate platforms and a key from one is refused by the other.</span><span data-zh>控制台已迁到 kimi.com，但接口主机仍是这里预填的 moonshot.cn。如果你的账号注册在国际站，请在<b>「站点」</b>那一行选<b>「国际」</b>——两边是各自独立的平台，Key 不通用。</span></td>
             </tr>
             <tr id="glm">
               <td><span class="pico pico-sm" data-icon="glm" style="background:#3859FF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11.991 23.503a.24.24 0 00-.244.248.24.24 0 00.244.249.24.24 0 00.245-.249.24.24 0 00-.22-.247l-.025-.001zM9.671 5.365a1.697 1.697 0 011.099 2.132l-.071.172-.016.04-.018.054c-.07.16-.104.32-.104.498-.035.71.47 1.279 1.186 1.314h.366c1.309.053 2.338 1.173 2.286 2.523-.052 1.332-1.152 2.38-2.478 2.327h-.174c-.715.018-1.274.64-1.239 1.368 0 .124.018.23.053.337.209.373.54.658.96.8.75.23 1.517-.125 1.9-.782l.018-.035c.402-.64 1.17-.96 1.92-.711.854.284 1.378 1.226 1.099 2.167a1.661 1.661 0 01-2.077 1.102 1.711 1.711 0 01-.907-.711l-.017-.035c-.2-.323-.463-.58-.851-.711l-.056-.018a1.646 1.646 0 00-1.954.746 1.66 1.66 0 01-1.065.764 1.677 1.677 0 01-1.989-1.279c-.209-.906.332-1.83 1.257-2.043a1.51 1.51 0 01.296-.035h.018c.68-.071 1.151-.622 1.116-1.333a1.307 1.307 0 00-.227-.693 2.515 2.515 0 01-.366-1.403 2.39 2.39 0 01.366-1.208c.14-.195.21-.444.227-.693.018-.71-.506-1.261-1.186-1.332l-.07-.018a1.43 1.43 0 01-.299-.07l-.05-.019a1.7 1.7 0 01-1.047-2.114 1.68 1.68 0 012.094-1.101zm-5.575 10.11c.26-.264.639-.367.994-.27.355.096.633.379.728.74.095.362-.007.748-.267 1.013-.402.41-1.053.41-1.455 0a1.062 1.062 0 010-1.482zm14.845-.294c.359-.09.738.024.992.297.254.274.344.665.237 1.025-.107.36-.396.634-.756.718-.551.128-1.1-.22-1.23-.781a1.05 1.05 0 01.757-1.26zm-.064-4.39c.314.32.49.753.49 1.206 0 .452-.176.886-.49 1.206-.315.32-.74.5-1.185.5-.444 0-.87-.18-1.184-.5a1.727 1.727 0 010-2.412 1.654 1.654 0 012.369 0zm-11.243.163c.364.484.447 1.128.218 1.691a1.665 1.665 0 01-2.188.923c-.855-.36-1.26-1.358-.907-2.228a1.68 1.68 0 011.33-1.038c.593-.08 1.183.169 1.547.652zm11.545-4.221c.368 0 .708.2.892.524.184.324.184.724 0 1.048a1.026 1.026 0 01-.892.524c-.568 0-1.03-.47-1.03-1.048 0-.579.462-1.048 1.03-1.048zm-14.358 0c.368 0 .707.2.891.524.184.324.184.724 0 1.048a1.026 1.026 0 01-.891.524c-.569 0-1.03-.47-1.03-1.048 0-.579.461-1.048 1.03-1.048zm10.031-1.475c.925 0 1.675.764 1.675 1.706s-.75 1.705-1.675 1.705-1.674-.763-1.674-1.705c0-.942.75-1.706 1.674-1.706zm-2.626-.684c.362-.082.653-.356.761-.718a1.062 1.062 0 00-.238-1.028 1.017 1.017 0 00-.996-.294c-.547.14-.881.7-.752 1.257.13.558.675.907 1.225.783zm0 16.876c.359-.087.644-.36.75-.72a1.062 1.062 0 00-.237-1.019 1.018 1.018 0 00-.985-.301 1.037 1.037 0 00-.762.717c-.108.361-.017.754.239 1.028.245.263.606.377.953.305l.043-.01zM17.19 3.5a.631.631 0 00.628-.64c0-.355-.279-.64-.628-.64a.631.631 0 00-.628.64c0 .355.28.64.628.64zm-10.38 0a.631.631 0 00.628-.64c0-.355-.28-.64-.628-.64a.631.631 0 00-.628.64c0 .355.279.64.628.64zm-5.182 7.852a.631.631 0 00-.628.64c0 .354.28.639.628.639a.63.63 0 00.627-.606l.001-.034a.62.62 0 00-.628-.64zm5.182 9.13a.631.631 0 00-.628.64c0 .355.279.64.628.64a.631.631 0 00.628-.64c0-.355-.28-.64-.628-.64zm10.38.018a.631.631 0 00-.628.64c0 .355.28.64.628.64a.631.631 0 00.628-.64c0-.355-.279-.64-.628-.64zm5.182-9.148a.631.631 0 00-.628.64c0 .354.279.639.628.639a.631.631 0 00.628-.64c0-.355-.28-.64-.628-.64zm-.384-4.992a.24.24 0 00.244-.249.24.24 0 00-.244-.249.24.24 0 00-.244.249c0 .142.122.249.244.249zM11.991.497a.24.24 0 00.245-.248A.24.24 0 0011.99 0a.24.24 0 00-.244.249c0 .133.108.236.223.247l.021.001zM2.011 6.36a.24.24 0 00.245-.249.24.24 0 00-.244-.249.24.24 0 00-.244.249.24.24 0 00.244.249zm0 11.263a.24.24 0 00-.243.248.24.24 0 00.244.249.24.24 0 00.244-.249.252.252 0 00-.244-.248zm19.995-.018a.24.24 0 00-.245.248.24.24 0 00.245.25.24.24 0 00.244-.25.252.252 0 00-.244-.248z"></path></svg></span><span data-en>Zhipu GLM</span><span data-zh>智谱 GLM</span></td>
               <td><a href="https://bigmodel.cn/usercenter/apikeys" target="_blank" rel="noopener">API keys</a> · <a href="https://bigmodel.cn/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
-              <td><span data-en>Mainland China endpoint.</span><span data-zh>国内接口。</span></td>
+              <td><span data-en>Mainland China endpoint by default. Registered on the international site? Pick <b>International</b> in the <b>Site</b> row — separate platforms, and a key from one is refused by the other.</span><span data-zh>默认走国内接口。账号注册在国际站的，请在<b>「站点」</b>那一行选<b>「国际」</b>——两边各自独立，Key 不通用。</span></td>
             </tr>
             <tr id="doubao">
-              <td><span class="pico pico-sm" data-icon="doubao" style="background:#1664FF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.31 15.756c.172-3.75 1.883-5.999 2.549-6.739-3.26 2.058-5.425 5.658-6.358 8.308v1.12C1.501 21.513 4.226 24 7.59 24a6.59 6.59 0 002.2-.375c.353-.12.7-.248 1.039-.378.913-.899 1.65-1.91 2.243-2.992-4.877 2.431-7.974.072-7.763-4.5l.002.001z" fill-opacity=".5"></path><path d="M22.57 10.283c-1.212-.901-4.109-2.404-7.397-2.8.295 3.792.093 8.766-2.1 12.773a12.782 12.782 0 01-2.244 2.992c3.764-1.448 6.746-3.457 8.596-5.219 2.82-2.683 3.353-5.178 3.361-6.66a2.737 2.737 0 00-.216-1.084v-.002zM14.303 1.867C12.955.7 11.248 0 9.39 0 7.532 0 5.883.677 4.545 1.807 2.791 3.29 1.627 5.557 1.5 8.125v9.201c.932-2.65 3.097-6.25 6.357-8.307.5-.318 1.025-.595 1.569-.829 1.883-.801 3.878-.932 5.746-.706-.222-2.83-.718-5.002-.87-5.617h.001z"></path><path d="M17.305 4.961a199.47 199.47 0 01-1.08-1.094c-.202-.213-.398-.419-.586-.622l-1.333-1.378c.151.615.648 2.786.869 5.617 3.288.395 6.185 1.898 7.396 2.8-1.306-1.275-3.475-3.487-5.266-5.323z" fill-opacity=".5"></path></svg></span><span data-en>Doubao (Volcano Ark)</span><span data-zh>豆包（火山方舟）</span></td>
+              <td><span class="pico pico-sm" data-icon="doubao" style="background:#1664FF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.31 15.756c.172-3.75 1.883-5.999 2.549-6.739-3.26 2.058-5.425 5.658-6.358 8.308v1.12C1.501 21.513 4.226 24 7.59 24a6.59 6.59 0 002.2-.375c.353-.12.7-.248 1.039-.378.913-.899 1.65-1.91 2.243-2.992-4.877 2.431-7.974.072-7.763-4.5l.002.001z" fill-opacity=".5"></path><path d="M22.57 10.283c-1.212-.901-4.109-2.404-7.397-2.8.295 3.792.093 8.766-2.1 12.773a12.782 12.782 0 01-2.244 2.992c3.764-1.448 6.746-3.457 8.596-5.219 2.82-2.683 3.353-5.178 3.361-6.66a2.737 2.737 0 00-.216-1.084v-.002zM14.303 1.867C12.955.7 11.248 0 9.39 0 7.532 0 5.883.677 4.545 1.807 2.791 3.29 1.627 5.557 1.5 8.125v9.201c.932-2.65 3.097-6.25 6.357-8.307.5-.318 1.025-.595 1.569-.829 1.883-.801 3.878-.932 5.746-.706-.222-2.83-.718-5.002-.87-5.617h.001z"></path><path d="M17.305 4.961a199.47 199.47 0 01-1.08-1.094c-.202-.213-.398-.419-.586-.622l-1.333-1.378c.151.615.648 2.786.869 5.617 3.288.395 6.185 1.898 7.396 2.8-1.306-1.275-3.475-3.487-5.266-5.323z" fill-opacity=".5"></path></svg></span><span data-en>Doubao (Volcengine Ark)</span><span data-zh>豆包（火山方舟）</span></td>
               <td><a href="https://console.volcengine.com/ark/region:ark+cn-beijing/apikey" target="_blank" rel="noopener">Ark <span data-en>console</span><span data-zh>控制台</span></a> · <a href="https://www.volcengine.com/docs/82379/1544106" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
               <td><span data-en>Takes an endpoint id (<code>ep-…</code>) in the model field, not a public model name.</span><span data-zh>模型栏要填接入点 ID（<code>ep-…</code>），不是公开模型名。</span></td>
             </tr>
             <tr id="siliconflow">
-              <td><span class="pico pico-sm" data-icon="siliconflow" style="background:#6E56CF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.956 6.521H12.522c-.577 0-1.044.468-1.044 1.044v3.13c0 .577-.466 1.044-1.043 1.044H1.044c-.577 0-1.044.467-1.044 1.044v4.174C0 17.533.467 18 1.044 18h10.434c.577 0 1.044-.467 1.044-1.043v-3.13c0-.578.466-1.044 1.043-1.044h9.391c.577 0 1.044-.467 1.044-1.044V7.565c0-.576-.467-1.044-1.044-1.044z"></path></svg></span>SiliconFlow</td>
+              <td><span class="pico pico-sm" data-icon="siliconflow" style="background:#6E56CF"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.956 6.521H12.522c-.577 0-1.044.468-1.044 1.044v3.13c0 .577-.466 1.044-1.043 1.044H1.044c-.577 0-1.044.467-1.044 1.044v4.174C0 17.533.467 18 1.044 18h10.434c.577 0 1.044-.467 1.044-1.043v-3.13c0-.578.466-1.044 1.043-1.044h9.391c.577 0 1.044-.467 1.044-1.044V7.565c0-.576-.467-1.044-1.044-1.044z"></path></svg></span>SiliconFlow<span data-en></span><span data-zh> 硅基流动</span></td>
               <td><a href="https://cloud.siliconflow.cn/account/ak" target="_blank" rel="noopener">API keys</a> · <a href="https://siliconflow.cn/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
-              <td><span data-en>Hosts many open models; names are long — fetch the list.</span><span data-zh>托管很多开源模型，名字都很长——用「拉取模型」。</span></td>
+              <td><span data-en>Hosts many open models; names are long — fetch the list. Registered on the international site? Pick <b>International</b> in the <b>Site</b> row — separate platforms, and a key from one is refused by the other.</span><span data-zh>托管很多开源模型，名字都很长——用「用我的 Key 拉取模型」。账号注册在国际站的，请在<b>「站点」</b>那一行选<b>「国际」</b>——两边各自独立，Key 不通用。</span></td>
             </tr>
             <tr id="openrouter">
               <td><span class="pico pico-sm" data-icon="openrouter" style="background:#6467F2"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M16.778 1.844v1.919q-.569-.026-1.138-.032-.708-.008-1.415.037c-1.93.126-4.023.728-6.149 2.237-2.911 2.066-2.731 1.95-4.14 2.75-.396.223-1.342.574-2.185.798-.841.225-1.753.333-1.751.333v4.229s.768.108 1.61.333c.842.224 1.789.575 2.185.799 1.41.798 1.228.683 4.14 2.75 2.126 1.509 4.22 2.11 6.148 2.236.88.058 1.716.041 2.555.005v1.918l7.222-4.168-7.222-4.17v2.176c-.86.038-1.611.065-2.278.021-1.364-.09-2.417-.357-3.979-1.465-2.244-1.593-2.866-2.027-3.68-2.508.889-.518 1.449-.906 3.822-2.59 1.56-1.109 2.614-1.377 3.978-1.466.667-.044 1.418-.017 2.278.02v2.176L24 6.014Z"/></svg></span>OpenRouter</td>
@@ -469,15 +592,282 @@
       </div>
     </section>
 
+    <!-- ------------------------------- local models --------------------------- -->
+    <section class="card" id="local">
+      <div class="head">
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></span>
+        <h2 data-en>Using a model on your own machine</h2>
+        <h2 data-zh>用你自己电脑上的模型</h2>
+      </div>
+
+      <p data-en>A model running on your own computer costs nothing per video and sends nothing anywhere. The trade is speed and quality: a 7B model (seven billion parameters — the usual way of saying how big a model is) on a reasonably recent laptop usually translates a line in under a second once it is warm, and reads about as well as a cheap cloud model — how fast it really is depends on your computer. Anything smaller than 7B tends to mix languages mid-sentence, which is worse than not translating at all.</p>
+      <p data-zh>跑在自己电脑上的模型，看多少视频都不花钱，字幕也不会离开这台机器。代价是速度和质量：一个 7B 模型（70 亿参数，「7B」是说模型多大的惯用写法）在还算新的笔记本上热起来之后，通常一句话不到一秒，读起来大致相当于一个便宜的云端模型——具体多快，看你的电脑。比 7B 更小的，常常一句话里中英文混着出，那还不如不翻。</p>
+
+      <p data-en>The model does not run by itself: you need a program that downloads models and runs them. Two free ones are easy to set up — Ollama, a small command-line tool, and LM Studio, the same idea with a window. Whichever you pick, the one thing that catches everybody is the same, and it is in step 2.</p>
+      <p data-zh>模型自己不会跑，要有一个负责下载和运行它的程序。免费又不难装的有两个：Ollama（一个命令行小工具）和 LM Studio（同样的东西，带窗口）。不管你选哪个，卡住所有人的都是同一件事，就在第 2 步。</p>
+
+      <h3 data-en>Ollama</h3>
+      <h3 data-zh>Ollama</h3>
+
+      <p data-en><b>1. Install it, then choose a model and pull it.</b> Download Ollama from <a href="https://ollama.com" target="_blank" rel="noopener">ollama.com</a> and install it. It comes with no model of its own: models are pulled separately, a few gigabytes each, and the part after the colon in a name is the size class — <code>7b</code> means seven billion parameters. Three things decide which one to pull:</p>
+      <p data-zh><b>1. 装上它，再挑一个模型拉下来。</b>去 <a href="https://ollama.com" target="_blank" rel="noopener">ollama.com</a> 下载安装。它本身不带模型：模型要另外拉，一个几 GB；名字里冒号后面是大小档位，<code>7b</code> 就是 70 亿参数。拉哪个，看三件事：</p>
+      <ul class="notes">
+        <li data-en><b>Size.</b> 7B is the floor for subtitles — smaller ones mix languages, as above. Bigger reads better but is slower and needs more memory: count on the machine having a few gigabytes more memory than the model file, so a 4.7 GB model wants 8 GB and an 8 GB model wants 16 GB.</li>
+        <li data-zh><b>大小。</b>字幕翻译 7B 起步——更小的会混语言，上面说过。更大的译得更好，但更慢、更吃内存：内存要比模型文件多出几 GB 才够，4.7 GB 的模型要 8 GB 内存，8 GB 的模型要 16 GB。</li>
+        <li data-en><b>Your languages.</b> Every model's page on ollama.com lists what it speaks.</li>
+        <li data-zh><b>会不会你的语言。</b>ollama.com 上每个模型的页面都写了它支持哪些语言。</li>
+        <li data-en><b>Not a thinking model.</b> Names like <code>qwen3</code> or <code>deepseek-r1</code> think before they answer, and a subtitle line cannot wait for that — the same reason as the cloud note above.</li>
+        <li data-zh><b>别选会先思考的。</b>名字里带 <code>qwen3</code>、<code>deepseek-r1</code> 这类的会先想再答，一句字幕等不起——和上面云端那条是同一个理由。</li>
+      </ul>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span data-en>Model</span><span data-zh>模型</span></th>
+              <th><span data-en>Download</span><span data-zh>下载</span></th>
+              <th><span data-en>Memory</span><span data-zh>内存</span></th>
+              <th><span data-en>Languages</span><span data-zh>语言</span></th>
+              <th><span data-en>In one line</span><span data-zh>一句话</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>qwen2.5:7b</code></td>
+              <td class="nw">4.7 GB</td>
+              <td class="nw">8 GB</td>
+              <td><span data-en>29, incl. Chinese, English, Japanese, Korean</span><span data-zh>29 种，含中、英、日、韩</span></td>
+              <td><span data-en>The one this guide was tested with, on a 16 GB Mac. Start here.</span><span data-zh>这一页就是用它在一台 16 GB 的 Mac 上实测的。从它开始。</span></td>
+            </tr>
+            <tr>
+              <td><code>gemma3:12b</code></td>
+              <td class="nw">8.1 GB</td>
+              <td class="nw">16 GB</td>
+              <td><span data-en>140+</span><span data-zh>140 多种</span></td>
+              <td><span data-en>Better outside the big languages, if the machine has the memory.</span><span data-zh>大语种之外的语言更好，前提是机器有这么多内存。</span></td>
+            </tr>
+            <tr>
+              <td><code>gemma3:4b</code></td>
+              <td class="nw">3.3 GB</td>
+              <td class="nw">8 GB</td>
+              <td><span data-en>140+</span><span data-zh>140 多种</span></td>
+              <td><span data-en>For small machines. Below the 7B floor, so watch one video before trusting it.</span><span data-zh>给小机器。低于 7B 这条线，先看一段视频再信它。</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-en>Then, in a terminal (the sizes and language counts above are ollama.com's figures at the time of writing — the model's own page is the current word):</p>
+      <p data-zh>然后在终端里跑（上面的大小和语言数是写这页时 ollama.com 上的数字，以模型自己的页面为准）：</p>
+      <pre class="code"><code>ollama pull qwen2.5:7b</code></pre>
+      <p data-en><code>ollama list</code> shows what is installed. Switching later is just pulling another one and picking it in step 3.</p>
+      <p data-zh>装了哪些，<code>ollama list</code> 会列出来。以后换模型，就是再拉一个，然后在第 3 步里选它。</p>
+
+      <p data-en><b>2. Start it so the browser is allowed to talk to it.</b> This is the step everybody misses. Ollama refuses requests from a browser extension unless you tell it not to, and the failure looks like the extension is broken rather than like a permission problem. Quit Ollama if it is already running, then start it like this (Mac and Linux — Windows is the next paragraph):</p>
+      <p data-zh><b>2. 启动它，并且允许浏览器连它。</b>这一步是所有人都会漏掉的。默认情况下 Ollama 会拒绝来自浏览器扩展的请求，而且失败的样子看着像是扩展坏了，不像是权限问题。如果它已经在跑，先退出，然后这样启动（Mac 和 Linux；Windows 看下一段）：</p>
+      <pre class="code"><code>OLLAMA_ORIGINS="chrome-extension://*" ollama serve</code></pre>
+      <p data-en>On Windows, set <code>OLLAMA_ORIGINS</code> to <code>chrome-extension://*</code> in the system environment variables and restart Ollama.</p>
+      <p data-zh>Windows 上把系统环境变量 <code>OLLAMA_ORIGINS</code> 设成 <code>chrome-extension://*</code>，然后重启 Ollama。</p>
+      <p data-en>On a Mac that line lasts only until the terminal closes. To have the menu-bar app allow the extension every time it starts, run this once, then quit and reopen Ollama — it is how Ollama's own FAQ sets its variables:</p>
+      <p data-zh>Mac 上那行命令只管这一次，终端一关就没了。想让菜单栏里的 Ollama 每次启动都放行扩展，跑一次下面这行，再退出重开 Ollama——这是 Ollama 官方 FAQ 设环境变量的做法：</p>
+      <pre class="code"><code>launchctl setenv OLLAMA_ORIGINS "chrome-extension://*"</code></pre>
+
+      <p data-en><b>3. Point the extension at it.</b> In the settings page's Translation service pane — the page that <b>Configure…</b> in the popup opens — pick <b>Ollama (local)</b> from the provider list. There is nothing to type: this entry is wired to <code>http://localhost:11434/v1</code>, Ollama's own port, and it has no key field because Ollama does not use one. If yours listens somewhere else, use <b>Custom (OpenAI-compatible)</b> at the bottom of the list instead — that one has an address field.</p>
+      <p data-zh><b>3. 把扩展指过去。</b>在设置页的「翻译服务」面里（就是弹窗里点「配置…」打开的那一页），从服务商清单里选 <b>Ollama（本机）</b>。<b>没有东西要填</b>：这一项直接连 <code>http://localhost:11434/v1</code>，也就是 Ollama 自己的端口；它也没有 Key 那一栏，Ollama 本来就不用 Key。如果你的 Ollama 换了端口，就用清单最下面那一项<b>自定义（OpenAI 兼容）</b>——那一项有地址栏。</p>
+
+      <p data-en>Press <b>List models with my key</b> (<b>List available models</b> on a provider that needs none) and the models you have pulled appear — the list comes from your own machine, so it says what is actually installed. Pick one, then press <b>Save and test</b>. A green line means it answered.</p>
+      <p data-zh>点<b>用我的 Key 拉取模型</b>（免 Key 的服务商上叫<b>「拉取可用模型」</b>），你已经拉下来的模型就会列出来——这份清单来自你自己的机器，所以它说的就是你真正装了什么。选一个，然后点<b>保存并测通</b>。出现绿色那行就是通了。</p>
+
+      <p class="tip" data-en><b>If step 2 was skipped</b>, this is where it shows: the test says it cannot reach the address, and names the two reasons — the server is not running, or it has not been told to allow the extension.</p>
+      <p class="tip" data-zh><b>要是第 2 步漏了</b>，就会在这里现形：测通会说连不上这个地址，并且把两个原因都说出来——服务没在跑，或者它还没允许扩展访问。</p>
+
+      <p data-en><b>Running it somewhere else?</b> The preset's address is fixed on purpose. If your Ollama listens on another port, or you reach a model server over a tunnel, use <b>Custom (OpenAI-compatible)</b> instead and type the address there — everything else on this page applies unchanged.</p>
+      <p data-zh><b>跑在别的地方？</b>这个预设的地址是固定的。如果你的 Ollama 换了端口，或者你要通过隧道连一台别的机器，就改用<b>「自定义（OpenAI 兼容）」</b>，把地址填进去——这一页其余的内容照旧适用。</p>
+
+      <h3 data-en>LM Studio</h3>
+      <h3 data-zh>LM Studio</h3>
+
+      <p data-en>Same three steps, different switch. Download a model in LM Studio's own interface (the advice on size and languages above applies unchanged), open the <b>Local Server</b> tab, and turn on <b>CORS</b> before you start the server — that switch is this program's version of the line above, and without it the browser is refused in exactly the same way. In the extension, pick <b>Custom (OpenAI-compatible)</b> from the provider list — not Ollama — and give it the address <code>http://localhost:1234/v1</code>; the key stays empty.</p>
+      <p data-zh>同样三步，只是开关换了个地方。在 LM Studio 自己的界面里下载模型（上面关于大小和语言的建议照样适用），打开 <b>Local Server</b> 页，<b>启动服务器之前先把 CORS 打开</b>——这个开关就是上面那行命令的等价物，不开的话浏览器会以一模一样的方式被拒。在扩展里，从服务商清单里选<b>「自定义（OpenAI 兼容）」</b>——不是 Ollama——地址填 <code>http://localhost:1234/v1</code>，Key 同样留空。</p>
+
+      <h3 data-en>Any other OpenAI-compatible server</h3>
+      <h3 data-zh>其他任何 OpenAI 兼容的服务</h3>
+
+      <p data-en>That is what <b>Custom (OpenAI-compatible)</b> is for: a model server on another port, a machine on your network, a tunnel to your desktop, or a provider this page does not list. Four things decide whether it works.</p>
+      <p data-zh><b>「自定义（OpenAI 兼容）」</b>就是干这个的：换了端口的本地服务、局域网里的另一台机器、连回家的隧道，或者这一页没列的某家服务。能不能通，取决于四件事。</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span data-en>What to fill in</span><span data-zh>填什么</span></th>
+              <th><span data-en>What is accepted</span><span data-zh>怎么填才对</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span data-en>Address</span><span data-zh>地址</span></td>
+              <td><span data-en>A base URL (<code>https://example.com/v1</code>) or the full endpoint (<code>https://example.com/v1/chat/completions</code>) — both are accepted, and the base URL is the safer one to give. <code>http://</code> is allowed for loopback addresses only (<code>localhost</code>, <code>127.0.0.1</code>); anything else has to be <code>https://</code>.</span><span data-zh>填 Base URL（<code>https://example.com/v1</code>）或完整接口地址（<code>https://example.com/v1/chat/completions</code>）都行，填 Base URL 更保险。<b><code>http://</code> 只允许本机回环地址</b>（<code>localhost</code>、<code>127.0.0.1</code>），其他一律要 <code>https://</code>。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>API Key</span><span data-zh>API Key</span></td>
+              <td><span data-en>Optional here, and only here. Leave it empty for a server that does not authenticate (Ollama, LM Studio) — empty means no <code>Authorization</code> header is sent at all, which is what those servers want. Fill it in for anything that does check.</span><span data-zh>只有这一栏可以留空。不做鉴权的服务（Ollama、LM Studio）就留空——<b>留空等于一个 <code>Authorization</code> 头都不发</b>，这正是它们想要的。要鉴权的服务就照填。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Model</span><span data-zh>模型</span></td>
+              <td><span data-en>Press <b>List models with my key</b> (<b>List available models</b> on a provider that needs none) first. If the server answers, you pick from what it really has. If the list stays empty, the server may not offer <code>/v1/models</code> — type the model name by hand and the rest still works.</span><span data-zh>先点<b>用我的 Key 拉取模型</b>（免 Key 的服务商上叫<b>「拉取可用模型」</b>）。服务器答得上来，你就从它真有的东西里选；<b>列表一直空着</b>，多半是这台服务不提供 <code>/v1/models</code>——手打模型名，其余照样能用。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Permission</span><span data-zh>权限</span></td>
+              <td><span data-en>A named provider's domain ships with the extension. An address you type comes in two kinds: <code>localhost</code> / <code>127.0.0.1</code> are declared too, so the browser asks once when you press <b>Save and test</b>; any other https address is not, the browser shows no prompt, and whether it connects is up to that server's CORS rules. Either way a server of your own must allow the extension (the <code>OLLAMA_ORIGINS</code> line above, or the CORS switch). A refusal there looks exactly like "cannot connect".</span><span data-zh>列表里那些服务商的域名是随扩展一起声明的；你自己填的地址分两种：<code>localhost</code> / <code>127.0.0.1</code> 也在声明里，第一次点<b>保存并测通</b>时浏览器会问一次；其他 https 地址不在，浏览器不会弹权限窗，能不能通由那台服务器的 CORS 规则决定。不管哪种，自己跑的服务都还得<b>允许扩展访问</b>（上面那行 <code>OLLAMA_ORIGINS</code>，或者 CORS 开关）。这一关被拒的样子，和「连不上」一模一样。</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 data-en>When it does not work</h3>
+      <h3 data-zh>不通的时候</h3>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span data-en>What you see</span><span data-zh>你看到的</span></th>
+              <th><span data-en>What it usually is</span><span data-zh>多半是什么</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span data-en>Cannot connect, and the model list stays empty</span><span data-zh>连不上，模型列表也是空的</span></td>
+              <td><span data-en>Step 2. The server is running, but it is turning the browser away. On a Mac, check that it was started with the line above — or that the launchctl line was run and the app reopened — rather than plainly from the menu-bar icon; on Windows, that the variable is set and Ollama was restarted afterwards.</span><span data-zh>第 2 步。服务在跑，但它把浏览器挡回去了。Mac 上确认是用上面那行命令起的——或者跑过 launchctl 那行并重开过——而不是直接点菜单栏图标；Windows 上确认环境变量设了、之后重启过 Ollama。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>The first line takes several seconds, then it speeds up</span><span data-zh>第一句要等好几秒，之后就快了</span></td>
+              <td><span data-en>Normal. The model is being loaded into memory. It stays warm while you keep watching.</span><span data-zh>正常。模型正在装进内存。只要你一直在看，它就一直是热的。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Chinese and English mixed inside one line</span><span data-zh>一句话里中英文混着</span></td>
+              <td><span data-en>The model is too small. 3B often does this; 7B rarely does.</span><span data-zh>模型太小了。3B 经常这样，7B 很少。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>It works, then stops when the laptop sleeps</span><span data-zh>本来好好的，合上盖子之后就不行了</span></td>
+              <td><span data-en>The server stopped with the machine. Start it again with the same line (after the launchctl line, reopening Ollama is enough).</span><span data-zh>服务跟着机器一起停了。用同一行命令再起一次就行（跑过 launchctl 那行的，重开 Ollama 就行）。</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p data-en>The same local model can also write the summaries — the summary panel accepts whatever the Translation service pane is set to, including this.</p>
+      <p data-zh>同一个本地模型也可以拿来写总结——总结面板用的就是「翻译服务」面里配的那家，本地模型也算。</p>
+    </section>
+
+    <!-- ------------------------------- read aloud ---------------------------- -->
+    <section class="card" id="readaloud">
+      <div class="head">
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+        <h2 data-en>Reading the translation out loud</h2>
+        <h2 data-zh>让它把译文念出来</h2>
+      </div>
+      <p data-en>Read-aloud starts on your browser's own voices: nothing to sign up for, no key, and with the voices installed on your machine nothing leaves it (the browser's online voices, the ones named Google, send the line to Google to be spoken). Turn it on in the popup and it speaks each translated line as it appears. If you want better voices than your operating system ships, the <b>Read aloud</b> pane of the settings page (the gear in the popup's header, then <b>Read aloud</b>) takes a key from one of the providers below — it is a separate key from the translation one, even when the company is the same.</p>
+      <p data-zh>朗读默认用你浏览器自带的音色：不用注册、不用 Key；用本机装好的音色时什么都不离开这台电脑（浏览器的在线音色——名字带 Google 的那几个——会把这句发给 Google 来念）。在弹窗里打开开关，每句译文出现时就会念出来。想要比系统音色更好的，就在设置页的「朗读」面板里（弹窗页眉上的齿轮，再点「朗读」）填一把下面某家的 Key——它和翻译那把 Key 是分开的，哪怕是同一家公司。</p>
+      <!-- Both sliders are inside the switch: with read-aloud off the card is
+           one checkbox, and a reader told to look for two sliders finds none.
+           The popup labels the second one "Original audio"; only the settings
+           page has room for the long name, which is what this said. -->
+      <p data-en>Tick <b>Read the translation aloud in the video</b> and two sliders appear under it: <b>Read-aloud volume</b>, and <b>Original audio</b> — how far the video's own sound drops under the voice. The settings page has room for that one's full name, <b>Original audio while speaking</b>.</p>
+      <p data-zh>勾上「在视频里朗读译文」，下面才会出现两个滑杆：「朗读音量」，和「原声音量」——朗读时视频原声压到多低。设置页上写得下它的全名：「朗读时的原声音量」。</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <!-- One cell per COLUMN, both languages inside it. Written as one
+                 cell per language, the hidden half still holds a column: the
+                 table laid out six columns, the three visible headings bunched
+                 into the left third and stopped sitting over the data they
+                 name (reported 2026-08-31 with a screenshot of exactly that). -->
+            <tr>
+              <th><span data-en>Provider</span><span data-zh>服务商</span></th>
+              <th><span data-en>Key</span><span data-zh>Key</span></th>
+              <th><span data-en>Worth knowing</span><span data-zh>要注意的</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="tts-local-speech">
+              <td><span data-en>Your browser's own voices (free)</span><span data-zh>浏览器内置音色（免费）</span></td>
+              <td><span data-en>none</span><span data-zh>不需要</span></td>
+              <td><span data-en>Free, offline, already installed. The voice list is whatever your operating system has. A long line slows the video a little here too, just as with a cloud voice; the one difference is that the browser's online voices (the ones named Google) start a beat later.</span><span data-zh>免费、离线、已经装好了。音色列表就是你系统里有的那些；句子太长时同样会把视频稍微放慢，和云端音色一样。唯一的差别：浏览器的在线音色（名字带 Google 的那几个）起播会慢半拍。</span></td>
+            </tr>
+            <tr id="tts-openai-tts">
+              <td>OpenAI TTS</td>
+              <td><a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">Keys</a> · <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>Thirteen voices, all of them cross-language, so one choice follows you whatever you are reading.</span><span data-zh>13 个音色，全都跨语言，选一个就能跟着你换任何译文语言走。</span></td>
+            </tr>
+            <tr id="tts-google-tts">
+              <td>Google Cloud TTS</td>
+              <td><a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Keys</a> · <a href="https://cloud.google.com/text-to-speech/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>Enable <b>Cloud Text-to-Speech API</b> on the project first, or the key answers 403. Covers 43 of the 50 translation languages; the rest say so honestly.</span><span data-zh>要先在项目里启用 <b>Cloud Text-to-Speech API</b>，否则 Key 会回 403。50 种译文语言里支持 43 种，其余的会直接告诉你不支持。</span></td>
+            </tr>
+            <tr id="tts-qwen-tts">
+              <td><span data-en>Alibaba Model Studio (Qwen-TTS)</span><span data-zh>阿里云百炼 Qwen-TTS</span></td>
+              <td><a href="https://bailian.console.aliyun.com/?apiKey=1" target="_blank" rel="noopener">Keys</a> · <a href="https://help.aliyun.com/zh/model-studio/models" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>The only one with Chinese regional voices — Beijing, Shanghai, Sichuan, Cantonese and more. Eleven languages, not fifty. Registered on the international site? Pick it in the <b>Site</b> row first — the keys are not interchangeable.</span><span data-zh>唯一有中文方言音色的一家——北京、上海、四川、粤语等等。只支持 11 种语言，不是 50 种。账号注册在国际站的，先在<b>「站点」</b>那一行选——两边的 Key 不通用。</span></td>
+            </tr>
+            <tr id="tts-elevenlabs">
+              <td>ElevenLabs</td>
+              <td><a href="https://elevenlabs.io/app/settings/api-keys" target="_blank" rel="noopener">Keys</a> · <a href="https://elevenlabs.io/pricing" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en>A large voice library, and your own cloned voices show up in the list too. Press <b>Fetch this language's full list with your key</b> to load them.</span><span data-zh>音色库很大，你自己克隆的声音也会出现在列表里，点「用你的 Key 拉取这个语言的完整音色清单」就能加载。</span></td>
+            </tr>
+            <tr id="tts-azure-speech">
+              <td>Azure Speech</td>
+              <td><a href="https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices" target="_blank" rel="noopener">Portal</a> · <a href="https://azure.microsoft.com/pricing/details/cognitive-services/speech-services/" target="_blank" rel="noopener"><span data-en>pricing</span><span data-zh>资费</span></a></td>
+              <td><span data-en><b>Also needs the region</b> — the one shown next to the key in the portal, such as <code>eastus</code>. The key alone will not work, and the pane says so. Xiaoxiao and the other Chinese multilingual voices live here. An Azure China (21Vianet) account picks its platform in the <b>Site</b> row.</span><span data-zh><b>还要填「服务区域」</b>——就是门户里 Key 旁边写的那个，比如 <code>eastus</code>。只有 Key 是用不了的，设置页会直说。晓晓等中文多语言音色在这一家。由世纪互联运营的 Azure 中国账号，在<b>「站点」</b>那一行选平台。</span></td>
+            </tr>
+            <tr id="tts-custom-speech">
+              <td><span data-en>Custom (OpenAI-compatible)</span><span data-zh>自定义（OpenAI 兼容）</span></td>
+              <td><span data-en>optional</span><span data-zh>可留空</span></td>
+              <td><span data-en>Point it at any server speaking the OpenAI <code>/v1/audio/speech</code> shape — a local Kokoro or openai-edge-tts gives you free read-aloud next to a local translation model. Type the address (plain <code>http://</code> works for this machine only), leave the key empty if the server wants none, and type the voice name yourself — local servers rarely publish a list.</span><span data-zh>指向任何说 OpenAI <code>/v1/audio/speech</code> 这套接口的服务——本机跑 Kokoro、openai-edge-tts 这类，就能在本地翻译模型旁边配上免费朗读。地址自己填（<code>http://</code> 只有本机能用），服务器不要 Key 就留空，音色名也自己打——本地服务一般没有音色目录。</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-en>The popup has no preview: open the settings page's <b>Read aloud</b> pane (the gear in the popup's header), where <b>Preview</b> next to the voice speaks a sentence in your translation language before you commit to anything.</p>
+      <p data-zh>弹窗里没有试听：从弹窗页眉的齿轮进设置页的「朗读」面，音色旁边的「试听」会用你当前的译文语言念一句话给你听，不用先开着看视频才知道好不好。</p>
+      <p data-en>If a provider's docs list more than one speech model, the same pane shows a <b>Model</b> row, and you can type a name yourself. When they ship a new model, type its name in and you can use it; you don't wait for an extension update.</p>
+      <p data-zh>服务商官方若写了不止一个语音模型，同一面板里会多一行「模型」，名字也可以自己填。他们新出了模型，把名字填进去就可以用，不用等扩展更新。</p>
+    </section>
+
+    <!-- ----------------------------- summary --------------------------------- -->
+    <section class="card" id="summary">
+      <div class="head">
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4.5"/></svg></span>
+        <h2 data-en>Summarizing a video into chapters</h2>
+        <h2 data-zh>把一支视频总结成章节</h2>
+      </div>
+      <p data-en>Click the small arrow on the extension's own subtitle button in the player's control bar (the one that is blue while the overlay is on — not YouTube's CC button) to open its menu, and pick <b>Summary</b>. The whole subtitle track becomes a one-line TL;DR plus chapters with timestamps, written in your translation language; click a timestamp to jump there. You need a service of yours: any own-key provider in the Translation service pane, or a local model — Ollama from the provider list, or LM Studio through the custom endpoint. The free engines only translate. They don't summarize.</p>
+      <p data-zh>点播放器控制栏里扩展自己那颗字幕按钮（开着时是蓝色的那颗，不是 YouTube 的 CC）上的小箭头打开菜单，选「总结」。整条字幕轨会变成一句摘要，加上带时间戳的章节，用你的译文语言来写；点时间戳就跳到那段。这需要你自己的服务：翻译面板里自带 Key 的任何一家，或本机模型——列表里选「Ollama（本机）」，LM Studio 走自定义接口。免费引擎只翻译，不总结。</p>
+      <!-- What the panel says with nothing set up, which is what a reader
+           following this page in order actually opens. It has no Summarize
+           button at all until then, so "before you press Summarize" was
+           advice about a control that was not on their screen. -->
+      <p data-en>With no service of your own set up, the panel opens on that instead: it says summaries need a service of yours and offers <b>Set up a translation service</b>, and there is no <b>Summarize</b> button until there is one.</p>
+      <p data-zh>还没配自己的服务时，面板开出来就是这句：它会说总结需要你自己的翻译服务，并给一颗「去配置翻译服务」；在那之前，「开始总结」这颗按钮根本不会出现。</p>
+      <p data-en>Before you press <b>Summarize</b>, the panel names the provider and how many parts the track is split into. Until you press it, the track stays in the browser; you can cancel mid-way. Long videos are summarized in parts and then merged. If a part fails, it is written into the result rather than papered over.</p>
+      <p data-zh>按「开始总结」之前，面板会先写清用哪家、整轨分几段。你不按这个按钮，字幕不会离开浏览器；跑一半也可以随时取消。长视频会分段总结再拼起来，哪一段失败了就照实写在结果里，不会糊弄过去。</p>
+    </section>
+
     <!-- ----------------------------- troubleshooting ------------------------- -->
     <section class="card" id="troubleshooting">
       <div class="head">
-        <span class="emoji">🔧</span>
+        <span class="emoji"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
         <h2 data-en>When it doesn't work</h2>
         <h2 data-zh>出问题了怎么办</h2>
       </div>
       <p data-en>The extension tries to name the actual problem instead of just failing. Here is what each message means.</p>
       <p data-zh>扩展会尽量说出到底哪里出了问题，而不是只报个失败。下面是每种提示的含义。</p>
+      <!-- Two different failures wear the same word. This table is about a key
+           that answers wrongly; the commonest report is no subtitles at all,
+           which raises no message for the table to explain, and whose three
+           checks live in the extension. They share the same Copy diagnostics
+           button, which is why the two kept being read as one. -->
+      <p class="tip" data-en><b>Nothing appeared at all?</b> That is the other kind, and this table will not have it: no message means nothing got as far as failing. Open the settings page's <b>About</b> pane and work through the three checks under <b>Something not working</b>. The table below is for the other case — the key is set up and the extension is telling you what came back.</p>
+      <p class="tip" data-zh><b>字幕根本没出来？</b>那是另一回事，这张表里查不到：没有提示，说明它还没走到失败那一步。去设置页的「关于」面，照「遇到问题」下面那三步过一遍。下面这张表管的是另一种——Key 已经配好了，扩展在告诉你对面回了什么。</p>
       <div class="tbl-wrap">
         <table>
           <thead>
@@ -488,32 +878,50 @@
           </thead>
           <tbody>
             <tr>
-              <td><span data-en>Key was rejected (401/403)</span><span data-zh>Key 被拒绝（401/403）</span></td>
-              <td><span data-en>Re-copy the whole key (a trailing space or a missing character is the usual cause), and check the key is active and the service is enabled on that account.</span><span data-zh>重新完整复制一遍 Key（多一个空格、少一个字符是最常见原因），并确认该 Key 有效、账号已开通对应服务。</span></td>
+              <td><span data-en>Key was rejected (401)</span><span data-zh>Key 被拒绝（401）</span></td>
+              <td><span data-en>Re-copy the whole key — a trailing space or a missing character is the usual cause — and check it is still active. A <b>403</b> is a different thing: the key works, but that account is not allowed to make this call — an identity check still pending, an API not switched on, or a region. The extension now says which of the two it got, and prints what the provider itself said underneath.</span><span data-zh>重新完整复制一遍 Key（多一个空格、少一个字符是最常见原因），再确认它还有效。<b>403</b> 是另一回事：Key 本身能用，是这个账号不被允许这样调用——多半是余额不足、实名还没做、某个接口没开通，或者地区限制。扩展现在会说清它遇到的是哪一种，并把服务商自己说的那句话显示在下面。</span></td>
             </tr>
             <tr>
-              <td><span data-en>Model name or base URL may be wrong</span><span data-zh>模型名或接口地址可能不对</span></td>
+              <td><span data-en>The endpoint refused the request — the model name or base URL may be wrong</span><span data-zh>接口拒绝了请求：模型名或接口地址可能不对</span></td>
               <td><span data-en>Use “List models with my key” and pick from the list. For a custom endpoint, both a base URL and a full endpoint URL are accepted.</span><span data-zh>点「用我的 Key 拉取模型」从列表里选。自定义接口地址时，填 Base URL 或完整接口地址都可以。</span></td>
             </tr>
             <tr>
               <td><span data-en>Only chain-of-thought, no translation</span><span data-zh>只输出了思考过程，没给译文</span></td>
-              <td><span data-en>You picked a reasoning model. Switch to a normal “flash”/“turbo” style model.</span><span data-zh>你选到了推理模型。换成普通的 flash／turbo 一类模型。</span></td>
+              <td><span data-en>You picked a reasoning model. Switch to an ordinary one — a name with “flash”, “turbo” or “lite” in it, not “thinking”, “reasoner” or “r1”.</span><span data-zh>你选到了推理模型。换成普通模型——名字里带 flash、turbo、lite 这类字样的，而不是带 thinking、reasoner、r1 的。</span></td>
             </tr>
             <tr>
               <td><span data-en>Rate-limited / out of quota</span><span data-zh>被限流／额度用完</span></td>
-              <td><span data-en>The extension slows down and retries by itself; already-translated lines keep working. If the quota is gone for the period, top up or switch engine.</span><span data-zh>扩展会自动放慢并重试，已翻译的句子不受影响。如果是本期额度用尽，充值或换引擎。</span></td>
+              <td><span data-en>Rate-limited: the extension slows down and retries by itself; already-translated lines keep working. Out of quota or unpaid balance (a 402): retrying will not help — top up, or switch engine; the popup says which of the two it is.</span><span data-zh>被限流：扩展会自动放慢并重试，已翻译的句子还在。额度用完或欠费（402）：重试没有用——充值，或换引擎；弹窗会说清是哪一种。</span></td>
             </tr>
             <tr>
               <td><span data-en>Cannot reach that endpoint</span><span data-zh>连不上这个接口</span></td>
               <td><span data-en>Network or regional restriction. Try again, try another provider, or use the free engine.</span><span data-zh>网络或区域限制。稍后重试、换一家，或先用免费引擎。</span></td>
             </tr>
             <tr>
-              <td><span data-en>Not authorized to reach that domain</span><span data-zh>没有授权访问这个域名</span></td>
+              <td><span data-en>Without permission to reach that API host the extension cannot connect</span><span data-zh>没有授权访问这个接口域名，无法连接</span></td>
               <td><span data-en>The permission prompt was dismissed. Press Save and test again and allow it.</span><span data-zh>权限弹窗被关掉了。再点一次「保存并测通」并允许。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>That address answered with a web page, not the API</span><span data-zh>那个地址回的是一个网页，不是接口</span></td>
+              <td><span data-en>Usually a sign-in wall or a network that intercepts requests. Check the address (an API base URL, not a web page), or try another network.</span><span data-zh>多半是登录页或网络在中间拦截。检查地址（要填接口地址，不是网页），或者换个网络。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>The model did not answer line by line as asked</span><span data-zh>模型没按要求逐行返回</span></td>
+              <td><span data-en>The extension already retried with smaller pieces. Pick another model — an ordinary chat model, not a reasoning one — and try again.</span><span data-zh>扩展已经自动拆小重试过了。换个模型——普通对话模型，不要推理模型——再试。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Could not play (read-aloud preview)</span><span data-zh>播不出来（朗读试听）</span></td>
+              <td><span data-en>The voice provider returned no audio. Check that key, press Save and test on the Read aloud pane, and read the line it prints.</span><span data-zh>语音服务商没有返回音频。检查那把 Key，在「朗读」面点「保存并测通」，看它打出的那一行。</span></td>
+            </tr>
+            <tr>
+              <td><span data-en>Heads up: this video only has AI-dubbed auto captions</span><span data-zh>提示：此视频只有 AI 配音的自动字幕</span></td>
+              <td><span data-en>Not a fault. The video has no caption track in its original language, so the lines follow the dubbed audio and may not match what you hear. Nothing to set; another video will be fine.</span><span data-zh>不是故障。视频没有原声语言的字幕轨，字幕跟的是配音音轨，可能和你听到的对不上。不用设置，换个视频就正常。</span></td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p data-en>Still stuck? Copy the diagnostic info first (settings → About → <b>Copy diagnostic info</b>: version, engine state, what the current tab is doing — no key, no subtitle text) and paste it into your message; it saves a round of questions.</p>
+      <p data-zh>还是不行？先复制诊断信息（设置页 → 关于 → <b>「复制诊断信息」</b>：版本、引擎状态、当前标签页在做什么，不含 Key 和字幕正文），贴进你的消息里，能省一轮来回。</p>
       <div class="actions">
         <a class="btn" href="feedback.html"><span data-en>Still stuck? Tell us</span><span data-zh>还是不行？告诉我们</span></a>
         <a class="ghost" href="./#faq"><span data-en>General FAQ</span><span data-zh>常见问题</span></a>
@@ -529,7 +937,7 @@
       <div class="foot-brand">
         <a href="./" class="brand"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
         <p data-en>Bilingual subtitles for YouTube — the original language and your translation together in one clean, non-overlapping layer.</p>
-        <p data-zh>为 YouTube 打造的双语字幕——原文与你的译文同处一层，干净整洁、互不重叠。</p>
+        <p data-zh>YouTube 的双语字幕——原文和你的译文同处一层，不会叠在一起糊成一团。</p>
       </div>
       <div class="foot-links">
         <div class="foot-col">
@@ -546,13 +954,13 @@
         <div class="foot-col">
           <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
+          <a href="https://github.com/Gythiro/yt-dual-subs/blob/main/LICENSE" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="./#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.6.0 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.7.0 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. Provider names and logos are trademarks of their respective owners and are used only to identify the API you choose. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。各服务商名称与标志均为其各自所有者的商标，此处仅用于标识你所选择的接口。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
@@ -566,7 +974,8 @@
   // two chrome controls carry both strings and are set here.
   var ARIA = [
     ["lang-toggle-group", "Language", "语言"],
-    ["navBurger", "Menu", "菜单"]
+    ["navBurger", "Menu", "菜单"],
+    ["toc", "Sections", "章节"]
   ];
   var setAria = function (lang) {
     ARIA.forEach(function (row) {
@@ -577,15 +986,27 @@
   var STORAGE_KEY = "dsfy-lang";
   var params = new URLSearchParams(location.search);
 
-  window.setLang = function (lang) {
+  window.setLang = function (lang, persist) {
     if (lang !== "zh") lang = "en";
     document.documentElement.setAttribute("lang", lang);
+    // The tab title follows the page language too; it used to stay English in Chinese mode.
+    var t = document.documentElement.getAttribute(lang === "zh" ? "data-title-zh" : "data-title-en");
+    if (t) document.title = t;
+    // The description and the image alts follow the page language too.
+    var d = document.querySelector('meta[name="description"]');
+    if (d) { var dv = d.getAttribute(lang === "zh" ? "data-desc-zh" : "data-desc-en"); if (dv) d.setAttribute("content", dv); }
+    document.querySelectorAll("img[data-alt-zh]").forEach(function (img) {
+      var av = img.getAttribute(lang === "zh" ? "data-alt-zh" : "data-alt-en"); if (av) img.setAttribute("alt", av);
+    });
     var enBtn = document.getElementById("lang-en");
     var zhBtn = document.getElementById("lang-zh");
     if (enBtn) enBtn.classList.toggle("active", lang === "en");
     if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+    if (enBtn) enBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+    if (zhBtn) zhBtn.setAttribute("aria-pressed", lang === "zh" ? "true" : "false");
     setAria(lang);
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    if (persist) { try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {} }
+    try { var u = new URL(location.href); if (u.searchParams.get("lang") !== lang) { u.searchParams.set("lang", lang); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
   };
 
   window.toggleMenu = function () {
@@ -599,6 +1020,10 @@
   var navMenuEl = document.getElementById("navMenu");
   if (navMenuEl) navMenuEl.addEventListener("click", function (e) {
     if (e.target && e.target.closest && e.target.closest("a")) window.toggleMenu();
+  });
+  document.addEventListener("click", function (e) {
+    var mm = document.getElementById("navMenu");
+    if (mm && mm.classList.contains("open") && e.target && e.target.closest && !e.target.closest("#navMenu, #navBurger")) window.toggleMenu();
   });
 
   var lang = params.get("lang");
@@ -642,6 +1067,10 @@
     if (!drop.contains(e.target)) window.toggleHelp();
   });
   document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      var mm = document.getElementById("navMenu");
+      if (mm && mm.classList.contains("open")) { window.toggleMenu(); var bb = document.getElementById("navBurger"); if (bb) bb.focus(); return; }
+    }
     if (e.key === "Escape" && drop && drop.classList.contains("open")) {
       window.toggleHelp();
       var b = document.getElementById("helpBtn");
@@ -651,5 +1080,125 @@
 })();
 </script>
 
+<script>
+// Which section you are in, marked on the jump row. Progressive: without JS the
+// row is still a list of jumps, which is most of its value.
+(function(){
+  var links = [].slice.call(document.querySelectorAll(".toc a"));
+  if (!links.length || !("IntersectionObserver" in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[a.getAttribute("href").slice(1)] = a; });
+  // The TOPMOST section still in the reading band, not the one with the most
+  // pixels in it: on a phone one section can fill the band while the heading
+  // you just scrolled to sits at the top of it, and "most pixels" then names
+  // the section you have already left (measured at 390px).
+  var live = {};
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) live[e.target.id] = Math.round(e.boundingClientRect.top);
+      else delete live[e.target.id];
+    });
+    var best = "", bestTop = Infinity;
+    Object.keys(live).forEach(function(id){
+      if (live[id] < bestTop) { bestTop = live[id]; best = id; }
+    });
+    links.forEach(function(a){
+      a.setAttribute("aria-current", a.getAttribute("href") === "#" + best ? "true" : "false");
+    });
+  }, { rootMargin: "-124px 0px -60% 0px", threshold: 0 });
+  Object.keys(byId).forEach(function(id){
+    var el = document.getElementById(id); if (el) io.observe(el);
+  });
+})();
+</script>
+<script>
+(function () {
+  // Sideways-scrolling regions: focusable for the keyboard, and marked while
+  // there is more to the right so the fade says so.
+  var regions = Array.prototype.slice.call(document.querySelectorAll(".tbl-wrap, pre.code, .toc-in"));
+  regions.forEach(function (el) { if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "0"); });
+  function mark() {
+    regions.forEach(function (el) {
+      var more = el.scrollWidth - el.clientWidth - el.scrollLeft > 4;
+      el.classList.toggle("can-scroll", more);
+    });
+  }
+  regions.forEach(function (el) { el.addEventListener("scroll", mark, { passive: true }); });
+  window.addEventListener("resize", mark);
+  mark();
+  // The jump bar's current chip is scrolled into view when it changes.
+  // A copy button on each shell command. Built here rather than written into
+  // the markup three times: the label has to exist in both languages, and the
+  // page's own [data-en]/[data-zh] rules already decide which one shows.
+  // Two ways to put text on the clipboard, because the modern one is not
+  // always allowed to: it needs a secure context AND a permission that can be
+  // denied, and it is simply absent when this page is opened from a file. The
+  // old selection-and-execCommand path has none of those conditions, so it is
+  // the fallback rather than the other way round.
+  function copyText(text) {
+    return new Promise(function (resolve, reject) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(resolve, function () { legacy(resolve, reject); });
+      } else {
+        legacy(resolve, reject);
+      }
+      function legacy(ok, no) {
+        try {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          // Off-screen but still selectable; readonly keeps a phone keyboard shut.
+          ta.setAttribute("readonly", "");
+          ta.style.cssText = "position:fixed;top:0;left:-9999px;opacity:0";
+          document.body.appendChild(ta);
+          ta.select();
+          ta.setSelectionRange(0, ta.value.length);
+          var done = document.execCommand && document.execCommand("copy");
+          document.body.removeChild(ta);
+          done ? ok() : no(new Error("execCommand said no"));
+        } catch (e) { no(e); }
+      }
+    });
+  }
+  Array.prototype.slice.call(document.querySelectorAll("pre.code")).forEach(function (pre) {
+    var code = pre.querySelector("code");
+    if (!code) return;
+    var wrap = document.createElement("div");
+    wrap.className = "codewrap";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copybtn";
+    var en = document.createElement("span"), zh = document.createElement("span");
+    en.setAttribute("data-en", ""); zh.setAttribute("data-zh", "");
+    function say(a, b) { en.textContent = a; zh.textContent = b; }
+    say("Copy", "复制");
+    btn.appendChild(en); btn.appendChild(zh);
+    btn.addEventListener("click", function () {
+      copyText(code.textContent).then(function () {
+        say("Copied", "已复制");
+        btn.classList.add("done");
+        setTimeout(function () { say("Copy", "复制"); btn.classList.remove("done"); }, 1600);
+      }, function () {
+        // Denied, or a browser that refuses outside a user gesture it trusts.
+        // Say so rather than looking like it worked.
+        say("Copy failed", "复制失败");
+        setTimeout(function () { say("Copy", "复制"); }, 1600);
+      });
+    });
+    wrap.appendChild(btn);
+  });
+  var toc = document.querySelector(".toc-in");
+  if (toc && window.MutationObserver) {
+    new MutationObserver(function () {
+      var cur = toc.querySelector('[aria-current="true"]');
+      // Sideways only: scrollIntoView would also drag the page vertically
+      // on every scrollspy change and fight the reader's scrolling.
+      if (cur) toc.scrollLeft = Math.max(0, cur.offsetLeft - (toc.clientWidth - cur.offsetWidth) / 2);
+      mark();
+    }).observe(toc, { attributes: true, subtree: true, attributeFilter: ["aria-current"] });
+  }
+})();
+</script>
 </body>
 </html>

@@ -1,11 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-title-en="Dual Subtitles for YouTube™ — bilingual captions in one clean layer" data-title-zh="Dual Subtitles for YouTube™ — 双语字幕，干净的一层">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <title>Dual Subtitles for YouTube™ — bilingual captions in one clean layer</title>
-<meta name="description" content="A free, open-source (MIT) Chrome and Edge extension that shows the original language and your translation together as a single, non-overlapping subtitle layer on every YouTube video.">
+<link rel="canonical" href="https://gythiro.github.io/yt-dual-subs/">
+<link rel="alternate" hreflang="en" href="https://gythiro.github.io/yt-dual-subs/?lang=en">
+<link rel="alternate" hreflang="zh" href="https://gythiro.github.io/yt-dual-subs/?lang=zh">
+<link rel="alternate" hreflang="x-default" href="https://gythiro.github.io/yt-dual-subs/">
+<meta name="description" content="A free, open-source (MIT) Chrome and Edge extension that shows the original language and your translation together as a single, non-overlapping subtitle layer on every YouTube video." data-desc-en="A free, open-source (MIT) Chrome and Edge extension that shows the original language and your translation together as a single, non-overlapping subtitle layer on every YouTube video." data-desc-zh="免费开源（MIT）的 Chrome / Edge 扩展：在每一支 YouTube 视频上，把原文和你的译文放在同一个整齐的字幕层里同时显示，两行互不遮挡。">
+<!-- Link preview. Title and description are this page's own, so there is one
+     place to change them. Card image is script-generated (site-shot.js og). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dual Subtitles for YouTube">
+<meta property="og:title" content="Dual Subtitles for YouTube™ — bilingual captions in one clean layer">
+<meta property="og:description" content="A free, open-source (MIT) Chrome and Edge extension that shows the original language and your translation together as a single, non-overlapping subtitle layer on every YouTube video.">
+<meta property="og:url" content="https://gythiro.github.io/yt-dual-subs/">
+<meta property="og:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A YouTube player showing one subtitle box with an English line above its Chinese translation.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dual Subtitles for YouTube™ — bilingual captions in one clean layer">
+<meta name="twitter:description" content="A free, open-source (MIT) Chrome and Edge extension that shows the original language and your translation together as a single, non-overlapping subtitle layer on every YouTube video.">
+<meta name="twitter:image" content="https://gythiro.github.io/yt-dual-subs/assets/og.png">
 <meta name="google-site-verification" content="ntm8sJQODSKTGupy_ClPUO9-YWm4VlE0yaUUz0T4YYY" />
 <style>
   :root{
@@ -15,13 +34,14 @@
     --card:#15151F;
     --ink:#FFFFFF;
     --muted:#A6A6B8;
-    --muted-2:#7C7C90;
+    --muted-2:#7F7F93;
     --line:rgba(255,255,255,0.10);
     --line-2:rgba(255,255,255,0.16);
-    --accent:#7B61FF;
+    --accent:#8571FF;
     --accent-2:#FF4D8D;
     --translation:#FFC24B;
     --grad:linear-gradient(105deg,#7B61FF 0%,#9E5CFF 45%,#FF4D8D 100%);
+    --grad-on:linear-gradient(105deg,#755CF2 0%,#8F53E7 45%,#CE3E72 100%);
     --radius:10px;
     --radius-lg:16px;
     --maxw:1160px;
@@ -38,7 +58,6 @@
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
-    overflow-x:hidden;
   }
   img{max-width:100%;height:auto;display:block}
   a{color:inherit;text-decoration:none}
@@ -66,6 +85,11 @@
   html[lang="zh"] .dev-note code[data-zh]{display:block}
 
   /* nav */
+  /* The nav is sticky, so an anchor jump lands underneath it. Nothing
+     was hiding today only because every section carries its own 78–103px
+     of padding — which is luck, not a decision, and stops being true the
+     moment a section is laid out more tightly. */
+  html{scroll-padding-top:76px}
   .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(12px);background:rgba(10,10,15,0.72);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:20px;height:64px}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-0.02em;font-size:16px;white-space:nowrap;flex:none}
@@ -76,12 +100,12 @@
      stretched anchor puts its text at the top of the box while the inline-flex
      button centres its own — 3px apart, which is visible in the bar. */
   .nav-links>a,.nav-links>.nav-drop{display:flex;align-items:center}
-  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-links a{color:var(--muted);font-size:14.5px;font-weight:500;white-space:nowrap;padding:5px 0}
   .nav-links a:hover{color:var(--ink)}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
   .ghost{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);color:var(--ink);font-size:14px;font-weight:600;transition:border-color .15s,background .15s;white-space:nowrap}
   .ghost:hover{border-color:rgba(255,255,255,0.34);background:rgba(255,255,255,0.04)}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 24px;border-radius:var(--radius);background:var(--grad);color:#fff;font-size:15px;font-weight:700;letter-spacing:-0.01em;border:0;cursor:pointer;box-shadow:0 6px 22px rgba(123,97,255,0.38);transition:transform .12s ease,box-shadow .15s ease}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 24px;border-radius:var(--radius);background:var(--grad-on);color:#fff;font-size:15px;font-weight:700;letter-spacing:-0.01em;border:0;cursor:pointer;box-shadow:0 6px 22px rgba(123,97,255,0.38);transition:transform .12s ease,box-shadow .15s ease}
   .btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(123,97,255,0.5)}
   .btn.sm{height:40px;padding:0 18px;font-size:14px;white-space:nowrap}
   .btn svg,.ghost svg{flex:none}
@@ -91,10 +115,8 @@
   .lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.03);height:36px;flex:none}
   .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:0.01em;padding:0 13px;height:100%;cursor:pointer;font-family:inherit;transition:color .15s,background .15s;white-space:nowrap}
   .lang-toggle button:hover{color:var(--ink)}
-  .lang-toggle button.active{color:#fff;background:var(--grad);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
+  .lang-toggle button.active{color:#fff;background:var(--grad-on);box-shadow:0 2px 10px rgba(123,97,255,0.4)}
 
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
-  .kicker{font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-2)}
 
   /* hero */
   .hero{position:relative;text-align:center;padding:74px 0 40px;overflow:hidden}
@@ -123,6 +145,7 @@
   .frame .bar{display:flex;align-items:center;gap:7px;padding:11px 15px;background:#15151d;border-bottom:1px solid var(--line)}
   .frame .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a46}
   .frame .bar .url{margin-left:12px;font-size:12px;color:var(--muted-2);font-family:ui-monospace,Menlo,Consolas,monospace}
+  .shot .credit{position:relative;z-index:1;margin:10px 6px 0;text-align:right;font-size:12px;color:var(--muted-2)}
   .frame img{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block;background:#0b0b12}
 
   /* trust strip */
@@ -134,14 +157,13 @@
 
   section{padding:96px 0}
   .sec-head{max-width:720px;margin:0 auto 52px;text-align:center}
-  .sec-head h2{font-size:clamp(28px,4vw,40px);letter-spacing:-0.03em;margin-top:14px}
+  .sec-head h2{font-size:clamp(28px,4vw,40px);letter-spacing:-0.03em}
   .sec-head p{color:var(--muted);margin-top:16px;font-size:18px}
 
   /* steps */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .step{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px 26px}
-  .step .n{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;font-weight:700;color:var(--accent-2);letter-spacing:0.08em}
-  .step h3{font-size:20px;margin-top:12px;letter-spacing:-0.02em}
+  .step h3{font-size:20px;margin-top:0;letter-spacing:-0.02em}
   .step p{color:var(--muted);margin-top:10px;font-size:15.5px}
 
   /* before/after */
@@ -163,25 +185,46 @@
   .rows{display:grid;gap:80px}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
   .row.rev .txt{order:2}
-  .row .txt h3{font-size:clamp(24px,3vw,30px);letter-spacing:-0.03em;margin-top:14px}
+  .row .txt h3{font-size:clamp(24px,3vw,30px);letter-spacing:-0.03em}
   .row .txt p{color:var(--muted);margin-top:16px;font-size:17px}
   .flist{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:11px}
   .flist li{display:flex;gap:11px;align-items:flex-start;color:var(--muted);font-size:15.5px}
   .flist li svg{flex:none;margin-top:3px;color:var(--accent)}
   .flist li b{color:var(--ink);font-weight:600}
   .media-frame{position:relative}
+  /* A line under a screenshot that says which STATE it is showing. Three of
+     these pictures are of the product after someone has set something up —
+     a key chosen, read-aloud switched on, a folded card opened — and a reader
+     who opens the popup expecting the picture finds a plainer screen and
+     wonders whether they installed the wrong thing. */
+  .media-frame .shot-note{position:relative;z-index:1;margin:10px auto 0;max-width:360px;
+    color:var(--muted-2);font-size:13px;line-height:1.5;text-align:center}
   .media-frame .glow{position:absolute;inset:-10% -6%;background:radial-gradient(55% 60% at 50% 50%,rgba(123,97,255,0.28),rgba(255,77,141,0.10) 55%,transparent 72%);filter:blur(28px);z-index:0}
   .media-frame .card-img{position:relative;z-index:1;border:1px solid var(--line-2);border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.5);background:#0b0b12}
   .media-frame img{width:100%;height:auto;object-fit:contain;background:#0b0b12}
   .media-frame img.ar-settings{aspect-ratio:1280/800}
   .media-frame img.ar-hero{aspect-ratio:16/9}
   .media-frame img.ar-compare{aspect-ratio:1080/1440;max-width:420px;margin:0 auto}
+  /* The popup shots are the real popup at its real size — 360x600, the width it
+     is authored at and the height Chrome gives a browser action. Capping the
+     width keeps it at 1:1 instead of blowing 360px of UI up to 500. */
+  .media-frame img.ar-popup{aspect-ratio:360/600;display:block}
+  /* The cap is on the FRAME, not the image: capping only the image leaves a
+     530px card with a 360px popup centred in it and the fade below spanning
+     the empty sides rather than the picture. */
+  .media-frame .card-img.fade-b{max-width:360px;margin:0 auto}
+  /* The panel is taller than 600px, so the shot ends mid-card. Fade the cut the
+     way the store composite does — a hard edge through a control reads as a
+     broken image rather than as "there is more below". */
+  .media-frame .card-img.fade-b::after{content:"";position:absolute;left:0;right:0;bottom:0;
+    height:96px;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(11,11,18,0) 0%,rgba(11,11,18,0.72) 55%,rgba(11,11,18,0.97) 100%)}
 
   /* engine strip */
   .engines{display:flex;flex-wrap:wrap;gap:14px;margin-top:22px}
   .engine{flex:1 1 220px;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;background:rgba(255,255,255,0.02)}
   .engine .h{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px}
-  .engine .h span.badge{font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent);background:rgba(123,97,255,0.14);padding:3px 8px;border-radius:6px}
+  .engine .h span.badge{font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink);background:rgba(123,97,255,0.14);padding:3px 8px;border-radius:6px}
   .engine p{margin-top:8px;color:var(--muted);font-size:14px}
 
   /* srt */
@@ -195,9 +238,44 @@
   .srt pre .t{color:var(--muted-2)}
   .srt pre .o{color:#fff}
   .srt pre .x{color:var(--translation)}
-  /* The SRT sample IS this section's visual — it stands where the image column
-     goes, so it needs no top margin and has to clear the frame's glow. */
-  .media-frame .srt{margin-top:0;position:relative;z-index:1}
+
+  /* drag / toggle mock — the "put the subtitles wherever you want" section.
+     It used to reuse hero.png, which has no handle in it (content.css keeps
+     .ytds-handle at opacity 0 until the player is hovered and not autohiding)
+     and no player bar, so the image could not show either thing the section
+     claims. A photograph that CAN show both is very hard to make land twice,
+     and YouTube moves its own controls around — the same reason this project
+     already refused to record a video tutorial. So the shapes come from the
+     shipping code instead: the six-dot grip is content.js buildHandle(), the
+     toggle is ensureToggleButton(), and the grip's chrome is content.css
+     .ytds-handle. It cannot go stale into a wrong claim the way a still can. */
+  .dragmock{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#0b0b12}
+  .dragmock .stage{position:relative;aspect-ratio:16/9;
+    background:radial-gradient(70% 90% at 50% 20%,#1d2432 0%,#0d1017 60%,#08090d 100%);
+    display:flex;align-items:flex-end;justify-content:center;padding:0 18px 22px}
+  .dragmock .subbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px}
+  /* Same geometry as content.css .ytds-handle: 38x26, radius 8, sitting above
+     the text block and flush with its left edge. Shown here because the point
+     of the picture is that it exists. */
+  .dragmock .grip{position:absolute;top:-32px;left:0;width:38px;height:26px;border-radius:8px;
+    background:rgba(8,8,8,0.78);border:1px solid rgba(255,255,255,0.38);color:#fff;
+    display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,0.6)}
+  .dragmock .grip svg{width:21px;height:15px;display:block}
+  .dragmock .l1,.dragmock .l2{display:inline-block;padding:2px 8px;border-radius:4px;
+    background:rgba(0,0,0,0.6);font-weight:700;line-height:1.35;font-size:15px;text-align:center}
+  .dragmock .l1{color:#fff}
+  .dragmock .l2{color:var(--translation)}
+  .dragmock .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;
+    border-top:1px solid var(--line);background:#15151d}
+  .dragmock .track{flex:1;height:3px;border-radius:2px;background:var(--line-2)}
+  .dragmock .track i{display:block;width:38%;height:100%;border-radius:2px;background:var(--muted-2)}
+  .dragmock .tg{width:22px;height:22px;color:#3ea6ff;flex:none}
+  .dragmock .tg-lbl{font-size:12px;font-weight:700;color:#3ea6ff;letter-spacing:0.03em}
+  @media (max-width:520px){ .dragmock .l1,.dragmock .l2{font-size:13px} }
+  /* The SRT sample and the drag mock ARE their sections' visuals — they stand
+     where the image column goes, so they need no top margin and have to clear
+     the frame's glow. */
+  .media-frame .srt,.media-frame .dragmock{margin-top:0;position:relative;z-index:1}
 
   /* languages */
   .langs-band{text-align:center}
@@ -214,6 +292,12 @@
 
   /* privacy */
   .privacy{position:relative;overflow:hidden;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  /* The glows hang past their boxes on purpose; what they must not do is push
+     the PAGE sideways. body{overflow-x:hidden} used to hide that — and with it
+     the sticky nav, which cannot stick inside a clipping ancestor (measured
+     2026-08-31: the bar had never actually stuck on any page). So the clip
+     moves to the thing that is actually spilling. */
+  .shot,.compare .media,.media-frame,.privacy{overflow:hidden}
   .privacy .bloom2{position:absolute;top:-40%;right:-10%;width:640px;height:640px;max-width:80vw;background:radial-gradient(50% 50% at 50% 50%,rgba(123,97,255,0.18),transparent 70%);filter:blur(20px);pointer-events:none}
   .priv-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
   .priv-grid h2{font-size:clamp(28px,4vw,38px);letter-spacing:-0.03em}
@@ -223,13 +307,12 @@
   .priv-facts li b{font-weight:700}
   .priv-facts li span{color:var(--muted)}
   .dev-note{border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px;background:var(--card)}
-  .dev-note .kicker{margin-bottom:10px;display:block}
   .dev-note h3{font-size:19px;letter-spacing:-0.02em}
   .dev-note p{color:var(--muted);font-size:15px;margin-top:10px}
   .dev-note code{display:block;margin-top:14px;background:#0b0b12;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:12.5px;color:var(--translation);font-family:ui-monospace,Menlo,Consolas,monospace;overflow-x:auto}
 
   /* faq */
-  .faq{max-width:800px;margin:0 auto}
+  .faq{max-width:800px;margin:0 auto}.faq details p{max-width:70ch}.nb{white-space:nowrap}
   details{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);margin-bottom:12px;overflow:hidden}
   details[open]{border-color:var(--line-2)}
   summary{cursor:pointer;list-style:none;padding:20px 22px;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:14px}
@@ -263,7 +346,7 @@
   /* mobile menu (burger) — appears exactly when the inline links hide */
   .nav-burger{display:none;width:40px;height:40px;border:1px solid var(--line-2);border-radius:var(--radius);background:transparent;color:var(--ink);cursor:pointer;align-items:center;justify-content:center;flex:none;padding:0}
   .nav-burger:hover{background:rgba(255,255,255,0.04)}
-  .nav-menu{display:none;position:absolute;top:64px;left:0;right:0;background:rgba(10,10,15,0.97);backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--line);padding:6px 24px 12px}
+  .nav-menu{display:none;position:absolute;top:64px;left:0;right:0;background:#0a0a0f;border-bottom:1px solid var(--line);padding:6px 24px 12px}
   .nav-menu a{display:block;padding:13px 2px;color:var(--muted);font-size:15.5px;font-weight:600;border-bottom:1px solid var(--line)}
   .nav-menu a:last-child{border-bottom:0}
   .nav-menu a:hover{color:var(--ink)}
@@ -308,13 +391,16 @@
   /* help dropdown — holds every standalone page so the row stops growing */
   .nav-drop{position:relative}
   .nav-drop-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:0;line-height:inherit;
-    padding:0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
+    padding:5px 0;font-family:inherit;font-size:14.5px;font-weight:500;color:var(--muted);
     cursor:pointer;white-space:nowrap;transition:color .15s}
   .nav-drop-btn:hover,.nav-drop.open .nav-drop-btn{color:var(--ink)}
   .nav-drop-btn svg{transition:transform .18s}
   .nav-drop.open .nav-drop-btn svg{transform:rotate(180deg)}
   .nav-drop-menu{display:none;position:absolute;top:calc(100% + 14px);left:-14px;min-width:210px;
-    background:rgba(14,14,21,0.98);backdrop-filter:saturate(140%) blur(14px);
+    /* 不透明。0.98 听起来已经够，但它压着 hero 那行发光的大字，
+       2% 也足够把字形透出来（走查截图 d1280-zh-index-helpdrop.png）。
+       模糊在不透明面板上不做任何事，一并去掉。 */
+    background:#0e0e15;
     border:1px solid var(--line-2);border-radius:12px;padding:6px;
     box-shadow:0 18px 44px rgba(0,0,0,.5)}
   .nav-drop.open .nav-drop-menu{display:block}
@@ -326,6 +412,8 @@
   .sec-links a:hover{text-decoration:underline}
   .faq details p a{color:var(--accent-2);font-weight:600}
   .faq details p a:hover{text-decoration:underline}
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+  .lang-toggle button:focus-visible { outline-offset: -2px; }
 </style>
 </head>
 <body>
@@ -340,22 +428,22 @@
       <a href="./#faq"><span data-en>FAQ</span><span data-zh>常见问题</span></a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" id="helpBtn" aria-expanded="false"
-                aria-haspopup="true" aria-controls="helpMenu" onclick="toggleHelp()">
+                aria-controls="helpMenu" onclick="toggleHelp()">
           <span data-en>Help</span><span data-zh>帮助</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="nav-drop-menu" id="helpMenu" role="menu">
-          <a role="menuitem" href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
-          <a role="menuitem" href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
-          <a role="menuitem" href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
-          <a role="menuitem" href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
+        <div class="nav-drop-menu" id="helpMenu">
+          <a href="guide.html"><span data-en>Own-key setup guide</span><span data-zh>自带 Key 教程</span></a>
+          <a href="roadmap.html"><span data-en>Roadmap</span><span data-zh>开发计划</span></a>
+          <a href="updated.html"><span data-en>Changelog</span><span data-zh>更新日志</span></a>
+          <a href="feedback.html"><span data-en>Feedback &amp; support</span><span data-zh>反馈与支持</span></a>
         </div>
       </div>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" id="lang-toggle-group" role="group" aria-label="Language">
-        <button type="button" id="lang-en" onclick="setLang('en')">EN</button>
-        <button type="button" id="lang-zh" onclick="setLang('zh')">中文</button>
+        <button type="button" id="lang-en" onclick="setLang('en', true)">EN</button>
+        <button type="button" id="lang-zh" onclick="setLang('zh', true)">中文</button>
       </div>
       <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
         <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -383,6 +471,7 @@
   </div>
 </nav>
 
+<main>
 <a id="top"></a>
 <header class="hero">
   <div class="bloom" aria-hidden="true"></div>
@@ -390,38 +479,38 @@
     <span class="pill"><span class="dot" aria-hidden="true"></span> <span data-en>Free <b>·</b> MIT <b>·</b> No account</span><span data-zh>免费 <b>·</b> MIT 开源 <b>·</b> 无需账号</span></span>
     <h1 data-en>Two languages.<br><span class="g">One clean subtitle track.</span></h1>
     <h1 data-zh>两种语言，<br><span class="g">一层清爽字幕。</span></h1>
-    <p class="sub" data-en>The <span class="orig">original language</span> and <span class="tr">your translation</span> on every YouTube™ video — a single, non-overlapping layer that switches cleanly, sentence by sentence. Free and open source.</p>
-    <p class="sub" data-zh>在每一个 YouTube™ 视频上同时显示<span class="orig">原文</span>和<span class="tr">你的译文</span>——同一层字幕、互不重叠，逐句干净切换。免费且开源。</p>
+    <p class="sub" data-en>The <span class="orig">original language</span> and <span class="tr">your translation</span> on any YouTube™ video that has captions — a single, non-overlapping layer that switches cleanly, sentence by sentence. Free and open source.</p>
+    <p class="sub" data-zh>在任何有字幕的 YouTube™ 视频上同时显示<span class="orig">原文</span>和<span class="tr">你的译文</span>——同一层字幕、互不重叠，逐句干净切换。免费且开源。</p>
 
     <div class="cta">
       <a class="btn" id="hero-cta" href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.4" stroke="#fff" stroke-width="1.7"/><path d="M12 8.6h8.4M8.9 13.7 4.7 20.4M15.1 13.7 10.9 20.4" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
-        <span id="hero-cta-label"><span data-en>Add to Chrome — it's free</span><span data-zh>添加到 Chrome——完全免费</span></span>
+        <span id="hero-cta-label"><span data-en>Add to Chrome — it's free</span><span data-zh>添加到 Chrome——免费</span></span>
       </a>
       <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">
         <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         <span data-en>View on GitHub</span><span data-zh>在 GitHub 查看</span>
       </a>
     </div>
-    <p class="microcopy" id="microcopy"><span data-en>Also works on Edge</span><span data-zh>同样支持 Edge</span> <span class="sep">·</span> <span data-en>Chromium 111+</span><span data-zh>Chromium 111+</span> <span class="sep">·</span> <span data-en>no account</span><span data-zh>本扩展无需注册</span> <span class="sep">·</span> <span data-en>runs locally</span><span data-zh>本地渲染</span></p>
+    <p class="microcopy" id="microcopy"><span data-en>Also works on Edge</span><span data-zh>同样支持 Edge</span> <span class="sep">·</span> <span data-en>Chromium 111+</span><span data-zh>Chromium 111+</span> <span class="sep">·</span> <span data-en>no account</span><span data-zh>本扩展无需注册</span> <span class="sep">·</span> <span data-en>drawn on your machine</span><span data-zh>字幕在本机绘制</span></p>
 
     <div class="shot">
       <div class="glow" aria-hidden="true"></div>
       <div class="frame">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="url">youtube.com/watch</span></div>
-        <img src="assets/hero.png" width="1920" height="1080" alt="A talk playing on YouTube with bilingual subtitles centered near the bottom: the English line above and the Chinese translation below, shown as one tidy overlay.">
+        <img src="assets/hero.png" width="1920" height="1080" fetchpriority="high" alt="A video playing on YouTube with bilingual subtitles centered near the bottom: the English line above and the Chinese translation below, shown as one tidy overlay." data-alt-en="A video playing on YouTube with bilingual subtitles centered near the bottom: the English line above and the Chinese translation below, shown as one tidy overlay." data-alt-zh="一场 YouTube 视频，双语字幕居中靠下：英文在上、中文译文在下，合成一个整齐的叠加层。">
       </div>
+      <p class="credit"><span data-en>Frame: NASA, International Space Station, public domain</span><span data-zh>画面：NASA 国际空间站摄，公有领域</span></p>
     </div>
   </div>
 </header>
 
 <div class="trust">
   <div class="wrap trust-in">
-    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><b><span data-en>100% free</span><span data-zh>完全免费</span></b></span>
+    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><b><span data-en>Free, no account</span><span data-zh>免费，不用注册</span></b></span>
     <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>MIT</b> licensed</span><span data-zh><b>MIT</b> 许可</span></span>
-    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>No tracking</span><span data-zh>无追踪</span></span>
-    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>No account to create</span><span data-zh>本扩展无需注册</span></span>
-    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Renders locally</span><span data-zh>本地渲染</span></span>
+    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>The extension does not track you</span><span data-zh>扩展不统计你</span></span>
+    <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Drawn on your machine</span><span data-zh>字幕在本机绘制</span></span>
     <span class="item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Open source</span><span data-zh>开放源代码</span></span>
   </div>
 </div>
@@ -429,29 +518,29 @@
 <section id="how">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker"><span data-en>How it works</span><span data-zh>工作原理</span></span>
       <h2 data-en>Three steps to bilingual captions</h2>
       <h2 data-zh>三步开启双语字幕</h2>
       <p data-en>It reads the video's real caption track, translates it, and renders both languages in one tidy overlay you can style and drag.</p>
       <p data-zh>它读取视频真实的字幕轨道，翻译后把两种语言渲染在同一层整洁的字幕里，样式可调、位置可拖。</p>
+      <!-- 装完先看到的其实是扩展自己那一页新手入门，不是视频。没人说过这件事，
+           于是点完「添加」的人等着看字幕，却对着一页设置。 -->
+      <p data-en>Installing opens one page of its own first — a short Getting started. Close it and go to a video; nothing on it has to be filled in.</p>
+      <p data-zh>装好之后会先自己打开一页「新手入门」。关掉它去看视频就行，那一页上没有任何非填不可的东西。</p>
     </div>
     <div class="steps">
       <div class="step">
-        <span class="n">01</span>
-        <h3 data-en>Pick your language pair</h3>
-        <h3 data-zh>选择你的语言组合</h3>
-        <p data-en>Pick a target language in the popup — 50 are available, and you decide which of them appear in the menu — and which translation engine to use. A live preview shows the result as you tweak.</p>
-        <p data-zh>在弹窗里选目标语言——共 50 种，显示哪几种由你决定——并选择使用哪个翻译引擎。实时预览会随你的调整即时呈现效果。</p>
+        <h3 data-en>Your language pair</h3>
+        <h3 data-zh>你的语言组合</h3>
+        <p data-en>Nothing to set first: the translation language is worked out from your browser when you install, and the engine starts on Auto (recommended). The popup is where you change either — 50 languages, and you decide which of them the menu lists. A live preview shows the result as you tweak.</p>
+        <p data-zh>不用先设什么：装好时译文语言就按你的浏览器算好了，引擎停在「自动（推荐）」。弹窗是你改它们的地方——共 50 种语言，菜单里列出哪几种由你决定。实时预览会随你的调整即时呈现效果。</p>
       </div>
       <div class="step">
-        <span class="n">02</span>
         <h3 data-en>Play any video</h3>
         <h3 data-zh>播放任意视频</h3>
-        <p data-en>Press play on any YouTube™ video. Captions turn on automatically, and the player-bar button toggles the overlay on or off.</p>
-        <p data-zh>在任意 YouTube™ 视频上点击播放。字幕会自动开启，播放栏上的按钮可随时开关字幕层。</p>
+        <p data-en>Press play on any YouTube™ video. Captions turn on by themselves when the video has them, and the player-bar button toggles the overlay on or off.</p>
+        <p data-zh>在任意 YouTube™ 视频上点击播放。视频本身有字幕时会自动开启，播放栏上的按钮可随时开关字幕层。</p>
       </div>
       <div class="step">
-        <span class="n">03</span>
         <h3 data-en>Read both lines</h3>
         <h3 data-zh>同时读两行</h3>
         <p data-en>The original language sits on one line, your translation on the other — one non-overlapping layer that switches sentence by sentence.</p>
@@ -464,7 +553,6 @@
 <section id="single-layer" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker"><span data-en>Single layer · never overlaps</span><span data-zh>单层显示 · 永不重叠</span></span>
       <h2 data-en>No more subtitle soup</h2>
       <h2 data-zh>告别字幕一团糊</h2>
       <p data-en>Other tools stack a second track on top of YouTube's own captions and they collide into a blob. This extension hides YouTube's native layer and renders one clean overlay instead.</p>
@@ -474,15 +562,14 @@
       <div class="media">
         <div class="glow" aria-hidden="true"></div>
         <div class="imgframe">
-          <img src="assets/compare-en.png" data-src-en="assets/compare-en.png" data-src-zh="assets/compare-zh.png" width="1080" height="1440" alt="Before and after: on top, another tool where the original and translation collide into one messy blob; on the bottom, this extension showing clean, separated lines.">
+          <img src="assets/compare-en.png" data-src-en="assets/compare-en.png" data-src-zh="assets/compare-zh.png" width="1080" height="1440" loading="lazy" decoding="async" alt="Before and after: on top, another tool where the original and translation collide into one messy blob; on the bottom, this extension showing clean, separated lines." data-alt-en="Before and after: on top, another tool where the original and translation collide into one messy blob; on the bottom, this extension showing clean, separated lines." data-alt-zh="对比图：上面是另一款工具，原文和译文挤成一团；下面是本扩展，两行干净分开。">
         </div>
       </div>
       <div>
-        <span class="eyebrow"><span data-en>Anatomy of the box</span><span data-zh>字幕框结构拆解</span></span>
         <ul class="anat">
-          <li><span class="tag orig"><span data-en>Line 1</span><span data-zh>第一行</span></span><p data-en><b>Original language</b>, at full strength — exactly as spoken in the video.</p><p data-zh><b>原文</b>，完整清晰——与视频里说的一字不差。</p></li>
-          <li><span class="tag tr"><span data-en>Line 2</span><span data-zh>第二行</span></span><p data-en><b>Your translation</b>, in a dimmer tint underneath, so the two never blur together.</p><p data-zh><b>你的译文</b>，以稍淡的色调置于下方，两行绝不会糊在一起。</p></li>
-          <li><span class="tag hide"><span data-en>Hidden</span><span data-zh>已隐藏</span></span><p data-en>YouTube™'s own caption layer is turned off, so <b>the two sources never overlap.</b></p><p data-zh>YouTube™ 自带的字幕层已关闭，因此<b>两个来源永不重叠。</b></p></li>
+          <li><span class="tag orig"><span data-en>Line 1</span><span data-zh>第一行</span></span><p data-en><b>Original language</b>, at full strength — straight from the video's own caption track.</p><p data-zh><b>原文</b>，完整清晰——取自视频自带的字幕轨道。</p></li>
+          <li><span class="tag tr"><span data-en>Line 2</span><span data-zh>第二行</span></span><p data-en><b>Your translation</b>, in a dimmer tint underneath, so the two read as two lines.</p><p data-zh><b>你的译文</b>，以稍淡的色调置于下方，两行一眼分得开。</p></li>
+          <li><span class="tag hide"><span data-en>Hidden</span><span data-zh>已隐藏</span></span><p data-en>YouTube™'s own caption layer is turned off, so <b>only one set of subtitles is drawn.</b></p><p data-zh>YouTube™ 自带的字幕层已关闭，因此<b>画面上只有一套字幕。</b></p></li>
         </ul>
         <ul class="flist" style="margin-top:22px">
           <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Rendered from the <b>timed caption cues</b>, so lines switch by whole sentence — <b>no word-by-word jitter.</b></span><span data-zh>基于<b>带时间轴的字幕轴点</b>渲染，因此字幕整句切换——<b>不会逐字抖动。</b></span></li>
@@ -495,9 +582,8 @@
 <section id="features">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker"><span data-en>Features</span><span data-zh>功能特性</span></span>
-      <h2 data-en>Everything you'd want from a subtitle layer</h2>
-      <h2 data-zh>一层好字幕该有的，它都有</h2>
+      <h2 data-en>What the layer does, and what you can change</h2>
+      <h2 data-zh>这层字幕能做什么、你能改什么</h2>
       <p class="sec-links">
         <a href="guide.html"><span data-en>How to set up your own key</span><span data-zh>怎么配置自带 Key</span> →</a>
         <a href="roadmap.html"><span data-en>What's coming next</span><span data-zh>接下来会做什么</span> →</a>
@@ -508,14 +594,13 @@
 
       <div class="row">
         <div class="txt">
-          <span class="eyebrow"><span data-en>Two free engines, plus your own key</span><span data-zh>两套免费引擎，也可自带 Key</span></span>
           <h3 data-en>Translation that lines up with what you hear</h3>
           <h3 data-zh>和你听到的对得上的翻译</h3>
           <p data-en>Use YouTube™'s own whole-track translation — one request for the whole track, aligned cue for cue — and when a track can't be translated, fragmented captions are rebuilt into full sentences before Google translates them. Bring your own API key and each sentence is understood whole, then split back across the subtitles.</p>
           <p data-zh>使用 YouTube™ 自带的整轨翻译——整轨只要一次请求，逐条对齐——视频不支持翻译时，会先把碎片字幕拼回完整句子，再交给 Google 翻译。也可以填自己的 API Key：整句理解之后再按字幕切回来。</p>
           <div class="engines">
             <div class="engine">
-              <div class="h"><span class="badge"><span data-en>Primary</span><span data-zh>首选</span></span> <span data-en>YouTube™ whole-track</span><span data-zh>YouTube™ 整轨翻译</span></div>
+              <div class="h"><span class="badge"><span data-en>Primary</span><span data-zh>首选</span></span> <span data-en>Whole-track (YouTube™)</span><span data-zh>整轨翻译（YouTube™）</span></div>
               <p data-en>Aligned to the video's timing, and it arrives with the line.</p>
               <p data-zh>与视频时间轴对齐，和原文一起出现。</p>
             </div>
@@ -524,41 +609,48 @@
               <p data-en>Rebuilds fragmented captions into full sentences before translating — also selectable manually.</p>
               <p data-zh>先把碎片字幕拼回完整句子再翻译——也可以手动选用。</p>
             </div>
-          </div>
+          <div class="engine">
+                <div class="h"><span class="badge"><span data-en>Yours</span><span data-zh>自带</span></span> <span data-en>Your own key (LLM / DeepL)</span><span data-zh>自带 Key（LLM / DeepL）</span></div>
+                <p data-en>Whole sentences understood by the service you pick, then cut back to the cue — the state shown here.</p>
+                <p data-zh>整句交给你选的那家理解，再按字幕切回来——右边这张图就是它。</p>
+              </div>
+            </div>
         </div>
         <div class="media-frame">
           <div class="glow" aria-hidden="true"></div>
-          <div class="card-img">
-            <img class="ar-settings" src="assets/settings-en.png" data-src-en="assets/settings-en.png" data-src-zh="assets/settings-zh.png" width="1280" height="800" alt="The extension's settings popup showing the target language selector, the engine dropdown set to the user's own key with DeepL picked, and layout controls, next to a short feature list.">
+          <div class="card-img fade-b">
+            <img class="ar-popup" src="assets/popup-engine-en.png" data-src-en="assets/popup-engine-en.png" data-src-zh="assets/popup-engine-zh.png" width="720" height="1200" loading="lazy" decoding="async" alt="The top of the extension's popup: a live preview showing an English line above its translation, then the translation-language dropdown and the engine dropdown set to the user's own key, with DeepSeek and its model named underneath." data-alt-en="The top of the extension's popup: a live preview showing an English line above its translation, then the translation-language dropdown and the engine dropdown set to the user's own key, with DeepSeek and its model named underneath." data-alt-zh="扩展弹窗的顶部：实时预览里英文原文在上、译文在下，下面是译文语言下拉和翻译引擎下拉，引擎选的是用户自己的 Key，下方标着 DeepSeek 和它的模型。">
           </div>
+          <p class="shot-note" data-en>Shown after someone has set up a key of their own. Out of the box the engine reads “Auto (recommended)” and there is no provider line.</p>
+          <p class="shot-note" data-zh>这是配好自己的 Key 之后的样子。刚装好时引擎是「自动（推荐）」，下面那行服务商还不存在。</p>
         </div>
       </div>
 
       <div class="row rev">
         <div class="txt">
-          <span class="eyebrow"><span data-en>Fully customizable</span><span data-zh>高度可定制</span></span>
           <h3 data-en>Style every line exactly how you like</h3>
           <h3 data-zh>每一行都按你的喜好来</h3>
-          <p data-en>Set per-line font, size, text color, background color and opacity, outline, and line spacing — and choose which line sits on top. A live preview in the popup shows every change instantly.</p>
-          <p data-zh>可分别设置每行的字体、字号、文字颜色、背景颜色与透明度、描边和行间距——还能决定哪一行在上。弹窗里的实时预览会即时呈现每一处改动。</p>
+          <p data-en>Set each line's font — from the fonts really installed on this computer, or a font file you import — size, text color, background color and opacity, and outline; set the spacing between the two lines, and choose which sits on top. A live preview in the popup shows every change instantly.</p>
+          <p data-zh>可分别设置每行的字体（列的是这台电脑上真装了的，也能导入你自己的字体文件）、字号、文字颜色、背景颜色与不透明度、描边；两行之间的行距和哪一行在上也由你定。弹窗里的实时预览会即时呈现每一处改动。</p>
           <ul class="flist">
             <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Per-line <b>font, size, and text color</b></span><span data-zh>每行独立的<b>字体、字号和文字颜色</b></span></li>
             <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>Background color and opacity</b>, outline, and line spacing</span><span data-zh><b>背景颜色与透明度</b>、描边和行间距</span></li>
             <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Choose <b>which line sits on top</b>, with a live preview</span><span data-zh>选择<b>哪一行在上</b>，带实时预览</span></li>
-            <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>50 target languages</b></span><span data-zh><b>50 种目标语言</b></span></li>
+            <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>50 translation languages</b></span><span data-zh><b>50 种译文语言</b></span></li>
           </ul>
         </div>
         <div class="media-frame">
           <div class="glow" aria-hidden="true"></div>
-          <div class="card-img">
-            <img class="ar-settings" src="assets/settings-en.png" data-src-en="assets/settings-en.png" data-src-zh="assets/settings-zh.png" width="1280" height="800" alt="The customization panel of the popup with live preview, showing per-line styling controls.">
+          <div class="card-img fade-b">
+            <img class="ar-popup" src="assets/popup-style-en.png" data-src-en="assets/popup-style-en.png" data-src-zh="assets/popup-style-zh.png" width="720" height="1200" loading="lazy" decoding="async" alt="The popup's Line style card, unfolded: tabs for the translation line and the original line, a show-this-line checkbox, a font dropdown, a font-size slider, three colour swatches for text, background and outline, and sliders for background and outline opacity." data-alt-en="The popup's Line style card, unfolded: tabs for the translation line and the original line, a show-this-line checkbox, a font dropdown, a font-size slider, three colour swatches for text, background and outline, and sliders for background and outline opacity." data-alt-zh="弹窗里展开的「行样式」卡片：译文行和原文行两个标签页、「显示该行」复选框、字体下拉、字号滑杆、文字 / 背景 / 描边三个色块，以及背景和描边不透明度的滑杆。">
           </div>
+          <p class="shot-note" data-en>The card opened. In the popup it sits folded into one line until you click it.</p>
+          <p class="shot-note" data-zh>这是把这张卡点开之后。在弹窗里它平时折成一行，点一下才展开。</p>
         </div>
       </div>
 
       <div class="row">
         <div class="txt">
-          <span class="eyebrow"><span data-en>Draggable · one-click toggle</span><span data-zh>可拖动 · 一键开关</span></span>
           <h3 data-en>Put the subtitles wherever you want</h3>
           <h3 data-zh>字幕想放哪就放哪</h3>
           <p data-en>Grab the handle and drop the subtitle box anywhere on the video — it stays put. Double-click to reset, and it works in fullscreen too. A button in the player control bar turns the overlay on and off.</p>
@@ -567,19 +659,34 @@
             <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Drag anywhere, <b>position persists</b>; double-click to reset</span><span data-zh>随意拖动，<b>位置会被记住</b>；双击复位</span></li>
             <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Works in <b>fullscreen</b></span><span data-zh>支持<b>全屏</b></span></li>
             <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Player-bar toggle: <b>blue when on, grey when off</b></span><span data-zh>播放栏开关：<b>开启时为蓝色，关闭时为灰色</b></span></li>
+            <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Works on <b>Shorts</b> too, keeping up as you swipe</span><span data-zh><b>Shorts</b> 同样支持，快速滑动也跟得上</span></li>
+            <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>Select text</b> — copy the subtitles when you want to; off by default. That is what the item is called in the player menu, and the popup's Layout card carries the same switch</span><span data-zh><b>选中复制</b>——需要时把字幕选中复制；默认关着。播放器菜单里那一项就叫这个名字，弹窗「布局」卡里是同一个开关</span></li>
+            <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>Three keyboard shortcuts</b> (subtitles, read-aloud, translation line) — bind them in Settings → About → Set shortcuts</span><span data-zh><b>三条快捷键</b>（字幕、朗读、译文行）——在设置页 → 关于 →「设置快捷键」里绑</span></li>
           </ul>
         </div>
         <div class="media-frame">
           <div class="glow" aria-hidden="true"></div>
-          <div class="card-img">
-            <img class="ar-hero" src="assets/hero.png" width="1920" height="1080" alt="The bilingual subtitle box positioned near the bottom of a YouTube video, showing it can be dragged and toggled.">
+          <div class="dragmock">
+            <div class="stage">
+              <div class="subbox">
+                <span class="grip">
+                  <svg viewBox="0 0 17 12" fill="currentColor" aria-hidden="true"><circle cx="3.5" cy="3.5" r="1.5"/><circle cx="8.5" cy="3.5" r="1.5"/><circle cx="13.5" cy="3.5" r="1.5"/><circle cx="3.5" cy="8.5" r="1.5"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="13.5" cy="8.5" r="1.5"/></svg>
+                </span>
+                <span class="l1">The best ideas start as questions.</span>
+                <span class="l2">最好的想法都始于提问。</span>
+              </div>
+            </div>
+            <div class="bar">
+              <span class="track"><i></i></span>
+              <svg class="tg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="5.5" width="18.8" height="13" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.8"></rect><rect x="5.6" y="9.2" width="7" height="1.8" rx="0.9" fill="currentColor"></rect><rect x="5.6" y="13" width="11" height="1.8" rx="0.9" fill="currentColor"></rect></svg>
+              <span class="tg-lbl"><span data-en>On</span><span data-zh>开</span></span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="row rev">
         <div class="txt">
-          <span class="eyebrow"><span data-en>Export to SRT</span><span data-zh>导出为 SRT</span></span>
           <h3 data-en>Take the subtitles with you</h3>
           <h3 data-zh>把字幕随身带走</h3>
           <p data-en>Download the current video's subtitles as a standard <span class="mono" style="color:var(--ink)">.srt</span> file — the original language, the translation, or both together as a bilingual file. With your own API key it can translate the whole track for you, and it says how many requests that will take before it starts.</p>
@@ -604,15 +711,45 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="txt">
+          <h3 data-en>Have it read the translation out loud</h3>
+          <h3 data-zh>让它把译文念出来</h3>
+          <p data-en>Turn on <b>Read the translation aloud in the video</b> and each line is spoken as it appears, in your translation language. The video's own audio ducks under the voice instead of being replaced, so you still hear the room. It starts on your browser's own voices — nothing to sign up for, no key, nothing leaving the machine with the voices installed on it — and five cloud services — or one you run yourself — can be plugged in with a key of yours if you want a better one. A line too long for its subtitle slows the picture a little and runs on into the gap after it, so most lines get to finish; a switch in the settings slows further to try to finish the rest, down to a floor it will not go under.</p>
+          <p data-zh>打开「在视频里朗读译文」，每句字幕出现时就用你的译文语言念出来。视频原声不会被替换，只是在念的时候压低一点，你仍然听得见现场。默认用浏览器自带的音色——不用注册、不用 Key，用本机装好的音色时什么都不离开这台机器；想要更好的声音，可以接五家云服务，或者你自己跑的那一个。一句话长到装不下时，画面会稍微放慢、借用后面那点空隙，大多数句子能读完；还想让更多句子读完的话，设置里有「尽量每句读完」的开关，它会继续放慢，但有一个不再往下走的底线。</p>
+        </div>
+        <div class="media-frame">
+          <div class="glow" aria-hidden="true"></div>
+          <div class="card-img fade-b">
+            <img src="assets/read-aloud-en.png" data-src-en="assets/read-aloud-en.png" data-src-zh="assets/read-aloud-zh.png" width="660" height="578" loading="lazy" decoding="async" alt="The popup's read-aloud card: a switch to read the translation aloud, sliders for the spoken volume and for how far the original audio ducks, a voice picker set to Cherry, and a status line reading Speaking (Cherry), 12 lines this video, 1 skipped." data-alt-en="The popup's read-aloud card: a switch to read the translation aloud, sliders for the spoken volume and for how far the original audio ducks, a voice picker set to Cherry, and a status line reading Speaking (Cherry), 12 lines this video, 1 skipped." data-alt-zh="弹窗里的朗读卡片：朗读译文的开关、朗读音量和原声压低幅度的滑杆、选中 Cherry 的音色选择器，以及一行状态「正在朗读（Cherry），本视频 12 句，跳过 1 句」。">
+          </div>
+          <p class="shot-note" data-en>Shown with read-aloud switched on and a cloud voice chosen. Out of the box the card is the switch alone — the sliders and the voice picker appear once you turn it on.</p>
+          <p class="shot-note" data-zh>这是打开朗读、并且选了一个云端音色之后的样子。刚装好时这张卡上只有那个开关，打开它，滑杆和音色选择才会出现。</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="txt">
+          <h3 data-en>Summarize the video into chapters, on your own key</h3>
+          <h3 data-zh>用你自己的 Key，把视频总结成章节</h3>
+          <p data-en>Pick <b>Summary</b> in the small menu behind the arrow on the player's subtitle button. The subtitle track is written up as a short TL;DR plus chapters with timestamps you can click to jump. It uses the translation service you set up (your own key, or a model server on your computer), and asks it to write in your translation language. The track is not sent to the provider until you press the button; the panel names the provider and how many parts first.</p>
+          <p data-zh>在播放器字幕按钮上的小箭头菜单里点「总结」，整条字幕轨会收成一段简短的摘要，下面是带时间戳的章节，点一下就能跳到那段。用的是你自己配的翻译服务（自带 Key，或你电脑上的本地模型服务），并会要求它用你的译文语言来写。你没按按钮之前，字幕不会发给那家服务；真要发时，面板会先写清发给哪家、分几段。</p>
+        </div>
+        <div class="media-frame">
+          <div class="glow" aria-hidden="true"></div>
+          <div class="card-img fade-b">
+            <img src="assets/summary-panel-en.png" data-src-en="assets/summary-panel-en.png" data-src-zh="assets/summary-panel-zh.png" width="760" height="916" loading="lazy" decoding="async" alt="The in-player summary panel: a one-sentence TL;DR above chapters, each with a clickable timestamp pill, written in the reader's own translation language." data-alt-en="The in-player summary panel: a one-sentence TL;DR above chapters, each with a clickable timestamp pill, written in the reader's own translation language." data-alt-zh="播放器内的总结面板：一句摘要在上，下面是带可点击时间戳的章节，用读者自己的译文语言写。">
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <section class="langs-band" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <span class="kicker"><span data-en>Supported languages</span><span data-zh>支持的语言</span></span>
-    <p class="lang-count" style="margin-top:14px" data-en>Translate into <span class="g">50 target languages</span></p>
-    <p class="lang-count" style="margin-top:14px" data-zh>可翻译成 <span class="g">50 种目标语言</span></p>
+    <p class="lang-count" data-en>Translate into <span class="g">50 translation languages</span></p>
+    <p class="lang-count" data-zh>可翻译成 <span class="g">50 种译文语言</span></p>
     <div class="chips">
       <span class="chip">English</span>
       <span class="chip">简体中文</span>
@@ -633,8 +770,12 @@
     </div>
     <p class="lang-note" data-en>The popup's menu is yours to edit: keep the ones you use, add any of the rest.</p>
     <p class="lang-note" data-zh>弹窗里的下拉由你决定：常用的留着，其余的随时加进来。</p>
+    <p class="lang-note" data-en>The extension's own interface speaks 44 languages too — it follows your browser, or Settings → About → Interface language sets it by hand.</p>
+    <p class="lang-note" data-zh>扩展自己的界面也有 44 种语言——跟随浏览器，或在设置页 →「关于」→「界面语言」里手动指定。</p>
+    <p class="lang-note" data-en>Same card offers six looks for the extension&rsquo;s own two pages &mdash; Default, Neon Terminal, Ember, Mocha, Ink and Dusk. The subtitles on the video keep whatever you set in Line style.</p>
+    <p class="lang-note" data-zh>同一张卡上还能换这个扩展自己的外观——默认、霓虹终端、余烬、摩卡、墨、暮色六套。视频上那两行字幕，仍用你在「行样式」里设的那套。</p>
     <div class="lang-shot">
-      <img src="assets/langs-en.png" data-src-en="assets/langs-en.png" data-src-zh="assets/langs-zh.png" width="1280" height="703" alt="The extension's settings page on the subtitle-languages panel: one column lists the languages shown in the popup, each removable, and a second column lists the rest, each addable.">
+      <img src="assets/langs-en.png" data-src-en="assets/langs-en.png" data-src-zh="assets/langs-zh.png" width="1280" height="703" loading="lazy" decoding="async" alt="The extension's settings page on the Translation languages pane: one column lists the languages shown in the popup, each removable, and a second column lists the rest, each addable." data-alt-en="The extension's settings page on the Translation languages pane: one column lists the languages shown in the popup, each removable, and a second column lists the rest, each addable." data-alt-zh="扩展设置页的「译文语言列表」面：一栏列出弹窗里显示的语言，每个都能移除；另一栏列出其余语言，每个都能加入。">
     </div>
   </div>
 </section>
@@ -644,13 +785,13 @@
   <div class="wrap">
     <div class="priv-grid">
       <div>
-        <span class="kicker"><span data-en>Free and open source · MIT</span><span data-zh>免费且开源 · MIT</span></span>
-        <h2 style="margin-top:14px" data-en>Your captions never leave the tab uninvited</h2>
-        <h2 style="margin-top:14px" data-zh>你的字幕绝不会擅自离开这个标签页</h2>
+        <h2 data-en>Your captions leave the tab only when you send them</h2>
+        <h2 data-zh>只有你自己选了，字幕才会离开这个标签页</h2>
         <ul class="priv-facts">
-          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>No analytics.</b> Nothing is logged or measured.</span><span data-zh><b>无任何统计分析。</b>不记录、不度量任何内容。</span></li>
-          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>No tracking, no accounts.</b> Nothing to sign up for.</span><span data-zh><b>无追踪、无账号。</b>无需注册任何东西。</span></li>
-          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Caption text goes <b>only to the translation service you choose.</b></span><span data-zh>字幕文本<b>只会发送到你自己选择的翻译服务。</b></span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>No analytics in the extension.</b> It sends no usage data to us.</span><span data-zh><b>扩展本身不做统计分析。</b>它不会把使用数据发给我们。</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>This website</b>, which is not the extension, loads Cloudflare Web Analytics.</span><span data-zh><b>这个网站</b>（它不是扩展）会加载 Cloudflare Web Analytics。</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>The extension does not track you, and there are no accounts.</b> Nothing to sign up for.</span><span data-zh><b>扩展不统计你，也没有账号。</b>无需注册任何东西。</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en>Caption text goes <b>only to services you choose</b>: the translation service, plus the speech provider if you turn read-aloud on and the provider you set up if you ask for a summary.</span><span data-zh>字幕文本<b>只发给你自己选的服务</b>：翻译服务，以及开了朗读时你选的语音服务商、点了总结时你配置的那一家。</span></li>
           <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en><b>Open source under MIT.</b> Read every line on GitHub.</span><span data-zh><b>基于 MIT 许可开源。</b>每一行代码都能在 GitHub 上查看。</span></li>
         </ul>
         <div class="cta" style="justify-content:flex-start;margin-top:28px">
@@ -658,10 +799,13 @@
             <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             <span data-en>Read the source</span><span data-zh>查看源代码</span>
           </a>
+          <a class="ghost" href="https://github.com/Gythiro/yt-dual-subs/blob/main/PRIVACY.md" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span data-en>Privacy policy</span><span data-zh>隐私政策</span>
+          </a>
         </div>
       </div>
-      <div class="dev-note">
-        <span class="kicker"><span data-en>For developers</span><span data-zh>面向开发者</span></span>
+      <div class="dev-note" id="install">
         <h3 data-en>Install from source</h3>
         <h3 data-zh>从源码安装</h3>
         <p data-en>Prefer to run it unpacked? Clone the repo, open your browser's extensions page, enable developer mode, and load the folder.</p>
@@ -678,15 +822,14 @@
 <section id="faq">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker"><span data-en>FAQ</span><span data-zh>常见问题</span></span>
       <h2 data-en>Good questions, honest answers</h2>
       <h2 data-zh>好问题，实在答</h2>
     </div>
     <div class="faq">
       <details open>
         <summary><span data-en>Is my caption data private?</span><span data-zh>我的字幕数据私密吗？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>Yes. There are no analytics, no tracking, and no accounts. Caption text is sent only to the translation service you choose — nothing else leaves your browser. The extension is open source under the MIT license, so you can verify this yourself.</p>
-        <p data-zh>私密。没有任何统计分析、追踪或账号。字幕文本只会发送到你自己选择的翻译服务——其余内容都不会离开你的浏览器。本扩展基于 MIT 许可开源，你可以自行核实。</p>
+        <p data-en>Yes. The extension has no analytics, no tracking, and no accounts. Caption text is sent only to services you chose: the translation service in use and — only if you turn them on — the speech provider for read-aloud and the provider you configured for summaries. Nothing else leaves your browser, and nothing goes to the developer. It is open source under the MIT license, so you can verify this yourself.</p>
+        <p data-zh>是的。扩展没有任何统计分析、追踪或账号。字幕文本只会发送到你自己选的服务：正在用的翻译服务，以及只在你开启时，朗读用的语音服务商和你为总结配置的那一家。其余内容都不会离开你的浏览器，也没有任何东西发给开发者。它基于 MIT 许可开源，你可以自行核实。</p>
       </details>
       <details>
         <summary><span data-en>Which browsers does it work on?</span><span data-zh>它支持哪些浏览器？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
@@ -695,28 +838,28 @@
       </details>
       <details>
         <summary><span data-en>Does it cost anything?</span><span data-zh>它收费吗？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>No. It's completely free and open source under the MIT license. There's no paid tier, no subscription, and no account to create.</p>
-        <p data-zh>不收费。它完全免费，基于 MIT 许可开源。没有付费档位、没有订阅，也不用创建账号。</p>
+        <p data-en>No. There is no paid tier, no subscription, and no account to create, and the extension is open source under the MIT license. The built-in engines cost you nothing. If you plug in your own API key, that provider bills you directly — the payment does not go through us.</p>
+        <p data-zh>不收费。没有付费档位、没有订阅，也不用创建账号，扩展本身基于 MIT 许可开源。内置的翻译引擎不花你的钱。如果你填了自己的 API Key，那笔钱是服务商直接向你收的——不经过我们。</p>
       </details>
       <details>
         <summary><span data-en>Does it work with auto-generated captions?</span><span data-zh>它支持自动生成的字幕吗？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>Yes. It reads the video's real caption track, and it can turn captions on for you automatically. If needed, it also falls back to reading the on-screen caption text, and it survives YouTube's single-page navigation.</p>
-        <p data-zh>支持。它会读取视频真实的字幕轨道，并能自动为你开启字幕。必要时还会回退到直接读取屏幕上显示的字幕文本，并且在 YouTube 的单页跳转中依然稳定工作。</p>
+        <p data-en>Yes. It reads the video's real caption track, and it can turn captions on for you automatically. If needed, it also falls back to reading the on-screen caption text, and when YouTube switches videos without reloading the page, it attaches itself again.</p>
+        <p data-zh>支持。它会读取视频真实的字幕轨道，并能自动为你开启字幕。必要时还会回退到直接读取屏幕上显示的字幕文本；YouTube 不刷新页面就换视频时，它会自己重新挂上去。</p>
       </details>
       <details>
         <summary><span data-en>Will it slow the video down?</span><span data-zh>它会让视频变卡吗？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>No — the video itself is untouched. YouTube™'s whole-track translation arrives with the line, and the Smart sentences engine prefetches ahead of playback, so the second line usually keeps up; when a service is busy it shows an honest “…” rather than a stale line. Lines are rendered from the timed cues, so they switch by whole sentence without flicker.</p>
-        <p data-zh>不会，视频本身完全不受影响。YouTube™ 的整轨翻译和原文一起出现，智能整句引擎也会在播放前提前预取，所以译文一般跟得上;服务繁忙时它会老实显示一个「…」，而不是把上一句旧译文摆在那里。字幕基于带时间轴的轴点渲染，整句切换、不会闪烁。</p>
+        <p data-en>The subtitles are drawn as an overlay; the video file is not modified. YouTube™'s whole-track translation arrives with the line, and the Smart sentences engine prefetches ahead of playback, so the second line usually keeps up; when a service is busy it shows an honest “…” rather than a stale line. Lines are rendered from the timed cues, so they switch by whole sentence without flicker. One exception, and it is deliberate: with read-aloud on, a line that runs long slows the picture a touch so the voice can finish — the “Try to finish every line” switch makes that more noticeable.</p>
+        <p data-zh>字幕是叠加在画面上的一层，不改动视频本身。YouTube™ 的整轨翻译和原文一起出现，智能整句引擎也会在播放前提前预取，所以译文一般跟得上；服务繁忙时它会老实显示一个「…」，而不是把上一句旧译文摆在那里。字幕基于带时间轴的轴点渲染，整句切换、不会闪烁。 只有一种情况是故意的：开着朗读时，句子长到读不完，画面会稍微放慢一点让声音念完——打开「尽量每句读完」那个开关后会更明显。</p>
       </details>
       <details>
         <summary><span data-en>The subtitles cover the video — how do I move them?</span><span data-zh>字幕挡住画面了，位置怎么调？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>Hover the subtitle box and drag the little round handle at its top-left corner to put it anywhere on the video — the position is remembered per device, and double-clicking the handle resets it. The popup also has top / center / bottom presets, plus per-line font size and spacing. Since v3.5.0 the box automatically steps above the progress bar while the player controls are visible.</p>
-        <p data-zh>把鼠标移到字幕框上，按住左上角的小圆形手柄就能把它拖到画面任意位置——位置会记住，双击手柄可复位。弹窗里还有顶部/居中/底部三个预设，以及每行的字号、行距等设置。从 v3.5.0 起，播放器控件出现时字幕框还会自动上移避开进度条。</p>
+        <p data-en>Hover the subtitle box and drag the six-dot grip at its top-left corner to put it anywhere on the video — the position is remembered (and synced with your browser account, like the other settings), and double-clicking the handle resets it (the popup's Layout card has a Reset position link too). The popup also has top / center / bottom presets, plus per-line font size and spacing. Since v3.5.0 the box automatically steps above the progress bar while the player controls are visible.</p>
+        <p data-zh>把鼠标移到字幕框上，按住左上角那块六点手柄就能把它拖到画面任意位置——位置会记住，双击手柄可复位（弹窗「布局」卡里也有「重置位置」）。弹窗里还有顶部/居中/底部三个预设，以及每行的字号、行距等设置。从 v3.5.0 起，播放器控件出现时字幕框还会自动上移避开进度条。</p>
       </details>
       <details>
         <summary><span data-en>Why do translations sometimes pause or not show up?</span><span data-zh>为什么翻译有时不出来、或者停一下？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
-        <p data-en>The Smart sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate-limit. The extension notices, slows down and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already-translated sentences stay cached. YouTube's own whole-track translation can be limited too — when that happens the extension falls back to the sentence engine and comes back for the whole-track version a little later.</p>
-        <p data-zh>智能整句引擎走的是 Google 免费公共接口，重度使用（超长视频、频繁拖进度条）时可能被短暂限流。扩展会自己发现并放慢重试：等待期间译文行显示「…」，翻译通常在几秒到一两分钟内自动恢复。已翻译过的句子有缓存不受影响。YouTube 自带的整轨翻译同样可能被限流——真遇上时扩展会先用整句引擎顶上，过一会儿再回头去要整轨译文。</p>
+        <p data-en>The Smart sentences engine uses Google's free public endpoint. Under heavy use — long videos, lots of seeking — it may briefly rate-limit. The extension notices, slows down and retries on its own: the translation line shows "…" while it waits, and translations resume automatically, usually within seconds to a couple of minutes. Already-translated sentences stay cached. YouTube's own whole-track translation can be limited too — when that happens the extension falls back to the sentence engine and comes back for the whole-track version a little later. If it still shows nothing, Settings → About → Something not working → Copy diagnostic info gives you the facts to send with a report.</p>
+        <p data-zh>智能整句引擎走的是 Google 免费公共接口，重度使用（超长视频、频繁拖进度条）时可能被短暂限流。扩展会自己发现并放慢重试：等待期间译文行显示「…」，翻译通常在几秒到一两分钟内自动恢复。已翻译过的句子有缓存，还在。YouTube 自带的整轨翻译同样可能被限流——真遇上时扩展会先用整句引擎顶上，过一会儿再回头去要整轨译文。还是什么都不出来的话，设置页 →「关于」→「遇到问题」→「复制诊断信息」会把该带上的事实都给你，贴进报告就行。</p>
       </details>
       <details>
         <summary><span data-en>Is the feature I want planned?</span><span data-zh>我想要的功能有没有计划？</span><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></summary>
@@ -731,9 +874,13 @@
   <div class="bloom3" aria-hidden="true"></div>
   <div class="wrap final-in">
     <h2 data-en>Start watching in <span class="g">two languages</span> today</h2>
-    <h2 data-zh>今天就开始<span class="g">用双语</span>看视频</h2>
-    <p data-en>Add it to your browser in one click. Free, open source, and no account required.</p>
-    <p data-zh>一键添加到你的浏览器。免费、开源，无需账号。</p>
+    <h2 data-zh>今天就开始<span class="g">用双语</span><span class="nb">看视频</span></h2>
+    <!-- "One click" was a promise about a flow that is not ours to make: the
+         store asks its own "Add extension?" afterwards, and configuring a key
+         later brings a second Chrome prompt for that provider's domain. The
+         button already says the true thing. -->
+    <p data-en>Add it from the Chrome Web Store. Free, open source, and no account required.</p>
+    <p data-zh>从 Chrome 应用商店添加。免费、开源，无需账号。</p>
     <div class="cta">
       <a class="btn" id="final-cta" href="https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.4" stroke="#fff" stroke-width="1.7"/><path d="M12 8.6h8.4M8.9 13.7 4.7 20.4M15.1 13.7 10.9 20.4" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
@@ -747,6 +894,7 @@
     <p class="microcopy"><span data-en>Free</span><span data-zh>免费</span> <span class="sep">·</span> MIT <span class="sep">·</span> <span data-en>no account</span><span data-zh>本扩展无需注册</span> <span class="sep">·</span> Chromium 111+</p>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
@@ -754,7 +902,7 @@
       <div class="foot-brand">
         <a href="#top" class="brand"><img src="assets/icon.png" alt="Dual Subtitles for YouTube icon" width="30" height="30">Dual Subtitles<span class="tm">for YouTube™</span></a>
         <p data-en>Bilingual subtitles for YouTube — the original language and your translation together in one clean, non-overlapping layer.</p>
-        <p data-zh>为 YouTube 打造的双语字幕——原文与你的译文同处一层，干净整洁、互不重叠。</p>
+        <p data-zh>YouTube 的双语字幕——原文和你的译文同处一层，不会叠在一起糊成一团。</p>
       </div>
       <div class="foot-links">
         <div class="foot-col">
@@ -771,14 +919,14 @@
         <div class="foot-col">
           <h3><span data-en>Open source</span><span data-zh>开放源代码</span></h3>
           <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/Gythiro/yt-dual-subs" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
+          <a href="https://github.com/Gythiro/yt-dual-subs/blob/main/LICENSE" target="_blank" rel="noopener"><span data-en>MIT license</span><span data-zh>MIT 许可</span></a>
           <a href="#privacy"><span data-en>Privacy</span><span data-zh>隐私</span></a>
-          <a href="#privacy"><span data-en>Install from source</span><span data-zh>从源码安装</span></a>
+          <a href="#install"><span data-en>Install from source</span><span data-zh>从源码安装</span></a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="ver">v3.6.0 · Chromium 111+ · Manifest V3</span>
+      <span class="ver">v3.7.0 · Chromium 111+ · Manifest V3</span>
       <p class="disclaimer" data-en>Not affiliated with, endorsed by, or sponsored by YouTube or Google LLC. "YouTube" is a trademark of Google LLC, used here only to describe compatibility.</p>
       <p class="disclaimer" data-zh>本站与本扩展非 YouTube 或 Google LLC 官方出品，与其无任何关联，亦未获其背书或赞助。「YouTube」是 Google LLC 的商标，此处仅用于说明兼容性。</p>
     </div>
@@ -818,12 +966,12 @@
         if (!isEdge) return;
         var map = {
           en: {
-            "hero-cta-label": "Add to Edge — it's free",
+            "hero-cta-label": "Add to Edge — free, from the Chrome Web Store",
             "nav-cta-label": "Add to Edge",
             "final-cta-label": "Add to Edge"
           },
           zh: {
-            "hero-cta-label": "添加到 Edge——完全免费",
+            "hero-cta-label": "添加到 Edge——免费，从 Chrome 应用商店安装",
             "nav-cta-label": "添加到 Edge",
             "final-cta-label": "添加到 Edge"
           }
@@ -836,17 +984,29 @@
       } catch (e) {}
     }
 
-    window.setLang = function (lang) {
+    window.setLang = function (lang, persist) {
       if (lang !== "zh") lang = "en";
       document.documentElement.setAttribute("lang", lang);
+      // The tab title follows the page language too; it used to stay English in Chinese mode.
+      var t = document.documentElement.getAttribute(lang === "zh" ? "data-title-zh" : "data-title-en");
+      if (t) document.title = t;
+      // The description and the image alts follow the page language too.
+      var d = document.querySelector('meta[name="description"]');
+      if (d) { var dv = d.getAttribute(lang === "zh" ? "data-desc-zh" : "data-desc-en"); if (dv) d.setAttribute("content", dv); }
+      document.querySelectorAll("img[data-alt-zh]").forEach(function (img) {
+        var av = img.getAttribute(lang === "zh" ? "data-alt-zh" : "data-alt-en"); if (av) img.setAttribute("alt", av);
+      });
       var enBtn = document.getElementById("lang-en");
       var zhBtn = document.getElementById("lang-zh");
       if (enBtn) enBtn.classList.toggle("active", lang === "en");
       if (zhBtn) zhBtn.classList.toggle("active", lang === "zh");
+      if (enBtn) enBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+      if (zhBtn) zhBtn.setAttribute("aria-pressed", lang === "zh" ? "true" : "false");
       applyLangToImages(lang);
       applyEdgeCopy(lang);
       setAria(lang);
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    if (persist) { try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {} }
+    try { var u = new URL(location.href); if (u.searchParams.get("lang") !== lang) { u.searchParams.set("lang", lang); history.replaceState(null, "", u.pathname + u.search + u.hash); } } catch (e) {}
     };
 
     window.toggleMenu = function () {
@@ -860,6 +1020,10 @@
     var navMenuEl = document.getElementById("navMenu");
     if (navMenuEl) navMenuEl.addEventListener("click", function (e) {
       if (e.target && e.target.closest && e.target.closest("a")) window.toggleMenu();
+    });
+    document.addEventListener("click", function (e) {
+      var mm = document.getElementById("navMenu");
+      if (mm && mm.classList.contains("open") && e.target && e.target.closest && !e.target.closest("#navMenu, #navBurger")) window.toggleMenu();
     });
 
     // ?lang= (used by the extension's welcome/update links) wins over the
@@ -899,6 +1063,10 @@
     if (!drop.contains(e.target)) window.toggleHelp();
   });
   document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      var mm = document.getElementById("navMenu");
+      if (mm && mm.classList.contains("open")) { window.toggleMenu(); var bb = document.getElementById("navBurger"); if (bb) bb.focus(); return; }
+    }
     if (e.key === "Escape" && drop && drop.classList.contains("open")) {
       window.toggleHelp();
       var b = document.getElementById("helpBtn");
