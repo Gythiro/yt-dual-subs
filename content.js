@@ -1699,6 +1699,11 @@
 
   function closeMenu() {
     if (menuEl) { try { menuEl.remove(); } catch (_e) { /* ignore */ } menuEl = null; }
+    // Paired with the "true" openMenu sets. Left standing, a screen reader goes
+    // on announcing a menu that is not on the page — and openMenu calls this
+    // first thing, so the flag has to be lowered here rather than only where
+    // the reader dismissed it.
+    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "false");
   }
 
   function paintMenuRows() {
@@ -1725,6 +1730,7 @@
     }
     menuEl = document.createElement("div");
     menuEl.className = "ytds-menu";
+    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "true");
     // Presses inside the menu are the menu's business — they must neither
     // close it (the document listener below) nor pause the player.
     menuEl.addEventListener("mousedown", (e) => e.stopPropagation());
@@ -1831,9 +1837,11 @@
   function onKeyDownForMenu(e) {
     if (orphaned || !menuEl) return;
     if (e.key !== "Escape" && e.key !== "Esc") return;
-    // The arrow gets the focus back, so the keyboard is where it was.
+    // The BUTTON gets the focus back. It used to be the arrow — a span,
+    // which cannot take focus at all, so focus() did nothing and the keyboard
+    // fell back to the document and had to start over.
     closeMenu();
-    try { if (moreEl) moreEl.focus(); } catch (_e2) { /* ignore */ }
+    try { if (toggleBtn) toggleBtn.focus(); } catch (_e2) { /* ignore */ }
     e.stopPropagation();
   }
   document.addEventListener("keydown", onKeyDownForMenu, true);
@@ -1869,6 +1877,14 @@
       '<rect x="5.6" y="13" width="11" height="1.8" rx="0.9" fill="currentColor"></rect>' +
       "</svg>";
     toggleBtn.addEventListener("click", onToggleClick, true);
+    // The arrow is a second control living inside one button, which the
+    // pointer can aim at and the keyboard cannot: Tab lands on the button and
+    // Enter always means "toggle subtitles". So the button says out loud that
+    // a menu hangs off it, and answers the keys a menu button is expected to
+    // answer. Nothing here changes what a click does.
+    toggleBtn.setAttribute("aria-haspopup", "menu");
+    toggleBtn.setAttribute("aria-expanded", "false");
+    toggleBtn.addEventListener("keydown", onToggleKeyDown);
     moreEl = document.createElement("span");
     moreEl.className = "ytds-toggle-more";
     moreEl.textContent = "▾";
@@ -1892,6 +1908,19 @@
     applyStateToDom();                       // add/remove overlay immediately
     syncCaptions();                          // turn YouTube CC on/off to match
     extCall(() => chrome.storage.sync.set({ enabled: settings.enabled }));
+  }
+
+  // ArrowDown / ArrowUp / Alt+ArrowDown open it, the way a menu button is
+  // expected to. None of the three did anything on this button before, so a
+  // reader who never uses the menu loses nothing. Focus goes to the first row
+  // only on this path: a mouse user's focus should stay where they left it.
+  function onToggleKeyDown(e) {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp" && e.key !== "Down" && e.key !== "Up") return;
+    e.preventDefault();
+    e.stopPropagation();          // the player reads arrows as seek/volume
+    if (!menuEl) openMenu();
+    const first = menuEl && menuEl.querySelector(".ytds-mi");
+    if (first) { try { first.focus(); } catch (_e) { /* ignore */ } }
   }
 
   function updateToggleState() {

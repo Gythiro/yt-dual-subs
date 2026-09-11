@@ -487,14 +487,14 @@
       <!-- Azure only: its key is bound to a region that becomes the request
            host. Hidden for every provider that has one fixed endpoint. -->
       <div class="ofield" id="ttsModelRow" hidden>
-        <label for="ttsModelSel" data-i18n="byoModelLabel">模型</label>
+        <label for="ttsModelSel" id="ttsModelSelLabel" data-i18n="byoModelLabel">模型</label>
         <!-- Same bargain as the translation pane: a curated list that always
              works, and a free entry for whatever the provider ships next —
              "what if the models move on" is exactly the question this answers. -->
         <div class="orow">
           <select id="ttsModelSel"></select>
         </div>
-        <input type="text" id="ttsModelInput" hidden spellcheck="false"
+        <input type="text" id="ttsModelInput" aria-labelledby="ttsModelSelLabel" hidden spellcheck="false"
                autocomplete="off" />
       </div>
       <div class="ofield" id="ttsRegionRow" hidden>
@@ -515,14 +515,14 @@
         </datalist>
       </div>
       <div class="ofield">
-        <label for="ttsVoiceSel" data-i18n="ttsVoiceLabel">音色</label>
+        <label for="ttsVoiceSel" id="ttsVoiceSelLabel" data-i18n="ttsVoiceLabel">音色</label>
         <!-- Preview sits with the voice it previews. It speaks a fixed line in
              the language being READ, so you hear this voice handle your
              language rather than an English probe that proves nothing. It does
              not save: you can listen your way down the list first. -->
         <div class="orow">
           <select id="ttsVoiceSel"></select>
-          <input type="text" id="ttsVoiceInput" hidden spellcheck="false"
+          <input type="text" id="ttsVoiceInput" aria-labelledby="ttsVoiceSelLabel" hidden spellcheck="false"
                  autocomplete="off" placeholder="af_bella" list="ttsVoiceList" />
           <!-- Filled from whatever the server answered on /v1/audio/voices.
                The field stays free text: a server can hold voices that path

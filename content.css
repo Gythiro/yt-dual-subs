@@ -153,6 +153,12 @@ html.ytds-active .caption-window {
 }
 .ytds-toggle:hover .ytds-toggle-more,
 .ytds-toggle:focus-visible .ytds-toggle-more { opacity: 1; }
+/* …and the button itself says where the keyboard is. It inherits YouTube's
+   .ytp-button, which clears the outline, so this needs its own rule and enough
+   specificity to win. Same ring the menu rows and the summary panel use. */
+button.ytds-toggle:focus-visible {
+  outline: 2px solid #3ea6ff; outline-offset: -2px; border-radius: 6px;
+}
 .ytds-toggle-more:hover {
   background: rgba(255, 255, 255, .16);
   top: 7px; bottom: 7px;               /* the pill sits inside the capsule */
