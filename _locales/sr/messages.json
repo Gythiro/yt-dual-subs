@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Ради и основни URL и пуни endpoint, нпр. http://localhost:8880/v1 или http://localhost:8880/v1/audio/speech (локални говорни сервери као Kokoro или openai-edge-tts). Кључ може да остане празан; обичан http ради само за loopback адресе."
   },

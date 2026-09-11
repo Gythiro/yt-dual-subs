@@ -350,14 +350,19 @@
     <section class="odetail" id="secLangs" hidden>
       <div class="olangs">
         <div class="olang-col">
-          <h2 class="olabel" data-i18n="langsKept">弹窗里显示的</h2>
+          <h2 class="olabel" id="langsKeptHd" data-i18n="langsKept">弹窗里显示的</h2>
           <p class="ohint" data-i18n="langsKeptHint">这些会出现在弹窗的「译文语言」下拉里。至少留一个。</p>
-          <ul class="olang-list" id="langKept"></ul>
+          <a class="oskip" href="#langsMoreHd" data-i18n="fontsSkipList">跳过这份名单</a>
+          <ul class="olang-list" id="langKept" aria-labelledby="langsKeptHd"></ul>
         </div>
         <div class="olang-col">
-          <h2 class="olabel" data-i18n="langsMore">其他语言</h2>
+          <!-- tabindex="-1" 不是装饰：h2 默认不可聚焦，跳过链接指过来焦点
+               根本不会动，链接就成了一句做不到的话。-1 = 可被程序聚焦、
+               不进 Tab 序列。 -->
+          <h2 class="olabel" id="langsMoreHd" tabindex="-1" data-i18n="langsMore">其他语言</h2>
           <p class="ohint" data-i18n="langsMoreHint">点 + 加进上面的列表。这份列表按免费引擎和 DeepL 支持的译文语言来列。</p>
-          <ul class="olang-list" id="langMore"></ul>
+          <a class="oskip" href="#langReset" data-i18n="fontsSkipList">跳过这份名单</a>
+          <ul class="olang-list" id="langMore" aria-labelledby="langsMoreHd"></ul>
         </div>
       </div>
       <p class="omsg" id="langMsg" role="status" aria-live="polite" hidden></p>

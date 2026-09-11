@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "A base URL or a full endpoint both work, e.g. http://localhost:8880/v1 or http://localhost:8880/v1/audio/speech (local speech servers like Kokoro or openai-edge-tts). The key may stay empty; plain http works only for loopback addresses."
   },
@@ -1252,7 +1255,7 @@
     "message": "This browser does not let the extension read the installed fonts, so only System default can be picked."
   },
   "fontNoGlyphs": {
-    "message": "cannot draw this line"
+    "message": "cannot show this line"
   },
   "fontNotHere": {
     "message": "not on this computer"

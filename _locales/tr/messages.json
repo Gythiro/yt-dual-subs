@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Temel URL de tam uç nokta da olur, örn. http://localhost:8880/v1 veya http://localhost:8880/v1/audio/speech (Kokoro veya openai-edge-tts gibi yerel konuşma sunucuları). Anahtar boş kalabilir; düz http yalnızca geri döngü adreslerinde çalışır."
   },

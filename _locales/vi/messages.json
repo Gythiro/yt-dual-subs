@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Điền Base URL hoặc địa chỉ endpoint đầy đủ đều được, ví dụ http://localhost:8880/v1 hoặc http://localhost:8880/v1/audio/speech (máy chủ đọc cục bộ như Kokoro hay openai-edge-tts). Khóa có thể để trống; http thường chỉ dùng được với địa chỉ loopback."
   },

@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Sekä perus-URL että täysi päätepiste käyvät, esim. http://localhost:8880/v1 tai http://localhost:8880/v1/audio/speech (paikalliset puhepalvelimet kuten Kokoro tai openai-edge-tts). Avaimen voi jättää tyhjäksi; pelkkä http toimii vain loopback-osoitteille."
   },

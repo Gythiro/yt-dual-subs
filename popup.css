@@ -598,6 +598,14 @@ input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 4px; }
 .export-btn:hover { filter: brightness(1.08); }
 .export-btn:active { filter: brightness(.95); }
 .export-btn:disabled { opacity: .6; cursor: default; }
+/* 看不见，但在无障碍树里。不能用 display:none / visibility:hidden /
+   hidden —— 那三样都会把元素从树上摘掉，读屏就再也收不到它的变化。 */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+
 .export-msg {
   margin: 0; font-size: 13px; line-height: 1.45;
   color: var(--muted);

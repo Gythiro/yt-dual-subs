@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "ベース URL でも完全なエンドポイントでも構いません。例: http://localhost:8880/v1、http://localhost:8880/v1/audio/speech（Kokoro や openai-edge-tts などのローカル読み上げサーバー）。キーは空でも構いません。http はループバックアドレスのみ使えます。"
   },

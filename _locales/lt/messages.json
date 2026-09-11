@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Tinka ir bazinis URL, ir visas endpointas, pvz. http://localhost:8880/v1 arba http://localhost:8880/v1/audio/speech (vietiniai kalbos serveriai kaip Kokoro ar openai-edge-tts). Raktas gali likti tuščias; paprastas http veikia tik loopback adresams."
   },

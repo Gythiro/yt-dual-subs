@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Підійде і базовий URL, і повний ендпоінт, напр. http://localhost:8880/v1 або http://localhost:8880/v1/audio/speech (локальні сервери озвучення на кшталт Kokoro чи openai-edge-tts). Ключ можна лишити порожнім; звичайний http працює лише для loopback-адрес."
   },

@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Zadziała zarówno bazowy URL, jak i pełny punkt końcowy, np. http://localhost:8880/v1 lub http://localhost:8880/v1/audio/speech (lokalne serwery mowy, jak Kokoro czy openai-edge-tts). Klucz może pozostać pusty; zwykłe http działa tylko dla adresów pętli zwrotnej."
   },

@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Vanno bene sia un URL base sia un endpoint completo, ad es. http://localhost:8880/v1 o http://localhost:8880/v1/audio/speech (server vocali locali come Kokoro o openai-edge-tts). La chiave può restare vuota; il semplice http funziona solo con indirizzi di loopback."
   },

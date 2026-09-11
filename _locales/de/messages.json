@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Eine Base-URL oder ein vollständiger Endpunkt gehen beide, z. B. http://localhost:8880/v1 oder http://localhost:8880/v1/audio/speech (lokale Sprachserver wie Kokoro oder openai-edge-tts). Der Schlüssel darf leer bleiben; einfaches http geht nur für Loopback-Adressen."
   },

@@ -1853,6 +1853,8 @@ function initAbout() {
   $("aboutVer").textContent = ver || "—";
   initUiLocale();
   initUiSkin();
+  wireTablistKeys($("plist"), ".pitem");
+  nameSkipLinks();
   const set = (id, href) => { const el = $(id); if (el) el.href = href; };
   set("aboutSite", SITE_URL + "?src=options&lang=" + lang);
   set("aboutGithub", "https://github.com/Gythiro/yt-dual-subs");
@@ -3179,6 +3181,48 @@ function initStartTarget() {
 // The popup is not repainted alongside it because by then it is gone: the gear
 // that brought you here called window.close() on it. Next time it opens it
 // wears the new skin — skins.js sets the attribute before the first paint.
+// 一组 role="tablist" 的键盘约定：Tab 进出这一组，方向键在组内走，
+// Home / End 跳两端。声明了 role 却不接键，是对读屏许一个做不到的承诺：
+// 它会念「这是一组标签」，而方向键什么都不会发生。
+//
+// roving tabindex（只有当前那个 tabindex=0）是规范里配套的另一半，这里
+// **不做**：这两组标签都只有可见的两三项到十几项，Tab 逐个走过去并不难受，
+// 而 roving 会让「Tab 进来落在哪一个」变成一件要维护的状态。先补方向键，
+// 那是缺了就骗人的一半。
+// popup.js 里有一份逐字相同的，改这里记得改那边。
+function wireTablistKeys(listEl, tabSelector) {
+  if (!listEl) return;
+  listEl.addEventListener("keydown", (e) => {
+    const keys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"];
+    if (keys.indexOf(e.key) < 0) return;
+    const tabs = [...listEl.querySelectorAll(tabSelector)]
+      .filter((el) => !el.disabled && el.offsetParent !== null);
+    if (tabs.length < 2) return;
+    const at = tabs.indexOf(document.activeElement);
+    if (at < 0) return;                       // 焦点不在这一组里，不抢键
+    e.preventDefault();
+    let to = at;
+    if (e.key === "Home") to = 0;
+    else if (e.key === "End") to = tabs.length - 1;
+    else if (e.key === "ArrowRight" || e.key === "ArrowDown") to = (at + 1) % tabs.length;
+    else to = (at - 1 + tabs.length) % tabs.length;
+    try { tabs[to].focus(); } catch (_e) { /* ignore */ }
+  });
+}
+
+// 一页上可以有好几条「跳过这份名单」。可见文案相同是对的 —— 它就在那一列
+// 下面，位置本身说明了跳过的是哪一份。但读屏只念名字，两条一样就分不清。
+// 这里给每条拼一个可访问名：文案 + 它要去的地方已有的名字。不开新键。
+function nameSkipLinks() {
+  for (const a of document.querySelectorAll("a.oskip")) {
+    const to = document.querySelector(a.getAttribute("href") || "");
+    if (!to) continue;
+    const where = (to.getAttribute("placeholder") || to.textContent || "").trim().slice(0, 40);
+    if (!where) continue;
+    a.setAttribute("aria-label", a.textContent.trim() + " — " + where);
+  }
+}
+
 function initUiSkin() {
   const box = $("uiSkinList");
   const S = self.YTDS_SKINS;

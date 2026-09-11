@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "பேஸ் URL அல்லது முழு முனையம் இரண்டும் ஆகும், எ.கா. http://localhost:8880/v1 அல்லது http://localhost:8880/v1/audio/speech (Kokoro அல்லது openai-edge-tts போன்ற உள்ளக பேச்சு சர்வர்கள்). விசை காலியாக இருக்கலாம்; சாதாரண http லூப்பேக் முகவரிகளுக்கு மட்டுமே ஆகும்."
   },

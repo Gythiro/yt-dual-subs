@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Merge atât un URL de bază, cât și un endpoint complet, de ex. http://localhost:8880/v1 sau http://localhost:8880/v1/audio/speech (servere vocale locale precum Kokoro sau openai-edge-tts). Cheia poate rămâne goală; http simplu funcționează doar pentru adrese de loopback."
   },

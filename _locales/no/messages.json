@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Både en base-URL og et fullt endepunkt virker, f.eks. http://localhost:8880/v1 eller http://localhost:8880/v1/audio/speech (lokale taleservere som Kokoro eller openai-edge-tts). Nøkkelen kan stå tom; vanlig http virker bare for loopback-adresser."
   },

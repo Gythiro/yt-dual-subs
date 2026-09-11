@@ -399,7 +399,14 @@
       <button id="exportStop" type="button" class="export-stop" hidden data-i18n="exportStop">
         停止
       </button>
-      <p class="export-msg" id="exportMsg" role="status" aria-live="polite" hidden></p>
+      <!-- 眼睛看的。每 700ms 刷一次进度，所以它**不带** live —— 带了就是
+           让读屏把四百次进度全念一遍。 -->
+      <p class="export-msg" id="exportMsg" hidden></p>
+      <!-- 耳朵听的。**永远不加 hidden**：带 hidden 的元素不在无障碍树里，
+           「先写字再揭开」会被当成新节点进树，而不是 live region 变了，
+           该念的那句反而可能丢。靠 .sr-only 移出画面，不靠 hidden。
+           只在转折时写它：开始 / 进了限流 / 成功 / 失败。 -->
+      <p class="sr-only" id="exportLive" role="status"></p>
     </section>
   </main>
 

@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Sobib nii baas-URL kui ka täielik otspunkt, nt http://localhost:8880/v1 või http://localhost:8880/v1/audio/speech (kohalikud kõneserverid nagu Kokoro või openai-edge-tts). Võtme võib tühjaks jätta; tavaline http töötab ainult loopback-aadressidel."
   },

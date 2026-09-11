@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Puwede ang base URL o buong endpoint, hal. http://localhost:8880/v1 o http://localhost:8880/v1/audio/speech (mga lokal na speech server tulad ng Kokoro o openai-edge-tts). Puwedeng walang laman ang key; plain http lang para sa loopback address."
   },

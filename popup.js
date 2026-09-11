@@ -2081,6 +2081,19 @@ function openOptionsAt(hash) {
   window.close();          // hand over to the tab instead of stacking UI
 }
 
+// 要念出来的那一路。和 #exportMsg 分开，因为那个每 700ms 就被重写一次。
+// 同一句话不重复写：live region 只认「变了」，重复赋同样的值在有的读屏上
+// 也会再念一遍。
+let lastSpoken = "";
+function announceExport(text) {
+  const el = $("exportLive");
+  if (!el) return;
+  const say = String(text || "").trim();
+  if (!say || say === lastSpoken) return;
+  lastSpoken = say;
+  el.textContent = say;
+}
+
 function showExportMsg(text, kind) {
   const el = $("exportMsg");
   if (!el) return;
@@ -2088,6 +2101,9 @@ function showExportMsg(text, kind) {
   el.classList.remove("ok", "err");
   if (kind) el.classList.add(kind);
   el.hidden = !text;
+  // 成功和失败是转折，念。进度和倒计时的 kind 是 null —— 它们一分钟来八十次，
+  // 正是不能念的那一类。
+  if (kind === "ok" || kind === "err") announceExport(text);
 }
 
 // ---- export with the own-key engine ---------------------------------------
@@ -2200,6 +2216,8 @@ function startPoll(tabId) {
       const secs = Math.max(1, Math.ceil((waitUntil - Date.now()) / 1000));
       showExportMsg(tsub("exportWaiting", [String(secs)],
         "翻译接口正在限流，约 " + secs + " 秒后继续"), "warn");
+      // 秒数每 0.7 秒变一次，但状态只转折了一次。念那一次，不念秒数。
+      announceExport(t("exportWaitingLive", "翻译接口正在限流，请稍候"));
       return;
     }
     if (s.total > 0) {
@@ -2229,6 +2247,8 @@ const NOT_YOUTUBE = () => t("exportNotYoutube", "请在 YouTube 视频页面使�
 async function runExport(useByo) {
   hideConfirm();
   showExportMsg("", null);
+  lastSpoken = "";                       // 新的一次导出，从头开始报
+  announceExport(t("exportWorking", "正在生成…"));
   setExportBusy(true, useByo);
   let tabId = null;
   try {
@@ -2331,6 +2351,35 @@ async function resumeExport() {
 }
 
 // ---- per-line tab editor -------------------------------------------------
+// 一组 role="tablist" 的键盘约定：Tab 进出这一组，方向键在组内走，
+// Home / End 跳两端。声明了 role 却不接键，是对读屏许一个做不到的承诺：
+// 它会念「这是一组标签」，而方向键什么都不会发生。
+//
+// roving tabindex（只有当前那个 tabindex=0）是规范里配套的另一半，这里
+// **不做**：这两组标签都只有可见的两三项到十几项，Tab 逐个走过去并不难受，
+// 而 roving 会让「Tab 进来落在哪一个」变成一件要维护的状态。先补方向键，
+// 那是缺了就骗人的一半。
+// options.js 里有一份逐字相同的，改这里记得改那边。
+function wireTablistKeys(listEl, tabSelector) {
+  if (!listEl) return;
+  listEl.addEventListener("keydown", (e) => {
+    const keys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"];
+    if (keys.indexOf(e.key) < 0) return;
+    const tabs = [...listEl.querySelectorAll(tabSelector)]
+      .filter((el) => !el.disabled && el.offsetParent !== null);
+    if (tabs.length < 2) return;
+    const at = tabs.indexOf(document.activeElement);
+    if (at < 0) return;                       // 焦点不在这一组里，不抢键
+    e.preventDefault();
+    let to = at;
+    if (e.key === "Home") to = 0;
+    else if (e.key === "End") to = tabs.length - 1;
+    else if (e.key === "ArrowRight" || e.key === "ArrowDown") to = (at + 1) % tabs.length;
+    else to = (at - 1 + tabs.length) % tabs.length;
+    try { tabs[to].focus(); } catch (_e) { /* ignore */ }
+  });
+}
+
 function bindLineControls() {
   const m = LINE[activeLine];
   $("lineShowLabel").textContent =
@@ -2383,6 +2432,7 @@ function bindUI() {
 let posHintTimer = 0;
 
 function wire() {
+  wireTablistKeys(document.getElementById("lineTabs"), ".tab");
   $("enabled").addEventListener("change", (e) => setKey("enabled", e.target.checked));
   $("diagCopy").addEventListener("click", onDiagCopy);
   $("updateNotes").addEventListener("change", (e) => setKey("updateNotes", e.target.checked));

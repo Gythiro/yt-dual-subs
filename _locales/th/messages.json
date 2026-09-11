@@ -1111,6 +1111,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "ใส่ได้ทั้ง Base URL หรือปลายทางแบบเต็ม เช่น http://localhost:8880/v1 หรือ http://localhost:8880/v1/audio/speech (เซิร์ฟเวอร์เสียงในเครื่องอย่าง Kokoro หรือ openai-edge-tts) คีย์เว้นว่างได้ ส่วน http ธรรมดาใช้ได้เฉพาะที่อยู่ loopback เท่านั้น"
   },

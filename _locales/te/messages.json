@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "బేస్ URL లేదా పూర్తి ఎండ్‌పాయింట్ రెండూ పని చేస్తాయి, ఉదా. http://localhost:8880/v1 లేదా http://localhost:8880/v1/audio/speech (Kokoro లేదా openai-edge-tts లాంటి లోకల్ స్పీచ్ సర్వర్లు). కీ ఖాళీగా ఉండవచ్చు; సాధారణ http లూప్‌బ్యాక్ అడ్రస్‌లకు మాత్రమే పని చేస్తుంది."
   },

@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Alap-URL és teljes végpont is jó, pl. http://localhost:8880/v1 vagy http://localhost:8880/v1/audio/speech (helyi beszédszerverek, mint a Kokoro vagy az openai-edge-tts). A kulcs üresen maradhat; sima http csak loopback-címeken működik."
   },

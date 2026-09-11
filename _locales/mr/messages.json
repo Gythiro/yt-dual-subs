@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "बेस URL किंवा पूर्ण एंडपॉइंट दोन्ही चालतात, उदा. http://localhost:8880/v1 किंवा http://localhost:8880/v1/audio/speech (Kokoro किंवा openai-edge-tts सारखे लोकल स्पीच सर्व्हर). की रिकामी राहू शकते; साधा http फक्त लूपबॅक पत्त्यांसाठी चालतो."
   },

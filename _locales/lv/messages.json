@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Der gan bāzes URL, gan pilns endpoints, piem. http://localhost:8880/v1 vai http://localhost:8880/v1/audio/speech (vietējie runas serveri kā Kokoro vai openai-edge-tts). Atslēga var palikt tukša; parastais http darbojas tikai loopback adresēm."
   },

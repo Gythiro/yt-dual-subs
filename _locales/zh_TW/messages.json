@@ -1140,6 +1140,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "翻譯介面正在限流，請稍候"
+  },
   "optTtsBaseHint": {
     "message": "填 Base URL 或完整端點位址都可以，例如 http://localhost:8880/v1 或 http://localhost:8880/v1/audio/speech（Kokoro、openai-edge-tts 這類本機朗讀服務）。金鑰可以留空；http 只有本機回環位址能用。"
   },

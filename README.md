@@ -55,6 +55,7 @@ English | [简体中文](README.zh-CN.md)
 - **50 translation languages**, and you choose which of them appear in the menu.
 - **Read the translation aloud** — each line is spoken as it appears, with the video's own audio ducked underneath and slowed a touch when a line is too long to fit. Your browser's own voices work with no key at all; five cloud providers are there if you want better ones, including Chinese regional voices and your own cloned ones. Preview a voice before you commit to it.
 - **Speaks your language, not just ours** — the interface itself comes in 44 languages, picked automatically and switchable by hand (Settings → About → Interface language).
+- **Six looks, or the one it shipped with** — Default, Neon Terminal, Ember, Mocha, Ink and Dusk, in Settings → About → Interface appearance. They repaint this extension only; the subtitles keep the font and colours you chose for them.
 
 </td>
 <td valign="top">

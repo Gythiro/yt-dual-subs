@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Δουλεύουν και το βασικό URL και το πλήρες τελικό σημείο, π.χ. http://localhost:8880/v1 ή http://localhost:8880/v1/audio/speech (τοπικοί διακομιστές ομιλίας όπως Kokoro ή openai-edge-tts). Το κλειδί μπορεί να μείνει άδειο· το σκέτο http δουλεύει μόνο για διευθύνσεις loopback."
   },

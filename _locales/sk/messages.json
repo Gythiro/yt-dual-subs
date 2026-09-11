@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "Funguje základná URL aj úplný endpoint, napr. http://localhost:8880/v1 alebo http://localhost:8880/v1/audio/speech (miestne hlasové servery ako Kokoro alebo openai-edge-tts). Kľúč môže ostať prázdny; obyčajné http funguje len pre loopback adresy."
   },

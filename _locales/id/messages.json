@@ -1145,6 +1145,9 @@
       }
     }
   },
+  "exportWaitingLive": {
+    "message": "The translation service is rate-limiting; please wait."
+  },
   "optTtsBaseHint": {
     "message": "URL dasar atau endpoint lengkap, keduanya jalan, mis. http://localhost:8880/v1 atau http://localhost:8880/v1/audio/speech (server suara lokal seperti Kokoro atau openai-edge-tts). Kuncinya boleh kosong; http biasa hanya jalan untuk alamat loopback."
   },
