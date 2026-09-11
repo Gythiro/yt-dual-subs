@@ -75,7 +75,7 @@ English | [简体中文](README.zh-CN.md)
 
 ## 🚀 Install
 
-**[➜ Install from the Chrome Web Store](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)** — one click, and it auto‑updates.
+**[➜ Install from the Chrome Web Store](https://chromewebstore.google.com/detail/dual-subtitles-for-youtub/ndifcigakimmibkgeabchfaolhjpcmge)** — free, and it auto‑updates.
 
 Then open any YouTube video with captions: the dual subtitles appear automatically (the extension turns captions on for you).
 
@@ -101,7 +101,7 @@ Works on **Chrome, Edge, and other Chromium browsers**, version 111+ (required f
 ## ⚙️ Usage
 
 - **Toolbar icon** → settings popup: translation language, translation engine, line order, position, spacing, and per‑line styling — all with a live preview.
-- **Gear icon** (top-right of the popup) → the settings page, six panes: Getting started; Translation service (your own key, or a local model); Translation languages (which ones appear in the menu); Subtitle fonts (this computer's fonts, or a file you import); Read aloud (voices and keys); About (interface language, keyboard shortcuts, and Something wrong → Copy diagnostic info).
+- **Gear icon** (top-right of the popup) → the settings page, six panes: Getting started; Translation service (your own key, or a local model); Translation languages (which ones appear in the menu); Subtitle fonts (this computer's fonts, or a file you import); Read aloud (voices and keys); About (interface language, keyboard shortcuts, and Something not working → Copy diagnostic info).
 - **Control‑bar button** (the caption icon next to the gear): one‑click on/off. Blue = on, grey = off.
 - **Drag** the subtitle box by its handle (appears top‑left when you hover the player); **double‑click** the handle to reset its position.
 - **Export** (popup → *Export*): download the subtitles as an `.srt` file — choose original, translation, or bilingual.
