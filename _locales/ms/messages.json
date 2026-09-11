@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Belum ada senarai model — ambil satu, atau taip namanya."
   },
+  "optModelEndpointId": {
+    "message": "Penyedia ini perlukan ID titik akhir dari konsol dia sendiri — bentuk macam di atas — bukan nama model awam."
+  },
   "optShowKey": {
     "message": "Tunjuk"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "penyedia menolak permintaan tu"
+  },
+  "ttsSkipNoNet": {
+    "message": "tak dapat capai penyedia"
   },
   "ttsSkipNotSet": {
     "message": "belum diset pada komputer ni"

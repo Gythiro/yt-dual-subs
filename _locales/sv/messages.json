@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Ingen modellista än — hämta en, eller skriv bara namnet."
   },
+  "optModelEndpointId": {
+    "message": "Den här leverantören kräver slutpunkts-ID:t från sin egen konsol — i formatet som visas ovan — och inte ett offentligt modellnamn."
+  },
   "optShowKey": {
     "message": "Visa"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "leverantören avvisade de anropen"
+  },
+  "ttsSkipNoNet": {
+    "message": "kunde inte nå leverantören"
   },
   "ttsSkipNotSet": {
     "message": "inte inställt på den här datorn"

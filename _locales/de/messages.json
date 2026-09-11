@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Noch keine Modellliste — abrufen oder den Namen eingeben."
   },
+  "optModelEndpointId": {
+    "message": "Dieser Anbieter verlangt die Endpoint-ID aus seiner eigenen Konsole — in dem Format wie oben gezeigt — und keinen öffentlichen Modellnamen."
+  },
   "optShowKey": {
     "message": "Anzeigen"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "der Anbieter hat diese Anfragen abgelehnt"
+  },
+  "ttsSkipNoNet": {
+    "message": "Anbieter nicht erreichbar"
   },
   "statusTrackRetry": {
     "message": "Die Untertitelspur ist nicht angekommen — es wird automatisch erneut versucht. Eilig? Seite neu laden, dann sofort noch einmal."

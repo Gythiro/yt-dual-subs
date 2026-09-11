@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Henüz model listesi yok — getir veya adı yaz."
   },
+  "optModelEndpointId": {
+    "message": "Bu sağlayıcı genel bir model adı değil, kendi konsolundan alınan uç nokta kimliğini (yukarıda gösterilen biçimde) istiyor."
+  },
   "optShowKey": {
     "message": "Göster"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "sağlayıcı bu istekleri reddetti"
+  },
+  "ttsSkipNoNet": {
+    "message": "sağlayıcıya ulaşılamadı"
   },
   "statusTrackRetry": {
     "message": "Altyazı parçası gelmedi — otomatik olarak yeniden deneniyor. Aceleniz mi var? Hemen denemek için sayfayı yenileyin."

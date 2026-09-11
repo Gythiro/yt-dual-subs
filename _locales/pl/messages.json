@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Brak listy modeli — pobierz ją albo wpisz nazwę."
   },
+  "optModelEndpointId": {
+    "message": "Ten dostawca wymaga identyfikatora punktu końcowego z własnej konsoli — w formacie pokazanym powyżej — a nie publicznej nazwy modelu."
+  },
   "optShowKey": {
     "message": "Pokaż"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "dostawca odrzucił te żądania"
+  },
+  "ttsSkipNoNet": {
+    "message": "nie udało się połączyć z dostawcą"
   },
   "statusTrackRetry": {
     "message": "Ścieżka napisów nie dotarła — ponawiam automatycznie. W pośpiechu? Odśwież stronę, aby spróbować od razu."

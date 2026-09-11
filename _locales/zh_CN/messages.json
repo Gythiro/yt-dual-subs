@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "还没有模型列表——拉一份，或者直接手填。"
   },
+  "optModelEndpointId": {
+    "message": "这一家要填的是它自己控制台里的接入点 ID，就是上面那个样子，不是公开的模型名。"
+  },
   "optShowKey": {
     "message": "显示"
   },
@@ -1122,6 +1125,9 @@
   },
   "ttsSkipRefused": {
     "message": "服务商拒绝了请求"
+  },
+  "ttsSkipNoNet": {
+    "message": "连不上这家服务商"
   },
   "ttsSkipNotSet": {
     "message": "这台电脑上还没配好"

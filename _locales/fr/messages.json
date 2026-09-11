@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Pas encore de liste de modèles — récupérez-en une, ou saisissez le nom."
   },
+  "optModelEndpointId": {
+    "message": "Ce fournisseur exige l’ID du point de terminaison de sa propre console — comme illustré ci-dessus — et non un nom de modèle public."
+  },
   "optShowKey": {
     "message": "Afficher"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "le fournisseur a refusé ces requêtes"
+  },
+  "ttsSkipNoNet": {
+    "message": "impossible de contacter le fournisseur"
   },
   "statusTrackRetry": {
     "message": "La piste de sous-titres n’est pas arrivée — nouvel essai automatique. Pressé ? Actualisez la page pour réessayer tout de suite."

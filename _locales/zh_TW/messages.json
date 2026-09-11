@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "還沒有模型清單——取得一份，或直接手填。"
   },
+  "optModelEndpointId": {
+    "message": "這家要填的是它自己控制台裡的端點 ID，就是上面那個樣子，不是公開的模型名稱。"
+  },
   "optShowKey": {
     "message": "顯示"
   },
@@ -1121,6 +1124,9 @@
   },
   "ttsSkipRefused": {
     "message": "服務商拒絕了請求"
+  },
+  "ttsSkipNoNet": {
+    "message": "連不上這家服務商"
   },
   "ttsSkipNotSet": {
     "message": "這台電腦上還沒配好"

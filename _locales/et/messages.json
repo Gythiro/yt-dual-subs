@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Mudelite loendit veel pole — too see või sisesta nimi käsitsi."
   },
+  "optModelEndpointId": {
+    "message": "See teenusepakkuja nõuab oma konsoolist saadud lõpp-punkti ID-d — ülalnäidatud kujul — ja mitte avalikku mudeli nime."
+  },
   "optShowKey": {
     "message": "Näita"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "teenusepakkuja lükkas need päringud tagasi"
+  },
+  "ttsSkipNoNet": {
+    "message": "teenusepakkujaga ei saadud ühendust"
   },
   "statusTrackRetry": {
     "message": "Subtiitririba ei saabunud — proovitakse automaatselt uuesti. Kiire? Värskenda lehte, et kohe uuesti proovida."

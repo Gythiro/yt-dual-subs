@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Aún no hay lista de modelos — obtén una o escribe el nombre."
   },
+  "optModelEndpointId": {
+    "message": "Este proveedor requiere el ID del endpoint de su propia consola —el formato mostrado arriba— y no un nombre de modelo público."
+  },
   "optShowKey": {
     "message": "Mostrar"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "el proveedor rechazó esas solicitudes"
+  },
+  "ttsSkipNoNet": {
+    "message": "no se pudo conectar con el proveedor"
   },
   "statusTrackRetry": {
     "message": "La pista de subtítulos no ha llegado; se reintenta automáticamente. ¿Prisa? Recarga la página para intentarlo ya."

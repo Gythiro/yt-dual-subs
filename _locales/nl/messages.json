@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Nog geen modellijst — haal er een op, of typ de naam."
   },
+  "optModelEndpointId": {
+    "message": "Deze aanbieder vraagt om de endpoint-ID uit zijn eigen console — in het formaat hierboven — en geen openbare modelnaam."
+  },
   "optShowKey": {
     "message": "Tonen"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "de aanbieder weigerde die verzoeken"
+  },
+  "ttsSkipNoNet": {
+    "message": "kon de aanbieder niet bereiken"
   },
   "ttsSkipNotSet": {
     "message": "niet ingesteld op deze computer"

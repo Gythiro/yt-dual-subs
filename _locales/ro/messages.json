@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Nicio listă de modele încă — obține una sau tastează numele."
   },
+  "optModelEndpointId": {
+    "message": "Acest furnizor cere ID-ul endpoint-ului din propria consolă — în formatul arătat mai sus — nu un nume de model public."
+  },
   "optShowKey": {
     "message": "Arată"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "furnizorul a refuzat acele cereri"
+  },
+  "ttsSkipNoNet": {
+    "message": "nu s-a putut contacta furnizorul"
   },
   "statusTrackRetry": {
     "message": "Pista de subtitrări nu a sosit — se reîncearcă automat. Grăbit? Reîncarcă pagina ca să încerci imediat."

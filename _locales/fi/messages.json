@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Ei mallilistaa vielä — hae lista tai kirjoita nimi."
   },
+  "optModelEndpointId": {
+    "message": "Tämä palveluntarjoaja vaatii päätepisteen tunnuksen omasta konsolistaan — yllä näkyvässä muodossa — eikä yleistä mallin nimeä."
+  },
   "optShowKey": {
     "message": "Näytä"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "palveluntarjoaja hylkäsi nämä pyynnöt"
+  },
+  "ttsSkipNoNet": {
+    "message": "palveluntarjoajaan ei saatu yhteyttä"
   },
   "statusTrackRetry": {
     "message": "Tekstitysraita ei saapunut — yritetään automaattisesti uudelleen. Kiire? Päivitä sivu ja yritä heti."

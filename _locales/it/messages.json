@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Nessun elenco di modelli — scaricalo o inserisci il nome."
   },
+  "optModelEndpointId": {
+    "message": "Questo fornitore richiede l'ID dell'endpoint dalla propria console — nel formato mostrato sopra — e non un nome di modello pubblico."
+  },
   "optShowKey": {
     "message": "Mostra"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "il fornitore ha rifiutato quelle richieste"
+  },
+  "ttsSkipNoNet": {
+    "message": "impossibile contattare il fornitore"
   },
   "statusTrackRetry": {
     "message": "La traccia dei sottotitoli non è arrivata: nuovo tentativo automatico. Di fretta? Ricarica la pagina per riprovare subito."

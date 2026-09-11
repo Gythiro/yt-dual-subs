@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Modeļu saraksta vēl nav — ielādē to vai vienkārši ieraksti nosaukumu."
   },
+  "optModelEndpointId": {
+    "message": "Šis sniedzējs pieprasa galapunkta ID no savas konsoles — iepriekš parādītajā formātā —, nevis publisku modeļa nosaukumu."
+  },
   "optShowKey": {
     "message": "Rādīt"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "sniedzējs noraidīja tos vaicājumus"
+  },
+  "ttsSkipNoNet": {
+    "message": "neizdevās sazināties ar sniedzēju"
   },
   "ttsSkipNotSet": {
     "message": "nav iestatīts šajā datorā"

@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "아직 모델 목록이 없습니다 — 불러오거나 이름을 직접 입력하세요."
   },
+  "optModelEndpointId": {
+    "message": "이 제공업체는 공개 모델 이름이 아니라, 자체 콘솔에서 생성한 엔드포인트 ID(위와 같은 형식)를 입력해야 합니다."
+  },
   "optShowKey": {
     "message": "표시"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "제공업체가 요청을 거부했습니다"
+  },
+  "ttsSkipNoNet": {
+    "message": "제공업체에 연결할 수 없음"
   },
   "statusTrackRetry": {
     "message": "자막 트랙을 받지 못했습니다. 자동으로 다시 시도하는 중입니다. 급하면 페이지를 새로고침해 바로 다시 시도하세요."

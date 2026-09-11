@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Seznama modelov še ni — pridobi ga ali samo vpiši ime."
   },
+  "optModelEndpointId": {
+    "message": "Ta ponudnik zahteva ID končne točke iz lastne konzole — v obliki, prikazani zgoraj — in ne javnega imena modela."
+  },
   "optShowKey": {
     "message": "Pokaži"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "ponudnik je te zahteve zavrnil"
+  },
+  "ttsSkipNoNet": {
+    "message": "ponudnika ni bilo mogoče doseči"
   },
   "ttsSkipNotSet": {
     "message": "ni nastavljeno na tem računalniku"

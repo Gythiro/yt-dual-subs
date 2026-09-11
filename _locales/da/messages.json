@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Ingen modelliste endnu — hent en, eller skriv bare navnet."
   },
+  "optModelEndpointId": {
+    "message": "Denne udbyder kræver endpoint-ID’et fra sin egen konsol — i det format, der vises ovenfor — og ikke et offentligt modelnavn."
+  },
   "optShowKey": {
     "message": "Vis"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "udbyderen afviste de kald"
+  },
+  "ttsSkipNoNet": {
+    "message": "kunne ikke nå udbyderen"
   },
   "ttsSkipNotSet": {
     "message": "ikke sat op på denne computer"

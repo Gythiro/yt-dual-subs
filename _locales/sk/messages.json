@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Zoznam modelov zatiaľ chýba — načítaj ho, alebo zadaj názov ručne."
   },
+  "optModelEndpointId": {
+    "message": "Tento poskytovateľ vyžaduje ID koncového bodu z vlastnej konzoly — v tvare uvedenom vyššie — a nie verejný názov modelu."
+  },
   "optShowKey": {
     "message": "Zobraziť"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "poskytovateľ tieto požiadavky odmietol"
+  },
+  "ttsSkipNoNet": {
+    "message": "nepodarilo sa spojiť s poskytovateľom"
   },
   "ttsSkipNotSet": {
     "message": "nenastavené na tomto počítači"

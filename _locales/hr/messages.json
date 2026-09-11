@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Još nema popisa modela — dohvati ga ili samo upiši naziv."
   },
+  "optModelEndpointId": {
+    "message": "Ovaj pružatelj traži ID krajnje točke iz vlastite konzole — u obliku prikazanom gore — a ne javni naziv modela."
+  },
   "optShowKey": {
     "message": "Prikaži"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "pružatelj je odbio te zahtjeve"
+  },
+  "ttsSkipNoNet": {
+    "message": "nije moguće povezati se s pružateljem"
   },
   "ttsSkipNotSet": {
     "message": "nije postavljeno na ovom računalu"

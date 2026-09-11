@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Encara no hi ha llista de models — obtén-ne una, o escriu el nom."
   },
+  "optModelEndpointId": {
+    "message": "Aquest proveïdor requereix l'ID de l'endpoint de la seva pròpia consola —en el format mostrat a dalt— i no pas un nom de model públic."
+  },
   "optShowKey": {
     "message": "Mostra"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "el proveïdor ha rebutjat aquestes peticions"
+  },
+  "ttsSkipNoNet": {
+    "message": "no s'ha pogut contactar amb el proveïdor"
   },
   "ttsSkipNotSet": {
     "message": "no està configurat en aquest ordinador"

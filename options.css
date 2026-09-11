@@ -313,7 +313,12 @@ a { text-underline-offset: 3px; }
   padding: 7px 10px;
 }
 .ofont-hd input[type="search"]:hover { border-color: #454545; }
-.ofont-hd input[type="search"]:focus { border-color: var(--accent); outline: none; }
+/* The accent border is the resting cue; the ring is the keyboard's. This rule
+   used to carry `outline: none`, and being three classes deep it beat the
+   page-wide `input:focus-visible` — so Tab landed in this box with nothing but
+   a border tint to say so. Measured: outline-style computed to `none` while
+   :focus-visible matched. Same fault the sliders had, in another file. */
+.ofont-hd input[type="search"]:focus { border-color: var(--accent); }
 .olabel-n { margin-left: .3em; color: var(--muted); font-weight: 500; letter-spacing: 0; text-transform: none; }
 /* A long name in a wide face must not push the column: the grid stays 1fr
    1fr and the name wraps to two lines at most. */

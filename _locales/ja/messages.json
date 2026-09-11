@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "モデル一覧はまだありません。取得するか、名前を直接入力してください。"
   },
+  "optModelEndpointId": {
+    "message": "このプロバイダーでは公開されているモデル名ではなく、自身のコンソールにあるエンドポイントID（上の例のような形式）を入力する必要があります。"
+  },
   "optShowKey": {
     "message": "表示"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "プロバイダーがリクエストを拒否しました"
+  },
+  "ttsSkipNoNet": {
+    "message": "プロバイダーに接続できなかった"
   },
   "statusTrackRetry": {
     "message": "字幕トラックを取得できていません。自動で再試行中です。急ぐ場合はページを再読み込みするとすぐやり直せます。"

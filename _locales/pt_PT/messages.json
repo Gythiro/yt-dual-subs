@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Ainda sem lista de modelos — obtenha uma ou escreva o nome."
   },
+  "optModelEndpointId": {
+    "message": "Este fornecedor exige o ID do endpoint da sua própria consola — no formato mostrado acima — e não um nome de modelo público."
+  },
   "optShowKey": {
     "message": "Mostrar"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "o fornecedor recusou esses pedidos"
+  },
+  "ttsSkipNoNet": {
+    "message": "não foi possível ligar ao fornecedor"
   },
   "statusTrackRetry": {
     "message": "A faixa de legendas não chegou — a tentar novamente de forma automática. Com pressa? Recarregue a página para tentar já."

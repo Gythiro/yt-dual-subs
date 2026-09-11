@@ -348,9 +348,14 @@ function renderModelField(p) {
   if (!choices.length) {
     // A provider with no key field must not be told to use one. The button
     // beside this line already switches label the same way.
-    showModelMsg(p.noKey
-      ? t("optNoModelsYetNoKey", "还没有模型列表——拉一份，或者直接手填。")
-      : t("optNoModelsYet", "还没有模型列表——用你的 Key 拉一份，或者直接手填。"), null);
+    // A provider that wants something other than a model name gets its own
+    // sentence: the shared one ends "or just type the name", which contradicts
+    // the endpoint id sitting in the box right above it.
+    showModelMsg(p.modelIsEndpointId
+      ? t("optModelEndpointId", "这一家要填的是它自己控制台里的接入点 ID，就是上面那个样子，不是公开的模型名。")
+      : p.noKey
+        ? t("optNoModelsYetNoKey", "还没有模型列表——拉一份，或者直接手填。")
+        : t("optNoModelsYet", "还没有模型列表——用你的 Key 拉一份，或者直接手填。"), null);
   }
 }
 
@@ -2364,7 +2369,18 @@ function paintTtsUse() {
       // held a key or did not exist.
       if (!ready) {
         const pair = TTS_LOCK_KEYS[why] || TTS_LOCK_KEYS.noKey;
-        banner.textContent = t(pair[0], pair[1]);
+        // Whose problem it is. The lock is about the provider that would
+        // SPEAK; the panel shows whichever one the reader clicked to look at,
+        // and those are deliberately not the same thing. With a cloud key
+        // deleted and the browser's own voices on screen, "this provider has
+        // no key yet" sat over a provider with no key field at all. Named only
+        // when they differ — on its own panel the heading already says it.
+        const about = P.tts.get(state.ttsProvider || "");
+        const shown = ttsProvider();
+        const named = about && shown && about.id !== shown.id
+          ? ((about.shortKey && t(about.shortKey, about.short)) || about.short || about.name)
+          : "";
+        banner.textContent = (named ? named + " · " : "") + t(pair[0], pair[1]);
       }
     }
     use.classList.toggle("locked", !ready);
@@ -2576,6 +2592,10 @@ function initReadaloud() {
     paintTtsKeyField(p);
     paintTtsVoices(p);
     paintTtsModel(p);
+    // The lock's sentence names the provider it is about only while that is
+    // NOT the one on screen, so moving between panels changes what it should
+    // say. Without this it kept the previous panel's wording.
+    paintTtsUse();
     renderList();          // the highlight on the left follows the draft
   });
   $("ttsModelSel").addEventListener("change", () => {

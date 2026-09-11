@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Chưa có danh sách mô hình — lấy danh sách, hoặc nhập tên."
   },
+  "optModelEndpointId": {
+    "message": "Nhà cung cấp này yêu cầu ID điểm cuối từ bảng điều khiển của riêng họ — giống định dạng hiển thị ở trên — chứ không phải tên mô hình công khai."
+  },
   "optShowKey": {
     "message": "Hiện"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "nhà cung cấp đã từ chối các yêu cầu đó"
+  },
+  "ttsSkipNoNet": {
+    "message": "không thể kết nối với nhà cung cấp"
   },
   "statusTrackRetry": {
     "message": "Chưa nhận được luồng phụ đề — đang tự động thử lại. Vội thì tải lại trang để thử ngay."

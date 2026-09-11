@@ -2469,8 +2469,14 @@ async function ttsVoices(asked) {
 // is told their language is unsupported.
 async function deeplTargets(t) {
   try {
+    // With no bound on it, a connection that opens and then goes quiet keeps
+    // Save-and-test saying "Testing…" until the service worker is torn down —
+    // the same shape as the two fetches next door, and the one this list was
+    // missing. A language list is not worth more than fifteen seconds; the
+    // caller treats null as "ask the hard-coded table instead".
     const res = await fetch(t.endpoint + "/languages?type=target", {
-      headers: { Authorization: "DeepL-Auth-Key " + t.key }
+      headers: { Authorization: "DeepL-Auth-Key " + t.key },
+      signal: AbortSignal.timeout(BYO_LIST_TIMEOUT_MS)
     });
     if (!res.ok) return null;
     const list = await res.json();

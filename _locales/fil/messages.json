@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Wala pang listahan ng modelo — kunin, o i-type ang pangalan."
   },
+  "optModelEndpointId": {
+    "message": "Kailangan ng provider na ito ang endpoint ID mula sa sarili nitong console — sa format na nasa itaas — at hindi pampublikong pangalan ng modelo."
+  },
   "optShowKey": {
     "message": "Ipakita"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "tinanggihan ng provider ang mga request na 'yon"
+  },
+  "ttsSkipNoNet": {
+    "message": "hindi ma-reach ang provider"
   },
   "ttsSkipNotSet": {
     "message": "hindi naka-set sa computer na 'to"

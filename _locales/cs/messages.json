@@ -467,6 +467,9 @@
   "optNoModelsYetNoKey": {
     "message": "Seznam modelů zatím chybí — načtěte jej, nebo zadejte název ručně."
   },
+  "optModelEndpointId": {
+    "message": "Tento poskytovatel vyžaduje ID koncového bodu z vlastní konzole — ve tvaru uvedeném výše — nikoliv veřejný název modelu."
+  },
   "optShowKey": {
     "message": "Zobrazit"
   },
@@ -1092,6 +1095,9 @@
   },
   "ttsSkipRefused": {
     "message": "poskytovatel tyto požadavky odmítl"
+  },
+  "ttsSkipNoNet": {
+    "message": "nelze se spojit s poskytovatelem"
   },
   "statusTrackRetry": {
     "message": "Stopa titulků nedorazila — zkouší se to automaticky znovu. Spěcháte? Obnovte stránku a zkuste to hned."

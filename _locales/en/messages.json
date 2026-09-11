@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "No model list yet — fetch one, or just type the name."
   },
+  "optModelEndpointId": {
+    "message": "This provider wants the endpoint ID from its own console — the shape shown above — not a public model name."
+  },
   "optShowKey": {
     "message": "Show"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "the provider refused those requests"
+  },
+  "ttsSkipNoNet": {
+    "message": "could not reach the provider"
   },
   "ttsSkipNotSet": {
     "message": "not set up on this computer"

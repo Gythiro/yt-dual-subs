@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Bado hakuna orodha ya modeli — leta moja, au andika jina tu."
   },
+  "optModelEndpointId": {
+    "message": "Mtoa huduma huyu anahitaji kitambulisho cha mwisho kutoka kwenye dashibodi yake mwenyewe — kama inavyoonyeshwa hapo juu — na si jina la modeli la umma."
+  },
   "optShowKey": {
     "message": "Onyesha"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "mtoa huduma alikataa maombi hayo"
+  },
+  "ttsSkipNoNet": {
+    "message": "haikuweza kuunganisha na mtoa huduma"
   },
   "ttsSkipNotSet": {
     "message": "haijawekwa kwenye kompyuta hii"

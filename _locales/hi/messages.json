@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "अभी मॉडल सूची नहीं — लाओ, या नाम लिख दो।"
   },
+  "optModelEndpointId": {
+    "message": "इस प्रदाता को अपने कंसोल से एंडपॉइंट आईडी चाहिए — जैसा कि ऊपर दिखाया गया है — न कि कोई सार्वजनिक मॉडल नाम।"
+  },
   "optShowKey": {
     "message": "दिखाओ"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "प्रदाता ने वे अनुरोध रोक दिए"
+  },
+  "ttsSkipNoNet": {
+    "message": "प्रदाता से संपर्क नहीं हो सका"
   },
   "ttsSkipNotSet": {
     "message": "इस कंप्यूटर पर सेट नहीं"

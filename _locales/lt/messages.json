@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Modelių sąrašo dar nėra — parsiųsk jį arba tiesiog įrašyk pavadinimą."
   },
+  "optModelEndpointId": {
+    "message": "Šis teikėjas reikalauja galinio punkto ID iš savo konsolės — tokio formato, kaip parodyta aukščiau — o ne viešo modelio pavadinimo."
+  },
   "optShowKey": {
     "message": "Rodyti"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "teikėjas atmetė tas užklausas"
+  },
+  "ttsSkipNoNet": {
+    "message": "nepavyko susisiekti su teikėju"
   },
   "ttsSkipNotSet": {
     "message": "nenustatyta šiame kompiuteryje"

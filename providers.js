@@ -172,6 +172,12 @@
       // literal, not a phrase: an endpoint id looks the same in every language.
       defaultModel: "",
       modelPlaceholder: "ep-20260101120000-abcde",
+      // …and the line under the box has to agree with it. That line is shared
+      // by every provider with no list to fetch, and it ends "or just type the
+      // name" — so the box showed an endpoint id while the sentence beneath
+      // asked for a name, and a reader who trusts sentences over placeholders
+      // typed a public model name that this provider does not answer to.
+      modelIsEndpointId: true,
       models: [],
       keyUrl: "https://console.volcengine.com/ark/region:ark+cn-beijing/apikey",
       pricingUrl: "https://www.volcengine.com/docs/82379/1544106",

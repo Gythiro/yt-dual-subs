@@ -440,6 +440,17 @@ async function refreshEngineStatus() {
 // not here.
 const BYO_SETUP_CODES = new Set(["noKey", "noProvider"]);
 
+// The next ones over: their sentence is right, and it names something to press
+// — "Save and test", "List models with my key", the API base URL field — that
+// lives on the settings page. Saying so here and offering no way there is the
+// same fault the repo has now fixed five times in other words, so the line
+// carries the door it is talking about. Codes NOT in this set are answered
+// somewhere else entirely (a provider's console, a bill, a wait), and a button
+// to our own settings page would send the reader to the wrong room.
+const BYO_FIX_ON_SETUP = new Set([
+  "noPerm", "noModel", "noModelEmpty", "badBaseUrl", "urlHasKey"
+]);
+
 // The summary button appears only where its panel can open: a page with a
 // player. Everything else about "can this be summarised" — a free engine, no
 // key, a video with no caption track — is answered by the panel itself, in the
@@ -501,6 +512,17 @@ async function paintEngineStatus() {
   // staying quiet would just look like "the extension stopped translating".
   if (byoCode && !BYO_SETUP_CODES.has(byoCode)) {
     el.textContent = byoErrText(byoCode, activeProvider());
+    if (BYO_FIX_ON_SETUP.has(byoCode)) {
+      el.appendChild(document.createTextNode(" "));
+      const go = document.createElement("button");
+      go.type = "button";
+      go.className = "link";
+      // The same words as the panel's own way in, so the two doors to one
+      // room are not two different names.
+      go.textContent = t("popupByoConfigure", "配置…");
+      go.addEventListener("click", () => openOptionsAt("#setup"));
+      el.appendChild(go);
+    }
     el.classList.add("warn");
     el.hidden = false;
     return;
@@ -595,7 +617,7 @@ async function paintEngineStatus() {
   }
   if (state.engine !== "auto") return;      // manual choice: stay quiet
   // The page waited for a track, re-pressed CC, and found no caption text on
-  // screen either: say so, with a door to the About pane's "Something wrong"
+  // screen either: say so, with a door to the About pane's "Something not working"
   // card. Not a warning — the diagnostics button is for faults, and a video
   // without captions is not one.
   if (!r.engine && r.noTrack && !r.trackWait) {
@@ -604,7 +626,7 @@ async function paintEngineStatus() {
     go.type = "button";
     go.className = "link";
     go.textContent = t("troubleTitle", "遇到问题");
-    go.addEventListener("click", () => toOptions("#about"));
+    go.addEventListener("click", () => openOptionsAt("#about"));
     el.appendChild(go);
     el.hidden = false;
     return;
@@ -801,6 +823,13 @@ function skipWhyText(code) {
   if (code === "unsupportedTarget") {
     return t("ttsSkipNoVoice", "这家没有这门语言的音色");
   }
+  // One step further out than the two above: the request DID leave, and
+  // nothing came back — no route, a blocked network, a local speech server
+  // that is not listening, or the fifteen-second timeout on synthesis. Nobody
+  // refused anything; there was no one on the other end to refuse. Reading
+  // "the provider refused those requests" here sends someone to check a key
+  // and an account that are both fine.
+  if (code === "netfail") return t("ttsSkipNoNet", "连不上这家服务商");
   // Everything else is a provider's own refusal code (429, quota, auth…).
   // These used to map to the empty string, so the reader saw a bare
   // "skipped 40" with nothing to act on — reported in exactly those words
@@ -972,7 +1001,7 @@ async function paintTtsCard() {
       go.type = "button";
       go.className = "link";
       go.textContent = t("ttsOpenSettings", "朗读设置");
-      go.addEventListener("click", () => toOptions("#readaloud"));
+      go.addEventListener("click", () => openOptionsAt("#readaloud"));
       broken.appendChild(go);
     }
     broken.hidden = !say;
@@ -2357,7 +2386,7 @@ function wire() {
   $("targetLang").addEventListener("change", (e) => {
     if (e.target.value === MANAGE) {
       e.target.value = state.targetLang;   // put it back before leaving
-      if (!arrowing(e.target)) toOptions("#langs");
+      if (!arrowing(e.target)) openOptionsAt("#langs");
       return;
     }
     setKey("targetLang", e.target.value);
@@ -2420,17 +2449,21 @@ function wire() {
   // Two ways in, and the header gear is the one that always exists: the BYO row
   // only appears once the own-key engine is chosen, which used to leave Getting
   // started and About unreachable for everyone on the default engine.
-  // The opener itself lives at module level (openOptionsAt) because the model
-  // menu's last row needs it too.
-  const toOptions = openOptionsAt;
+  // The opener lives at module level (openOptionsAt) because four painters
+  // outside this function build doors of their own — the About door on the
+  // no-track line, the read-aloud pane's, the model menu's last row. There
+  // used to be a `toOptions` alias declared here and called from all of them:
+  // inside this function it worked, and every button written elsewhere threw
+  // ReferenceError the moment it was pressed. Nothing caught it because the
+  // assertions checked that those buttons EXISTED. Call the real name.
   // Bare handlers: a click event as the first argument must not be mistaken
   // for a hash.
-  $("openOptions").addEventListener("click", () => toOptions());
+  $("openOptions").addEventListener("click", () => openOptionsAt());
   // …and this one names its pane. Without the hash it calls openOptionsPage(),
   // which FOCUSES a settings tab that is already open — leaving the reader on
   // whichever pane they last used (fonts, About) after pressing Configure on
   // the translation card.
-  $("byoConfigure").addEventListener("click", () => toOptions("#setup"));
+  $("byoConfigure").addEventListener("click", () => openOptionsAt("#setup"));
   const pick = $("byoPick");
   if (pick) pick.addEventListener("change", onPickProvider);
 
@@ -2503,8 +2536,8 @@ function wire() {
   // ---- read-aloud card ---
   // Both doors land on the read-aloud pane: the empty state to set it up, the
   // status line for the low-frequency knobs (voice, region, ducking).
-  $("ttsConfigure").addEventListener("click", () => toOptions("#readaloud"));
-  $("ttsStatus").addEventListener("click", () => toOptions("#readaloud"));
+  $("ttsConfigure").addEventListener("click", () => openOptionsAt("#readaloud"));
+  $("ttsStatus").addEventListener("click", () => openOptionsAt("#readaloud"));
   $("ttsEnabledChk").addEventListener("change", (e) => {
     setKey("ttsEnabled", e.target.checked);
     paintTtsCard();                // the volume row follows the switch
@@ -2597,7 +2630,7 @@ function wire() {
   $("lineFont").addEventListener("change", (e) => {
     if (e.target.value === FONT_MORE) {
       e.target.value = state[LINE[activeLine].font];   // put it back before leaving
-      if (!arrowing(e.target)) toOptions("#fonts");
+      if (!arrowing(e.target)) openOptionsAt("#fonts");
       return;
     }
     setKey(LINE[activeLine].font, e.target.value);

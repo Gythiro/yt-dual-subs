@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Még nincs modellista — hozd le, vagy csak írd be a nevet."
   },
+  "optModelEndpointId": {
+    "message": "Ez a szolgáltató a saját konzoljából származó végpont-azonosítót kéri — a fenti formátumban —, nem pedig egy nyilvános modellnevet."
+  },
   "optShowKey": {
     "message": "Mutasd"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "a szolgáltató elutasította azokat a kéréseket"
+  },
+  "ttsSkipNoNet": {
+    "message": "nem sikerült elérni a szolgáltatót"
   },
   "ttsSkipNotSet": {
     "message": "nincs beállítva ezen a számítógépen"

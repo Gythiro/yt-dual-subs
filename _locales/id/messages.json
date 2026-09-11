@@ -503,6 +503,9 @@
   "optNoModelsYetNoKey": {
     "message": "Belum ada daftar model — ambil dulu, atau ketik namanya."
   },
+  "optModelEndpointId": {
+    "message": "Penyedia ini memerlukan ID endpoint dari konsolnya sendiri — dengan format seperti di atas — bukan nama model publik."
+  },
   "optShowKey": {
     "message": "Tampil"
   },
@@ -1126,6 +1129,9 @@
   },
   "ttsSkipRefused": {
     "message": "penyedia menolak permintaan itu"
+  },
+  "ttsSkipNoNet": {
+    "message": "tidak dapat terhubung ke penyedia"
   },
   "ttsSkipNotSet": {
     "message": "belum disetel di komputer ini"
