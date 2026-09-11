@@ -23,9 +23,13 @@
 /* ===========================================================================
  * 下面四套只改颜色 —— 没有一条规则动字体、间距或圆角。
  *
- * 霓虹那套上面的等宽读数、▍ 标记、品红「正在发生」，是**它自己的身份**，
- * 不是皮肤的通用形态。一套皮肤的最小形态就是这样一块 token：改 token，
- * 基表里每一条 var() 自己跟着走。谁要再加一套，照抄这个形状就够。
+ * 一套皮肤的最小形态就是这样一块 token：改 token，基表里每一条 var()
+ * 自己跟着走。谁要再加一套，照抄这个形状就够。
+ *
+ * 霓虹那套多出来的只有两样：等宽读数（拖滑块时数字不抖，是理由不是花样），
+ * 和品红那支「正在发生」（它和余烬、暮色共用同一组规则）。
+ * 装饰性的那些——标题前的小方块、页眉下那条跟着总开关变色的线——已经拿掉了：
+ * 六套里只有一套有装饰，会让另外五套读起来像没做完，而不是像更素。
  *
  * 强调色只当「可以操作 / 选中」用。出错仍是 #ff8a8a、警告仍是 #ffc24b、
  * 成功与「使用中」仍是 #5fd38a —— 这三支不跟皮肤走，它们说的是状态不是风格。
@@ -169,17 +173,20 @@ html[data-skin="neon"] .oplain > .odetail {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
 }
 
-/* Section titles: silkscreen, not a control. The ▍ carries the instrument
-   feel; the monospace does not — that font stack has no CJK, so a Chinese
-   heading just drops to whatever the system picks and stops matching the body
-   text. Latin keeps the tracking, everyone keeps the mark. */
+/* Section titles: silkscreen, not a control. Tracking and a dimmer grey are
+   the whole of it — no monospace, because that font stack has no CJK and a
+   Chinese heading would drop to whatever the system picks and stop matching
+   the body text.
+   There was a ▍ in front of these, and a hairline under the header that
+   followed the master switch. Both are gone: of six skins only this one had
+   ornament, which made the other five read as unfinished rather than as
+   plainer. A skin is a palette; the one thing this skin still keeps for
+   itself is the monospace readouts, and that is because tabular figures stop
+   a dragged number jittering — a reason, not a flourish. */
 html[data-skin="neon"] .card-title,
 html[data-skin="neon"] .olabel {
   color: var(--muted); opacity: .8; letter-spacing: 1.6px;
 }
-html[data-skin="neon"] .card-title::before,
-html[data-skin="neon"] .olabel::before { content: "▍"; margin-right: 5px; opacity: .35; }
-
 /* Readouts — and only readouts. The version number is a signature, not a
    number you are adjusting, so it stays in the body face. */
 html[data-skin="neon"] label b {
@@ -281,14 +288,6 @@ html[data-skin="dusk"] .tts-status {
   box-shadow: inset 1px 0 0 var(--hot);   /* inset 才不占位置（皮肤只准上漆） */
   padding-left: 8px;
 }
-/* The hairline under the header follows the master switch: on is magenta, off
-   is the ordinary line. Whether the extension is doing anything, without
-   reading a word. */
-html[data-skin="neon"] header { box-shadow: inset 0 -1px 0 var(--line); }
-html[data-skin="neon"] body:has(#enabled:checked) header {
-  box-shadow: inset 0 -1px 0 rgba(255, 77, 141, .5);
-}
-
 /* "In use" and "broken" must never share a colour. Warning and error keep the
    palette's own amber and red. */
 html[data-skin="neon"] .engine-msg.warn,
