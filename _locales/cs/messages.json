@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Ember"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Inkoust"
+  },
+  "skinDusk": {
+    "message": "Soumrak"
+  },
   "cmdToggleSubs": {
     "message": "Zapnout nebo vypnout titulky"
   },

@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Glöd"
+  },
+  "skinMocha": {
+    "message": "Mokka"
+  },
+  "skinInk": {
+    "message": "Bläck"
+  },
+  "skinDusk": {
+    "message": "Skymning"
+  },
   "cmdToggleSubs": {
     "message": "Undertexter på eller av"
   },

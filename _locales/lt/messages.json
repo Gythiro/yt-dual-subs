@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Žarija"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Rašalas"
+  },
+  "skinDusk": {
+    "message": "Sutemos"
+  },
   "cmdToggleSubs": {
     "message": "Subtitrai įj./išj."
   },

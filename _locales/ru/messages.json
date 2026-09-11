@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Неоновый терминал"
   },
+  "skinEmber": {
+    "message": "Ember"
+  },
+  "skinMocha": {
+    "message": "Мокко"
+  },
+  "skinInk": {
+    "message": "Чернила"
+  },
+  "skinDusk": {
+    "message": "Сумерки"
+  },
   "cmdToggleSubs": {
     "message": "Включить или выключить субтитры"
   },

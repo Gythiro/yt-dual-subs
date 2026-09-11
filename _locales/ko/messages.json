@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "네온 터미널"
   },
+  "skinEmber": {
+    "message": "엠버"
+  },
+  "skinMocha": {
+    "message": "모카"
+  },
+  "skinInk": {
+    "message": "잉크"
+  },
+  "skinDusk": {
+    "message": "더스크"
+  },
   "cmdToggleSubs": {
     "message": "자막 켜기/끄기"
   },

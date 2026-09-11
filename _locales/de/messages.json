@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Glut"
+  },
+  "skinMocha": {
+    "message": "Mokka"
+  },
+  "skinInk": {
+    "message": "Tinte"
+  },
+  "skinDusk": {
+    "message": "Dämmerung"
+  },
   "cmdToggleSubs": {
     "message": "Untertitel ein/aus"
   },

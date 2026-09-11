@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Baga"
+  },
+  "skinMocha": {
+    "message": "Mocha"
+  },
+  "skinInk": {
+    "message": "Tinta"
+  },
+  "skinDusk": {
+    "message": "Takipsilim"
+  },
   "cmdToggleSubs": {
     "message": "I-on o i-off ang mga subtitle"
   },

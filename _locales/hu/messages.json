@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Parázs"
+  },
+  "skinMocha": {
+    "message": "Mokka"
+  },
+  "skinInk": {
+    "message": "Tinta"
+  },
+  "skinDusk": {
+    "message": "Alkony"
+  },
   "cmdToggleSubs": {
     "message": "Felirat be vagy ki"
   },

@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Žar"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Tinta"
+  },
+  "skinDusk": {
+    "message": "Suton"
+  },
   "cmdToggleSubs": {
     "message": "Titlovi uklj./isklj."
   },

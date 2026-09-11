@@ -42,7 +42,15 @@
     { id: "default", nameKey: "skinDefault", name: "Default",
       swatch: ["#0e0f11", "#3ea6ff", "#f1f1f1"] },
     { id: "neon", nameKey: "skinNeon", name: "Neon Terminal",
-      swatch: ["#07080c", "#38e8ff", "#ff4d8d"] }
+      swatch: ["#07080c", "#38e8ff", "#ff4d8d"] },
+    { id: "ember", nameKey: "skinEmber", name: "Ember",
+      swatch: ["#140e0a", "#ec9e5d", "#e06b4f"] },
+    { id: "mocha", nameKey: "skinMocha", name: "Mocha",
+      swatch: ["#1a1815", "#8ba876", "#eaddcf"] },
+    { id: "ink", nameKey: "skinInk", name: "Ink",
+      swatch: ["#000000", "#8ba3c7", "#ececf1"] },
+    { id: "dusk", nameKey: "skinDusk", name: "Dusk",
+      swatch: ["#121018", "#b794f6", "#e089c0"] }
   ];
   const BY_ID = {};
   for (const s of SKINS) BY_ID[s.id] = s;

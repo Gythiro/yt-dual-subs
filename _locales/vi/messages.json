@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Ember"
+  },
+  "skinMocha": {
+    "message": "Mocha"
+  },
+  "skinInk": {
+    "message": "Mực"
+  },
+  "skinDusk": {
+    "message": "Chạng vạng"
+  },
   "cmdToggleSubs": {
     "message": "Bật hoặc tắt phụ đề"
   },

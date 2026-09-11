@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Terminale Neon"
   },
+  "skinEmber": {
+    "message": "Brace"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Inchiostro"
+  },
+  "skinDusk": {
+    "message": "Crepuscolo"
+  },
   "cmdToggleSubs": {
     "message": "Attivare o disattivare i sottotitoli"
   },

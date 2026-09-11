@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Неоновий термінал"
   },
+  "skinEmber": {
+    "message": "Жаринка"
+  },
+  "skinMocha": {
+    "message": "Мока"
+  },
+  "skinInk": {
+    "message": "Чорнило"
+  },
+  "skinDusk": {
+    "message": "Сутінки"
+  },
   "cmdToggleSubs": {
     "message": "Субтитри ввімк. / вимк."
   },

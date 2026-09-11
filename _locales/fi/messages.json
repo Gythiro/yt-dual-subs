@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Hiillos"
+  },
+  "skinMocha": {
+    "message": "Mokka"
+  },
+  "skinInk": {
+    "message": "Muste"
+  },
+  "skinDusk": {
+    "message": "Hämärä"
+  },
   "cmdToggleSubs": {
     "message": "Tekstitys päälle tai pois"
   },

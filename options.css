@@ -11,6 +11,12 @@
   --txt: #f1f1f1;
   --muted: #b6b9be;
   --accent: #3ea6ff;
+  /* 三个「小地方」的颜色。它们本来是写死的，于是换皮肤时整页都变了、
+     滚动条和这两处小标签还留在默认的冷灰上。值和从前逐字一致 ——
+     默认皮肤不该因为这次收拢而动一个像素。 */
+  --muted-2: #8c9095;          /* 比 --muted 再暗一档：小体量的全大写标签 */
+  --scroll: #3a3d41;           /* 滚动条滑块 */
+  --scroll-hi: #4a4e53;        /* 滑块被指着的时候 */
   --accent-dim: rgba(62, 166, 255, 0.16);
   --radius: 10px;
   font-size: 14px;
@@ -41,8 +47,8 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
    (selection, scrollbar, control accents, link underlines). */
 ::selection { background: var(--accent-dim); color: var(--txt); }
 body::-webkit-scrollbar, .olang-list::-webkit-scrollbar { width: 10px; }
-body::-webkit-scrollbar-thumb, .olang-list::-webkit-scrollbar-thumb { background: #3a3d41; border-radius: 8px; }
-body::-webkit-scrollbar-thumb:hover, .olang-list::-webkit-scrollbar-thumb:hover { background: #4a4e53; }
+body::-webkit-scrollbar-thumb, .olang-list::-webkit-scrollbar-thumb { background: var(--scroll); border-radius: 8px; }
+body::-webkit-scrollbar-thumb:hover, .olang-list::-webkit-scrollbar-thumb:hover { background: var(--scroll-hi); }
 body::-webkit-scrollbar-track, .olang-list::-webkit-scrollbar-track { background: transparent; }
 input[type="range"], input[type="checkbox"] { accent-color: var(--accent); }
 a { text-underline-offset: 3px; }
@@ -67,7 +73,7 @@ a { text-underline-offset: 3px; }
 
 .olabel {
   margin: 0 0 8px;
-  font-size: 11px; font-weight: 600; color: #8c9095;
+  font-size: 11px; font-weight: 600; color: var(--muted-2);
   text-transform: uppercase; letter-spacing: 1.7px;
 }
 /* a group label mid-section: more air above than below (设计规范 §2) */
@@ -192,7 +198,7 @@ a { text-underline-offset: 3px; }
 .ocmp-orig { margin: 0; color: #fff; font-size: 11px; }
 .ocmp-trans { margin: 0; color: #ffe98a; font-size: 12px; }
 .ocmp-card:not(.on) .ocmp-trans { margin-bottom: 7px; }   /* pair gaps = chopped */
-.ocmp-note { margin: auto 0 0; padding-top: 8px; color: #8a8a8a; font-size: 10.5px; text-wrap: balance; }
+.ocmp-note { margin: auto 0 0; padding-top: 8px; color: var(--muted-2); font-size: 10.5px; text-wrap: balance; }
 .ocmp-note.on { color: var(--muted); }
 .ostart-cta { margin-top: 15px; }
 .ostart-foot {
@@ -322,7 +328,15 @@ a { text-underline-offset: 3px; }
 /* 皮肤单选。和这张卡上另外两行（下拉、按钮）混用控件类型没问题——
    它们回答的是三个不同的问题。色块是三竖条，不是一个圆点：一套皮肤是
    「底 + 强调 + 第二色」，一个圆点说不出这件事。 */
-.oskins { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+/* 两列，不是一列。一列在两套的时候是对的；到六套就是 430px，把「设置」这张
+   卡整个占掉了，而它还要装界面语言和快捷键。两列 125px，名字照旧每套都在
+   （德语的 Dämmerung 也放得下 —— 量过，两种语言都是 125px）。
+   控件种类没变：还是 radiogroup + 三色块 + 名字，换的只是排布。
+   到十套左右这个网格仍然够用；真到那时再改成「一行当前 + 点开面板」。 */
+.oskins {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px;
+  flex: 1; min-width: 0;
+}
 /* The group's name lines up with its FIRST row. .orow centres its children,
    which is right for a row with one control in it and wrong for a stack of
    two: centred, the name sits beside the second row and reads as though it

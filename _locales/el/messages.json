@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Θράκα"
+  },
+  "skinMocha": {
+    "message": "Μόκα"
+  },
+  "skinInk": {
+    "message": "Μελάνι"
+  },
+  "skinDusk": {
+    "message": "Σούρουπο"
+  },
   "cmdToggleSubs": {
     "message": "Υπότιτλοι ανοιχτοί ή κλειστοί"
   },

@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Ogle"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Tinte"
+  },
+  "skinDusk": {
+    "message": "Krēsla"
+  },
   "cmdToggleSubs": {
     "message": "Subtitri ieslēgti vai izslēgti"
   },

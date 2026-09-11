@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Terminal Neon"
   },
+  "skinEmber": {
+    "message": "Bara"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Tinta"
+  },
+  "skinDusk": {
+    "message": "Senja"
+  },
   "cmdToggleSubs": {
     "message": "Subtitle nyala atau mati"
   },

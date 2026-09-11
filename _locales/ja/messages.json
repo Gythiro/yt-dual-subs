@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "ネオンターミナル"
   },
+  "skinEmber": {
+    "message": "エンバー"
+  },
+  "skinMocha": {
+    "message": "モカ"
+  },
+  "skinInk": {
+    "message": "インク"
+  },
+  "skinDusk": {
+    "message": "ダスク"
+  },
   "cmdToggleSubs": {
     "message": "字幕のオン/オフ"
   },

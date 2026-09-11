@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Ember"
+  },
+  "skinMocha": {
+    "message": "Mocha"
+  },
+  "skinInk": {
+    "message": "Wino"
+  },
+  "skinDusk": {
+    "message": "Jioni"
+  },
   "cmdToggleSubs": {
     "message": "Washa au zima manukuu"
   },

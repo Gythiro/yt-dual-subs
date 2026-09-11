@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Neonowy Terminal"
   },
+  "skinEmber": {
+    "message": "Żar"
+  },
+  "skinMocha": {
+    "message": "Mokka"
+  },
+  "skinInk": {
+    "message": "Atrament"
+  },
+  "skinDusk": {
+    "message": "Zmierzch"
+  },
   "cmdToggleSubs": {
     "message": "Włącz lub wyłącz napisy"
   },

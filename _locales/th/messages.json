@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "นีออนเทอร์มินัล"
   },
+  "skinEmber": {
+    "message": "เอมเบอร์"
+  },
+  "skinMocha": {
+    "message": "มอคค่า"
+  },
+  "skinInk": {
+    "message": "อิงค์"
+  },
+  "skinDusk": {
+    "message": "ดัสก์"
+  },
   "cmdToggleSubs": {
     "message": "เปิดหรือปิดคำบรรยาย"
   },

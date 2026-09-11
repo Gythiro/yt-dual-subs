@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Gloed"
+  },
+  "skinMocha": {
+    "message": "Mokka"
+  },
+  "skinInk": {
+    "message": "Inkt"
+  },
+  "skinDusk": {
+    "message": "Schemering"
+  },
   "cmdToggleSubs": {
     "message": "Ondertitels aan of uit"
   },

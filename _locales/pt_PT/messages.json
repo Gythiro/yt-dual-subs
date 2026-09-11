@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Terminal Néon"
   },
+  "skinEmber": {
+    "message": "Brasa"
+  },
+  "skinMocha": {
+    "message": "Moca"
+  },
+  "skinInk": {
+    "message": "Tinta"
+  },
+  "skinDusk": {
+    "message": "Crepúsculo"
+  },
   "cmdToggleSubs": {
     "message": "Ativar ou desativar as legendas"
   },

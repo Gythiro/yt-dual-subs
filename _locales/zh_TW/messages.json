@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "霓虹終端"
   },
+  "skinEmber": {
+    "message": "餘燼"
+  },
+  "skinMocha": {
+    "message": "摩卡"
+  },
+  "skinInk": {
+    "message": "墨"
+  },
+  "skinDusk": {
+    "message": "暮色"
+  },
   "cmdToggleSubs": {
     "message": "開關字幕"
   },

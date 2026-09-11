@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Köz"
+  },
+  "skinMocha": {
+    "message": "Mocha"
+  },
+  "skinInk": {
+    "message": "Mürekkep"
+  },
+  "skinDusk": {
+    "message": "Alacakaranlık"
+  },
   "cmdToggleSubs": {
     "message": "Altyazıları aç veya kapat"
   },

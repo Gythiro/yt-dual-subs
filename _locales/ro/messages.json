@@ -779,6 +779,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Jăratic"
+  },
+  "skinMocha": {
+    "message": "Mocca"
+  },
+  "skinInk": {
+    "message": "Cerneală"
+  },
+  "skinDusk": {
+    "message": "Amurg"
+  },
   "cmdToggleSubs": {
     "message": "Activează sau dezactivează subtitrările"
   },

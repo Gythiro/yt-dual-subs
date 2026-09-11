@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Ember"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Črnilo"
+  },
+  "skinDusk": {
+    "message": "Somrak"
+  },
   "cmdToggleSubs": {
     "message": "Podnapisi vklop ali izklop"
   },

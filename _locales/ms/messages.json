@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Terminal Neon"
   },
+  "skinEmber": {
+    "message": "Bara"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Dakwat"
+  },
+  "skinDusk": {
+    "message": "Senja"
+  },
   "cmdToggleSubs": {
     "message": "Sari kata hidup atau mati"
   },

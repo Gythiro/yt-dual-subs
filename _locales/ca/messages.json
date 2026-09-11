@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Terminal de neó"
   },
+  "skinEmber": {
+    "message": "Brasa"
+  },
+  "skinMocha": {
+    "message": "Moca"
+  },
+  "skinInk": {
+    "message": "Tinta"
+  },
+  "skinDusk": {
+    "message": "Crepuscle"
+  },
   "cmdToggleSubs": {
     "message": "Subtítols on/off"
   },

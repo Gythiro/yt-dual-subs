@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neónový terminál"
   },
+  "skinEmber": {
+    "message": "Ember"
+  },
+  "skinMocha": {
+    "message": "Moka"
+  },
+  "skinInk": {
+    "message": "Atrament"
+  },
+  "skinDusk": {
+    "message": "Súmrak"
+  },
   "cmdToggleSubs": {
     "message": "Zapnúť alebo vypnúť titulky"
   },

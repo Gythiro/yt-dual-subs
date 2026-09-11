@@ -590,6 +590,18 @@
   "skinNeon": {
     "message": "Neon Terminal"
   },
+  "skinEmber": {
+    "message": "Ember"
+  },
+  "skinMocha": {
+    "message": "Mocha"
+  },
+  "skinInk": {
+    "message": "Ink"
+  },
+  "skinDusk": {
+    "message": "Dusk"
+  },
   "cmdToggleSubs": {
     "message": "ఉపశీర్షికలు ఆన్/ఆఫ్"
   },
