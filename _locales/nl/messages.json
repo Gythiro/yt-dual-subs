@@ -1255,7 +1255,7 @@
     "message": "Deze browser laat de extensie de geïnstalleerde lettertypen niet lezen, dus alleen Systeemstandaard kan worden gekozen."
   },
   "fontNoGlyphs": {
-    "message": "kan deze regel niet tekenen"
+    "message": "kan deze regel niet tonen"
   },
   "fontNotHere": {
     "message": "niet op deze computer"

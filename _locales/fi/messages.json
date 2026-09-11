@@ -1233,7 +1233,7 @@
     "message": "Tämä selain ei salli laajennuksen lukea asennettuja fontteja, joten vain Järjestelmän oletus on valittavissa."
   },
   "fontNoGlyphs": {
-    "message": "ei voi piirtää tätä riviä"
+    "message": "ei voi näyttää tätä riviä"
   },
   "fontNotHere": {
     "message": "ei tällä tietokoneella"

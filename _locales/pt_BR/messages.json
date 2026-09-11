@@ -1233,7 +1233,7 @@
     "message": "Este navegador não permite que a extensão leia as fontes instaladas, então só Padrão do sistema pode ser escolhido."
   },
   "fontNoGlyphs": {
-    "message": "não desenha esta linha"
+    "message": "não mostra esta linha"
   },
   "fontNotHere": {
     "message": "não está neste computador"

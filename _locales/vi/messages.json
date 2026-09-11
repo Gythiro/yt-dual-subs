@@ -1233,7 +1233,7 @@
     "message": "Trình duyệt này không cho tiện ích đọc phông đã cài, nên chỉ chọn được Mặc định hệ thống."
   },
   "fontNoGlyphs": {
-    "message": "không vẽ được dòng này"
+    "message": "không hiển thị được dòng này"
   },
   "fontNotHere": {
     "message": "không có trên máy này"

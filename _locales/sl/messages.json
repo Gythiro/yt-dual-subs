@@ -1255,7 +1255,7 @@
     "message": "Ta brskalnik razširitvi ne dovoli brati nameščenih pisav, zato lahko izbereš samo Sistemsko."
   },
   "fontNoGlyphs": {
-    "message": "te vrstice ne more narisati"
+    "message": "te vrstice ne more prikazati"
   },
   "fontNotHere": {
     "message": "ni na tem računalniku"

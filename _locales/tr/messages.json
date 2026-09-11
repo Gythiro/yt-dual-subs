@@ -1233,7 +1233,7 @@
     "message": "Bu tarayıcı, uzantının yüklü yazı tiplerini okumasına izin vermiyor; bu yüzden yalnızca Sistem varsayılanı seçilebilir."
   },
   "fontNoGlyphs": {
-    "message": "bu satırı çizemez"
+    "message": "bu satırı gösteremez"
   },
   "fontNotHere": {
     "message": "bu bilgisayarda yok"

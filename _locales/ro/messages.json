@@ -1233,7 +1233,7 @@
     "message": "Acest browser nu permite extensiei să citească fonturile instalate, deci se poate alege doar Implicit sistem."
   },
   "fontNoGlyphs": {
-    "message": "nu poate desena această linie"
+    "message": "nu poate afișa această linie"
   },
   "fontNotHere": {
     "message": "nu este pe acest computer"

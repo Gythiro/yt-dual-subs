@@ -1255,7 +1255,7 @@
     "message": "Browser ini tidak membiarkan ekstensi membaca font terpasang, jadi hanya Bawaan sistem yang bisa dipilih."
   },
   "fontNoGlyphs": {
-    "message": "tidak bisa menggambar baris ini"
+    "message": "tidak bisa menampilkan baris ini"
   },
   "fontNotHere": {
     "message": "tidak ada di komputer ini"

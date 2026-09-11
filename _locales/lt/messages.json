@@ -1255,7 +1255,7 @@
     "message": "Ši naršyklė neleidžia plėtiniui skaityti įdiegtų šriftų, tad galima rinktis tik sistemos numatytąjį."
   },
   "fontNoGlyphs": {
-    "message": "negali nupiešti šios eilutės"
+    "message": "negali parodyti šios eilutės"
   },
   "fontNotHere": {
     "message": "nėra šiame kompiuteryje"

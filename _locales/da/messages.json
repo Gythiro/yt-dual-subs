@@ -1255,7 +1255,7 @@
     "message": "Denne browser lader ikke udvidelsen læse de installerede skrifttyper, så kun Systemstandard kan vælges."
   },
   "fontNoGlyphs": {
-    "message": "kan ikke tegne denne linje"
+    "message": "kan ikke vise denne linje"
   },
   "fontNotHere": {
     "message": "ikke på denne computer"

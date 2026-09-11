@@ -1255,7 +1255,7 @@
     "message": "Den här webbläsaren låter inte tillägget läsa installerade typsnitt, så bara Systemstandard kan väljas."
   },
   "fontNoGlyphs": {
-    "message": "kan inte rita den här raden"
+    "message": "kan inte visa den här raden"
   },
   "fontNotHere": {
     "message": "inte på den här datorn"

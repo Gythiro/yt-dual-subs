@@ -1255,7 +1255,7 @@
     "message": "Šis pārlūks neļauj paplašinājumam lasīt instalētos fontus, tāpēc var izvēlēties tikai sistēmas noklusējuma."
   },
   "fontNoGlyphs": {
-    "message": "nevar uzzīmēt šo rindu"
+    "message": "nevar parādīt šo rindu"
   },
   "fontNotHere": {
     "message": "nav šajā datorā"

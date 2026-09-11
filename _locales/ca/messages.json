@@ -1255,7 +1255,7 @@
     "message": "Aquest navegador no deixa que l'extensió llegeixi les lletres instal·lades, així que només es pot triar la predeterminada del sistema."
   },
   "fontNoGlyphs": {
-    "message": "no pot dibuixar aquesta línia"
+    "message": "no pot mostrar aquesta línia"
   },
   "fontNotHere": {
     "message": "no és en aquest ordinador"

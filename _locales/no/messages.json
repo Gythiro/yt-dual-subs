@@ -1255,7 +1255,7 @@
     "message": "Denne nettleseren lar ikke utvidelsen lese installerte skrifter, så bare systemstandard kan velges."
   },
   "fontNoGlyphs": {
-    "message": "kan ikke tegne denne linjen"
+    "message": "kan ikke vise denne linjen"
   },
   "fontNotHere": {
     "message": "ikke på denne datamaskinen"
